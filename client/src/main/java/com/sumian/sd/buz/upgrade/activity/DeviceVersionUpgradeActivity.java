@@ -135,13 +135,13 @@ public class DeviceVersionUpgradeActivity extends BaseViewModelActivity implemen
         @Override
         public void onDeviceDisconnecting(String deviceAddress) {
             LogManager.appendUserOperationLog("设备 dfu 固件升级,正在断开连接中  mac=" + deviceAddress);
-            cancelDialog();
+//            cancelDialog();
         }
 
         @Override
         public void onDeviceDisconnected(String deviceAddress) {
             LogManager.appendUserOperationLog("设备 dfu 固件升级,已断开连接  mac=" + deviceAddress);
-            cancelDialog();
+//            cancelDialog();
         }
 
         @Override
@@ -178,8 +178,8 @@ public class DeviceVersionUpgradeActivity extends BaseViewModelActivity implemen
         public void onError(String deviceAddress, int error, int errorType, String message) {
             if (mDfuCount > 2) {
                 SumianExecutor.INSTANCE.runOnUiThread(() -> {
-                    ToastHelper.show(R.string.firmware_upgrade_failed_hint);
                     cancelDialog();
+                    ToastUtils.showShort(R.string.firmware_upgrade_failed_hint);
                 });
             } else {
                 mDfuCount++;
@@ -324,7 +324,7 @@ public class DeviceVersionUpgradeActivity extends BaseViewModelActivity implemen
                 break;
         }
         ToastHelper.show(this, getString(R.string.firmware_upgrade_ing_hint), Gravity.CENTER);
-        mDfuCount++;
+        mDfuCount = 0;
         mPresenter.upgrade(mVersionType);
     }
 
@@ -404,7 +404,6 @@ public class DeviceVersionUpgradeActivity extends BaseViewModelActivity implemen
             mTvVersionCurrent.removeCallbacks(mDismissDialogRunnable);
         }
         checkAndCancelDialog();
-        mDfuCount = 0;
     }
 
     private void checkAndCancelDialog() {
