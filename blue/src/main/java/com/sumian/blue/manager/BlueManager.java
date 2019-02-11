@@ -223,6 +223,7 @@ public class BlueManager implements BlueScanCallback {
         }
         if (mScanForDeviceListener != null && device.getAddress().equals(mScanDeviceMac)) {
             mScanForDeviceListener.onDeviceFound(device);
+            stopScan();
             removeDelayStopScanRunnable();
             mScanForDeviceListener = null;
             mScanDeviceMac = null;

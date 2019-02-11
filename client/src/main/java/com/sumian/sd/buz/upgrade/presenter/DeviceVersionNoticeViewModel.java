@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import com.sumian.common.base.BaseViewModel;
 import com.sumian.common.network.error.ErrorCode;
 import com.sumian.common.network.response.ErrorResponse;
+import com.sumian.common.utils.VersionUtil;
 import com.sumian.sd.R;
 import com.sumian.sd.app.App;
 import com.sumian.sd.app.AppManager;
@@ -22,6 +23,7 @@ import com.sumian.sd.common.utils.UiUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.ref.WeakReference;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -122,8 +124,8 @@ public class DeviceVersionNoticeViewModel extends BaseViewModel {
         }
         if (isConnected) {
             if (versionInfo != null) {//服务器有固件版本信息
-                //if (VersionUtil.hasNewVersion(Arrays.asList(versionInfo.getVersion().split(".")), Arrays.asList(currentVersionInfo.split(".")))) {
-                if (versionInfo.getVersionCode() > NumberUtil.formatVersionCode(currentVersionInfo)) {//有新版本
+                if (VersionUtil.hasNewVersion(versionInfo.getVersion(), currentVersionInfo)) {
+//                if (versionInfo.getVersionCode() > NumberUtil.formatVersionCode(currentVersionInfo)) {//有新版本
 
                     versionInfo.setVersion(TextUtils.isEmpty(currentVersionInfo) ? App.getAppContext().getString(R.string.connected_state_hint) : currentVersionInfo);
 

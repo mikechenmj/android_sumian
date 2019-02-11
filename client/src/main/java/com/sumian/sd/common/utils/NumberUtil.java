@@ -42,7 +42,7 @@ public final class NumberUtil {
         if (TextUtils.isEmpty(version)) {
             return 0;
         } else {
-            version = version.replace("", "");
+            version = version.replace(".", "");
             return Integer.parseInt(version);
         }
     }
