@@ -125,7 +125,7 @@ public class QrCodeFragment extends BaseFragment implements View.OnClickListener
             zxingView.startSpotAndShowRect();
 
         } else if (i == R.id.bt_action) {
-            if (!DeviceManager.INSTANCE.isConnected()) {
+            if (!DeviceManager.INSTANCE.isMonitorConnected()) {
                 ToastUtils.showShort("监测仪未连接,无法绑定速眠仪,请先连接监测仪");
                 return;
             }

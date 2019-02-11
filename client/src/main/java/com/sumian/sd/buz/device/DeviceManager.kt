@@ -183,7 +183,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
     }
 
     fun tryToConnectCacheMonitor() {
-        if (isConnected() || isConnecting() || !isBluetoothEnable()) {
+        if (isMonitorConnected() || isMonitorConnecting() || !isBluetoothEnable()) {
             return
         }
         getCachedMonitor()?.let {
@@ -269,12 +269,16 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         bluePeripheral.write(BlueCmd.cDoMonitorMonitoringMode(monitoringMode))
     }
 
-    fun isConnected(): Boolean {
+    fun isMonitorConnected(): Boolean {
         return mMonitorLiveData.value?.isConnected ?: false
     }
 
-    fun isConnecting(): Boolean {
+    fun isMonitorConnecting(): Boolean {
         return mMonitorLiveData.value?.status == BlueDevice.STATUS_CONNECTING
+    }
+
+    fun isSleeperConnected(): Boolean {
+        return mMonitorLiveData.value?.sleeperStatus == BlueDevice.STATUS_CONNECTED
     }
 
     fun isSyncing(): Boolean {
@@ -1094,7 +1098,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
 
     private val mQueryMonitorVersionDelayRunnable: Runnable by lazy {
         Runnable {
-            if (!isConnected()) return@Runnable
+            if (!isMonitorConnected()) return@Runnable
             val peripheral = getCurrentBluePeripheral() ?: return@Runnable
             if (mMonitorLiveData.value?.version == null) {
                 peripheral.writeDelay(BlueCmd.cMonitorFirmwareVersion(), 0)
@@ -1107,7 +1111,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
 
     private val mQuerySleeperVersionDelayRunnable: Runnable by lazy {
         Runnable {
-            if (!isConnected() || mMonitorLiveData.value?.isSleeperConnected != true) return@Runnable
+            if (!isMonitorConnected() || mMonitorLiveData.value?.isSleeperConnected != true) return@Runnable
             val peripheral = getCurrentBluePeripheral() ?: return@Runnable
             if (mMonitorLiveData.value?.sleeperVersion == null) {
                 peripheral.writeDelay(BlueCmd.cSleepyFirmwareVersion(), 0)

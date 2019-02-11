@@ -263,7 +263,7 @@ class MainActivity : BaseActivity(), VersionModel.ShowDotCallback {
 
     override fun showDot(isShowAppDot: Boolean, isShowMonitorDot: Boolean, isShowSleepyDot: Boolean) {
 
-        if (mIsResume && DeviceManager.isConnected()) {
+        if (mIsResume && DeviceManager.isMonitorConnected()) {
             var titleResId = R.string.monitor_version_title
             var message = R.string.monitor_version_message
 

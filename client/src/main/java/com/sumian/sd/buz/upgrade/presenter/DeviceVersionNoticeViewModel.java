@@ -23,7 +23,6 @@ import com.sumian.sd.common.utils.UiUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.ref.WeakReference;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -118,9 +117,9 @@ public class DeviceVersionNoticeViewModel extends BaseViewModel {
     private void checkVersionInfo(DeviceVersionNoticeActivity view, int versionType, VersionInfo versionInfo, String currentVersionInfo) {
         boolean isConnected;
         if (versionType == MONITOR_VERSION_TYPE) {
-            isConnected = DeviceManager.INSTANCE.isConnected();
+            isConnected = DeviceManager.INSTANCE.isMonitorConnected();
         } else {
-            isConnected = DeviceManager.INSTANCE.isConnected() && DeviceManager.INSTANCE.getSleeperStatus() == BlueDevice.STATUS_CONNECTED;
+            isConnected = DeviceManager.INSTANCE.isMonitorConnected() && DeviceManager.INSTANCE.getSleeperStatus() == BlueDevice.STATUS_CONNECTED;
         }
         if (isConnected) {
             if (versionInfo != null) {//服务器有固件版本信息
@@ -190,6 +189,7 @@ public class DeviceVersionNoticeViewModel extends BaseViewModel {
                 }
             }
 
+            @SuppressWarnings("deprecation")
             @Override
             protected void onSuccess(AppUpgradeInfo response) {
 

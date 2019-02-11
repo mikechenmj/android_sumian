@@ -843,4 +843,5 @@
     <string name="finished_lesson_to_be_unlock">完成上节课程后解锁</string>
     <string name="save_permission_tips">保存图片需要授予存储权限，该权限已被禁止，请在设置中授予app相关权限</string>
     <string name="request_save_permissions_tips">存储图片，需要授予手机存储权限权限</string>
+    <string name="device_not_connected">设备未连接</string>
 </resources>

@@ -151,7 +151,7 @@ class SyncPatternService : Service(), BluePeripheralDataCallback {
     }
 
     private fun getConnectedBluePeripheral(): BluePeripheral? {
-        return if (DeviceManager.isConnected()) {
+        return if (DeviceManager.isMonitorConnected()) {
             AppManager.getBlueManager().bluePeripheral
         } else {
             null

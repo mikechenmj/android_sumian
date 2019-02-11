@@ -307,6 +307,10 @@ public class DeviceVersionUpgradeActivity extends BaseViewModelActivity implemen
             showErrorDialog(R.string.phone_bettery_low_title, R.string.phone_bettery_low_message);
             return;
         }
+        if (!DeviceManager.INSTANCE.isMonitorConnected()) {
+            ToastUtils.showShort(R.string.device_not_connected);
+            return;
+        }
         switch (mVersionType) {
             case VERSION_TYPE_MONITOR:
                 if (monitorBatteryLow()) {
@@ -316,6 +320,10 @@ public class DeviceVersionUpgradeActivity extends BaseViewModelActivity implemen
                 }
                 break;
             case VERSION_TYPE_SLEEPY:
+                if (!DeviceManager.INSTANCE.isSleeperConnected()) {
+                    ToastUtils.showShort(R.string.device_not_connected);
+                    return;
+                }
                 if (sleepyBatterLow()) {
                     LogManager.appendSpeedSleeperLog("速眠仪电量不足50%,无法进行 dfu 升级");
                     showErrorDialog(R.string.sleeper_bettery_low_title, R.string.sleeper_bettery_low_message);

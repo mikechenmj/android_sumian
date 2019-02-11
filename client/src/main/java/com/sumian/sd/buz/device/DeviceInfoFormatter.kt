@@ -19,7 +19,7 @@ class DeviceInfoFormatter {
         private val model = SystemUtil.getDeviceBrand() + " " + SystemUtil.getSystemModel()
         private val appVersion = SystemUtil.getPackageInfo(App.getAppContext()).versionName
 
-        public fun getFormatedDeviceInfo(): String {
+        fun getFormatedDeviceInfo(): String {
             //Device-Info": "app_version=速眠-test_1.2.3.1&model=iPhone10,3&system=iOS_11.3.1&monitor_fw=&monitor_sn=&sleeper_fw=&sleeper_sn="
             val monitorFw = formatMonitorInfo(getFormatMonitorFw())
             val monitorSn = formatMonitorInfo(DeviceManager.getMonitorSn())
@@ -36,7 +36,7 @@ class DeviceInfoFormatter {
             return deviceInfo
         }
 
-        public fun getDeviceInfoMap(): Map<String, String> {
+        fun getDeviceInfoMap(): Map<String, String> {
             val monitorFw = formatMonitorInfo(getFormatMonitorFw())
             val monitorSn = formatMonitorInfo(DeviceManager.getMonitorSn())
             val sleeperFw = formatSpeedSleeperInfo(getFormatSleeperFw())
@@ -69,14 +69,14 @@ class DeviceInfoFormatter {
         }
 
         private fun formatMonitorInfo(monitorInfo: String?): String {
-            if (!DeviceManager.isConnected()) {
+            if (!DeviceManager.isMonitorConnected()) {
                 return ""
             }
             return monitorInfo ?: ""
         }
 
         private fun formatSpeedSleeperInfo(speedSleeperInfo: String?): String {
-            if (!DeviceManager.isConnected()) {
+            if (!DeviceManager.isMonitorConnected()) {
                 return ""
             }
             val monitor = DeviceManager.getMonitorLiveData().value

@@ -80,7 +80,7 @@ class SettingActivity : BaseActivity(), TitleBar.OnBackClickListener, View.OnCli
             R.id.sdv_about_us -> SimpleWebActivity.launch(this, H5Uri.ABOUT_US)
             R.id.sdv_device_version -> DeviceVersionNoticeActivity.show(v.context)
             R.id.sdv_change_bind -> {
-                if (!DeviceManager.isConnected()) {
+                if (!DeviceManager.isMonitorConnected()) {
                     ToastHelper.show(getString(R.string.please_connect_monitor_before_change_bind))
                     return
                 }

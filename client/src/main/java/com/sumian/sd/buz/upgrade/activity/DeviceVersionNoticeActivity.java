@@ -145,7 +145,7 @@ public class DeviceVersionNoticeActivity extends BaseViewModelActivity implement
     @Override
     public void showDot(boolean isShowAppDot, boolean isShowMonitorDot, boolean isShowSleepyDot) {
         mHandler.post(() -> {
-            boolean isDeviceConnected = DeviceManager.INSTANCE.isConnected();
+            boolean isDeviceConnected = DeviceManager.INSTANCE.isMonitorConnected();
             if (!isDeviceConnected) {
                 setText(mTvMonitorVersionName, String.format(Locale.getDefault(), getString(R.string.version_name_hint),
                         getString(R.string.monitor), App.Companion.getAppContext().getString(R.string.none_connected_state_hint)));
