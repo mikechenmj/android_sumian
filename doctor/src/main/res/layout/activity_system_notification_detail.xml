@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -43,13 +43,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            tools:text="这是一条系统通知正文，随便写点东西来填充文案：您好，感谢您对速眠医生CBTI的认可。CBTI已经被国内外睡眠医学领域推荐为治疗失眠的首选方案。您好，感谢您对速眠医生CBTI的认可。CBTI已经被国内外睡眠医学领域推荐为治疗失眠的首选方案。
+            tools:text="这是一条系统通知正文，\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n随便写点东西来填充文案：您好，感谢您对速眠医生CBTI的认可。CBTI已经被国内外睡眠医学领域推荐为治疗失眠的首选方案。您好，感谢您对速眠医生CBTI的认可。CBTI已经被国内外睡眠医学领域推荐为治疗失眠的首选方案。
 
 1. 系统通知正文第一条。
 2. 系统通知正文第二条，系统通知正文的第二条，系统通知正文第二条，正文第二条。
 
-您好，感谢您对速眠医生CBTI的认可。CBTI已经被国内外睡眠医学领域推荐为治疗失眠的首选方案。" />
+您好，感谢您对速眠医生CBTI的认可。CBTI已经被国内外睡眠医学领域推荐为治疗失眠的首选方案。end" />
     </LinearLayout>
 
 
-</FrameLayout>
+</ScrollView>
