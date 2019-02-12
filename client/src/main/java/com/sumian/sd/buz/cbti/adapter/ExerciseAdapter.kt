@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.sumian.common.base.BaseRecyclerAdapter
 import com.sumian.sd.R
-import com.sumian.sd.base.holder.SdBaseViewHolder
+import com.sumian.common.base.holder.SdBaseViewHolder
 import com.sumian.sd.buz.cbti.bean.Exercise
 
 /**
