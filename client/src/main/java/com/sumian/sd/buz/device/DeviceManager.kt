@@ -648,11 +648,12 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         }
     }
 
-    private fun uploadDeviceSns(monitorCache: BlueDevice?) {
+    private fun uploadDeviceSns(monitorSn: String? = null, sleeperSn: String? = null) {
+        if (monitorSn == null && sleeperSn == null) {
+            return
+        }
         val map = HashMap<String, String>()
-        val monitorSn = monitorCache?.sn
         monitorSn?.let { map.put("monitor_sn", it) }
-        val sleeperSn = monitorCache?.sleeperSn
         sleeperSn?.let { map.put("sleeper_sn", it) }
         if (monitorSn != null || sleeperSn != null) {
             AppManager.getSdHttpService().modifyUserProfile(map).enqueue(object : BaseSdResponseCallback<UserInfo>() {
@@ -672,6 +673,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         val sleepySn = BlueCmd.formatSn(data)
         mMonitorLiveData.value?.sleeperSn = sleepySn
         notifyMonitorChange()
+        uploadDeviceSns(sleeperSn = sleepySn)
         LogManager.appendSpeedSleeperLog("0x55 获取到监测仪绑定的速眠仪的 sn=$sleepySn  cmd=$cmd")
     }
 
@@ -690,6 +692,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         val monitorSn = BlueCmd.formatSn(data)
         LogManager.appendMonitorLog("0x53 获取到监测仪的sn=$monitorSn  cmd=$cmd")
         mMonitorLiveData.value?.sn = monitorSn
+        uploadDeviceSns(monitorSn = monitorSn)
         notifyMonitorChange()
     }
 
@@ -1038,12 +1041,6 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
     fun getIsUploadingSleepDataToServerLiveData(): MutableLiveData<Boolean> {
         return mIsUploadingSleepDataToServerLiveData
     }
-
-    fun uploadCacheSn() {
-        val monitorCache = getCachedMonitor()
-        uploadDeviceSns(monitorCache)
-    }
-
 
     fun getAndCheckFirmVersion() {
         val call = AppManager.getSdHttpService().syncFirmwareInfo()

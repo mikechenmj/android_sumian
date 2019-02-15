@@ -43,7 +43,6 @@ class MainLazyInitHelper {
     }
 
     private fun initMainPlatform() {
-        DeviceManager.uploadCacheSn()
         KefuManager.loginAndQueryUnreadMsg()
         AppNotificationManager.uploadPushId()
         getSleepDataUploadManager().checkPendingTaskAndRun()
