@@ -37,7 +37,7 @@ import com.sumian.sd.buz.account.model.AccountViewModel
 import com.sumian.sd.buz.device.DeviceManager
 import com.sumian.sd.buz.device.FileHelper
 import com.sumian.sd.buz.doctor.model.DoctorViewModel
-import com.sumian.sd.buz.job.SleepDataUploadManager
+import com.sumian.sd.buz.device.uploadsleepdata.SleepDataUploadManager
 import com.sumian.sd.buz.kefu.KefuManager
 import com.sumian.sd.buz.notification.NotificationConst
 import com.sumian.sd.buz.notification.NotificationDelegate

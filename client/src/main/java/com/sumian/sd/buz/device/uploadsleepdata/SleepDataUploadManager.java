@@ -1,4 +1,4 @@
-package com.sumian.sd.buz.job;
+package com.sumian.sd.buz.device.uploadsleepdata;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

@@ -20,7 +20,7 @@ import com.sumian.sd.buz.device.DeviceManager
 import com.sumian.sd.buz.diary.event.UpdateMonitorDataEvent
 import com.sumian.sd.buz.diary.sleeprecord.calendar.calendarView.CalendarView
 import com.sumian.sd.buz.diary.sleeprecord.calendar.custom.CalendarPopup
-import com.sumian.sd.buz.job.UploadSleepDataFinishedEvent
+import com.sumian.sd.buz.device.uploadsleepdata.UploadSleepDataFinishedEvent
 import com.sumian.sd.buz.report.weeklyreport.CalendarItemSleepReport
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import com.sumian.sd.common.utils.EventBusUtil
