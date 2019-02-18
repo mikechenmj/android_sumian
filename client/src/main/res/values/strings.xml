@@ -628,7 +628,7 @@
     <string name="go_to_evaluation">去评估</string>
     <string name="cbti_chapter_no_lock">本周课程还未解锁</string>
     <string name="go_to_evaluation_title">CBTI评估</string>
-    <string name="go_to_evaluation_message">为更好地追踪治疗效果，我们需要您配合定进行评估，请您耐心完成评估</string>
+    <string name="go_to_evaluation_message">为更好地追踪治疗效果，我们需要您定期配合进行评估，请您耐心完成评估</string>
     <string name="click_top_button_add_record">- 点击上方按钮，添加记录 -</string>
     <string name="event">事件</string>
     <string name="thought">想法</string>

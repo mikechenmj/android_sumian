@@ -146,7 +146,14 @@ object KefuManager {
             }
 
             override fun onFailure(errorResponse: ErrorResponse) {
-                retryRegister(notifyCount, userInfo)
+                when (errorResponse.code) {
+                    KeFuMessage.REPEAT_ERROR -> {
+                        loginAndQueryUnreadMsg()
+                    }
+                    KeFuMessage.OTHER_ERROR -> {
+                        retryRegister(notifyCount, userInfo)
+                    }
+                }
             }
         })
     }

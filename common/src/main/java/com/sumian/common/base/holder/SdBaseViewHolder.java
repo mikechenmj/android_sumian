@@ -1,4 +1,4 @@
-package com.sumian.sd.base.holder;
+package com.sumian.common.base.holder;
 
 import android.text.TextUtils;
 import android.view.View;

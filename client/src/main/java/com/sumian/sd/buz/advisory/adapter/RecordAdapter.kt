@@ -16,7 +16,7 @@ import com.sumian.common.widget.FlowLayout
 import com.sumian.common.widget.voice.VoicePlayer
 import com.sumian.common.widget.voice.VoicePlayerView
 import com.sumian.sd.R
-import com.sumian.sd.base.holder.SdBaseViewHolder
+import com.sumian.common.base.holder.SdBaseViewHolder
 import com.sumian.sd.buz.account.bean.UserInfo
 import com.sumian.sd.buz.advisory.bean.Record
 import com.sumian.sd.buz.doctor.bean.Doctor
