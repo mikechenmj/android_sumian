@@ -8,6 +8,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.media.AudioManager
 import android.media.MediaPlayer
+import com.blankj.utilcode.util.LogUtils
 import com.sumian.common.utils.SumianExecutor
 import java.lang.ref.WeakReference
 import java.util.*
@@ -53,7 +54,7 @@ object CommonAudioPlayer : MediaPlayer.OnErrorListener, MediaPlayer.OnCompletion
 
     private fun onPrepared() {
         mIsPrepared = true
-        startProgressTimer()
+        updateProgress(0, mMediaPlayer?.duration ?: 0)
         if (mStartOnPrepared) {
             play()
         }
@@ -62,7 +63,7 @@ object CommonAudioPlayer : MediaPlayer.OnErrorListener, MediaPlayer.OnCompletion
     }
 
     private fun startProgressTimer() {
-        mProgressTimer?.cancel()
+        stopProgressTimer()
         mProgressTimer = Timer()
         mProgressTimer?.schedule(object : TimerTask() {
             override fun run() {
@@ -74,6 +75,10 @@ object CommonAudioPlayer : MediaPlayer.OnErrorListener, MediaPlayer.OnCompletion
                 })
             }
         }, 0, PROGRESS_CHANGE_CALL_DURATION)
+    }
+
+    private fun stopProgressTimer() {
+        mProgressTimer?.cancel()
     }
 
     override fun onCompletion(mp: MediaPlayer?) {
@@ -92,8 +97,15 @@ object CommonAudioPlayer : MediaPlayer.OnErrorListener, MediaPlayer.OnCompletion
     }
 
     private fun updateProgress() {
-        mStateListener?.onProgressChange(mMediaPlayer?.currentPosition
-                ?: 0, mMediaPlayer?.duration ?: 0)
+        try {
+            updateProgress(mMediaPlayer?.currentPosition ?: 0, mMediaPlayer?.duration ?: 0)
+        } catch (e: Exception) {
+            LogUtils.d(e.message)
+        }
+    }
+
+    private fun updateProgress(current: Int, total: Int) {
+        mStateListener?.onProgressChange(current, total)
     }
 
     fun isPlaying(): Boolean {
@@ -120,6 +132,7 @@ object CommonAudioPlayer : MediaPlayer.OnErrorListener, MediaPlayer.OnCompletion
             registerBecomingNoisyReceiver()
             mAutoPlayIfPossible = false
         }
+        startProgressTimer()
     }
 
     fun pause(autoPlayWhenPossible: Boolean = false) {
@@ -133,11 +146,12 @@ object CommonAudioPlayer : MediaPlayer.OnErrorListener, MediaPlayer.OnCompletion
             mAudioManager?.abandonAudioFocus(mAudioFocusChangeListener)
         }
         mAutoPlayIfPossible = autoPlayWhenPossible
+        stopProgressTimer()
     }
 
     fun release() {
         mContextWR.clear()
-        mProgressTimer?.cancel()
+        stopProgressTimer()
         mMediaPlayer?.release()
         mStateListener?.onPlayStatusChange(false)
         mAudioManager?.abandonAudioFocus(mAudioFocusChangeListener)
