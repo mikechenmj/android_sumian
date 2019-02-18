@@ -4,27 +4,16 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.sdk.android.oss.ClientException;
-import com.alibaba.sdk.android.oss.OSSClient;
-import com.alibaba.sdk.android.oss.ServiceException;
-import com.alibaba.sdk.android.oss.callback.OSSCompletedCallback;
-import com.alibaba.sdk.android.oss.common.OSSLog;
-import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
-import com.alibaba.sdk.android.oss.common.auth.OSSStsTokenCredentialProvider;
-import com.alibaba.sdk.android.oss.model.ObjectMetadata;
-import com.alibaba.sdk.android.oss.model.PutObjectRequest;
-import com.alibaba.sdk.android.oss.model.PutObjectResult;
 import com.sumian.common.network.error.ErrorCode;
 import com.sumian.common.network.response.ErrorResponse;
 import com.sumian.common.utils.SumianExecutor;
-import com.sumian.sd.BuildConfig;
-import com.sumian.sd.app.App;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.buz.device.AutoSyncDeviceDataUtil;
 import com.sumian.sd.buz.report.bean.DailyReport;
 import com.sumian.sd.common.log.LogManager;
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback;
-import com.sumian.sd.common.oss.hwbean.OssResponse;
+import com.sumian.sd.common.oss.OssEngine;
+import com.sumian.sd.common.oss.OssResponse;
 import com.sumian.sd.common.oss.hwbean.OssTransData;
 import com.sumian.sd.common.oss.hwbean.OssTransDataError;
 import com.sumian.sd.common.utils.NetUtil;
@@ -119,14 +108,14 @@ public class SleepDataUploadTask implements Serializable, Cloneable {
         map.put("type", transDataType);
         map.put("app_receive_started_at", receiveStartedTime);
         map.put("app_receive_ended_at", receiveEndedTime);
-        LogManager.appendTransparentLog("1.开始请求透传数据的 oss  凭证");
+        LogManager.appendTransparentLog("1.开始请求透传数据的 oss  凭证" + "， fileName: " + fileName);
         Call<OssResponse> call = AppManager.getSdHttpService().uploadTransData(map);
         call.enqueue(new BaseSdResponseCallback<OssResponse>() {
             @Override
             protected void onFailure(@NotNull ErrorResponse errorResponse) {
                 boolean isSuccess = false;
                 if (errorResponse.getCode() == ErrorCode.FORBIDDEN) {
-                    LogManager.appendTransparentLog("2.该组透传数据已存在服务器,403 禁止再次上传 error=" + errorResponse.getMessage());
+                    LogManager.appendTransparentLog("2.该组透传数据已存在服务器,403 禁止再次上传 error=" + errorResponse.getMessage() + "， fileName: " + fileName);
                     if (transDataType == 1) {
                         AutoSyncDeviceDataUtil.INSTANCE.saveAutoSyncTime();
                     }
@@ -146,48 +135,35 @@ public class SleepDataUploadTask implements Serializable, Cloneable {
         });
     }
 
+
     private void requestOss(OssResponse ossResponse, String filePath, int trasDataType) {
-        if (BuildConfig.DEBUG) {
-            OSSLog.enableLog();
-        }
-        OSSCredentialProvider credentialProvider = new OSSStsTokenCredentialProvider(ossResponse.getAccess_key_id(), ossResponse.getAccess_key_secret(), ossResponse.getSecurity_token());
-        OSSClient ossClient = new OSSClient(App.Companion.getAppContext(), ossResponse.getEndpoint(), credentialProvider);
-        PutObjectRequest putObjectRequest = new PutObjectRequest(ossResponse.getBucket(), ossResponse.getObject(), filePath);
-        ObjectMetadata metadata = new ObjectMetadata();
-        metadata.addUserMetadata("Accept-Encoding", "");
-        putObjectRequest.setMetadata(metadata);
-        Map<String, String> callbackParam = new HashMap<>(0);
-        callbackParam.put("callbackUrl", ossResponse.getCallback_url());
-        callbackParam.put("callbackBody", ossResponse.getCallback_body());
-        putObjectRequest.setCallbackParam(callbackParam);
-        putObjectRequest.setProgressCallback((request, currentSize, totalSize) -> LogManager.appendTransparentLog("该组透传数据oss 服务文件上传中进度回调   currentSize = " + currentSize + "  totalSize = " + totalSize));
         LogManager.appendTransparentLog("该组透传数据开始发起 oss 异步文件上传任务....");
-        ossClient.asyncPutObject(putObjectRequest, new OSSCompletedCallback<PutObjectRequest, PutObjectResult>() {
-            @SuppressWarnings({"unchecked", "SingleStatementInBlock"})
+        OssEngine.Companion.uploadFile(ossResponse, filePath, new OssEngine.UploadCallback() {
             @Override
-            public void onSuccess(PutObjectRequest request, PutObjectResult result) {
-                String returnBody = result.getServerCallbackReturnBody();
-                LogManager.appendTransparentLog("oss onSuccess" + returnBody);
+            public void onSuccess(@org.jetbrains.annotations.Nullable String response) {
+                if (response == null) {
+                    return;
+                }
+                LogManager.appendTransparentLog("oss onSuccess" + response);
                 if (trasDataType == 0x01) {
                     AutoSyncDeviceDataUtil.INSTANCE.saveAutoSyncTime();
                 }
                 boolean success = false;
                 boolean retry = true;
-                if (!TextUtils.isEmpty(returnBody)) {
+                if (!TextUtils.isEmpty(response)) {
                     try {
-                        JSONObject jsonObject = new JSONObject(returnBody);
-                        if (returnBody.contains("data")) {
+                        JSONObject jsonObject = new JSONObject(response);
+                        if (response.contains("data")) {
                             //透传成功睡眠特征数据,并解析成功
                             LogManager.appendTransparentLog("该组透传数据 oss服务上传成功, 是睡眠特征数据-->" + " dailyReports=" + JSON.parseArray(jsonObject.getString("data"), DailyReport.class).toString());
                             success = true;
                             retry = false;
-                        } else if (returnBody.contains("errors")) {//透传成功睡眠特征数据,但是出现错误信息.比如采集时间重叠  解析失败  文件名存在
+                        } else if (response.contains("errors")) {//透传成功睡眠特征数据,但是出现错误信息.比如采集时间重叠  解析失败  文件名存在
                             //{"errors":{"code":1,"user_message":"采集时间重叠","internal_message":"coverage","more_info":""}}
                             OssTransDataError ossTransDataError = JSON.parseObject(jsonObject.getString("errors"), OssTransDataError.class);
                             LogManager.appendTransparentLog("该组透传数据 oss服务上传成功, 但出现错误信息  ossTransDataError=" + ossTransDataError.toString());
                             switch (ossTransDataError.getCode()) {
                                 case 1: // 采集时间重叠
-                                    //noinspection ConstantConditions
                                     success = false;
                                     retry = false;
                                     break;
@@ -200,7 +176,7 @@ public class SleepDataUploadTask implements Serializable, Cloneable {
                             }
                         } else {
                             //透传成功,不是睡眠特征数据
-                            LogManager.appendTransparentLog("该组透传数据 oss服务上传成功,不是睡眠特征数据---->" + " ossTransData=" + JSON.parseObject(returnBody, OssTransData.class).toString());
+                            LogManager.appendTransparentLog("该组透传数据 oss服务上传成功,不是睡眠特征数据---->" + " ossTransData=" + JSON.parseObject(response, OssTransData.class).toString());
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -210,18 +186,12 @@ public class SleepDataUploadTask implements Serializable, Cloneable {
             }
 
             @Override
-            public void onFailure(PutObjectRequest request, ClientException clientException, ServiceException serviceException) {
+            public void onFailure(@org.jetbrains.annotations.Nullable String errorCode, @org.jetbrains.annotations.Nullable String message) {
                 Log.e(TAG, "onFailure: ----------->");
-                // 请求异常
-                if (clientException != null) {
-                    LogManager.appendUserOperationLog("该组透传数据 oss 上传失败,进入队列末尾进行再次上传  clientException=" + clientException.getLocalizedMessage());
-                }
-                if (serviceException != null) {
-                    LogManager.appendUserOperationLog("该组透传数据 oss 上传失败,进入队列末尾进行再次上传  serviceException=" + serviceException.getLocalizedMessage());
-                }
+                LogManager.appendUserOperationLog("该组透传数据 oss 上传失败,进入队列末尾进行再次上传  clientException=" + message);
                 onUploadFinish(false);
             }
-        });
+        }, (currentSize, totalSize) -> LogManager.appendTransparentLog("该组透传数据oss 服务文件上传中进度回调   currentSize = " + currentSize + "  totalSize = " + totalSize));
     }
 
     @Override
@@ -251,5 +221,14 @@ public class SleepDataUploadTask implements Serializable, Cloneable {
 
     public interface TaskCallback {
         void executeTaskFinish(SleepDataUploadTask sleepDataUploadTask, boolean isSuccess, boolean retry, @Nullable String message);
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (!(obj instanceof SleepDataUploadTask)) {
+            return false;
+        } else {
+            return this.filePath.equals(((SleepDataUploadTask) obj).filePath);
+        }
     }
 }

@@ -147,7 +147,11 @@ public class SleepDataUploadManager {
 
     private void addTaskAndRun(SleepDataUploadTask sleepDataUploadTask) {
         LogManager.appendTransparentLog("透传任务加入队列");
-        mSleepDataUploadTasks.add(sleepDataUploadTask);
+        if (!mSleepDataUploadTasks.contains(sleepDataUploadTask)) {
+            mSleepDataUploadTasks.add(sleepDataUploadTask);
+        } else {
+            LogManager.appendTransparentLog("重复添加任务： " + sleepDataUploadTask.toString());
+        }
         persistPendingTask();
         startNextTaskIfPossible();
     }

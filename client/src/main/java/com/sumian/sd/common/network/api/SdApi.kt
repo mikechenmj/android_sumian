@@ -488,7 +488,7 @@ interface SdApi {
      */
     @FormUrlEncoded
     @POST("raw-data/pass-through-file")
-    fun uploadTransData(@FieldMap map: MutableMap<String, Any>): Call<com.sumian.sd.common.oss.hwbean.OssResponse>
+    fun uploadTransData(@FieldMap map: MutableMap<String, Any>): Call<OssResponse>
 
     /**
      *

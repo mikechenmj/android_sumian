@@ -37,7 +37,7 @@ class OssEngine {
             return uploadFile(ossResponse, localUploadFilePath, uploadCallback, null)
         }
 
-        private fun uploadFile(ossResponse: OssResponse, localUploadFilePath: String, uploadCallback: UploadCallback, progressListener: UploadProgressListener?): OSSAsyncTask<PutObjectResult> {
+        fun uploadFile(ossResponse: OssResponse, localUploadFilePath: String, uploadCallback: UploadCallback, progressListener: UploadProgressListener?): OSSAsyncTask<PutObjectResult> {
             val credentialProvider = OSSStsTokenCredentialProvider(ossResponse.accessKeyId, ossResponse.accessKeySecret, ossResponse.securityToken)
             val ossClient = OSSClient(App.getAppContext(), ossResponse.endpoint, credentialProvider)
             val putObjectRequest = PutObjectRequest(ossResponse.bucket, ossResponse.objectX, localUploadFilePath)
