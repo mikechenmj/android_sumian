@@ -1,4 +1,4 @@
-package com.sumian.sd.buz.device.bean;
+package com.sumian.sd.buz.devicemanager;
 
 import android.bluetooth.BluetoothAdapter;
 

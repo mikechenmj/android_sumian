@@ -1,4 +1,4 @@
-package com.sumian.sd.buz.device.adapter;
+package com.sumian.sd.buz.device.scan;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.sumian.sd.R;
-import com.sumian.sd.buz.device.bean.BlueDevice;
+import com.sumian.sd.buz.devicemanager.BlueDevice;
 
 import java.util.ArrayList;
 import java.util.Collections;

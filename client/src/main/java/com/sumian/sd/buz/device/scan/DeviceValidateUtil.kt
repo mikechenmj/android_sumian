@@ -1,7 +1,7 @@
 package com.sumian.sd.buz.device.scan
 
 import com.sumian.sd.BuildConfig
-import com.sumian.sd.buz.device.util.BluetoothDeviceUtil
+import com.sumian.sd.buz.devicemanager.util.BluetoothDeviceUtil
 import com.sumian.sd.common.log.LogManager
 
 /**

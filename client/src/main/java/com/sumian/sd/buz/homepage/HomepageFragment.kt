@@ -27,8 +27,8 @@ import com.sumian.sd.buz.cbti.activity.CBTIIntroductionActivity
 import com.sumian.sd.buz.cbti.activity.CbtiFinalReportDialogActivity
 import com.sumian.sd.buz.cbti.event.CBTIProgressChangeEvent
 import com.sumian.sd.buz.cbti.event.CBTIServiceBoughtEvent
-import com.sumian.sd.buz.device.DeviceManager
-import com.sumian.sd.buz.device.bean.BlueDevice
+import com.sumian.sd.buz.devicemanager.DeviceManager
+import com.sumian.sd.buz.devicemanager.BlueDevice
 import com.sumian.sd.buz.device.scan.ScanDeviceActivity
 import com.sumian.sd.buz.device.widget.DeviceCardView
 import com.sumian.sd.buz.homepage.banner.BannerContract

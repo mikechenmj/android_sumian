@@ -19,9 +19,8 @@ import com.sumian.common.base.BaseFragment
 import com.sumian.common.widget.dialog.SumianDialog
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.buz.device.DeviceManager
-import com.sumian.sd.buz.device.adapter.DeviceAdapter
-import com.sumian.sd.buz.device.bean.BlueDevice
+import com.sumian.sd.buz.devicemanager.DeviceManager
+import com.sumian.sd.buz.devicemanager.BlueDevice
 import com.sumian.sd.common.log.LogManager
 import com.sumian.sd.common.utils.LocationManagerUtil
 import kotlinx.android.synthetic.main.fragment_scan_device.*

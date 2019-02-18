@@ -1,11 +1,11 @@
-package com.sumian.sd.buz.device.command;
+package com.sumian.sd.buz.devicemanager.command;
 
 import android.text.TextUtils;
 import android.util.Log;
 
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.buz.account.bean.Answers;
-import com.sumian.sd.buz.device.util.BlueByteUtil;
+import com.sumian.sd.buz.devicemanager.util.BlueByteUtil;
 
 import java.math.BigInteger;
 import java.util.Arrays;
@@ -290,14 +290,14 @@ public final class BlueCmd {
     }
 
     /**
-     * @param cmd cmd, see {@link com.sumian.sd.buz.device.command.Cmd}
+     * @param cmd cmd, see {@link com.sumian.sd.buz.devicemanager.command.Cmd}
      */
     public static byte[] makeCmd(byte cmd, @NonNull String data) {
         return makeCmd(cmd, hexStringToByteArray(data));
     }
 
     /**
-     * @param cmd cmd, see {@link com.sumian.sd.buz.device.command.Cmd}
+     * @param cmd cmd, see {@link com.sumian.sd.buz.devicemanager.command.Cmd}
      */
     public static byte[] makeCmd(byte cmd, byte[] data) {
         // aa 4a 05 10 01 9f 20 50

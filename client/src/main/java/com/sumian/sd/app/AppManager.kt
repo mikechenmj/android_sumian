@@ -34,8 +34,8 @@ import com.sumian.sd.buz.account.bean.UserInfo
 import com.sumian.sd.buz.account.login.LoginActivity
 import com.sumian.sd.buz.account.login.NewUserGuideActivity
 import com.sumian.sd.buz.account.model.AccountViewModel
-import com.sumian.sd.buz.device.DeviceManager
-import com.sumian.sd.buz.device.FileHelper
+import com.sumian.sd.buz.devicemanager.DeviceManager
+import com.sumian.sd.buz.devicemanager.FileHelper
 import com.sumian.sd.buz.doctor.model.DoctorViewModel
 import com.sumian.sd.buz.device.uploadsleepdata.SleepDataUploadManager
 import com.sumian.sd.buz.kefu.KefuManager

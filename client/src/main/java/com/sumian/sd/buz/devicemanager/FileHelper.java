@@ -1,4 +1,4 @@
-package com.sumian.sd.buz.device;
+package com.sumian.sd.buz.devicemanager;
 
 import android.os.Environment;
 import android.util.Log;
@@ -25,7 +25,7 @@ public final class FileHelper {
     private static final String EMG_FILE_NAME = "emg";
     private static final String PULSE_FILE_NAME = "pulse";
     private static final String SPEED_FILE_NAME = "speed";
-    private static final String FILE_CONNECTOR = ".";
+    private static final String FILE_CONNECTOR = "";
     private static final String FILE_SUFFIX = "log";
     private static volatile FileHelper INSTANCE;
 

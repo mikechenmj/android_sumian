@@ -1,4 +1,4 @@
-package com.sumian.sd.buz.device.util;
+package com.sumian.sd.buz.devicemanager.util;
 
 import android.annotation.SuppressLint;
 

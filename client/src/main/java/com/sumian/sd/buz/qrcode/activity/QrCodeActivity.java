@@ -13,7 +13,7 @@ import com.sumian.common.base.BaseViewModelActivity;
 import com.sumian.common.widget.TitleBar;
 import com.sumian.sd.R;
 import com.sumian.sd.app.AppManager;
-import com.sumian.sd.buz.device.command.BlueCmd;
+import com.sumian.sd.buz.devicemanager.command.BlueCmd;
 import com.sumian.sd.buz.qrcode.fragment.InputSnFragment;
 import com.sumian.sd.buz.qrcode.fragment.QrCodeFragment;
 

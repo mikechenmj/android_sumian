@@ -6,8 +6,8 @@ import com.sumian.common.base.BaseFragment
 import com.sumian.common.utils.ColorCompatUtil
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.buz.device.AutoSyncDeviceDataUtil
-import com.sumian.sd.buz.device.DeviceManager
+import com.sumian.sd.buz.devicemanager.AutoSyncDeviceDataUtil
+import com.sumian.sd.buz.devicemanager.DeviceManager
 import com.sumian.sd.buz.diary.event.ChangeDataFragmentTabEvent
 import com.sumian.sd.buz.diary.monitorrecord.MonitorDataVpFragment
 import com.sumian.sd.buz.diary.sleeprecord.SleepDiaryVpFragment

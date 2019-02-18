@@ -1,8 +1,7 @@
-package com.sumian.sd.buz.device
+package com.sumian.sd.buz.devicemanager
 
 import com.blankj.utilcode.util.LogUtils
 import com.sumian.sd.app.App
-import com.sumian.sd.buz.device.bean.BlueDevice
 import com.sumian.sd.common.utils.SystemUtil
 
 /**

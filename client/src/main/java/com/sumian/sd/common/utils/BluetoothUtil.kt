@@ -1,4 +1,4 @@
-package com.sumian.sd.buz.device
+package com.sumian.sd.common.utils
 
 import android.bluetooth.BluetoothAdapter
 import android.content.Intent

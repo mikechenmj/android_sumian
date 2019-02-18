@@ -407,7 +407,7 @@
             android:theme="@style/BaseAppTheme.TranslucentStatus" />
 
         <service
-            android:name="com.sumian.sd.buz.device.pattern.SyncPatternService"
+            android:name="com.sumian.sd.buz.devicemanager.pattern.SyncPatternService"
             android:exported="false" />
 
         <activity
@@ -431,7 +431,7 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.sumian.sd.buz.device.DeviceManageActivity"
+            android:name="com.sumian.sd.buz.device.devicemanage.DeviceManageActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
@@ -532,7 +532,7 @@
             android:name="com.sumian.sd.buz.diary.fillsleepdiary.FillSleepDiaryActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name="com.sumian.sd.buz.device.UpgradeFirmwareDialogActivity"
+            android:name="com.sumian.sd.buz.device.widget.UpgradeFirmwareDialogActivity"
             android:launchMode="singleTop"
             android:theme="@style/DialogActivity" />
         <activity

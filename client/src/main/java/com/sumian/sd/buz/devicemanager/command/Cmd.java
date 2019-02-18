@@ -1,4 +1,4 @@
-package com.sumian.sd.buz.device.command;
+package com.sumian.sd.buz.devicemanager.command;
 
 /**
  * Created by jzz

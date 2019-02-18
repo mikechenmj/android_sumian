@@ -16,7 +16,7 @@ import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.utils.TimeUtilV2
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.buz.device.DeviceManager
+import com.sumian.sd.buz.devicemanager.DeviceManager
 import com.sumian.sd.buz.diary.event.UpdateMonitorDataEvent
 import com.sumian.sd.buz.diary.sleeprecord.calendar.calendarView.CalendarView
 import com.sumian.sd.buz.diary.sleeprecord.calendar.custom.CalendarPopup

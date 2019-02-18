@@ -3,7 +3,7 @@ package com.sumian.sd.common.log
 import com.sumian.common.log.CommonLogManager
 import com.sumian.common.utils.JsonUtil
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.buz.device.DeviceInfoFormatter
+import com.sumian.sd.buz.devicemanager.DeviceInfoFormatter
 
 /**
  * @author : Zhan Xuzhao

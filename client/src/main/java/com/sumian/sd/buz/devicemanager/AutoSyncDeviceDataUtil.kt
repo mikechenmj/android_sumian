@@ -1,4 +1,4 @@
-package com.sumian.sd.buz.device
+package com.sumian.sd.buz.devicemanager
 
 import android.content.BroadcastReceiver
 import android.content.Context

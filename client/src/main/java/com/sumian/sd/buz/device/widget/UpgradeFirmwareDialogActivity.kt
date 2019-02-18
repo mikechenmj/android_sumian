@@ -1,4 +1,4 @@
-package com.sumian.sd.buz.device
+package com.sumian.sd.buz.device.widget
 
 import android.content.Intent
 import android.view.View

@@ -16,8 +16,8 @@ import com.sumian.common.utils.SettingsUtil
 import com.sumian.sd.R
 import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.buz.device.AutoSyncDeviceDataUtil
-import com.sumian.sd.buz.device.DeviceManager
+import com.sumian.sd.buz.devicemanager.AutoSyncDeviceDataUtil
+import com.sumian.sd.buz.devicemanager.DeviceManager
 import com.sumian.sd.buz.diary.DataFragment
 import com.sumian.sd.buz.homepage.HomepageFragment
 import com.sumian.sd.buz.kefu.KefuManager

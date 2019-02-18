@@ -1,6 +1,6 @@
-package com.sumian.sd.buz.device.util;
+package com.sumian.sd.buz.devicemanager.util;
 
-import com.sumian.sd.buz.device.command.BlueCmd;
+import com.sumian.sd.buz.devicemanager.command.BlueCmd;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

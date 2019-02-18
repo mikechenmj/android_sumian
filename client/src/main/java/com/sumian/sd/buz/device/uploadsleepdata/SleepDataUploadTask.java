@@ -8,7 +8,7 @@ import com.sumian.common.network.error.ErrorCode;
 import com.sumian.common.network.response.ErrorResponse;
 import com.sumian.common.utils.SumianExecutor;
 import com.sumian.sd.app.AppManager;
-import com.sumian.sd.buz.device.AutoSyncDeviceDataUtil;
+import com.sumian.sd.buz.devicemanager.AutoSyncDeviceDataUtil;
 import com.sumian.sd.buz.report.bean.DailyReport;
 import com.sumian.sd.common.log.LogManager;
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback;

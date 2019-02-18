@@ -20,7 +20,7 @@ import com.sumian.common.utils.SumianExecutor;
 import com.sumian.common.widget.TitleBar;
 import com.sumian.sd.R;
 import com.sumian.sd.app.AppManager;
-import com.sumian.sd.buz.device.DeviceManager;
+import com.sumian.sd.buz.devicemanager.DeviceManager;
 import com.sumian.sd.buz.upgrade.dialog.Version2ConnectingDialog;
 import com.sumian.sd.buz.upgrade.dialog.VersionDialog;
 import com.sumian.sd.buz.upgrade.presenter.DeviceVersionUpgradePresenter;

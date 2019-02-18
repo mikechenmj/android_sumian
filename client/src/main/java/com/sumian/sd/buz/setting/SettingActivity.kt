@@ -17,7 +17,7 @@ import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.account.login.SettingPasswordActivity
-import com.sumian.sd.buz.device.DeviceManager
+import com.sumian.sd.buz.devicemanager.DeviceManager
 import com.sumian.sd.buz.qrcode.activity.QrCodeActivity
 import com.sumian.sd.buz.setting.remind.RemindSettingActivity
 import com.sumian.sd.buz.setting.version.VersionActivity

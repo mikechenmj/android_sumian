@@ -1,7 +1,7 @@
 package com.sumian.sd.common.network.interceptor
 
 import android.net.Uri
-import com.sumian.sd.buz.device.DeviceInfoFormatter
+import com.sumian.sd.buz.devicemanager.DeviceInfoFormatter
 import okhttp3.Interceptor
 import okhttp3.Response
 import java.io.IOException

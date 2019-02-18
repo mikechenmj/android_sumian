@@ -1,4 +1,4 @@
-package com.sumian.sd.buz.device.pattern
+package com.sumian.sd.buz.devicemanager.pattern
 
 import com.google.gson.annotations.SerializedName
 

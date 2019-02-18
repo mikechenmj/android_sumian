@@ -12,9 +12,9 @@ import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.utils.ColorCompatUtil
 import com.sumian.sd.R
-import com.sumian.sd.buz.device.DeviceManager
-import com.sumian.sd.buz.device.MonitorEventListener
-import com.sumian.sd.buz.device.bean.BlueDevice
+import com.sumian.sd.buz.devicemanager.DeviceManager
+import com.sumian.sd.buz.devicemanager.MonitorEventListener
+import com.sumian.sd.buz.devicemanager.BlueDevice
 import com.sumian.sd.buz.diary.DataFragment
 import com.sumian.sd.buz.diary.event.ChangeDataFragmentTabEvent
 import com.sumian.sd.common.log.LogManager

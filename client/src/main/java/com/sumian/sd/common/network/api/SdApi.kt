@@ -16,7 +16,7 @@ import com.sumian.sd.buz.anxiousandfaith.bean.AnxietyData
 import com.sumian.sd.buz.anxiousandfaith.bean.FaithData
 import com.sumian.sd.buz.cbti.bean.*
 import com.sumian.sd.buz.coupon.bean.Coupon
-import com.sumian.sd.buz.device.pattern.PatternData
+import com.sumian.sd.buz.devicemanager.pattern.PatternData
 import com.sumian.sd.buz.diary.fillsleepdiary.bean.SleepDiaryData
 import com.sumian.sd.buz.diary.sleeprecord.bean.DoctorServiceList
 import com.sumian.sd.buz.diary.sleeprecord.bean.SleepPill

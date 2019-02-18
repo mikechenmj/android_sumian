@@ -1,6 +1,6 @@
 @file:Suppress("MemberVisibilityCanBePrivate")
 
-package com.sumian.sd.buz.device
+package com.sumian.sd.buz.devicemanager
 
 import android.bluetooth.BluetoothDevice
 import android.os.Handler
@@ -26,9 +26,9 @@ import com.sumian.sd.R
 import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.account.bean.UserInfo
-import com.sumian.sd.buz.device.bean.BlueDevice
-import com.sumian.sd.buz.device.command.BlueCmd
-import com.sumian.sd.buz.device.pattern.SyncPatternService
+import com.sumian.sd.buz.devicemanager.command.BlueCmd
+import com.sumian.sd.buz.devicemanager.pattern.SyncPatternService
+import com.sumian.sd.buz.device.widget.UpgradeFirmwareDialogActivity
 import com.sumian.sd.common.log.LogManager
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import com.sumian.sd.common.network.response.FirmwareInfo
@@ -234,7 +234,8 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
     }
 
     fun turnOnSleeperPaMode() {
-        val bluePeripheral = getCurrentBluePeripheral() ?: return
+        val bluePeripheral = getCurrentBluePeripheral()
+                ?: return
         bluePeripheral.writeDelay(BlueCmd.cDoSleepyPaMode(), 500)
         onTurnOnPaModeStart()
         LogManager.appendSpeedSleeperLog("主动 turn on  速眠仪 pa 模式")
@@ -242,7 +243,8 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
 
     fun syncSleepData() {
         if (isSyncing()) return
-        val bluePeripheral = getCurrentBluePeripheral() ?: return
+        val bluePeripheral = getCurrentBluePeripheral()
+                ?: return
         if (mMonitorLiveData.value?.isSyncing == true) return
         bluePeripheral.write(BlueCmd.cSleepData())
         mPackageNumber = 1
@@ -262,7 +264,8 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
     }
 
     fun turnOnMonitoringMode(monitoringMode: Int) {
-        val bluePeripheral = getCurrentBluePeripheral() ?: return
+        val bluePeripheral = getCurrentBluePeripheral()
+                ?: return
         bluePeripheral.write(BlueCmd.cDoMonitorMonitoringMode(monitoringMode))
     }
 
@@ -387,7 +390,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
             peripheral.write(byteArrayOf(0xaa.toByte(), 0x8f.toByte(), 0x03, data[2], data[3], 0xff.toByte()))
             LogManager.appendTransparentLog("收到透传数据：cmd: $cmd，index=$index  realCount=$mPackageCurrentIndex  该index 出错,要求重传 cmd=$cmd")
         } else {
-            LogManager.appendMonitorLog("收到透传数据：cmd: $cmd， index：$index, mPackageCurrentIndex:$mPackageCurrentIndex, mPackageTotalDataCount:$mPackageTotalDataCount,  mTotalProgress：$mTotalProgress， mTotalDataCount:$mTotalDataCount")
+            LogManager.appendMonitorLog("收到透传数据：cmd: $cmd， index：$index, mPackageCurrentIndex:$mPackageCurrentIndex, mPackageTotalDataCount:$mPackageTotalDataCount,  mTotalProgress：${mTotalProgress}， mTotalDataCount:$mTotalDataCount")
             mTotalProgress++
             mPackageCurrentIndex = index
             peripheral.write(byteArrayOf(0xaa.toByte(), 0x8f.toByte(), 0x03, data[2], data[3], 0x88.toByte()))
@@ -440,7 +443,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
                     }
                     mTotalDataCount = subHexStringToInt(cmd, 30, 34)
                 }
-                LogManager.appendMonitorLog("开始透传 mCurrentPackageIndex: $mCurrentPackageIndex， mTotalPackageCount: $mTotalPackageCount, mTotalDataCount: $mTotalDataCount")
+                LogManager.appendMonitorLog("开始透传 mCurrentPackageIndex: ${mCurrentPackageIndex}， mTotalPackageCount: $mTotalPackageCount, mTotalDataCount: $mTotalDataCount")
                 if (isAvailableStorageEnough(dataCount)) {
                     writeResponse(peripheral, data, true)
                     LogManager.appendMonitorLog("0x8e01 缓冲区初始化完毕,等待设备透传 " + dataCount + "包数据" + "  cmd=" + cmd)
@@ -584,7 +587,8 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         if (isPa) {
             onTurnOnPaModeSuccess()
         } else {
-            onTurnOnPaModeFailed(errorMessage ?: "未知错误")
+            onTurnOnPaModeFailed(errorMessage
+                    ?: "未知错误")
         }
         mMonitorLiveData.value?.sleeperPaStatus = if (isPa) BlueDevice.PA_STATUS_PA else BlueDevice.PA_STATUS_NOT_PA
         notifyMonitorChange()
@@ -1103,7 +1107,8 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
     private val mQueryMonitorVersionDelayRunnable: Runnable by lazy {
         Runnable {
             if (!isMonitorConnected()) return@Runnable
-            val peripheral = getCurrentBluePeripheral() ?: return@Runnable
+            val peripheral = getCurrentBluePeripheral()
+                    ?: return@Runnable
             if (mMonitorLiveData.value?.version == null) {
                 peripheral.writeDelay(BlueCmd.cMonitorFirmwareVersion(), 0)
                 mMainHandler.postDelayed(mQueryMonitorVersionDelayRunnable, CMD_RESEND_TIME)
@@ -1116,7 +1121,8 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
     private val mQuerySleeperVersionDelayRunnable: Runnable by lazy {
         Runnable {
             if (!isMonitorConnected() || mMonitorLiveData.value?.isSleeperConnected != true) return@Runnable
-            val peripheral = getCurrentBluePeripheral() ?: return@Runnable
+            val peripheral = getCurrentBluePeripheral()
+                    ?: return@Runnable
             if (mMonitorLiveData.value?.sleeperVersion == null) {
                 peripheral.writeDelay(BlueCmd.cSleepyFirmwareVersion(), 0)
                 mMainHandler.postDelayed(mQuerySleeperVersionDelayRunnable, CMD_RESEND_TIME)
@@ -1149,4 +1155,38 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
 //                    }
 //                }
 //    }
+}
+
+interface MonitorEventListener {
+    fun onSyncStart()
+
+    /**
+     * @param packageNumber   第几个数据包
+     * @param packageProgress 当前包同步进度
+     * @param packageTotalCount    当前包数据总量
+     */
+    fun onSyncProgressChange(packageNumber: Int, packageProgress: Int, packageTotalCount: Int)
+
+    /**
+     * @param packageNumber   第几个数据包
+     * @param totalProgress 所有包同步进度
+     * @param totalCount    所有包数据总量
+     */
+    fun onSyncProgressChangeV2(packageNumber: Int, totalProgress: Int, totalCount: Int)
+
+    fun onSyncSuccess()
+
+    fun onSyncFailed()
+
+    fun onTurnOnPaModeStart()
+
+    fun onTurnOnPaModeSuccess()
+
+    fun onTurnOnPaModeFailed(message: String)
+
+    fun onConnectStart()
+
+    fun onConnectFailed()
+
+    fun onConnectSuccess()
 }

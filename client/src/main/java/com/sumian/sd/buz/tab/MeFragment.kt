@@ -16,8 +16,8 @@ import com.sumian.sd.buz.account.bean.UserInfo
 import com.sumian.sd.buz.account.userProfile.UserInfoActivity
 import com.sumian.sd.buz.advisory.activity.AdvisoryListActivity
 import com.sumian.sd.buz.coupon.activity.CouponCenterActivity
-import com.sumian.sd.buz.device.DeviceManageActivity
-import com.sumian.sd.buz.device.DeviceManager
+import com.sumian.sd.buz.device.devicemanage.DeviceManageActivity
+import com.sumian.sd.buz.devicemanager.DeviceManager
 import com.sumian.sd.buz.diaryevaluation.DiaryEvaluationListActivity
 import com.sumian.sd.buz.kefu.KefuManager
 import com.sumian.sd.buz.notification.NotificationListActivity

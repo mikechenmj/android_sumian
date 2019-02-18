@@ -1,4 +1,4 @@
-package com.sumian.sd.buz.device.pattern
+package com.sumian.sd.buz.devicemanager.pattern
 
 import android.app.Service
 import android.content.Context
@@ -13,9 +13,9 @@ import com.sumian.blue.model.BluePeripheral
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.utils.JsonUtil
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.buz.device.DeviceManager
-import com.sumian.sd.buz.device.command.BlueCmd
-import com.sumian.sd.buz.device.command.Cmd
+import com.sumian.sd.buz.devicemanager.DeviceManager
+import com.sumian.sd.buz.devicemanager.command.BlueCmd
+import com.sumian.sd.buz.devicemanager.command.Cmd
 import com.sumian.sd.common.log.LogManager
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 
