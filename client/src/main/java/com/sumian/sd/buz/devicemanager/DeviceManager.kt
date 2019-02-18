@@ -3,6 +3,7 @@
 package com.sumian.sd.buz.devicemanager
 
 import android.bluetooth.BluetoothDevice
+import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import android.text.TextUtils
@@ -29,6 +30,7 @@ import com.sumian.sd.buz.account.bean.UserInfo
 import com.sumian.sd.buz.devicemanager.command.BlueCmd
 import com.sumian.sd.buz.devicemanager.pattern.SyncPatternService
 import com.sumian.sd.buz.device.widget.UpgradeFirmwareDialogActivity
+import com.sumian.sd.buz.devicemanager.uploadsleepdata.SleepDataUploadHelper
 import com.sumian.sd.common.log.LogManager
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import com.sumian.sd.common.network.response.FirmwareInfo
@@ -72,18 +74,19 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
     val mSleeperNeedUpdateLiveData = MutableLiveData<Boolean>()
     private val mMainHandler = Handler(Looper.getMainLooper())
 
-    fun init() {
+    fun init(context:Context) {
         AppManager.getBlueManager().addBlueAdapterCallback(this)
         mIsBluetoothEnableLiveData.value = AppManager.getBlueManager().isEnable
         val monitorCache = getCachedMonitor()
         setMonitorToLiveData(monitorCache)
+        SleepDataUploadHelper.getInstance().init(context)
     }
 
-    fun reInitIfNeed() {
-        if (mMonitorLiveData.value == null || getCachedMonitor() != null) {
-            init()
-        }
-    }
+//    fun reInitIfNeed() {
+//        if (mMonitorLiveData.value == null || getCachedMonitor() != null) {
+//            init()
+//        }
+//    }
 
     fun getMonitorLiveData(): MutableLiveData<BlueDevice> {
         return mMonitorLiveData
@@ -472,7 +475,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
                         }
                         LogManager.appendMonitorLog("0x8e0f 透传数据" + dataCount + "包接收成功,准备写入本地文件 cmd=" + cmd)
                         postIsUploadingSleepDataToServer(true)
-                        AppManager.getSleepDataUploadManager()
+                        SleepDataUploadHelper.getInstance()
                                 .saveSleepData(sleepData, mTranType, mBeginCmd, cmd,
                                         mMonitorLiveData.value?.sn,
                                         mMonitorLiveData.value?.sleeperSn,
@@ -1130,6 +1133,10 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
                 LogUtils.d("重新请求 监测仪版本信息")
             }
         }
+    }
+
+    fun startSleepDataUploadTaskIfPossible() {
+        SleepDataUploadHelper.getInstance().checkPendingTaskAndRun()
     }
 
 //    private var mTestFlag = 0

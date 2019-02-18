@@ -38,7 +38,8 @@ import androidx.core.net.ConnectivityManagerCompat;
  * desc:
  */
 
-public class SleepDataUploadManager {
+public class SleepDataUploadHelper {
+
     private static final String SP_NAME = "SyncSleepDataTask";
     private static final String SP_KEY_PENDING_TASKS = "pending_tasks";
     private static final int MAX_RETRY_TIME = 3;
@@ -73,7 +74,19 @@ public class SleepDataUploadManager {
         }
     };
 
-    public SleepDataUploadManager(Context context) {
+    private SleepDataUploadHelper() {
+
+    }
+
+    private static class INSTANCE_HOLDER {
+        static SleepDataUploadHelper INSTANCE = new SleepDataUploadHelper();
+    }
+
+    public static SleepDataUploadHelper getInstance() {
+        return INSTANCE_HOLDER.INSTANCE;
+    }
+
+    public void init(Context context) {
         loadCacheJobTaskAndRun();
         registerNetworkStateChangeListener(context);
     }

@@ -37,7 +37,7 @@ import com.sumian.sd.buz.account.model.AccountViewModel
 import com.sumian.sd.buz.devicemanager.DeviceManager
 import com.sumian.sd.buz.devicemanager.FileHelper
 import com.sumian.sd.buz.doctor.model.DoctorViewModel
-import com.sumian.sd.buz.devicemanager.uploadsleepdata.SleepDataUploadManager
+import com.sumian.sd.buz.devicemanager.uploadsleepdata.SleepDataUploadHelper
 import com.sumian.sd.buz.kefu.KefuManager
 import com.sumian.sd.buz.notification.NotificationConst
 import com.sumian.sd.buz.notification.NotificationDelegate
@@ -78,10 +78,6 @@ object AppManager {
     private val mNetworkManager: NetworkManager  by lazy {
         //注册网络引擎框架
         NetworkManager.create()
-    }
-
-    private val M_SLEEP_DATA_UPLOAD_MANAGER: SleepDataUploadManager  by lazy {
-        SleepDataUploadManager(App.getAppContext())
     }
 
     private val mBlueManager: BlueManager by lazy {
@@ -152,12 +148,6 @@ object AppManager {
     @Synchronized
     fun getOpenAnalytics(): OpenAnalytics {
         return mOpenEngine.openAnalytics!!
-    }
-
-    @JvmStatic
-    @Synchronized
-    fun getSleepDataUploadManager(): SleepDataUploadManager {
-        return M_SLEEP_DATA_UPLOAD_MANAGER
     }
 
     @JvmStatic
@@ -244,13 +234,6 @@ object AppManager {
         }
     }
 
-    fun exitApp() {
-        AppManager.getSleepDataUploadManager().release()
-        AppManager.getBlueManager().bluePeripheral?.close()
-        ActivityUtils.finishAllActivities()
-        LogManager.appendUserOperationLog("用户退出 app.......")
-    }
-
     fun launchMainAndFinishAll() {
         ActivityUtils.finishAllActivities()
         launchMain()
@@ -297,7 +280,7 @@ object AppManager {
         SumianExecutor.runOnLooperIdle(Runnable {
             synchronized(AppManager::class.java) {
                 initKefu(context)
-                DeviceManager.init()
+                DeviceManager.init(context)
                 initWebView(context)
             }
         })
@@ -311,7 +294,7 @@ object AppManager {
 
     fun onMainActivityRestore() {
         SdLogManager.log("on MainActivity Restore")
-        DeviceManager.reInitIfNeed()
+//        DeviceManager.reInitIfNeed()
     }
 
     fun onLoginSuccess(token: Token?) {

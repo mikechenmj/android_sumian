@@ -4,12 +4,12 @@ import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import com.sumian.common.notification.AppNotificationManager
-import com.sumian.sd.app.AppManager.getSleepDataUploadManager
 import com.sumian.sd.app.AppManager.sendHeartbeat
 import com.sumian.sd.app.AppManager.syncUserInfo
+import com.sumian.sd.buz.devicemanager.DeviceManager
 import com.sumian.sd.buz.kefu.KefuManager
 
-/**
+/**ø
  * Created by sm
  *
  * on 2018/12/25
@@ -44,7 +44,7 @@ class MainLazyInitHelper {
     private fun initMainPlatform() {
         KefuManager.loginAndQueryUnreadMsg()
         AppNotificationManager.uploadPushId()
-        getSleepDataUploadManager().checkPendingTaskAndRun()
+        DeviceManager.startSleepDataUploadTaskIfPossible()
         sendHeartbeat()
         syncUserInfo()
     }
