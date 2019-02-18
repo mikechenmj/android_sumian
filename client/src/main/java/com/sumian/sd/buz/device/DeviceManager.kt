@@ -440,7 +440,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
                     }
                     mTotalDataCount = subHexStringToInt(cmd, 30, 34)
                 }
-                LogManager.appendMonitorLog("开始透传 totalPackage: $mTotalPackageCount, mTotalDataCount: $mTotalDataCount")
+                LogManager.appendMonitorLog("开始透传 mCurrentPackageIndex: $mCurrentPackageIndex， mTotalPackageCount: $mTotalPackageCount, mTotalDataCount: $mTotalDataCount")
                 if (isAvailableStorageEnough(dataCount)) {
                     writeResponse(peripheral, data, true)
                     LogManager.appendMonitorLog("0x8e01 缓冲区初始化完毕,等待设备透传 " + dataCount + "包数据" + "  cmd=" + cmd)
