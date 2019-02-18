@@ -1,4 +1,4 @@
-package com.sumian.sd.buz.device.uploadsleepdata
+package com.sumian.sd.buz.devicemanager.uploadsleepdata
 
 /**
  * @author : Zhan Xuzhao

@@ -1,4 +1,4 @@
-package com.sumian.sd.buz.device.uploadsleepdata;
+package com.sumian.sd.buz.devicemanager.uploadsleepdata;
 
 import android.text.TextUtils;
 import android.util.Log;

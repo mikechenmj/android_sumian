@@ -9,7 +9,7 @@ import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.diary.event.UpdateMonitorDataEvent
-import com.sumian.sd.buz.device.uploadsleepdata.UploadSleepDataFinishedEvent
+import com.sumian.sd.buz.devicemanager.uploadsleepdata.UploadSleepDataFinishedEvent
 import com.sumian.sd.buz.report.base.BaseResultResponse
 import com.sumian.sd.buz.report.bean.DailyMeta
 import com.sumian.sd.buz.report.bean.DailyReport
