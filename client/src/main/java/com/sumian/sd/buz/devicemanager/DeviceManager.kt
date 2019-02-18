@@ -82,12 +82,6 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         SleepDataUploadHelper.getInstance().init(context)
     }
 
-//    fun reInitIfNeed() {
-//        if (mMonitorLiveData.value == null || getCachedMonitor() != null) {
-//            init()
-//        }
-//    }
-
     fun getMonitorLiveData(): MutableLiveData<BlueDevice> {
         return mMonitorLiveData
     }
@@ -1133,10 +1127,6 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
                 LogUtils.d("重新请求 监测仪版本信息")
             }
         }
-    }
-
-    fun startSleepDataUploadTaskIfPossible() {
-        SleepDataUploadHelper.getInstance().checkPendingTaskAndRun()
     }
 
 //    private var mTestFlag = 0

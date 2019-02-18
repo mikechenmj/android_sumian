@@ -89,6 +89,7 @@ public class SleepDataUploadHelper {
     public void init(Context context) {
         loadCacheJobTaskAndRun();
         registerNetworkStateChangeListener(context);
+        checkPendingTaskAndRun();
     }
 
     public void checkPendingTaskAndRun() {

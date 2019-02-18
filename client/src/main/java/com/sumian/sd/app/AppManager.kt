@@ -37,7 +37,6 @@ import com.sumian.sd.buz.account.model.AccountViewModel
 import com.sumian.sd.buz.devicemanager.DeviceManager
 import com.sumian.sd.buz.devicemanager.FileHelper
 import com.sumian.sd.buz.doctor.model.DoctorViewModel
-import com.sumian.sd.buz.devicemanager.uploadsleepdata.SleepDataUploadHelper
 import com.sumian.sd.buz.kefu.KefuManager
 import com.sumian.sd.buz.notification.NotificationConst
 import com.sumian.sd.buz.notification.NotificationDelegate
@@ -49,7 +48,6 @@ import com.sumian.sd.common.network.NetworkManager
 import com.sumian.sd.common.network.api.SdApi
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import com.sumian.sd.main.MainActivity
-import com.sumian.sd.main.MainLazyInitHelper
 
 /**
  * Created by jzz
@@ -276,25 +274,20 @@ object AppManager {
 
     fun onWelcomeActivityResume() {
         val context = App.getAppContext()
-        AppManager.initKefu(context)
-        SumianExecutor.runOnLooperIdle(Runnable {
-            synchronized(AppManager::class.java) {
-                initKefu(context)
-                DeviceManager.init(context)
-                initWebView(context)
-            }
-        })
+        initWebView(context)
     }
 
     fun onMainActivityCreate() {
         initKefu(App.getAppContext())
         KefuManager.loginAndQueryUnreadMsg()
-        MainLazyInitHelper.create().initLazyMainService()
+        AppNotificationManager.uploadPushId()
+        DeviceManager.init(App.getAppContext())
+        sendHeartbeat()
+        syncUserInfo()
     }
 
     fun onMainActivityRestore() {
         SdLogManager.log("on MainActivity Restore")
-//        DeviceManager.reInitIfNeed()
     }
 
     fun onLoginSuccess(token: Token?) {
@@ -328,6 +321,7 @@ object AppManager {
     }
 
     // ------------ App's important lifecycle events end------------
+
     fun sendHeartbeat() {
         if (!getAccountViewModel().isLogin) {
             return
