@@ -3,6 +3,7 @@
 package com.sumian.sddoctor.me
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import androidx.lifecycle.Observer
@@ -12,6 +13,7 @@ import com.sumian.sddoctor.R
 import com.sumian.sddoctor.account.activity.SettingsActivity
 import com.sumian.sddoctor.account.activity.UserInfoActivity
 import com.sumian.sddoctor.account.contract.LogoutContract
+import com.sumian.sddoctor.account.kefu.KefuManager
 import com.sumian.sddoctor.account.presenter.LogoutPresenter
 import com.sumian.sddoctor.app.AppManager
 import com.sumian.sddoctor.base.BaseFragment
@@ -59,11 +61,36 @@ class MeFragment : BaseFragment(), LogoutContract.View {
         sdv_setting.setOnClickListener { ActivityUtils.startActivity(SettingsActivity::class.java) }
         sdv_my_service.setOnClickListener { ActivityUtils.startActivity(MyServiceListActivity::class.java) }
         sdv_my_wallet.setOnClickListener { ActivityUtils.startActivity(MyWalletActivity::class.java) }
+        sdv_my_kefu.setOnClickListener {
+            KefuManager.loginAndQueryUnreadMsg(object : KefuManager.LoginCallback {
+                override fun onSuccess() {
+                    KefuManager.launchKefuActivity()
+                    Log.e("tag", "登录成功")
+                }
+
+                override fun onFailed(error: String) {
+                    super.onFailed(error)
+                    Log.e("tag", error)
+                }
+            })
+        }
+        KefuManager.mMessageCountLiveData.observe(this, Observer {
+            showMessageDot(it > 0)
+        })
+    }
+
+    private fun showMessageDot(isHaveDot: Boolean) {
+        sdv_my_kefu.redDotInvalid(isHaveDot)
     }
 
     override fun initData() {
         super.initData()
         AppManager.getAccountViewModel().getDoctorInfo().observe(this, Observer { invalidDoctorInfo(it) })
+    }
+
+    override fun onDestroyView() {
+        AppManager.getAccountViewModel().getDoctorInfo().removeObservers(this)
+        super.onDestroyView()
     }
 
     @SuppressLint("SetTextI18n")

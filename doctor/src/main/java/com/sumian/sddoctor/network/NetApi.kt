@@ -3,6 +3,7 @@ package com.sumian.sddoctor.network
 import com.google.gson.JsonObject
 import com.sumian.sddoctor.account.bean.Feedback
 import com.sumian.sddoctor.account.bean.Version
+import com.sumian.sddoctor.account.kefu.KeFuMessage
 import com.sumian.sddoctor.booking.bean.*
 import com.sumian.sddoctor.homepage.FreeCallResponse
 import com.sumian.sddoctor.homepage.bean.PatientDashboardData
@@ -34,7 +35,6 @@ import com.sumian.sddoctor.service.evaluation.bean.EvaluationResponse
 import com.sumian.sddoctor.service.plan.bean.Plan
 import com.sumian.sddoctor.service.report.bean.DailyReport
 import com.sumian.sddoctor.service.scale.bean.Scale
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -529,4 +529,20 @@ interface NetApi {
 
     @GET("doctor/cbti-configs")
     fun getConfigs(): Call<JsonObject>
+
+    //环信客服相关
+    /**
+     * 新用户登录环信
+     * @return Call<Any>
+     */
+    @POST("customer-service/message-event")
+    fun newCustomerMessage(): Call<Any>
+
+    /**
+     *
+     * @param userId ") userId: Int
+     * @return Call<UserInfo>
+     */
+    @POST("authorizations/user/{userId}/easemob")
+    fun notifyRegisterImServer(@Path("userId") userId: Int): Call<KeFuMessage>
 }

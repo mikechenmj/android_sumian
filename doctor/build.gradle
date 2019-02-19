@@ -68,6 +68,10 @@ android {
         buildConfigField("String", "ALIYUN_LOG_LOG_STORE", appProperties['ALIYUN_LOG_LOG_STORE'])
         buildConfigField("String", "ALIYUN_LOG_END_POINT", appProperties['ALIYUN_LOG_END_POINT'])
         buildConfigField("String", "CBTI_SHARE_WEBSITE", appProperties['CBTI_SHARE_WEBSITE'])
+        //easemob
+        buildConfigField("String", "EASEMOB_APP_KEY", appProperties['EASEMOB_APP_KEY'])
+        buildConfigField("String", "EASEMOB_TENANT_ID", appProperties['EASEMOB_TENANT_ID'])
+        buildConfigField("String", "EASEMOB_CUSTOMER_SERVICE_ID", appProperties['EASEMOB_CUSTOMER_SERVICE_ID'])
         // Enabling multidex support.
         multiDexEnabled true
 
@@ -244,6 +248,8 @@ dependencies {
 
     //sumian component
     implementation project(':common')
+    //客服
+    implementation project(':kefu-easeui')
 
     //aliyun player sdk
     implementation(name: 'AlivcReporter-1.2', ext: 'aar')

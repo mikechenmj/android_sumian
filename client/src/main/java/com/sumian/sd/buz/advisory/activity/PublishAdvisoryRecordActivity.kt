@@ -51,7 +51,8 @@ import kotlin.collections.ArrayList
  * desc:图文咨询上传
  **/
 class PublishAdvisoryRecordActivity : BaseViewModelActivity<PublishAdvisoryRecordPresenter>(), TitleBar.OnBackClickListener,
-        TitleBar.OnMenuClickListener, PictureBottomSheet.OnTakePhotoCallback, OSSProgressCallback<PutObjectRequest>, EasyPermissions.PermissionCallbacks, PicturesPreviewer.OnPreviewerCallback {
+        TitleBar.OnMenuClickListener, PictureBottomSheet.OnTakePhotoCallback, OSSProgressCallback<PutObjectRequest>,
+        EasyPermissions.PermissionCallbacks, PicturesPreviewer.OnPreviewerCallback {
 
     private var mSelectOnlineRecords: ArrayList<OnlineReport>? = null
 
@@ -109,7 +110,10 @@ class PublishAdvisoryRecordActivity : BaseViewModelActivity<PublishAdvisoryRecor
         super.initWidget()
         PublishAdvisoryRecordPresenter.init(this)
         title_bar.setOnBackClickListener(this)
-        title_bar.setOnMenuClickListener(this)
+        //title_bar.setOnMenuClickListener(this)
+        tv_service_submit.setOnClickListener {
+            onMenuClick(v = it)
+        }
 
         et_input.addTextChangedListener(object : EmptyTextWatcher() {
 
@@ -146,6 +150,9 @@ class PublishAdvisoryRecordActivity : BaseViewModelActivity<PublishAdvisoryRecor
         super.initData()
         if (mAdvisoryId <= 0) {
             this.mViewModel?.getLastAdvisory()
+            tv_service_submit.visibility = View.VISIBLE
+        } else {
+            tv_service_submit.visibility = View.VISIBLE
         }
         requestWritePermissions()
     }
@@ -226,10 +233,12 @@ class PublishAdvisoryRecordActivity : BaseViewModelActivity<PublishAdvisoryRecor
     fun onGetLastAdvisorySuccess(advisory: Advisory) {
         this.mAdvisory = advisory
         this.mAdvisoryId = advisory.id
+        tv_service_submit.visibility = View.VISIBLE
     }
 
     fun onGetLastAdvisoryFailed(error: String) {
         ToastUtils.showShort(error)
+        tv_service_submit.visibility = View.GONE
     }
 
     fun onPublishAdvisoryRecordSuccess(advisory: Advisory) {
@@ -241,7 +250,8 @@ class PublishAdvisoryRecordActivity : BaseViewModelActivity<PublishAdvisoryRecor
         this.mAdvisoryId = advisory.id
         //this.mViewModel.getLastAdvisory()
 
-        title_bar.hideMore().more.visibility = View.INVISIBLE
+        //title_bar.hideMore().more.visibility = View.INVISIBLE
+        tv_service_submit.visibility = View.INVISIBLE
 
         if (mIsAskAgain) {//追问，直接进入详情页
             AdvisoryDetailActivity.show(this@PublishAdvisoryRecordActivity, advisoryId = advisory.id)
@@ -258,6 +268,7 @@ class PublishAdvisoryRecordActivity : BaseViewModelActivity<PublishAdvisoryRecor
                         finish()
                     }
                 }).show()
+                tv_service_submit.visibility = View.GONE
             }
         }
     }

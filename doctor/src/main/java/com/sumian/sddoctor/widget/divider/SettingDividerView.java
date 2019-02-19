@@ -35,6 +35,8 @@ public class SettingDividerView extends LinearLayout {
     private ImageView mIvTypeCircle;
     private TextView mTvLabel;
 
+    private View mDot;
+
     private TextView mTvContent;
 
     private ImageView mIvRightArrow;
@@ -61,7 +63,7 @@ public class SettingDividerView extends LinearLayout {
         mIvType = inflate.findViewById(R.id.iv_type);
         mIvTypeCircle = inflate.findViewById(R.id.iv_type_circle);
         mTvLabel = inflate.findViewById(R.id.tv_type_label);
-        View VDot = inflate.findViewById(R.id.v_dot);
+        mDot = inflate.findViewById(R.id.v_dot);
         mTvContent = inflate.findViewById(R.id.tv_content);
         View VDividerLine = inflate.findViewById(R.id.v_divider_line);
         mIvRightArrow = inflate.findViewById(R.id.iv_right_arrow);
@@ -91,7 +93,7 @@ public class SettingDividerView extends LinearLayout {
         }
         mTvLabel.setTextColor(typeDescColor);
         mTvLabel.setText(typeDesc);
-        VDot.setBackgroundColor(dotColor);
+        mDot.setBackgroundColor(dotColor);
         mTvContent.setText(typeContent);
         mTvContent.setTextColor(typeContentColor);
         mTvContent.setVisibility(TextUtils.isEmpty(typeContent) ? GONE : VISIBLE);
@@ -129,6 +131,10 @@ public class SettingDividerView extends LinearLayout {
 
     public void setSwitchChecked(boolean checked) {
         mSwitch.setChecked(checked);
+    }
+
+    public void redDotInvalid(boolean isShow) {
+        mDot.setVisibility(isShow ? View.VISIBLE : View.GONE);
     }
 
     /**

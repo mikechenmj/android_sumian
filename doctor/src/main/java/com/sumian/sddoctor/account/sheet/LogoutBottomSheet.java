@@ -8,6 +8,7 @@ import com.sumian.common.helper.ToastHelper;
 import com.sumian.sddoctor.R;
 import com.sumian.sddoctor.account.contract.LogoutContract;
 import com.sumian.sddoctor.account.presenter.LogoutPresenter;
+import com.sumian.sddoctor.app.AppManager;
 import com.sumian.sddoctor.login.login.LoginActivity;
 import com.sumian.sddoctor.widget.LoadingDialog;
 import com.sumian.sddoctor.widget.sheet.AbstractBottomSheetView;
@@ -70,6 +71,7 @@ public class LogoutBottomSheet extends AbstractBottomSheetView implements View.O
         showCenterToast(getString(R.string.logout_success));
         ActivityUtils.finishAllActivities();
         ActivityUtils.startActivity(LoginActivity.class);
+        AppManager.INSTANCE.onLogout();
     }
 
     @Override

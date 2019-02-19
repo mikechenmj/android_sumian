@@ -484,6 +484,7 @@
     <string name="money_is_re_checking_click_see_detail">该笔收入重新核实中，点击查看 ></string>
     <string name="predict_in_account">预计入账：%s</string>
     <string name="modify_name">修改姓名</string>
+    <string name="my_kefu">我的客服</string>
     <string-array name="settling_status_array">
         <item>结算中</item>
         <item>待核实</item>

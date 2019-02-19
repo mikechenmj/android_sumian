@@ -22,6 +22,7 @@ import com.sumian.common.social.login.OpenLogin
 import com.sumian.sddoctor.BuildConfig
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.account.AccountViewModel
+import com.sumian.sddoctor.account.kefu.KefuManager
 import com.sumian.sddoctor.base.ActivityDelegateFactory
 import com.sumian.sddoctor.log.SddLogManager
 import com.sumian.sddoctor.login.login.LoginActivity
@@ -191,10 +192,11 @@ object AppManager {
     }
 
     fun onMainActivityCreate() {
+        initKefu(App.getAppContext())
+        KefuManager.loginAndQueryUnreadMsg()
         AppNotificationManager.uploadPushId()
         AppManager.updateDoctorInfo()
     }
-
 
     fun onLoginSuccess(loginResponse: LoginResponse?, isNewRegister: Boolean = false) {
         AppManager.getAccountViewModel().updateTokenInfoAndDoctorInfo(loginResponse)
@@ -208,7 +210,12 @@ object AppManager {
     }
 
     fun onLogout() {
+        KefuManager.logout()
+    }
 
+    @JvmStatic
+    fun initKefu(context: Context) {
+        KefuManager.init(context)
     }
 
     // ------------ App's important lifecycle events end  ------------

@@ -11,7 +11,6 @@
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:menu_text="@string/submit"
         app:show_back="true"
         app:text="问题详情" />
 
@@ -21,7 +20,8 @@
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/space_62">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -167,6 +167,18 @@
             android:id="@+id/service_state_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/tv_service_submit"
+            style="@style/text_b2_16"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_62"
+            android:layout_gravity="bottom"
+            android:background="@color/b3_color_day"
+            android:gravity="center"
+            android:text="@string/tel_submit"
+            android:visibility="gone"
+            tools:visibility="visible" />
     </FrameLayout>
 
 </LinearLayout>
