@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="65dp"
+    android:gravity="center_vertical"
     android:orientation="horizontal"
     android:paddingStart="20dp"
     android:paddingTop="10dp"
@@ -10,20 +11,45 @@
     android:paddingBottom="10dp">
 
     <TextView
-        android:id="@+id/tv_pill"
+        android:id="@+id/tv_pill_time"
+        style="@style/text_white_14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_rect_b3_corner_4dp"
+        android:padding="5dp"
+        tools:text="早饭前/后" />
+
+    <TextView
+        android:id="@+id/tv_pill_name"
         style="@style/text_t2_16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:maxLines="1"
+        android:layout_marginStart="10dp"
         android:ellipsize="end"
-        tools:text=" 唑吡坦（1片，早饭前/后）" />
+        android:maxLines="1"
+        tools:text="唑吡坦" />
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/tv_pill_amount"
+        style="@style/text_t2_16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        tools:text="1片" />
 
     <ImageView
         android:id="@+id/iv_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end"
+        android:layout_marginStart="20dp"
         android:src="@drawable/record_h5_icon_delete"
         tools:ignore="ContentDescription" />
 
-</FrameLayout>
+</LinearLayout>

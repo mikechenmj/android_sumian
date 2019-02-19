@@ -28,6 +28,7 @@ class FillDiaryViewModel : BaseViewModel() {
     val mDaySleepLiveData = MutableLiveData<Pair<Int, Int>>()    // x time, y minus
     val mFeelingLiveData = MutableLiveData<Int>()    // 0-4
     val mPillsLiveData = MutableLiveData<List<SleepPill>>()
+    var mHasHistoryPills = false;
     val mRemarkLiveData = MutableLiveData<String>()
     var mProgressListener: ProgressListener? = null
     var mDayTime = System.currentTimeMillis()
@@ -159,6 +160,7 @@ class FillDiaryViewModel : BaseViewModel() {
         addCall(call)
         call.enqueue(object : BaseSdResponseCallback<List<SleepPill>>() {
             override fun onSuccess(response: List<SleepPill>?) {
+                mHasHistoryPills = response != null && !response.isEmpty()
                 mPillsLiveData.value = response
             }
 

@@ -8,11 +8,13 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.ToastUtils
+import com.sumian.common.widget.CommonDividerItemDecoration
 import com.sumian.common.widget.SimpleViewHolder
 import com.sumian.common.widget.picker.WheelPickerBottomSheet
 import com.sumian.sd.R
 import com.sumian.sd.buz.diary.sleeprecord.bean.SleepPill
 import kotlinx.android.synthetic.main.fragment_sleep_pills.*
+import kotlinx.android.synthetic.main.item_pill.view.*
 import kotlinx.android.synthetic.main.list_item_pills.view.*
 import java.util.*
 
@@ -47,6 +49,7 @@ class SleepPillsFragment : BaseFillSleepDiaryFragment() {
         super.initWidget()
         recycler_view.layoutManager = LinearLayoutManager(activity!!)
         recycler_view.adapter = mAdapter
+        recycler_view.addItemDecoration(CommonDividerItemDecoration(mActivity))
         mAdapter.mListener = object : PillAdapter.Listener {
             override fun onDeletePill(pill: SleepPill) {
                 removePill(pill)
@@ -59,6 +62,7 @@ class SleepPillsFragment : BaseFillSleepDiaryFragment() {
             tv_continue_add.visibility = if (it.isNotEmpty()) View.VISIBLE else View.GONE
             recycler_view.visibility = if (it.isNotEmpty()) View.VISIBLE else View.GONE
         })
+        tv_history_pills_hint.visibility = if (mFillDiaryViewModel.mHasHistoryPills) View.VISIBLE else View.GONE
     }
 
     private fun showAddPillBottomSheet() {
@@ -120,7 +124,9 @@ class SleepPillsFragment : BaseFillSleepDiaryFragment() {
 
         override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
             val sleepPill = mData[position]
-            holder.itemView.tv_pill.text = sleepPill.toString()
+            holder.itemView.tv_pill_time.text = sleepPill.time
+            holder.itemView.tv_pill_name.text = sleepPill.name
+            holder.itemView.tv_pill_amount.text = sleepPill.amount
             holder.itemView.iv_delete.setOnClickListener { mListener?.onDeletePill(sleepPill) }
         }
 
