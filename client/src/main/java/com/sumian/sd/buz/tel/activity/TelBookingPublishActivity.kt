@@ -103,6 +103,8 @@ class TelBookingPublishActivity : BaseViewModelActivity<TelBookingPublishPresent
 
         if (mTelBooking == null) {
             this.mViewModel?.getLatestTelBookingOrder()
+        } else {
+            bt_submit.visibility = View.VISIBLE
         }
     }
 
@@ -124,14 +126,17 @@ class TelBookingPublishActivity : BaseViewModelActivity<TelBookingPublishPresent
     override fun onGetLatestTelBookingOrderSuccess(latestTelBooking: TelBooking) {
         this.mTelBooking = latestTelBooking
         invalidTelBooking(telBooking = latestTelBooking)
+        bt_submit.visibility = View.VISIBLE
     }
 
     override fun onGetLatestTelBookingOrderFailed(error: String) {
         onPublishTelBookingOrderFailed(error)
+        bt_submit.visibility = View.GONE
     }
 
     override fun onPublishTelBookingOrderSuccess(telBooking: TelBooking) {//publish success
         invalidTelBooking(telBooking)
+        bt_submit.visibility = View.GONE
         service_state_view.setOnServiceSuccessCallback(object : ServiceSuccessStateView.OnServiceSuccessCallback {
             override fun showServiceDetailCallback() {
                 TelBookingDetailActivity.show(telBookingId = telBooking.id)

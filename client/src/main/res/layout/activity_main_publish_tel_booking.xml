@@ -9,7 +9,8 @@
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scroll_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/space_62">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -175,17 +176,11 @@
 
             </LinearLayout>
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/bt_submit"
-                style="@style/bt_t1_style"
+            <View
+                android:id="@+id/v_bottom"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/space_50"
-                android:layout_marginLeft="@dimen/space_36"
-                android:layout_marginTop="@dimen/space_40"
-                android:layout_marginRight="@dimen/space_36"
-                android:layout_marginBottom="@dimen/space_40"
-                android:gravity="center"
-                android:text="@string/tel_submit" />
+                android:layout_height="@dimen/space_10"
+                android:background="@color/l1_color" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
@@ -194,4 +189,16 @@
         android:id="@+id/service_state_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/bt_submit"
+        style="@style/text_b2_16"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_62"
+        android:layout_gravity="bottom"
+        android:background="@color/b3_color_day"
+        android:gravity="center"
+        android:text="@string/tel_submit"
+        android:visibility="gone"
+        tools:visibility="visible" />
 </FrameLayout>

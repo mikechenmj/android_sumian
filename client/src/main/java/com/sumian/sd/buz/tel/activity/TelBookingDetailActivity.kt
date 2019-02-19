@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
+import android.widget.FrameLayout
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.helper.ToastHelper
@@ -72,6 +73,12 @@ class TelBookingDetailActivity : BaseViewModelActivity<TelBookingDetailViewModel
         bt_submit.visibility = View.GONE
         tv_input_count.visibility = View.GONE
         tv_input_ask_count.visibility = View.GONE
+        val layoutParams = scroll_view.layoutParams  as? FrameLayout.LayoutParams
+        layoutParams?.let {
+            it.bottomMargin = 0
+        }
+        scroll_view.layoutParams = layoutParams
+        v_bottom.visibility = View.GONE
     }
 
     override fun initData() {
