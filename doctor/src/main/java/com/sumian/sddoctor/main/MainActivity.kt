@@ -2,11 +2,14 @@ package com.sumian.sddoctor.main
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.base.BaseActivity
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.account.delegate.VersionDelegate
+import com.sumian.sddoctor.account.kefu.KefuManager
 import com.sumian.sddoctor.app.AppManager
 import com.sumian.sddoctor.homepage.HomepageFragment
 import com.sumian.sddoctor.me.MeFragment
@@ -63,6 +66,9 @@ class MainActivity : BaseActivity(), BottomNavigationBar.OnSelectedTabChangeList
         bottom_nav_bar.setOnSelectedTabChangeListener(this)
         bottom_nav_bar.selectItem(position)
         showFragmentByTabPosition(position)
+        KefuManager.mMessageCountLiveData.observe(this, Observer {
+            this.tb_me?.showDot(if (it > 0) View.VISIBLE else View.GONE)
+        })
     }
 
     override fun onStart() {

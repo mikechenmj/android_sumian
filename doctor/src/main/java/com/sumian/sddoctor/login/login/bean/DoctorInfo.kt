@@ -22,6 +22,7 @@ data class DoctorInfo(
         var title: String,
         var introduction: String,
         var name: String,
+        var nickname: String? = null,
         var avatar: String,
         var mobile: String,
         var qr_code: String,
@@ -34,8 +35,10 @@ data class DoctorInfo(
         var introduction_no_tag: String,
         var bind_patient: Int,
         var review_status: Int, //审核状态 0:未认证 1:审核中 2:已认证
-        var set_password: Boolean = false
-) {
+        var set_password: Boolean = false,
+        var im_id: String? = null,
+        var im_password: String? = null
+        ) {
     companion object {
         const val AUTHENTICATION_STATE_NOT_AUTHENTICATED = 0
         const val AUTHENTICATION_STATE_IS_AUTHENTICATING = 1

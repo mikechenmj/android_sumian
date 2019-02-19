@@ -84,6 +84,13 @@
         app:type_icon="@drawable/ic_info_icon_wallet" />
 
     <com.sumian.sddoctor.widget.divider.SettingDividerView
+        android:id="@+id/sdv_my_kefu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:type_desc="@string/my_kefu"
+        app:type_icon="@drawable/ic_info_kefu" />
+
+    <com.sumian.sddoctor.widget.divider.SettingDividerView
         android:id="@+id/sdv_setting"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
