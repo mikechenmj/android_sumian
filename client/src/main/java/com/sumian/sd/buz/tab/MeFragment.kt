@@ -25,6 +25,7 @@ import com.sumian.sd.buz.notification.NotificationViewModel
 import com.sumian.sd.buz.onlinereport.OnlineReportListActivity
 import com.sumian.sd.buz.scale.ScaleListActivity
 import com.sumian.sd.buz.setting.SettingActivity
+import com.sumian.sd.buz.setting.version.delegate.VersionDelegate
 import com.sumian.sd.buz.tel.activity.TelBookingListActivity
 import com.sumian.sd.buz.upgrade.model.VersionModel
 import com.sumian.sd.common.h5.SleepFileWebActivity
@@ -88,6 +89,7 @@ class MeFragment : BaseViewModelFragment<BaseViewModel>(), View.OnClickListener,
         })
         DeviceManager.mMonitorNeedUpdateLiveData.observe(this, Observer { dv_setting.showRedDot(DeviceManager.hasFirmwareNeedUpdate()) })
         DeviceManager.mSleeperNeedUpdateLiveData.observe(this, Observer { dv_setting.showRedDot(DeviceManager.hasFirmwareNeedUpdate()) })
+        VersionDelegate.init().checkVersionCallback(activity!!, Runnable { dv_setting.showRedDot(true) }, Runnable { dv_setting.showRedDot(false) })
     }
 
     override fun onClick(v: View) {

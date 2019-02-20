@@ -13,6 +13,7 @@ import com.sumian.sddoctor.R
 import com.sumian.sddoctor.account.activity.SettingsActivity
 import com.sumian.sddoctor.account.activity.UserInfoActivity
 import com.sumian.sddoctor.account.contract.LogoutContract
+import com.sumian.sddoctor.account.delegate.VersionDelegate
 import com.sumian.sddoctor.account.kefu.KefuManager
 import com.sumian.sddoctor.account.presenter.LogoutPresenter
 import com.sumian.sddoctor.app.AppManager
@@ -23,6 +24,7 @@ import com.sumian.sddoctor.me.authentication.AuthenticationActivity
 import com.sumian.sddoctor.me.myservice.MyServiceListActivity
 import com.sumian.sddoctor.me.mywallet.MyWalletActivity
 import com.sumian.sddoctor.util.ImageLoader
+import com.sumian.sddoctor.widget.divider.SettingDividerView
 import kotlinx.android.synthetic.main.fragment_me.*
 import kotlinx.android.synthetic.main.lay_visitor_tips.*
 
@@ -75,17 +77,22 @@ class MeFragment : BaseFragment(), LogoutContract.View {
             })
         }
         KefuManager.mMessageCountLiveData.observe(this, Observer {
-            showMessageDot(it > 0)
+            showDot(sdv_my_kefu, it > 0)
         })
     }
 
-    private fun showMessageDot(isHaveDot: Boolean) {
-        sdv_my_kefu.redDotInvalid(isHaveDot)
+    private fun showDot(settingDividerView: SettingDividerView, isHaveDot: Boolean) {
+        settingDividerView.redDotInvalid(isHaveDot)
     }
 
     override fun initData() {
         super.initData()
         AppManager.getAccountViewModel().getDoctorInfo().observe(this, Observer { invalidDoctorInfo(it) })
+        VersionDelegate.init().checkVersionCallback(activity!!, Runnable {
+            showDot(sdv_setting, true)
+        }, Runnable {
+            showDot(sdv_setting, false)
+        })
     }
 
     override fun onDestroyView() {

@@ -6,6 +6,7 @@ import android.Manifest
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.blankj.utilcode.util.ActivityUtils
@@ -143,7 +144,7 @@ class MainActivity : BaseActivity(), VersionModel.ShowDotCallback {
                     tb_me?.showDot(if (unreadCount != null && unreadCount > 0) View.VISIBLE else View.GONE)
                 })
         KefuManager.mMessageCountLiveData.observe(this, Observer {
-            this.tb_doctor?.showDot(if (it > 0) android.view.View.VISIBLE else android.view.View.GONE)
+            this.tb_doctor?.showDot(if (it > 0) View.VISIBLE else View.GONE)
         })
     }
 
@@ -237,7 +238,7 @@ class MainActivity : BaseActivity(), VersionModel.ShowDotCallback {
     private fun showFragmentByPosition(position: Int) {
         FragmentUtil.switchFragment(R.id.sd_main_fragment_container, supportFragmentManager!!, mFragmentTags, position,
                 object : FragmentUtil.FragmentCreator {
-                    override fun createFragmentByPosition(position: Int): androidx.fragment.app.Fragment {
+                    override fun createFragmentByPosition(position: Int): Fragment {
                         return when (position) {
                             0 -> HomepageFragment()
                             1 -> DataFragment()
