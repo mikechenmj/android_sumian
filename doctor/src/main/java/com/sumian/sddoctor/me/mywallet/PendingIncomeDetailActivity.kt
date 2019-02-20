@@ -13,7 +13,7 @@ import com.sumian.sddoctor.base.SddBaseActivity
 import com.sumian.sddoctor.me.mywallet.bean.SettlingRecord
 import com.sumian.sddoctor.network.callback.BaseSdResponseCallback
 import com.sumian.sddoctor.util.MoneyUtil
-import kotlinx.android.synthetic.main.activity_settling_record_detail.*
+import kotlinx.android.synthetic.main.activity_pending_income_detail.*
 import kotlinx.android.synthetic.main.view_wallet_detail_item.view.*
 
 /**
@@ -24,13 +24,13 @@ import kotlinx.android.synthetic.main.view_wallet_detail_item.view.*
  * version: 1.0
  */
 @Suppress("DEPRECATION")
-class SettlingRecordDetailActivity : SddBaseActivity() {
+class PendingIncomeDetailActivity : SddBaseActivity() {
     override fun showBackNav(): Boolean {
         return true
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.activity_settling_record_detail
+        return R.layout.activity_pending_income_detail
     }
 
     companion object {
@@ -41,7 +41,7 @@ class SettlingRecordDetailActivity : SddBaseActivity() {
         }
 
         fun getLaunchIntent(id: Int): Intent {
-            val intent = Intent(ActivityUtils.getTopActivity(), SettlingRecordDetailActivity::class.java)
+            val intent = Intent(ActivityUtils.getTopActivity(), PendingIncomeDetailActivity::class.java)
             intent.putExtra(KEY_RECORD_ID, id)
             return intent
         }

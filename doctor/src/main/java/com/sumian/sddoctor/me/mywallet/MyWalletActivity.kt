@@ -45,7 +45,7 @@ class MyWalletActivity : SddBaseActivity() {
         super.initWidget()
         iv_nav_icon.setOnClickListener { onBackPressed() }
         tv_inspect.setOnClickListener { ActivityUtils.startActivity(WithdrawAmountActivity::class.java) }
-        v_settling.setOnClickListener { ActivityUtils.startActivity(SettlingAmountActivity::class.java) }
+        v_settling.setOnClickListener { ActivityUtils.startActivity(PendingIncomeAmountActivity::class.java) }
         recycler_view.layoutManager = LinearLayoutManager(this)
         recycler_view.adapter = mAdapter
         recycler_view.isNestedScrollingEnabled = false

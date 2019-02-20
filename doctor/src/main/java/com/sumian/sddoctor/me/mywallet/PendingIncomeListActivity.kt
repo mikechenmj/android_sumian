@@ -25,7 +25,7 @@ import kotlinx.android.synthetic.main.layout_recycler_view_padding_top_10.*
  * desc   :
  * version: 1.0
  */
-class SettlingRecordListActivity : SddBaseActivity() {
+class PendingIncomeListActivity : SddBaseActivity() {
     override fun showBackNav(): Boolean {
         return true
     }
@@ -44,7 +44,7 @@ class SettlingRecordListActivity : SddBaseActivity() {
         recycler_view.layoutManager = LinearLayoutManager(this)
         recycler_view.adapter = mAdapter
         mAdapter.setOnLoadMoreListener({ queryData(mPage) }, recycler_view)
-        mAdapter.setOnItemClickListener { adapter, view, position -> SettlingRecordDetailActivity.launch(mAdapter.getItem(position)!!.id) }
+        mAdapter.setOnItemClickListener { adapter, view, position -> PendingIncomeDetailActivity.launch(mAdapter.getItem(position)!!.id) }
         mAdapter.emptyView = EmptyViewCreator.createImageTextEmptyView(this, R.drawable.ic_no_withdraw_record, R.string.no_settling_data)
     }
 
