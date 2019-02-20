@@ -490,4 +490,7 @@
         <item>待核实</item>
     </string-array>
 
+    <string name="assistant_say_hello">您好，我是睡眠助手，很高兴为您服务！</string>
+    <string name="online_customer">在线客服</string>
+
 </resources>

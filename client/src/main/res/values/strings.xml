@@ -845,4 +845,5 @@
     <string name="request_save_permissions_tips">存储图片，需要授予手机存储权限权限</string>
     <string name="device_not_connected">设备未连接</string>
     <string name="there_have_history_pills">检测到您上次有填写过服药记录。</string>
+    <string name="doctor_say_hello">您好，我是您的睡眠管家，很高兴为您服务！</string>
 </resources>

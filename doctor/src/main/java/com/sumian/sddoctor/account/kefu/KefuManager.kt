@@ -18,6 +18,7 @@ import com.hyphenate.helpdesk.callback.Callback
 import com.hyphenate.helpdesk.easeui.UIProvider
 import com.hyphenate.helpdesk.easeui.util.IntentBuilder
 import com.hyphenate.helpdesk.model.ContentFactory
+import com.hyphenate.helpdesk.model.MessageHelper
 import com.sumian.common.image.ImageLoader
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.utils.SumianExecutor
@@ -61,6 +62,7 @@ object KefuManager {
         // Kefu EaseUI的初始化
         UIProvider.getInstance().init(context)
         registerMessageListener()
+        UIProvider.getInstance().helloWord = App.getAppContext().getString(R.string.assistant_say_hello)
         UIProvider.getInstance().setUnreadMessageChangeListener { mMessageCountLiveData.postValue(it) }
     }
 
@@ -153,6 +155,9 @@ object KefuManager {
                     KeFuMessage.OTHER_ERROR -> {
                         retryRegister(notifyCount, userInfo)
                     }
+                    else -> {
+                        retryRegister(notifyCount, userInfo)
+                    }
                 }
             }
         })
@@ -214,6 +219,7 @@ object KefuManager {
         return IntentBuilder(App.getAppContext())
                 .setServiceIMNumber(BuildConfig.EASEMOB_CUSTOMER_SERVICE_ID)
                 .setShowUserNick(false)
+                .setTitleName(App.getAppContext().getString(R.string.online_customer))
                 .setVisitorInfo(visitorInfo).build()
     }
 
@@ -243,10 +249,26 @@ object KefuManager {
 
     private fun registerUserProfileProvider() {
         UIProvider.getInstance().setUserProfileProvider { context, message, userAvatarView, usernickView ->
-            if (Message.Direct.SEND == message.direct()) {
+            if (message.direct() == Message.Direct.SEND) {
                 userAvatarView?.let {
                     ImageLoader.loadImage(AppManager.getAccountViewModel().getDoctorInfo().value?.avatar
                             ?: "", userAvatarView, R.mipmap.ic_chat_right_default, R.mipmap.ic_chat_right_default)
+                }
+            } else {
+                userAvatarView?.let {
+                    val agentInfo = MessageHelper.getAgentInfo(message)
+                    var avatar = ""
+                    if (agentInfo != null) {
+                        if (!TextUtils.isEmpty(agentInfo.avatar)) {
+                            avatar = agentInfo.avatar
+                            if (!TextUtils.isEmpty(avatar)) {
+                                if (!avatar.startsWith("http")) {
+                                    avatar = "http:$avatar"
+                                }
+                            }
+                        }
+                    }
+                    ImageLoader.loadImage(avatar, userAvatarView, R.mipmap.ic_chat_assiant_default, R.mipmap.ic_chat_assiant_default)
                 }
             }
         }

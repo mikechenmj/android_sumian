@@ -535,7 +535,7 @@ interface NetApi {
      * 新用户登录环信
      * @return Call<Any>
      */
-    @POST("customer-service/message-event")
+    @POST("doctor/customer-service/message-event")
     fun newCustomerMessage(): Call<Any>
 
     /**
@@ -543,6 +543,6 @@ interface NetApi {
      * @param userId ") userId: Int
      * @return Call<UserInfo>
      */
-    @POST("authorizations/user/{userId}/easemob")
-    fun notifyRegisterImServer(@Path("userId") userId: Int): Call<KeFuMessage>
+    @POST("doctor/authorizations/{doctorId}/easemob")
+    fun notifyRegisterImServer(@Path("doctorId") userId: Int): Call<KeFuMessage>
 }

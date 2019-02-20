@@ -62,6 +62,8 @@ public class UIProvider {
 
     private volatile boolean mIsLogin;
 
+    private String mHelloWord = "";
+
     /**
      * 用来记录注册了eventlistener的foreground Activity
      */
@@ -99,6 +101,14 @@ public class UIProvider {
             instance = new UIProvider();
         }
         return instance;
+    }
+
+    public String getHelloWord() {
+        return mHelloWord;
+    }
+
+    public void setHelloWord(String helloWord) {
+        mHelloWord = helloWord;
     }
 
     public void setShowProgress(boolean isShowProgress) {

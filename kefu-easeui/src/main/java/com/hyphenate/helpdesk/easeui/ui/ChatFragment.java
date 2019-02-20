@@ -285,7 +285,7 @@ public class ChatFragment extends BaseFragment implements ChatManager.MessageLis
                     // titleBar.setTitle(input);
                 } else {
                     if (!TextUtils.isEmpty(titleName)) {
-                        //   titleBar.setTitle(titleName);
+                        //mEaseTitleBar.setTitle(titleName);
                     } else {
                         //  titleBar.setTitle(toChatUsername);
                     }
@@ -301,7 +301,7 @@ public class ChatFragment extends BaseFragment implements ChatManager.MessageLis
     @Override
     protected void setUpView() {
         if (!TextUtils.isEmpty(titleName)) {
-            // titleBar.setTitle(titleName);
+            mEaseTitleBar.setTitle(titleName);
         } else {
             //  titleBar.setTitle(toChatUsername);
         }

@@ -38,8 +38,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_userid"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="32dp"
             android:layout_marginTop="@dimen/space_8"
+            android:layout_marginRight="32dp"
             android:layout_toRightOf="@id/iv_userhead"
             tools:ignore="RtlHardcoded">
 
@@ -55,7 +55,7 @@
                 android:padding="@dimen/space_8"
                 android:paddingLeft="6dp"
                 android:paddingRight="1dp"
-                android:textColor="@color/bt_hole_color"
+                android:textColor="#475266"
                 android:textColorLink="@color/bt_hole_color"
                 android:textSize="@dimen/font_16"
                 tools:ignore="RtlHardcoded"

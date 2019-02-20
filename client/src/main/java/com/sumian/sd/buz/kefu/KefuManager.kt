@@ -61,6 +61,7 @@ object KefuManager {
         // Kefu EaseUI的初始化
         UIProvider.getInstance().init(context)
         registerMessageListener()
+        UIProvider.getInstance().helloWord = App.getAppContext().getString(R.string.doctor_say_hello)
         UIProvider.getInstance().setUnreadMessageChangeListener { mMessageCountLiveData.postValue(it) }
     }
 

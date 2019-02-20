@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
@@ -175,7 +176,12 @@ public class MessageAdapter extends BaseAdapter {
         int allMsgCount = conversation.getAllMsgCount();
         if (allMsgCount <= 0 && UIProvider.getInstance().isLogin()) {
             Message message = Message.createReceiveMessage(Message.Type.TXT);
-            EMMessageBody msgBody = new EMTextMessageBody(context.getString(R.string.doctor_say_hello));
+
+            String welcomeText = UIProvider.getInstance().getHelloWord();
+            if (TextUtils.isEmpty(welcomeText)) {
+                welcomeText = context.getString(R.string.doctor_say_hello);
+            }
+            EMMessageBody msgBody = new EMTextMessageBody(welcomeText);
             message.setBody(msgBody);
             message.setTo(toChatUsername);
             message.setMsgId(UUID.randomUUID().toString());
