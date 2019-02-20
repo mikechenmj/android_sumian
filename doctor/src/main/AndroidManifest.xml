@@ -282,9 +282,9 @@
         <activity
             android:name=".me.mywallet.WithdrawAmountActivity"
             android:launchMode="singleTop" />
-        <activity android:name=".me.mywallet.SettlingRecordListActivity" />
-        <activity android:name=".me.mywallet.SettlingRecordDetailActivity" />
-        <activity android:name=".me.mywallet.SettlingAmountActivity" />
+        <activity android:name=".me.mywallet.PendingIncomeListActivity" />
+        <activity android:name=".me.mywallet.PendingIncomeDetailActivity" />
+        <activity android:name=".me.mywallet.PendingIncomeAmountActivity" />
     </application>
 
 </manifest>

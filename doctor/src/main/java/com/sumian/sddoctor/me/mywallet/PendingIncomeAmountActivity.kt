@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.activity_settling_amount.*
  * desc   :
  * version: 1.0
  */
-class SettlingAmountActivity : SddBaseActivity() {
+class PendingIncomeAmountActivity : SddBaseActivity() {
 
     override fun getLayoutId(): Int {
         return R.layout.activity_settling_amount
@@ -33,7 +33,7 @@ class SettlingAmountActivity : SddBaseActivity() {
     override fun initWidget() {
         super.initWidget()
         setTitle(R.string.settling_amount)
-        tv_see_detail.setOnClickListener { ActivityUtils.startActivity(SettlingRecordListActivity::class.java) }
+        tv_see_detail.setOnClickListener { ActivityUtils.startActivity(PendingIncomeListActivity::class.java) }
     }
 
     override fun initData() {

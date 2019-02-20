@@ -7,6 +7,7 @@ import com.sumian.common.notification.ISchemeResolver
 import com.sumian.common.notification.SchemeResolveUtil
 import com.sumian.sddoctor.booking.BookingDetailActivity
 import com.sumian.sddoctor.me.myservice.MyServiceListActivity
+import com.sumian.sddoctor.me.mywallet.PendingIncomeDetailActivity
 import com.sumian.sddoctor.me.mywallet.WalletRecordDetailActivity
 import com.sumian.sddoctor.me.mywallet.WithdrawDetailActivity
 import com.sumian.sddoctor.service.advisory.activity.AdvisoryDetailActivity
@@ -33,8 +34,17 @@ object SchemeResolver : ISchemeResolver {
             "wallet-details" -> resolveWalletDetailScheme(context, uri)
             "withdrawals" -> resolveWithdrawDetailScheme(context, uri)
             "system-notifications-detail" -> resolveSystemNotificationsDetail(context, uri)
+            "pending-income" -> resolvePendingIncomeDetail(context, uri)
             else -> null
         }
+    }
+
+    /**
+     * scheme=sd-doctor://pending-income?pending_income_id=2&notification_id=d36e45e4-a2fb-422b-b7d7-770b6f9c79a6&doctor_id=3
+     */
+    private fun resolvePendingIncomeDetail(context: Context, uri: Uri): Intent? {
+        return PendingIncomeDetailActivity.getLaunchIntent(
+                uri.getQueryParameter("pending_income_id")?.toInt() ?: 0)
     }
 
     private fun resolveSystemNotificationsDetail(context: Context, uri: Uri): Intent? {
