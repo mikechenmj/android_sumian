@@ -42,6 +42,9 @@ open class VersionDelegate private constructor() : VersionContract.View, View.On
 
     private lateinit var mActivity: Activity
 
+    private var showDotRunnable: Runnable? = null
+    private var hideDotRunnable: Runnable? = null
+
     override fun onGetVersionSuccess(version: Version) {
         this.mVersion = version
     }
@@ -49,7 +52,8 @@ open class VersionDelegate private constructor() : VersionContract.View, View.On
     override fun onGetVersionFailed(error: String) {
     }
 
-    override fun onHaveUpgrade(isHaveUpgrade: Boolean, isHaveForce: Boolean, versionMsg: String?) {
+    override fun onHaveUpgrade(isHaveUpgrade: Boolean, isHaveForce: Boolean, isShowDialog: Boolean, versionMsg: String?) {
+        hideDotRunnable?.run()
         if (isHaveForce) {
             AppVersionUpgradeAlertDialog(mActivity)
                     .setTitle(R.string.version_upgrade_title)
@@ -64,7 +68,19 @@ open class VersionDelegate private constructor() : VersionContract.View, View.On
                     .setOnKeyListener(this)
                     .show()
             VersionDialogAlertUtils.saveAlertTime()
+
+            showDotRunnable?.run()
         } else {
+            if (!isShowDialog) {
+                showDotRunnable?.run()
+                return
+            }
+            if (isHaveUpgrade) {
+                showDotRunnable?.run()
+            } else {
+                hideDotRunnable?.run()
+            }
+
             if (isHaveUpgrade && VersionDialogAlertUtils.isCanAlert()) {
                 AppVersionUpgradeAlertDialog(mActivity)
                         .setTitle(R.string.version_upgrade_title)
@@ -105,5 +121,11 @@ open class VersionDelegate private constructor() : VersionContract.View, View.On
         this.mPresenter.getVersion()
     }
 
+    fun checkVersionCallback(activity: Activity, showDotRunnable: Runnable, hideDotRunnable: Runnable) {
+        this.mActivity = activity
+        this.mPresenter.getVersion()
+        this.showDotRunnable = showDotRunnable
+        this.hideDotRunnable = hideDotRunnable
+    }
 
 }

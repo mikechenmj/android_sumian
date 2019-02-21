@@ -1,16 +1,24 @@
 package com.sumian.sd.buz.tab
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
 import android.text.TextUtils
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.blankj.utilcode.util.ActivityUtils
-import com.sumian.common.base.BaseViewModel
+import com.qmuiteam.qmui.util.QMUISpanHelper
 import com.sumian.common.base.BaseViewModelFragment
 import com.sumian.common.image.loadImage
+import com.sumian.common.utils.BitmapUtil
+import com.sumian.common.utils.SumianExecutor
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.account.achievement.MyAchievementActivity
+import com.sumian.sd.buz.account.achievement.bean.AchievementRecord
+import com.sumian.sd.buz.account.achievement.contract.GetAchievementListContract
+import com.sumian.sd.buz.account.achievement.presenter.GetAchievementListPresenter
 import com.sumian.sd.buz.account.bean.Token
 import com.sumian.sd.buz.account.bean.UserInfo
 import com.sumian.sd.buz.account.userProfile.UserInfoActivity
@@ -25,6 +33,7 @@ import com.sumian.sd.buz.notification.NotificationViewModel
 import com.sumian.sd.buz.onlinereport.OnlineReportListActivity
 import com.sumian.sd.buz.scale.ScaleListActivity
 import com.sumian.sd.buz.setting.SettingActivity
+import com.sumian.sd.buz.setting.version.delegate.VersionDelegate
 import com.sumian.sd.buz.tel.activity.TelBookingListActivity
 import com.sumian.sd.buz.upgrade.model.VersionModel
 import com.sumian.sd.common.h5.SleepFileWebActivity
@@ -34,6 +43,8 @@ import com.sumian.sd.widget.tips.PatientRecordTips
 import com.sumian.sd.widget.tips.PatientServiceTips
 import com.sumian.sd.wxapi.MiniProgramHelper
 import kotlinx.android.synthetic.main.fragment_tab_me.*
+import java.net.HttpURLConnection
+import java.net.URL
 
 /**
  * Created by jzz
@@ -41,11 +52,15 @@ import kotlinx.android.synthetic.main.fragment_tab_me.*
  * desc:
  */
 
-class MeFragment : BaseViewModelFragment<BaseViewModel>(), View.OnClickListener,
-        PatientServiceTips.OnServiceTipsCallback, PatientRecordTips.OnRecordTipsCallback, OnEnterListener, VersionModel.ShowDotCallback {
+class MeFragment : BaseViewModelFragment<GetAchievementListPresenter>(), View.OnClickListener, PatientServiceTips.OnServiceTipsCallback, PatientRecordTips.OnRecordTipsCallback, OnEnterListener, VersionModel.ShowDotCallback, GetAchievementListContract.View {
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_tab_me
+    }
+
+    override fun onInitWidgetBefore() {
+        super.onInitWidgetBefore()
+        mViewModel = GetAchievementListPresenter(this)
     }
 
     override fun initWidget() {
@@ -88,6 +103,16 @@ class MeFragment : BaseViewModelFragment<BaseViewModel>(), View.OnClickListener,
         })
         DeviceManager.mMonitorNeedUpdateLiveData.observe(this, Observer { dv_setting.showRedDot(DeviceManager.hasFirmwareNeedUpdate()) })
         DeviceManager.mSleeperNeedUpdateLiveData.observe(this, Observer { dv_setting.showRedDot(DeviceManager.hasFirmwareNeedUpdate()) })
+        VersionDelegate.init().checkVersionCallback(activity!!, Runnable { dv_setting.showRedDot(true) }, Runnable { dv_setting.showRedDot(false) })
+        mViewModel?.getAchievementList()
+    }
+
+    override fun showLoading() {
+        //super.showLoading()
+    }
+
+    override fun dismissLoading() {
+        //super.dismissLoading()
     }
 
     override fun onClick(v: View) {
@@ -148,4 +173,39 @@ class MeFragment : BaseViewModelFragment<BaseViewModel>(), View.OnClickListener,
     override fun showDot(isShowAppDot: Boolean, isShowMonitorDot: Boolean, isShowSleepyDot: Boolean) {
 
     }
+
+    override fun onGetAchievementListSuccess(achievementRecordList: List<AchievementRecord>) {
+        var tmpText: CharSequence = ""
+        achievementRecordList.forEachIndexed { index, achievementRecord ->
+            if (index >= 3) return@forEachIndexed
+            SumianExecutor.runOnBackgroundThread {
+                val oldBmp = returnBitmap(achievementRecord.achievement.gainMedalPicture)
+                if (oldBmp != null) {
+                    val newBmp = Bitmap.createScaledBitmap(oldBmp, resources.getDimensionPixelOffset(R.dimen.space_34), resources.getDimensionPixelOffset(R.dimen.space_34), true)
+                    oldBmp.recycle()
+                    val bitmapDrawable = BitmapDrawable(resources, newBmp)
+                    val text = QMUISpanHelper.generateSideIconText(false, resources.getDimensionPixelOffset(R.dimen.space_5), " ", bitmapDrawable)
+                    tmpText = TextUtils.concat(tmpText, text)
+                    dv_my_metal.post {
+                        dv_my_metal?.setContent(tmpText)
+                    }
+                }
+            }
+        }
+    }
+
+    override fun onGetAchievementListFailed(error: String) {
+    }
+
+    private fun returnBitmap(url: String): Bitmap? {
+        val myFileUrl = URL(url)
+        val conn: HttpURLConnection = myFileUrl.openConnection() as HttpURLConnection
+        conn.doInput = true
+        conn.connect()
+        val inputStream = conn.inputStream
+        val decodeStream = BitmapFactory.decodeStream(inputStream, null, BitmapUtil.createOptions())
+        inputStream.close()
+        return decodeStream
+    }
+
 }

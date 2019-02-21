@@ -46,7 +46,7 @@ class VersionActivity : BaseViewModelActivity<VersionPresenter>(), VersionContra
         super.initData()
         tv_current_app_version.text = formatVersion(getString(R.string.current_version), UiUtils.getPackageInfo(this).versionName)
         tv_new_app_version.text = formatVersion(getString(R.string.new_version), UiUtils.getPackageInfo(this).versionName)
-        onHaveUpgrade(false, false, "")
+        onHaveUpgrade(false, false, false, "")
         this.mViewModel?.getVersion()
     }
 
@@ -60,7 +60,7 @@ class VersionActivity : BaseViewModelActivity<VersionPresenter>(), VersionContra
         ToastUtils.showShort(error)
     }
 
-    override fun onHaveUpgrade(isHaveUpgrade: Boolean, isHaveForce: Boolean, versionMsg: String?) {
+    override fun onHaveUpgrade(isHaveUpgrade: Boolean, isHaveForce: Boolean, isShowDialog: Boolean, versionMsg: String?) {
         mIsHaveUpgrade = isHaveUpgrade
         sdv_go_market.visibility = View.VISIBLE//if (isHaveUpgrade) View.VISIBLE else View.GONE
     }

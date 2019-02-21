@@ -3,10 +3,8 @@
 package com.sumian.sddoctor.account.presenter
 
 import com.sumian.common.base.BaseViewModel
-import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.utils.VersionUtil
-import com.sumian.sddoctor.account.activity.VersionActivity
 import com.sumian.sddoctor.account.bean.Version
 import com.sumian.sddoctor.account.contract.VersionContract
 import com.sumian.sddoctor.app.App
@@ -61,7 +59,7 @@ class VersionPresenter private constructor(view: VersionContract.View) : BaseVie
                         val onlineVersionCodes = it.split(".")
                         val currentVersionCodes = currentVersion.split(".")
                         isHaveUpgrade = VersionUtil.hasNewVersion(onlineVersionCodes, currentVersionCodes)
-                        mView?.onHaveUpgrade(isHaveUpgrade, response.need_force_update, response.description)
+                        mView?.onHaveUpgrade(isHaveUpgrade, response.need_force_update, response.show_update_mode, response.description)
                     }
                 }
             }

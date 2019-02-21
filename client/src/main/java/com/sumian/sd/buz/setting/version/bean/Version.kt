@@ -15,4 +15,4 @@ package com.sumian.sd.buz.setting.version.bean
  */
 data class Version(var version: String?,
                    var description: String?,
-                   var need_force_update: Boolean)
+                   var need_force_update: Boolean, var show_update_mode: Boolean)

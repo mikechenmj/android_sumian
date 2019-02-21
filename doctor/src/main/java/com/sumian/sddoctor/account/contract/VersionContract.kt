@@ -25,7 +25,7 @@ interface VersionContract {
 
         fun onGetVersionFailed(error: String)
 
-        fun onHaveUpgrade(isHaveUpgrade: Boolean, isHaveForce: Boolean, versionMsg: String?)
+        fun onHaveUpgrade(isHaveUpgrade: Boolean, isHaveForce: Boolean, isShowDialog: Boolean, versionMsg: String?)
 
     }
 

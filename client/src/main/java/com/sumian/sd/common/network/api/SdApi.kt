@@ -4,6 +4,7 @@ import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.sumian.common.network.response.PaginationResponseV2
 import com.sumian.sd.buz.account.achievement.bean.AchievementData
+import com.sumian.sd.buz.account.achievement.bean.AchievementRecord
 import com.sumian.sd.buz.account.achievement.bean.AchievementResponse
 import com.sumian.sd.buz.account.achievement.bean.LastAchievementData
 import com.sumian.sd.buz.account.bean.Social
@@ -596,4 +597,11 @@ interface SdApi {
 
     @GET("configs")
     fun getConfigs(): Call<JsonArray>
+
+    /**
+     * 获取勋章成就列表
+     * @return Call<Any>
+     */
+    @GET("achievement-records")
+    fun getAchievementRecords(): Call<List<AchievementRecord>>
 }
