@@ -17,6 +17,21 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
 
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+            res.srcDirs(
+                    'src/main/res',
+                    'src/main/res_common',
+                    'src/main/res_device',
+                    'src/main/res_cbti',
+                    'src/main/res_doctor_and_service',
+                    'src/main/res_me_and_others',
+                    'src/main/res_sleep_data_and_treatment',
+            )
+        }
+    }
+
     signingConfigs {
         configs {
             keyAlias appProperties['APP_KEY_ALIAS']
@@ -136,14 +151,6 @@ android {
 
     lintOptions {
         abortOnError rootProject.ext.abortOnError
-    }
-
-    sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
-
-        main {
-            jniLibs.srcDirs = ['libs']
-        }
     }
 
     //product flavors
