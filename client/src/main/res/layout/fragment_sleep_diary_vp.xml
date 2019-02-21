@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/b1_color"
@@ -9,6 +10,19 @@
         android:id="@+id/date_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tv_sleep_restriction_hint"
+        style="@style/text_white_14"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="5dp"
+        android:background="@drawable/sleepdiary_img_restrictionbg"
+        android:gravity="center_vertical"
+        android:paddingStart="50dp"
+        android:text="@string/sleep_restriction_hint"
+        tools:ignore="RtlSymmetry" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"

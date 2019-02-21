@@ -13,8 +13,7 @@
 
         <LinearLayout
             android:id="@+id/vg_title"
-            style="@style/SimpleTitleItem"
-            android:layout_marginTop="10dp">
+            style="@style/SimpleTitleItem">
 
             <TextView
                 style="@style/text_t1_16"
