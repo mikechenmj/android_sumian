@@ -21,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:drawableStart="@drawable/ic_close"
+            android:drawableStart="@drawable/toast_icon_caveat"
             android:drawablePadding="10dp"
             android:text="@string/there_have_history_pills" />
     </FrameLayout>

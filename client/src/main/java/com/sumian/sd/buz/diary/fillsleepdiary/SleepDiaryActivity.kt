@@ -2,6 +2,7 @@ package com.sumian.sd.buz.diary.fillsleepdiary
 
 import com.sumian.common.base.BaseActivity
 import com.sumian.sd.R
+import com.sumian.sd.buz.diary.sleeprecord.SleepRestrictionIntroductionDialogActivity
 
 /**
  * @author : Zhan Xuzhao
@@ -18,6 +19,7 @@ class SleepDiaryActivity : BaseActivity() {
     override fun initWidget() {
         super.initWidget()
         setTitle(R.string.sleep_diary)
+        SleepRestrictionIntroductionDialogActivity.start()
     }
 
     override fun showBackNav(): Boolean {

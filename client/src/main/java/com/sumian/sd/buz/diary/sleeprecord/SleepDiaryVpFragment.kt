@@ -58,6 +58,7 @@ class SleepDiaryVpFragment : BaseFragment() {
             override fun onPageSelected(position: Int) {
             }
         })
+        tv_sleep_restriction_hint.setOnClickListener { SleepRestrictionIntroductionDialogActivity.start() }
     }
 
     private fun initDateBar() {
