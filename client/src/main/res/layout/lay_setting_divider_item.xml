@@ -57,9 +57,10 @@
         <TextView
             android:id="@+id/tv_setting_content"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/space_8"
             android:layout_marginRight="@dimen/space_8"
+            android:gravity="center"
             android:text="@string/user_info_center"
             android:textColor="@color/t1_color"
             android:textSize="@dimen/font_16"

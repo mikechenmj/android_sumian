@@ -1,6 +1,8 @@
 package com.sumian.sd.common.utils
 
 import androidx.annotation.IdRes
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.sumian.sd.main.OnEnterListener
 
 /**
@@ -16,12 +18,12 @@ class FragmentUtil {
     companion object {
 
         @JvmStatic
-        fun switchFragment(@IdRes containerViewId: Int, fragmentManager: androidx.fragment.app.FragmentManager,
+        fun switchFragment(@IdRes containerViewId: Int, fragmentManager: FragmentManager,
                            tags: Array<String>, position: Int, fragmentCreator: FragmentCreator,
                            runOnCommitCallback: RunOnCommitCallback? = DefaultRunOnCommitCallbackImpl()) {
             var tag: String
-            var selectFragment: androidx.fragment.app.Fragment
-            var fragmentByTag: androidx.fragment.app.Fragment?
+            var selectFragment: Fragment
+            var fragmentByTag: Fragment?
             for (i in 0 until tags.size) {
                 tag = tags[i]
                 fragmentByTag = fragmentManager.findFragmentByTag(tag)
@@ -47,15 +49,15 @@ class FragmentUtil {
     }
 
     interface FragmentCreator {
-        fun createFragmentByPosition(position: Int): androidx.fragment.app.Fragment
+        fun createFragmentByPosition(position: Int): Fragment
     }
 
     interface RunOnCommitCallback {
-        fun runOnCommit(selectFragment: androidx.fragment.app.Fragment)
+        fun runOnCommit(selectFragment: Fragment)
     }
 
     open class DefaultRunOnCommitCallbackImpl : RunOnCommitCallback {
-        override fun runOnCommit(selectFragment: androidx.fragment.app.Fragment) {
+        override fun runOnCommit(selectFragment: Fragment) {
             if (selectFragment is OnEnterListener) {
                 selectFragment.onEnter(null)
             }
