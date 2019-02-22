@@ -11,6 +11,7 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.helper.ToastHelper
 import com.sumian.sd.R
+import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.buz.tel.bean.TelBooking
 import com.sumian.sd.buz.tel.contract.TelBookingDetailContract
 import com.sumian.sd.buz.tel.presenter.TelBookingDetailViewModel
@@ -60,6 +61,10 @@ class TelBookingDetailActivity : BaseViewModelActivity<TelBookingDetailViewModel
     override fun initWidgetBefore() {
         super.initWidgetBefore()
         this.mViewModel = TelBookingDetailViewModel.init(this)
+    }
+
+    override fun getPageName(): String {
+        return StatConstants.page_tel_consult_book_detail
     }
 
     override fun initWidget() {

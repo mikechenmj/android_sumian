@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentPagerAdapter
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.base.BaseActivity
 import com.sumian.sd.R
+import com.sumian.sd.buz.stat.StatConstants
 import kotlinx.android.synthetic.main.activity_main_advisory.*
 
 class ScaleListActivity : BaseActivity() {
@@ -30,6 +31,10 @@ class ScaleListActivity : BaseActivity() {
             intent.putExtra(KEY_TAB_INDEX, tabIndex)
             ActivityUtils.startActivity(intent)
         }
+    }
+
+    override fun getPageName(): String {
+        return StatConstants.page_scale_list
     }
 
     override fun initWidget() {

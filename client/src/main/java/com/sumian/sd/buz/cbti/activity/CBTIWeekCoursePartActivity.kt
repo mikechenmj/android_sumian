@@ -23,6 +23,7 @@ import com.sumian.sd.buz.cbti.model.CbtiChapterViewModel
 import com.sumian.sd.buz.cbti.presenter.CBTIMessageBoardActionPresenter
 import com.sumian.sd.buz.cbti.widget.adapter.EmptyOnTabSelectedListener
 import com.sumian.sd.buz.cbti.widget.keyboard.MsgBoardKeyBoard
+import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.widget.TitleBar
 import com.sumian.sd.widget.dialog.SumianDataWebDialog
 import kotlinx.android.synthetic.main.activity_main_cbti_week_lesson_part.*
@@ -68,6 +69,10 @@ class CBTIWeekCoursePartActivity : BaseViewModelActivity<CBTIMessageBoardActionP
 
     override fun getLayoutId(): Int {
         return R.layout.activity_main_cbti_week_lesson_part
+    }
+
+    override fun getPageName(): String {
+        return StatConstants.page_cbti_chapter_content_list
     }
 
     override fun initWidget() {

@@ -11,8 +11,11 @@ import com.sumian.common.h5.widget.SWebView;
 import com.sumian.sd.base.SdBaseWebViewActivity;
 import com.sumian.sd.buz.scale.event.ScaleFinishFillingEvent;
 import com.sumian.sd.buz.scale.event.ScaleFinishFillingEvent2;
+import com.sumian.sd.buz.stat.StatConstants;
 import com.sumian.sd.common.h5.H5Uri;
 import com.sumian.sd.common.utils.EventBusUtil;
+
+import org.jetbrains.annotations.NotNull;
 
 import androidx.annotation.NonNull;
 
@@ -49,6 +52,12 @@ public class ScaleDetailActivity extends SdBaseWebViewActivity {
     @Override
     protected String initTitle() {
         return mTitle;
+    }
+
+    @NotNull
+    @Override
+    public String getPageName() {
+        return StatConstants.page_scale_detail;
     }
 
     @Override

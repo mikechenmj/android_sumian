@@ -9,9 +9,11 @@ import android.widget.TextView
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.helper.ToastHelper
+import com.sumian.common.statistic.StatUtil
 import com.sumian.common.utils.TimeUtilV2
 import com.sumian.common.widget.adapter.EmptyTextWatcher
 import com.sumian.sd.R
+import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.buz.tel.bean.TelBooking
 import com.sumian.sd.buz.tel.contract.TelBookingPublishContract
 import com.sumian.sd.buz.tel.presenter.TelBookingPublishPresenter
@@ -74,6 +76,10 @@ class TelBookingPublishActivity : BaseViewModelActivity<TelBookingPublishPresent
     override fun initWidgetBefore() {
         super.initWidgetBefore()
         this.mViewModel = TelBookingPublishPresenter.init(this)
+    }
+
+    override fun getPageName(): String {
+        return StatConstants.page_tel_consult_book_edit
     }
 
     override fun initWidget() {

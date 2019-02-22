@@ -3,6 +3,7 @@ package com.sumian.sd.buz.diary
 import android.view.View
 import androidx.lifecycle.Observer
 import com.sumian.common.base.BaseFragment
+import com.sumian.common.statistic.StatUtil
 import com.sumian.common.utils.ColorCompatUtil
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
@@ -11,6 +12,7 @@ import com.sumian.sd.buz.devicemanager.DeviceManager
 import com.sumian.sd.buz.diary.event.ChangeDataFragmentTabEvent
 import com.sumian.sd.buz.diary.monitorrecord.MonitorDataVpFragment
 import com.sumian.sd.buz.diary.sleeprecord.SleepDiaryVpFragment
+import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.log.LogManager
 import com.sumian.sd.common.utils.EventBusUtil
 import com.sumian.sd.common.utils.FragmentUtil
@@ -81,8 +83,15 @@ class DataFragment : BaseFragment() {
         FragmentUtil.switchFragment(R.id.fl_container, fragmentManager!!, TAGS, position, object : FragmentUtil.FragmentCreator {
             override fun createFragmentByPosition(position: Int): androidx.fragment.app.Fragment {
                 return when (position) {
-                    0 -> SleepDiaryVpFragment()
-                    else -> MonitorDataVpFragment()
+                    0 -> {
+                        StatUtil.trackBeginPage(activity!!, StatConstants.page_data_page_sleep_data_tab)
+                        SleepDiaryVpFragment()
+                    }
+                    else -> {
+                        StatUtil.trackBeginPage(activity!!, StatConstants.page_data_page_monitor_data_tab)
+                        MonitorDataVpFragment()
+                    }
+
                 }
             }
         })

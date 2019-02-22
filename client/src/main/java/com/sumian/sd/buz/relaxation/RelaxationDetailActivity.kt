@@ -16,6 +16,7 @@ import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.homepage.sheet.ShareBottomSheet
 import com.sumian.sd.buz.relaxation.bean.RelaxationData
+import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.h5.H5Uri
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import com.sumian.sd.common.utils.StatusBarUtil
@@ -46,6 +47,10 @@ class RelaxationDetailActivity : BaseActivity(){
             intent.putExtra(KEY_RELAXATION_ID, relaxationDataId)
             ActivityUtils.startActivity(intent)
         }
+    }
+
+    override fun getPageName(): String {
+        return StatConstants.page_relaxation_detail
     }
 
     override fun initWidget() {

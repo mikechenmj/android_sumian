@@ -15,9 +15,12 @@ import com.sumian.sd.buz.advisory.activity.PublishAdvisoryRecordActivity;
 import com.sumian.sd.buz.diaryevaluation.DiaryEvaluationDetailActivity;
 import com.sumian.sd.buz.doctor.bean.DoctorService;
 import com.sumian.sd.buz.doctor.bean.H5DoctorServiceShoppingResult;
+import com.sumian.sd.buz.stat.StatConstants;
 import com.sumian.sd.buz.tel.activity.TelBookingPublishActivity;
 import com.sumian.sd.common.h5.H5Uri;
 import com.sumian.sd.common.pay.activity.PaymentActivity;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
 
@@ -66,6 +69,12 @@ public class DoctorServiceWebActivity extends SdBaseWebViewActivity {
     @Override
     protected String initTitle() {
         return this.mDoctorService.getName();
+    }
+
+    @NotNull
+    @Override
+    public String getPageName() {
+        return StatConstants.page_doctor_service_introduction;
     }
 
     @Override

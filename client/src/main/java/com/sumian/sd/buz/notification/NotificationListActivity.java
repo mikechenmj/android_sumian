@@ -13,7 +13,10 @@ import com.sumian.common.utils.SettingsUtil;
 import com.sumian.common.widget.CommonEmptyView;
 import com.sumian.sd.R;
 import com.sumian.sd.buz.notification.bean.Notification;
+import com.sumian.sd.buz.stat.StatConstants;
 import com.sumian.sd.widget.TitleBar;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +44,12 @@ public class NotificationListActivity extends BaseViewModelActivity<Notification
     @Override
     protected int getLayoutId() {
         return R.layout.activity_notification_list;
+    }
+
+    @NotNull
+    @Override
+    public String getPageName() {
+        return StatConstants.page_notification_list;
     }
 
     @Override

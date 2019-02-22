@@ -12,6 +12,7 @@ import com.sumian.common.statistic.StatUtil
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.setting.version.delegate.VersionDelegate
+import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.h5.H5Uri
 import com.sumian.sd.common.h5.SimpleWebActivity
 import com.sumian.sd.common.utils.StatusBarUtil
@@ -41,7 +42,7 @@ class LoginActivity : BaseViewModelActivity<LoginPresenter>(), LoginContract.Vie
 
     override fun initWidget() {
         super.initWidget()
-        StatUtil.event("page_login")
+        StatUtil.event(StatConstants.page_login)
         StatusBarUtil.setStatusBarTextColorDark(this, true)
         iv_user_agreement.isSelected = true
         tv_send_captcha.setOnClickListener {
@@ -49,7 +50,7 @@ class LoginActivity : BaseViewModelActivity<LoginPresenter>(), LoginContract.Vie
             if (number != null) {
                 onRequestCaptchaSuccess()
                 mViewModel!!.requestCaptcha(number)
-                StatUtil.event("click_captcha", mapOf("usage" to "登录注册", "mobile" to number))
+                StatUtil.event(StatConstants.click_captcha, mapOf("usage" to "登录注册", "mobile" to number))
             }
         }
         bt_login.setOnClickListener { onLoginClick() }
@@ -126,7 +127,7 @@ class LoginActivity : BaseViewModelActivity<LoginPresenter>(), LoginContract.Vie
 
     private fun wechatLogin() {
         mViewModel!!.loginByWechat(this)
-        StatUtil.event("click_wechat_login")
+        StatUtil.event(StatConstants.click_wechat_login)
     }
 
     private fun turnOnCaptchaLogin(turnOn: Boolean) {

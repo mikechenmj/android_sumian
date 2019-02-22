@@ -17,6 +17,7 @@ import com.sumian.sd.buz.cbti.bean.MessageBoard
 import com.sumian.sd.buz.cbti.contract.CBTISelfMessageBoardContract
 import com.sumian.sd.buz.cbti.presenter.CBTISelfMessageBoardPresenter
 import com.sumian.sd.buz.cbti.widget.keyboard.MaxMsgBoardKeyBoard
+import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.widget.dialog.SumianAlertDialog
 import kotlinx.android.synthetic.main.activity_main_message_board.*
 import kotlinx.android.synthetic.main.lay_max_msg_keyboard_view.*
@@ -67,6 +68,10 @@ class CBTIMessageBoardActivity : BaseViewModelActivity<CBTISelfMessageBoardPrese
     override fun initWidgetBefore() {
         super.initWidgetBefore()
         this.mViewModel = CBTISelfMessageBoardPresenter.init(this)
+    }
+
+    override fun getPageName(): String {
+        return StatConstants.page_cbti_write_comment
     }
 
     override fun initWidget() {

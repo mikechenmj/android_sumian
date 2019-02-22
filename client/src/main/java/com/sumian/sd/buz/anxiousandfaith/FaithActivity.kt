@@ -15,6 +15,7 @@ import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.anxiousandfaith.bean.FaithData
 import com.sumian.sd.buz.anxiousandfaith.event.FaithChangeEvent
+import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import com.sumian.sd.common.utils.EventBusUtil
 import kotlinx.android.synthetic.main.activity_faith.*
@@ -49,6 +50,10 @@ class FaithActivity : BaseActivity() {
             intent.putExtra(KEY_FAITH_DATA, faithData)
             ActivityUtils.startActivity(intent)
         }
+    }
+
+    override fun getPageName(): String {
+        return StatConstants.page_add_faith
     }
 
     override fun initBundle(bundle: Bundle) {

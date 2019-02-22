@@ -16,6 +16,7 @@ import com.sumian.sd.base.SdBaseWebViewActivity
 import com.sumian.sd.buz.diary.fillsleepdiary.FillSleepDiaryActivity
 import com.sumian.sd.buz.homepage.bean.SleepPrescriptionWrapper
 import com.sumian.sd.buz.homepage.event.SleepPrescriptionUpdatedEvent
+import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.h5.H5Uri
 import com.sumian.sd.common.utils.EventBusUtil
 import com.sumian.sd.widget.dialog.SumianTitleMessageDialog
@@ -36,6 +37,10 @@ class SleepPrescriptionActivity : SdBaseWebViewActivity() {
         fun launch() {
             ActivityUtils.startActivity(SleepPrescriptionActivity::class.java)
         }
+    }
+
+    override fun getPageName(): String {
+        return StatConstants.page_sleep_prescription_edit
     }
 
     override fun initWidget() {

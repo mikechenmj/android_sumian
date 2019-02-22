@@ -16,6 +16,7 @@ import com.sumian.sd.buz.anxiousandfaith.bean.AnxietyFaithItemViewData
 import com.sumian.sd.buz.anxiousandfaith.event.AnxietyChangeEvent
 import com.sumian.sd.buz.anxiousandfaith.widget.AnxiousFaithItemView
 import com.sumian.sd.buz.anxiousandfaith.widget.EditAnxietyBottomSheetDialog
+import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import com.sumian.sd.common.utils.EventBusUtil
 import kotlinx.android.synthetic.main.activity_anxiety_faith_list.*
@@ -39,6 +40,10 @@ class AnxietyListActivity : BaseActivity() {
 
     override fun getLayoutId(): Int {
         return R.layout.activity_anxiety_faith_list
+    }
+
+    override fun getPageName(): String {
+        return StatConstants.page_anxiety_list
     }
 
     override fun onStart() {

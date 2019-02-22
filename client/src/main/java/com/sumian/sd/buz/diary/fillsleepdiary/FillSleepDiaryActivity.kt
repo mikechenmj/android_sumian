@@ -12,6 +12,7 @@ import com.sumian.sd.R
 import com.sumian.sd.buz.diary.event.SleepRecordFilledEvent
 import com.sumian.sd.buz.diary.fillsleepdiary.fragment.*
 import com.sumian.sd.buz.diary.sleeprecord.bean.SleepRecord
+import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.utils.EventBusUtil
 
 /**
@@ -57,6 +58,10 @@ class FillSleepDiaryActivity : BaseActivity(), FillDiaryViewModel.ProgressListen
 
     override fun showBackNav(): Boolean {
         return true
+    }
+
+    override fun getPageName(): String {
+        return StatConstants.page_sleep_diary_edit
     }
 
     override fun initWidget() {

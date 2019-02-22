@@ -10,6 +10,7 @@ import com.sumian.sd.buz.cbti.activity.CBTIIntroductionActivity
 import com.sumian.sd.buz.diary.fillsleepdiary.SleepDiaryActivity
 import com.sumian.sd.buz.kefu.KefuManager
 import com.sumian.sd.buz.relaxation.RelaxationListActivity
+import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.h5.H5Uri
 import com.sumian.sd.common.h5.SimpleWebActivity
 import com.sumian.sd.wxapi.MiniProgramHelper
@@ -26,6 +27,10 @@ class SleepGuideActivity : SimpleWebActivity() {
         }
     }
 
+    override fun getPageName(): String {
+        return StatConstants.page_sleep_guide_cover
+    }
+
     override fun initWidget() {
         super.initWidget()
         mTitleBar.openTopPadding(true)
@@ -39,7 +44,7 @@ class SleepGuideActivity : SimpleWebActivity() {
             "cbti" -> CBTIIntroductionActivity.show()
             "youzan" -> MiniProgramHelper.launchYouZanOrWeb(this)
             "anxietyAndFaith" -> ActivityUtils.startActivity(AnxiousAndFaithActivity::class.java)
-            "sleepHealth" -> SimpleWebActivity.launch(this, H5Uri.CBTI_SLEEP_HEALTH)
+            "sleepHealth" -> SimpleWebActivity.launch(this, H5Uri.CBTI_SLEEP_HEALTH, StatConstants.page_sleep_health_list)
             "onlineConsult" -> KefuManager.launchKefuActivity()
         }
     }

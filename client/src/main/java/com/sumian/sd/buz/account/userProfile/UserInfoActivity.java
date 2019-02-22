@@ -26,12 +26,15 @@ import com.sumian.sd.buz.account.bean.Social;
 import com.sumian.sd.buz.account.bean.Token;
 import com.sumian.sd.buz.account.bean.UserInfo;
 import com.sumian.sd.buz.account.sheet.ModifySelectBottomSheet;
+import com.sumian.sd.buz.stat.StatConstants;
 import com.sumian.sd.widget.TitleBar;
 import com.sumian.sd.widget.dialog.SumianAlertDialog;
 import com.sumian.sd.widget.divider.SettingDividerView;
 import com.sumian.sd.widget.sheet.PictureBottomSheet;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -122,6 +125,12 @@ public class UserInfoActivity extends BaseViewModelActivity<SdUserInfoPresenter>
         mDvWechat.setOnCheckedChangeListener(this);
         mDvMedicineHistory.setOnShowMoreListener(this);
         AppManager.getAccountViewModel().getLiveDataToken().observe(this, this);
+    }
+
+    @NotNull
+    @Override
+    public String getPageName() {
+        return StatConstants.page_personal_info;
     }
 
     @Override

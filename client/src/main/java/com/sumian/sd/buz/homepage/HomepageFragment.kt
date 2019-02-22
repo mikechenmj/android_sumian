@@ -39,6 +39,7 @@ import com.sumian.sd.buz.homepage.bean.SleepPrescriptionStatus
 import com.sumian.sd.buz.relaxation.RelaxationListActivity
 import com.sumian.sd.buz.scale.ScaleListActivity
 import com.sumian.sd.buz.sleepguide.SleepGuideActivity
+import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.h5.H5Uri
 import com.sumian.sd.common.h5.SimpleWebActivity
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
@@ -83,7 +84,7 @@ class HomepageFragment : BaseViewModelFragment<BaseViewModel>(), OnEnterListener
         initUserInfo()
         cbti_progress_view.setOnEnterLearnBtnClickListener(View.OnClickListener { CBTIIntroductionActivity.show() })
         tv_relaxation.setOnClickListener { ActivityUtils.startActivity(RelaxationListActivity::class.java) }
-        tv_sleep_health.setOnClickListener { SimpleWebActivity.launch(activity!!, H5Uri.CBTI_SLEEP_HEALTH) }
+        tv_sleep_health.setOnClickListener { SimpleWebActivity.launch(activity!!, H5Uri.CBTI_SLEEP_HEALTH, StatConstants.page_sleep_health_list) }
         tv_scale.setOnClickListener { ScaleListActivity.launch() }
         sleep_prescription_view.setOnClickListener { SleepPrescriptionActivity.launch() }
         iv_avatar.setOnClickListener { onAvatarClick() }

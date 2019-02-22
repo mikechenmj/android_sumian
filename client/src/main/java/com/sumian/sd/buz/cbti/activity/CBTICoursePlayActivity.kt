@@ -27,6 +27,7 @@ import com.sumian.sd.buz.cbti.video.NiceVideoPlayerManager
 import com.sumian.sd.buz.cbti.video.NiceVideoView
 import com.sumian.sd.buz.cbti.video.OnVideoViewEvent
 import com.sumian.sd.buz.cbti.video.TxVideoPlayerController
+import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.utils.EventBusUtil
 import com.sumian.sd.widget.TitleBar
 import com.sumian.sd.widget.dialog.SumianAlertDialog
@@ -90,6 +91,10 @@ class CBTICoursePlayActivity : BaseViewModelActivity<CBTICoursePlayAuthPresenter
     override fun getLayoutId(): Int {
         window.setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         return R.layout.activity_main_cbti_lesson_detail_center
+    }
+
+    override fun getPageName(): String {
+        return StatConstants.page_cbti_detail
     }
 
     override fun initWidget() {

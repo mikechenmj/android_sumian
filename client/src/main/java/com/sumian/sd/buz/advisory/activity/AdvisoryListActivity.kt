@@ -9,6 +9,7 @@ import com.sumian.sd.R
 import com.sumian.sd.buz.advisory.bean.Advisory
 import com.sumian.sd.buz.advisory.fragment.AdvisoryListFragment
 import com.sumian.sd.buz.advisory.presenter.AdvisoryListPresenter
+import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.widget.TitleBar
 import kotlinx.android.synthetic.main.activity_main_advisory.*
 
@@ -43,6 +44,10 @@ class AdvisoryListActivity : BaseViewModelActivity<AdvisoryListPresenter>(), Tit
 
     override fun getLayoutId(): Int {
         return R.layout.activity_main_advisory
+    }
+
+    override fun getPageName(): String {
+        return StatConstants.page_image_text_consult_list
     }
 
     override fun initWidget() {

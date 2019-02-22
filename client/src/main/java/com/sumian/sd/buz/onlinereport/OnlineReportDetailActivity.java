@@ -8,8 +8,11 @@ import com.blankj.utilcode.util.LogUtils;
 import com.sumian.common.h5.handler.SBridgeHandler;
 import com.sumian.common.h5.widget.SWebView;
 import com.sumian.common.utils.JsonUtil;
+import com.sumian.sd.buz.stat.StatConstants;
 import com.sumian.sd.common.h5.SimpleWebActivity;
 import com.sumian.sd.main.MainActivity;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -51,5 +54,11 @@ public class OnlineReportDetailActivity extends SimpleWebActivity {
                 MainActivity.Companion.launch(MainActivity.TAB_2, null);
             }
         });
+    }
+
+    @NotNull
+    @Override
+    public String getPageName() {
+        return StatConstants.page_online_report_detail;
     }
 }

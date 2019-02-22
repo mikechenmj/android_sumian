@@ -23,6 +23,7 @@ import com.sumian.common.media.SelectImageActivity
 import com.sumian.common.media.Util
 import com.sumian.common.media.config.SelectOptions
 import com.sumian.common.media.widget.PicturesPreviewer
+import com.sumian.common.statistic.StatUtil
 import com.sumian.common.widget.adapter.EmptyTextWatcher
 import com.sumian.sd.R
 import com.sumian.sd.app.App
@@ -32,6 +33,7 @@ import com.sumian.sd.buz.advisory.presenter.PublishAdvisoryRecordPresenter
 import com.sumian.sd.buz.advisory.utils.AdvisoryContentCacheUtils
 import com.sumian.sd.buz.onlinereport.OnlineReport
 import com.sumian.sd.buz.onlinereport.OnlineReportListActivity
+import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.buz.tel.widget.ServiceSuccessStateView
 import com.sumian.sd.widget.TitleBar
 import com.sumian.sd.widget.dialog.ActionLoadingDialog
@@ -105,6 +107,9 @@ class PublishAdvisoryRecordActivity : BaseViewModelActivity<PublishAdvisoryRecor
         return R.layout.activity_main_publish_advisory_record
     }
 
+    override fun getPageName(): String {
+        return StatConstants.page_image_text_consult_edit
+    }
 
     override fun initWidget() {
         super.initWidget()
@@ -267,8 +272,10 @@ class PublishAdvisoryRecordActivity : BaseViewModelActivity<PublishAdvisoryRecor
                     override fun goBackHome() {
                         finish()
                     }
-                }).show()
+                })
+                        .show()
                 tv_service_submit.visibility = View.GONE
+                StatUtil.trackBeginPage(this, StatConstants.page_consult_send_success)
             }
         }
     }

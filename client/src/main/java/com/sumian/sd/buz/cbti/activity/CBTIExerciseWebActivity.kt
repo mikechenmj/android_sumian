@@ -9,6 +9,7 @@ import com.sumian.common.h5.handler.SBridgeHandler
 import com.sumian.common.h5.widget.SWebView
 import com.sumian.common.utils.JsonUtil
 import com.sumian.sd.base.SdBaseWebViewActivity
+import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.h5.H5Uri
 import java.util.*
 
@@ -43,6 +44,10 @@ class CBTIExerciseWebActivity : SdBaseWebViewActivity() {
 
     override fun initBundle(bundle: Bundle) {
         courseId = bundle.getInt(EXTRAS_COURSE_ID, 0)
+    }
+
+    override fun getPageName(): String {
+        return StatConstants.page_cbti_exercise
     }
 
     override fun getUrlContentPart(): String {

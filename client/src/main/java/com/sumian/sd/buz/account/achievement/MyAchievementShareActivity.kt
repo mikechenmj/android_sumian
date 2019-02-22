@@ -19,6 +19,7 @@ import com.sumian.sd.buz.account.achievement.bean.LastAchievementData
 import com.sumian.sd.buz.account.achievement.bean.Record
 import com.sumian.sd.buz.account.achievement.bean.ShareAchievement
 import com.sumian.sd.buz.account.achievement.presenter.MyAchievementSharePresenter
+import com.sumian.sd.buz.stat.StatConstants
 import com.umeng.socialize.UMShareListener
 import com.umeng.socialize.bean.SHARE_MEDIA
 import kotlinx.android.synthetic.main.activity_main_my_achievement_share.*
@@ -107,6 +108,9 @@ class MyAchievementShareActivity : BaseViewModelActivity<MyAchievementSharePrese
         return false
     }
 
+    override fun getPageName(): String {
+        return StatConstants.page_medal_detail
+    }
     @SuppressLint("SetTextI18n")
     override fun initWidget() {
         super.initWidget()

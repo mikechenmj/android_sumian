@@ -21,6 +21,7 @@ import com.sumian.sd.buz.devicemanager.DeviceManager
 import com.sumian.sd.buz.qrcode.activity.QrCodeActivity
 import com.sumian.sd.buz.setting.remind.RemindSettingActivity
 import com.sumian.sd.buz.setting.version.VersionActivity
+import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.buz.upgrade.activity.DeviceVersionNoticeActivity
 import com.sumian.sd.common.h5.H5Uri
 import com.sumian.sd.common.h5.SimpleWebActivity
@@ -151,5 +152,9 @@ class SettingActivity : BaseActivity(), TitleBar.OnBackClickListener, View.OnCli
                 AppManager.logoutAndLaunchLoginActivity()
             }
         })
+    }
+
+    override fun getPageName(): String {
+        return StatConstants.page_setting
     }
 }

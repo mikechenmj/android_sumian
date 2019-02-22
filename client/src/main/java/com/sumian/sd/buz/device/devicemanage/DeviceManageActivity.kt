@@ -6,6 +6,7 @@ import com.sumian.sd.buz.devicemanager.AutoSyncDeviceDataUtil
 import com.sumian.sd.buz.devicemanager.DeviceManager
 import com.sumian.sd.buz.devicemanager.BlueDevice
 import com.sumian.sd.buz.device.scan.ScanDeviceFragment
+import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.utils.FragmentUtil
 import com.sumian.sd.common.utils.FragmentUtil.Companion.switchFragment
 
@@ -30,6 +31,10 @@ class DeviceManageActivity : BaseActivity() {
 
     override fun getLayoutId(): Int {
         return R.layout.activity_device_manage
+    }
+
+    override fun getPageName(): String {
+        return StatConstants.page_device_management
     }
 
     override fun initWidget() {

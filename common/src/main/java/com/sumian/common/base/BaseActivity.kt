@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.blankj.utilcode.util.KeyboardUtils
 import com.sumian.common.R
 import com.sumian.common.dialog.LoadingDialog
+import com.sumian.common.statistic.StatUtil
 import com.sumian.common.widget.TitleBar
 import org.greenrobot.eventbus.EventBus
 import retrofit2.Call
@@ -81,6 +82,11 @@ abstract class BaseActivity : AppCompatActivity(), BaseShowLoadingView {
             EventBus.getDefault().register(this)
         }
         mActivityDelegate.onStart()
+        StatUtil.trackBeginPage(this, getPageName())
+    }
+
+    open fun getPageName(): String {
+        return this.javaClass.simpleName
     }
 
     override fun onStop() {
@@ -89,6 +95,7 @@ abstract class BaseActivity : AppCompatActivity(), BaseShowLoadingView {
         }
         super.onStop()
         mActivityDelegate.onStop()
+        StatUtil.trackEndPage(this, getPageName())
     }
 
     protected open fun openEventBus(): Boolean {

@@ -8,12 +8,15 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.base.BaseViewModelActivity
+import com.sumian.common.statistic.StatUtil
 import com.sumian.common.widget.voice.VoicePlayer
 import com.sumian.sd.R
 import com.sumian.sd.buz.advisory.adapter.RecordAdapter
 import com.sumian.sd.buz.advisory.bean.Advisory
 import com.sumian.sd.buz.advisory.presenter.RecordPresenter
+import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.h5.H5Uri
+import com.sumian.sd.common.utils.StatusBarUtil
 import com.sumian.sd.main.MainActivity
 import com.sumian.sd.widget.TitleBar
 import com.sumian.sd.widget.dialog.SumianWebDialog
@@ -64,6 +67,10 @@ class AdvisoryDetailActivity : BaseViewModelActivity<RecordPresenter>(), TitleBa
 
     override fun getLayoutId(): Int {
         return R.layout.activity_main_advisory_detail
+    }
+
+    override fun getPageName(): String {
+        return StatConstants.page_image_text_consult_detail
     }
 
     override fun initWidget() {

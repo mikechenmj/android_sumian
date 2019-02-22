@@ -3,6 +3,7 @@ package com.sumian.sd.buz.diary.fillsleepdiary
 import com.sumian.common.base.BaseActivity
 import com.sumian.sd.R
 import com.sumian.sd.buz.diary.sleeprecord.SleepRestrictionIntroductionDialogActivity
+import com.sumian.sd.buz.stat.StatConstants
 
 /**
  * @author : Zhan Xuzhao
@@ -16,6 +17,9 @@ class SleepDiaryActivity : BaseActivity() {
         return R.layout.activity_sleep_diary
     }
 
+    override fun getPageName(): String {
+        return StatConstants.page_sleep_diary_detail
+    }
     override fun initWidget() {
         super.initWidget()
         setTitle(R.string.sleep_diary)

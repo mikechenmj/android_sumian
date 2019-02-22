@@ -7,12 +7,14 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.sumian.common.base.BaseFragment
 import com.sumian.common.network.response.ErrorResponse
+import com.sumian.common.statistic.StatUtil
 import com.sumian.common.utils.TimeUtilV2
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.diary.sleeprecord.bean.SleepRecordSummary
 import com.sumian.sd.buz.diary.sleeprecord.calendar.calendarView.CalendarView
 import com.sumian.sd.buz.diary.sleeprecord.calendar.custom.CalendarPopup
+import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.h5.H5Uri
 import com.sumian.sd.common.h5.SimpleWebActivity
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
@@ -89,7 +91,7 @@ class SleepDiaryVpFragment : BaseFragment() {
         date_bar.setWeekIconClickListener(View.OnClickListener {
             val selectTimeInSecond = (date_bar.getCurrentTime() / 1000).toInt()
             val urlContentPart = H5Uri.SLEEP_RECORD_WEEKLY_REPORT.replace("{date}", selectTimeInSecond.toString())
-            SimpleWebActivity.launch(activity!!, urlContentPart)
+            SimpleWebActivity.launch(activity!!, urlContentPart, StatConstants.page_weekly_sleep_diary)
         })
     }
 

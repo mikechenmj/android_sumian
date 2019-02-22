@@ -14,6 +14,7 @@ import com.sumian.sd.buz.account.achievement.contract.LastAchievementContract
 import com.sumian.sd.buz.account.achievement.contract.MyAchievementContract
 import com.sumian.sd.buz.account.achievement.presenter.LastAchievementPresenter
 import com.sumian.sd.buz.account.achievement.presenter.MyAchievementPresenter
+import com.sumian.sd.buz.stat.StatConstants
 import kotlinx.android.synthetic.main.activity_main_my_achievement.*
 
 /**
@@ -54,6 +55,10 @@ class MyAchievementActivity : BaseViewModelActivity<MyAchievementPresenter>(), B
     override fun initWidgetBefore() {
         super.initWidgetBefore()
         this.mViewModel = MyAchievementPresenter.create(this)
+    }
+
+    override fun getPageName(): String {
+        return StatConstants.page_my_medal
     }
 
     override fun initWidget() {

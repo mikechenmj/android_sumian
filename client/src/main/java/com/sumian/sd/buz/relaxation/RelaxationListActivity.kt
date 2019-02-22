@@ -1,6 +1,8 @@
 package com.sumian.sd.buz.relaxation
 
+import android.content.Intent
 import androidx.recyclerview.widget.GridLayoutManager
+import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
@@ -10,6 +12,7 @@ import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.relaxation.bean.RelaxationData
+import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import com.sumian.sd.common.utils.StatusBarUtil
 import kotlinx.android.synthetic.main.activity_relaxation_list.*
@@ -23,6 +26,11 @@ import kotlinx.android.synthetic.main.activity_relaxation_list.*
  */
 @Suppress("UNUSED_ANONYMOUS_PARAMETER")
 class RelaxationListActivity : BaseActivity() {
+    companion object {
+        fun getLaunchIntent(): Intent {
+            return Intent(ActivityUtils.getTopActivity(), RelaxationListActivity::class.java)
+        }
+    }
     private val mAdapter = ItemAdapter()
 
     override fun getLayoutId(): Int {
@@ -36,6 +44,10 @@ class RelaxationListActivity : BaseActivity() {
     override fun onStart() {
         super.onStart()
         StatusBarUtil.setStatusBarTextColorDark(this, false)
+    }
+
+    override fun getPageName(): String {
+        return StatConstants.page_relaxation_list
     }
 
     override fun initWidget() {

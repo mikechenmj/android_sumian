@@ -8,6 +8,7 @@ import com.sumian.common.network.response.PaginationResponseV2
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.setting.remind.bean.Reminder
+import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import kotlinx.android.synthetic.main.activity_remind_setting.*
 
@@ -23,6 +24,10 @@ class RemindSettingActivity : BaseActivity() {
 
     override fun getLayoutId(): Int {
         return R.layout.activity_remind_setting
+    }
+
+    override fun getPageName(): String {
+        return StatConstants.page_reminder_setting
     }
 
     override fun initWidget() {

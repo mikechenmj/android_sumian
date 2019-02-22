@@ -20,12 +20,14 @@ import com.hyphenate.helpdesk.easeui.util.IntentBuilder
 import com.hyphenate.helpdesk.model.ContentFactory
 import com.sumian.common.image.ImageLoader
 import com.sumian.common.network.response.ErrorResponse
+import com.sumian.common.statistic.StatUtil
 import com.sumian.common.utils.SumianExecutor
 import com.sumian.sd.BuildConfig
 import com.sumian.sd.R
 import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.account.bean.UserInfo
+import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 
 /**
@@ -49,6 +51,7 @@ object KefuManager {
         registerAccountProvider()
         registerUserProfileProvider()
         ActivityUtils.startActivity(getChatRoomLaunchIntent())
+        StatUtil.trackBeginPage(App.getAppContext(), StatConstants.page_sleep_steward)
         mLaunchKefuActivity = true
     }
 

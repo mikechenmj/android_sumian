@@ -6,6 +6,7 @@ import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.statistic.StatUtil
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.account.bean.Token
+import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 
 /**
@@ -67,7 +68,7 @@ class ValidatePhoneNumberPresenter(var view: ValidatePhoneNumberContract.View) :
 
             override fun onSuccess(response: Token?) {
                 AppManager.onLoginSuccess(response)
-                StatUtil.event("e_login_success", mapOf("mode" to "微信"))
+                StatUtil.event(StatConstants.e_login_success, mapOf("mode" to "微信"))
             }
 
             override fun onFinish() {

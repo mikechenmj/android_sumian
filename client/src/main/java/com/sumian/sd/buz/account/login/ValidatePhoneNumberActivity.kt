@@ -5,6 +5,7 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.statistic.StatUtil
 import com.sumian.sd.R
+import com.sumian.sd.buz.stat.StatConstants
 import kotlinx.android.synthetic.main.activity_validate_phone_number.*
 
 class ValidatePhoneNumberActivity : BaseViewModelActivity<ValidatePhoneNumberPresenter>(), ValidatePhoneNumberContract.View {
@@ -52,7 +53,7 @@ class ValidatePhoneNumberActivity : BaseViewModelActivity<ValidatePhoneNumberPre
         super.initWidget()
         title_bar.setOnBackClickListener { onBackPressed() }
         if (mLaunchType == LAUNCH_TYPE_BIND_SOCIAL) {
-            StatUtil.event("page_wechat_binding")
+            StatUtil.event(StatConstants.page_wechat_binding)
         }
         tv_send_captcha.setOnClickListener {
             val mobile = et_mobile.getValidText()
@@ -63,7 +64,7 @@ class ValidatePhoneNumberActivity : BaseViewModelActivity<ValidatePhoneNumberPre
             mViewModel!!.requestCaptcha(mobile)
             onRequestCaptchaSuccess()
             val type = if (mLaunchType == LAUNCH_TYPE_BIND_SOCIAL) "绑定微信" else "忘记密码"
-            StatUtil.event("click_captcha", mapOf("usage" to type, "mobile" to mobile))
+            StatUtil.event(StatConstants.click_captcha, mapOf("usage" to type, "mobile" to mobile))
         }
         btn_next.setOnClickListener {
             val mobile = et_mobile.getValidText()

@@ -20,6 +20,7 @@ import com.sumian.sd.buz.diary.sleeprecord.calendar.custom.CalendarPopup
 import com.sumian.sd.buz.diary.sleeprecord.calendar.custom.SleepCalendarViewWrapper.PRELOAD_THRESHOLD
 import com.sumian.sd.buz.report.weeklyreport.CalendarItemSleepReport
 import com.sumian.sd.buz.report.weeklyreport.WeeklyReportFragmentV2
+import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import kotlinx.android.synthetic.main.activity_weekly_report.*
 import java.util.*
@@ -52,6 +53,9 @@ class WeeklyReportActivity : BaseActivity() {
         return R.layout.activity_weekly_report
     }
 
+    override fun getPageName(): String {
+        return StatConstants.page_weekly_monitor_data
+    }
     override fun initWidget() {
         super.initWidget()
         setTitle(R.string.weekly_data)

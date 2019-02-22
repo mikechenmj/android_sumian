@@ -17,6 +17,7 @@ import com.sumian.sd.base.SdBaseWebViewActivity;
 import com.sumian.sd.buz.doctor.bean.Doctor;
 import com.sumian.sd.buz.doctor.bean.DoctorService;
 import com.sumian.sd.buz.doctor.presenter.BindDoctorPresenter;
+import com.sumian.sd.buz.stat.StatConstants;
 import com.sumian.sd.common.h5.H5Uri;
 import com.sumian.sd.main.MainActivity;
 
@@ -62,10 +63,16 @@ public class DoctorWebActivity extends SdBaseWebViewActivity {
         context.startActivity(intent);
     }
 
+    @NotNull
+    @Override
+    public String getPageName() {
+        return StatConstants.page_doctor_introduction;
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StatUtil.INSTANCE.event("page_binding_doctor", null);
+        StatUtil.INSTANCE.event(StatConstants.page_binding_doctor, null);
     }
 
     @Override
@@ -115,7 +122,7 @@ public class DoctorWebActivity extends SdBaseWebViewActivity {
         } else {
             MainActivity.launch(MainActivity.TAB_2, null);
         }
-        StatUtil.INSTANCE.event("e_binding_success", null);
+        StatUtil.INSTANCE.event(StatConstants.e_binding_success, null);
     }
 
 

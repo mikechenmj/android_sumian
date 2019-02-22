@@ -10,6 +10,7 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.base.BaseRecyclerAdapter
 import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.helper.ToastHelper
+import com.sumian.common.statistic.StatUtil
 import com.sumian.common.widget.dialog.SumianDialog
 import com.sumian.sd.R
 import com.sumian.sd.buz.cbti.adapter.CBTIIntroductionAdapter
@@ -18,6 +19,7 @@ import com.sumian.sd.buz.cbti.event.CBTIServiceBoughtEvent
 import com.sumian.sd.buz.cbti.presenter.CBTIIntroductionPresenter
 import com.sumian.sd.buz.cbti.sheet.CBTIShareBottomSheet
 import com.sumian.sd.buz.homepage.bean.CbtiChapterData
+import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.utils.EventBusUtil
 import kotlinx.android.synthetic.main.activity_main_cbti_introduction.*
 
@@ -146,8 +148,10 @@ class CBTIIntroductionActivity : BaseViewModelActivity<CBTIIntroductionPresenter
         // finish()
         if (isExpired) {
             showCBTIIntroductionWebView()
+            StatUtil.trackBeginPage(this, StatConstants.page_cbti_introduction_from_banner)
         } else {
             hideCBTIIntroductionWebView()
+            StatUtil.trackBeginPage(this, StatConstants.page_cbti_chapter_list)
         }
         // CBTIIntroductionWebActivity.show()//已过期，跳转去购买服务
     }

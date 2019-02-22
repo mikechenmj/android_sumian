@@ -15,6 +15,7 @@ import com.sumian.sd.R.string
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.anxiousandfaith.bean.AnxietyData
 import com.sumian.sd.buz.anxiousandfaith.event.AnxietyChangeEvent
+import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import com.sumian.sd.common.utils.EventBusUtil
 import kotlinx.android.synthetic.main.activity_anxiety.*
@@ -53,6 +54,10 @@ class AnxietyActivity : BaseActivity() {
     override fun initBundle(bundle: Bundle) {
         super.initBundle(bundle)
         mAnxietyData = bundle.getParcelable(KEY_ANXIETY)
+    }
+
+    override fun getPageName(): String {
+        return StatConstants.page_add_anxiety
     }
 
     @SuppressLint("SetTextI18n")

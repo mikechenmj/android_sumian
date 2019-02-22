@@ -17,6 +17,7 @@ import com.sumian.common.utils.JsonUtil
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.diary.sleeprecord.bean.ShareInfo
+import com.sumian.sd.buz.stat.StatConstants
 import com.umeng.socialize.UMShareListener
 import com.umeng.socialize.bean.SHARE_MEDIA
 import kotlinx.android.synthetic.main.activity_share_sleep_diary_dialog_content_1.*
@@ -83,7 +84,7 @@ class ShareSleepDiaryDialogActivity : BaseDialogViewModelActivity<BaseViewModel>
 
     private fun checkPermissionForCreateImageAndShare(shareMedia: SHARE_MEDIA) {
         val channel = if (shareMedia == SHARE_MEDIA.WEIXIN) "微信会话" else "微信朋友圈"
-        StatUtil.event("click_sleep_diary_share", mapOf("channel" to channel))
+        StatUtil.event(StatConstants.click_sleep_diary_share, mapOf("channel" to channel))
         AppManager.getOpenEngine().shareImage(this, v_share_sleep_diary_root.drawToBitmap(), shareMedia, object : UMShareListener {
             override fun onResult(p0: SHARE_MEDIA?) {
             }
@@ -102,7 +103,7 @@ class ShareSleepDiaryDialogActivity : BaseDialogViewModelActivity<BaseViewModel>
 
     override fun onDestroy() {
         super.onDestroy()
-        StatUtil.event("click_sleep_diary_share_cancel")
+        StatUtil.event(StatConstants.click_sleep_diary_share_cancel)
     }
 
 }

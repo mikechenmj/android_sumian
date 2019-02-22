@@ -17,6 +17,7 @@ import com.sumian.sd.buz.anxiousandfaith.bean.AnxietyFaithItemViewData
 import com.sumian.sd.buz.anxiousandfaith.bean.FaithData
 import com.sumian.sd.buz.anxiousandfaith.widget.AnxiousFaithItemView
 import com.sumian.sd.buz.anxiousandfaith.widget.EditAnxietyBottomSheetDialog
+import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import kotlinx.android.synthetic.main.activity_anxious_and_faith.*
 
@@ -43,6 +44,10 @@ class AnxiousAndFaithActivity : BaseActivity() {
         fun getLaunchIntent(): Intent {
             return Intent(ActivityUtils.getTopActivity(), AnxiousAndFaithActivity::class.java)
         }
+    }
+
+    override fun getPageName(): String {
+        return StatConstants.page_anxiety_and_faith
     }
 
     override fun initWidget() {

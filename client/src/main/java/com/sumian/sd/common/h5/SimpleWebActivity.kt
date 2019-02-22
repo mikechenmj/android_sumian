@@ -34,41 +34,49 @@ open class SimpleWebActivity : SdBaseWebViewActivity() {
         } else super.getCompleteUrl()
     }
 
+    override fun getPageName(): String {
+        return intent.getStringExtra(KEY_PAGE_NAME) ?: super.getPageName()
+    }
 
     companion object {
 
         val KEY_TITLE = "KEY_TITLE"
         val KEY_URL_CONTENT_PART = "KEY_URL_CONTENT_PART"
         val KEY_URL_COMPLETE = "KEY_URL_COMPLETE"
+        val KEY_PAGE_NAME = "KEY_PAGE_NAME"
 
-        fun launch(context: Context, urlContentPart: String) {
-            val intent = getLaunchIntentWithPartUrl(context, urlContentPart)
+        @JvmOverloads
+        fun launch(context: Context, urlContentPart: String, pageNameForStat: String? = null) {
+            val intent = getLaunchIntentWithPartUrl(context, urlContentPart, pageNameForStat)
             ActivityUtils.startActivity(intent)
         }
 
-        private fun getLaunchIntentWithPartUrl(context: Context, urlContentPart: String): Intent {
+        @JvmOverloads
+        private fun getLaunchIntentWithPartUrl(context: Context, urlContentPart: String, pageNameForStat: String? = null): Intent {
             val intent = Intent(context, SimpleWebActivity::class.java)
             intent.putExtra(KEY_URL_CONTENT_PART, urlContentPart)
+            intent.putExtra(KEY_PAGE_NAME, pageNameForStat)
             return intent
         }
 
-        private fun getLaunchIntentWithCompleteUrl(context: Context, completeUrl: String, cls: Class<out SimpleWebActivity>): Intent {
+        private fun getLaunchIntentWithCompleteUrl(context: Context, completeUrl: String, cls: Class<out SimpleWebActivity>, pageNameForStat: String? = null): Intent {
             val intent = Intent(context, cls)
             intent.putExtra(KEY_URL_COMPLETE, completeUrl)
+            intent.putExtra(KEY_PAGE_NAME, pageNameForStat)
             return intent
         }
 
-        fun getLaunchIntentWithRouteData(context: Context, pageName: String, data: Map<String, Any?>? = null): Intent {
+        fun getLaunchIntentWithRouteData(context: Context, pageName: String, data: Map<String, Any?>? = null, pageNameForStat: String? = null): Intent {
             return getLaunchIntentWithRouteData(context, H5PayloadData(pageName, data).toJson(), SimpleWebActivity::class.java)
         }
 
         @JvmOverloads
-        fun getLaunchIntentWithRouteData(context: Context, routePageData: String, cls: Class<out SimpleWebActivity> = SimpleWebActivity::class.java): Intent {
+        fun getLaunchIntentWithRouteData(context: Context, routePageData: String, cls: Class<out SimpleWebActivity> = SimpleWebActivity::class.java, pageNameForStat: String? = null): Intent {
             val urlContent = H5Uri.NATIVE_ROUTE
                     .replace("{pageData}", routePageData)
                     .replace("{token}", AppManager.getAccountViewModel().token.token)
             val completeUrl = BuildConfig.BASE_H5_URL + urlContent
-            return getLaunchIntentWithCompleteUrl(context, completeUrl, cls)
+            return getLaunchIntentWithCompleteUrl(context, completeUrl, cls, pageNameForStat)
         }
     }
 }

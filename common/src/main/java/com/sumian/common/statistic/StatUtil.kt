@@ -66,6 +66,7 @@ object StatUtil {
         StatService.removeMultiAccount(mContext, StatMultiAccount.AccountType.PHONE_NO)
     }
 
+    @JvmOverloads
     fun event(eventId: String, properties: Map<String, String>? = null) {
         val prop = Properties()
         if (properties != null) {
@@ -90,5 +91,13 @@ object StatUtil {
 
     fun onPause() {
         StatService.onPause(mContext)
+    }
+
+    fun trackBeginPage(context: Context, pageName: String) {
+        StatService.trackBeginPage(context, pageName)
+    }
+
+    fun trackEndPage(context: Context, pageName: String) {
+        StatService.trackEndPage(context, pageName)
     }
 }

@@ -15,6 +15,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.sumian.common.base.BaseActivity;
 import com.sumian.sd.R;
 import com.sumian.sd.buz.doctor.bean.DoctorService;
+import com.sumian.sd.buz.stat.StatConstants;
 import com.sumian.sd.widget.qr.QrCodeView;
 
 import org.jetbrains.annotations.NotNull;
@@ -62,6 +63,12 @@ public class ScanDoctorQrCodeActivity extends BaseActivity implements View.OnCli
     @Override
     protected int getLayoutId() {
         return R.layout.activity_main_scan_doctor_qr_code;
+    }
+
+    @NotNull
+    @Override
+    public String getPageName() {
+        return StatConstants.page_scan_doctor;
     }
 
     @Override

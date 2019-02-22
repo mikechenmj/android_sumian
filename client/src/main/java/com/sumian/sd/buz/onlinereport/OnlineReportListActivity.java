@@ -14,6 +14,7 @@ import com.sumian.common.network.response.ErrorResponse;
 import com.sumian.common.network.response.PaginationResponseV2;
 import com.sumian.sd.R;
 import com.sumian.sd.app.AppManager;
+import com.sumian.sd.buz.stat.StatConstants;
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback;
 import com.sumian.sd.widget.TitleBar;
 import com.sumian.sd.widget.error.EmptyErrorView;
@@ -87,6 +88,12 @@ public class OnlineReportListActivity extends BaseActivity implements BaseQuickA
             mIsShowListMode = LAUNCH_TYPE_SHOW_INPUT_DATA.equals(launchType);
             mIsPickMode = LAUNCH_TYPE_PICK.equals(launchType);
             mLaunchOnlineReports = bundle.getParcelableArrayList(KEY_LAUNCH_DATA);
+    }
+
+    @NotNull
+    @Override
+    public String getPageName() {
+        return StatConstants.page_online_report_list;
     }
 
     @Override

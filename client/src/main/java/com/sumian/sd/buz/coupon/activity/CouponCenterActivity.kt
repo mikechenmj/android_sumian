@@ -6,6 +6,7 @@ import com.sumian.common.base.BaseActivity
 import com.sumian.sd.R
 import com.sumian.sd.buz.coupon.fragment.CouponActionFragment
 import com.sumian.sd.buz.coupon.fragment.CouponListFragment
+import com.sumian.sd.buz.stat.StatConstants
 import kotlinx.android.synthetic.main.activity_main_coupon_center.*
 
 /**
@@ -33,6 +34,10 @@ class CouponCenterActivity : BaseActivity(), androidx.viewpager.widget.ViewPager
 
     override fun getLayoutId(): Int {
         return R.layout.activity_main_coupon_center
+    }
+
+    override fun getPageName(): String {
+        return StatConstants.page_exchange_center
     }
 
     override fun initWidget() {

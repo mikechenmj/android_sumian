@@ -13,6 +13,7 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.SPUtils
 import com.sumian.common.base.BaseActivity
 import com.sumian.common.notification.NotificationUtil
+import com.sumian.common.statistic.StatUtil
 import com.sumian.common.utils.SettingsUtil
 import com.sumian.sd.R
 import com.sumian.sd.app.App
@@ -25,6 +26,7 @@ import com.sumian.sd.buz.kefu.KefuManager
 import com.sumian.sd.buz.notification.NotificationUnreadCountChangeEvent
 import com.sumian.sd.buz.notification.NotificationViewModel
 import com.sumian.sd.buz.setting.version.delegate.VersionDelegate
+import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.buz.tab.DoctorFragment
 import com.sumian.sd.buz.tab.MeFragment
 import com.sumian.sd.buz.upgrade.activity.DeviceVersionNoticeActivity
@@ -228,10 +230,22 @@ class MainActivity : BaseActivity(), VersionModel.ShowDotCallback {
         changeStatusBarColorByPosition(position)
         mCurrentPosition = position
         when (position) {
-            0 -> LogManager.appendUserOperationLog("首页Tab切换 -> $position 首页")
-            1 -> LogManager.appendUserOperationLog("首页Tab切换 -> $position 数据")
-            2 -> LogManager.appendUserOperationLog("首页Tab切换 -> $position 医生")
-            3 -> LogManager.appendUserOperationLog("首页Tab切换 -> $position 我的")
+            0 -> {
+                LogManager.appendUserOperationLog("首页Tab切换 -> $position 首页")
+                StatUtil.trackBeginPage(this, StatConstants.page_home_tab)
+            }
+            1 -> {
+                LogManager.appendUserOperationLog("首页Tab切换 -> $position 数据")
+                StatUtil.trackBeginPage(this, StatConstants.page_data_tab)
+            }
+            2 -> {
+                LogManager.appendUserOperationLog("首页Tab切换 -> $position 医生")
+                StatUtil.trackBeginPage(this, StatConstants.page_doctor_tab)
+            }
+            3 -> {
+                LogManager.appendUserOperationLog("首页Tab切换 -> $position 我的")
+                StatUtil.trackBeginPage(this, StatConstants.page_me_tab)
+            }
         }
     }
 

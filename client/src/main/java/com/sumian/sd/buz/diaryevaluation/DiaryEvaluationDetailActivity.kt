@@ -10,6 +10,7 @@ import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.utils.JsonUtil
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.diaryevaluation.bean.DiaryEvaluationData
+import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.h5.SimpleWebActivity
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import com.sumian.sd.main.MainActivity
@@ -66,6 +67,10 @@ class DiaryEvaluationDetailActivity : SimpleWebActivity() {
             page["payload"] = payload
             return SimpleWebActivity.getLaunchIntentWithRouteData(context, JsonUtil.toJson(page), DiaryEvaluationDetailActivity::class.java)
         }
+    }
+
+    override fun getPageName(): String {
+        return StatConstants.page_diary_evaluation_detail
     }
 
     override fun registerHandler(sWebView: SWebView) {

@@ -6,6 +6,7 @@ import com.sumian.common.base.BaseActivity
 import com.sumian.common.utils.JsonUtil
 import com.sumian.sd.R
 import com.sumian.sd.buz.devicemanager.BlueDevice
+import com.sumian.sd.buz.stat.StatConstants
 
 /**
  * @author : Zhan Xuzhao
@@ -31,6 +32,9 @@ class ScanDeviceActivity : BaseActivity() {
         }
     }
 
+    override fun getPageName(): String {
+        return StatConstants.page_add_device
+    }
     override fun initWidget() {
         super.initWidget()
         setTitle(R.string.add_device)

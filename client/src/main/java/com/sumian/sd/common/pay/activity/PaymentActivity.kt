@@ -13,6 +13,7 @@ import com.sumian.common.statistic.StatUtil
 import com.sumian.sd.R
 import com.sumian.sd.buz.doctor.bean.DoctorService
 import com.sumian.sd.buz.doctor.bean.DoctorServicePackage
+import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.pay.bean.PayCouponCode
 import com.sumian.sd.common.pay.bean.PayOrder
 import com.sumian.sd.common.pay.dialog.PayDialog
@@ -107,7 +108,11 @@ class PaymentActivity : BaseViewModelActivity<PayPresenter>(), View.OnClickListe
         bt_pay.setOnClickListener(this)
         pay_group_view.setOnSelectPayWayListener(this)
         pay_calculate_item_view.setOnMoneyChangeCallback(this)
-        StatUtil.event("page_pay")
+        StatUtil.event(StatConstants.page_pay)
+    }
+
+    override fun getPageName(): String {
+        return StatConstants.page_pay
     }
 
     override fun initData() {
@@ -130,7 +135,7 @@ class PaymentActivity : BaseViewModelActivity<PayPresenter>(), View.OnClickListe
         when (v.id) {
             R.id.bt_pay -> {
                 pay()
-                StatUtil.event("click_pay")
+                StatUtil.event(StatConstants.click_pay)
             }
             else -> {
             }
@@ -189,7 +194,7 @@ class PaymentActivity : BaseViewModelActivity<PayPresenter>(), View.OnClickListe
     }
 
     fun onOrderPaySuccess(payMsg: String) {
-        StatUtil.event("e_pay_success",
+        StatUtil.event(StatConstants.e_pay_success,
                 mapOf(
                         "amount" to pay_calculate_item_view.currentMoney.toString(),
                         "quantity" to pay_calculate_item_view.currentBuyCount.toString(),

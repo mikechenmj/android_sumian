@@ -14,8 +14,11 @@ import com.sumian.common.utils.JsonUtil;
 import com.sumian.common.utils.StreamUtil;
 import com.sumian.common.utils.SumianExecutor;
 import com.sumian.sd.base.SdBaseWebViewActivity;
+import com.sumian.sd.buz.stat.StatConstants;
 import com.sumian.sd.common.h5.bean.ImageCount;
 import com.sumian.sd.widget.sheet.SelectPictureBottomSheet;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -55,6 +58,12 @@ public class SleepFileWebActivity extends SdBaseWebViewActivity {
     @Override
     protected String h5HandlerName() {
         return "getImgUrl";
+    }
+
+    @NotNull
+    @Override
+    public String getPageName() {
+        return StatConstants.page_sleep_archive;
     }
 
     @Override

@@ -399,13 +399,6 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.TranslucentStatus" />
-        <activity
-            android:name=".buz.homepage.RelaxationActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme.TranslucentStatus" />
-
         <service
             android:name=".buz.devicemanager.pattern.SyncPatternService"
             android:exported="false" />
@@ -568,9 +561,6 @@
             android:name=".buz.sleepguide.SleepGuideActivity"
             android:launchMode="singleTop"
             android:theme="@style/BaseAppTheme.TranslucentStatus" />
-        <activity
-            android:name=".buz.sleepguide.SleepGuideResultActivity"
-            android:launchMode="singleTop" />
         <activity
             android:name=".buz.homepage.SleepGuideDialogActivity"
             android:launchMode="singleTop"

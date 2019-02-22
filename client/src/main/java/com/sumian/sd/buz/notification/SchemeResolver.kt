@@ -14,8 +14,8 @@ import com.sumian.sd.buz.cbti.activity.CBTIWeekCoursePartActivity
 import com.sumian.sd.buz.diary.sleeprecord.SleepRecordActivity
 import com.sumian.sd.buz.diaryevaluation.DiaryEvaluationDetailActivity
 import com.sumian.sd.buz.diaryevaluation.DiaryEvaluationListActivity
-import com.sumian.sd.buz.homepage.RelaxationActivity
 import com.sumian.sd.buz.onlinereport.OnlineReportDetailActivity
+import com.sumian.sd.buz.relaxation.RelaxationListActivity
 import com.sumian.sd.buz.scale.ScaleDetailActivity
 import com.sumian.sd.buz.tel.activity.TelBookingDetailActivity
 import com.sumian.sd.buz.tel.activity.TelBookingListActivity
@@ -126,7 +126,7 @@ object SchemeResolver : ISchemeResolver {
      * sleepdoctor://relaxations?user_id=2102
      */
     fun resolveRelaxationScheme(context: Context, uri: Uri): Intent {
-        return RelaxationActivity.getLaunchIntent(context)
+        return RelaxationListActivity.getLaunchIntent()
     }
 
     /**

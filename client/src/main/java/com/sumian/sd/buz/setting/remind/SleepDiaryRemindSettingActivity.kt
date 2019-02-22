@@ -8,6 +8,7 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.sd.R
 import com.sumian.sd.buz.setting.remind.bean.Reminder
+import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.utils.TimeUtil
 import com.sumian.sd.widget.sheet.SelectTimeHHmmBottomSheet
 import kotlinx.android.synthetic.main.activity_sleep_diary_remind_setting.*
@@ -52,6 +53,15 @@ class SleepDiaryRemindSettingActivity : BaseViewModelActivity<SleepDiaryReminder
 
     override fun getLayoutId(): Int {
         return R.layout.activity_sleep_diary_remind_setting
+    }
+
+    override fun getPageName(): String {
+        return when (mReminderType) {
+            Reminder.TYPE_SLEEP_DIARY -> StatConstants.page_sleep_diary_remind_setting
+            Reminder.TYPE_RELAXATION_TRAINING -> StatConstants.page_relaxation_reminder_setting
+            Reminder.TYPE_ANXIETY -> StatConstants.page_anxiety_reminder_setting
+            else -> StatConstants.page_sleep_diary_remind_setting
+        }
     }
 
     override fun initWidget() {

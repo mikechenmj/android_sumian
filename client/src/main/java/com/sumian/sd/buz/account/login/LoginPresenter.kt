@@ -9,6 +9,7 @@ import com.sumian.common.utils.JsonUtil
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.account.bean.Token
+import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import com.umeng.socialize.UMAuthListener
 import com.umeng.socialize.bean.SHARE_MEDIA
@@ -33,7 +34,7 @@ class LoginPresenter(var view: LoginContract.View) : BaseViewModel(){
 
             override fun onSuccess(response: Token?) {
                 AppManager.onLoginSuccess(response)
-                StatUtil.event("e_login_success", mapOf("mode" to "密码", "mobile" to mobile))
+                StatUtil.event(StatConstants.e_login_success, mapOf("mode" to "密码", "mobile" to mobile))
 
             }
 
@@ -58,7 +59,7 @@ class LoginPresenter(var view: LoginContract.View) : BaseViewModel(){
 
             override fun onSuccess(response: Token?) {
                 AppManager.onLoginSuccess(response)
-                StatUtil.event("e_login_success", mapOf("mode" to "验证码", "mobile" to mobile))
+                StatUtil.event(StatConstants.e_login_success, mapOf("mode" to "验证码", "mobile" to mobile))
             }
 
             override fun onFinish() {
@@ -112,7 +113,7 @@ class LoginPresenter(var view: LoginContract.View) : BaseViewModel(){
 
             override fun onSuccess(response: Token?) {
                 AppManager.onLoginSuccess(response)
-                StatUtil.event("e_login_success", mapOf("mode" to "微信"))
+                StatUtil.event(StatConstants.e_login_success, mapOf("mode" to "微信"))
             }
 
             override fun onFinish() {

@@ -5,6 +5,7 @@ import android.os.Bundle
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.base.BaseActivity
 import com.sumian.sd.R
+import com.sumian.sd.buz.stat.StatConstants
 import kotlinx.android.synthetic.main.activity_main_tel_booking.*
 
 class DiaryEvaluationListActivity : BaseActivity() {
@@ -33,6 +34,9 @@ class DiaryEvaluationListActivity : BaseActivity() {
         mType = bundle.getInt(KEY_TYPE, DiaryEvaluationListFragment.TYPE_UNFINISHED)
     }
 
+    override fun getPageName(): String {
+        return StatConstants.page_diary_evaluation_list
+    }
 
     override fun initWidget() {
         super.initWidget()

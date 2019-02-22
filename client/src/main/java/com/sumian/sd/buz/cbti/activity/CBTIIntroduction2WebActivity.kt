@@ -9,6 +9,7 @@ import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.SdBaseWebViewActivity
 import com.sumian.sd.buz.cbti.sheet.CBTIShareBottomSheet
+import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.h5.H5Uri
 
 /**
@@ -32,11 +33,11 @@ class CBTIIntroduction2WebActivity : SdBaseWebViewActivity() {
 
     override fun initWidget() {
         super.initWidget()
-        StatUtil.event("page_cbti_introduction")
+        StatUtil.trackBeginPage(this, StatConstants.page_cbti_introduction_from_learn_more)
         getTitleBar().openTopPadding(true)
         getTitleBar().showMoreIcon(R.drawable.ic_nav_share)
         getTitleBar().setOnMenuClickListener {
-            StatUtil.event("click_cbti_introduction_share")
+            StatUtil.event(StatConstants.click_cbti_introduction_share)
             CBTIShareBottomSheet.show(fragmentManager = supportFragmentManager)
         }
     }

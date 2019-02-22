@@ -16,11 +16,13 @@ import com.blankj.utilcode.util.ToastUtils
 import com.sumian.blue.callback.BlueAdapterCallback
 import com.sumian.blue.callback.BlueScanCallback
 import com.sumian.common.base.BaseFragment
+import com.sumian.common.statistic.StatUtil
 import com.sumian.common.widget.dialog.SumianDialog
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.devicemanager.DeviceManager
 import com.sumian.sd.buz.devicemanager.BlueDevice
+import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.log.LogManager
 import com.sumian.sd.common.utils.LocationManagerUtil
 import kotlinx.android.synthetic.main.fragment_scan_device.*
@@ -179,6 +181,7 @@ class ScanDeviceFragment : BaseFragment() {
             bt_confirm.visibility = View.VISIBLE
             vg_scan_more_tvs.visibility = View.VISIBLE
         }
+        StatUtil.trackBeginPage(activity!!, StatConstants.page_scan_device)
         LogManager.appendBluetoothLog("该次搜索到一台设备 " + mScanResults[0].name + " " + mScanResults[0].mac)
     }
 

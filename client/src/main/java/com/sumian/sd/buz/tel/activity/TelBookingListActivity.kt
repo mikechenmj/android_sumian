@@ -5,6 +5,7 @@ import android.os.Bundle
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.base.BaseActivity
 import com.sumian.sd.R
+import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.buz.tel.bean.TelBooking
 import com.sumian.sd.buz.tel.fragment.TelBookingListFragment
 import kotlinx.android.synthetic.main.activity_main_tel_booking.*
@@ -46,6 +47,10 @@ class TelBookingListActivity : BaseActivity() {
 
     override fun getLayoutId(): Int {
         return R.layout.activity_main_tel_booking
+    }
+
+    override fun getPageName(): String {
+        return StatConstants.page_tel_consult_book_record_list
     }
 
     override fun initWidget() {
