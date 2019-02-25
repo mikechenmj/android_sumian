@@ -1,6 +1,7 @@
 package com.sumian.sd.buz.diary.fillsleepdiary
 
 import com.sumian.common.base.BaseActivity
+import com.sumian.common.statistic.StatUtil
 import com.sumian.sd.R
 import com.sumian.sd.buz.diary.sleeprecord.SleepRestrictionIntroductionDialogActivity
 import com.sumian.sd.buz.stat.StatConstants
@@ -22,6 +23,7 @@ class SleepDiaryActivity : BaseActivity() {
     }
     override fun initWidget() {
         super.initWidget()
+        StatUtil.event(StatConstants.enter_sleep_diary_detail_page)
         setTitle(R.string.sleep_diary)
         SleepRestrictionIntroductionDialogActivity.start()
     }

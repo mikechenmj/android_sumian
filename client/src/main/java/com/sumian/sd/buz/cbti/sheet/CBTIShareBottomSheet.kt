@@ -4,9 +4,11 @@ import android.view.Gravity
 import android.view.View
 import androidx.fragment.app.FragmentManager
 import com.sumian.common.helper.ToastHelper
+import com.sumian.common.statistic.StatUtil
 import com.sumian.sd.BuildConfig
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
+import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.widget.base.BaseBottomSheetView
 import com.umeng.socialize.UMShareListener
 import com.umeng.socialize.bean.SHARE_MEDIA
@@ -75,6 +77,7 @@ class CBTIShareBottomSheet : BaseBottomSheetView(), UMShareListener, View.OnClic
     }
 
     override fun onStart(shareMedia: SHARE_MEDIA?) {
+        StatUtil.event(StatConstants.on_cbti_introduction_page_share_success)
     }
 
     override fun onCancel(shareMedia: SHARE_MEDIA?) {

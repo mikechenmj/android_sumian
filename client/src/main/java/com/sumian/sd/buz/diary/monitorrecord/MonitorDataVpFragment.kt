@@ -13,6 +13,7 @@ import com.blankj.utilcode.util.LogUtils
 import com.google.gson.JsonObject
 import com.sumian.common.base.BaseFragment
 import com.sumian.common.network.response.ErrorResponse
+import com.sumian.common.statistic.StatUtil
 import com.sumian.common.utils.TimeUtilV2
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
@@ -22,6 +23,7 @@ import com.sumian.sd.buz.diary.sleeprecord.calendar.calendarView.CalendarView
 import com.sumian.sd.buz.diary.sleeprecord.calendar.custom.CalendarPopup
 import com.sumian.sd.buz.devicemanager.uploadsleepdata.UploadSleepDataFinishedEvent
 import com.sumian.sd.buz.report.weeklyreport.CalendarItemSleepReport
+import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import com.sumian.sd.common.utils.EventBusUtil
 import kotlinx.android.synthetic.main.fragment_monitor_data_vp.*
@@ -152,7 +154,10 @@ class MonitorDataVpFragment : BaseFragment() {
             }
         })
         date_bar.setOnDateClickListener(CalendarView.OnDateClickListener { time -> scrollToTime(time) })
-        date_bar.setWeekIconClickListener(View.OnClickListener { WeeklyReportActivity.launch(date_bar.getCurrentTime()) })
+        date_bar.setWeekIconClickListener(View.OnClickListener {
+            StatUtil.event(StatConstants.click_monitor_data_page_weekly_report_icon)
+            WeeklyReportActivity.launch(date_bar.getCurrentTime())
+        })
     }
 
     private fun scrollToTime(time: Long) {

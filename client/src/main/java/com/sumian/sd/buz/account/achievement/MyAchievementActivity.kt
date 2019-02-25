@@ -7,6 +7,7 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.base.BaseRecyclerAdapter
 import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.helper.ToastHelper
+import com.sumian.common.statistic.StatUtil
 import com.sumian.sd.R
 import com.sumian.sd.buz.account.achievement.adapter.MyMedalAdapter
 import com.sumian.sd.buz.account.achievement.bean.*
@@ -76,6 +77,7 @@ class MyAchievementActivity : BaseViewModelActivity<MyAchievementPresenter>(), B
     }
 
     override fun onItemClick(position: Int, itemId: Long) {
+        StatUtil.event(StatConstants.click_my_medal_page_medel_icon)
         val achievement = adapter.getItem(position)
         if (!achievement.isHave()) {
             ToastHelper.show(this, getString(R.string.none_get_achievement_toast), Gravity.CENTER)

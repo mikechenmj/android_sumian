@@ -52,6 +52,7 @@ object KefuManager {
         registerUserProfileProvider()
         ActivityUtils.startActivity(getChatRoomLaunchIntent())
         StatUtil.trackBeginPage(App.getAppContext(), StatConstants.page_sleep_steward)
+        StatUtil.event(StatConstants.enter_sleep_steward_page)
         mLaunchKefuActivity = true
     }
 

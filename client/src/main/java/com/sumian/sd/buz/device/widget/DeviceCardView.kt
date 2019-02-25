@@ -10,6 +10,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ToastUtils
+import com.sumian.common.statistic.StatUtil
 import com.sumian.common.utils.ColorCompatUtil
 import com.sumian.sd.R
 import com.sumian.sd.buz.devicemanager.DeviceManager
@@ -17,6 +18,7 @@ import com.sumian.sd.buz.devicemanager.MonitorEventListener
 import com.sumian.sd.buz.devicemanager.BlueDevice
 import com.sumian.sd.buz.diary.DataFragment
 import com.sumian.sd.buz.diary.event.ChangeDataFragmentTabEvent
+import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.log.LogManager
 import com.sumian.sd.common.utils.EventBusUtil
 import com.sumian.sd.common.utils.getString
@@ -121,10 +123,12 @@ class DeviceCardView(context: Context, attributeSet: AttributeSet? = null) : Fra
                 }
             }
             tv_device_data.setOnClickListener {
+                StatUtil.event(StatConstants.click_home_page_device_data_icon)
                 EventBusUtil.postStickyEvent(ChangeMainTabEvent(MainActivity.TAB_1))
                 EventBusUtil.postStickyEvent(ChangeDataFragmentTabEvent(DataFragment.TAB_1))
             }
             tv_know_device.setOnClickListener {
+                StatUtil.event(StatConstants.click_home_page_learn_more_about_device)
                 MiniProgramHelper.launchYouZanOrWeb(getContext())
             }
         }

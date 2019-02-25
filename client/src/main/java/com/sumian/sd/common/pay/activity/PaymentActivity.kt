@@ -136,6 +136,7 @@ class PaymentActivity : BaseViewModelActivity<PayPresenter>(), View.OnClickListe
             R.id.bt_pay -> {
                 pay()
                 StatUtil.event(StatConstants.click_pay)
+                StatUtil.event(StatConstants.click_pay_page_pay_btn)
             }
             else -> {
             }
@@ -195,6 +196,13 @@ class PaymentActivity : BaseViewModelActivity<PayPresenter>(), View.OnClickListe
 
     fun onOrderPaySuccess(payMsg: String) {
         StatUtil.event(StatConstants.e_pay_success,
+                mapOf(
+                        "amount" to pay_calculate_item_view.currentMoney.toString(),
+                        "quantity" to pay_calculate_item_view.currentBuyCount.toString(),
+                        "channel" to if (mPayChannel == ALIPAY_PAY_TYPE) "支付宝" else "微信",
+                        "productName" to mDoctorService!!.name
+                ))
+        StatUtil.event(StatConstants.on_cbti_pay_success,
                 mapOf(
                         "amount" to pay_calculate_item_view.currentMoney.toString(),
                         "quantity" to pay_calculate_item_view.currentBuyCount.toString(),

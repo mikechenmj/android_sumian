@@ -71,7 +71,10 @@ class ScanDeviceFragment : BaseFragment() {
         recycler_view.layoutManager = LinearLayoutManager(activity!!)
         recycler_view.adapter = mDeviceAdapter
         bt_re_scan.setOnClickListener { startScan() }
-        bt_confirm.setOnClickListener { onDeviceSelected(mScanResults[0]) }
+        bt_confirm.setOnClickListener {
+            StatUtil.event(StatConstants.click_scan_device_page_confirm_bind_btn)
+            onDeviceSelected(mScanResults[0])
+        }
         showEnableBtnOrStartScan()
     }
 
@@ -278,6 +281,7 @@ class ScanDeviceFragment : BaseFragment() {
     }
 
     private fun onDeviceSelected(device: BlueDevice) {
+        StatUtil.event(StatConstants.on_bind_device_success)
         unregisterBlueCallbacks()
         stopScanIfIsScanning()
         DeviceManager.cacheBlueDevice(device)

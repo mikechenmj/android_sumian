@@ -29,8 +29,10 @@ class ShareBottomSheet : BaseBottomSheetView(), UMShareListener, View.OnClickLis
         private const val ARGS_THUMB_URL = "com.sumian.sd.args.thumb_url"
 
         @JvmStatic
-        fun show(fragmentManager: androidx.fragment.app.FragmentManager, url: String, title: String, desc: String, momentTitle: String, thumbUrl: String) {
+        fun show(fragmentManager: androidx.fragment.app.FragmentManager, url: String, title: String, desc: String, momentTitle: String, thumbUrl: String,
+                 umShareListener: UMShareListener? = null) {
             val relaxationShareBottomSheet = ShareBottomSheet()
+            relaxationShareBottomSheet.mListener = umShareListener
             relaxationShareBottomSheet.arguments = Bundle().apply {
                 putString(ARGS_URL, url)
                 putString(ARGS_TITLE, title)
@@ -51,6 +53,7 @@ class ShareBottomSheet : BaseBottomSheetView(), UMShareListener, View.OnClickLis
     private lateinit var shareDesc: String
     private lateinit var shareMomentTitle: String
     private lateinit var thumbUrl: String
+    private var mListener: UMShareListener? = null
 
     override fun getLayout(): Int {
         return R.layout.lay_share_bottom_sheet
@@ -105,18 +108,21 @@ class ShareBottomSheet : BaseBottomSheetView(), UMShareListener, View.OnClickLis
     }
 
     override fun onStart(shareMedia: SHARE_MEDIA?) {
+        mListener?.onStart(shareMedia)
     }
 
     override fun onCancel(shareMedia: SHARE_MEDIA?) {
         ToastHelper.show(context, "分享已取消", Gravity.CENTER)
+        mListener?.onCancel(shareMedia)
     }
 
     override fun onResult(shareMedia: SHARE_MEDIA?) {
         dismissAllowingStateLoss()
+        mListener?.onResult(shareMedia)
     }
 
     override fun onError(shareMedia: SHARE_MEDIA?, throwable: Throwable?) {
         ToastHelper.show(context, "分享失败", Gravity.CENTER)
-
+        mListener?.onError(shareMedia, throwable)
     }
 }

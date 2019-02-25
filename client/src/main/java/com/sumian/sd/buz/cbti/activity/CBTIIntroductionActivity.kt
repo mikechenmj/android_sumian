@@ -69,6 +69,7 @@ class CBTIIntroductionActivity : BaseViewModelActivity<CBTIIntroductionPresenter
         mTitleBar.showMoreIcon(R.drawable.ic_nav_share)
         mTitleBar.setOnMenuClickListener {
             CBTIShareBottomSheet.show(fragmentManager = supportFragmentManager)
+            StatUtil.event(StatConstants.click_cbti_main_page_share_btn)
         }
         recycler.adapter = mAdapter
         recycler.itemAnimator = null
@@ -149,6 +150,7 @@ class CBTIIntroductionActivity : BaseViewModelActivity<CBTIIntroductionPresenter
         if (isExpired) {
             showCBTIIntroductionWebView()
             StatUtil.trackBeginPage(this, StatConstants.page_cbti_introduction_from_banner)
+            StatUtil.event(StatConstants.enter_cbti_introduction_page)
         } else {
             hideCBTIIntroductionWebView()
             StatUtil.trackBeginPage(this, StatConstants.page_cbti_chapter_list)

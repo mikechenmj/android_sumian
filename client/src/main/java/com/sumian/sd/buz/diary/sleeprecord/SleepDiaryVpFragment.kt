@@ -60,7 +60,10 @@ class SleepDiaryVpFragment : BaseFragment() {
             override fun onPageSelected(position: Int) {
             }
         })
-        tv_sleep_restriction_hint.setOnClickListener { SleepRestrictionIntroductionDialogActivity.start() }
+        tv_sleep_restriction_hint.setOnClickListener {
+            SleepRestrictionIntroductionDialogActivity.start()
+            StatUtil.event(StatConstants.click_sleep_diary_page_relationship_between_sleepdiary_and_restriction)
+        }
     }
 
     private fun initDateBar() {
@@ -89,6 +92,7 @@ class SleepDiaryVpFragment : BaseFragment() {
         })
         date_bar.setOnDateClickListener(CalendarView.OnDateClickListener { time -> scrollToTime(time) })
         date_bar.setWeekIconClickListener(View.OnClickListener {
+            StatUtil.event(StatConstants.click_sleep_diary_page_weekly_report_icon)
             val selectTimeInSecond = (date_bar.getCurrentTime() / 1000).toInt()
             val urlContentPart = H5Uri.SLEEP_RECORD_WEEKLY_REPORT.replace("{date}", selectTimeInSecond.toString())
             SimpleWebActivity.launch(activity!!, urlContentPart, StatConstants.page_weekly_sleep_diary)

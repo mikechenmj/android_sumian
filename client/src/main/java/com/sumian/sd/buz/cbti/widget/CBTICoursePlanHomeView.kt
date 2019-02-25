@@ -4,9 +4,11 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.sumian.common.statistic.StatUtil
 import com.sumian.common.widget.voice.IVisible
 import com.sumian.sd.R
 import com.sumian.sd.buz.cbti.activity.CBTIIntroduction2WebActivity
+import com.sumian.sd.buz.stat.StatConstants
 import kotlinx.android.synthetic.main.lay_cbti_lesson_introduction_home_view.view.*
 
 /**
@@ -34,6 +36,7 @@ class CBTICoursePlanHomeView : ConstraintLayout, IVisible {
         tv_cbti_invalid_time.text = formatExpiredTime
         tv_cbti_introduction.setOnClickListener {
             CBTIIntroduction2WebActivity.show()
+            StatUtil.event(StatConstants.click_cbti_main_page_see_introduction_btn)
         }
     }
 

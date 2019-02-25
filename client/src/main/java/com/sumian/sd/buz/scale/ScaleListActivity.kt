@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.base.BaseActivity
+import com.sumian.common.statistic.StatUtil
 import com.sumian.sd.R
 import com.sumian.sd.buz.stat.StatConstants
 import kotlinx.android.synthetic.main.activity_main_advisory.*
@@ -39,6 +40,7 @@ class ScaleListActivity : BaseActivity() {
 
     override fun initWidget() {
         super.initWidget()
+        StatUtil.event(StatConstants.enter_scale_evaluation_page)
         setTitle(R.string.scale_evaluation)
         tab_layout?.setupWithViewPager(view_pager, true)
         view_pager?.adapter = object : FragmentPagerAdapter(supportFragmentManager) {

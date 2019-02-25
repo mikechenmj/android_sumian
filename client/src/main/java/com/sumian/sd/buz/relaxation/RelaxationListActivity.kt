@@ -9,6 +9,7 @@ import com.chad.library.adapter.base.BaseViewHolder
 import com.sumian.common.base.BaseActivity
 import com.sumian.common.image.ImageLoader
 import com.sumian.common.network.response.ErrorResponse
+import com.sumian.common.statistic.StatUtil
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.relaxation.bean.RelaxationData
@@ -52,6 +53,7 @@ class RelaxationListActivity : BaseActivity() {
 
     override fun initWidget() {
         super.initWidget()
+        StatUtil.event(StatConstants.enter_relaxation_page)
         setTitle(R.string.relax_exercise)
         rv_relaxation.layoutManager = GridLayoutManager(this, 2)
         rv_relaxation.adapter = mAdapter

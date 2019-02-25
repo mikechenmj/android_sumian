@@ -11,6 +11,7 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.qmuiteam.qmui.util.QMUISpanHelper
 import com.sumian.common.base.BaseViewModelFragment
 import com.sumian.common.image.loadImage
+import com.sumian.common.statistic.StatUtil
 import com.sumian.common.utils.BitmapUtil
 import com.sumian.common.utils.SumianExecutor
 import com.sumian.sd.R
@@ -34,6 +35,7 @@ import com.sumian.sd.buz.onlinereport.OnlineReportListActivity
 import com.sumian.sd.buz.scale.ScaleListActivity
 import com.sumian.sd.buz.setting.SettingActivity
 import com.sumian.sd.buz.setting.version.delegate.VersionDelegate
+import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.buz.tel.activity.TelBookingListActivity
 import com.sumian.sd.buz.upgrade.model.VersionModel
 import com.sumian.sd.common.h5.SleepFileWebActivity
@@ -125,6 +127,7 @@ class MeFragment : BaseViewModelFragment<GetAchievementListPresenter>(), View.On
                 KefuManager.launchKefuActivity()
             }
             R.id.dv_my_metal -> {
+                StatUtil.event(StatConstants.click_me_page_my_medal_item)
                 MyAchievementActivity.show()
             }
             R.id.dv_device_manage -> {
@@ -160,6 +163,7 @@ class MeFragment : BaseViewModelFragment<GetAchievementListPresenter>(), View.On
     }
 
     override fun showEvaluation() {
+        StatUtil.event(StatConstants.click_me_page_my_scale_icon)
         ScaleListActivity.launch(1)
     }
 

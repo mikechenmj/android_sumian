@@ -13,6 +13,7 @@ import com.sumian.common.base.BaseViewModel
 import com.sumian.common.base.BaseViewModelFragment
 import com.sumian.common.image.ImageLoader
 import com.sumian.common.network.response.ErrorResponse
+import com.sumian.common.statistic.StatUtil
 import com.sumian.common.utils.JsonUtil
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
@@ -40,6 +41,7 @@ import com.sumian.sd.buz.relaxation.RelaxationListActivity
 import com.sumian.sd.buz.scale.ScaleListActivity
 import com.sumian.sd.buz.sleepguide.SleepGuideActivity
 import com.sumian.sd.buz.stat.StatConstants
+import com.sumian.sd.buz.stat.StatConstants.click_home_page_anxiety_and_faith
 import com.sumian.sd.common.h5.H5Uri
 import com.sumian.sd.common.h5.SimpleWebActivity
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
@@ -62,7 +64,8 @@ import org.greenrobot.eventbus.Subscribe
  *     version: 1.0
  * </pre>
  */
-class HomepageFragment : BaseViewModelFragment<BaseViewModel>(), OnEnterListener, LastAchievementContract.View, BannerContract.View {
+class
+HomepageFragment : BaseViewModelFragment<BaseViewModel>(), OnEnterListener, LastAchievementContract.View, BannerContract.View {
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_homepage
@@ -82,16 +85,28 @@ class HomepageFragment : BaseViewModelFragment<BaseViewModel>(), OnEnterListener
     override fun initWidget() {
         super.initWidget()
         initUserInfo()
-        cbti_progress_view.setOnEnterLearnBtnClickListener(View.OnClickListener { CBTIIntroductionActivity.show() })
-        tv_relaxation.setOnClickListener { ActivityUtils.startActivity(RelaxationListActivity::class.java) }
-        tv_sleep_health.setOnClickListener { SimpleWebActivity.launch(activity!!, H5Uri.CBTI_SLEEP_HEALTH, StatConstants.page_sleep_health_list) }
-        tv_scale.setOnClickListener { ScaleListActivity.launch() }
+        cbti_progress_view.setOnEnterLearnBtnClickListener(View.OnClickListener {
+            CBTIIntroductionActivity.show()
+        })
+        tv_relaxation.setOnClickListener {
+            ActivityUtils.startActivity(RelaxationListActivity::class.java)
+            StatUtil.event(StatConstants.click_home_page_relaxation_icon)
+        }
+        tv_sleep_health.setOnClickListener {
+            SimpleWebActivity.launch(activity!!, H5Uri.CBTI_SLEEP_HEALTH, StatConstants.page_sleep_health_list)
+            StatUtil.event(StatConstants.click_home_page_sleep_health_icon)
+        }
+        tv_scale.setOnClickListener {
+            ScaleListActivity.launch()
+            StatUtil.event(StatConstants.click_home_page_scale_icon)
+        }
         sleep_prescription_view.setOnClickListener { SleepPrescriptionActivity.launch() }
         iv_avatar.setOnClickListener { onAvatarClick() }
         device_card_view.registerLifecycleOwner(this)
         DeviceManager.tryToConnectCacheMonitor()
         device_card_view.mHost = object : DeviceCardView.Host {
             override fun scanForDevice() {
+                StatUtil.event(StatConstants.click_home_page_add_device)
                 ScanDeviceActivity.startForResult(this@HomepageFragment, REQUEST_CODE_SCAN_DEVICE)
             }
 
@@ -99,8 +114,14 @@ class HomepageFragment : BaseViewModelFragment<BaseViewModel>(), OnEnterListener
                 startActivityForResult(Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), REQUEST_CODE_ENABLE_BLUETOOTH)
             }
         }
-        tv_anxious_and_faith.setOnClickListener { ActivityUtils.startActivity(AnxiousAndFaithActivity::class.java) }
-        home_page_sleep_guide_enter_btn.setOnClickListener { SleepGuideActivity.start() }
+        tv_anxious_and_faith.setOnClickListener {
+            StatUtil.event(StatConstants.click_home_page_anxiety_and_faith)
+            ActivityUtils.startActivity(AnxiousAndFaithActivity::class.java)
+        }
+        home_page_sleep_guide_enter_btn.setOnClickListener {
+            SleepGuideActivity.start()
+            StatUtil.event(StatConstants.click_home_page_sleep_guide)
+        }
     }
 
     private fun showSleepGuideDialogIfNeed() {
@@ -156,6 +177,7 @@ class HomepageFragment : BaseViewModelFragment<BaseViewModel>(), OnEnterListener
             cbti_banner_view_pager.setBannerClickListener(object : BannerViewPager.OnBannerClickListener {
                 override fun onClick(banner: View, position: Int) {
                     CBTIIntroductionActivity.show()
+                    StatUtil.event(StatConstants.click_home_page_cbti_banner)
                 }
             })
             cbti_banner_view_pager.show()
@@ -220,6 +242,7 @@ class HomepageFragment : BaseViewModelFragment<BaseViewModel>(), OnEnterListener
                 if (isLock) {
                     iv_default_banner.setOnClickListener {
                         CBTIIntroductionActivity.show()
+                        StatUtil.event(StatConstants.click_home_page_cbti_banner)
                     }
                     cbti_progress_view.visibility = View.GONE
                     cbti_banner_view_pager.visibility = View.INVISIBLE

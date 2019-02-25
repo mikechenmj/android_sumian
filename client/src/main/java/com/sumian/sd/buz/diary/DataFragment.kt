@@ -13,6 +13,7 @@ import com.sumian.sd.buz.diary.event.ChangeDataFragmentTabEvent
 import com.sumian.sd.buz.diary.monitorrecord.MonitorDataVpFragment
 import com.sumian.sd.buz.diary.sleeprecord.SleepDiaryVpFragment
 import com.sumian.sd.buz.stat.StatConstants
+import com.sumian.sd.buz.stat.StatConstants.enter_sleep_diary_detail_tab
 import com.sumian.sd.common.log.LogManager
 import com.sumian.sd.common.utils.EventBusUtil
 import com.sumian.sd.common.utils.FragmentUtil
@@ -85,6 +86,7 @@ class DataFragment : BaseFragment() {
                 return when (position) {
                     0 -> {
                         StatUtil.trackBeginPage(activity!!, StatConstants.page_data_page_sleep_data_tab)
+                        StatUtil.event(StatConstants.enter_sleep_diary_detail_tab)
                         SleepDiaryVpFragment()
                     }
                     else -> {

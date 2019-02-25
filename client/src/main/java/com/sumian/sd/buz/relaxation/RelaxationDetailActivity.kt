@@ -12,6 +12,7 @@ import com.sumian.common.h5.WebViewManger
 import com.sumian.common.image.ImageLoader
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.player.CommonAudioPlayer
+import com.sumian.common.statistic.StatUtil
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.homepage.sheet.ShareBottomSheet
@@ -20,6 +21,8 @@ import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.h5.H5Uri
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import com.sumian.sd.common.utils.StatusBarUtil
+import com.umeng.socialize.UMShareListener
+import com.umeng.socialize.bean.SHARE_MEDIA
 import kotlinx.android.synthetic.main.activity_relaxation_detail.*
 import java.util.*
 
@@ -58,11 +61,27 @@ class RelaxationDetailActivity : BaseActivity(){
         StatusBarUtil.setStatusBarTextColorDark(this, true)
         iv_close.setOnClickListener { onBackPressed() }
         iv_share.setOnClickListener {
+            StatUtil.event(StatConstants.click_relaxation_detail_page_share_btn)
             ShareBottomSheet.show(supportFragmentManager, getShareUrl(),
                     "放松训练正在进⾏中",
                     "快来和我⼀起，劝烦恼打个盹～",
                     "放松训练正在进⾏中，快来和我⼀起，劝烦恼打个盹～",
-                    mRelaxationData?.icon ?: "")
+                    mRelaxationData?.icon ?: "",
+                    object: UMShareListener {
+                        override fun onResult(p0: SHARE_MEDIA?) {
+
+                        }
+
+                        override fun onCancel(p0: SHARE_MEDIA?) {
+                        }
+
+                        override fun onError(p0: SHARE_MEDIA?, p1: Throwable?) {
+                        }
+
+                        override fun onStart(p0: SHARE_MEDIA?) {
+                            StatUtil.event(StatConstants.on_relaxation_detail_page_share_success)
+                        }
+                    })
         }
         iv_play.setOnClickListener { CommonAudioPlayer.playOrPause() }
         seek_bar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {

@@ -3,8 +3,10 @@ package com.sumian.sd.buz.diary.fillsleepdiary.fragment
 import android.annotation.SuppressLint
 import android.os.Bundle
 import com.google.android.material.chip.Chip
+import com.sumian.common.statistic.StatUtil
 import com.sumian.common.utils.ColorCompatUtil
 import com.sumian.sd.R
+import com.sumian.sd.buz.stat.StatConstants
 import kotlinx.android.synthetic.main.fragment_remark.*
 import kotlinx.android.synthetic.main.view_fill_diary_container.*
 
@@ -36,6 +38,7 @@ class RemarkFragment : BaseFillSleepDiaryFragment() {
         super.initWidget()
         initChipGroup()
         bt_fill_diary_complete.setOnClickListener {
+            StatUtil.event(StatConstants.click_sleep_diary_edit_page_commit_btn)
             mFillDiaryViewModel.mRemarkLiveData.value = et_remark.text.toString()
             mFillDiaryViewModel.next()
         }

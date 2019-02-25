@@ -8,7 +8,7 @@ package com.sumian.sd.buz.stat
  * version: 1.0
  */
 object StatConstants {
-    //    const val page_cbti_introduction = "page_cbti_introduction"
+    // old
     const val click_cbti_introduction_share = "click_cbti_introduction_share"
     const val page_binding_doctor = "page_binding_doctor"
     const val e_binding_success = "e_binding_success"
@@ -22,6 +22,67 @@ object StatConstants {
     const val click_sleep_diary_share = "click_sleep_diary_share"
     const val click_sleep_diary_share_cancel = "click_sleep_diary_share_cancel"
     const val page_wechat_binding = "page_wechat_binding"
+
+    // ------------ event ------------
+    const val enter_login_page = "enter_login_page"
+    const val click_login_page_get_captcha = "click_login_page_get_captcha"
+    const val on_login_success = "on_login_success"
+    const val click_home_page_cbti_banner = "click_home_page_cbti_banner"
+    const val click_sleep_guide_page_cbti_item = "click_sleep_guide_page_cbti_item"
+    const val enter_cbti_introduction_page = "enter_cbti_introduction_page"
+    const val click_cbti_introduction_page_share_btn = "click_cbti_introduction_page_share_btn"
+    const val on_cbti_introduction_page_share_success = "on_cbti_introduction_page_share_success"   // h5
+    const val click_cbti_introduction_page_video_play_btn = "click_cbti_introduction_page_video_play_btn"// h5
+    const val click_cbti_introduction_page_leave_message_tab = "click_cbti_introduction_page_leave_message_tab"// h5
+    const val click_cbti_introduction_page_leave_message_btn = "click_cbti_introduction_page_leave_message_btn"// h5
+    const val click_leave_message_page_send_btn = "click_leave_message_page_send_btn"// h5
+    const val click_cbti_introduction_page_introduction_tab = "click_cbti_introduction_page_introduction_tab"// h5
+    const val click_cbti_introduction_page_introduction_join_btn = "click_cbti_introduction_page_introduction_join_btn"// h5
+    const val click_pay_page_pay_btn = "click_pay_page_pay_btn"
+    const val on_cbti_pay_success = "on_cbti_pay_success"
+    const val click_cbti_main_page_share_btn = "click_cbti_main_page_share_btn"
+    const val on_cbti_main_page_share_success = "on_cbti_main_page_share_success"   // duplicate
+    const val click_cbti_main_page_see_introduction_btn = "click_cbti_main_page_see_introduction_btn"
+    const val click_home_page_relaxation_icon = "click_home_page_relaxation_icon"
+    const val click_sleep_guide_page_relaxation_item = "click_sleep_guide_page_relaxation_item"
+    const val enter_relaxation_page = "enter_relaxation_page"
+    const val click_relaxation_detail_page_share_btn = "click_relaxation_detail_page_share_btn"
+    const val on_relaxation_detail_page_share_success = "on_relaxation_detail_page_share_success"
+    const val enter_scale_evaluation_page = "enter_scale_evaluation_page"
+    const val click_home_page_scale_icon = "click_home_page_scale_icon"
+    const val click_me_page_my_scale_icon = "click_me_page_my_scale_icon"
+    const val click_home_page_anxiety_and_faith = "click_home_page_anxiety_and_faith"
+    const val click_sleep_guide_page_anxiety_and_faith_item = "click_sleep_guide_page_anxiety_and_faith_item"
+    const val click_anxiety_and_faith_page_question_mark = "click_anxiety_and_faith_page_question_mark"
+    const val click_home_page_sleep_health_icon = "click_home_page_sleep_health_icon"
+    const val click_sleep_guide_page_sleep_health_item = "click_sleep_guide_page_sleep_health_item"
+    const val click_home_page_sleep_guide = "click_home_page_sleep_guide"
+    const val enter_sleep_guide_page = "enter_sleep_guide_page"
+    const val enter_sleep_guide_qustion_page = "enter_sleep_guide_qustion_page" //h5
+    const val click_sleep_guide_page_start_test_btn = "click_sleep_guide_page_start_test_btn" //h5
+    const val click_sleep_guide_page_get_guide_btn = "click_sleep_guide_page_get_guide_btn" //h5
+    const val enter_sleep_guide_result_page = "enter_sleep_guide_result_page" //h5
+    const val click_sleep_guide_expand_icon = "click_sleep_guide_expand_icon" //h5
+    const val enter_sleep_diary_detail_tab = "enter_sleep_diary_detail_tab"
+    const val enter_sleep_diary_detail_page = "enter_sleep_diary_detail_page"
+    const val click_sleep_guide_page_sleep_restrction_item = "click_sleep_guide_page_sleep_restrction_item"
+    const val click_sleep_diary_page_relationship_between_sleepdiary_and_restriction = "click_sleep_diary_page_relationship_between_sleepdiary_and_restriction"
+    const val click_sleep_diary_page_record_btn = "click_sleep_diary_page_record_btn"
+    const val click_sleep_diary_edit_page_commit_btn = "click_sleep_diary_edit_page_commit_btn"
+    const val click_sleep_diary_page_weekly_report_icon = "click_sleep_diary_page_weekly_report_icon"
+    const val click_sleep_guide_page_sleep_steward = "click_sleep_guide_page_sleep_steward"
+    const val click_doctor_page_sleep_steward = "click_doctor_page_sleep_steward"
+    const val enter_sleep_steward_page = "enter_sleep_steward_page"
+    const val click_home_page_learn_more_about_device = "click_home_page_learn_more_about_device"
+    const val click_home_page_add_device = "click_home_page_add_device"
+    const val click_scan_device_page_confirm_bind_btn = "click_scan_device_page_confirm_bind_btn"
+    const val on_bind_device_success = "on_bind_device_success"
+    const val click_home_page_device_data_icon = "click_home_page_device_data_icon"
+    const val click_monitor_data_page_weekly_report_icon = "click_monitor_data_page_weekly_report_icon"
+    const val click_doctor_page_scan_doctor_icon = "click_doctor_page_scan_doctor_icon"
+    const val click_doctor_introduction_page_bind_btn = "click_doctor_introduction_page_bind_btn"
+    const val click_me_page_my_medal_item = "click_me_page_my_medal_item"
+    const val click_my_medal_page_medel_icon = "click_my_medal_page_medel_icon"
 
     // ------------ page ------------
     const val page_home_tab = "首页"

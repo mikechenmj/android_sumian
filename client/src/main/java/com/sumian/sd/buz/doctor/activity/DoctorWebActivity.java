@@ -102,6 +102,7 @@ public class DoctorWebActivity extends SdBaseWebViewActivity {
             @SuppressWarnings("ConstantConditions")
             @Override
             public void handler(String data) {
+                StatUtil.INSTANCE.event(StatConstants.click_doctor_introduction_page_bind_btn);
                 SBridgeResult<Doctor> sBridgeResult = JsonUtil.fromJson(data, new TypeToken<SBridgeResult<Doctor>>() {
                 }.getType());
 

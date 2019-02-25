@@ -5,12 +5,14 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
 import com.sumian.common.image.ImageLoader
+import com.sumian.common.statistic.StatUtil
 import com.sumian.common.widget.refresh.SumianSwipeRefreshLayout
 import com.sumian.sd.R
 import com.sumian.sd.buz.doctor.activity.DoctorServiceWebActivity
 import com.sumian.sd.buz.doctor.bean.Doctor
 import com.sumian.sd.buz.doctor.bean.DoctorService
 import com.sumian.sd.buz.kefu.KefuManager
+import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.widget.dialog.SumianTitleMessageDialog
 import kotlinx.android.synthetic.main.lay_doctor_detail_view.view.*
 import java.util.*
@@ -38,6 +40,7 @@ class DoctorDetailLayout @JvmOverloads constructor(context: Context, attrs: Attr
         fold_layout?.setText(doctor.introduction_no_tag ?: "")
         siv_customer_service?.setOnClickListener {
             KefuManager.launchKefuActivity()
+            StatUtil.event(StatConstants.click_doctor_page_sleep_steward)
         }
 
         doctor_info?.setOnClickListener { v ->

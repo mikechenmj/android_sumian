@@ -42,6 +42,7 @@ import com.sumian.sd.buz.kefu.KefuManager
 import com.sumian.sd.buz.notification.NotificationConst
 import com.sumian.sd.buz.notification.NotificationDelegate
 import com.sumian.sd.buz.notification.SchemeResolver
+import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.buz.upgrade.model.VersionModel
 import com.sumian.sd.common.log.LogManager
 import com.sumian.sd.common.log.SdLogManager
@@ -306,6 +307,7 @@ object AppManager {
         AppManager.launchMainOrNewUserGuide()
         StatUtil.reportAccount(token.user.mobile, token.expired_at.toLong())
         sendHeartbeat()
+        StatUtil.event(StatConstants.on_login_success)
     }
 
     fun logoutAndLaunchLoginActivity() {

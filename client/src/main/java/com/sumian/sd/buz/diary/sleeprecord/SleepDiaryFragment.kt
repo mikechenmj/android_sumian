@@ -7,6 +7,7 @@ import android.view.View
 import com.sumian.common.base.BaseViewModel
 import com.sumian.common.base.BaseViewModelFragment
 import com.sumian.common.network.response.ErrorResponse
+import com.sumian.common.statistic.StatUtil
 import com.sumian.common.utils.TimeUtilV2
 import com.sumian.common.widget.refresh.SumianSwipeRefreshLayout
 import com.sumian.sd.R
@@ -14,6 +15,7 @@ import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.diary.fillsleepdiary.FillSleepDiaryActivity
 import com.sumian.sd.buz.diary.sleeprecord.bean.ShareInfo
 import com.sumian.sd.buz.diary.sleeprecord.bean.SleepRecord
+import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import com.sumian.sd.widget.dialog.SumianAlertDialogV2
 import kotlinx.android.synthetic.main.fragment_sleep_diary.*
@@ -40,6 +42,7 @@ class SleepDiaryFragment : BaseViewModelFragment<BaseViewModel>() {
             }
         })
         sleep_record?.setOnClickFillSleepRecordBtnListener(View.OnClickListener {
+            StatUtil.event(StatConstants.click_sleep_diary_page_record_btn)
             if (isRefillable) {
                 launchFillSleepRecordActivity(selectedTime)
             }

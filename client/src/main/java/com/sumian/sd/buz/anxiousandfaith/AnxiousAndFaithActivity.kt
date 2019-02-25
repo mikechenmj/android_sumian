@@ -8,6 +8,7 @@ import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.base.BaseActivity
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.network.response.PaginationResponseV2
+import com.sumian.common.statistic.StatUtil
 import com.sumian.common.widget.dialog.SumianArticleDialog
 import com.sumian.common.widget.dialog.SumianDialog
 import com.sumian.sd.R
@@ -18,6 +19,7 @@ import com.sumian.sd.buz.anxiousandfaith.bean.FaithData
 import com.sumian.sd.buz.anxiousandfaith.widget.AnxiousFaithItemView
 import com.sumian.sd.buz.anxiousandfaith.widget.EditAnxietyBottomSheetDialog
 import com.sumian.sd.buz.stat.StatConstants
+import com.sumian.sd.buz.stat.StatConstants.click_anxiety_and_faith_page_question_mark
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import kotlinx.android.synthetic.main.activity_anxious_and_faith.*
 
@@ -55,7 +57,10 @@ class AnxiousAndFaithActivity : BaseActivity() {
         setTitle(R.string.anxious_and_belief)
         tv_add_anxiety.setOnClickListener { AnxietyActivity.launch() }
         tv_add_belief.setOnClickListener { FaithActivity.launch() }
-        vg_question.setOnClickListener { showExplainDialog() }
+        vg_question.setOnClickListener {
+            showExplainDialog()
+            StatUtil.event(StatConstants.click_anxiety_and_faith_page_question_mark)
+        }
         vg_anxiety_label.setOnClickListener { if (mHasAnxiety) ActivityUtils.startActivity(AnxietyListActivity::class.java) }
         vg_faith_label.setOnClickListener { if (mHasBelief) ActivityUtils.startActivity(FaithListActivity::class.java) }
     }

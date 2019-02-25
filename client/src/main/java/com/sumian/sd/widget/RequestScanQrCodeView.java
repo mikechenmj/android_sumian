@@ -9,8 +9,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.sumian.common.helper.ToastHelper;
+import com.sumian.common.statistic.StatUtil;
 import com.sumian.sd.R;
 import com.sumian.sd.buz.kefu.KefuManager;
+import com.sumian.sd.buz.stat.StatConstants;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -123,6 +125,7 @@ public class RequestScanQrCodeView extends LinearLayout implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ib_scan:
+                StatUtil.INSTANCE.event(StatConstants.click_doctor_page_scan_doctor_icon);
                 requestCodeQRCodePermissions();
                 break;
             case R.id.siv_customer_service:
