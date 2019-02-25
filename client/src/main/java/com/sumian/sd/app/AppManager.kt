@@ -169,6 +169,7 @@ object AppManager {
         initLogManager(app)
         initStatic(app)
         observeAppLifecycle()
+        initWebView(app)
     }
 
     private fun initStatic(app: Application) {
@@ -281,11 +282,6 @@ object AppManager {
 
     fun onAppBackground() {
         LogManager.appendUserOperationLog("App 进入 后台")
-    }
-
-    fun onWelcomeActivityResume() {
-        val context = App.getAppContext()
-        initWebView(context)
     }
 
     fun onMainActivityCreate() {

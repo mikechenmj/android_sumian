@@ -22,11 +22,6 @@ class WelcomeActivity : BaseActivity() {
         private const val SPLASH_DURATION = 500L
     }
 
-    override fun onResume() {
-        super.onResume()
-        AppManager.onWelcomeActivityResume()
-    }
-
     override fun getLayoutId(): Int {
         return R.layout.activity_main_welcome
     }
