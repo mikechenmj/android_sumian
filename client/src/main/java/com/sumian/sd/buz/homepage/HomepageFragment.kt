@@ -9,10 +9,13 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SPUtils
+import com.google.gson.JsonArray
 import com.sumian.common.base.BaseViewModel
 import com.sumian.common.base.BaseViewModelFragment
 import com.sumian.common.image.ImageLoader
+import com.sumian.common.network.response.BaseResponseCallback
 import com.sumian.common.network.response.ErrorResponse
+import com.sumian.common.network.response.PaginationResponseV2
 import com.sumian.common.statistic.StatUtil
 import com.sumian.common.utils.JsonUtil
 import com.sumian.sd.R
@@ -44,6 +47,7 @@ import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.buz.stat.StatConstants.click_home_page_anxiety_and_faith
 import com.sumian.sd.common.h5.H5Uri
 import com.sumian.sd.common.h5.SimpleWebActivity
+import com.sumian.sd.common.network.api.SdApi
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import com.sumian.sd.common.utils.EventBusUtil
 import com.sumian.sd.main.MainActivity
@@ -150,6 +154,9 @@ HomepageFragment : BaseViewModelFragment<BaseViewModel>(), OnEnterListener, Last
     override fun onStart() {
         super.onStart()
         refreshData()
+
+
+
     }
 
     override fun onResume() {

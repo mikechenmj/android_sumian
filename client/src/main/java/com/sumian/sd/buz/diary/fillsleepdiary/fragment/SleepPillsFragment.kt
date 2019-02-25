@@ -27,7 +27,7 @@ import java.util.*
  */
 class SleepPillsFragment : BaseFillSleepDiaryFragment() {
     private val mAdapter = PillAdapter()
-    private val mPillNameOptions by lazy { resources.getStringArray(R.array.pill_name_options) }
+    private val mPillNameOptions by lazy { mFillDiaryViewModel.getMedicines() }
     private val mPillAmountOptions by lazy { resources.getStringArray(R.array.pill_amount_options) }
     private val mPillTimeOptions by lazy { resources.getStringArray(R.array.pill_time_options) }
 
@@ -76,7 +76,7 @@ class SleepPillsFragment : BaseFillSleepDiaryFragment() {
                 object : WheelPickerBottomSheet.Listener {
                     override fun onConfirmClick(values: List<Int>) {
                         val pill = SleepPill(
-                                mPillNameOptions[values[0]],
+                                mPillNameOptions[values[0]]!!,
                                 mPillAmountOptions[values[1]],
                                 mPillTimeOptions[values[2]]
                         )

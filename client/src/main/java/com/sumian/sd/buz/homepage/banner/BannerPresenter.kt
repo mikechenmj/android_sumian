@@ -1,6 +1,6 @@
 package com.sumian.sd.buz.homepage.banner
 
-import com.google.gson.JsonArray
+import com.google.gson.JsonObject
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
@@ -27,23 +27,17 @@ class BannerPresenter private constructor(private var view: BannerContract.View?
     override fun getBannerList() {
         val call = AppManager.getSdHttpService().getConfigs()
         // todo cancel call
-        call.enqueue(object : BaseSdResponseCallback<JsonArray>() {
-            override fun onSuccess(response: JsonArray?) {
+        call.enqueue(object : BaseSdResponseCallback<List<JsonObject>>() {
+            override fun onSuccess(response: List<JsonObject>?) {
                 response?.let {
-                    for (jsonElement in response) {
-                        val jsonObject = jsonElement.asJsonObject
-                        if (jsonObject.get(NAME_KEY).asString == HOME_BANNERS_KEY) {
-                            val asJsonArray = jsonObject.get(VALUE_KEY).asJsonArray
-                            val banners = mutableListOf<Banner>()
-                            var banner: Banner
-                            asJsonArray.forEachIndexed { index, tmpJsonElement ->
-                                val url = tmpJsonElement.asString
-                                banner = Banner(id = index, position = index, url = url, text = index.toString())
-                                banners.add(banner)
-                            }
-                            view?.onGetBannerListSuccess(banners)
-                            break
-                        }
+                    val banners = mutableListOf<Banner>()
+                    val list = response.filter { it.get("name").asString == HOME_BANNERS_KEY }
+                    if (list.size > 0) {
+                        list[0].asJsonArray
+                                .forEachIndexed { index, tmpJsonElement ->
+                                    banners.add(Banner(index, index, tmpJsonElement.asString, index.toString()))
+                                }
+                        view?.onGetBannerListSuccess(banners)
                     }
                 }
             }

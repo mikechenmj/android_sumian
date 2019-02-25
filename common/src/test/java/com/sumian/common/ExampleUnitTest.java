@@ -1,6 +1,14 @@
 package com.sumian.common;
 
+import android.content.res.TypedArray;
+
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
+import com.sumian.common.utils.JsonUtil;
+
 import org.junit.Test;
+
+import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
@@ -13,5 +21,7 @@ public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() throws Exception {
         assertEquals(4, 2 + 2);
+
+
     }
 }

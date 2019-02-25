@@ -5,14 +5,16 @@ import androidx.lifecycle.MutableLiveData
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.base.BaseViewModel
 import com.sumian.common.network.response.ErrorResponse
+import com.sumian.common.network.response.PaginationResponseV2
 import com.sumian.common.utils.TimeUtilV2
-import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.diary.fillsleepdiary.bean.SleepDiaryData
+import com.sumian.sd.buz.diary.fillsleepdiary.bean.SleepMedicine
 import com.sumian.sd.buz.diary.fillsleepdiary.bean.SleepTimeData
 import com.sumian.sd.buz.diary.sleeprecord.bean.SleepPill
 import com.sumian.sd.buz.diary.sleeprecord.bean.SleepRecord
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
+
 
 /**
  * @author : Zhan Xuzhao
@@ -32,6 +34,7 @@ class FillDiaryViewModel : BaseViewModel() {
     val mRemarkLiveData = MutableLiveData<String>()
     var mProgressListener: ProgressListener? = null
     var mDayTime = System.currentTimeMillis()
+    var mMedicines = ArrayList<String>()
 
     companion object {
         const val TOTAL_PAGE = 9
@@ -44,6 +47,25 @@ class FillDiaryViewModel : BaseViewModel() {
         mDaySleepLiveData.value = null
         mFeelingLiveData.value = null
         getPreviousSleepPills()
+        getSleepMedicine()
+    }
+
+    private fun getSleepMedicine() {
+        AppManager.getSdHttpService().getMedicines().enqueue(object : BaseSdResponseCallback<PaginationResponseV2<SleepMedicine>>() {
+
+            override fun onSuccess(response: PaginationResponseV2<SleepMedicine>?) {
+                if (response == null) {
+                    return
+                }
+                for (m in response.data) {
+                    mMedicines.add(m.name)
+                }
+            }
+
+            override fun onFailure(errorResponse: ErrorResponse) {
+            }
+
+        })
     }
 
     fun previous() {
@@ -52,12 +74,12 @@ class FillDiaryViewModel : BaseViewModel() {
 
     fun next() {
         if (!isNextPageAvailable()) {
-            ToastUtils.showShort(R.string.please_complete_the_question)
+            ToastUtils.showShort(com.sumian.sd.R.string.please_complete_the_question)
             return
         }
         if (mCurrentProgress == 4) {
             if (mNightWakeLiveData.value!!.second * DateUtils.MINUTE_IN_MILLIS > getSleepDuration()) {
-                ToastUtils.showShort(R.string.night_wake_time_cant_bigger_than_sleep_time)
+                ToastUtils.showShort(com.sumian.sd.R.string.night_wake_time_cant_bigger_than_sleep_time)
                 return
             }
         }
@@ -170,4 +192,9 @@ class FillDiaryViewModel : BaseViewModel() {
         })
     }
 
+    fun getMedicines(): Array<String?> {
+        var array = arrayOfNulls<String>(mMedicines.size)
+        array = mMedicines.toArray(array)
+        return array
+    }
 }

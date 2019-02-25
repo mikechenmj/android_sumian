@@ -19,6 +19,7 @@ import com.sumian.sd.buz.cbti.bean.*
 import com.sumian.sd.buz.coupon.bean.Coupon
 import com.sumian.sd.buz.devicemanager.pattern.PatternData
 import com.sumian.sd.buz.diary.fillsleepdiary.bean.SleepDiaryData
+import com.sumian.sd.buz.diary.fillsleepdiary.bean.SleepMedicine
 import com.sumian.sd.buz.diary.sleeprecord.bean.DoctorServiceList
 import com.sumian.sd.buz.diary.sleeprecord.bean.SleepPill
 import com.sumian.sd.buz.diary.sleeprecord.bean.SleepRecord
@@ -595,8 +596,9 @@ interface SdApi {
     @GET("sleep/guide")
     fun getSleepGuide(): Call<Any?>
 
+    //配置名， service_phone：咨询电话，about_us_title：关于我们的标题，about_us_content：关于我们的内容，home_banners：cbti首页banner图，learning_banners：cbti学习中banner图 sleep_restriction_introduction: 睡眠限制疗法介绍（url）
     @GET("configs")
-    fun getConfigs(): Call<JsonArray>
+    fun getConfigs(): Call<List<JsonObject>>
 
     /**
      * 获取勋章成就列表
@@ -604,4 +606,7 @@ interface SdApi {
      */
     @GET("achievement-records")
     fun getAchievementRecords(): Call<List<AchievementRecord>>
+
+    @GET("medicines")
+    fun getMedicines(@Query("page") page: Int = 1, @Query("per_page") perPage: Int = 100): Call<PaginationResponseV2<SleepMedicine>>
 }

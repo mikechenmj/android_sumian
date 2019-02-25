@@ -12,6 +12,22 @@
     android:orientation="vertical"
     tools:context=".buz.diary.sleeprecord.SleepRestrictionIntroductionDialogActivity">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_title"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp">
+
+        <ImageView
+            android:id="@+id/iv_sleep_restriction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:ignore="ContentDescription" />
+        <!--android:src="@drawable/sleep_restriction"-->
+
+    </ScrollView>
+
     <ImageView
         android:id="@+id/iv_close"
         android:layout_width="wrap_content"
@@ -21,29 +37,4 @@
         android:padding="20dp"
         android:src="@drawable/ic_close"
         tools:ignore="ContentDescription" />
-
-    <TextView
-        android:id="@+id/tv_title"
-        style="@style/text_t1_18"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="40dp"
-        android:text="@string/sleep_restriction_treatment"
-        android:textStyle="bold" />
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/tv_title"
-        android:layout_margin="20dp"
-        android:layout_marginTop="85dp">
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/sleep_prescription_2"
-            tools:ignore="ContentDescription" />
-    </ScrollView>
 </RelativeLayout>
