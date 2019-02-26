@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentPagerAdapter
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.base.SddBaseActivity
+import com.sumian.sddoctor.constants.StatConstants
 import com.sumian.sddoctor.patient.fragment.PatientInfoWebFragment
 import com.sumian.sddoctor.service.advisory.fragment.AdvisoryDetailFragment
 import kotlinx.android.synthetic.main.activity_main_advisory_detail.*
@@ -57,6 +58,10 @@ class AdvisoryDetailActivity : SddBaseActivity() {
 
     override fun getLayoutId(): Int {
         return R.layout.activity_main_advisory_detail
+    }
+
+    override fun getPageName(): String {
+        return StatConstants.page_service_rtf_detail
     }
 
     override fun initBundle(bundle: Bundle) {

@@ -10,6 +10,7 @@ import com.blankj.utilcode.util.ToastUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.base.SddBaseViewModelActivity
+import com.sumian.sddoctor.constants.StatConstants
 import com.sumian.sddoctor.service.plan.adapter.PlanListAdapter
 import com.sumian.sddoctor.service.plan.bean.Plan
 import com.sumian.sddoctor.service.plan.contract.PlanContract
@@ -59,6 +60,10 @@ class PlanListActivity : SddBaseViewModelActivity<PlanPresenter>(), BaseQuickAda
 
     override fun getLayoutId(): Int {
         return R.layout.activity_main_scale_list
+    }
+
+    override fun getPageName(): String {
+        return StatConstants.page_patient_send_plan
     }
 
     override fun initBundle(bundle: Bundle) {

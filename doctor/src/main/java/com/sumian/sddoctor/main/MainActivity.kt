@@ -7,10 +7,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.base.BaseActivity
+import com.sumian.common.statistic.StatUtil
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.account.delegate.VersionDelegate
 import com.sumian.sddoctor.account.kefu.KefuManager
 import com.sumian.sddoctor.app.AppManager
+import com.sumian.sddoctor.constants.StatConstants
 import com.sumian.sddoctor.homepage.HomepageFragment
 import com.sumian.sddoctor.me.MeFragment
 import com.sumian.sddoctor.patient.fragment.PatientFragment
@@ -103,9 +105,18 @@ class MainActivity : BaseActivity(), BottomNavigationBar.OnSelectedTabChangeList
 
     private fun createFragmentByPosition(position: Int): Fragment {
         return when (position) {
-            0 -> HomepageFragment()
-            1 -> PatientFragment()
-            2 -> MeFragment()
+            0 -> {
+                StatUtil.trackBeginPage(this, StatConstants.page_home)
+                HomepageFragment()
+            }
+            1 -> {
+                StatUtil.trackBeginPage(this, StatConstants.page_patient_list)
+                PatientFragment()
+            }
+            2 -> {
+                StatUtil.trackBeginPage(this, StatConstants.page_profile)
+                MeFragment()
+            }
             else -> throw RuntimeException("Wrong position")
         }
     }

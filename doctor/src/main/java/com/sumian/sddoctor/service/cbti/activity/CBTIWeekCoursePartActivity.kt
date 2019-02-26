@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.sddoctor.R
+import com.sumian.sddoctor.constants.StatConstants
 import com.sumian.sddoctor.service.advisory.onlinereport.SdBaseActivity
 import com.sumian.sddoctor.service.cbti.bean.CBTIMeta
 import com.sumian.sddoctor.service.cbti.contract.CBTIMessageBoardActionContract
@@ -68,6 +69,9 @@ class CBTIWeekCoursePartActivity : SdBaseActivity<CBTIWeekLessonContract.Present
         return R.layout.activity_main_cbti_week_lesson_part
     }
 
+    override fun getPageName(): String {
+        return StatConstants.page_cbti_coure_list
+    }
     override fun initWidget(root: View) {
         super.initWidget(root)
         title_bar.setOnBackClickListener(this)

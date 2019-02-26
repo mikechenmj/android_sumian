@@ -15,6 +15,7 @@ import com.sumian.common.widget.TitleBar
 import com.sumian.sddoctor.BuildConfig
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.base.StatusBarHelper
+import com.sumian.sddoctor.constants.StatConstants
 import com.sumian.sddoctor.service.advisory.onlinereport.SdBaseActivity
 import com.sumian.sddoctor.service.cbti.bean.Course
 import com.sumian.sddoctor.service.cbti.bean.CoursePlayAuth
@@ -89,6 +90,10 @@ class CBTICoursePlayActivity : SdBaseActivity<CBTIWeekPlayContract.Presenter>(),
     override fun getLayoutId(): Int {
         window.setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         return R.layout.activity_main_cbti_lesson_detail_center
+    }
+
+    override fun getPageName(): String {
+        return StatConstants.page_cbti_vedio_detail
     }
 
     override fun initPresenter() {

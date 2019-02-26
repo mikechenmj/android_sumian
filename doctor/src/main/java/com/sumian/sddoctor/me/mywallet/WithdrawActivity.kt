@@ -13,6 +13,7 @@ import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.utils.ColorCompatUtil
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.base.SddBaseViewModelActivity
+import com.sumian.sddoctor.constants.StatConstants
 import com.sumian.sddoctor.me.mywallet.bean.WithdrawRecord
 import com.sumian.sddoctor.me.mywallet.bean.WithdrawRule
 import com.sumian.sddoctor.util.MoneyUtil
@@ -50,6 +51,10 @@ class WithdrawActivity : SddBaseViewModelActivity<WithdrawPresenter>(), Withdraw
 
     override fun getLayoutId(): Int {
         return R.layout.activity_withdraw
+    }
+
+    override fun getPageName(): String {
+        return StatConstants.page_profile_withdrawable
     }
 
     companion object {

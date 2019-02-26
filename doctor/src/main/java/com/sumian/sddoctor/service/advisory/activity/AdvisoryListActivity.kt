@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentPagerAdapter
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.base.SddBaseActivity
+import com.sumian.sddoctor.constants.StatConstants
 import com.sumian.sddoctor.service.advisory.bean.Advisory
 import com.sumian.sddoctor.service.advisory.fragment.AdvisoryListFragment
 import kotlinx.android.synthetic.main.activity_main_advisory.*
@@ -32,6 +33,10 @@ class AdvisoryListActivity : SddBaseActivity() {
 
     override fun showBackNav(): Boolean {
         return true
+    }
+
+    override fun getPageName(): String {
+        return StatConstants.page_service_rtf_list
     }
 
     override fun getLayoutId(): Int {

@@ -9,6 +9,7 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.h5.handler.SBridgeHandler
 import com.sumian.common.h5.widget.SWebView
 import com.sumian.common.utils.JsonUtil
+import com.sumian.sddoctor.constants.StatConstants
 import com.sumian.sddoctor.h5.SimpleWebActivity
 import com.sumian.sddoctor.patient.fragment.PatientInfoWebFragment
 import com.sumian.sddoctor.patient.sleepdiary.PatientSleepDiaryDetailActivity
@@ -46,6 +47,10 @@ class WeekEvaluationDetailWebActivity : SimpleWebActivity() {
             intent.putExtra(EXTRAS_EVALUATION_ID, id)
             return intent
         }
+    }
+
+    override fun getPageName(): String {
+        return StatConstants.page_service_dairy_evaluate_detail
     }
 
     override fun onStart() {

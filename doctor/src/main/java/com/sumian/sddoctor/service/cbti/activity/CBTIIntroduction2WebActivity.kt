@@ -11,6 +11,7 @@ import com.sumian.sddoctor.BuildConfig
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.app.AppManager
 import com.sumian.sddoctor.constants.H5Uri
+import com.sumian.sddoctor.constants.StatConstants
 import com.sumian.sddoctor.h5.SddBaseWebViewActivity
 import com.sumian.sddoctor.main.MainActivity
 import com.sumian.sddoctor.service.cbti.presenter.CBTILauncherPresenter
@@ -52,6 +53,10 @@ class CBTIIntroduction2WebActivity : SddBaseWebViewActivity() {
     override fun initBundle(bundle: Bundle) {
         super.initBundle(bundle)
         isMoreInfo = bundle.getBoolean(IS_GO_TO_MORE_INFO, false)
+    }
+
+    override fun getPageName(): String {
+        return StatConstants.page_cbti_info
     }
 
     override fun initWidget() {

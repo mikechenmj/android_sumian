@@ -10,6 +10,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.sumian.common.network.response.ErrorResponse;
 import com.sumian.sddoctor.R;
 import com.sumian.sddoctor.app.AppManager;
+import com.sumian.sddoctor.constants.StatConstants;
 import com.sumian.sddoctor.network.bean.PaginationResponse;
 import com.sumian.sddoctor.network.callback.BaseSdResponseCallback;
 import com.sumian.sddoctor.widget.EmptyErrorView;
@@ -74,6 +75,11 @@ public class OnlineReportListActivity extends SdBaseActivity implements BaseQuic
     @Override
     protected int getLayoutId() {
         return R.layout.activity_online_report_list;
+    }
+
+    @Override
+    public String getPageName() {
+        return StatConstants.page_service_patient_report_list;
     }
 
     @Override

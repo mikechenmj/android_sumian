@@ -8,6 +8,7 @@ import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.widget.TitleBar
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.base.SddBaseViewModelActivity
+import com.sumian.sddoctor.constants.StatConstants
 import com.sumian.sddoctor.patient.bean.Patient
 import com.sumian.sddoctor.patient.contract.ModifyPatientTagContract
 import com.sumian.sddoctor.patient.presenter.ModifyPatientTagPresenter
@@ -52,6 +53,9 @@ class ModifyPatientTagActivity : SddBaseViewModelActivity<ModifyPatientTagPresen
         return R.layout.activity_main_modify_patient_tag
     }
 
+    override fun getPageName(): String {
+        return StatConstants.page_patient_tags
+    }
     override fun initBundle(bundle: Bundle) {
         super.initBundle(bundle)
         this.mPatientId = bundle.getInt(EXTRAS_PATIENT_ID, 0)

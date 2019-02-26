@@ -12,6 +12,7 @@ import com.sumian.sddoctor.account.contract.AccountContract
 import com.sumian.sddoctor.account.presenter.AccountPresenter
 import com.sumian.sddoctor.app.AppManager
 import com.sumian.sddoctor.constants.Configs
+import com.sumian.sddoctor.constants.StatConstants
 import com.sumian.sddoctor.login.login.bean.DoctorInfo
 import com.sumian.sddoctor.util.InputCheckUtil
 import kotlinx.android.synthetic.main.activity_modify_name.*
@@ -41,8 +42,8 @@ class ModifyDoctorInfoActivity : BaseViewModelActivity<AccountPresenter>(), View
             intent.putExtra(EXTRAS_MODIFY_TYPE, modifyType)
             ActivityUtils.startActivity(intent)
         }
-
     }
+
 
     override fun initBundle(bundle: Bundle) {
         super.initBundle(bundle)

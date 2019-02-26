@@ -5,7 +5,10 @@ import android.content.Intent;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.sumian.common.utils.JsonUtil;
+import com.sumian.sddoctor.constants.StatConstants;
 import com.sumian.sddoctor.h5.SimpleWebActivity;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,6 +27,12 @@ public class OnlineReportDetailActivity extends SimpleWebActivity {
     public static void launch(Context context, OnlineReport onlineReport) {
         Intent intent = getLaunchIntent(context, onlineReport.getId());
         ActivityUtils.startActivity(intent);
+    }
+
+    @NotNull
+    @Override
+    public String getPageName() {
+        return StatConstants.page_service_patient_report_detail;
     }
 
     public static Intent getLaunchIntent(Context context, int id) {

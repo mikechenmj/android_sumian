@@ -12,6 +12,7 @@ import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.app.AppManager
 import com.sumian.sddoctor.booking.bean.BookingDetail
+import com.sumian.sddoctor.constants.StatConstants
 import com.sumian.sddoctor.network.callback.BaseSdResponseCallback
 import com.sumian.sddoctor.patient.fragment.PatientInfoWebFragment
 import kotlinx.android.synthetic.main.activity_booking_detail.*
@@ -35,6 +36,10 @@ class BookingDetailActivity : BaseActivity() {
         fun launch(context: Context, bookingId: Int) {
             ActivityUtils.startActivity(getLaunchIntent(context, bookingId))
         }
+    }
+
+    override fun getPageName(): String {
+        return StatConstants.page_service_phone_reserve_detail
     }
 
     override fun initWidget() {

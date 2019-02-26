@@ -9,6 +9,7 @@ import com.sumian.sddoctor.R
 import com.sumian.sddoctor.app.AppManager
 import com.sumian.sddoctor.base.SddBaseActivity
 import com.sumian.sddoctor.constants.Configs
+import com.sumian.sddoctor.constants.StatConstants
 import com.sumian.sddoctor.login.login.LoginActivity
 import com.sumian.sddoctor.login.login.bean.DoctorInfo
 import com.sumian.sddoctor.network.callback.BaseSdResponseCallback
@@ -34,6 +35,10 @@ class ModifyPasswordActivity : SddBaseActivity() {
 
     override fun showBackNav(): Boolean {
         return true
+    }
+
+    override fun getPageName(): String {
+        return StatConstants.page_profile_pwd
     }
 
     override fun initWidget() {

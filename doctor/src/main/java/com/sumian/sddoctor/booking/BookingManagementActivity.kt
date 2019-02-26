@@ -13,11 +13,15 @@ import com.sumian.sddoctor.booking.adapter.BookingAdapter
 import com.sumian.sddoctor.booking.bean.BookingDayData
 import com.sumian.sddoctor.booking.bean.BookingSection
 import com.sumian.sddoctor.booking.bean.GetBookingsResponse
+import com.sumian.sddoctor.constants.StatConstants
 import com.sumian.sddoctor.network.callback.BaseSdResponseCallback
 import com.sumian.sddoctor.util.TimeUtil
 import kotlinx.android.synthetic.main.activity_booking_management.*
 import java.util.*
 
+/**
+ * desc: 电话预约
+ */
 class BookingManagementActivity : BaseActivity(), BaseQuickAdapter.RequestLoadMoreListener, SwipeRefreshLayout.OnRefreshListener {
 
     val mAdapter = BookingAdapter(null)
@@ -27,6 +31,10 @@ class BookingManagementActivity : BaseActivity(), BaseQuickAdapter.RequestLoadMo
 
     override fun getLayoutId(): Int {
         return R.layout.activity_booking_management
+    }
+
+    override fun getPageName(): String {
+        return StatConstants.page_service_phone_list
     }
 
     companion object {

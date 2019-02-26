@@ -10,6 +10,7 @@ import com.sumian.common.utils.TimeUtilV2
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.app.AppManager
 import com.sumian.sddoctor.base.SddBaseActivity
+import com.sumian.sddoctor.constants.StatConstants
 import com.sumian.sddoctor.me.mywallet.bean.SettlingRecord
 import com.sumian.sddoctor.network.callback.BaseSdResponseCallback
 import com.sumian.sddoctor.util.MoneyUtil
@@ -45,6 +46,10 @@ class PendingIncomeDetailActivity : SddBaseActivity() {
             intent.putExtra(KEY_RECORD_ID, id)
             return intent
         }
+    }
+
+    override fun getPageName(): String {
+        return StatConstants.page_profile_detail
     }
 
     override fun initWidget() {
