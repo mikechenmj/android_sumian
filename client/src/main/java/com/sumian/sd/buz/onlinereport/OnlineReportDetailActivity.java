@@ -56,9 +56,9 @@ public class OnlineReportDetailActivity extends SimpleWebActivity {
         });
     }
 
-    @NotNull
-    @Override
-    public String getPageName() {
-        return StatConstants.page_online_report_detail;
-    }
+//    @NotNull
+//    @Override
+//    public String getPageName() {
+//        return StatConstants.page_online_report_detail;
+//    }
 }

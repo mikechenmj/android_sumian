@@ -28,9 +28,9 @@ class SleepGuideActivity : SimpleWebActivity() {
         }
     }
 
-    override fun getPageName(): String {
-        return StatConstants.page_sleep_guide_cover
-    }
+//    override fun getPageName(): String {
+//        return StatConstants.page_sleep_guide_cover
+//    }
 
     override fun initWidget() {
         super.initWidget()
@@ -62,7 +62,8 @@ class SleepGuideActivity : SimpleWebActivity() {
                 StatUtil.event(StatConstants.click_sleep_guide_page_anxiety_and_faith_item)
             }
             "sleepHealth" -> {
-                SimpleWebActivity.launch(this, H5Uri.CBTI_SLEEP_HEALTH, StatConstants.page_sleep_health_list)
+//                SimpleWebActivity.launch(this, H5Uri.CBTI_SLEEP_HEALTH, StatConstants.page_sleep_health_list)
+                SimpleWebActivity.launch(this, H5Uri.CBTI_SLEEP_HEALTH)
                 StatUtil.event(StatConstants.click_sleep_guide_page_sleep_health_item)
             }
             "onlineConsult" -> {

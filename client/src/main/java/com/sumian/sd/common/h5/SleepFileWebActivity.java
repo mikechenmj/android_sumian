@@ -60,11 +60,11 @@ public class SleepFileWebActivity extends SdBaseWebViewActivity {
         return "getImgUrl";
     }
 
-    @NotNull
-    @Override
-    public String getPageName() {
-        return StatConstants.page_sleep_archive;
-    }
+//    @NotNull
+//    @Override
+//    public String getPageName() {
+//        return StatConstants.page_sleep_archive;
+//    }
 
     @Override
     protected void registerHandler(@NonNull SWebView sWebView) {

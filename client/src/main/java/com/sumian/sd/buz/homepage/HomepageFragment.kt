@@ -97,7 +97,8 @@ HomepageFragment : BaseViewModelFragment<BaseViewModel>(), OnEnterListener, Last
             StatUtil.event(StatConstants.click_home_page_relaxation_icon)
         }
         tv_sleep_health.setOnClickListener {
-            SimpleWebActivity.launch(activity!!, H5Uri.CBTI_SLEEP_HEALTH, StatConstants.page_sleep_health_list)
+//            SimpleWebActivity.launch(activity!!, H5Uri.CBTI_SLEEP_HEALTH, StatConstants.page_sleep_health_list)
+            SimpleWebActivity.launch(activity!!, H5Uri.CBTI_SLEEP_HEALTH)
             StatUtil.event(StatConstants.click_home_page_sleep_health_icon)
         }
         tv_scale.setOnClickListener {

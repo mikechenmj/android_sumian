@@ -39,9 +39,9 @@ class SleepPrescriptionActivity : SdBaseWebViewActivity() {
         }
     }
 
-    override fun getPageName(): String {
-        return StatConstants.page_sleep_prescription_edit
-    }
+//    override fun getPageName(): String {
+//        return StatConstants.page_sleep_prescription_edit
+//    }
 
     override fun initWidget() {
         super.initWidget()

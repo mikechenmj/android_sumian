@@ -27,9 +27,9 @@ class PatientSleepDiaryDetailActivity : SddBaseActivity() {
         }
     }
 
-    override fun getPageName(): String {
-        return StatConstants.page_patient_dairy_detail
-    }
+//    override fun getPageName(): String {
+//        return StatConstants.page_patient_dairy_detail
+//    }
 
     override fun initWidget() {
         super.initWidget()
