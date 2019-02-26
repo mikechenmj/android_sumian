@@ -4,9 +4,11 @@ import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.network.response.ErrorResponse
+import com.sumian.common.statistic.StatUtil
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.app.AppManager
 import com.sumian.sddoctor.base.SddBaseActivity
+import com.sumian.sddoctor.constants.StatConstants
 import com.sumian.sddoctor.login.login.bean.DoctorInfo
 import com.sumian.sddoctor.main.MainActivity
 import com.sumian.sddoctor.network.callback.BaseSdResponseCallback
@@ -30,10 +32,13 @@ class SetInviteCodeActivity : SddBaseActivity() {
 
     override fun initWidget() {
         super.initWidget()
+        StatUtil.event(StatConstants.enter_fill_invite_code_page)
         mTitleBar.mIvBack.visibility = View.GONE
         setTitle(R.string.invite_code)
         mTitleBar.setMenuText(getString(R.string.skip))
-        mTitleBar.setOnMenuClickListener { launchMain() }
+        mTitleBar.setOnMenuClickListener {
+            StatUtil.event(StatConstants.click_fill_invite_code_page_skip_btn)
+            launchMain() }
         bt_complete.setOnClickListener { postInviteCode(et_invite_code.text.toString()) }
     }
 
@@ -47,6 +52,7 @@ class SetInviteCodeActivity : SddBaseActivity() {
             ToastUtils.showShort("输入不能为空")
             return
         }
+        StatUtil.event(StatConstants.click_fill_invite_code_page_submit_btn)
         val call = AppManager.getHttpService().updateDoctorInfo(mapOf("retailer_invitation_code" to inviteCode))
         addCall(call)
         call.enqueue(object : BaseSdResponseCallback<DoctorInfo>() {

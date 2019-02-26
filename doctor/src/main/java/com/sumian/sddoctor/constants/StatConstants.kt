@@ -60,14 +60,14 @@ object StatConstants {
     const val page_profile_protocol = "用户协议页"
 
     // ------ event ------
-    const val e_click_captcha = "click_captcha"
-    const val e_page_login = "page_login"
-    const val e_login_success = "e_login_success"
-    const val e_page_vscode = "page_vscode"
-    const val e_fill_vscode = "e_fill_vscode"
-    const val e_jump_over = "e_jump_over"
-    const val e_page_home = "page_home"
-    const val e_page_verify = "page_verify"
-    const val e_upload_verify = "e_upload_verify"
+    const val click_home_page_captcha = "click_home_page_captcha"
+    const val enter_login_page = "enter_login_page"
+    const val on_login_success = "on_login_success"
+    const val enter_fill_invite_code_page = "enter_fill_invite_code_page"
+    const val click_fill_invite_code_page_submit_btn = "click_fill_invite_code_page_submit_btn"
+    const val click_fill_invite_code_page_skip_btn = "click_fill_invite_code_page_skip_btn"
+    const val enter_home_page = "enter_home_page"
+    const val enter_doctor_verify_page = "enter_doctor_verify_page"
+    const val click_doctor_verify_page_submit_btn = "click_doctor_verify_page_submit_btn"
 
 }

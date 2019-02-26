@@ -5,9 +5,11 @@ import android.view.View.VISIBLE
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.network.response.ErrorResponse
+import com.sumian.common.statistic.StatUtil
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.app.AppManager
 import com.sumian.sddoctor.base.BaseFragment
+import com.sumian.sddoctor.constants.StatConstants
 import com.sumian.sddoctor.login.login.bean.LoginResponse
 import com.sumian.sddoctor.network.callback.BaseSdResponseCallback
 import com.sumian.sddoctor.util.EditTextUtil
@@ -30,6 +32,7 @@ class RegisterVerifyPhoneNumberFragment : BaseFragment() {
 
     override fun initWidget(root: View?) {
         super.initWidget(root)
+        StatUtil.event(StatConstants.enter_doctor_verify_page)
         tv_send_captcha.setOnClickListener { onSendCaptchaClick() }
         tv_next_step.setOnClickListener { onNextStepClick() }
         iv_phone_clear.setOnClickListener { EditTextUtil.clearEditText(et_phone, iv_phone_clear) }

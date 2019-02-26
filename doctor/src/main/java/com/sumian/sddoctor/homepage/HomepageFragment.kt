@@ -13,6 +13,7 @@ import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.sumian.common.network.response.ErrorResponse
+import com.sumian.common.statistic.StatUtil
 import com.sumian.common.utils.SettingsUtil
 import com.sumian.common.utils.SumianExecutor
 import com.sumian.sddoctor.BuildConfig
@@ -23,6 +24,7 @@ import com.sumian.sddoctor.base.BaseFragment
 import com.sumian.sddoctor.booking.BookingManagementActivity
 import com.sumian.sddoctor.constants.H5Uri
 import com.sumian.sddoctor.constants.SPKeys
+import com.sumian.sddoctor.constants.StatConstants
 import com.sumian.sddoctor.event.NotificationUnreadCountChangeEvent
 import com.sumian.sddoctor.homepage.bean.PatientDashboardData
 import com.sumian.sddoctor.homepage.widget.DoctorServicesView
@@ -71,6 +73,7 @@ class HomepageFragment : BaseFragment(), DoctorServicesView.OnDoctorServicesCall
 
     override fun initWidget(root: View?) {
         super.initWidget(root)
+        StatUtil.event(StatConstants.enter_home_page)
         iv_avatar.setOnClickListener {
             ActivityUtils.startActivity(UserInfoActivity::class.java)
         }
