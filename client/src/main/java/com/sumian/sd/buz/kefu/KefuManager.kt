@@ -100,40 +100,50 @@ object KefuManager {
         }
         val instance = ChatClient.getInstance()
         instance?.let {
-            it.login(imId, md5Pwd, object : Callback {
-                override fun onSuccess() {
-                    SumianExecutor.runOnUiThread({
-                        UIProvider.getInstance().isLogin = true
-                        loginCallback?.onSuccess()
-                        UIProvider.getInstance().onLoginCallback?.onLoginSuccess()
-                        // Log.e("TAG", "onSuccess: ----kefu ime----->")
-                    })
-                }
+            val loggedInBefore = it.isLoggedInBefore
+            if (loggedInBefore) {
+                SumianExecutor.runOnUiThread({
+                    UIProvider.getInstance().isLogin = true
+                    loginCallback?.onSuccess()
+                    UIProvider.getInstance().onLoginCallback?.onLoginSuccess()
+                    // Log.e("TAG", "onSuccess: ----kefu ime----->")
+                })
+            } else {
+                it.login(imId, md5Pwd, object : Callback {
+                    override fun onSuccess() {
+                        SumianExecutor.runOnUiThread({
+                            UIProvider.getInstance().isLogin = true
+                            loginCallback?.onSuccess()
+                            UIProvider.getInstance().onLoginCallback?.onLoginSuccess()
+                            // Log.e("TAG", "onSuccess: ----kefu ime----->")
+                        })
+                    }
 
-                override fun onError(code: Int, error: String) {
-                    SumianExecutor.runOnUiThread({
-                        when (code) {
-                            Error.USER_ALREADY_LOGIN -> {
-                                UIProvider.getInstance().isLogin = true
-                                loginCallback?.onSuccess()
-                                UIProvider.getInstance().onLoginCallback?.onLoginSuccess()
+                    override fun onError(code: Int, error: String) {
+                        SumianExecutor.runOnUiThread({
+                            when (code) {
+                                Error.USER_ALREADY_LOGIN -> {
+                                    UIProvider.getInstance().isLogin = true
+                                    loginCallback?.onSuccess()
+                                    UIProvider.getInstance().onLoginCallback?.onLoginSuccess()
+                                }
+                                else -> {
+                                    UIProvider.getInstance().isLogin = false
+                                    loginCallback?.onFailed(error)
+                                    val notifyCount = 0
+                                    notifyServerRegister2ImServer(userInfo, notifyCount)
+                                    UIProvider.getInstance().onLoginCallback?.onLoginFailed()
+                                }
                             }
-                            else -> {
-                                UIProvider.getInstance().isLogin = false
-                                loginCallback?.onFailed(error)
-                                val notifyCount = 0
-                                notifyServerRegister2ImServer(userInfo, notifyCount)
-                                UIProvider.getInstance().onLoginCallback?.onLoginFailed()
-                            }
-                        }
-                        Log.e("TAG", "code=$code  error=$error")
-                    })
-                }
+                            Log.e("TAG", "code=$code  error=$error")
+                        })
+                    }
 
-                override fun onProgress(progress: Int, status: String) {
-                    LogUtils.d(progress)
-                }
-            })
+                    override fun onProgress(progress: Int, status: String) {
+                        LogUtils.d(progress)
+                    }
+                })
+            }
         }
     }
 
