@@ -1,7 +1,5 @@
 package com.sumian.sd.buz.homepage.banner
 
-import com.google.gson.JsonArray
-import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.app.AppManager

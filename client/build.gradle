@@ -264,8 +264,6 @@ static def formatDate() {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'androidx.appcompat:appcompat:1.0.0-beta01'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation('androidx.test.espresso:espresso-core:3.1.0', {
         exclude group: 'com.android.support', module: 'support-annotations'
@@ -329,8 +327,8 @@ dependencies {
     // round corner image view
     implementation 'com.makeramen:roundedimageview:2.3.0'
 
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.3'
-    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3'
+    //debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.3'
+    //debugImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3'
     // Optional, if you use support library fragments:
-    debugImplementation 'com.squareup.leakcanary:leakcanary-support-fragment:1.6.3'
+    //debugImplementation 'com.squareup.leakcanary:leakcanary-support-fragment:1.6.3'
 }
