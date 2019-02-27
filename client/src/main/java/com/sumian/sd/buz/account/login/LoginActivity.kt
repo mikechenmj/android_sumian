@@ -42,11 +42,10 @@ class LoginActivity : BaseViewModelActivity<LoginPresenter>(), LoginContract.Vie
 
     override fun initWidget() {
         super.initWidget()
-        StatUtil.event(StatConstants.enter_login_page)
+        StatUtil.event(StatConstants.page_login)
         StatusBarUtil.setStatusBarTextColorDark(this, true)
         iv_user_agreement.isSelected = true
         tv_send_captcha.setOnClickListener {
-            StatUtil.event(StatConstants.click_login_page_get_captcha)
             val number = getPhoneNumberWithCheck()
             if (number != null) {
                 onRequestCaptchaSuccess()
