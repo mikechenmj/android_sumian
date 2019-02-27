@@ -12,7 +12,6 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.blankj.utilcode.util.Utils
-import com.squareup.leakcanary.LeakCanary
 import com.sumian.blue.manager.BlueManager
 import com.sumian.common.base.BaseActivityManager
 import com.sumian.common.dns.HttpDnsEngine
@@ -178,12 +177,12 @@ object AppManager {
     }
 
     private fun initLeakCanary(app: Application) {
-        if (LeakCanary.isInAnalyzerProcess(app)) {
-            // This process is dedicated to LeakCanary for heap analysis.
-            // You should not init your app in this process.
-            return;
-        }
-        LeakCanary.install(app);
+        // if (LeakCanary.isInAnalyzerProcess(app)) {
+        // This process is dedicated to LeakCanary for heap analysis.
+        // You should not init your app in this process.
+        //     return
+        // }
+        // LeakCanary.install(app)
     }
 
     private fun initLogManager(app: Application) {
