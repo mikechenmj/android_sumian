@@ -28,6 +28,7 @@ object StatUtil {
         StatConfig.setDebugEnable(debug)
         StatConfig.setAppKey(app, appKey)
         StatConfig.setInstallChannel(channel)
+        StatConfig.setAutoTrackAppsEvent(false)
         mContext = app
         try {
             StatService.startStatService(app, appKey, StatConstants.VERSION)

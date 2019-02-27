@@ -54,6 +54,7 @@ class ShareSleepDiaryDialogActivity : BaseDialogViewModelActivity<BaseViewModel>
 
     override fun initWidget() {
         super.initWidget()
+        StatUtil.event(StatConstants.page_sleep_diary_share)
         iv_close.setOnClickListener { finish() }
         val shareInfo = intent.getParcelableExtra<ShareInfo>(KEY_SHARE_INFO)
         val totalDiaries = shareInfo.totalDiaries

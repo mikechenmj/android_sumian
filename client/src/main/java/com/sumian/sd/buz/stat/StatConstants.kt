@@ -19,6 +19,7 @@ object StatConstants {
     const val click_pay = "click_pay"
     const val e_pay_success = "e_pay_success"
     const val page_cbti_relaxations = "page_cbti_relaxations"
+    const val page_sleep_diary_share = "page_sleep_diary_share"
     const val click_sleep_diary_share = "click_sleep_diary_share"
     const val click_sleep_diary_share_cancel = "click_sleep_diary_share_cancel"
     const val page_wechat_binding = "page_wechat_binding"
