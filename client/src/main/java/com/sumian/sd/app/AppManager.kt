@@ -183,7 +183,7 @@ object AppManager {
             // You should not init your app in this process.
             return;
         }
-        LeakCanary.install(app);
+//        LeakCanary.install(app);
     }
 
     private fun initLogManager(app: Application) {
