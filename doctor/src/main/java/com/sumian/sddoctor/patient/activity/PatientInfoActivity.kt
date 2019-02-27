@@ -6,6 +6,7 @@ import android.os.Bundle
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.base.BaseActivity
 import com.sumian.sddoctor.R
+import com.sumian.sddoctor.constants.StatConstants
 import com.sumian.sddoctor.patient.bean.Patient
 import com.sumian.sddoctor.patient.fragment.PatientInfoWebFragment
 
@@ -46,6 +47,10 @@ class PatientInfoActivity : BaseActivity() {
 
     override fun getLayoutId(): Int {
         return R.layout.activity_main_patient_info
+    }
+
+    override fun getPageName(): String {
+        return StatConstants.page_patient_detail
     }
 
     override fun initBundle(bundle: Bundle) {

@@ -13,6 +13,7 @@ import com.sumian.common.utils.JsonUtil
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.app.AppManager
 import com.sumian.sddoctor.base.SddBaseActivity
+import com.sumian.sddoctor.constants.StatConstants
 import com.sumian.sddoctor.me.authentication.AuthenticationHelper
 import com.sumian.sddoctor.me.myservice.bean.Packages
 import com.sumian.sddoctor.me.myservice.bean.ServicePackage
@@ -50,6 +51,10 @@ class OpenServiceActivity : SddBaseActivity() {
 
     override fun getLayoutId(): Int {
         return R.layout.activity_open_service
+    }
+
+    override fun getPageName(): String {
+        return StatConstants.page_profile_service_setting
     }
 
     override fun initWidget() {

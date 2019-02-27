@@ -10,6 +10,7 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.base.SddBaseViewModelActivity
+import com.sumian.sddoctor.constants.StatConstants
 import com.sumian.sddoctor.service.publish.bean.Publish
 import com.sumian.sddoctor.service.publish.contract.PublishDocContract
 import com.sumian.sddoctor.service.publish.presenter.PublishDocPresenter
@@ -50,6 +51,10 @@ class ReplyDocActivity : SddBaseViewModelActivity<PublishDocPresenter>(), Publis
 
     override fun getLayoutId(): Int {
         return R.layout.activity_main_reply_publish_doc
+    }
+
+    override fun getPageName(): String {
+        return StatConstants.page_service_txt_response
     }
 
     override fun initBundle(bundle: Bundle) {

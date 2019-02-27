@@ -14,6 +14,7 @@ import com.sumian.common.utils.SpUtil
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.app.App
 import com.sumian.sddoctor.base.StatusBarHelper
+import com.sumian.sddoctor.constants.StatConstants
 import com.sumian.sddoctor.service.cbti.adapter.CBTIIntroductionAdapter
 import com.sumian.sddoctor.service.cbti.bean.CbtiChapterData
 import com.sumian.sddoctor.service.cbti.contract.CBTIIntroductionContract
@@ -64,6 +65,10 @@ class CBTIIntroductionActivity : BaseViewModelActivity<CBTIIntroductionPresenter
 
     override fun getLayoutId(): Int {
         return R.layout.activity_main_cbti_introduction
+    }
+
+    override fun getPageName(): String {
+        return StatConstants.page_cbti_course
     }
 
     override fun initWidgetBefore() {

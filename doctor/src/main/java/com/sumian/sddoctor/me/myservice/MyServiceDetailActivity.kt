@@ -11,6 +11,7 @@ import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.app.AppManager
 import com.sumian.sddoctor.base.SddBaseActivity
+import com.sumian.sddoctor.constants.StatConstants
 import com.sumian.sddoctor.me.myservice.bean.DoctorService
 import com.sumian.sddoctor.network.callback.BaseSdResponseCallback
 import com.sumian.sddoctor.widget.divider.SettingDividerView
@@ -49,9 +50,9 @@ class MyServiceDetailActivity : SddBaseActivity() {
         return R.layout.activity_my_service_detail
     }
 
-//    override fun getTitleBarTitle(): String? {
-//        return intent.getStringExtra(KEY_NAME)
-//    }
+    override fun getPageName(): String {
+        return StatConstants.page_profile_services + " service id: ${getServiceId()}"
+    }
 
     override fun initWidget() {
         super.initWidget()
@@ -64,7 +65,7 @@ class MyServiceDetailActivity : SddBaseActivity() {
     }
 
     private fun loadData(): Boolean {
-        val id = intent.getIntExtra(KEY_ID, -1)
+        val id = getServiceId()
         if (id == -1) {
             LogUtils.d("id not set")
             return true
@@ -102,6 +103,8 @@ class MyServiceDetailActivity : SddBaseActivity() {
         })
         return false
     }
+
+    private fun getServiceId() = intent.getIntExtra(KEY_ID, -1)
 
     override fun onDestroy() {
         mGetServiceDetailCall?.cancel()

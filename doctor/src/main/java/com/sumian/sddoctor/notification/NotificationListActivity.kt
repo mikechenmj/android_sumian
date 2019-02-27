@@ -8,6 +8,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.sumian.common.base.BaseActivity
 import com.sumian.common.utils.SettingsUtil
 import com.sumian.sddoctor.R
+import com.sumian.sddoctor.constants.StatConstants
 import com.sumian.sddoctor.homepage.HomepageFragment.Companion.REQUEST_CODE_OPEN_NOTIFICATION
 import com.sumian.sddoctor.notification.bean.Notification
 import com.sumian.sddoctor.util.NotificationUtil
@@ -22,6 +23,10 @@ class NotificationListActivity : BaseActivity(), BaseQuickAdapter.OnItemClickLis
 
     override fun getLayoutId(): Int {
         return R.layout.activity_notification_list
+    }
+
+    override fun getPageName(): String {
+        return StatConstants.page_message
     }
 
     override fun initWidget() {

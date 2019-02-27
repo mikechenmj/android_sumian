@@ -10,6 +10,7 @@ import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.app.AppManager
 import com.sumian.sddoctor.base.SddBaseActivity
+import com.sumian.sddoctor.constants.StatConstants
 import com.sumian.sddoctor.me.myservice.bean.DoctorService
 import com.sumian.sddoctor.network.bean.PaginationResponse
 import com.sumian.sddoctor.network.callback.BaseSdResponseCallback
@@ -35,9 +36,9 @@ class MyServiceListActivity : SddBaseActivity() {
         return R.layout.activity_my_service_list
     }
 
-//    override fun getTitleBarTitle(): String? {
-//        return getString(R.string.my_service)
-//    }
+    override fun getPageName(): String {
+        return StatConstants.page_profile_services
+    }
 
     override fun initWidget() {
         super.initWidget()

@@ -17,6 +17,7 @@ import com.sumian.common.utils.TimeUtilV2
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.app.AppManager
 import com.sumian.sddoctor.base.SddBaseActivity
+import com.sumian.sddoctor.constants.StatConstants
 import com.sumian.sddoctor.me.mywallet.bean.WalletBalance
 import com.sumian.sddoctor.me.mywallet.bean.WalletDetail
 import com.sumian.sddoctor.me.mywallet.bean.WalletDetailResponse
@@ -39,6 +40,10 @@ class MyWalletActivity : SddBaseActivity() {
 
     override fun getLayoutId(): Int {
         return R.layout.activity_my_wallet
+    }
+
+    override fun getPageName(): String {
+        return StatConstants.page_profile_wallet
     }
 
     override fun initWidget() {

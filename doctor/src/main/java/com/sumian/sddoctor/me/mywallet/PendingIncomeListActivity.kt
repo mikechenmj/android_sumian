@@ -11,6 +11,7 @@ import com.sumian.common.utils.TimeUtilV2
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.app.AppManager
 import com.sumian.sddoctor.base.SddBaseActivity
+import com.sumian.sddoctor.constants.StatConstants
 import com.sumian.sddoctor.me.mywallet.bean.SettlingRecord
 import com.sumian.sddoctor.network.bean.PaginationResponseV2
 import com.sumian.sddoctor.network.callback.BaseSdResponseCallback
@@ -37,6 +38,10 @@ class PendingIncomeListActivity : SddBaseActivity() {
     private val mAdapter = SettlingRecordAdapter()
 
     private val mPage = 1
+
+    override fun getPageName(): String {
+        return StatConstants.page_profile_count
+    }
 
     override fun initWidget() {
         super.initWidget()

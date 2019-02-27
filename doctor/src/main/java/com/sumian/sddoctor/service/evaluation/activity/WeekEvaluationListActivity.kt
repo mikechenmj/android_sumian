@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentPagerAdapter
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.base.SddBaseActivity
+import com.sumian.sddoctor.constants.StatConstants
 import com.sumian.sddoctor.service.evaluation.bean.WeekEvaluation
 import com.sumian.sddoctor.service.evaluation.fragment.WeekEvaluationListFragment
 import kotlinx.android.synthetic.main.activity_main_evaluation.*
@@ -38,9 +39,9 @@ class WeekEvaluationListActivity : SddBaseActivity() {
         return R.layout.activity_main_evaluation
     }
 
-//    override fun getTitleBarTitle(): String? {
-//        return getString(R.string.diary_evaluation)
-//    }
+    override fun getPageName(): String {
+        return StatConstants.page_service_dairy_evaluate
+    }
 
     override fun initWidget() {
         super.initWidget()

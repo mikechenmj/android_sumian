@@ -29,7 +29,7 @@
             style="@style/text_t2_16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/n_days_later_update_prescription" />
+            tools:text="@string/n_days_later_update_prescription" />
 
         <TextView
             android:id="@+id/tv_new_prescription"

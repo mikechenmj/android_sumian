@@ -9,6 +9,7 @@ import com.sumian.common.helper.ToastHelper
 import com.sumian.common.utils.ColorCompatUtil
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.base.SddBaseViewModelActivity
+import com.sumian.sddoctor.constants.StatConstants
 import com.sumian.sddoctor.service.cbti.ITrigger
 import com.sumian.sddoctor.service.cbti.adapter.CBTIProgressGroupAdapter
 import com.sumian.sddoctor.service.cbti.bean.CBTIProgressGroup
@@ -53,6 +54,10 @@ class CBTIProgressActivity : SddBaseViewModelActivity<CBTIProgressGroupPresenter
     override fun initWidgetBefore() {
         super.initWidgetBefore()
         this.mViewModel = CBTIProgressGroupPresenter.init(this)
+    }
+
+    override fun getPageName(): String {
+        return StatConstants.page_cbti_patient_progress
     }
 
     override fun initWidget() {

@@ -15,6 +15,7 @@ import com.sumian.sddoctor.account.contract.UserAvatarContract;
 import com.sumian.sddoctor.account.presenter.UserAvatarPresenter;
 import com.sumian.sddoctor.account.sheet.SelectDoctorInfoBottomSheet;
 import com.sumian.sddoctor.app.AppManager;
+import com.sumian.sddoctor.constants.StatConstants;
 import com.sumian.sddoctor.login.login.bean.DoctorInfo;
 import com.sumian.sddoctor.me.authentication.AuthenticationActivity;
 import com.sumian.sddoctor.widget.TitleBar;
@@ -41,6 +42,12 @@ public class UserInfoActivity extends BaseActivity implements TitleBar.OnBackCli
     @Override
     protected int getLayoutId() {
         return R.layout.activity_main_user_info;
+    }
+
+    @NotNull
+    @Override
+    public String getPageName() {
+        return StatConstants.page_profile_info;
     }
 
     @Override

@@ -15,6 +15,7 @@ import com.sumian.sddoctor.R
 import com.sumian.sddoctor.account.contract.FeedbackContract
 import com.sumian.sddoctor.account.presenter.FeedbackPresenter
 import com.sumian.sddoctor.base.SddBaseViewModelActivity
+import com.sumian.sddoctor.constants.StatConstants
 import com.sumian.sddoctor.widget.text.EmptyTextWatcher
 import kotlinx.android.synthetic.main.activity_main_feedback.*
 import java.util.*
@@ -44,6 +45,10 @@ class FeedbackActivity : SddBaseViewModelActivity<FeedbackPresenter>(), Feedback
 
     override fun getLayoutId(): Int {
         return R.layout.activity_main_feedback
+    }
+
+    override fun getPageName(): String {
+        return StatConstants.page_profile_feedback
     }
 
     override fun initWidgetBefore() {

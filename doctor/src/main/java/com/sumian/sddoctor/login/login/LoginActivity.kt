@@ -7,11 +7,13 @@ import android.view.View.VISIBLE
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.base.BaseActivity
+import com.sumian.common.statistic.StatUtil
 import com.sumian.sddoctor.BuildConfig
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.account.delegate.VersionDelegate
 import com.sumian.sddoctor.app.AppManager
 import com.sumian.sddoctor.constants.Configs
+import com.sumian.sddoctor.constants.StatConstants
 import com.sumian.sddoctor.main.MainActivity
 import com.sumian.sddoctor.util.PhoneNumberUtil
 import kotlinx.android.synthetic.main.activity_login.*
@@ -41,6 +43,7 @@ class LoginActivity : BaseActivity(), LoginContract.View {
 
     override fun initWidget() {
         super.initWidget()
+        StatUtil.event(StatConstants.enter_login_page)
         iv_user_agreement.isSelected = true
         iv_phone_clear.setOnClickListener {
             iv_phone_clear.visibility = GONE
@@ -58,6 +61,7 @@ class LoginActivity : BaseActivity(), LoginContract.View {
             et_password.setText("")
         }
         tv_send_captcha.setOnClickListener {
+            StatUtil.event(StatConstants.click_home_page_captcha)
             val number = getPhoneNumberWithCheck()
             if (number != null) {
                 mPresenter.requestCaptcha(number)

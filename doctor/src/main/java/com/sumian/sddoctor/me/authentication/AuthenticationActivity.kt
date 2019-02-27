@@ -4,9 +4,11 @@ import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.blankj.utilcode.util.ActivityUtils
+import com.sumian.common.statistic.StatUtil
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.app.AppManager
 import com.sumian.sddoctor.base.SddBaseActivity
+import com.sumian.sddoctor.constants.StatConstants
 import com.sumian.sddoctor.login.register.AuthenticateViewModel
 import kotlinx.android.synthetic.main.activity_authentication_activity.*
 
@@ -30,6 +32,7 @@ class AuthenticationActivity : SddBaseActivity() {
 
     override fun initWidget() {
         super.initWidget()
+        StatUtil.event(StatConstants.click_doctor_verify_page_submit_btn)
         setTitle(R.string.doctor_authentication)
         btn_confirm.setOnClickListener { finish() }
     }

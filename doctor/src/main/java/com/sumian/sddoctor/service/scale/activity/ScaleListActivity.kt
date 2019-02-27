@@ -10,6 +10,7 @@ import com.blankj.utilcode.util.ToastUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.base.SddBaseViewModelActivity
+import com.sumian.sddoctor.constants.StatConstants
 import com.sumian.sddoctor.service.scale.adapter.ScaleListAdapter
 import com.sumian.sddoctor.service.scale.bean.Scale
 import com.sumian.sddoctor.service.scale.contract.ScaleContract
@@ -60,6 +61,10 @@ class ScaleListActivity : SddBaseViewModelActivity<ScalePresenter>(), BaseQuickA
 
     override fun getLayoutId(): Int {
         return R.layout.activity_main_scale_list
+    }
+
+    override fun getPageName(): String {
+        return StatConstants.page_patient_send_scale
     }
 
     override fun initBundle(bundle: Bundle) {

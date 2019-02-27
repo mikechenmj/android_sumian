@@ -9,6 +9,7 @@ import com.sumian.common.widget.voice.VoicePlayer
 import com.sumian.common.widget.voice.VoicePlayerView
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.base.SddBaseViewModelActivity
+import com.sumian.sddoctor.constants.StatConstants
 import com.sumian.sddoctor.service.advisory.bean.Record
 import com.sumian.sddoctor.service.publish.bean.Publish
 import com.sumian.sddoctor.service.publish.contract.PublishVoiceContact
@@ -70,6 +71,10 @@ class ReplyVoiceActivity : SddBaseViewModelActivity<PublishVoicePresenter>(),
     override fun initWidgetBefore() {
         super.initWidgetBefore()
         this.mViewModel = PublishVoicePresenter.init(this)
+    }
+
+    override fun getPageName(): String {
+        return StatConstants.page_service_audio_response
     }
 
     override fun initWidget() {

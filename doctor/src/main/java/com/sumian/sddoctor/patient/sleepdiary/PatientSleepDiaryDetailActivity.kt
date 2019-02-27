@@ -4,6 +4,7 @@ import android.content.Intent
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.base.SddBaseActivity
+import com.sumian.sddoctor.constants.StatConstants
 
 class PatientSleepDiaryDetailActivity : SddBaseActivity() {
     override fun showBackNav(): Boolean {
@@ -25,6 +26,10 @@ class PatientSleepDiaryDetailActivity : SddBaseActivity() {
             ActivityUtils.startActivity(intent)
         }
     }
+
+//    override fun getPageName(): String {
+//        return StatConstants.page_patient_dairy_detail
+//    }
 
     override fun initWidget() {
         super.initWidget()

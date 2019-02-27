@@ -12,6 +12,7 @@ import com.sumian.sddoctor.BuildConfig
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.app.AppManager
 import com.sumian.sddoctor.constants.H5Uri
+import com.sumian.sddoctor.constants.StatConstants
 import com.sumian.sddoctor.login.login.bean.DoctorInfo
 import com.sumian.sddoctor.util.ImageLoader
 import com.umeng.socialize.bean.SHARE_MEDIA
@@ -23,6 +24,10 @@ class DoctorQrCodeActivity : BaseActivity() {
 
     override fun getLayoutId(): Int {
         return R.layout.activity_doctor_qr_code
+    }
+
+    override fun getPageName(): String {
+        return StatConstants.page_my_qrcode
     }
 
     override fun initWidget() {

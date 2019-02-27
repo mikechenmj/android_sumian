@@ -10,6 +10,7 @@ import com.blankj.utilcode.util.ToastUtils
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.base.SddBaseViewModelActivity
 import com.sumian.sddoctor.booking.DoctorQrCodeActivity
+import com.sumian.sddoctor.constants.StatConstants
 import com.sumian.sddoctor.patient.adapter.PatientAdapter
 import com.sumian.sddoctor.patient.bean.Patient
 import com.sumian.sddoctor.patient.contract.PatientListContract
@@ -54,6 +55,10 @@ class PatientListActivity : SddBaseViewModelActivity<PatientListPresenter>(),
 
     override fun getLayoutId(): Int {
         return R.layout.activity_main_patient_list
+    }
+
+    override fun getPageName(): String {
+        return StatConstants.page_service_new_list
     }
 
     override fun initWidgetBefore() {

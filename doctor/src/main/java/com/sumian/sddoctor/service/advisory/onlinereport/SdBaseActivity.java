@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.sumian.common.helper.ToastHelper;
+import com.sumian.common.statistic.StatUtil;
 import com.sumian.sddoctor.R;
 import com.sumian.sddoctor.widget.LoadingDialog;
 import com.sumian.sddoctor.widget.TitleBar;
@@ -154,6 +155,7 @@ public abstract class SdBaseActivity<Presenter extends SdBasePresenter> extends 
         if (openEventBus()) {
             EventBus.getDefault().register(this);
         }
+        StatUtil.INSTANCE.trackBeginPage(this, getPageName());
     }
 
     @Override
@@ -162,6 +164,7 @@ public abstract class SdBaseActivity<Presenter extends SdBasePresenter> extends 
             EventBus.getDefault().unregister(this);
         }
         super.onStop();
+        StatUtil.INSTANCE.trackEndPage(this, getPageName());
     }
 
     @Override
@@ -278,5 +281,9 @@ public abstract class SdBaseActivity<Presenter extends SdBasePresenter> extends 
         if (mLoadingDialog.isShowing()) {
             mLoadingDialog.dismiss();
         }
+    }
+
+    public String getPageName() {
+        return this.getClass().getName();
     }
 }

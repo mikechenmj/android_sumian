@@ -8,6 +8,7 @@ import com.sumian.sddoctor.R
 import com.sumian.sddoctor.account.bean.Version
 import com.sumian.sddoctor.account.contract.VersionContract
 import com.sumian.sddoctor.account.presenter.VersionPresenter
+import com.sumian.sddoctor.constants.StatConstants
 import com.sumian.sddoctor.util.UiUtils
 import kotlinx.android.synthetic.main.activity_main_version.*
 import java.util.*
@@ -33,6 +34,9 @@ class VersionActivity : BaseViewModelActivity<VersionPresenter>(), VersionContra
         return R.layout.activity_main_version
     }
 
+    override fun getPageName(): String {
+        return StatConstants.page_profile_version
+    }
 
     override fun initWidgetBefore() {
         super.initWidgetBefore()

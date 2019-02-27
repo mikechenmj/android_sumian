@@ -46,9 +46,9 @@ class CBTIExerciseWebActivity : SdBaseWebViewActivity() {
         courseId = bundle.getInt(EXTRAS_COURSE_ID, 0)
     }
 
-    override fun getPageName(): String {
-        return StatConstants.page_cbti_exercise
-    }
+//    override fun getPageName(): String {
+//        return StatConstants.page_cbti_exercise
+//    }
 
     override fun getUrlContentPart(): String {
         return H5Uri.CBTI_EXERCISES.replace("{course-id}", String.format(Locale.getDefault(), "%d", courseId))

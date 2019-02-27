@@ -12,6 +12,7 @@ import com.sumian.sddoctor.account.contract.SettingsContract;
 import com.sumian.sddoctor.account.presenter.SettingsPresenter;
 import com.sumian.sddoctor.account.sheet.LogoutBottomSheet;
 import com.sumian.sddoctor.app.AppManager;
+import com.sumian.sddoctor.constants.StatConstants;
 import com.sumian.sddoctor.login.login.UserProtocolActivity;
 import com.sumian.sddoctor.login.login.bean.DoctorInfo;
 import com.sumian.sddoctor.login.login.bean.SocialiteInfo;
@@ -70,6 +71,12 @@ public class SettingsActivity extends BaseViewModelActivity<SettingsPresenter> i
         userAgreement.setOnClickListener(v -> ActivityUtils.startActivity(UserProtocolActivity.class));
         sdvFeedback.setOnClickListener(v -> FeedbackActivity.show());
         AppManager.getAccountViewModel().getDoctorInfo().observe(this, this);
+    }
+
+    @NotNull
+    @Override
+    public String getPageName() {
+        return StatConstants.page_profile_setting;
     }
 
     @Override

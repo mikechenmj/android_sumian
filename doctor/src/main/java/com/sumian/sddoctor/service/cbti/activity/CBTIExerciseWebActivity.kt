@@ -9,6 +9,7 @@ import com.sumian.common.h5.handler.SBridgeHandler
 import com.sumian.common.h5.widget.SWebView
 import com.sumian.common.utils.JsonUtil
 import com.sumian.sddoctor.constants.H5Uri
+import com.sumian.sddoctor.constants.StatConstants
 import com.sumian.sddoctor.h5.SddBaseWebViewActivity
 import java.util.*
 
@@ -73,6 +74,10 @@ class CBTIExerciseWebActivity : SddBaseWebViewActivity() {
                 mQuitWithoutCheck = true
             }
         })
+    }
+
+    override fun getPageName(): String {
+        return StatConstants.page_cbti_introduction
     }
 
 }
