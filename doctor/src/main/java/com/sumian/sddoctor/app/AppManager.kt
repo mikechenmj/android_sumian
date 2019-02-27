@@ -19,6 +19,7 @@ import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.notification.AppNotificationManager
 import com.sumian.common.social.OpenEngine
 import com.sumian.common.social.login.OpenLogin
+import com.sumian.common.statistic.StatUtil
 import com.sumian.sddoctor.BuildConfig
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.account.AccountViewModel
@@ -107,6 +108,7 @@ object AppManager {
         OpenEngine.init(application, BuildConfig.DEBUG, BuildConfig.UMENG_APP_KEY, BuildConfig.UMENG_CHANNEL, BuildConfig.UMENG_PUSH_SECRET)
         initNotification(application)
         initWebView(application)
+        initStatic(application)
         BaseActivityManager.setActivityDelegateFactory(ActivityDelegateFactory())
         observeAppLifecycle()
         SddLogManager.init(application,
@@ -116,6 +118,10 @@ object AppManager {
                 BuildConfig.ALIYUN_LOG_LOG_STORE,
                 BuildConfig.ALIYUN_LOG_END_POINT
         )
+    }
+
+    private fun initStatic(app: Application) {
+        StatUtil.init(app, BuildConfig.TENCENT_STATIC_APP_ID, BuildConfig.CHANNEL, BuildConfig.DEBUG)
     }
 
     private fun observeAppLifecycle() {
