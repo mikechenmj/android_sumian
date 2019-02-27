@@ -1,19 +1,22 @@
 package com.sumian.sd.buz.tab
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.text.TextUtils
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.blankj.utilcode.util.ActivityUtils
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.Target
 import com.qmuiteam.qmui.util.QMUISpanHelper
 import com.sumian.common.base.BaseViewModelFragment
 import com.sumian.common.image.loadImage
 import com.sumian.common.statistic.StatUtil
-import com.sumian.common.utils.BitmapUtil
-import com.sumian.common.utils.SumianExecutor
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.account.achievement.MyAchievementActivity
@@ -45,8 +48,6 @@ import com.sumian.sd.widget.tips.PatientRecordTips
 import com.sumian.sd.widget.tips.PatientServiceTips
 import com.sumian.sd.wxapi.MiniProgramHelper
 import kotlinx.android.synthetic.main.fragment_tab_me.*
-import java.net.HttpURLConnection
-import java.net.URL
 
 /**
  * Created by jzz
@@ -55,6 +56,8 @@ import java.net.URL
  */
 
 class MeFragment : BaseViewModelFragment<GetAchievementListPresenter>(), View.OnClickListener, PatientServiceTips.OnServiceTipsCallback, PatientRecordTips.OnRecordTipsCallback, OnEnterListener, VersionModel.ShowDotCallback, GetAchievementListContract.View {
+
+    private var mPreRequestTimeMills = 0L
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_tab_me
@@ -172,6 +175,9 @@ class MeFragment : BaseViewModelFragment<GetAchievementListPresenter>(), View.On
     }
 
     override fun onEnter(data: String?) {
+        if (isCanRequest()) {
+            mViewModel?.getAchievementList()
+        }
     }
 
     override fun showDot(isShowAppDot: Boolean, isShowMonitorDot: Boolean, isShowSleepyDot: Boolean) {
@@ -179,37 +185,43 @@ class MeFragment : BaseViewModelFragment<GetAchievementListPresenter>(), View.On
     }
 
     override fun onGetAchievementListSuccess(achievementRecordList: List<AchievementRecord>) {
-        var tmpText: CharSequence = ""
-        achievementRecordList.forEachIndexed { index, achievementRecord ->
-            if (index >= 3) return@forEachIndexed
-            SumianExecutor.runOnBackgroundThread {
-                val oldBmp = returnBitmap(achievementRecord.achievement.gainMedalPicture)
-                if (oldBmp != null) {
-                    val newBmp = Bitmap.createScaledBitmap(oldBmp, resources.getDimensionPixelOffset(R.dimen.space_34), resources.getDimensionPixelOffset(R.dimen.space_34), true)
-                    oldBmp.recycle()
-                    val bitmapDrawable = BitmapDrawable(resources, newBmp)
-                    val text = QMUISpanHelper.generateSideIconText(false, resources.getDimensionPixelOffset(R.dimen.space_5), " ", bitmapDrawable)
-                    tmpText = TextUtils.concat(tmpText, text)
-                    dv_my_metal.post {
-                        dv_my_metal?.setContent(tmpText)
-                    }
-                }
-            }
-        }
+        invalidImageSpanAndTiming(achievementRecordList)
     }
 
     override fun onGetAchievementListFailed(error: String) {
     }
 
-    private fun returnBitmap(url: String): Bitmap? {
-        val myFileUrl = URL(url)
-        val conn: HttpURLConnection = myFileUrl.openConnection() as HttpURLConnection
-        conn.doInput = true
-        conn.connect()
-        val inputStream = conn.inputStream
-        val decodeStream = BitmapFactory.decodeStream(inputStream, null, BitmapUtil.createOptions())
-        inputStream.close()
-        return decodeStream
+    /**
+     * 超过5分钟再去请求刷新勋章列表
+     * @return Boolean
+     */
+    private fun isCanRequest(): Boolean {
+        return isVisible && (mPreRequestTimeMills == 0L || System.currentTimeMillis() - mPreRequestTimeMills >= 5 * 60 * 60 * 1000L)
     }
 
+    private fun invalidImageSpanAndTiming(achievementRecordList: List<AchievementRecord>) {
+        mPreRequestTimeMills = System.currentTimeMillis()
+        var imageSpan: CharSequence = ""
+        var tmpAchievementRecordList: List<AchievementRecord>? = null
+        if (achievementRecordList.size > 3) {
+            tmpAchievementRecordList = achievementRecordList.subList(0, 3)
+        }
+        tmpAchievementRecordList?.forEach { achievementRecord ->
+            val options = RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.AUTOMATIC)
+            Glide.with(this).asDrawable().load(achievementRecord.achievement.gainMedalPicture).apply(options).listener(object : RequestListener<Drawable> {
+                override fun onLoadFailed(e: GlideException?, model: Any?, target: com.bumptech.glide.request.target.Target<Drawable>?, isFirstResource: Boolean): Boolean {
+                    return true
+                }
+
+                override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                    //  bannerView.setImageBitmap(resource)
+                    val text = QMUISpanHelper.generateSideIconText(false, resources.getDimensionPixelOffset(R.dimen.space_5), " ", resource)
+                    imageSpan = TextUtils.concat(imageSpan, text)
+                    dv_my_metal?.setContent(imageSpan)
+                    return true
+                }
+
+            }).preload(resources.getDimensionPixelOffset(R.dimen.space_34), resources.getDimensionPixelOffset(R.dimen.space_34))
+        }
+    }
 }
