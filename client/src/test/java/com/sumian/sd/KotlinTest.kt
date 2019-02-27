@@ -1,6 +1,6 @@
 package com.sumian.sd
 
-import com.sumian.common.utils.JsonUtil
+import com.sumian.sd.buz.diary.fillsleepdiary.bean.SleepMedicine
 import org.junit.Test
 
 /**
@@ -15,40 +15,15 @@ import org.junit.Test
 class KotlinTest {
     @Test
     fun test() {
-        val json = "{\n" +
-                "\"name\":123\n" +
-                "}"
-        val jsonObject = JsonUtil.getJsonObject(json) ?: return
-        val jsonElement = jsonObject["name"]
-        println(jsonElement.asInt)
-    }
+        var list = ArrayList<SleepMedicine>()
+        list.add(SleepMedicine("1", 1, 1, "1", 1))
+        list.add(SleepMedicine("3", 2, 2, "3", 3))
+        list.add(SleepMedicine("2", 0, 2, "2", 2))
 
-
-    @Test
-    fun testMaxValue() {
-
-        val value = Int.MAX_VALUE
-
-        val modDefaultIndex = modDefaultIndex(value, 4, 0)
-
-        println("totalCount=$value   mod=$modDefaultIndex")
-
-    }
-
-
-    private fun modDefaultIndex(totalCount: Int, bannerCount: Int, offset: Int = 0): Int {
-        return if (bannerCount == 1) {
-            0
-        } else {
-            var shr = totalCount.shr(1)
-            shr += offset
-            val startIndex = shr % bannerCount
-            if (startIndex != 0) {
-                modDefaultIndex(totalCount, bannerCount, (offset + 1))
-            } else {
-                shr
-            }
-        }
+        val sortedList = list.sortedWith(compareBy(SleepMedicine::weight, SleepMedicine::weight)).reversed().filter { it.enable != 0 }
+        println(sortedList)
+//        val sortedList = list.sortWith(compareBy(SleepMedicine::weight, SleepMedicine::weight))
+//        println(list)
     }
 
 }

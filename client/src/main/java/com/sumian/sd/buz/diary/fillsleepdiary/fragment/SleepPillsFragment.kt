@@ -14,7 +14,6 @@ import com.sumian.common.widget.picker.WheelPickerBottomSheet
 import com.sumian.sd.R
 import com.sumian.sd.buz.diary.sleeprecord.bean.SleepPill
 import kotlinx.android.synthetic.main.fragment_sleep_pills.*
-import kotlinx.android.synthetic.main.item_pill.view.*
 import kotlinx.android.synthetic.main.list_item_pills.view.*
 import java.util.*
 
@@ -62,7 +61,7 @@ class SleepPillsFragment : BaseFillSleepDiaryFragment() {
             tv_continue_add.visibility = if (it.isNotEmpty()) View.VISIBLE else View.GONE
             recycler_view.visibility = if (it.isNotEmpty()) View.VISIBLE else View.GONE
         })
-        tv_history_pills_hint.visibility = if (mFillDiaryViewModel.mHasHistoryPills) View.VISIBLE else View.GONE
+        v_history_pills_hint_bg.visibility = if (mFillDiaryViewModel.mHasHistoryPills) View.VISIBLE else View.GONE
     }
 
     private fun showAddPillBottomSheet() {

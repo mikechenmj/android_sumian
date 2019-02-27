@@ -23,11 +23,13 @@ import java.util.*
  */
 @SuppressLint("StaticFieldLeak")
 object StatUtil {
+    var TAG = javaClass.simpleName
     private lateinit var mContext: Context
     fun init(app: Application, appKey: String, channel: String, debug: Boolean) {
         StatConfig.setDebugEnable(debug)
         StatConfig.setAppKey(app, appKey)
         StatConfig.setInstallChannel(channel)
+        StatConfig.setAutoTrackAppsEvent(false)
         mContext = app
         try {
             StatService.startStatService(app, appKey, StatConstants.VERSION)
@@ -74,6 +76,7 @@ object StatUtil {
                 prop[key] = value
             }
         }
+        logEvent(eventId)
         StatService.trackCustomKVEvent(mContext, eventId, prop)
     }
 
@@ -94,10 +97,23 @@ object StatUtil {
     }
 
     fun trackBeginPage(context: Context, pageName: String) {
+        logPage(pageName)
         StatService.trackBeginPage(context, pageName)
     }
 
     fun trackEndPage(context: Context, pageName: String) {
         StatService.trackEndPage(context, pageName)
+    }
+
+    private fun logEvent(msg: String) {
+        Log.d(TAG, "event: $msg")
+    }
+
+    private fun logPage(msg: String) {
+        Log.d(TAG, "page: $msg")
+    }
+
+    private fun log(msg: String) {
+        Log.d(TAG, msg)
     }
 }

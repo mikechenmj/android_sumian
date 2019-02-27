@@ -11,7 +11,6 @@ import com.sumian.sd.base.SdBaseWebViewActivity
 import com.sumian.sd.buz.cbti.sheet.CBTIShareBottomSheet
 import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.h5.H5Uri
-import com.sumian.sd.common.utils.StatusBarUtil
 
 /**
  * Created by sm
@@ -34,13 +33,12 @@ class CBTIIntroduction2WebActivity : SdBaseWebViewActivity() {
 
     override fun initWidget() {
         super.initWidget()
-        StatUtil.event(StatConstants.enter_cbti_introduction_page)
+        StatUtil.event(StatConstants.page_cbti_introduction)
         StatUtil.trackBeginPage(this, StatConstants.page_cbti_introduction_from_learn_more)
         getTitleBar().openTopPadding(true)
         getTitleBar().showMoreIcon(R.drawable.ic_nav_share)
         getTitleBar().setOnMenuClickListener {
             StatUtil.event(StatConstants.click_cbti_introduction_share)
-            StatUtil.event(StatConstants.click_cbti_introduction_page_share_btn)
             CBTIShareBottomSheet.show(fragmentManager = supportFragmentManager)
         }
     }

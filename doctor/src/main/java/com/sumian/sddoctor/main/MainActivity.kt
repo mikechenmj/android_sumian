@@ -101,20 +101,22 @@ class MainActivity : BaseActivity(), BottomNavigationBar.OnSelectedTabChangeList
                 }
             }
         }
+        when (position) {
+            0 -> StatUtil.trackBeginPage(this, StatConstants.page_home)
+            1 -> StatUtil.trackBeginPage(this, StatConstants.page_patient_list)
+            3 -> StatUtil.trackBeginPage(this, StatConstants.page_profile)
+        }
     }
 
     private fun createFragmentByPosition(position: Int): Fragment {
         return when (position) {
             0 -> {
-                StatUtil.trackBeginPage(this, StatConstants.page_home)
                 HomepageFragment()
             }
             1 -> {
-                StatUtil.trackBeginPage(this, StatConstants.page_patient_list)
                 PatientFragment()
             }
             2 -> {
-                StatUtil.trackBeginPage(this, StatConstants.page_profile)
                 MeFragment()
             }
             else -> throw RuntimeException("Wrong position")

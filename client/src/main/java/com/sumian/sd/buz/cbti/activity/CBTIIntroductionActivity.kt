@@ -150,7 +150,7 @@ class CBTIIntroductionActivity : BaseViewModelActivity<CBTIIntroductionPresenter
         if (isExpired) {
             showCBTIIntroductionWebView()
             StatUtil.trackBeginPage(this, StatConstants.page_cbti_introduction_from_banner)
-            StatUtil.event(StatConstants.enter_cbti_introduction_page)
+            StatUtil.event(StatConstants.page_cbti_introduction)
         } else {
             hideCBTIIntroductionWebView()
             StatUtil.trackBeginPage(this, StatConstants.page_cbti_chapter_list)

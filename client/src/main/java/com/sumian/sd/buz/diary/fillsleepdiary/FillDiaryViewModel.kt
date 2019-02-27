@@ -57,7 +57,8 @@ class FillDiaryViewModel : BaseViewModel() {
                 if (response == null) {
                     return
                 }
-                for (m in response.data) {
+                val list = response.data.sortedWith(compareBy(SleepMedicine::weight, SleepMedicine::weight)).reversed().filter { it.enable != 0 }
+                for (m in list) {
                     mMedicines.add(m.name)
                 }
             }
