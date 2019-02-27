@@ -49,6 +49,8 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+
+        buildConfigField("String", "CHANNEL", "\"default\"")
         // wechat
         buildConfigField("String", "WECHAT_APP_ID", appProperties['WECHAT_APP_ID'])
         buildConfigField("String", "WECHAT_APP_SECRET", appProperties['WECHAT_APP_SECRET'])
@@ -159,6 +161,8 @@ android {
             buildConfigField("String", "LEANCLOUD_APP_ID", appProperties['OFFICIAL_LEANCLOUD_APP_ID'])
             buildConfigField("String", "LEANCLOUD_APP_KEY", appProperties['OFFICIAL_LEANCLOUD_APP_KEY'])
             buildConfigField("String", "ALIYUN_LOG_PROJECT", appProperties['ALIYUN_LOG_PROJECT_OFFICIAL'])
+            buildConfigField("String", "TENCENT_STATIC_APP_ID", appProperties['TENCENT_STATIC_APP_ID_OFFICIAL'])
+
         }
 
         alpha {
@@ -169,6 +173,8 @@ android {
             buildConfigField("String", "LEANCLOUD_APP_ID", appProperties['TEST_LEANCLOUD_APP_ID'])
             buildConfigField("String", "LEANCLOUD_APP_KEY", appProperties['TEST_LEANCLOUD_APP_KEY'])
             buildConfigField("String", "ALIYUN_LOG_PROJECT", appProperties['ALIYUN_LOG_PROJECT_TEST'])
+            buildConfigField("String", "TENCENT_STATIC_APP_ID", appProperties['TENCENT_STATIC_APP_ID_TEST'])
+
         }
 
         dev {
@@ -179,6 +185,8 @@ android {
             buildConfigField("String", "LEANCLOUD_APP_ID", appProperties['DEV_LEANCLOUD_APP_ID'])
             buildConfigField("String", "LEANCLOUD_APP_KEY", appProperties['DEV_LEANCLOUD_APP_KEY'])
             buildConfigField("String", "ALIYUN_LOG_PROJECT", appProperties['ALIYUN_LOG_PROJECT_DEV'])
+            buildConfigField("String", "TENCENT_STATIC_APP_ID", appProperties['TENCENT_STATIC_APP_ID_TEST'])
+
         }
 
         productFlavors.all { flavor ->
