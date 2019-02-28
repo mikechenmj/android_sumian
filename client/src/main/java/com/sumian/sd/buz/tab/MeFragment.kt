@@ -106,8 +106,8 @@ class MeFragment : BaseViewModelFragment<GetAchievementListPresenter>(), View.On
             }
             dv_device_manage.setContent(monitorSn!!)
         })
-        DeviceManager.mMonitorNeedUpdateLiveData.observe(this, Observer { dv_setting.showRedDot(DeviceManager.hasFirmwareNeedUpdate()) })
-        DeviceManager.mSleeperNeedUpdateLiveData.observe(this, Observer { dv_setting.showRedDot(DeviceManager.hasFirmwareNeedUpdate()) })
+//        DeviceManager.mMonitorNeedUpdateLiveData.observe(this, Observer { dv_setting.showRedDot(DeviceManager.hasFirmwareNeedUpdate()) })
+//        DeviceManager.mSleeperNeedUpdateLiveData.observe(this, Observer { dv_setting.showRedDot(DeviceManager.hasFirmwareNeedUpdate()) })
         VersionDelegate.init().checkVersionCallback(activity!!, Runnable { dv_setting.showRedDot(true) }, Runnable { dv_setting.showRedDot(false) })
         mViewModel?.getAchievementList()
     }
