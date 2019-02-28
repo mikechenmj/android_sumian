@@ -64,7 +64,7 @@ class SleepDataDateBar(context: Context, attributeSet: AttributeSet) : FrameLayo
             })
             mCalendarPopup!!.setOnDismissListener { iv_date_arrow.isActivated = false }
             mCalendarPopup!!.setSelectDayTime(mSelectedTime)
-            mCalendarPopup!!.showAsDropDown(this, 0, resources.getDimension(R.dimen.space_10).toInt())
+            mCalendarPopup!!.showAsDropDown(this, 0, 0)
         }
     }
 
