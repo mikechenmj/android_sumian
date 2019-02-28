@@ -25,6 +25,7 @@ import com.sumian.sd.buz.homepage.HomepageFragment
 import com.sumian.sd.buz.kefu.KefuManager
 import com.sumian.sd.buz.notification.NotificationUnreadCountChangeEvent
 import com.sumian.sd.buz.notification.NotificationViewModel
+import com.sumian.sd.buz.setting.version.VersionManager
 import com.sumian.sd.buz.setting.version.delegate.VersionDelegate
 import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.buz.tab.DoctorFragment
@@ -159,6 +160,11 @@ class MainActivity : BaseActivity(), VersionModel.ShowDotCallback {
                     changeStatusBarTextColor(doctor == null)
                 }
             }
+        })
+
+        VersionManager.queryVersion()
+        VersionManager.mHasUpgradeLiveData.observe(this, Observer {
+            tb_me?.showDot(if (it) View.VISIBLE else View.GONE)
         })
     }
 
