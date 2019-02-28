@@ -45,6 +45,7 @@
     <dimen name="space_3">3dp</dimen>
     <dimen name="space_2">2dp</dimen>
     <dimen name="space_1">1dp</dimen>
+    <dimen name="space_0">0dp</dimen>
 
     <!--divider size-->
     <dimen name="divider_px_1">1px</dimen>

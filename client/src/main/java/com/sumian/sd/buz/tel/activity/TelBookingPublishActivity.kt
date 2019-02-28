@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.Gravity
 import android.view.View
+import android.widget.FrameLayout
 import android.widget.TextView
+import androidx.annotation.DimenRes
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.helper.ToastHelper
@@ -147,6 +149,7 @@ class TelBookingPublishActivity : BaseViewModelActivity<TelBookingPublishPresent
 
     override fun onKeyboardOpen() {
         bt_submit.visibility = View.GONE
+        updateScrollLayoutParams(R.dimen.space_0)
         if (et_input_ask_question.hasFocus()) {
             scroll_view.invokeSuperScrollToChild(tv_question_tips)
         }
@@ -159,8 +162,18 @@ class TelBookingPublishActivity : BaseViewModelActivity<TelBookingPublishPresent
     override fun onKeyboardClose() {
         if (published) {
             bt_submit.visibility = View.GONE
+            updateScrollLayoutParams(R.dimen.space_62)
         } else {
             bt_submit.visibility = View.VISIBLE
+            updateScrollLayoutParams(R.dimen.space_62)
+        }
+    }
+
+    private fun updateScrollLayoutParams(@DimenRes pixels: Int) {
+        val layoutParams = scroll_view.layoutParams as? FrameLayout.LayoutParams
+        layoutParams?.let {
+            it.bottomMargin = resources.getDimensionPixelOffset(pixels)
+            scroll_view.layoutParams = layoutParams
         }
     }
 
