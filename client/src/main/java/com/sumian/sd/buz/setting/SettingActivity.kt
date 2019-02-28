@@ -5,6 +5,7 @@ package com.sumian.sd.buz.setting
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
+import androidx.lifecycle.Observer
 import com.avos.avoscloud.AVInstallation
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.FileUtils
@@ -21,6 +22,7 @@ import com.sumian.sd.buz.devicemanager.DeviceManager
 import com.sumian.sd.buz.qrcode.activity.QrCodeActivity
 import com.sumian.sd.buz.setting.remind.RemindSettingActivity
 import com.sumian.sd.buz.setting.version.VersionActivity
+import com.sumian.sd.buz.setting.version.VersionManager
 import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.buz.upgrade.activity.DeviceVersionNoticeActivity
 import com.sumian.sd.common.h5.H5Uri
@@ -63,6 +65,9 @@ class SettingActivity : BaseActivity(), TitleBar.OnBackClickListener, View.OnCli
         findViewById<View>(R.id.sdv_feedback).setOnClickListener(this)
         findViewById<View>(R.id.sdv_modify_password).setOnClickListener(this)
         findViewById<View>(R.id.sdv_clear_cache).setOnClickListener(this)
+
+        VersionManager.queryVersion()
+        VersionManager.mHasUpgradeLiveData.observe(this, Observer { sdv_app_version.showRedDot(it) })
     }
 
     override fun initData() {
