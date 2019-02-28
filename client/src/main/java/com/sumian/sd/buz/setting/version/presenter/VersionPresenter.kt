@@ -67,7 +67,7 @@ class VersionPresenter private constructor(view: VersionContract.View) : BaseVie
                         val currentVersionCodes = currentVersion.split(".")
                         val isHaveUpgrade = VersionUtil.hasNewVersion(onlineVersionCodes, currentVersionCodes)
 
-                        mView?.onHaveUpgrade(isHaveUpgrade, response.need_force_update, response.showShowDialog(), response.description)
+                        mView?.onHaveUpgrade(isHaveUpgrade, response.isForceUpdate(), response.showShowDialog(), response.description)
                     }
                 }
             }
