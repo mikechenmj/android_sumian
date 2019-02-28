@@ -87,6 +87,11 @@ public class PanelFrameLayout extends FrameLayout {
 
         if (bottomChangeSize == 0) {//窗口大小变化完毕,才进行软键盘事件分发
             // int changeSize = mLastFrame.bottom - mDisplayHeight;
+
+            if (frame.top > 0 && frame.bottom - frame.top == mDisplayDefaultHeight) {
+                mDisplayHeight = frame.bottom; //一加  6 plus  异形刘海屏 因为初始化高度不是0 所以需要再处理一下,重新对窗口的整个值进行赋值
+            }
+
             if (isOpenSoftKeyboard()) {
                 notifyOpen();
             } else {
