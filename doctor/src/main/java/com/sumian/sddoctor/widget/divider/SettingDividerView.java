@@ -133,7 +133,7 @@ public class SettingDividerView extends LinearLayout {
         mSwitch.setChecked(checked);
     }
 
-    public void redDotInvalid(boolean isShow) {
+    public void showRedDot(boolean isShow) {
         mDot.setVisibility(isShow ? View.VISIBLE : View.GONE);
     }
 

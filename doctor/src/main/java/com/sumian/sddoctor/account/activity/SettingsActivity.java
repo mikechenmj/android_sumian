@@ -72,6 +72,13 @@ public class SettingsActivity extends BaseViewModelActivity<SettingsPresenter> i
         userAgreement.setOnClickListener(v -> ActivityUtils.startActivity(UserProtocolActivity.class));
         sdvFeedback.setOnClickListener(v -> FeedbackActivity.show());
         AppManager.getAccountViewModel().getDoctorInfo().observe(this, this);
+        VersionManager.INSTANCE.queryVersion();
+        VersionManager.INSTANCE.getMUpgradeMode().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                mSdvVersion.showRedDot(integer >= VersionManager.UPGRADE_MODE_NORMAL);
+            }
+        });
     }
 
     @NotNull
@@ -85,8 +92,6 @@ public class SettingsActivity extends BaseViewModelActivity<SettingsPresenter> i
         super.initData();
         invalidWechat();
         invalidVersion();
-        VersionManager.INSTANCE.queryVersion();
-        VersionManager.INSTANCE.getMHasUpgradeLiveData().observe(this, isUpdate -> mSdvVersion.redDotInvalid(isUpdate));
     }
 
     private void invalidVersion() {

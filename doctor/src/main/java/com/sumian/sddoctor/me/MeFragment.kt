@@ -13,9 +13,9 @@ import com.sumian.sddoctor.R
 import com.sumian.sddoctor.account.activity.SettingsActivity
 import com.sumian.sddoctor.account.activity.UserInfoActivity
 import com.sumian.sddoctor.account.contract.LogoutContract
-import com.sumian.sddoctor.account.delegate.VersionDelegate
 import com.sumian.sddoctor.account.kefu.KefuManager
 import com.sumian.sddoctor.account.presenter.LogoutPresenter
+import com.sumian.sddoctor.account.version.VersionManager
 import com.sumian.sddoctor.app.AppManager
 import com.sumian.sddoctor.base.BaseFragment
 import com.sumian.sddoctor.login.login.LoginActivity
@@ -79,20 +79,15 @@ class MeFragment : BaseFragment(), LogoutContract.View {
         KefuManager.mMessageCountLiveData.observe(this, Observer {
             showDot(sdv_my_kefu, it > 0)
         })
+        AppManager.getAccountViewModel().getDoctorInfo().observe(this, Observer { invalidDoctorInfo(it) })
+        VersionManager.queryVersion()
+        VersionManager.mUpgradeMode.observe(this, Observer {
+            sdv_setting.showRedDot(it == VersionManager.UPGRADE_MODE_NORMAL || it == VersionManager.UPGRADE_MODE_FORCE)
+        })
     }
 
     private fun showDot(settingDividerView: SettingDividerView, isHaveDot: Boolean) {
-        settingDividerView.redDotInvalid(isHaveDot)
-    }
-
-    override fun initData() {
-        super.initData()
-        AppManager.getAccountViewModel().getDoctorInfo().observe(this, Observer { invalidDoctorInfo(it) })
-        VersionDelegate.init().checkVersionCallback(activity!!, Runnable {
-            showDot(sdv_setting, true)
-        }, Runnable {
-            showDot(sdv_setting, false)
-        })
+        settingDividerView.showRedDot(isHaveDot)
     }
 
     override fun onDestroyView() {

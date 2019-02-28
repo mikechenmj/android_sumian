@@ -67,7 +67,9 @@ class SettingActivity : BaseActivity(), TitleBar.OnBackClickListener, View.OnCli
         findViewById<View>(R.id.sdv_clear_cache).setOnClickListener(this)
 
         VersionManager.queryVersion()
-        VersionManager.mHasUpgradeLiveData.observe(this, Observer { sdv_app_version.showRedDot(it) })
+        VersionManager.mUpgradeMode.observe(this, Observer {
+            sdv_app_version.showRedDot(it >= VersionManager.UPGRADE_MODE_NORMAL)
+        })
     }
 
     override fun initData() {

@@ -18,9 +18,14 @@ import com.sumian.sddoctor.util.UiUtils
  * version: 1.0
  */
 object VersionManager {
-    val mHasUpgradeLiveData by lazy {
-        val liveData = MutableLiveData<Boolean>()
-        liveData.value = false
+    const val UPGRADE_MODE_NO_UPGRADE = -1
+    const val UPGRADE_MODE_NORMAL = 0
+    const val UPGRADE_MODE_FORCE = 1
+    const val UPGRADE_MODE_MUTE = 2
+
+    val mUpgradeMode by lazy {
+        val liveData = MutableLiveData<Int>()
+        liveData.value = UPGRADE_MODE_NO_UPGRADE
         liveData
     }
 
@@ -41,11 +46,16 @@ object VersionManager {
 
             override fun onSuccess(response: Version?) {
                 response?.let { it ->
+
                     it.version?.let {
                         val currentVersionCodes = currentVersion.split(".")
                         val onlineVersionCodes = it.split(".")
                         val isHaveUpgrade = VersionUtil.hasNewVersion(onlineVersionCodes, currentVersionCodes)
-                        mHasUpgradeLiveData.value = isHaveUpgrade
+                        if (isHaveUpgrade) {
+                            mUpgradeMode.value = response.mode
+                        } else {
+                            mUpgradeMode.value = UPGRADE_MODE_NO_UPGRADE
+                        }
                     }
                 }
             }
