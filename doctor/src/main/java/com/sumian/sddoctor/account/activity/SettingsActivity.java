@@ -11,6 +11,7 @@ import com.sumian.sddoctor.R;
 import com.sumian.sddoctor.account.contract.SettingsContract;
 import com.sumian.sddoctor.account.presenter.SettingsPresenter;
 import com.sumian.sddoctor.account.sheet.LogoutBottomSheet;
+import com.sumian.sddoctor.account.version.VersionManager;
 import com.sumian.sddoctor.app.AppManager;
 import com.sumian.sddoctor.constants.StatConstants;
 import com.sumian.sddoctor.login.login.UserProtocolActivity;
@@ -84,6 +85,8 @@ public class SettingsActivity extends BaseViewModelActivity<SettingsPresenter> i
         super.initData();
         invalidWechat();
         invalidVersion();
+        VersionManager.INSTANCE.queryVersion();
+        VersionManager.INSTANCE.getMHasUpgradeLiveData().observe(this, isUpdate -> mSdvVersion.redDotInvalid(isUpdate));
     }
 
     private void invalidVersion() {
