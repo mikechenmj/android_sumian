@@ -202,9 +202,10 @@ class MeFragment : BaseViewModelFragment<GetAchievementListPresenter>(), View.On
     private fun invalidImageSpanAndTiming(achievementRecordList: List<AchievementRecord>) {
         mPreRequestTimeMills = System.currentTimeMillis()
         var imageSpan: CharSequence = ""
-        var tmpAchievementRecordList: List<AchievementRecord>? = null
-        if (achievementRecordList.size > 3) {
-            tmpAchievementRecordList = achievementRecordList.subList(0, 3)
+        val tmpAchievementRecordList: List<AchievementRecord>? = if (achievementRecordList.size > 3) {
+            achievementRecordList.subList(0, 3)
+        } else {
+            achievementRecordList
         }
         tmpAchievementRecordList?.forEach { achievementRecord ->
             val options = RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.AUTOMATIC)

@@ -93,7 +93,7 @@ public class SettingDividerView extends LinearLayout {
         }
         mTvLabel.setTextColor(typeDescColor);
         mTvLabel.setText(typeDesc);
-        mDot.setBackgroundColor(dotColor);
+        // mDot.setBackgroundColor(dotColor);
         mTvContent.setText(typeContent);
         mTvContent.setTextColor(typeContentColor);
         mTvContent.setVisibility(TextUtils.isEmpty(typeContent) ? GONE : VISIBLE);

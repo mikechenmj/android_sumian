@@ -154,6 +154,7 @@
                 android:layout_height="58dp"
                 android:layout_margin="20dip"
                 android:background="@drawable/bt_circle_bg_light"
+                android:gravity="center"
                 android:padding="10dip"
                 android:text="@string/tip_btn_sumbit"
                 android:textColor="#ffffffff"

@@ -9,9 +9,9 @@ import android.widget.TextView
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.helper.ToastHelper
-import com.sumian.common.statistic.StatUtil
 import com.sumian.common.utils.TimeUtilV2
 import com.sumian.common.widget.adapter.EmptyTextWatcher
+import com.sumian.common.widget.panel.PanelFrameLayout
 import com.sumian.sd.R
 import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.buz.tel.bean.TelBooking
@@ -32,7 +32,7 @@ import java.util.*
  */
 @Suppress("DEPRECATION")
 class TelBookingPublishActivity : BaseViewModelActivity<TelBookingPublishPresenter>(), View.OnClickListener,
-        TelBookingPublishContract.View, TelBookingBottomSheet.OnSelectTelBookingCallback {
+        TelBookingPublishContract.View, TelBookingBottomSheet.OnSelectTelBookingCallback, PanelFrameLayout.OnKeyboardListener {
 
     companion object {
 
@@ -59,6 +59,8 @@ class TelBookingPublishActivity : BaseViewModelActivity<TelBookingPublishPresent
     private var mTelBooking: TelBooking? = null
 
     private var mTelBookingUnixTime: Int = 0
+
+    private var published = false
 
     override fun initBundle(bundle: Bundle) {
         super.initBundle(bundle)
@@ -93,6 +95,11 @@ class TelBookingPublishActivity : BaseViewModelActivity<TelBookingPublishPresent
                 showEditContentLength(s, 20, tv_input_ask_count)
             }
         })
+        et_input_ask_question.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                scroll_view.invokeSuperScrollToChild(tv_question_tips)
+            }
+        }
         et_input_ask_question_more.addTextChangedListener(object : EmptyTextWatcher() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -100,7 +107,15 @@ class TelBookingPublishActivity : BaseViewModelActivity<TelBookingPublishPresent
                 showEditContentLength(s, 400, tv_input_count)
             }
         })
+        et_input_ask_question_more.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                scroll_view.invokeSuperScrollToChild(v_bottom)
+                scroll_view.smoothScrollTo(0, v_bottom.bottom)
+            }
+        }
         bt_submit.setOnClickListener(this)
+        container.setup(this)
+        container.setOnKeyboardListener(this)
     }
 
     override fun initData() {
@@ -124,8 +139,28 @@ class TelBookingPublishActivity : BaseViewModelActivity<TelBookingPublishPresent
                     onCheckInputContentFailed("请选择预约时间")
                     return
                 }
+                published = false
                 mViewModel?.checkInputContent(et_input_ask_question.text.toString().trim(), et_input_ask_question_more.text.toString().trim())
             }
+        }
+    }
+
+    override fun onKeyboardOpen() {
+        bt_submit.visibility = View.GONE
+        if (et_input_ask_question.hasFocus()) {
+            scroll_view.invokeSuperScrollToChild(tv_question_tips)
+        }
+        if (et_input_ask_question_more.hasFocus()) {
+            scroll_view.invokeSuperScrollToChild(v_bottom)
+            scroll_view.smoothScrollTo(0, v_bottom.bottom)
+        }
+    }
+
+    override fun onKeyboardClose() {
+        if (published) {
+            bt_submit.visibility = View.GONE
+        } else {
+            bt_submit.visibility = View.VISIBLE
         }
     }
 
@@ -141,6 +176,7 @@ class TelBookingPublishActivity : BaseViewModelActivity<TelBookingPublishPresent
     }
 
     override fun onPublishTelBookingOrderSuccess(telBooking: TelBooking) {//publish success
+        published = true
         invalidTelBooking(telBooking)
         bt_submit.visibility = View.GONE
         service_state_view.setOnServiceSuccessCallback(object : ServiceSuccessStateView.OnServiceSuccessCallback {

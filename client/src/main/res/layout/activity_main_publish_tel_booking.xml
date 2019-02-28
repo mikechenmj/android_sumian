@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.sumian.common.widget.panel.PanelFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".buz.tel.activity.TelBookingPublishActivity">
 
-    <androidx.core.widget.NestedScrollView
+    <com.sumian.common.widget.panel.PanelNestScrollView
         android:id="@+id/scroll_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/space_62">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -80,6 +80,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tv_question_tips"
                     style="@style/text_t1_16"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/space_64"
@@ -183,7 +184,7 @@
                 android:background="@color/l1_color" />
 
         </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+    </com.sumian.common.widget.panel.PanelNestScrollView>
 
     <com.sumian.sd.buz.tel.widget.ServiceSuccessStateView
         android:id="@+id/service_state_view"
@@ -201,4 +202,4 @@
         android:text="@string/tel_submit"
         android:visibility="gone"
         tools:visibility="visible" />
-</FrameLayout>
+</com.sumian.common.widget.panel.PanelFrameLayout>
