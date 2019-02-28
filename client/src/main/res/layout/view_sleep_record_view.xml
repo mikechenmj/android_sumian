@@ -11,6 +11,19 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/tv_sleep_restriction_hint"
+            style="@style/text_white_14"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="5dp"
+            android:background="@drawable/sleepdiary_img_restrictionbg"
+            android:gravity="center_vertical"
+            android:paddingStart="50dp"
+            android:text="@string/sleep_restriction_hint"
+            tools:ignore="RtlSymmetry" />
+
         <LinearLayout
             android:id="@+id/vg_title"
             style="@style/SimpleTitleItem">

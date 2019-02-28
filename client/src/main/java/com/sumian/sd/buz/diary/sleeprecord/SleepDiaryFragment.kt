@@ -19,6 +19,7 @@ import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import com.sumian.sd.widget.dialog.SumianAlertDialogV2
 import kotlinx.android.synthetic.main.fragment_sleep_diary.*
+import kotlinx.android.synthetic.main.view_sleep_record_view.*
 
 class SleepDiaryFragment : BaseViewModelFragment<BaseViewModel>() {
 
@@ -49,6 +50,10 @@ class SleepDiaryFragment : BaseViewModelFragment<BaseViewModel>() {
         })
         mRefreshLayout = view?.findViewById(R.id.refresh_layout)
         mRefreshLayout!!.setOnRefreshListener { queryAndShowSleepReportAtTime(selectedTime) }
+        tv_sleep_restriction_hint.setOnClickListener {
+            SleepRestrictionIntroductionDialogActivity.start()
+            StatUtil.event(StatConstants.click_sleep_diary_page_relationship_between_sleepdiary_and_restriction)
+        }
     }
 
     private fun showRefillNotEnableDialog() {
