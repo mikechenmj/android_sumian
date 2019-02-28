@@ -32,7 +32,7 @@ class AuthenticationActivity : SddBaseActivity() {
 
     override fun initWidget() {
         super.initWidget()
-        StatUtil.event(StatConstants.click_doctor_verify_page_submit_btn)
+        StatUtil.event(StatConstants.enter_doctor_verify_page)
         setTitle(R.string.doctor_authentication)
         btn_confirm.setOnClickListener { finish() }
     }

@@ -61,7 +61,7 @@ class LoginActivity : BaseActivity(), LoginContract.View {
             et_password.setText("")
         }
         tv_send_captcha.setOnClickListener {
-            StatUtil.event(StatConstants.click_home_page_captcha)
+            StatUtil.event(StatConstants.click_login_page_captcha)
             val number = getPhoneNumberWithCheck()
             if (number != null) {
                 mPresenter.requestCaptcha(number)

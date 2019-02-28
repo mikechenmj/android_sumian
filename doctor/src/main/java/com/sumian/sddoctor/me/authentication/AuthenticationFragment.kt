@@ -10,10 +10,12 @@ import androidx.lifecycle.ViewModelProviders
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.network.response.ErrorResponse
+import com.sumian.common.statistic.StatUtil
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.app.AppManager
 import com.sumian.sddoctor.base.BaseFragment
 import com.sumian.sddoctor.constants.Configs
+import com.sumian.sddoctor.constants.StatConstants
 import com.sumian.sddoctor.login.register.AuthenticateViewModel
 import com.sumian.sddoctor.login.register.bean.RegisterInfo
 import com.sumian.sddoctor.network.callback.BaseSdResponseCallback
@@ -52,7 +54,10 @@ class AuthenticationFragment : BaseFragment() {
 
     override fun initWidget(root: View?) {
         super.initWidget(root)
-        tv_submit_audit.setOnClickListener { onSubmitClick() }
+        tv_submit_audit.setOnClickListener {
+            StatUtil.event(StatConstants.click_doctor_verify_page_submit_btn)
+            onSubmitClick()
+        }
         sdv_department.setOnClickListener { startActivityForString(REQUEST_CODE_GET_DEPARTMENT) }
         sdv_job_title.setOnClickListener { startActivityForString(REQUEST_CODE_GET_JOB_TITLE) }
         ll_doctor_license_container.setOnClickListener { addPhotoIfNeed() }

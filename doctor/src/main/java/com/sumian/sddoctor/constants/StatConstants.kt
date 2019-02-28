@@ -60,7 +60,7 @@ object StatConstants {
     const val page_profile_protocol = "用户协议页"
 
     // ------ event ------
-    const val click_home_page_captcha = "click_home_page_captcha"
+    const val click_login_page_captcha = "click_login_page_captcha"
     const val enter_login_page = "enter_login_page"
     const val on_login_success = "on_login_success"
     const val enter_fill_invite_code_page = "enter_fill_invite_code_page"
