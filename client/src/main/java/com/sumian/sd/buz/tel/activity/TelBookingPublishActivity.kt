@@ -60,6 +60,8 @@ class TelBookingPublishActivity : BaseViewModelActivity<TelBookingPublishPresent
 
     private var mTelBookingUnixTime: Int = 0
 
+    private var published = false
+
     override fun initBundle(bundle: Bundle) {
         super.initBundle(bundle)
         this.mTelBooking = bundle.getParcelable(EXTRA_TEL_BOOKING)
@@ -137,6 +139,7 @@ class TelBookingPublishActivity : BaseViewModelActivity<TelBookingPublishPresent
                     onCheckInputContentFailed("请选择预约时间")
                     return
                 }
+                published = false
                 mViewModel?.checkInputContent(et_input_ask_question.text.toString().trim(), et_input_ask_question_more.text.toString().trim())
             }
         }
@@ -154,7 +157,11 @@ class TelBookingPublishActivity : BaseViewModelActivity<TelBookingPublishPresent
     }
 
     override fun onKeyboardClose() {
-        bt_submit.visibility = View.VISIBLE
+        if (published) {
+            bt_submit.visibility = View.GONE
+        } else {
+            bt_submit.visibility = View.VISIBLE
+        }
     }
 
     override fun onGetLatestTelBookingOrderSuccess(latestTelBooking: TelBooking) {
@@ -169,6 +176,7 @@ class TelBookingPublishActivity : BaseViewModelActivity<TelBookingPublishPresent
     }
 
     override fun onPublishTelBookingOrderSuccess(telBooking: TelBooking) {//publish success
+        published = true
         invalidTelBooking(telBooking)
         bt_submit.visibility = View.GONE
         service_state_view.setOnServiceSuccessCallback(object : ServiceSuccessStateView.OnServiceSuccessCallback {
