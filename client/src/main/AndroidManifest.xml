@@ -268,7 +268,7 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
+            android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".buz.notification.RefundActivity"
             android:configChanges="keyboardHidden|orientation"
@@ -303,7 +303,7 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
+            android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".buz.account.userProfile.MyTargetAndInformationActivity"
             android:configChanges="keyboardHidden|orientation"
@@ -399,6 +399,7 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.TranslucentStatus" />
+
         <service
             android:name=".buz.devicemanager.pattern.SyncPatternService"
             android:exported="false" />
