@@ -50,7 +50,7 @@
         android:text="@string/continue_add"
         android:visibility="gone"
         tools:showIn="@layout/fragment_sleep_pills"
-        tools:visibility="gone" />
+        tools:visibility="visible" />
 
     <LinearLayout
         android:id="@+id/vg_add"
