@@ -108,7 +108,7 @@
             android:name="com.sumian.common.notification.PushReceiver"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.sumian.sd.action.PUSH" />
+                <action android:name="com.sumian.sdd.action.PUSH" />
             </intent-filter>
         </receiver>
         <receiver android:name="com.avos.avoscloud.AVBroadcastReceiver">
