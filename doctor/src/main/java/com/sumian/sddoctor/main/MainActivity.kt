@@ -11,6 +11,7 @@ import com.sumian.common.statistic.StatUtil
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.account.delegate.VersionDelegate
 import com.sumian.sddoctor.account.kefu.KefuManager
+import com.sumian.sddoctor.account.version.VersionManager
 import com.sumian.sddoctor.app.AppManager
 import com.sumian.sddoctor.constants.StatConstants
 import com.sumian.sddoctor.homepage.HomepageFragment
@@ -70,6 +71,14 @@ class MainActivity : BaseActivity(), BottomNavigationBar.OnSelectedTabChangeList
         showFragmentByTabPosition(position)
         KefuManager.mMessageCountLiveData.observe(this, Observer {
             this.tb_me?.showDot(if (it > 0) View.VISIBLE else View.GONE)
+        })
+    }
+
+    override fun initData() {
+        super.initData()
+        VersionManager.queryVersion()
+        VersionManager.mHasUpgradeLiveData.observe(this, Observer {
+            tb_me?.showDot(if (it) View.VISIBLE else View.GONE)
         })
     }
 
