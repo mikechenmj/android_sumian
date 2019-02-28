@@ -11,12 +11,16 @@ import com.sumian.common.R
  * desc   :
  * version: 1.0
  */
-class CommonDividerItemDecoration(context: Context, orientation: Int = DividerItemDecoration.VERTICAL) : DividerItemDecoration(context, orientation) {
+class CommonDividerItemDecoration(context: Context, orientation: Int = DividerItemDecoration.VERTICAL, drawableRes: Int = 0) : DividerItemDecoration(context, orientation) {
     init {
-        if (orientation == VERTICAL) {
-            setDrawable(context.getDrawable(R.drawable.item_divider_line_horizontal)!!)
+        if (drawableRes != 0) {
+            setDrawable(context.resources.getDrawable(drawableRes))
         } else {
-            setDrawable(context.getDrawable(R.drawable.item_divider_line_vertical)!!)
+            if (orientation == VERTICAL) {
+                setDrawable(context.getDrawable(R.drawable.item_divider_line_horizontal)!!)
+            } else {
+                setDrawable(context.getDrawable(R.drawable.item_divider_line_vertical)!!)
+            }
         }
     }
 }
