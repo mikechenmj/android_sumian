@@ -22,4 +22,9 @@
         <attr name="cev_content" format="string|reference" />
     </declare-styleable>
 
+    <declare-styleable name="AirPanelLinearLayout">
+        <attr name="airPanelMinHeight" format="dimension" />
+        <attr name="airPanelMaxHeight" format="dimension" />
+    </declare-styleable>
+
 </resources>

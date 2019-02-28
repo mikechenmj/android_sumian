@@ -290,5 +290,8 @@
 
     <dimen name="sumian_button_corner_radius">24dp</dimen>
 
+    <dimen name="airPanelMinHeight">86dp</dimen>
+    <dimen name="airPanelMaxHeight">300dp</dimen>
+
 </resources>
 
