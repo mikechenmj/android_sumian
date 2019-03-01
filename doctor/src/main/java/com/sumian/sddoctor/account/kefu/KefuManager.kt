@@ -223,7 +223,7 @@ object KefuManager {
         val userInfo = AppManager.getAccountViewModel().getDoctorInfo().value
         val visitorInfo = ContentFactory.createVisitorInfo(null)
                 .nickName(userInfo?.nickname)
-                .name(userInfo?.nickname)
+                .name(userInfo?.name)
                 .phone(userInfo?.mobile)
                 .description("医生")
         return IntentBuilder(App.getAppContext())
