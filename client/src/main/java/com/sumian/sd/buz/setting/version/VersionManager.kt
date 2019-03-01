@@ -52,7 +52,7 @@ object VersionManager {
                         val onlineVersionCodes = it.split(".")
                         val isHaveUpgrade = VersionUtil.hasNewVersion(onlineVersionCodes, currentVersionCodes)
                         if (isHaveUpgrade) {
-                            mUpgradeMode.value = response.mode
+                            mUpgradeMode.value = response.show_update_mode
                         } else {
                             mUpgradeMode.value = UPGRADE_MODE_NO_UPGRADE
                         }
