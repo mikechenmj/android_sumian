@@ -82,7 +82,7 @@ class MeFragment : BaseFragment(), LogoutContract.View {
         AppManager.getAccountViewModel().getDoctorInfo().observe(this, Observer { invalidDoctorInfo(it) })
         VersionManager.queryVersion()
         VersionManager.mUpgradeMode.observe(this, Observer {
-            sdv_setting.showRedDot(it == VersionManager.UPGRADE_MODE_NORMAL || it == VersionManager.UPGRADE_MODE_FORCE)
+            sdv_setting.showRedDot(it == VersionManager.UPGRADE_MODE_FORCE)
         })
     }
 

@@ -112,7 +112,7 @@ class MeFragment : BaseViewModelFragment<GetAchievementListPresenter>(), View.On
         mViewModel?.getAchievementList()
         VersionManager.queryVersion()
         VersionManager.mUpgradeMode.observe(this, Observer {
-            dv_setting.showRedDot(it == VersionManager.UPGRADE_MODE_NORMAL || it == VersionManager.UPGRADE_MODE_FORCE)
+            dv_setting.showRedDot(it == VersionManager.UPGRADE_MODE_FORCE)
         })
     }
 
