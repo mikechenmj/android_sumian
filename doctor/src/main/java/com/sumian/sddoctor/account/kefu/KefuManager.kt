@@ -225,6 +225,7 @@ object KefuManager {
                 .nickName(userInfo?.nickname)
                 .name(userInfo?.nickname)
                 .phone(userInfo?.mobile)
+                .description("医生")
         return IntentBuilder(App.getAppContext())
                 .setServiceIMNumber(BuildConfig.EASEMOB_CUSTOMER_SERVICE_ID)
                 .setShowUserNick(false)
