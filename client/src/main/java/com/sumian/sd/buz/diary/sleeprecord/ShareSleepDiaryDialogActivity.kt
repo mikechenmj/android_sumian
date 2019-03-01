@@ -39,7 +39,7 @@ class ShareSleepDiaryDialogActivity : BaseDialogViewModelActivity<BaseViewModel>
                     "        \"sleep_knowledge\":{\n" +
                     "            \"id\":2,\n" +
                     "            \"question\":\"qqq2\",\n" +
-                    "            \"answer\":\"aaa2\"\n" +
+                    "            \"answer\":\"aa \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  a2\"\n" +
                     "        },\n" +
                     "        \"official_qr_code\":\"https://sleep-doctor-dev.oss-cn-shenzhen.aliyuncs.com/official_account/diary_achievement.png\"\n" +
                     "    }"

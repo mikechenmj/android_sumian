@@ -1,133 +1,157 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/v_share_sleep_diary_root"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:orientation="vertical"
-    android:visibility="invisible"
-    tools:visibility="visible">
+    android:layout_height="wrap_content">
 
-    <FrameLayout
+    <LinearLayout
+        android:id="@+id/v_share_sleep_diary_root"
         android:layout_width="match_parent"
-        android:layout_height="542dp"
-        android:background="@drawable/sleepdiary_img_sharebg"
-        tools:showIn="@layout/activity_share_sleep_diary_dialog">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="invisible"
+        tools:visibility="visible">
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            tools:ignore="UselessParent">
+            android:background="@drawable/sleepdiary_img_sharebg"
+            android:paddingTop="30dp"
+            android:paddingBottom="30dp"
+            tools:showIn="@layout/activity_share_sleep_diary_dialog">
 
-            <LinearLayout
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="70dp"
-                android:layout_marginEnd="15dp"
-                android:background="@drawable/shape_rect_solid_white_radius_4dp"
-                android:orientation="vertical"
-                android:paddingTop="80dp"
-                android:paddingBottom="20dp">
+                android:layout_gravity="center_vertical"
+                tools:ignore="UselessParent">
 
-                <TextView
-                    android:id="@+id/tv_desc_2"
-                    style="@style/text_t1_16"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:text="@string/today_is_xx_day_fill_sleep_diary"
-                    android:textSize="15sp" />
-
-                <FrameLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp">
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="70dp"
+                    android:layout_marginEnd="15dp"
+                    android:background="@drawable/shape_rect_solid_white_radius_4dp"
+                    android:orientation="vertical"
+                    android:paddingTop="80dp"
+                    android:paddingBottom="20dp">
 
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/tv_desc_2"
+                        style="@style/text_t1_16"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:text="@string/today_is_xx_day_fill_sleep_diary"
+                        android:textSize="15sp" />
+
+                    <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginEnd="15dp"
-                        android:background="@drawable/fill_diary_dialog_blue_bg"
-                        android:orientation="vertical">
+                        android:layout_marginTop="20dp">
 
-                        <TextView
-                            android:id="@+id/tv_question_2"
-                            style="@style/text_t1_16"
-                            android:layout_width="wrap_content"
-                            android:layout_height="70dp"
-                            android:layout_marginStart="70dp"
-                            android:layout_marginEnd="15dp"
-                            android:gravity="center_vertical"
-                            android:textStyle="bold"
-                            tools:text="晚上睡觉前可以喝牛奶吗\naaa？" />
-
-                        <TextView
-                            android:id="@+id/tv_answer_2"
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="15dp"
                             android:layout_marginEnd="15dp"
-                            android:layout_marginBottom="15dp"
-                            android:textColor="@color/t2_color"
-                            android:textSize="15sp"
-                            tools:text="晚上总是做梦是很正常的行为，晚上总是做梦是很正常的行为，晚上总是做梦是很正常的行为，晚上总是做梦是很正常的行为，晚上，总是做梦是很正常的行为，晚上总是做梦是很正常的行为，晚上，总是做梦是很正常的行为，晚上总是做梦是很正常的行为不用担心，你很健康！" />
+                            android:background="@drawable/fill_diary_dialog_blue_bg"
+                            android:orientation="vertical">
 
-                    </LinearLayout>
+                            <TextView
+                                android:id="@+id/tv_question_2"
+                                style="@style/text_t1_16"
+                                android:layout_width="wrap_content"
+                                android:layout_height="70dp"
+                                android:layout_marginStart="70dp"
+                                android:layout_marginEnd="15dp"
+                                android:gravity="center_vertical"
+                                android:textStyle="bold"
+                                tools:text="晚上睡觉前可以喝牛奶吗\naaa？" />
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="15dp"
-                        android:src="@drawable/popups_img_encyclopedia"
-                        tools:ignore="ContentDescription" />
-                </FrameLayout>
-            </LinearLayout>
+                            <TextView
+                                android:id="@+id/tv_answer_2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="15dp"
+                                android:layout_marginEnd="15dp"
+                                android:layout_marginBottom="15dp"
+                                android:textColor="@color/t2_color"
+                                android:textSize="15sp"
+                                tools:text="一二三四五六七八九十，
+                                晚上总是做梦是很正常的行为，
+                                晚上总是做梦是很正常的行为，
+                                晚上总是做梦是很正常的行为，
+                                晚上总是做梦是很正常的行为，
+                                晚上总是做梦是很正常的行为，
+                                晚上总是做梦是很正常的行为，
+                                晚上总是做梦是很正常的行为，
+                                晚上总是做梦是很正常的行为，
+                                晚上总是做梦是很正常的行为，
+                                晚上总是做梦是很正常的行为，
+                                晚上总是做梦是很正常的行为，
+                                晚上总是做梦是很正常的行为，
+                                晚上总是做梦是很正常的行为，
+                                晚上总是做梦是很正常的行为，
+                                晚上总是做梦是很正常的行为，
+                                晚上总是做梦是很正常的行为，
+                                晚上总是做梦是很正常的行为，
+                                晚上总是做梦是很正常的行为，晚上，总是做梦是很正常的行为，晚上总是做梦是很正常的行为，晚上，总是做梦是很正常的行为，晚上总是做梦是很正常的行为不用担心，你很健康！" />
 
-            <TextView
-                android:id="@+id/tv_day_2"
-                android:layout_width="140dp"
-                android:layout_height="140dp"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/sleepdiary_img_days"
-                android:gravity="center"
-                android:textColor="@color/t6_color"
-                android:textSize="40sp"
-                android:textStyle="bold"
-                tools:ignore="ContentDescription"
-                tools:text="100" />
+                        </LinearLayout>
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="15dp"
+                            android:src="@drawable/popups_img_encyclopedia"
+                            tools:ignore="ContentDescription" />
+                    </FrameLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_day_2"
+                    android:layout_width="140dp"
+                    android:layout_height="140dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/sleepdiary_img_days"
+                    android:gravity="center"
+                    android:textColor="@color/t6_color"
+                    android:textSize="40sp"
+                    android:textStyle="bold"
+                    tools:ignore="ContentDescription"
+                    tools:text="100" />
+            </FrameLayout>
+
         </FrameLayout>
 
-    </FrameLayout>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="125dp"
+            android:background="@color/white"
+            android:gravity="center"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="125dp"
-        android:background="@color/white"
-        android:gravity="center"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/sleepdiary_icon_logo"
+                tools:ignore="ContentDescription" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/sleepdiary_icon_logo"
-            tools:ignore="ContentDescription" />
+            <ImageView
+                android:id="@+id/iv_qr"
+                android:layout_width="95dp"
+                android:layout_height="95dp"
+                android:layout_gravity="end|center_vertical"
+                tools:background="@color/blue_50"
+                tools:ignore="ContentDescription" />
 
-        <ImageView
-            android:id="@+id/iv_qr"
-            android:layout_width="95dp"
-            android:layout_height="95dp"
-            android:layout_gravity="end|center_vertical"
-            tools:background="@color/blue_50"
-            tools:ignore="ContentDescription" />
+        </FrameLayout>
 
-    </FrameLayout>
-
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>

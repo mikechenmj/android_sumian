@@ -1,142 +1,155 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:orientation="vertical"
-    android:paddingStart="15dp"
-    android:paddingEnd="15dp"
+    android:layout_height="match_parent"
     tools:background="@color/black_50">
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:showIn="@layout/activity_share_sleep_diary_dialog">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="55dp"
-            android:background="@drawable/shape_rect_solid_white_radius_4dp"
-            android:orientation="vertical"
-            android:paddingTop="65dp"
-            android:paddingBottom="20dp">
-
-            <TextView
-                android:id="@+id/tv_desc_1"
-                style="@style/text_t1_16"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:text="@string/today_is_xx_day_fill_sleep_diary"
-                android:textSize="15sp" />
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:background="@drawable/fill_diary_dialog_blue_bg"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/tv_question_1"
-                        style="@style/text_t1_16"
-                        android:layout_width="wrap_content"
-                        android:layout_height="70dp"
-                        android:layout_marginStart="70dp"
-                        android:layout_marginEnd="15dp"
-                        android:gravity="center_vertical"
-                        android:textStyle="bold"
-                        tools:text="晚上睡觉前可以喝牛奶吗\naaa？" />
-
-                    <TextView
-                        android:id="@+id/tv_answer_1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginEnd="15dp"
-                        android:layout_marginBottom="15dp"
-                        android:textColor="@color/t2_color"
-                        android:textSize="15sp"
-                        tools:text="晚上总是做梦是很正常的行为，晚上总是做梦是很正常的行为，晚上总是做梦是很正常的行为，晚上总是做梦是很正常的行为，晚上，总是做梦是很正常的行为，晚上总是做梦是很正常的行为，晚上，总是做梦是很正常的行为，晚上总是做梦是很正常的行为不用担心，你很健康！" />
-
-                </LinearLayout>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="15dp"
-                    android:src="@drawable/popups_img_encyclopedia"
-                    tools:ignore="ContentDescription" />
-            </FrameLayout>
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/tv_day_1"
-            android:layout_width="110dp"
-            android:layout_height="110dp"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/sleepdiary_img_days"
-            android:gravity="center"
-            android:textColor="@color/t6_color"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            tools:ignore="ContentDescription"
-            tools:text="100" />
-
-        <ImageView
-            android:id="@+id/iv_close"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_gravity="end"
-            android:layout_marginTop="75dp"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_close"
-            tools:ignore="ContentDescription" />
-
-    </FrameLayout>
-
-    <TextView
-        style="@style/text_white_14"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:text="@string/share_healthy_sleep" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:gravity="center">
+        android:orientation="vertical"
+        android:paddingStart="15dp"
+        android:paddingTop="50dp"
+        android:paddingEnd="15dp"
+        android:paddingBottom="50dp">
 
-        <ImageView
-            android:id="@+id/iv_weixin"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:scaleType="centerInside"
-            android:src="@drawable/share_icon_wechat"
-            tools:ignore="ContentDescription" />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <Space
-            android:layout_width="50dp"
-            android:layout_height="0dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="55dp"
+                android:background="@drawable/shape_rect_solid_white_radius_4dp"
+                android:orientation="vertical"
+                android:paddingTop="65dp"
+                android:paddingBottom="20dp">
 
-        <ImageView
-            android:id="@+id/iv_weixin_cicle"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:scaleType="centerInside"
-            android:src="@drawable/share_icon_wechatcircle"
-            tools:ignore="ContentDescription" />
+                <TextView
+                    android:id="@+id/tv_desc_1"
+                    style="@style/text_t1_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:text="@string/today_is_xx_day_fill_sleep_diary"
+                    android:textSize="15sp" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/fill_diary_dialog_blue_bg"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_question_1"
+                            style="@style/text_t1_16"
+                            android:layout_width="wrap_content"
+                            android:layout_height="70dp"
+                            android:layout_marginStart="70dp"
+                            android:layout_marginEnd="15dp"
+                            android:gravity="center_vertical"
+                            android:textStyle="bold"
+                            tools:text="晚上睡觉前可以喝牛奶吗\naaa？" />
+
+                        <TextView
+                            android:id="@+id/tv_answer_1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginEnd="15dp"
+                            android:layout_marginBottom="15dp"
+                            android:textColor="@color/t2_color"
+                            android:textSize="15sp"
+                            tools:text="
+                        123456789012345678901234567890123456789012345678901234567890，
+                        123456789012345678901234567890123456789012345678901234567890，
+                        123456789012345678901234567890123456789012345678901234567890，
+                        123456789012345678901234567890123456789012345678901234567890，
+                        123456789012345678901234567890123456789012345678901234567890，
+                        123456789012345678901234567890123456789012345678901234567890，
+                        123456789012345678901234567890123456789012345678901234567890，
+                        " />
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="15dp"
+                        android:src="@drawable/popups_img_encyclopedia"
+                        tools:ignore="ContentDescription" />
+                </FrameLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_day_1"
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/sleepdiary_img_days"
+                android:gravity="center"
+                android:textColor="@color/t6_color"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                tools:ignore="ContentDescription"
+                tools:text="100" />
+
+            <ImageView
+                android:id="@+id/iv_close"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="end"
+                android:layout_marginTop="75dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_close"
+                tools:ignore="ContentDescription" />
+
+        </FrameLayout>
+
+        <TextView
+            style="@style/text_white_14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:text="@string/share_healthy_sleep" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/iv_weixin"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/share_icon_wechat"
+                tools:ignore="ContentDescription" />
+
+            <Space
+                android:layout_width="50dp"
+                android:layout_height="0dp" />
+
+            <ImageView
+                android:id="@+id/iv_weixin_cicle"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/share_icon_wechatcircle"
+                tools:ignore="ContentDescription" />
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</ScrollView>

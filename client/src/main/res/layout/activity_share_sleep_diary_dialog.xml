@@ -6,8 +6,8 @@
     android:background="@color/black_50"
     tools:context=".buz.diary.sleeprecord.ShareSleepDiaryDialogActivity">
 
-    <include layout="@layout/activity_share_sleep_diary_dialog_content_1" />
-
     <include layout="@layout/activity_share_sleep_diary_dialog_content_2" />
+
+    <include layout="@layout/activity_share_sleep_diary_dialog_content_1" />
 
 </FrameLayout>
