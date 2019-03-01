@@ -16,7 +16,7 @@ import com.sumian.common.utils.SumianExecutor;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.buz.account.bean.UserInfo;
 import com.sumian.sd.buz.devicemanager.DeviceManager;
-import com.sumian.sd.buz.devicemanager.FileHelper;
+import com.sumian.sd.buz.devicemanager.helper.FileHelper;
 import com.sumian.sd.common.log.LogManager;
 import com.sumian.sd.common.utils.EventBusUtil;
 import com.sumian.sd.common.utils.StreamUtil;

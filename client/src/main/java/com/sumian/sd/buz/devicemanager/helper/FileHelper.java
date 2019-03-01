@@ -1,4 +1,4 @@
-package com.sumian.sd.buz.devicemanager;
+package com.sumian.sd.buz.devicemanager.helper;
 
 import android.os.Environment;
 import android.util.Log;
