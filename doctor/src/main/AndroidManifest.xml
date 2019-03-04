@@ -229,7 +229,7 @@
 
         <activity
             android:name=".service.cbti.activity.CBTIIntroduction2WebActivity"
-            android:configChanges="keyboardHidden|orientation"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/ActivityTheme"
@@ -254,7 +254,7 @@
 
         <activity
             android:name=".service.cbti.activity.CBTIIntroductionActivity"
-            android:configChanges="keyboardHidden|orientation"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:exported="true"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
