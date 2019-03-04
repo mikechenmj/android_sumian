@@ -443,7 +443,7 @@
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
             android:name=".buz.cbti.activity.CBTIIntroductionActivity"
-            android:configChanges="keyboardHidden|orientation"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.TranslucentStatus"
@@ -457,7 +457,7 @@
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
             android:name=".buz.cbti.activity.CBTIIntroduction2WebActivity"
-            android:configChanges="keyboardHidden|orientation"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.TranslucentStatus"
