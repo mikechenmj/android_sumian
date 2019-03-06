@@ -119,7 +119,7 @@ class ModifySelectBottomSheet : BaseBottomSheetView(), ModifyUserInfoContract.Vi
         }
     }
 
-    override fun transformOneDisplayedValues(currentPosition: Int, hintText: String?, displayedValues: Array<out String>) {
+    override fun transformOneDisplayedValues(currentPosition: Int, hintText: String?, displayedValues: Array<out String?>?) {
         runUiThread {
             picker_one.refreshByNewDisplayedValues(displayedValues)
             picker_one.pickedIndexRelativeToRaw = currentPosition
@@ -128,7 +128,7 @@ class ModifySelectBottomSheet : BaseBottomSheetView(), ModifyUserInfoContract.Vi
         }
     }
 
-    override fun transformTwoDisplayedValues(currentPosition: Int, hintText: String?, displayedValues: Array<out String>) {
+    override fun transformTwoDisplayedValues(currentPosition: Int, hintText: String?, displayedValues: Array<out String?>?) {
         runUiThread {
             picker_two.refreshByNewDisplayedValues(displayedValues)
             picker_two.pickedIndexRelativeToRaw = currentPosition
@@ -137,7 +137,7 @@ class ModifySelectBottomSheet : BaseBottomSheetView(), ModifyUserInfoContract.Vi
         }
     }
 
-    override fun transformThreeDisplayedValues(currentPosition: Int, hintText: String?, displayedValues: Array<out String>?) {
+    override fun transformThreeDisplayedValues(currentPosition: Int, hintText: String?, displayedValues: Array<out String?>?) {
         runUiThread {
             picker_three.refreshByNewDisplayedValues(displayedValues)
             picker_three.setHintText(hintText)
