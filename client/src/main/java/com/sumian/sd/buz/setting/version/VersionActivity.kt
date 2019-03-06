@@ -63,7 +63,7 @@ class VersionActivity : BaseViewModelActivity<VersionPresenter>(), VersionContra
     override fun onHaveUpgrade(isHaveUpgrade: Boolean, isHaveForce: Boolean, isShowDialog: Boolean, versionMsg: String?) {
         mIsHaveUpgrade = isHaveUpgrade
         sdv_go_market.visibility = View.VISIBLE//if (isHaveUpgrade) View.VISIBLE else View.GONE
-        sdv_go_market.showRedDot(true)
+        sdv_go_market.showRedDot(isHaveUpgrade)
     }
 
     override fun onClick(v: View?) {
