@@ -1,4 +1,4 @@
-include ':client',
+include ':client', ':module_cbti', ':module_core', ':common_ui',
         ':doctor',
         ':common',
         ':blue',

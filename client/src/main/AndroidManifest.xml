@@ -580,6 +580,7 @@
             android:theme="@style/BaseAppTheme.TranslucentStatus.DialogActivity" />
         <activity android:name=".buz.doctormessage.DoctorMessageListActivity" android:launchMode="singleTop"/>
         <activity android:name=".buz.sleepertalk.SleeperTalkListActivity" android:launchMode="singleTop"/>
+        <activity android:name=".buz.patientdoctorim.PatientDoctorImActivity" />
 
     </application>
 

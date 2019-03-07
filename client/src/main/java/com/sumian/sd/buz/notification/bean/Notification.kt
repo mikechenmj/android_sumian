@@ -17,7 +17,7 @@ data class Notification(
         @SerializedName("created_at")
         var createdAt: Int,
         @SerializedName("data")
-        var `data`: Data,
+        var `data`: NotificationData,
         @SerializedName("data_id")
         var dataId: Int,
         @SerializedName("id")
@@ -34,7 +34,7 @@ data class Notification(
     }
 }
 
-data class Data(
+data class NotificationData(
         @SerializedName("content")
         var content: String,
         @SerializedName("scheme")
