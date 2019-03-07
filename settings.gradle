@@ -1,4 +1,4 @@
-include ':client', ':module_core', ':common_ui',
+include ':client', ':module_core',
         ':doctor',
         ':common_base',
         ':blue',
