@@ -1,4 +1,4 @@
-package com.example.module_ui;
+package com.sumian.module_core;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.example.module_ui.test", appContext.getPackageName());
+        assertEquals("com.sumian.module_core.test", appContext.getPackageName());
     }
 }

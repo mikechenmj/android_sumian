@@ -1,4 +1,4 @@
-package com.example.module_cbti;
+package com.sumian.module_core;
 
 import org.junit.Test;
 
