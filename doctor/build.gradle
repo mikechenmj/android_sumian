@@ -255,7 +255,7 @@ dependencies {
     implementation 'com.aliyun.dpa:oss-android-sdk:2.9.1'
 
     //sumian component
-    implementation project(':common')
+    implementation project(':common_base')
     //客服
     implementation project(':kefu-easeui')
 

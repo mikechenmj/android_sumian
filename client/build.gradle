@@ -303,7 +303,7 @@ dependencies {
     //    implementation 'com.sumian.sd:kefu-easeui:1.0.3'
     //    implementation 'com.sumian.sd:jsbridge:1.0.0'
     implementation project(':blue')
-    implementation project(':common')
+    implementation project(':common_base')
     //implementation project(':jsbridge')
     implementation project(':kefu-easeui')
     // round corner image view
