@@ -14,8 +14,8 @@
         app:menu_text="@string/all_read"
         app:text="@string/notification_center" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
+    <FrameLayout
+        android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

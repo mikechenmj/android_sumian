@@ -268,4 +268,5 @@ dependencies {
     implementation('cn.leancloud.android:avoscloud-sdk:v4.7.6')
     // 推送与即时通讯需要的包
     implementation('cn.leancloud.android:avoscloud-push:v4.7.6@aar') { transitive = true }
+    implementation project(':module_core')
 }

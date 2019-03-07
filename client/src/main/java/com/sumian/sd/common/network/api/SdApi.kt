@@ -1,8 +1,8 @@
 package com.sumian.sd.common.network.api
 
-import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.sumian.common.network.response.PaginationResponseV2
+import com.sumian.module_core.notification.NotificationListResponse
 import com.sumian.sd.buz.account.achievement.bean.AchievementData
 import com.sumian.sd.buz.account.achievement.bean.AchievementRecord
 import com.sumian.sd.buz.account.achievement.bean.AchievementResponse
@@ -31,7 +31,6 @@ import com.sumian.sd.buz.homepage.bean.GetCbtiChaptersResponse
 import com.sumian.sd.buz.homepage.bean.SentencePoolText
 import com.sumian.sd.buz.homepage.bean.SleepPrescriptionStatus
 import com.sumian.sd.buz.kefu.KeFuMessage
-import com.sumian.sd.buz.notification.bean.NotificationListResponse
 import com.sumian.sd.buz.notification.bean.SystemNotificationData
 import com.sumian.sd.buz.onlinereport.OnlineReport
 import com.sumian.sd.buz.relaxation.bean.RelaxationData

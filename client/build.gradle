@@ -290,11 +290,11 @@ dependencies {
     // RecyclerViewPager
     implementation 'com.github.lsjwzh.RecyclerViewPager:lib:v1.1.2@aar'
     //implementation 'com.github.wendux:DSBridge-Android:x5-3.0-SNAPSHOT'
-    // Base Adapter
-    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.40'
-    implementation('com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.40') {
-        exclude module: 'support-recyclerview'
-    }
+//    // Base Adapter
+//    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.40'
+//    implementation('com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.40') {
+//        exclude module: 'support-recyclerview'
+//    }
     //hw
     implementation 'no.nordicsemi.android:dfu:1.8.1'
     //sumian component
@@ -312,4 +312,5 @@ dependencies {
     //debugImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3'
     // Optional, if you use support library fragments:
     //debugImplementation 'com.squareup.leakcanary:leakcanary-support-fragment:1.6.3'
+    implementation project(':module_core')
 }

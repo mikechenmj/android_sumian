@@ -1,5 +1,6 @@
 package com.sumian.sd.buz.patientdoctorim
 
+import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.base.BaseViewModel
 import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.sd.R
@@ -14,5 +15,11 @@ import com.sumian.sd.R
 class PatientDoctorImActivity : BaseViewModelActivity<BaseViewModel>() {
     override fun getLayoutId(): Int {
         return R.layout.activity_patient_doctor_im
+    }
+
+    companion object {
+        fun launch() {
+            ActivityUtils.startActivity(ActivityUtils.getTopActivity(), PatientDoctorImActivity::class.java)
+        }
     }
 }

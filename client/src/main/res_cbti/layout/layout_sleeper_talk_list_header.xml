@@ -8,9 +8,9 @@
     android:padding="10dp">
 
     <ImageView
+        android:id="@+id/iv_header"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="iv_header"
         tools:background="#3f00" />
 
     <TextView

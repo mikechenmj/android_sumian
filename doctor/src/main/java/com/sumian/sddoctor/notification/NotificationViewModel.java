@@ -2,9 +2,9 @@ package com.sumian.sddoctor.notification;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.sumian.common.network.response.ErrorResponse;
+import com.sumian.module_core.notification.NotificationListResponse;
 import com.sumian.sddoctor.app.AppManager;
 import com.sumian.sddoctor.network.callback.BaseSdResponseCallback;
-import com.sumian.sddoctor.notification.bean.GetNotificationListResponse;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -34,9 +34,9 @@ public class NotificationViewModel extends ViewModel {
 
     public void updateUnreadCount() {
         AppManager.getHttpService().getNotificationList(1, 10, "unread")
-                .enqueue(new BaseSdResponseCallback<GetNotificationListResponse>() {
+                .enqueue(new BaseSdResponseCallback<NotificationListResponse>() {
                     @Override
-                    protected void onSuccess(GetNotificationListResponse response) {
+                    protected void onSuccess(NotificationListResponse response) {
                         mUnreadCount.setValue(response.getMeta().getUnreadNum());
                     }
 

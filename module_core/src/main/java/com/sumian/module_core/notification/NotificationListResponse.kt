@@ -1,4 +1,4 @@
-package com.sumian.sd.buz.notification.bean
+package com.sumian.module_core.notification
 
 import com.google.gson.annotations.SerializedName
 import com.sumian.common.network.response.Pagination

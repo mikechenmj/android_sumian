@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">module_core</string>
+    <string name="doctor_message">医生消息</string>
+    <string name="system_message">系统消息</string>
+    <string name="no_doctor_message_yet">尚未收到医生发起的会话</string>
+    <string name="no_system_notification_yet">- 暂无系统消息 -</string>
+    <string name="sleeper_talk">眠友说</string>
+    <string name="more_article">更多文章</string>
+
+    <string name="open_notification_push">开启消息推送通知</string>
+    <string name="open_notification_push_hint">第一时间接收消息更新通知</string>
+    <string name="go_open">去开启</string>
+
 </resources>

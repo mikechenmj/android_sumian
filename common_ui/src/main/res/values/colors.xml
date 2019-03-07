@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="colorPrimary">@color/b3_color</color>
+    <color name="colorPrimaryDark">@color/b3_color</color>
+    <color name="colorAccent">@color/b3_color</color>
+
+    <color name="white">#FFFFFFFF</color>
+    <color name="white_90">#E5FFFFFF</color>
+    <color name="white_80">#CCFFFFFF</color>
+    <color name="white_70">#B2FFFFFF</color>
+    <color name="white_60">#99FFFFFF</color>
+    <color name="white_50">#7FFFFFFF</color>
+    <color name="white_40">#66FFFFFF</color>
+    <color name="white_30">#4CFFFFFF</color>
+    <color name="white_20">#33FFFFFF</color>
+    <color name="white_10">#19FFFFFF</color>
+
+    <!-- black opacity-->
+    <color name="black">#FF000000</color>
+    <color name="black_90">#E5000000</color>
+    <color name="black_80">#CC000000</color>
+    <color name="black_70">#B2000000</color>
+    <color name="black_60">#99000000</color>
+    <color name="black_50">#7F000000</color>
+    <color name="black_40">#66000000</color>
+    <color name="black_30">#4C000000</color>
+    <color name="black_20">#33000000</color>
+    <color name="black_10">#19000000</color>
+
+    <!--font color-->
+    <color name="t1_color">#ff475266</color>
+    <color name="t1_color_40">#66475266</color>
+    <color name="t2_color">#ff878d99</color>
+    <color name="t2_alpha_color">#b2878d99</color>
+    <color name="t2_alpha_40_color">#b2878d99</color>
+    <color name="t3_color">#ff2c2f37</color>
+    <color name="t4_color">#ffe56a67</color>
+    <color name="t5_color">#ff7ea5f4</color>
+
+    <!--line color-->
+    <color name="l1_color">#ffedeff0</color>
+    <color name="l1_10_color">#19edeff0</color>
+    <color name="l1_66_color">#a8edeff0</color>
+    <color name="l1_33_color">#54edeff0</color>
+
+    <color name="l2_color">#ffcbcbcb</color>
+    <color name="l3_color">#ffe3e5e6</color>
+
+    <!--bg color-->
+    <color name="b1_color">#fff2f3f5</color>
+    <color name="b2_color">#ffffffff</color>
+    <color name="b2_alpha_50_color">#7fffffff</color>
+    <color name="b2_alpha_80_color">#ccffffff</color>
+    <color name="b3_color">#ff6595f4</color>
+    <color name="b4_color">#fff1ba5c</color>
+    <color name="b5_color">#ff9cbdff</color>
+    <color name="b6_color">#ff84c6fa</color>
+    <color name="b7_color">#ff5c7de6</color>
+    <color name="b8_color">#ffF0918E</color>
+    <color name="b9_color">#ff477eed</color>
+
+    <!--shadow color-->
+    <color name="s1_color">#ff779ce6</color>
+    <color name="s2_color">#ffadbcd9</color>
+    <color name="s3_color">#ff5c6373</color>
+    <color name="s4_color">#4c000000</color>
+
+    <color name="loading_bg_color">#96000000</color>
+    <color name="dialog_bg_color">#7f000000</color>
+
+    <color name="black_alpha_48">#30000000</color>
+    <!--sleep record progress-->
+    <color name="sleep_record_progress_high_start">@color/b6_color</color>
+    <color name="sleep_record_progress_high_end">@color/b7_color</color>
+    <color name="sleep_record_progress_middle_start">#F2DA91</color>
+    <color name="sleep_record_progress_middle_end">@color/b4_color</color>
+    <color name="sleep_record_progress_low_start">#F2A291</color>
+    <color name="sleep_record_progress_low_end">@color/t4_color</color>
+
+    <color name="qr_code_bg">#7F9cbdff</color>
+    <color name="alpha5_color">#7f000000</color>
+
+    <!--  day  light theme-->
+    <!--bg color-->
+    <color name="b1_color_day">#fff2f3f5</color>
+    <color name="b2_color_day">#ffffffff</color>
+    <color name="b2_alpha_50_color_day">#7fffffff</color>
+    <color name="b3_color_day">#ff6595f4</color>
+    <color name="b4_color_day">#fff1ba5c</color>
+    <color name="b5_color_day">#ff9cbdff</color>
+    <color name="b6_color_day">#ff84c6fa</color>
+    <color name="b7_color_day">#ff5c7de6</color>
+    <color name="b8_color_day">#fff0918e</color>
+
+    <!--font color-->
+    <color name="t1_color_day">#ff475266</color>
+    <color name="t2_color_day">#ff878d99</color>
+    <color name="t2_alpha_color_day">#b2878d99</color>
+    <color name="t2_alpha_40_color_day">#b2878d99</color>
+    <color name="t3_color_day">#ff2c2f37</color>
+    <color name="t4_color_day">#ffe56a67</color>
+    <color name="t5_color_day">#ff475266</color>
+
+    <!--line color-->
+    <color name="l1_color_day">#ffedeff0</color>
+    <color name="l1_alpha_10_color_day">#19edeff0</color>
+    <color name="l2_color_day">#ffcbcbcb</color>
+    <color name="l3_color_day">#ffe3e5e6</color>
+
+    <!--shadow color-->
+    <color name="s1_color_day">#ff779ce6</color>
+    <color name="s2_color_day">#ffadbcd9</color>
+    <color name="s3_color_day">#ff5c6373</color>
+
+    <!--grid color-->
+    <color name="g1_color_day">#ff5779f7</color>
+    <color name="g2_color_day">#ff76a4ff</color>
+    <color name="g3_color_day">#fffaba4b</color>
+
+    <!--navigation color-->
+    <color name="n1_color_day">#ff6595f4</color>
+    <color name="n2_color_day">#ffffffff</color>
+    <color name="n2_alpha_40_color_day">#66ffffff</color>
+
+    <color name="full_general_color">#ff7d8fb3</color>
+    <color name="transparent">#00000000</color>
+
+</resources>
