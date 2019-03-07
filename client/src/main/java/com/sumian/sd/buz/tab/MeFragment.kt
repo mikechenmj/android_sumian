@@ -128,7 +128,7 @@ class MeFragment : BaseViewModelFragment<GetAchievementListPresenter>(), View.On
         when (v.id) {
             R.id.iv_modify, R.id.iv_avatar, R.id.tv_nickname -> ActivityUtils.startActivity(UserInfoActivity::class.java)
             R.id.dv_setting -> ActivityUtils.startActivity(SettingActivity::class.java)
-            R.id.iv_notification -> NotificationListActivity.launch(activity)
+            R.id.iv_notification -> NotificationListActivity.launch(activity!!)
             R.id.siv_customer_service -> {
 //                UIProvider.getInstance().clearCacheMsg()
                 KefuManager.launchKefuActivity()
@@ -138,6 +138,7 @@ class MeFragment : BaseViewModelFragment<GetAchievementListPresenter>(), View.On
                 MyAchievementActivity.show()
             }
             R.id.dv_device_manage -> {
+
                 LogManager.appendUserOperationLog("点击【设备管理】")
                 ActivityUtils.startActivity(DeviceManageActivity::class.java)
             }
