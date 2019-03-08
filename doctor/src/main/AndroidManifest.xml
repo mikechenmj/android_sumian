@@ -286,9 +286,10 @@
         <activity
             android:name=".me.mywallet.WithdrawAmountActivity"
             android:launchMode="singleTop" />
-        <activity android:name=".me.mywallet.PendingIncomeListActivity" />
-        <activity android:name=".me.mywallet.PendingIncomeDetailActivity" />
-        <activity android:name=".me.mywallet.PendingIncomeAmountActivity" />
+        <activity android:name=".me.mywallet.PendingIncomeListActivity" android:launchMode="singleTop"/>
+        <activity android:name=".me.mywallet.PendingIncomeDetailActivity" android:launchMode="singleTop"/>
+        <activity android:name=".me.mywallet.PendingIncomeAmountActivity" android:launchMode="singleTop"/>
+        <activity android:name=".buz.patientdoctorim.PatientDoctorImDetailActivity" android:launchMode="singleTop" android:exported="true"/>
     </application>
 
 </manifest>

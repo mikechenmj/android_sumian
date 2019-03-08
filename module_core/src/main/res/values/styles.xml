@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="core_im_message_text" parent="text_t1_16">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/shape_rect_im_bubble_left_white</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:maxWidth">@dimen/im_message_item_text_max_width</item>
+        <item name="android:visibility">gone</item>
+        <item name="android:paddingStart">15dp</item>
+        <item name="android:paddingEnd">15dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+    </style>
+
+    <style name="core_im_message_voice" parent="core_im_message_text">
+        <item name="android:background">@drawable/shape_rect_im_bubble_left_white</item>
+        <item name="android:drawablePadding">10dp</item>
+        <item name="android:maxWidth">215dp</item>
+        <item name="android:minWidth">85dp</item>
+    </style>
+</resources>
