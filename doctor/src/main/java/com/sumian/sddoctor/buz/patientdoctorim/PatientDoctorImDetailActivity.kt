@@ -1,7 +1,27 @@
 package com.sumian.sddoctor.buz.patientdoctorim
 
-import com.sumian.module_core.patientdoctorim.PatientDoctorImDetailFragment
+import android.content.Intent
+import android.widget.Toast
+import cn.leancloud.chatkit.LCChatKit
+import cn.leancloud.chatkit.LCChatKitUser
+import cn.leancloud.chatkit.LCChatProfileProvider
+import cn.leancloud.chatkit.LCChatProfilesCallBack
+import cn.leancloud.chatkit.activity.LCIMConversationFragment
+import cn.leancloud.chatkit.cache.LCIMConversationItemCache
+import cn.leancloud.chatkit.utils.LCIMConversationUtils
+import cn.leancloud.chatkit.utils.LCIMLogUtils
+import com.avos.avoscloud.AVCallback
+import com.avos.avoscloud.AVException
+import com.avos.avoscloud.im.v2.AVIMClient
+import com.avos.avoscloud.im.v2.AVIMConversation
+import com.avos.avoscloud.im.v2.AVIMException
+import com.avos.avoscloud.im.v2.AVIMTemporaryConversation
+import com.avos.avoscloud.im.v2.callback.AVIMClientCallback
+import com.avos.avoscloud.im.v2.callback.AVIMConversationCreatedCallback
+import com.blankj.utilcode.util.ActivityUtils
+import com.sumian.sddoctor.BuildConfig
 import com.sumian.sddoctor.R
+import com.sumian.sddoctor.app.AppManager
 import com.sumian.sddoctor.base.SddBaseActivity
 
 /**
@@ -11,19 +31,80 @@ import com.sumian.sddoctor.base.SddBaseActivity
  * desc   :
  * version: 1.0
  */
-class PatientDoctorImDetailActivity : SddBaseActivity() {
-    private lateinit var mPatientDoctorImDetailFragment : PatientDoctorImDetailFragment
+open class PatientDoctorImDetailActivity : SddBaseActivity() {
+    private lateinit var mFragment: LCIMConversationFragment
     override fun getLayoutId(): Int {
         return R.layout.im_activity_patient_doctor_im_detail
+    }
+
+    override fun showBackNav(): Boolean {
+        return true
     }
 
     override fun initWidget() {
         super.initWidget()
         initFragment()
+
+        val doctor = AppManager.getAccountViewModel().getDoctorInfo().value!!
+        val clientId = doctor.im_id
+        LCChatKit.getInstance().init(this, BuildConfig.LEANCLOUD_APP_ID, BuildConfig.LEANCLOUD_APP_KEY)
+        LCChatKit.getInstance().open(clientId, object : AVIMClientCallback() {
+            override fun done(avimClient: AVIMClient, e: AVIMException?) {
+                if (null == e) {
+                    onConversationOpened()
+                } else {
+                    Toast.makeText(this@PatientDoctorImDetailActivity, e.toString(), Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
+        LCChatKit.getInstance().profileProvider = object : LCChatProfileProvider {
+            override fun fetchProfiles(userIdList: MutableList<String>?, profilesCallBack: LCChatProfilesCallBack?) {
+                val userList = ArrayList<LCChatKitUser>()
+                userList.add(LCChatKitUser(doctor.im_id, doctor.name, doctor.avatar))
+                profilesCallBack?.done(userList, null)
+            }
+
+            override fun getAllUsers(): MutableList<LCChatKitUser> {
+                return ArrayList<LCChatKitUser>()
+            }
+        }
+
+    }
+
+    private fun onConversationOpened() {
+        LCChatKit.getInstance().client.createConversation(listOf("jack", "lucy"), "Titanic", null, false, true, object : AVIMConversationCreatedCallback() {
+            override fun done(conversation: AVIMConversation?, p1: AVIMException?) {
+                updateConversation(LCChatKit.getInstance().client!!.getConversation(conversation?.conversationId))
+            }
+        })
+    }
+
+    private fun updateConversation(conversation: AVIMConversation?) {
+        if (null != conversation) {
+            if (conversation is AVIMTemporaryConversation) {
+                println("Conversation expired flag: " + conversation.isExpired)
+            }
+            mFragment.setConversation(conversation)
+            LCIMConversationItemCache.getInstance().insertConversation(conversation.conversationId)
+            LCIMConversationUtils.getConversationName(conversation, object : AVCallback<String>() {
+                override fun internalDone0(s: String, e: AVException?) {
+                    if (null != e) {
+                        LCIMLogUtils.logException(e)
+                    } else {
+                    }
+                }
+            })
+        }
     }
 
     private fun initFragment() {
-        mPatientDoctorImDetailFragment = PatientDoctorImDetailFragment()
-        supportFragmentManager.beginTransaction().replace(R.id.fragment_container, mPatientDoctorImDetailFragment).commit()
+        mFragment = LCIMConversationFragment()
+        supportFragmentManager.beginTransaction().replace(R.id.fragment_container, mFragment).commit()
+    }
+
+    companion object {
+        fun launch() {
+            ActivityUtils.startActivity(Intent(ActivityUtils.getTopActivity(), PatientDoctorImDetailActivity::class.java))
+        }
     }
 }

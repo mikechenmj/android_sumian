@@ -17,8 +17,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.im.v2.AVIMConversation;
@@ -26,13 +26,13 @@ import com.avos.avoscloud.im.v2.AVIMException;
 import com.avos.avoscloud.im.v2.AVIMMessage;
 import com.avos.avoscloud.im.v2.AVIMMessageOption;
 import com.avos.avoscloud.im.v2.callback.AVIMConversationCallback;
-import com.avos.avoscloud.im.v2.callback.AVIMMessagesQueryCallback;
 import com.avos.avoscloud.im.v2.callback.AVIMMessageRecalledCallback;
 import com.avos.avoscloud.im.v2.callback.AVIMMessageUpdatedCallback;
+import com.avos.avoscloud.im.v2.callback.AVIMMessagesQueryCallback;
 import com.avos.avoscloud.im.v2.messages.AVIMAudioMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMImageMessage;
-import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMRecalledMessage;
+import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
 
 import java.io.File;
 import java.io.IOException;
@@ -240,6 +240,7 @@ public class LCIMConversationFragment extends Fragment {
    * 因为不排除某些特殊情况会受到其他页面过来的无效消息，所以此处加了 tag 判断
    */
   public void onEvent(LCIMInputBottomBarTextEvent textEvent) {
+    LCIMLogUtils.d(textEvent.toString());
     if (null != imConversation && null != textEvent) {
       if (!TextUtils.isEmpty(textEvent.sendContent) && imConversation.getConversationId().equals(textEvent.tag)) {
         sendText(textEvent.sendContent);
