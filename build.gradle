@@ -31,7 +31,7 @@ buildscript {
 allprojects {
     repositories {
         google()
-//        jcenter()
+        jcenter()
         jcenter() { url'http://maven.aliyun.com/nexus/content/groups/public/'}
         maven { url "https://dl.bintray.com/sumiantech/common" }
         maven { url "https://dl.bintray.com/sumiantech/blue" }

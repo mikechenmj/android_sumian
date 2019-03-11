@@ -33,14 +33,11 @@ object AppNotificationManager {
 
     fun init(context: Context,
              smallIcon: Int, largeIcon: Int,
-             leanCloudAppId: String, leanCloudAppKey: String,
-             pushChannel: String, isDebug: Boolean,
              channelId: String, channelName: String,
              notificationDelegate: INotificationDelegate,
              schemeResolver: ISchemeResolver,
              userIdKey:String) {
         NotificationUtil.createNotificationChannel(context, channelId, channelName)
-        LeanCloudManager.init(context, leanCloudAppId, leanCloudAppKey, pushChannel, isDebug)
         mSmallIcon = smallIcon
         mLargeIcon = largeIcon
         mChannelId = channelId

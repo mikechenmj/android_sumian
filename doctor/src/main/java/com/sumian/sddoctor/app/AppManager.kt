@@ -17,6 +17,7 @@ import com.sumian.common.h5.WebViewManger
 import com.sumian.common.helper.ToastHelper
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.notification.AppNotificationManager
+import com.sumian.common.notification.LeanCloudManager
 import com.sumian.common.social.OpenEngine
 import com.sumian.common.social.login.OpenLogin
 import com.sumian.common.statistic.StatUtil
@@ -48,6 +49,7 @@ import com.sumian.sddoctor.notification.SchemeResolver
  * </pre>
  */
 object AppManager {
+    private lateinit var mApplication: Application
 
     private val mAccountViewModel: AccountViewModel by lazy {
         AccountViewModel(App.getAppContext())
@@ -102,10 +104,12 @@ object AppManager {
     }
 
     fun init(application: Application) {
+        mApplication = application
         Utils.init(application)
         observeTokenInvalidation()
         ToastHelper.init(application)
         OpenEngine.init(application, BuildConfig.DEBUG, BuildConfig.UMENG_APP_KEY, BuildConfig.UMENG_CHANNEL, BuildConfig.UMENG_PUSH_SECRET)
+        initLeanCloud()
         initNotification(application)
         initWebView(application)
         initStatic(application)
@@ -118,6 +122,12 @@ object AppManager {
                 BuildConfig.ALIYUN_LOG_LOG_STORE,
                 BuildConfig.ALIYUN_LOG_END_POINT
         )
+    }
+
+    private fun initLeanCloud() {
+        LeanCloudManager.init(mApplication,
+                BuildConfig.LEANCLOUD_APP_ID, BuildConfig.LEANCLOUD_APP_KEY,
+                NotificationConst.PUSH_CHANNEL, BuildConfig.DEBUG)
     }
 
     private fun initStatic(app: Application) {
@@ -141,8 +151,6 @@ object AppManager {
     private fun initNotification(app: Application) {
         AppNotificationManager.init(app,
                 R.drawable.ic_notification_small, R.mipmap.ic_launcher,
-                BuildConfig.LEANCLOUD_APP_ID, BuildConfig.LEANCLOUD_APP_KEY,
-                NotificationConst.PUSH_CHANNEL, BuildConfig.DEBUG,
                 NotificationConst.CHANNEL_ID, NotificationConst.CHANNEL_NAME,
                 NotificationDelegate(), SchemeResolver, NotificationConst.USER_ID_KEY)
     }

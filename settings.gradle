@@ -3,5 +3,6 @@ include ':client', ':module_core',
         ':common_base',
         ':blue',
         ':kefu-easeui',
-        ':jsbridge'
+        ':jsbridge' ,
+        ':leancloudchatkit'
 

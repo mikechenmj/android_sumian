@@ -3,12 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:background="@color/white"
+        android:focusable="true"
         android:gravity="center_vertical"
         android:paddingTop="5dp"
         android:paddingBottom="5dp">
@@ -21,6 +22,7 @@
             android:src="@drawable/core_sel_im_switch_voice_btn" />
 
         <EditText
+            android:id="@+id/et_message"
             style="@style/text_t2_16"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -32,7 +34,7 @@
             android:paddingEnd="10dp"
             tools:text="12123" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/bt_send"
             style="@style/SumianButton"
             android:layout_width="70dp"
@@ -45,7 +47,9 @@
     <RelativeLayout
         android:id="@+id/record_voice_container"
         android:layout_width="match_parent"
-        android:layout_height="210dp">
+        android:layout_height="210dp"
+        android:visibility="gone"
+        tools:visibility="visible">
 
         <TextView
             android:id="@+id/tv_record_voice_hint"
@@ -54,7 +58,22 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
+            android:visibility="gone"
             tools:text="@string/move_right_cancel_send" />
+
+        <TextView
+            android:id="@+id/tv_record_voice_warning"
+            style="@style/text_t2_14"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="10dp"
+            android:background="@drawable/core_shapre_rect_pink_bg_4dp_corner"
+            android:gravity="center"
+            android:textColor="@color/t4_color"
+            android:visibility="gone"
+            tools:text="@string/record_too_long"
+            tools:visibility="visible" />
 
         <ImageView
             android:id="@+id/iv_record_voice"
@@ -72,7 +91,7 @@
             android:src="@drawable/inputbox_line" />
 
         <ImageView
-            android:id="@+id/iv_cancel"
+            android:id="@+id/iv_cancel_record"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"

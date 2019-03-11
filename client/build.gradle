@@ -41,15 +41,6 @@ android {
             def userName = System.getProperty("user.name")//根据 os 账户信息动态生成keystore 保存路径
             def keystore_path = Os.isFamily(Os.FAMILY_WINDOWS) ? appProperties['WINDOWS_RELEASE_STORE_FILE'] : appProperties['LINUX_RELEASE_STORE_FILE']
             keystore_path = keystore_path.replace("{user_name}", userName)
-
-            //加载资源
-            //Properties properties = new Properties()
-            //InputStream inputStream = project.rootProject.file('local.properties').newDataInputStream()
-            //properties.load( inputStream )
-
-            //读取文件
-            //def keystore_file = properties.getProperty('RELEASE_STORE_FILE')
-
             storeFile file(keystore_path)
         }
     }
