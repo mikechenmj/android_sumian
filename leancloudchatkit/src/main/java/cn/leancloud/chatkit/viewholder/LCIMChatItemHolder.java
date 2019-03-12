@@ -57,7 +57,7 @@ public class LCIMChatItemHolder extends LCIMCommonViewHolder {
   public void initView() {
     if (isLeft) {
       avatarView = (ImageView) itemView.findViewById(R.id.chat_left_iv_avatar);
-      timeView = (TextView) itemView.findViewById(R.id.chat_left_tv_time);
+      timeView = (TextView) itemView.findViewById(R.id.chat_tv_time);
       nameView = (TextView) itemView.findViewById(R.id.chat_left_tv_name);
       conventLayout = (LinearLayout) itemView.findViewById(R.id.chat_left_layout_content);
       statusLayout = (FrameLayout) itemView.findViewById(R.id.chat_left_layout_status);
@@ -66,7 +66,7 @@ public class LCIMChatItemHolder extends LCIMCommonViewHolder {
       errorView = (ImageView) itemView.findViewById(R.id.chat_left_tv_error);
     } else {
       avatarView = (ImageView) itemView.findViewById(R.id.chat_right_iv_avatar);
-      timeView = (TextView) itemView.findViewById(R.id.chat_right_tv_time);
+      timeView = (TextView) itemView.findViewById(R.id.chat_tv_time);
       nameView = (TextView) itemView.findViewById(R.id.chat_right_tv_name);
       conventLayout = (LinearLayout) itemView.findViewById(R.id.chat_right_layout_content);
       statusLayout = (FrameLayout) itemView.findViewById(R.id.chat_right_layout_status);
@@ -134,7 +134,7 @@ public class LCIMChatItemHolder extends LCIMCommonViewHolder {
       (AVIMMessage.AVIMMessageStatus.AVIMMessageStatusSent == message.getMessageStatus() ||
       AVIMMessage.AVIMMessageStatus.AVIMMessageStatusReceipt == message.getMessageStatus())) {
       timeView.setVisibility(option.isShowTime() ? View.VISIBLE : View.GONE);
-      nameView.setVisibility(option.isShowName() ? View.VISIBLE : View.GONE);
+//      nameView.setVisibility(option.isShowName() ? View.VISIBLE : View.GONE);
       statusView.setVisibility(option.isShowDelivered() || option.isShowRead() ? View.VISIBLE : View.GONE);
       statusLayout.setVisibility(option.isShowDelivered() || option.isShowRead() ? View.VISIBLE : View.GONE);
       progressBar.setVisibility(View.GONE);

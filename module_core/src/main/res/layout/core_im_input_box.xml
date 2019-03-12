@@ -68,7 +68,7 @@
             android:layout_height="40dp"
             android:layout_centerHorizontal="true"
             android:layout_margin="10dp"
-            android:background="@drawable/core_shapre_rect_pink_bg_4dp_corner"
+            android:background="@drawable/core_shape_rect_pink_bg_4dp_corner"
             android:gravity="center"
             android:textColor="@color/t4_color"
             android:visibility="gone"

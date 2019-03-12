@@ -10,7 +10,7 @@
     </style>
 
     <!-- activity -->
-    <style name="LCIMActivity" parent="LCIMKitTheme"/>
+    <style name="LCIMActivity" parent="LCIMKitTheme" />
 
     <style name="LCIMActivity.NoActionBar">
         <item name="colorPrimary">@color/lcim_common_blue</item>
@@ -27,7 +27,7 @@
         <item name="android:textColorPrimary">@android:color/white</item>
     </style>
     <!--<style name="LCIMActivity.FullScreen" >-->
-        <!--<item name="android:windowFullscreen">true</item>-->
+    <!--<item name="android:windowFullscreen">true</item>-->
     <!--</style>-->
 
 
@@ -54,7 +54,7 @@
     </style>
 
     <!-- text appearance -->
-    <style name="LCIMTextAppearance"/>
+    <style name="LCIMTextAppearance" />
 
     <style name="LCIMTextAppearance.Large">
         <item name="android:textSize">@dimen/lcim_textsize_large</item>
@@ -76,7 +76,7 @@
         <item name="android:textColor">@color/lcim_common_gray</item>
     </style>
 
-    <style name="LCIMTextAppearance.Small"/>
+    <style name="LCIMTextAppearance.Small" />
 
     <!-- Avatar -->
     <style name="LCIMAvatar">
@@ -105,7 +105,8 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:backgroundDimEnabled">false</item>
         <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowBackground">@drawable/lcim_chat_record_button_round_background</item>
+        <item name="android:windowBackground">@drawable/lcim_chat_record_button_round_background
+        </item>
     </style>
 
     <style name="lcim_input_bar_button_style">
@@ -144,4 +145,38 @@
         <item name="android:layout_marginBottom">5dp</item>
         <item name="android:text">@string/lcim_chat_bottom_record_layout_pressToRecord</item>
     </style>
+
+    <style name="im_message_text_left">
+        <item name="android:textColor">@color/t1_color</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/shape_rect_im_bubble_left_white</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:maxWidth">215dp</item>
+        <item name="android:paddingStart">15dp</item>
+        <item name="android:paddingEnd">15dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+    </style>
+
+    <style name="im_message_text_right" parent="im_message_text_left">
+        <item name="android:background">@drawable/shape_rect_im_bubble_right_blue</item>
+        <item name="android:layout_gravity">end</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="im_message_voice" parent="im_message_text_left">
+        <item name="android:background">@drawable/shape_rect_im_bubble_left_white</item>
+        <item name="android:drawablePadding">10dp</item>
+        <item name="android:maxWidth">215dp</item>
+        <item name="android:minWidth">85dp</item>
+    </style>
+
+    <style name="lcim_progressbar_style">
+        <item name="android:indeterminateDrawable">@drawable/lcim_loading_anim</item>
+        <item name="android:layout_width">20dp</item>
+        <item name="android:layout_height">20dp</item>
+    </style>
+
 </resources>

@@ -1,20 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_marginBottom="5dp"
-              android:layout_marginLeft="@dimen/lcim_chat_horizontal_margin"
-              android:layout_marginRight="@dimen/lcim_chat_horizontal_margin"
-              android:layout_marginTop="5dp"
-              android:orientation="vertical">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/lcim_chat_horizontal_margin"
+    android:layout_marginTop="20dp"
+    android:layout_marginRight="@dimen/lcim_chat_horizontal_margin"
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/chat_left_tv_time"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="3dp"
-        android:layout_marginTop="10dp"
-        android:gravity="center"/>
+    <include layout="@layout/lcim_chat_time_tv" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -22,11 +16,11 @@
         android:layout_marginRight="20dp"
         android:orientation="horizontal">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/chat_left_iv_avatar"
             style="@style/LCIMAvatar"
-            android:layout_alignParentBottom="true"
-            android:layout_marginRight="10dp"/>
+            android:layout_marginRight="10dp"
+            tools:src="@drawable/lcim_default_avatar_icon" />
 
         <LinearLayout
             android:id="@+id/chat_left_layout_content"
@@ -35,21 +29,20 @@
             android:layout_alignParentBottom="true"
             android:layout_toRightOf="@+id/chat_left_iv_avatar"
             android:orientation="horizontal"
-            android:paddingRight="40dp"/>
+            android:paddingRight="40dp" />
 
         <FrameLayout
             android:id="@+id/chat_left_layout_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignRight="@+id/chat_left_layout_content"
-            android:visibility="gone">
+            android:visibility="gone"
+            tools:visibility="visible">
 
             <ProgressBar
                 android:id="@+id/chat_left_progressbar"
-                style="@android:style/Widget.ProgressBar.Large"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center_vertical"/>
+                style="@style/lcim_progressbar_style"
+                android:layout_gravity="center_vertical" />
 
             <TextView
                 android:id="@+id/chat_left_tv_status"
@@ -57,13 +50,13 @@
                 android:layout_height="wrap_content"
                 android:text="@string/lcim_chat_sent"
                 android:textSize="12sp"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
             <ImageView
                 android:id="@+id/chat_left_tv_error"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/lcim_chat_resend_bg"/>
+                android:src="@drawable/lcim_chat_resend_bg" />
         </FrameLayout>
     </RelativeLayout>
 
@@ -71,9 +64,12 @@
         android:id="@+id/chat_left_tv_name"
         android:layout_width="45dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="3dp"
         android:layout_marginTop="3dp"
+        android:layout_marginBottom="3dp"
         android:ellipsize="end"
         android:gravity="left"
-        android:singleLine="true"/>
+        android:singleLine="true"
+        android:textColor="@color/t1_color"
+        android:visibility="gone"
+        tools:text="name" />
 </LinearLayout>

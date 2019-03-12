@@ -50,7 +50,8 @@ public class LCIMChatItemAudioHolder extends LCIMChatItemHolder {
     super.bindData(o);
     if (o instanceof AVIMAudioMessage) {
       AVIMAudioMessage audioMessage = (AVIMAudioMessage) o;
-      durationView.setText(String.format("%.0f\"", audioMessage.getDuration()));
+//      durationView.setText(String.format("%.0f\"", audioMessage.getDuration()));
+        playButton.setText(String.format("%.0f\"", audioMessage.getDuration()));
       double duration = audioMessage.getDuration();
       int width = getWidthInPixels(duration);
       if (width > 0) {

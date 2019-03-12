@@ -2,15 +2,15 @@
 <animation-list xmlns:android="http://schemas.android.com/apk/res/android"
                 android:oneshot="false">
     <item
-        android:drawable="@drawable/lcim_chat_voice_left"
+        android:drawable="@drawable/lcim_group_chatbubble_icon_right_1"
         android:duration="200"/>
     <item
-        android:drawable="@drawable/lcim_chat_voice_left1"
+        android:drawable="@drawable/lcim_group_chatbubble_icon_right_2"
         android:duration="200"/>
     <item
-        android:drawable="@drawable/lcim_chat_voice_left2"
+        android:drawable="@drawable/lcim_group_chatbubble_icon_right_3"
         android:duration="200"/>
     <item
-        android:drawable="@drawable/lcim_chat_voice_left3"
+        android:drawable="@drawable/lcim_group_chatbubble_icon_right_4"
         android:duration="200"/>
 </animation-list>

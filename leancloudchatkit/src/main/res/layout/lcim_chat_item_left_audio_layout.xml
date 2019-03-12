@@ -1,23 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:orientation="horizontal">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
 
-    <cn.leancloud.chatkit.view.LCIMPlayButton
-        android:id="@+id/chat_item_audio_play_btn"
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <cn.leancloud.chatkit.view.LCIMPlayButton xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:custom="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/chat_item_audio_play_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/lcim_chat_item_left_bg"
+        android:background="@drawable/shape_rect_im_bubble_left_white"
+        android:drawablePadding="10dp"
+        android:gravity="center_vertical|start"
         android:orientation="vertical"
-        custom:left="true"/>
+        android:padding="10dp"
+        android:textColor="@color/t1_color"
+        android:textSize="16sp"
+        custom:left="true"
+        tools:text="12121233" />
 
     <TextView
         android:id="@+id/chat_item_audio_duration_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_marginLeft="@dimen/lcim_chat_horizontal_margin"/>
+        android:layout_marginLeft="@dimen/lcim_chat_horizontal_margin" />
 </LinearLayout>
