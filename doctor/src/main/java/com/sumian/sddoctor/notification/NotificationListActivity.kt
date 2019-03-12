@@ -11,6 +11,7 @@ import com.sumian.module_core.notification.NotificationListFragment
 import com.sumian.module_core.notification.NotificationListResponse
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.app.AppManager
+import com.sumian.sddoctor.buz.patientdoctorim.ConversationListActivity
 import com.sumian.sddoctor.constants.StatConstants
 import com.sumian.sddoctor.event.NotificationUnreadCountChangeEvent
 import com.sumian.sddoctor.network.callback.BaseSdResponseCallback
@@ -83,7 +84,7 @@ class NotificationListActivity : BaseActivity(), NotificationListFragment.Host {
     }
 
     override fun launchPatientDoctorMessageListActivity() {
-
+        ConversationListActivity.launch()
     }
 
     override fun onNewIntent(intent: Intent?) {

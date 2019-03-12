@@ -74,4 +74,8 @@ class LCIMInputBar(context: Context, attributeSet: AttributeSet? = null) : Linea
             KeyboardUtils.hideSoftInput(this)
         }
     }
+
+    fun showAudioBtn(show: Boolean) {
+        iv_switch_voice.visibility = if (show) View.VISIBLE else View.GONE
+    }
 }

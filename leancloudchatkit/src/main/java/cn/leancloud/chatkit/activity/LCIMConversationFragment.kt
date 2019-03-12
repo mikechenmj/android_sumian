@@ -68,7 +68,7 @@ class LCIMConversationFragment : Fragment() {
                 fragment_chat_srl_pullrefresh.isRefreshing = false
             } else {
                 imConversation!!.queryMessages(message.messageId, message.timestamp, 20, object : AVIMMessagesQueryCallback() {
-                    override fun done(list: List<AVIMMessage>?, e: AVIMException) {
+                    override fun done(list: List<AVIMMessage>?, e: AVIMException?) {
                         fragment_chat_srl_pullrefresh.isRefreshing = false
                         if (filterException(e)) {
                             if (null != list && list.size > 0) {
@@ -230,10 +230,11 @@ class LCIMConversationFragment : Fragment() {
      */
     fun onEvent(recordEvent: LCIMInputBottomBarRecordEvent?) {
         if (null != imConversation && null != recordEvent
-                && !TextUtils.isEmpty(recordEvent.audioPath)) {
+                && !TextUtils.isEmpty(recordEvent.audioPath)
+                && imConversation!!.conversationId == recordEvent.tag) {
             if (recordEvent.audioDuration > 0)
                 sendAudio(recordEvent.audioPath)
-        }//                && imConversation.getConversationId().equals(recordEvent.tag)
+        }
     }
 
     /**
@@ -505,6 +506,15 @@ class LCIMConversationFragment : Fragment() {
         if (imConversation!!.unreadMessagesCount > 0) {
             imConversation!!.read()
         }
+    }
+
+    fun showInputBar(show: Boolean) {
+        fragment_chat_inputbar.visibility = if (show) View.VISIBLE else View.GONE
+        fragment_chat_tv_doctor_is_busy.visibility = if (!show) View.VISIBLE else View.GONE
+    }
+
+    fun showAudioBtn(show: Boolean) {
+        fragment_chat_inputbar.showAudioBtn(show)
     }
 
     companion object {

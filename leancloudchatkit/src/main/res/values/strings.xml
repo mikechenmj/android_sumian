@@ -5,4 +5,5 @@
     <string name="record_will_stop_in_x_sec">%d”后停止语音</string>
     <string name="record_too_long">对讲时间过长</string>
     <string name="record_too_short">按键时间过短</string>
+    <string name="doctor_is_busy">医生当前繁忙，敬请谅解</string>
 </resources>

@@ -190,6 +190,9 @@ public class LCIMChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
         long lastTime = messageList.get(position - 1).getTimestamp();
         long curTime = messageList.get(position).getTimestamp();
+        if (curTime == 0) {
+            return false;
+        }
         return curTime - lastTime > TIME_INTERVAL;
     }
 

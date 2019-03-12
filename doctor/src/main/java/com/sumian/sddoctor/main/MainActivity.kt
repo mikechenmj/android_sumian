@@ -12,7 +12,6 @@ import com.sumian.sddoctor.R
 import com.sumian.sddoctor.account.delegate.VersionDelegate
 import com.sumian.sddoctor.account.kefu.KefuManager
 import com.sumian.sddoctor.app.AppManager
-import com.sumian.sddoctor.buz.patientdoctorim.PatientDoctorImDetailActivity
 import com.sumian.sddoctor.constants.StatConstants
 import com.sumian.sddoctor.homepage.HomepageFragment
 import com.sumian.sddoctor.me.MeFragment
@@ -78,7 +77,7 @@ class MainActivity : BaseActivity(), BottomNavigationBar.OnSelectedTabChangeList
         super.onStart()
         mVersionDelegate.checkVersion(this)
 
-        PatientDoctorImDetailActivity.launch() // todo remove
+//        ConversationListActivity.launch()
     }
 
     override fun onSelectedTabChange(navigationItem: NavigationItem?, position: Int) {

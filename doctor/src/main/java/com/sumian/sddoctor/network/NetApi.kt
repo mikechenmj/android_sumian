@@ -1,6 +1,7 @@
 package com.sumian.sddoctor.network
 
 import com.google.gson.JsonObject
+import com.sumian.module_core.chat.bean.CreateConversationResponse
 import com.sumian.module_core.notification.NotificationListResponse
 import com.sumian.sddoctor.account.bean.Feedback
 import com.sumian.sddoctor.account.bean.Version
@@ -545,4 +546,7 @@ interface NetApi {
      */
     @POST("doctor/authorizations/{doctorId}/easemob")
     fun notifyRegisterImServer(@Path("doctorId") userId: Int): Call<KeFuMessage>
+
+    @POST("doctor/user/{userId}/conversations")
+    fun createConversation(@Path("userId") userId: Int): Call<CreateConversationResponse>
 }

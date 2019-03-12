@@ -4,10 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
-import androidx.annotation.AttrRes;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
@@ -17,6 +13,11 @@ import android.widget.TextView;
 
 import com.sumian.common.R;
 import com.sumian.common.utils.ColorCompatUtil;
+
+import androidx.annotation.AttrRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 
 /**
  * Created by jzz

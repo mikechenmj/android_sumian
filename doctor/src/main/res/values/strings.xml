@@ -492,5 +492,9 @@
 
     <string name="assistant_say_hello">您好，我是睡眠助手，很高兴为您服务！</string>
     <string name="online_customer">在线客服</string>
+    <string name="patient_message">患者消息</string>
+    <string name="close_conversation">结束对话</string>
+    <string name="clocse_conversation_dialog_title">确定要结束此对话？</string>
+    <string name="clocse_conversation_dialog_message">结束后将不再接收患者消息，当您再次发消息或重新激活会话时，才能继续与患者交流</string>
 
 </resources>

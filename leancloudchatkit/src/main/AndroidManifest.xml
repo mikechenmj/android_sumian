@@ -19,11 +19,11 @@
         <activity
             android:name=".activity.LCIMConversationActivity"
             android:launchMode="singleTask">
-            <intent-filter>
-                <action android:name="cn.leancloud.chatkit.conversation_item_click_action"/>
+            <!--<intent-filter>-->
+            <!--<action android:name="cn.leancloud.chatkit.conversation_item_click_action"/>-->
 
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
+            <!--<category android:name="android.intent.category.DEFAULT"/>-->
+            <!--</intent-filter>-->
         </activity>
         <activity android:name=".activity.LCIMImageActivity"/>
 

@@ -194,8 +194,8 @@
         <activity android:name=".service.cbti.activity.CBTIProgressActivity" />
         <activity
             android:name=".me.mywallet.WithdrawActivity"
-            android:windowSoftInputMode="stateVisible"
-            android:exported="true" />
+            android:exported="true"
+            android:windowSoftInputMode="stateVisible" />
         <activity android:name=".me.mywallet.WithdrawRulesActivity" />
         <activity
             android:name=".service.report.activity.ReportActivity"
@@ -286,10 +286,29 @@
         <activity
             android:name=".me.mywallet.WithdrawAmountActivity"
             android:launchMode="singleTop" />
-        <activity android:name=".me.mywallet.PendingIncomeListActivity" android:launchMode="singleTop"/>
-        <activity android:name=".me.mywallet.PendingIncomeDetailActivity" android:launchMode="singleTop"/>
-        <activity android:name=".me.mywallet.PendingIncomeAmountActivity" android:launchMode="singleTop"/>
-        <activity android:name=".buz.patientdoctorim.PatientDoctorImDetailActivity" android:launchMode="singleTop" android:exported="true"/>
+        <activity
+            android:name=".me.mywallet.PendingIncomeListActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".me.mywallet.PendingIncomeDetailActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".me.mywallet.PendingIncomeAmountActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".buz.patientdoctorim.ConversationActivity"
+            android:exported="true"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="cn.leancloud.chatkit.conversation_item_click_action" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".buz.patientdoctorim.ConversationListActivity"
+            android:exported="true"
+            android:launchMode="singleTop" />
     </application>
 
 </manifest>
