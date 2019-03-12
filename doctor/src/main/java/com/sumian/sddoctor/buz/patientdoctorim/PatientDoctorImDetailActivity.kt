@@ -32,7 +32,9 @@ import com.sumian.sddoctor.base.SddBaseActivity
  * version: 1.0
  */
 open class PatientDoctorImDetailActivity : SddBaseActivity() {
-    private lateinit var mFragment: LCIMConversationFragment
+    private val mFragment: LCIMConversationFragment by lazy {
+        supportFragmentManager.findFragmentById(R.id.conversation_fragment) as LCIMConversationFragment
+    }
     override fun getLayoutId(): Int {
         return R.layout.im_activity_patient_doctor_im_detail
     }
@@ -43,8 +45,6 @@ open class PatientDoctorImDetailActivity : SddBaseActivity() {
 
     override fun initWidget() {
         super.initWidget()
-        initFragment()
-
         val doctor = AppManager.getAccountViewModel().getDoctorInfo().value!!
         val clientId = doctor.im_id
         LCChatKit.getInstance().init(this, BuildConfig.LEANCLOUD_APP_ID, BuildConfig.LEANCLOUD_APP_KEY)
@@ -95,11 +95,6 @@ open class PatientDoctorImDetailActivity : SddBaseActivity() {
                 }
             })
         }
-    }
-
-    private fun initFragment() {
-        mFragment = LCIMConversationFragment()
-        supportFragmentManager.beginTransaction().replace(R.id.fragment_container, mFragment).commit()
     }
 
     companion object {
