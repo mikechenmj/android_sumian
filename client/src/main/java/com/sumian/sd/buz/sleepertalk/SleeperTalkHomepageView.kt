@@ -5,7 +5,12 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
 import com.sumian.common.image.ImageLoader
+import com.sumian.common.network.response.ErrorResponse
+import com.sumian.common.network.response.PaginationResponseV2
 import com.sumian.sd.R
+import com.sumian.sd.app.AppManager
+import com.sumian.sd.buz.sleepertalk.bean.SleepTalkData
+import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import kotlinx.android.synthetic.main.list_item_sleeper_talk_homepage.view.*
 import kotlinx.android.synthetic.main.view_sleeper_talk_homepage.view.*
 
@@ -20,16 +25,31 @@ class SleeperTalkHomepageView(context: Context, attributeSet: AttributeSet? = nu
     init {
         View.inflate(context, R.layout.view_sleeper_talk_homepage, this)
         tv_more_article.setOnClickListener { SleeperTalkListActivity.launch() }
+
+        queryData()
     }
 
-    fun setData(list: List<String>) {
-        v_item_container.removeAllViews()
-        for (s in list) {
+    private fun queryData() {
+        val call = AppManager.getSdHttpService().getSleeperTalkList(1, 5)
+        call.enqueue(object : BaseSdResponseCallback<PaginationResponseV2<SleepTalkData>>() {
+            override fun onSuccess(response: PaginationResponseV2<SleepTalkData>?) {
+                val list = response?.data ?: return
+                setData(list)
+            }
+
+            override fun onFailure(errorResponse: ErrorResponse) {
+            }
+        })
+    }
+
+    fun setData(list: List<SleepTalkData>) {
+        v_item_container?.removeAllViews() ?: return
+        for (item in list) {
             val itemView = View.inflate(context, R.layout.list_item_sleeper_talk_homepage, null)
             v_item_container.addView(itemView)
             itemView.setOnClickListener { }
-            itemView.tv_title.text = s
-            ImageLoader.loadImage(s, itemView.iv_bg)
+            itemView.tv_title.text = item.title
+            ImageLoader.loadImage(item.coverUrl, itemView.iv_bg)
         }
     }
 

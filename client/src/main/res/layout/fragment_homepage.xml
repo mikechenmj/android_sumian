@@ -87,6 +87,11 @@
             android:layout_height="wrap_content"
             android:visibility="gone" />
 
+        <com.sumian.sd.buz.sleepertalk.SleeperTalkHomepageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" />
+
         <include layout="@layout/layout_homepage_fragment_grid_items" />
 
         <ImageView
