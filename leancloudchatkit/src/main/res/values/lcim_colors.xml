@@ -33,6 +33,8 @@
     <color name="b8_color">#ffF0918E</color>
     <color name="b9_color">#ff477eed</color>
 
+    <color name="s1_color">#ff779ce6</color>
+
     <!-- white opacity-->
     <color name="white">#FFFFFFFF</color>
     <color name="white_90">#E5FFFFFF</color>

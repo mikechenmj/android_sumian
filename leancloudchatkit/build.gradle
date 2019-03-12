@@ -1,4 +1,8 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
 
 android {
     compileSdkVersion 26
@@ -12,6 +16,14 @@ android {
 
     lintOptions {
         abortOnError false
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    lintOptions {
+        rootProject.ext.lintOptions
     }
 }
 
@@ -37,7 +49,9 @@ dependencies {
 
     implementation 'de.greenrobot:eventbus:2.4.0'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
-
+    implementation 'com.blankj:utilcode:1.19.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation 'com.qmuiteam:qmui:1.1.12'
 }
 
 //apply from: '../maven_push.gradle'

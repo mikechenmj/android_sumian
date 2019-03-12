@@ -179,4 +179,148 @@
         <item name="android:layout_height">20dp</item>
     </style>
 
+    <!--text-->
+    <style name="WrapContent">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="BaseText" parent="WrapContent" />
+
+    <style name="text_t1_style" parent="BaseText">
+        <item name="android:textColor">@color/t1_color</item>
+        <item name="android:textSize">@dimen/font_14</item>
+    </style>
+
+    <style name="text_t1_12" parent="text_t1_style">
+        <item name="android:textSize">@dimen/font_12</item>
+    </style>
+
+    <style name="text_t1_14" parent="text_t1_style">
+        <item name="android:textSize">@dimen/font_14</item>
+    </style>
+
+    <style name="text_t1_16" parent="text_t1_style">
+        <item name="android:textSize">@dimen/font_16</item>
+    </style>
+
+    <style name="text_t1_18" parent="text_t1_style">
+        <item name="android:textSize">@dimen/font_18</item>
+    </style>
+
+    <style name="text_t2_style" parent="BaseText">
+        <item name="android:textColor">@color/t2_color</item>
+        <item name="android:textSize">@dimen/font_16</item>
+    </style>
+
+    <style name="text_t2_14" parent="text_t2_style">
+        <item name="android:textSize">@dimen/font_14</item>
+    </style>
+
+    <style name="text_t2_12" parent="text_t2_style">
+        <item name="android:textSize">@dimen/font_12</item>
+    </style>
+
+    <style name="text_t2_13" parent="text_t2_style">
+        <item name="android:textSize">@dimen/font_13</item>
+    </style>
+
+    <style name="text_t2_16" parent="text_t2_style">
+        <item name="android:textSize">@dimen/font_16</item>
+    </style>
+
+    <style name="text_t2_18" parent="text_t2_style">
+        <item name="android:textSize">@dimen/font_18</item>
+    </style>
+
+    <style name="text_t3_style" parent="BaseText">
+        <item name="android:textColor">@color/t3_color</item>
+        <item name="android:textSize">@dimen/font_18</item>
+    </style>
+
+    <style name="text_t3_14" parent="text_t3_style">
+        <item name="android:textSize">@dimen/font_14</item>
+    </style>
+
+    <style name="text_t3_16" parent="text_t3_style">
+        <item name="android:textSize">@dimen/font_16</item>
+    </style>
+
+    <style name="text_t3_18" parent="text_t3_style">
+        <item name="android:textSize">@dimen/font_18</item>
+    </style>
+
+    <!--&lt;!&ndash;<style name="text_t5" parent="BaseText">&ndash;&gt;-->
+    <!--&lt;!&ndash;<item name="android:textSize">@dimen/font_14</item>&ndash;&gt;-->
+    <!--&lt;!&ndash;<item name="android:textColor">@color/t5_color_day</item>&ndash;&gt;-->
+    <!--&lt;!&ndash;</style>&ndash;&gt;-->
+
+    <!--<style name="text_t5_14" parent="text_t5">-->
+    <!--<item name="android:textSize">@dimen/font_14</item>-->
+    <!--</style>-->
+
+    <!--<style name="text_t5_21" parent="text_t5">-->
+    <!--<item name="android:textSize">@dimen/font_21</item>-->
+    <!--</style>-->
+
+    <style name="text_white" parent="BaseText">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/font_14</item>
+    </style>
+
+    <style name="text_b2_12" parent="BaseText">
+        <item name="android:textColor">@color/b2_color</item>
+        <item name="android:textSize">@dimen/font_12</item>
+    </style>
+
+    <style name="text_b2_16" parent="BaseText">
+        <item name="android:textColor">@color/b2_color</item>
+        <item name="android:textSize">@dimen/font_16</item>
+    </style>
+
+    <style name="text_b2_18" parent="BaseText">
+        <item name="android:textColor">@color/b2_color</item>
+        <item name="android:textSize">@dimen/font_18</item>
+    </style>
+
+    <style name="text_b2_22" parent="BaseText">
+        <item name="android:textColor">@color/b2_color</item>
+        <item name="android:textSize">@dimen/font_22</item>
+    </style>
+
+    <style name="text_b3_14" parent="BaseText">
+        <item name="android:textColor">@color/b3_color</item>
+        <item name="android:textSize">@dimen/font_14</item>
+    </style>
+
+    <style name="text_b4_14" parent="BaseText">
+        <item name="android:textColor">@color/b4_color</item>
+        <item name="android:textSize">@dimen/font_14</item>
+    </style>
+
+    <style name="text_b2_14" parent="text_b2_22">
+        <item name="android:textSize">@dimen/font_14</item>
+    </style>
+
+    <style name="text_white_14" parent="text_white">
+        <item name="android:textSize">@dimen/font_14</item>
+    </style>
+
+    <style name="text_white_16" parent="text_white">
+        <item name="android:textSize">@dimen/font_16</item>
+    </style>
+
+    <style name="text_white_18" parent="text_white">
+        <item name="android:textSize">@dimen/font_18</item>
+    </style>
+
+    <style name="SumianButton">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:background">@drawable/bg_bt</item>
+        <item name="android:textColor">@color/sel_btn_text</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/font_16</item>
+    </style>
+
 </resources>
