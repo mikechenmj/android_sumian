@@ -9,7 +9,7 @@ import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.network.response.PaginationResponseV2
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.buz.sleepertalk.bean.SleepTalkData
+import com.sumian.sd.buz.sleepertalk.bean.SleeperTalkData
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import kotlinx.android.synthetic.main.list_item_sleeper_talk_homepage.view.*
 import kotlinx.android.synthetic.main.view_sleeper_talk_homepage.view.*
@@ -31,8 +31,8 @@ class SleeperTalkHomepageView(context: Context, attributeSet: AttributeSet? = nu
 
     private fun queryData() {
         val call = AppManager.getSdHttpService().getSleeperTalkList(1, 5)
-        call.enqueue(object : BaseSdResponseCallback<PaginationResponseV2<SleepTalkData>>() {
-            override fun onSuccess(response: PaginationResponseV2<SleepTalkData>?) {
+        call.enqueue(object : BaseSdResponseCallback<PaginationResponseV2<SleeperTalkData>>() {
+            override fun onSuccess(response: PaginationResponseV2<SleeperTalkData>?) {
                 val list = response?.data ?: return
                 setData(list)
             }
@@ -42,12 +42,12 @@ class SleeperTalkHomepageView(context: Context, attributeSet: AttributeSet? = nu
         })
     }
 
-    fun setData(list: List<SleepTalkData>) {
+    fun setData(list: List<SleeperTalkData>) {
         v_item_container?.removeAllViews() ?: return
         for (item in list) {
             val itemView = View.inflate(context, R.layout.list_item_sleeper_talk_homepage, null)
             v_item_container.addView(itemView)
-            itemView.setOnClickListener { }
+            itemView.setOnClickListener { SleeperTalkActivity.launch(item.id) }
             itemView.tv_title.text = item.title
             ImageLoader.loadImage(item.coverUrl, itemView.iv_bg)
         }

@@ -1,6 +1,7 @@
 package com.sumian.sd.buz.cbti.activity
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.text.TextUtils
 import android.view.Gravity
@@ -40,6 +41,10 @@ class CBTIIntroductionActivity : BaseViewModelActivity<CBTIIntroductionPresenter
             ActivityUtils.getTopActivity()?.let {
                 it.startActivity(Intent(it, CBTIIntroductionActivity::class.java))
             }
+        }
+
+        fun getLaunchIntent(context: Context): Intent {
+            return Intent(context, CBTIIntroductionActivity::class.java)
         }
     }
 

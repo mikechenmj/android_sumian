@@ -21,15 +21,15 @@
             android:text="@string/more_article" />
     </FrameLayout>
 
-    <ScrollView
+    <HorizontalScrollView
         android:layout_width="match_parent"
-        android:layout_height="110dp"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:id="@+id/v_item_container"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="110dp"
+            android:layout_marginBottom="10dp"
             android:orientation="horizontal" />
-    </ScrollView>
+    </HorizontalScrollView>
 </LinearLayout>

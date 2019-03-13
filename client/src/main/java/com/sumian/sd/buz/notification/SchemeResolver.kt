@@ -9,8 +9,8 @@ import com.sumian.sd.R
 import com.sumian.sd.buz.advisory.activity.AdvisoryDetailActivity
 import com.sumian.sd.buz.advisory.activity.AdvisoryListActivity
 import com.sumian.sd.buz.anxiousandfaith.AnxiousAndFaithActivity
+import com.sumian.sd.buz.cbti.activity.CBTIIntroductionActivity
 import com.sumian.sd.buz.cbti.activity.CBTIMessageBoardDetailActivity
-import com.sumian.sd.buz.cbti.activity.CBTIWeekCoursePartActivity
 import com.sumian.sd.buz.diary.sleeprecord.SleepRecordActivity
 import com.sumian.sd.buz.diaryevaluation.DiaryEvaluationDetailActivity
 import com.sumian.sd.buz.diaryevaluation.DiaryEvaluationListActivity
@@ -144,8 +144,9 @@ object SchemeResolver : ISchemeResolver {
      * sleepdoctor://cbti-chapters?notification_id=8e194802-a2bb-47f4-a695-f03ccb5d92ad&user_id=2172&cbti_chapter_id=2"  //urlencode后
      */
     fun resolveCbtiChapterScheme(context: Context, uri: Uri): Intent {
-        val data = uri.getQueryParameter("cbti_chapter_id")
-        return CBTIWeekCoursePartActivity.getLaunchIntent(context, chapterId = data!!.toInt())
+//        val data = uri.getQueryParameter("cbti_chapter_id")
+//        return CBTIWeekCoursePartActivity.getLaunchIntent(context, chapterId = data!!.toInt())
+        return CBTIIntroductionActivity.getLaunchIntent(context)
     }
 
     /**

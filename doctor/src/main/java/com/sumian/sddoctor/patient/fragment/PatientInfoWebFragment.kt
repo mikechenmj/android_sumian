@@ -149,7 +149,7 @@ class PatientInfoWebFragment : BaseWebViewFragment(), TitleBar.OnMenuClickListen
 
         mTitleBar.iv_menu.visibility = View.VISIBLE
         val imageView = ImageView(activity)
-        imageView.setImageResource(R.drawable.ic_wechat)
+        imageView.setImageResource(R.drawable.nav_icon_conversation)
         mTitleBar.v_menu_container.addView(imageView)
         imageView.setOnClickListener {
             val call = AppManager.getHttpService().createConversation(mPatientId)

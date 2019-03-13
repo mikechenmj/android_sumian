@@ -1,6 +1,7 @@
 package com.sumian.sd.buz.sleepertalk
 
 import android.content.Intent
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
@@ -13,7 +14,7 @@ import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.network.response.PaginationResponseV2
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.buz.sleepertalk.bean.SleepTalkData
+import com.sumian.sd.buz.sleepertalk.bean.SleeperTalkData
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import kotlinx.android.synthetic.main.activity_sleeper_talk_list.*
 import java.text.SimpleDateFormat
@@ -26,7 +27,9 @@ import java.util.*
  * desc   :
  * version: 1.0
  */
-class SleeperTalkListActivity : BaseViewModelActivity<BaseViewModel>() {
+class SleeperTalkListActivity : BaseViewModelActivity<BaseViewModel>(), BaseQuickAdapter.OnItemClickListener {
+
+
     private var mPage = 1
     private val mAdapter = SleeperTalkAdapter()
 
@@ -45,6 +48,12 @@ class SleeperTalkListActivity : BaseViewModelActivity<BaseViewModel>() {
         recycler_view.adapter = mAdapter
         recycler_view.layoutManager = LinearLayoutManager(this)
         mAdapter.setOnLoadMoreListener({ loadMore() }, recycler_view)
+        mAdapter.setOnItemClickListener(this)
+    }
+
+    override fun onItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
+        val data = mAdapter.getItem(position) ?: return
+        SleeperTalkActivity.launch(data.id)
     }
 
     override fun initData() {
@@ -55,8 +64,8 @@ class SleeperTalkListActivity : BaseViewModelActivity<BaseViewModel>() {
     private fun loadMore() {
         val call = AppManager.getSdHttpService().getSleeperTalkList(mPage)
         addCall(call)
-        call.enqueue(object : BaseSdResponseCallback<PaginationResponseV2<SleepTalkData>>() {
-            override fun onSuccess(response: PaginationResponseV2<SleepTalkData>?) {
+        call.enqueue(object : BaseSdResponseCallback<PaginationResponseV2<SleeperTalkData>>() {
+            override fun onSuccess(response: PaginationResponseV2<SleeperTalkData>?) {
                 mAdapter.addData(response!!.data)
                 mAdapter.setEnableLoadMore(response.meta.pagination.isLastPage())
                 mPage++
@@ -74,8 +83,8 @@ class SleeperTalkListActivity : BaseViewModelActivity<BaseViewModel>() {
         }
     }
 
-    class SleeperTalkAdapter : BaseQuickAdapter<SleepTalkData, BaseViewHolder>(R.layout.list_item_sleeper_talk_list) {
-        override fun convert(helper: BaseViewHolder, item: SleepTalkData) {
+    class SleeperTalkAdapter : BaseQuickAdapter<SleeperTalkData, BaseViewHolder>(R.layout.list_item_sleeper_talk_list) {
+        override fun convert(helper: BaseViewHolder, item: SleeperTalkData) {
             helper.setText(R.id.tv_title, item.title)
             val simpleDateFormat = SimpleDateFormat("yyyy年MM月dd日", Locale.getDefault())
             val time = simpleDateFormat.format(Date(item.createdAt * 1000L))

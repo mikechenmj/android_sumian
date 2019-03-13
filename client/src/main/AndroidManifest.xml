@@ -588,6 +588,7 @@
             android:name=".buz.sleepertalk.SleeperTalkListActivity"
             android:launchMode="singleTop" />
         <activity android:name=".buz.patientdoctorim.PatientDoctorImActivity" />
+        <activity android:name=".buz.sleepertalk.SleeperTalkActivity" />
 
     </application>
 

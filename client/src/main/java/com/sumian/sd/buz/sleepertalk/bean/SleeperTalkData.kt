@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName
  * desc   :
  * version: 1.0
  */
-data class SleepTalkData(
+data class SleeperTalkData(
         @SerializedName("author")
         val author: String, // aaa
         @SerializedName("content")

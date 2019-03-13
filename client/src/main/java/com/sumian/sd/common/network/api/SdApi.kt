@@ -46,7 +46,7 @@ import com.sumian.sd.buz.scale.bean.Scale
 import com.sumian.sd.buz.setting.bean.Feedback
 import com.sumian.sd.buz.setting.remind.bean.Reminder
 import com.sumian.sd.buz.setting.version.bean.Version
-import com.sumian.sd.buz.sleepertalk.bean.SleepTalkData
+import com.sumian.sd.buz.sleepertalk.bean.SleeperTalkData
 import com.sumian.sd.buz.tel.bean.TelBooking
 import com.sumian.sd.common.log.LogOssResponse
 import com.sumian.sd.common.network.response.AppUpgradeInfo
@@ -611,14 +611,14 @@ interface SdApi {
     fun getMedicines(@Query("page") page: Int = 1, @Query("per_page") perPage: Int = 100): Call<PaginationResponseV2<SleepMedicine>>
 
     @GET("essays/{id}")
-    fun getSleeperTalkDetail(@Query("id") id: Int): Call<Any>
+    fun getSleeperTalkDetail(@Path("id") id: Int): Call<SleeperTalkData>
 
     @GET("essays")
-    fun getSleeperTalkList(@Query("page") page: Int = 1, @Query("per_page") perPage: Int = 16): Call<PaginationResponseV2<SleepTalkData>>
+    fun getSleeperTalkList(@Query("page") page: Int = 1, @Query("per_page") perPage: Int = 16): Call<PaginationResponseV2<SleeperTalkData>>
 
     @POST("essays/{id}/likes")
-    fun likeSleeperTalk(@Query("id") id: Int): Call<Any>
+    fun likeSleeperTalk(@Path("id") id: Int): Call<Any>
 
     @DELETE("essays/{id}/likes")
-    fun cancelLikeSleeperTalk(@Query("id") id: Int): Call<Any>
+    fun cancelLikeSleeperTalk(@Path("id") id: Int): Call<Any>
 }
