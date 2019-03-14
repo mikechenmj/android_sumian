@@ -68,7 +68,10 @@ open class ConversationActivity : SddBaseActivity() {
         val bottomSheetDialog = BottomSheetDialog(this)
         val content = LayoutInflater.from(this).inflate(R.layout.bottom_sheet_close_conversation, null)
         bottomSheetDialog.setContentView(content)
-        content.tv_close_conversation.setOnClickListener { showCloseConversationDialog() }
+        content.tv_close_conversation.setOnClickListener {
+            showCloseConversationDialog()
+            bottomSheetDialog.dismiss()
+        }
         content.tv_cancel.setOnClickListener { bottomSheetDialog.dismiss() }
         bottomSheetDialog.show()
     }
@@ -126,7 +129,6 @@ open class ConversationActivity : SddBaseActivity() {
             if (conversation is AVIMTemporaryConversation) {
                 println("Conversation expired flag: " + conversation.isExpired)
             }
-            setTitle(conversation.name ?: "---")
             mFragment.setConversation(conversation)
             LCIMConversationItemCache.getInstance().insertConversation(conversation.conversationId)
             LCIMConversationUtils.getConversationName(conversation, object : AVCallback<String>() {
@@ -134,6 +136,7 @@ open class ConversationActivity : SddBaseActivity() {
                     if (null != e) {
                         LCIMLogUtils.logException(e)
                     } else {
+                        setTitle(s)
                     }
                 }
             })

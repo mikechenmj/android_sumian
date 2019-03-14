@@ -2,6 +2,11 @@ package com.sumian.module_core.notification
 
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import cn.leancloud.chatkit.event.LCIMOfflineMessageCountChangeEvent
+import cn.leancloud.chatkit.utils.LCIMConversationUtils
+import cn.leancloud.chatkit.utils.LCIMLogUtils
+import com.avos.avoscloud.AVCallback
+import com.avos.avoscloud.AVException
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -13,6 +18,7 @@ import com.sumian.module_core.R
 import com.sumian.module_core.async.AsyncCallback
 import kotlinx.android.synthetic.main.fragment_notification_list.*
 import kotlinx.android.synthetic.main.view_notification_list_head_view.view.*
+import org.greenrobot.eventbus.Subscribe
 import java.util.*
 
 /**
@@ -168,4 +174,26 @@ class NotificationListFragment : BaseFragment(), BaseQuickAdapter.OnItemClickLis
         }
     }
 
+    override fun openEventBus(): Boolean {
+        return true
+    }
+
+    @Subscribe
+    fun onUnReadImMessageCountChange(event: LCIMOfflineMessageCountChangeEvent) {
+        val conversation = event.conversation
+        val unreadMessagesCount = conversation.unreadMessagesCount
+        if (unreadMessagesCount > 0) {
+            LCIMConversationUtils.getConversationName(conversation, object : AVCallback<String>() {
+                override fun internalDone0(s: String, e: AVException?) {
+                    if (null != e) {
+                        LCIMLogUtils.logException(e)
+                    } else {
+                        mHeaderView?.showMessage(s + ": " + event.lastMessage.content)
+                    }
+                }
+            })
+        } else {
+            mHeaderView?.showNoMessage()
+        }
+    }
 }

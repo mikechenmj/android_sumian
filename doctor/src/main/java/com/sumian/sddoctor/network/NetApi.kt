@@ -7,6 +7,8 @@ import com.sumian.sddoctor.account.bean.Feedback
 import com.sumian.sddoctor.account.bean.Version
 import com.sumian.sddoctor.account.kefu.KeFuMessage
 import com.sumian.sddoctor.booking.bean.*
+import com.sumian.sddoctor.buz.patientdoctorim.bean.ImIds
+import com.sumian.sddoctor.buz.patientdoctorim.bean.ImUser
 import com.sumian.sddoctor.homepage.FreeCallResponse
 import com.sumian.sddoctor.homepage.bean.PatientDashboardData
 import com.sumian.sddoctor.login.login.bean.DoctorInfo
@@ -549,4 +551,7 @@ interface NetApi {
 
     @POST("doctor/user/{userId}/conversations")
     fun createConversation(@Path("userId") userId: Int): Call<CreateConversationResponse>
+
+    @POST("doctor/user/im-ids")
+    fun queryImUserInfo(@Body imIds: ImIds): Call<Map<String, ImUser?>>
 }

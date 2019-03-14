@@ -7,13 +7,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ProcessLifecycleOwner
-import cn.leancloud.chatkit.LCChatKitUser
-import cn.leancloud.chatkit.LCChatProfileProvider
-import cn.leancloud.chatkit.LCChatProfilesCallBack
 import cn.leancloud.chatkit.LCIMManager
-import com.avos.avoscloud.im.v2.AVIMClient
-import com.avos.avoscloud.im.v2.AVIMException
-import com.avos.avoscloud.im.v2.callback.AVIMClientCallback
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.Utils
@@ -33,6 +27,7 @@ import com.sumian.sddoctor.R
 import com.sumian.sddoctor.account.AccountViewModel
 import com.sumian.sddoctor.account.kefu.KefuManager
 import com.sumian.sddoctor.base.ActivityDelegateFactory
+import com.sumian.sddoctor.buz.patientdoctorim.IMProfileProvider
 import com.sumian.sddoctor.log.SddLogManager
 import com.sumian.sddoctor.login.login.LoginActivity
 import com.sumian.sddoctor.login.login.SetInviteCodeActivity
@@ -45,7 +40,6 @@ import com.sumian.sddoctor.network.callback.BaseSdResponseCallback
 import com.sumian.sddoctor.notification.NotificationConst
 import com.sumian.sddoctor.notification.NotificationDelegate
 import com.sumian.sddoctor.notification.SchemeResolver
-import java.util.*
 
 /**
  * <pre>
@@ -226,21 +220,7 @@ object AppManager {
     private fun initLCChatData() {
         val doctor = getAccountViewModel().getDoctorInfo().value!!
         LCIMManager.getInstance().userId = doctor.im_id!!
-        LCIMManager.getInstance().open(object : AVIMClientCallback() {
-            override fun done(p0: AVIMClient?, p1: AVIMException?) {
-            }
-        })
-        LCIMManager.getInstance().profileProvider = object : LCChatProfileProvider {
-            override fun fetchProfiles(userIdList: MutableList<String>?, profilesCallBack: LCChatProfilesCallBack?) {
-                val userList = ArrayList<LCChatKitUser>()
-                userList.add(LCChatKitUser(doctor.im_id, doctor.name, doctor.avatar))
-                profilesCallBack?.done(userList, null)
-            }
-
-            override fun getAllUsers(): MutableList<LCChatKitUser> {
-                return ArrayList<LCChatKitUser>()
-            }
-        }
+        LCIMManager.getInstance().profileProvider = IMProfileProvider()
     }
 
     fun onLoginSuccess(loginResponse: LoginResponse?, isNewRegister: Boolean = false) {
