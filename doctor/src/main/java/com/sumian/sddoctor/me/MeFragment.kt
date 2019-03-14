@@ -23,6 +23,7 @@ import com.sumian.sddoctor.login.login.bean.DoctorInfo
 import com.sumian.sddoctor.me.authentication.AuthenticationActivity
 import com.sumian.sddoctor.me.myservice.MyServiceListActivity
 import com.sumian.sddoctor.me.mywallet.MyWalletActivity
+import com.sumian.sddoctor.me.useguide.UseGuideListActivity
 import com.sumian.sddoctor.util.ImageLoader
 import com.sumian.sddoctor.widget.divider.SettingDividerView
 import kotlinx.android.synthetic.main.fragment_me.*
@@ -76,6 +77,7 @@ class MeFragment : BaseFragment(), LogoutContract.View {
                 }
             })
         }
+        sdv_user_guid.setOnClickListener { UseGuideListActivity.launch() }
         KefuManager.mMessageCountLiveData.observe(this, Observer {
             showDot(sdv_my_kefu, it > 0)
         })

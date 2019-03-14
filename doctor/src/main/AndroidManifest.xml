@@ -54,7 +54,8 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths" />
+                android:resource="@xml/provider_paths"
+                tools:replace="android:resource" />
         </provider>
 
         <activity
@@ -309,6 +310,10 @@
             android:name=".buz.patientdoctorim.ConversationListActivity"
             android:exported="true"
             android:launchMode="singleTop" />
+        <activity android:name=".me.useguide.UseGuideListActivity" />
+        <activity
+            android:name=".me.useguide.UseGuideActivity"
+            android:exported="true" />
     </application>
 
 </manifest>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <VideoView
+        android:id="@+id/video_view"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="1"
+        android:visibility="visible" />
+
+    <com.sumian.common.h5.widget.SWebView
+        android:id="@+id/web_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="182dp"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp">
+
+        <TextView
+            android:id="@+id/tv_use_guide_title"
+            style="@style/text_t1_18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="开通自由定价服务" />
+
+        <TextView
+            android:id="@+id/tv_content"
+            style="@style/text_t2_14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            tools:text="您可以根据需要选择开通的服务类型，并根据服务类型自由设置价格。" />
+
+        <TextView
+            android:id="@+id/tv_useful"
+            style="@style/text_t2_13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:drawableLeft="@drawable/sel_use_guide_like"
+            android:drawablePadding="5dp"
+            android:text="@string/useful_to_me"
+            android:textColor="@color/sel_b3_t2" />
+
+    </LinearLayout>
+</LinearLayout>

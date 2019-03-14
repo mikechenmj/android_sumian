@@ -91,6 +91,13 @@
         app:type_icon="@drawable/ic_info_kefu" />
 
     <com.sumian.sddoctor.widget.divider.SettingDividerView
+        android:id="@+id/sdv_user_guid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:type_desc="@string/use_guide"
+        app:type_icon="@drawable/info_icon_userguides" />
+
+    <com.sumian.sddoctor.widget.divider.SettingDividerView
         android:id="@+id/sdv_setting"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
