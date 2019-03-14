@@ -1,5 +1,7 @@
 package com.sumian.sddoctor.network
 
+import cn.leancloud.chatkit.bean.ImIds
+import cn.leancloud.chatkit.bean.ImUser
 import com.google.gson.JsonObject
 import com.sumian.module_core.chat.bean.CreateConversationResponse
 import com.sumian.module_core.notification.NotificationListResponse
@@ -7,8 +9,6 @@ import com.sumian.sddoctor.account.bean.Feedback
 import com.sumian.sddoctor.account.bean.Version
 import com.sumian.sddoctor.account.kefu.KeFuMessage
 import com.sumian.sddoctor.booking.bean.*
-import com.sumian.sddoctor.buz.patientdoctorim.bean.ImIds
-import com.sumian.sddoctor.buz.patientdoctorim.bean.ImUser
 import com.sumian.sddoctor.homepage.FreeCallResponse
 import com.sumian.sddoctor.homepage.bean.PatientDashboardData
 import com.sumian.sddoctor.login.login.bean.DoctorInfo

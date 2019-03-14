@@ -212,10 +212,10 @@ object AppManager {
         KefuManager.loginAndQueryUnreadMsg()
         AppNotificationManager.uploadPushId()
         AppManager.updateDoctorInfo()
-        initLCChatData()
+        initImManager()
     }
 
-    private fun initLCChatData() {
+    private fun initImManager() {
         LCIMManager.getInstance().init(mApplication,
                 BuildConfig.LEANCLOUD_APP_ID, BuildConfig.LEANCLOUD_APP_KEY,
                 getAccountViewModel().getDoctorInfo().value!!.im_id,

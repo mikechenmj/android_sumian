@@ -1,18 +1,19 @@
 package cn.leancloud.chatkit.handler;
 
 import com.avos.avoscloud.im.v2.AVIMClient;
-import com.avos.avoscloud.im.v2.AVIMMessage;
 import com.avos.avoscloud.im.v2.AVIMConversation;
 import com.avos.avoscloud.im.v2.AVIMConversationEventHandler;
+import com.avos.avoscloud.im.v2.AVIMMessage;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
 import cn.leancloud.chatkit.cache.LCIMConversationItemCache;
 import cn.leancloud.chatkit.event.LCIMConversationReadStatusEvent;
-import cn.leancloud.chatkit.event.LCIMOfflineMessageCountChangeEvent;
 import cn.leancloud.chatkit.event.LCIMMessageUpdatedEvent;
+import cn.leancloud.chatkit.event.LCIMOfflineMessageCountChangeEvent;
 import cn.leancloud.chatkit.utils.LCIMLogUtils;
-import de.greenrobot.event.EventBus;
 
 /**
  * Created by wli on 15/12/1.

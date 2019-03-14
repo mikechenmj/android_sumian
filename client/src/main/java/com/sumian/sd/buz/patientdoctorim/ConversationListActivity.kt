@@ -12,14 +12,23 @@ import com.sumian.sd.R
  * desc   :
  * version: 1.0
  */
-class PatientDoctorImActivity : BaseViewModelActivity<BaseViewModel>() {
+class ConversationListActivity : BaseViewModelActivity<BaseViewModel>() {
     override fun getLayoutId(): Int {
         return R.layout.activity_patient_doctor_im
     }
 
+    override fun showBackNav(): Boolean {
+        return true
+    }
+
+    override fun initWidget() {
+        super.initWidget()
+        setTitle(R.string.doctor_message)
+    }
+
     companion object {
         fun launch() {
-            ActivityUtils.startActivity(ActivityUtils.getTopActivity(), PatientDoctorImActivity::class.java)
+            ActivityUtils.startActivity(ActivityUtils.getTopActivity(), ConversationListActivity::class.java)
         }
     }
 }

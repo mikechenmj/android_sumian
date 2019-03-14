@@ -14,8 +14,8 @@ import cn.leancloud.chatkit.event.LCIMInputBottomBarRecordEvent
 import cn.leancloud.chatkit.event.LCIMInputBottomBarTextEvent
 import cn.leancloud.chatkit.utils.LCIMPathUtils
 import com.blankj.utilcode.util.KeyboardUtils
-import de.greenrobot.event.EventBus
 import kotlinx.android.synthetic.main.lcim_input_box.view.*
+import org.greenrobot.eventbus.EventBus
 
 /**
  * @author : Zhan Xuzhao

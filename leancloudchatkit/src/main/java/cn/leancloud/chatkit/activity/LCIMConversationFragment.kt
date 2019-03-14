@@ -34,8 +34,9 @@ import com.avos.avoscloud.im.v2.messages.AVIMAudioMessage
 import com.avos.avoscloud.im.v2.messages.AVIMImageMessage
 import com.avos.avoscloud.im.v2.messages.AVIMRecalledMessage
 import com.avos.avoscloud.im.v2.messages.AVIMTextMessage
-import de.greenrobot.event.EventBus
 import kotlinx.android.synthetic.main.lcim_conversation_fragment.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
 import java.io.File
 import java.io.IOException
 
@@ -168,6 +169,7 @@ class LCIMConversationFragment : Fragment() {
      * 输入事件处理，接收后构造成 AVIMTextMessage 然后发送
      * 因为不排除某些特殊情况会受到其他页面过来的无效消息，所以此处加了 tag 判断
      */
+    @Subscribe
     fun onEvent(textEvent: LCIMInputBottomBarTextEvent?) {
         LCIMLogUtils.d(textEvent!!.toString())
         if (null != imConversation && null != textEvent) {
@@ -181,6 +183,7 @@ class LCIMConversationFragment : Fragment() {
      * 处理推送过来的消息
      * 同理，避免无效消息，此处加了 conversation id 判断
      */
+    @Subscribe
     fun onEvent(messageEvent: LCIMIMTypeMessageEvent?) {
         if (null != imConversation && null != messageEvent &&
                 imConversation!!.conversationId == messageEvent.conversation.conversationId) {
@@ -198,6 +201,7 @@ class LCIMConversationFragment : Fragment() {
     /**
      * 重新发送已经发送失败的消息
      */
+    @Subscribe
     fun onEvent(resendEvent: LCIMMessageResendEvent?) {
         if (null != imConversation && null != resendEvent &&
                 null != resendEvent.message && imConversation!!.conversationId == resendEvent.message.conversationId) {
@@ -212,6 +216,7 @@ class LCIMConversationFragment : Fragment() {
      *
      * @param event
      */
+    @Subscribe
     fun onEvent(event: LCIMInputBottomBarEvent?) {
         if (null != imConversation && null != event && imConversation!!.conversationId == event.tag) {
             when (event.eventAction) {
@@ -228,6 +233,7 @@ class LCIMConversationFragment : Fragment() {
      *
      * @param recordEvent
      */
+    @Subscribe
     fun onEvent(recordEvent: LCIMInputBottomBarRecordEvent?) {
         if (null != imConversation && null != recordEvent
                 && !TextUtils.isEmpty(recordEvent.audioPath)
@@ -242,6 +248,7 @@ class LCIMConversationFragment : Fragment() {
      *
      * @param readEvent
      */
+    @Subscribe
     fun onEvent(readEvent: LCIMConversationReadStatusEvent?) {
         if (null != imConversation && null != readEvent &&
                 imConversation!!.conversationId == readEvent.conversationId) {
@@ -251,6 +258,7 @@ class LCIMConversationFragment : Fragment() {
         }
     }
 
+    @Subscribe
     fun onEvent(event: LCIMMessageUpdateEvent?) {
         if (null != imConversation && null != event &&
                 null != event.message && imConversation!!.conversationId == event.message.conversationId) {
@@ -266,6 +274,7 @@ class LCIMConversationFragment : Fragment() {
         }
     }
 
+    @Subscribe
     fun onEvent(event: LCIMMessageUpdatedEvent?) {
         if (null != imConversation && null != event &&
                 null != event.message && imConversation!!.conversationId == event.message.conversationId) {
@@ -273,6 +282,7 @@ class LCIMConversationFragment : Fragment() {
         }
     }
 
+    @Subscribe
     fun onEvent(event: LCIMOfflineMessageCountChangeEvent?) {
         if (null == event || null == event.conversation || null == event.conversation) {
             return

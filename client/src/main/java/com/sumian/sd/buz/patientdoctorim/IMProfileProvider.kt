@@ -1,4 +1,4 @@
-package com.sumian.sddoctor.buz.patientdoctorim
+package com.sumian.sd.buz.patientdoctorim
 
 import cn.leancloud.chatkit.LCChatKitUser
 import cn.leancloud.chatkit.LCChatProfileProvider
@@ -7,8 +7,8 @@ import cn.leancloud.chatkit.bean.ImIds
 import cn.leancloud.chatkit.bean.ImUser
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.network.response.ErrorResponse
-import com.sumian.sddoctor.app.AppManager
-import com.sumian.sddoctor.network.callback.BaseSdResponseCallback
+import com.sumian.sd.app.AppManager
+import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import java.util.ArrayList
 import kotlin.collections.HashMap
 import kotlin.collections.set
@@ -28,8 +28,8 @@ class IMProfileProvider : LCChatProfileProvider {
     }
 
     private fun initAppUserInfo() {
-        val doctor = AppManager.getAccountViewModel().getDoctorInfo().value!!
-        mImUserInfoCache.put(doctor.im_id!!, LCChatKitUser(doctor.im_id, doctor.name, doctor.avatar))
+        val userInfo = AppManager.getAccountViewModel().userInfo
+        mImUserInfoCache.put(userInfo.im_id!!, LCChatKitUser(userInfo.im_id, userInfo.name, userInfo.avatar))
     }
 
     override fun fetchProfiles(userIdList: MutableList<String>, profilesCallBack: LCChatProfilesCallBack?) {
@@ -44,12 +44,12 @@ class IMProfileProvider : LCChatProfileProvider {
         if (noCacheList.isEmpty()) {
             returnProfiles(profilesCallBack)
         } else {
-            val call = AppManager.getHttpService().queryImUserInfo(ImIds(userIdList!!))
+            val call = AppManager.getSdHttpService().queryImUserInfo(ImIds(userIdList!!))
             call.enqueue(object : BaseSdResponseCallback<Map<String, ImUser?>>() {
                 override fun onSuccess(response: Map<String, ImUser?>?) {
                     for (entity in response!!) {
                         val imUser = entity.value ?: continue
-                        mImUserInfoCache[entity.key] = LCChatKitUser(imUser.imId, imUser.name + "医生", imUser.avatar)
+                        mImUserInfoCache[entity.key] = LCChatKitUser(imUser.imId, imUser.name, imUser.avatar)
                     }
                     returnProfiles(profilesCallBack)
                 }

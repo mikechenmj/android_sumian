@@ -47,11 +47,18 @@ dependencies {
 
     implementation 'com.squareup.picasso:picasso:2.5.2'
 
-    implementation 'de.greenrobot:eventbus:2.4.0'
+    implementation 'org.greenrobot:eventbus:3.1.1'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'com.blankj:utilcode:1.19.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation 'com.qmuiteam:qmui:1.1.12'
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
+    kapt 'androidx.lifecycle:lifecycle-compiler:2.0.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel:2.0.0'
+    // Java8 support for Lifecycles
+    implementation 'androidx.lifecycle:lifecycle-common-java8:2.0.0'
+
 }
 
 //apply from: '../maven_push.gradle'

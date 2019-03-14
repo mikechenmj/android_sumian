@@ -7,6 +7,9 @@ import android.view.ViewGroup;
 
 import com.avos.avoscloud.im.v2.AVIMConversation;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +26,6 @@ import cn.leancloud.chatkit.event.LCIMIMTypeMessageEvent;
 import cn.leancloud.chatkit.event.LCIMOfflineMessageCountChangeEvent;
 import cn.leancloud.chatkit.view.LCIMDividerItemDecoration;
 import cn.leancloud.chatkit.viewholder.LCIMConversationItemHolder;
-import de.greenrobot.event.EventBus;
 
 /**
  * Created by wli on 16/2/29.
@@ -76,6 +78,7 @@ public class LCIMConversationListFragment extends Fragment {
    *
    * @param event
    */
+  @Subscribe
   public void onEvent(LCIMIMTypeMessageEvent event) {
     updateConversationList();
   }
@@ -84,6 +87,7 @@ public class LCIMConversationListFragment extends Fragment {
    * 删除会话列表中的某个 item
    * @param event
    */
+  @Subscribe
   public void onEvent(LCIMConversationItemLongClickEvent event) {
     if (null != event.conversation) {
       String conversationId = event.conversation.getConversationId();

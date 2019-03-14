@@ -11,14 +11,14 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import org.greenrobot.eventbus.EventBus;
+
 import cn.leancloud.chatkit.R;
 import cn.leancloud.chatkit.event.LCIMInputBottomBarEvent;
-import cn.leancloud.chatkit.event.LCIMInputBottomBarLocationClickEvent;
 import cn.leancloud.chatkit.event.LCIMInputBottomBarRecordEvent;
 import cn.leancloud.chatkit.event.LCIMInputBottomBarTextEvent;
 import cn.leancloud.chatkit.utils.LCIMPathUtils;
 import cn.leancloud.chatkit.utils.LCIMSoftInputUtils;
-import de.greenrobot.event.EventBus;
 
 
 /**

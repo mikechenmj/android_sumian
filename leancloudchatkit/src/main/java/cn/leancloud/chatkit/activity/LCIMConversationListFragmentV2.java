@@ -10,6 +10,9 @@ import com.avos.avoscloud.im.v2.AVIMException;
 import com.avos.avoscloud.im.v2.callback.AVIMConversationQueryCallback;
 import com.blankj.utilcode.util.ToastUtils;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.List;
 
 import androidx.fragment.app.Fragment;
@@ -24,7 +27,6 @@ import cn.leancloud.chatkit.event.LCIMConversationItemLongClickEvent;
 import cn.leancloud.chatkit.event.LCIMIMTypeMessageEvent;
 import cn.leancloud.chatkit.event.LCIMOfflineMessageCountChangeEvent;
 import cn.leancloud.chatkit.viewholder.LCIMConversationItemHolderV2;
-import de.greenrobot.event.EventBus;
 
 /**
  * Created by wli on 16/2/29.
@@ -74,6 +76,7 @@ public class LCIMConversationListFragmentV2 extends Fragment {
      *
      * @param event
      */
+    @Subscribe
     public void onEvent(LCIMIMTypeMessageEvent event) {
         updateConversationList();
     }
@@ -83,6 +86,7 @@ public class LCIMConversationListFragmentV2 extends Fragment {
      *
      * @param event
      */
+    @Subscribe
     public void onEvent(LCIMConversationItemLongClickEvent event) {
         if (null != event.conversation) {
             String conversationId = event.conversation.getConversationId();
@@ -95,12 +99,15 @@ public class LCIMConversationListFragmentV2 extends Fragment {
      * 刷新页面
      */
     private void updateConversationList() {
-        LCIMManager.getInstance().queryConversationList(100, new AVIMConversationQueryCallback() {
+        LCIMManager.getInstance().queryConversationList(10, new AVIMConversationQueryCallback() {
             @Override
             public void done(List<AVIMConversation> list, AVIMException e) {
                 if (e != null) {
                     ToastUtils.showShort(e.getMessage());
                     return;
+                }
+                for (AVIMConversation conversation : list) {
+                    System.out.println("conversation unread count" + conversation.getUnreadMessagesCount());
                 }
                 itemAdapter.setDataList(list);
                 itemAdapter.notifyDataSetChanged();
@@ -114,6 +121,7 @@ public class LCIMConversationListFragmentV2 extends Fragment {
      *
      * @param updateEvent
      */
+    @Subscribe
     public void onEvent(LCIMOfflineMessageCountChangeEvent updateEvent) {
         updateConversationList();
     }

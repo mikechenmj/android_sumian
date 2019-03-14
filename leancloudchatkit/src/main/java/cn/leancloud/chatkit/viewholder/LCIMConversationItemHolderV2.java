@@ -2,7 +2,6 @@ package cn.leancloud.chatkit.viewholder;
 
 import android.content.ActivityNotFoundException;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
@@ -25,14 +24,11 @@ import com.squareup.picasso.Picasso;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import androidx.appcompat.app.AlertDialog;
 import cn.leancloud.chatkit.LCChatMessageInterface;
 import cn.leancloud.chatkit.R;
-import cn.leancloud.chatkit.event.LCIMConversationItemLongClickEvent;
 import cn.leancloud.chatkit.utils.LCIMConstants;
 import cn.leancloud.chatkit.utils.LCIMConversationUtils;
 import cn.leancloud.chatkit.utils.LCIMLogUtils;
-import de.greenrobot.event.EventBus;
 
 /**
  * Created by wli on 15/10/8.
@@ -125,20 +121,20 @@ public class LCIMConversationItemHolderV2 extends LCIMCommonViewHolder {
                 }
             });
 
-            itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                    builder.setItems(new String[]{"删除该聊天"}, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            EventBus.getDefault().post(new LCIMConversationItemLongClickEvent(conversation));
-                        }
-                    });
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
-                    return false;
-                }
-            });
+//            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+//                @Override
+//                public boolean onLongClick(View v) {
+//                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+//                    builder.setItems(new String[]{"删除该聊天"}, new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            EventBus.getDefault().post(new LCIMConversationItemLongClickEvent(conversation));
+//                        }
+//                    });
+//                    AlertDialog dialog = builder.create();
+//                    dialog.show();
+//                    return false;
+//                }
+//            });
         }
     }
 

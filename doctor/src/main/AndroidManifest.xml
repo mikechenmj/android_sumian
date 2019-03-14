@@ -298,7 +298,6 @@
             android:launchMode="singleTop" />
         <activity
             android:name=".buz.patientdoctorim.ConversationActivity"
-            android:exported="true"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="cn.leancloud.chatkit.conversation_item_click_action" />

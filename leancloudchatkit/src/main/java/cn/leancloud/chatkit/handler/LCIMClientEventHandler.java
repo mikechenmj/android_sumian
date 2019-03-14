@@ -3,9 +3,10 @@ package cn.leancloud.chatkit.handler;
 import com.avos.avoscloud.im.v2.AVIMClient;
 import com.avos.avoscloud.im.v2.AVIMClientEventHandler;
 
+import org.greenrobot.eventbus.EventBus;
+
 import cn.leancloud.chatkit.event.LCIMConnectionChangeEvent;
 import cn.leancloud.chatkit.utils.LCIMLogUtils;
-import de.greenrobot.event.EventBus;
 
 /**
  * Created by wli on 15/12/16.

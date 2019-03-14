@@ -19,6 +19,9 @@ import com.avos.avoscloud.im.v2.callback.AVIMOperationPartiallySucceededCallback
 import com.avos.avoscloud.im.v2.conversation.AVIMConversationMemberInfo;
 import com.avos.avoscloud.im.v2.conversation.ConversationMemberRole;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -38,7 +41,6 @@ import cn.leancloud.chatkit.event.LCIMMemberSelectedChangeEvent;
 import cn.leancloud.chatkit.utils.LCIMConstants;
 import cn.leancloud.chatkit.view.LCIMDividerItemDecoration;
 import cn.leancloud.chatkit.viewholder.LCIMContactItemHolder;
-import de.greenrobot.event.EventBus;
 
 public class LCIMConversationDetailActivity extends AppCompatActivity {
   private static final int REQUEST_CODE_ADD_ADMIN = 10;
@@ -362,6 +364,7 @@ public class LCIMConversationDetailActivity extends AppCompatActivity {
     Toast.makeText(LCIMConversationDetailActivity.this, content, Toast.LENGTH_SHORT).show();
   }
 
+  @Subscribe
   public void onEvent(LCIMMemberSelectedChangeEvent event) {
     System.out.println("eventHandler. isChecked=" + event.isSelected + ", user=" + event.member);
     if (null != event && null != event.member) {

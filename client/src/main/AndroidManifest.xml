@@ -587,8 +587,17 @@
         <activity
             android:name=".buz.sleepertalk.SleeperTalkListActivity"
             android:launchMode="singleTop" />
-        <activity android:name=".buz.patientdoctorim.PatientDoctorImActivity" />
+        <activity android:name=".buz.patientdoctorim.ConversationListActivity" />
         <activity android:name=".buz.sleepertalk.SleeperTalkActivity" />
+        <activity
+            android:name=".buz.patientdoctorim.ConversationActivity"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="cn.leancloud.chatkit.conversation_item_click_action" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
     </application>
 

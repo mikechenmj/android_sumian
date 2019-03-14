@@ -18,6 +18,8 @@ import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.im.v2.AVIMMessage;
 import com.squareup.picasso.Picasso;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -28,7 +30,6 @@ import cn.leancloud.chatkit.event.LCIMMessageResendEvent;
 import cn.leancloud.chatkit.event.LCIMMessageUpdateEvent;
 import cn.leancloud.chatkit.utils.LCIMConstants;
 import cn.leancloud.chatkit.utils.LCIMLogUtils;
-import de.greenrobot.event.EventBus;
 
 /**
  * Created by wli on 15/9/17.
@@ -139,11 +140,11 @@ public class LCIMChatItemHolder extends LCIMCommonViewHolder {
       statusLayout.setVisibility(option.isShowDelivered() || option.isShowRead() ? View.VISIBLE : View.GONE);
       progressBar.setVisibility(View.GONE);
       errorView.setVisibility(View.GONE);
-      if (option.isShowRead()) {
-        statusView.setText("已读");
-      } else if (option.isShowDelivered()) {
-        statusView.setText("已收到");
-      }
+//      if (option.isShowRead()) {
+//        statusView.setText("已读");
+//      } else if (option.isShowDelivered()) {
+//        statusView.setText("已收到");
+//      }
     }
   }
 

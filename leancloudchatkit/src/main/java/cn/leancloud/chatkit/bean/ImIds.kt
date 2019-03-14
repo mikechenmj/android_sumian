@@ -1,4 +1,4 @@
-package com.sumian.sddoctor.buz.patientdoctorim.bean
+package cn.leancloud.chatkit.bean
 
 /**
  * @author : Zhan Xuzhao

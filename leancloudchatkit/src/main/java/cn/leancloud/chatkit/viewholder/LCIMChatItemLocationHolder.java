@@ -8,9 +8,10 @@ import android.widget.TextView;
 import com.avos.avoscloud.im.v2.AVIMMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMLocationMessage;
 
+import org.greenrobot.eventbus.EventBus;
+
 import cn.leancloud.chatkit.R;
 import cn.leancloud.chatkit.event.LCIMLocationItemClickEvent;
-import de.greenrobot.event.EventBus;
 
 /**
  * Created by wli on 15/9/17.

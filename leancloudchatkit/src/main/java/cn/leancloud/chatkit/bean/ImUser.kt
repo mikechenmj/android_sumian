@@ -1,4 +1,4 @@
-package com.sumian.sddoctor.buz.patientdoctorim.bean
+package cn.leancloud.chatkit.bean
 
 import com.google.gson.annotations.SerializedName
 
@@ -12,7 +12,7 @@ data class ImUser(
         @SerializedName("name")
         val name: String, // testzzz
         @SerializedName("nickname")
-        val nickname: String, // test詹徐照
+        val nickname: String?, // test詹徐照
         @SerializedName("real_name")
-        val realName: String
+        val realName: String?
 )

@@ -9,6 +9,7 @@ import com.avos.avoscloud.AVOSCloud;
 import com.avos.avoscloud.AVUtils;
 import com.avos.avoscloud.SignatureFactory;
 import com.avos.avoscloud.im.v2.AVIMClient;
+import com.avos.avoscloud.im.v2.AVIMConversation;
 import com.avos.avoscloud.im.v2.AVIMConversationsQuery;
 import com.avos.avoscloud.im.v2.AVIMException;
 import com.avos.avoscloud.im.v2.AVIMMessageManager;
@@ -17,9 +18,18 @@ import com.avos.avoscloud.im.v2.AVIMTypedMessage;
 import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
 import com.avos.avoscloud.im.v2.callback.AVIMConversationQueryCallback;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import cn.leancloud.chatkit.cache.LCIMConversationItemCache;
 import cn.leancloud.chatkit.cache.LCIMProfileCache;
+import cn.leancloud.chatkit.event.LCIMOfflineMessageCountChangeEvent;
 import cn.leancloud.chatkit.handler.LCIMClientEventHandler;
 import cn.leancloud.chatkit.handler.LCIMConversationHandler;
 import cn.leancloud.chatkit.handler.LCIMMessageHandler;
@@ -33,6 +43,8 @@ public final class LCIMManager {
     private static LCIMManager sInstance;
     private LCChatProfileProvider mProfileProvider;
     private String mUserId;
+    private List<AVIMConversation> mUnreadConversations = new ArrayList<>();
+    private MutableLiveData<Integer> mUnreadCountLiveData = new MutableLiveData<>();
 
     private LCIMManager() {
     }
@@ -79,10 +91,41 @@ public final class LCIMManager {
         open(new AVIMClientCallback() {
             @Override
             public void done(AVIMClient avimClient, AVIMException e) {
-
+                updateUnreadConversation();
             }
         });
 
+        EventBus.getDefault().register(this);
+    }
+
+    private void updateUnreadConversation() {
+        queryConversationList(100, new AVIMConversationQueryCallback() {
+            @Override
+            public void done(List<AVIMConversation> list, AVIMException e) {
+                for (AVIMConversation conversation : list) {
+                    if (conversation.getUnreadMessagesCount() > 0) {
+                        mUnreadConversations.add(conversation);
+                    }
+                }
+                notifyUnreadCountChange();
+            }
+        });
+    }
+
+    private void notifyUnreadCountChange() {
+        mUnreadCountLiveData.postValue(getUnreadMessageCount());
+    }
+
+    @Subscribe
+    public void onUnReadImMessageCountChange(LCIMOfflineMessageCountChangeEvent event) {
+        AVIMConversation conversation = event.conversation;
+        int unreadMessagesCount = conversation.getUnreadMessagesCount();
+        if (unreadMessagesCount > 0) {
+            mUnreadConversations.add(conversation);
+        } else {
+            mUnreadConversations.remove(conversation);
+        }
+        notifyUnreadCountChange();
     }
 
     /**
@@ -205,5 +248,17 @@ public final class LCIMManager {
         AVIMConversationsQuery query = getClient().getConversationsQuery();
         query.limit(limit);
         query.findInBackground(callback);
+    }
+
+    public int getUnreadMessageCount() {
+        int count = 0;
+        for (AVIMConversation conversation : mUnreadConversations) {
+            count += conversation.getUnreadMessagesCount();
+        }
+        return count;
+    }
+
+    public LiveData<Integer> getUnreadCountLiveData() {
+        return mUnreadCountLiveData;
     }
 }

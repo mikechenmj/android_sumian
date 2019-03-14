@@ -11,6 +11,9 @@ import android.view.ViewGroup;
 
 import com.alibaba.fastjson.JSON;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -27,7 +30,6 @@ import cn.leancloud.chatkit.adapter.LCIMMembersAdapter;
 import cn.leancloud.chatkit.event.LCIMMemberLetterEvent;
 import cn.leancloud.chatkit.event.LCIMMemberSelectedChangeEvent;
 import cn.leancloud.chatkit.view.LCIMDividerItemDecoration;
-import de.greenrobot.event.EventBus;
 
 import static android.app.Activity.RESULT_OK;
 import static cn.leancloud.chatkit.activity.LCIMUserSelectActivity.KEY_RESULT_DATA;
@@ -130,6 +132,7 @@ public class LCIMContactFragment extends Fragment {
    * 处理 LetterView 发送过来的 LCIMMemberLetterEvent
    * 会通过 LCIMMembersAdapter 获取应该要跳转到的位置，然后跳转
    */
+  @Subscribe
   public void onEvent(LCIMMemberLetterEvent event) {
     Character targetChar = Character.toLowerCase(event.letter);
     if (itemAdapter.getIndexMap().containsKey(targetChar)) {
@@ -140,6 +143,7 @@ public class LCIMContactFragment extends Fragment {
     }
   }
 
+  @Subscribe
   public void onEvent(LCIMMemberSelectedChangeEvent event) {
     System.out.println("eventHandler. isChecked=" + event.isSelected + ", user=" + event.member);
     if (null != event && null != event.member) {

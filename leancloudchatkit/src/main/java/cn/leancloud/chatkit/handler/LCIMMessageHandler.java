@@ -11,6 +11,8 @@ import com.avos.avoscloud.im.v2.AVIMTypedMessage;
 import com.avos.avoscloud.im.v2.AVIMTypedMessageHandler;
 import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
 
+import org.greenrobot.eventbus.EventBus;
+
 import cn.leancloud.chatkit.LCChatKitUser;
 import cn.leancloud.chatkit.LCIMManager;
 import cn.leancloud.chatkit.R;
@@ -20,7 +22,6 @@ import cn.leancloud.chatkit.event.LCIMIMTypeMessageEvent;
 import cn.leancloud.chatkit.utils.LCIMConstants;
 import cn.leancloud.chatkit.utils.LCIMLogUtils;
 import cn.leancloud.chatkit.utils.LCIMNotificationUtils;
-import de.greenrobot.event.EventBus;
 
 /**
  * Created by zhangxiaobo on 15/4/20.

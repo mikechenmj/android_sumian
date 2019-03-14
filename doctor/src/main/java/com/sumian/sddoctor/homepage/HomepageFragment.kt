@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import cn.leancloud.chatkit.event.LCIMOfflineMessageCountChangeEvent
+import cn.leancloud.chatkit.LCIMManager
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SPUtils
@@ -63,7 +63,6 @@ import java.util.*
 class HomepageFragment : BaseFragment(), DoctorServicesView.OnDoctorServicesCallback {
 
     private val mNotificationViewModel by lazy { ViewModelProviders.of(Objects.requireNonNull(activity!!)).get(NotificationViewModel::class.java) }
-    private var mUnreadImMessageCount = 0
 
     companion object {
         const val REQUEST_CODE_OPEN_NOTIFICATION = 1
@@ -97,6 +96,7 @@ class HomepageFragment : BaseFragment(), DoctorServicesView.OnDoctorServicesCall
         mNotificationViewModel
                 .unreadCountLiveData
                 .observe(this, Observer<Int> { unreadCount -> updateNotificationIconUI() })
+        LCIMManager.getInstance().unreadCountLiveData.observe(this, Observer<Int> { it -> updateNotificationIconUI() })
         AppManager.getAccountViewModel().getDoctorInfo().observe(this, Observer<DoctorInfo> { t ->
             ImageLoader.load(activity!!, t?.qr_code_raw, iv_doctor_qr)
             LogUtils.d("qr_code_raw", t?.qr_code_raw)
@@ -107,7 +107,7 @@ class HomepageFragment : BaseFragment(), DoctorServicesView.OnDoctorServicesCall
     private fun updateNotificationIconUI() {
         val notificationCount = mNotificationViewModel.unreadCountLiveData.value
         val hasNotification = notificationCount != null && notificationCount > 0
-        val hasIm = mUnreadImMessageCount > 0
+        val hasIm = LCIMManager.getInstance().unreadMessageCount > 0
         iv_notification.isActivated = hasNotification || hasIm
     }
 
@@ -187,12 +187,6 @@ class HomepageFragment : BaseFragment(), DoctorServicesView.OnDoctorServicesCall
     override fun onShowEvaluateService(v: View) {
         //ToastUtils.showShort(R.string.coming_soon)
         WeekEvaluationListActivity.show()
-    }
-
-    @Subscribe
-    fun onUnReadImMessageCountChange(event: LCIMOfflineMessageCountChangeEvent) {
-        mUnreadImMessageCount = event.conversation.unreadMessagesCount
-        updateNotificationIconUI()
     }
 
     @Subscribe(sticky = true)

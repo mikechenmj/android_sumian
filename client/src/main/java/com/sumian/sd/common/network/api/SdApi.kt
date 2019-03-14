@@ -1,5 +1,7 @@
 package com.sumian.sd.common.network.api
 
+import cn.leancloud.chatkit.bean.ImIds
+import cn.leancloud.chatkit.bean.ImUser
 import com.google.gson.JsonObject
 import com.sumian.common.network.response.PaginationResponseV2
 import com.sumian.module_core.notification.NotificationListResponse
@@ -621,4 +623,7 @@ interface SdApi {
 
     @DELETE("essays/{id}/likes")
     fun cancelLikeSleeperTalk(@Path("id") id: Int): Call<Any>
+
+    @POST("doctor/im-ids")
+    fun queryImUserInfo(@Body imIds: ImIds): Call<Map<String, ImUser?>>
 }

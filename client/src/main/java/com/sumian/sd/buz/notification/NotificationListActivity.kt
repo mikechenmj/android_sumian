@@ -15,7 +15,7 @@ import com.sumian.module_core.notification.NotificationListFragment
 import com.sumian.module_core.notification.NotificationListResponse
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.buz.patientdoctorim.PatientDoctorImActivity
+import com.sumian.sd.buz.patientdoctorim.ConversationListActivity
 import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import com.sumian.sd.common.utils.EventBusUtil
@@ -92,7 +92,7 @@ class NotificationListActivity : BaseViewModelActivity<BaseViewModel>(), Notific
     }
 
     override fun launchPatientDoctorMessageListActivity() {
-        PatientDoctorImActivity.launch()
+        ConversationListActivity.launch()
     }
 
     /**

@@ -8,6 +8,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ProcessLifecycleOwner
+import cn.leancloud.chatkit.LCIMManager
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.ToastUtils
@@ -42,6 +43,7 @@ import com.sumian.sd.buz.kefu.KefuManager
 import com.sumian.sd.buz.notification.NotificationConst
 import com.sumian.sd.buz.notification.NotificationDelegate
 import com.sumian.sd.buz.notification.SchemeResolver
+import com.sumian.sd.buz.patientdoctorim.IMProfileProvider
 import com.sumian.sd.buz.upgrade.model.VersionModel
 import com.sumian.sd.common.log.LogManager
 import com.sumian.sd.common.log.SdLogManager
@@ -299,6 +301,14 @@ object AppManager {
         DeviceManager.init(App.getAppContext())
         sendHeartbeat()
         syncUserInfo()
+        initImManager()
+    }
+
+    private fun initImManager() {
+        LCIMManager.getInstance().init(mApplication,
+                BuildConfig.LEANCLOUD_APP_ID, BuildConfig.LEANCLOUD_APP_KEY,
+                getAccountViewModel().userInfo.im_id,
+                IMProfileProvider())
     }
 
     fun onMainActivityRestore() {
