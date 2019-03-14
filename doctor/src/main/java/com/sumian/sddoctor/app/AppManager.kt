@@ -124,7 +124,6 @@ object AppManager {
                 BuildConfig.ALIYUN_LOG_LOG_STORE,
                 BuildConfig.ALIYUN_LOG_END_POINT
         )
-        LCIMManager.getInstance().init(mApplication, BuildConfig.LEANCLOUD_APP_ID, BuildConfig.LEANCLOUD_APP_KEY)
     }
 
     private fun initLeanCloud() {
@@ -213,14 +212,14 @@ object AppManager {
         KefuManager.loginAndQueryUnreadMsg()
         AppNotificationManager.uploadPushId()
         AppManager.updateDoctorInfo()
-
         initLCChatData()
     }
 
     private fun initLCChatData() {
-        val doctor = getAccountViewModel().getDoctorInfo().value!!
-        LCIMManager.getInstance().userId = doctor.im_id!!
-        LCIMManager.getInstance().profileProvider = IMProfileProvider()
+        LCIMManager.getInstance().init(mApplication,
+                BuildConfig.LEANCLOUD_APP_ID, BuildConfig.LEANCLOUD_APP_KEY,
+                getAccountViewModel().getDoctorInfo().value!!.im_id,
+                IMProfileProvider())
     }
 
     fun onLoginSuccess(loginResponse: LoginResponse?, isNewRegister: Boolean = false) {

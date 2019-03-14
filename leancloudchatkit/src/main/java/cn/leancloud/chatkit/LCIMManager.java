@@ -31,7 +31,7 @@ import cn.leancloud.chatkit.handler.LCIMMessageHandler;
 public final class LCIMManager {
 
     private static LCIMManager sInstance;
-    private LCChatProfileProvider profileProvider;
+    private LCChatProfileProvider mProfileProvider;
     private String mUserId;
 
     private LCIMManager() {
@@ -55,7 +55,7 @@ public final class LCIMManager {
      * @param appId
      * @param appKey
      */
-    public void init(Context context, String appId, String appKey) {
+    public void init(Context context, String appId, String appKey, String userId, LCChatProfileProvider profileProvider) {
         if (TextUtils.isEmpty(appId)) {
             throw new IllegalArgumentException("appId can not be empty!");
         }
@@ -73,6 +73,16 @@ public final class LCIMManager {
         AVIMClient.setUnreadNotificationEnabled(true);
         // 默认设置为离线消息仅推送数量
         AVIMClient.setOfflineMessagePush(true);
+
+        mUserId = userId;
+        mProfileProvider = profileProvider;
+        open(new AVIMClientCallback() {
+            @Override
+            public void done(AVIMClient avimClient, AVIMException e) {
+
+            }
+        });
+
     }
 
     /**
@@ -81,7 +91,7 @@ public final class LCIMManager {
      * @return
      */
     public LCChatProfileProvider getProfileProvider() {
-        return profileProvider;
+        return mProfileProvider;
     }
 
     /**
@@ -90,7 +100,7 @@ public final class LCIMManager {
      * @param profileProvider
      */
     public void setProfileProvider(LCChatProfileProvider profileProvider) {
-        this.profileProvider = profileProvider;
+        this.mProfileProvider = profileProvider;
     }
 
     /**
@@ -179,10 +189,6 @@ public final class LCIMManager {
             throw new RuntimeException("setUserId first");
         }
         return mUserId;
-    }
-
-    public void setUserId(String userId) {
-        mUserId = userId;
     }
 
     /**

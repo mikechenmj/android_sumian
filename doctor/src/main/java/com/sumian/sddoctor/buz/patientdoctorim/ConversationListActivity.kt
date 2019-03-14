@@ -1,11 +1,6 @@
 package com.sumian.sddoctor.buz.patientdoctorim
 
 import android.content.Intent
-import android.os.Bundle
-import cn.leancloud.chatkit.LCIMManager
-import com.avos.avoscloud.im.v2.AVIMClient
-import com.avos.avoscloud.im.v2.AVIMException
-import com.avos.avoscloud.im.v2.callback.AVIMClientCallback
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.base.SddBaseActivity
@@ -29,14 +24,6 @@ class ConversationListActivity : SddBaseActivity() {
     override fun initWidget() {
         super.initWidget()
         setTitle(R.string.patient_message)
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        LCIMManager.getInstance().open(object : AVIMClientCallback() {
-            override fun done(p0: AVIMClient?, p1: AVIMException?) {
-            }
-        })
     }
 
     companion object {
