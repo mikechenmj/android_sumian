@@ -3,6 +3,7 @@ package cn.leancloud.chatkit;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.alibaba.fastjson.JSONObject;
 import com.avos.avoscloud.AVCallback;
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVOSCloud;
@@ -10,6 +11,7 @@ import com.avos.avoscloud.AVUtils;
 import com.avos.avoscloud.SignatureFactory;
 import com.avos.avoscloud.im.v2.AVIMClient;
 import com.avos.avoscloud.im.v2.AVIMConversation;
+import com.avos.avoscloud.im.v2.AVIMConversationEventHandler;
 import com.avos.avoscloud.im.v2.AVIMConversationsQuery;
 import com.avos.avoscloud.im.v2.AVIMException;
 import com.avos.avoscloud.im.v2.AVIMMessageManager;
@@ -17,6 +19,7 @@ import com.avos.avoscloud.im.v2.AVIMOptions;
 import com.avos.avoscloud.im.v2.AVIMTypedMessage;
 import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
 import com.avos.avoscloud.im.v2.callback.AVIMConversationQueryCallback;
+import com.blankj.utilcode.util.LogUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -82,6 +85,39 @@ public final class LCIMManager {
         AVIMOptions.getGlobalOptions().setResetConnectionWhileBroken(true);
         // 和 Conversation 相关的事件的 handler
         AVIMMessageManager.setConversationEventHandler(LCIMConversationHandler.getInstance());
+        AVIMMessageManager.setConversationEventHandler(new AVIMConversationEventHandler() {
+            @Override
+            public void onMemberLeft(AVIMClient avimClient, AVIMConversation avimConversation, List<String> list, String s) {
+
+            }
+
+            @Override
+            public void onMemberJoined(AVIMClient avimClient, AVIMConversation avimConversation, List<String> list, String s) {
+
+            }
+
+            @Override
+            public void onKicked(AVIMClient avimClient, AVIMConversation avimConversation, String s) {
+
+            }
+
+            @Override
+            public void onInvited(AVIMClient avimClient, AVIMConversation avimConversation, String s) {
+
+            }
+
+            @Override
+            public void onUnreadMessagesCountUpdated(AVIMClient client, AVIMConversation conversation) {
+                LogUtils.d("onUnreadMessagesCountUpdated");
+            }
+
+            @Override
+            public void onInfoChanged(AVIMClient client, AVIMConversation conversation, JSONObject attr, String operator) {
+                super.onInfoChanged(client, conversation, attr, operator);
+                LogUtils.d(conversation, attr);
+            }
+        });
+
         AVIMClient.setUnreadNotificationEnabled(true);
         // 默认设置为离线消息仅推送数量
         AVIMClient.setOfflineMessagePush(true);

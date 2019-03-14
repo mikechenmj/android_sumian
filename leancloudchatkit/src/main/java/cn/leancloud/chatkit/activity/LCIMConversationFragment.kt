@@ -45,7 +45,7 @@ import java.io.IOException
  * 将聊天相关的封装到此 Fragment 里边，只需要通过 setConversation 传入 Conversation 即可
  */
 class LCIMConversationFragment : Fragment() {
-    protected var imConversation: AVIMConversation? = null
+    protected var mConversation: AVIMConversation? = null
     protected var itemAdapter: LCIMChatAdapter = LCIMChatAdapter()
     protected lateinit var layoutManager: LinearLayoutManager
     // 记录拍照等的文件路径
@@ -68,14 +68,14 @@ class LCIMConversationFragment : Fragment() {
             if (null == message) {
                 fragment_chat_srl_pullrefresh.isRefreshing = false
             } else {
-                imConversation!!.queryMessages(message.messageId, message.timestamp, 20, object : AVIMMessagesQueryCallback() {
+                mConversation!!.queryMessages(message.messageId, message.timestamp, 20, object : AVIMMessagesQueryCallback() {
                     override fun done(list: List<AVIMMessage>?, e: AVIMException?) {
                         fragment_chat_srl_pullrefresh.isRefreshing = false
                         if (filterException(e)) {
                             if (null != list && list.size > 0) {
                                 itemAdapter.addMessageList(list)
-                                itemAdapter.setDeliveredAndReadMark(imConversation!!.lastDeliveredAt,
-                                        imConversation!!.lastReadAt)
+                                itemAdapter.setDeliveredAndReadMark(mConversation!!.lastDeliveredAt,
+                                        mConversation!!.lastReadAt)
                                 itemAdapter.notifyDataSetChanged()
                                 layoutManager.scrollToPositionWithOffset(list.size - 1, 0)
                             }
@@ -88,16 +88,16 @@ class LCIMConversationFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        if (null != imConversation) {
-            LCIMNotificationUtils.addTag(imConversation!!.conversationId)
+        if (null != mConversation) {
+            LCIMNotificationUtils.addTag(mConversation!!.conversationId)
         }
     }
 
     override fun onPause() {
         super.onPause()
         LCIMAudioHelper.getInstance().stopPlayer()
-        if (null != imConversation) {
-            LCIMNotificationUtils.removeTag(imConversation!!.conversationId)
+        if (null != mConversation) {
+            LCIMNotificationUtils.removeTag(mConversation!!.conversationId)
         }
     }
 
@@ -113,7 +113,7 @@ class LCIMConversationFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         if (item!!.itemId == R.id.menu_conv_setting) {
             val intent = Intent(activity, LCIMConversationDetailActivity::class.java)
-            intent.putExtra(LCIMConstants.CONVERSATION_ID, imConversation!!.conversationId)
+            intent.putExtra(LCIMConstants.CONVERSATION_ID, mConversation!!.conversationId)
             activity!!.startActivity(intent)
             return true
         }
@@ -121,11 +121,11 @@ class LCIMConversationFragment : Fragment() {
     }
 
     fun setConversation(conversation: AVIMConversation) {
-        imConversation = conversation
+        mConversation = conversation
         fragment_chat_srl_pullrefresh.isEnabled = true
-        fragment_chat_inputbar.tag = imConversation!!.conversationId
+        fragment_chat_inputbar.tag = mConversation!!.conversationId
         fetchMessages()
-        imConversation!!.read()
+        mConversation!!.read()
         LCIMNotificationUtils.addTag(conversation.conversationId)
         if (!conversation.isTransient) {
             if (conversation.members.size == 0) {
@@ -144,19 +144,20 @@ class LCIMConversationFragment : Fragment() {
         } else {
             itemAdapter.showUserName(true)
         }
+        updateConversationCloseUI()
     }
 
     /**
      * 拉取消息，必须加入 conversation 后才能拉取消息
      */
     private fun fetchMessages() {
-        imConversation!!.queryMessages(object : AVIMMessagesQueryCallback() {
+        mConversation!!.queryMessages(object : AVIMMessagesQueryCallback() {
             override fun done(messageList: List<AVIMMessage>, e: AVIMException?) {
                 if (filterException(e)) {
                     itemAdapter.setMessageList(messageList)
                     fragment_chat_rv_chat.adapter = itemAdapter
-                    itemAdapter.setDeliveredAndReadMark(imConversation!!.lastDeliveredAt,
-                            imConversation!!.lastReadAt)
+                    itemAdapter.setDeliveredAndReadMark(mConversation!!.lastDeliveredAt,
+                            mConversation!!.lastReadAt)
                     itemAdapter.notifyDataSetChanged()
                     scrollToBottom()
                     clearUnreadConut()
@@ -172,8 +173,8 @@ class LCIMConversationFragment : Fragment() {
     @Subscribe
     fun onEvent(textEvent: LCIMInputBottomBarTextEvent?) {
         LCIMLogUtils.d(textEvent!!.toString())
-        if (null != imConversation && null != textEvent) {
-            if (!TextUtils.isEmpty(textEvent.sendContent) && imConversation!!.conversationId == textEvent.tag) {
+        if (null != mConversation && null != textEvent) {
+            if (!TextUtils.isEmpty(textEvent.sendContent) && mConversation!!.conversationId == textEvent.tag) {
                 sendText(textEvent.sendContent)
             }
         }
@@ -185,11 +186,11 @@ class LCIMConversationFragment : Fragment() {
      */
     @Subscribe
     fun onEvent(messageEvent: LCIMIMTypeMessageEvent?) {
-        if (null != imConversation && null != messageEvent &&
-                imConversation!!.conversationId == messageEvent.conversation.conversationId) {
-            println("currentConv unreadCount=" + imConversation!!.unreadMessagesCount)
-            if (imConversation!!.unreadMessagesCount > 0) {
-                paddingNewMessage(imConversation)
+        if (null != mConversation && null != messageEvent &&
+                mConversation!!.conversationId == messageEvent.conversation.conversationId) {
+            println("currentConv unreadCount=" + mConversation!!.unreadMessagesCount)
+            if (mConversation!!.unreadMessagesCount > 0) {
+                paddingNewMessage(mConversation)
             } else {
                 itemAdapter.addMessage(messageEvent.message)
                 itemAdapter.notifyDataSetChanged()
@@ -203,9 +204,9 @@ class LCIMConversationFragment : Fragment() {
      */
     @Subscribe
     fun onEvent(resendEvent: LCIMMessageResendEvent?) {
-        if (null != imConversation && null != resendEvent &&
-                null != resendEvent.message && imConversation!!.conversationId == resendEvent.message.conversationId) {
-            if (AVIMMessage.AVIMMessageStatus.AVIMMessageStatusFailed == resendEvent.message.messageStatus && imConversation!!.conversationId == resendEvent.message.conversationId) {
+        if (null != mConversation && null != resendEvent &&
+                null != resendEvent.message && mConversation!!.conversationId == resendEvent.message.conversationId) {
+            if (AVIMMessage.AVIMMessageStatus.AVIMMessageStatusFailed == resendEvent.message.messageStatus && mConversation!!.conversationId == resendEvent.message.conversationId) {
                 sendMessage(resendEvent.message, false)
             }
         }
@@ -218,7 +219,7 @@ class LCIMConversationFragment : Fragment() {
      */
     @Subscribe
     fun onEvent(event: LCIMInputBottomBarEvent?) {
-        if (null != imConversation && null != event && imConversation!!.conversationId == event.tag) {
+        if (null != mConversation && null != event && mConversation!!.conversationId == event.tag) {
             when (event.eventAction) {
                 LCIMInputBottomBarEvent.INPUTBOTTOMBAR_IMAGE_ACTION -> dispatchPickPictureIntent()
                 LCIMInputBottomBarEvent.INPUTBOTTOMBAR_CAMERA_ACTION -> dispatchTakePictureIntent()
@@ -235,9 +236,9 @@ class LCIMConversationFragment : Fragment() {
      */
     @Subscribe
     fun onEvent(recordEvent: LCIMInputBottomBarRecordEvent?) {
-        if (null != imConversation && null != recordEvent
+        if (null != mConversation && null != recordEvent
                 && !TextUtils.isEmpty(recordEvent.audioPath)
-                && imConversation!!.conversationId == recordEvent.tag) {
+                && mConversation!!.conversationId == recordEvent.tag) {
             if (recordEvent.audioDuration > 0)
                 sendAudio(recordEvent.audioPath)
         }
@@ -250,18 +251,18 @@ class LCIMConversationFragment : Fragment() {
      */
     @Subscribe
     fun onEvent(readEvent: LCIMConversationReadStatusEvent?) {
-        if (null != imConversation && null != readEvent &&
-                imConversation!!.conversationId == readEvent.conversationId) {
-            itemAdapter.setDeliveredAndReadMark(imConversation!!.lastDeliveredAt,
-                    imConversation!!.lastReadAt)
+        if (null != mConversation && null != readEvent &&
+                mConversation!!.conversationId == readEvent.conversationId) {
+            itemAdapter.setDeliveredAndReadMark(mConversation!!.lastDeliveredAt,
+                    mConversation!!.lastReadAt)
             itemAdapter.notifyDataSetChanged()
         }
     }
 
     @Subscribe
     fun onEvent(event: LCIMMessageUpdateEvent?) {
-        if (null != imConversation && null != event &&
-                null != event.message && imConversation!!.conversationId == event.message.conversationId) {
+        if (null != mConversation && null != event &&
+                null != event.message && mConversation!!.conversationId == event.message.conversationId) {
             val builder = AlertDialog.Builder(activity!!)
             builder.setTitle("操作").setItems(arrayOf("撤回", "修改消息内容")) { dialog, which ->
                 if (0 == which) {
@@ -276,8 +277,8 @@ class LCIMConversationFragment : Fragment() {
 
     @Subscribe
     fun onEvent(event: LCIMMessageUpdatedEvent?) {
-        if (null != imConversation && null != event &&
-                null != event.message && imConversation!!.conversationId == event.message.conversationId) {
+        if (null != mConversation && null != event &&
+                null != event.message && mConversation!!.conversationId == event.message.conversationId) {
             itemAdapter.updateMessage(event.message)
         }
     }
@@ -287,13 +288,24 @@ class LCIMConversationFragment : Fragment() {
         if (null == event || null == event.conversation || null == event.conversation) {
             return
         }
-        if (imConversation!!.conversationId != event.conversation.conversationId) {
+        if (mConversation!!.conversationId != event.conversation.conversationId) {
             return
         }
         if (event.conversation.unreadMessagesCount < 1) {
             return
         }
         paddingNewMessage(event.conversation)
+    }
+
+    @Subscribe
+    fun onEvent(event: LCIMConversationInfoChangeEvent) {
+        if (event.mConversation == null) {
+            return
+        }
+        if (mConversation!!.conversationId != event.mConversation.conversationId) {
+            return
+        }
+        updateConversationCloseUI()
     }
 
     private fun paddingNewMessage(currentConversation: AVIMConversation?) {
@@ -330,7 +342,7 @@ class LCIMConversationFragment : Fragment() {
     }
 
     private fun recallMessage(message: AVIMMessage) {
-        imConversation!!.recallMessage(message, object : AVIMMessageRecalledCallback() {
+        mConversation!!.recallMessage(message, object : AVIMMessageRecalledCallback() {
             override fun done(recalledMessage: AVIMRecalledMessage, e: AVException?) {
                 if (null == e) {
                     itemAdapter.updateMessage(recalledMessage)
@@ -344,7 +356,7 @@ class LCIMConversationFragment : Fragment() {
     private fun updateMessage(message: AVIMMessage, newContent: String) {
         val textMessage = AVIMTextMessage()
         textMessage.text = newContent
-        imConversation!!.updateMessage(message, textMessage, object : AVIMMessageUpdatedCallback() {
+        mConversation!!.updateMessage(message, textMessage, object : AVIMMessageUpdatedCallback() {
             override fun done(message: AVIMMessage, e: AVException?) {
                 if (null == e) {
                     itemAdapter.updateMessage(message)
@@ -486,6 +498,7 @@ class LCIMConversationFragment : Fragment() {
      */
     @JvmOverloads
     fun sendMessage(message: AVIMMessage, addToList: Boolean = true) {
+        closeConversation(0)
         if (addToList) {
             itemAdapter.addMessage(message)
         }
@@ -494,7 +507,7 @@ class LCIMConversationFragment : Fragment() {
 
         val option = AVIMMessageOption()
         option.isReceipt = true
-        imConversation!!.sendMessage(message, option, object : AVIMConversationCallback() {
+        mConversation!!.sendMessage(message, option, object : AVIMConversationCallback() {
             override fun done(e: AVIMException?) {
                 itemAdapter.notifyDataSetChanged()
                 if (null != e) {
@@ -513,8 +526,8 @@ class LCIMConversationFragment : Fragment() {
     }
 
     private fun clearUnreadConut() {
-        if (imConversation!!.unreadMessagesCount > 0) {
-            imConversation!!.read()
+        if (mConversation!!.unreadMessagesCount > 0) {
+            mConversation!!.read()
         }
     }
 
@@ -527,9 +540,32 @@ class LCIMConversationFragment : Fragment() {
         fragment_chat_inputbar.showAudioBtn(show)
     }
 
-    companion object {
+    /**
+     * close: 1 close ,0 open
+     */
+    fun closeConversation(close: Int = 1, callback: AVIMConversationCallback? = null) {
+        mConversation?.set(ATTR_IS_BLOCKED, close)
+        mConversation?.updateInfoInBackground(object : AVIMConversationCallback() {
+            override fun done(p0: AVIMException?) {
+                mConversation?.setAttribute(ATTR_IS_BLOCKED, close)
+                updateConversationCloseUI()
+                callback?.done(p0)
+            }
+        })
+    }
 
+    private fun updateConversationCloseUI() {
+        val isBlocked = (mConversation?.get(ATTR_IS_BLOCKED) ?: 0) as Int
+        tv_conversation_closed_hint.visibility = if (isBlocked == 1) View.VISIBLE else View.GONE
+    }
+
+    fun getConversation(): AVIMConversation? {
+        return mConversation
+    }
+
+    companion object {
         private val REQUEST_IMAGE_CAPTURE = 1
         private val REQUEST_IMAGE_PICK = 2
+        private val ATTR_IS_BLOCKED = "isBlocked"
     }
 }

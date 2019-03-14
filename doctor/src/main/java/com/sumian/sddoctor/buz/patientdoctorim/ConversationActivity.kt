@@ -17,6 +17,7 @@ import com.avos.avoscloud.AVException
 import com.avos.avoscloud.im.v2.AVIMConversation
 import com.avos.avoscloud.im.v2.AVIMException
 import com.avos.avoscloud.im.v2.AVIMTemporaryConversation
+import com.avos.avoscloud.im.v2.callback.AVIMConversationCallback
 import com.avos.avoscloud.im.v2.callback.AVIMConversationCreatedCallback
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
@@ -84,10 +85,22 @@ open class ConversationActivity : SddBaseActivity() {
                 .whitenLeft()
                 .setRightBtn(R.string.confirm, object : View.OnClickListener {
                     override fun onClick(v: View?) {
-                        // todo close conversation
+                        closeConversation()
                     }
                 })
                 .show()
+    }
+
+    private fun closeConversation() {
+        mFragment.closeConversation(1, object : AVIMConversationCallback() {
+            override fun done(e: AVIMException?) {
+                if (e != null) {
+                    ToastUtils.showShort(e.message)
+                } else {
+                    ToastUtils.showShort("success")
+                }
+            }
+        })
     }
 
     private fun initByIntent(intent: Intent) {
@@ -107,7 +120,7 @@ open class ConversationActivity : SddBaseActivity() {
     }
 
     private fun getConversation(memberId: String?) {
-        LCIMManager.getInstance().client!!.createConversation(
+        LCIMManager.getInstance().client.createConversation(
                 Arrays.asList<String>(memberId), "", null, false, true, object : AVIMConversationCreatedCallback() {
             override fun done(avimConversation: AVIMConversation, e: AVIMException?) {
                 if (null != e) {
@@ -151,7 +164,6 @@ open class ConversationActivity : SddBaseActivity() {
             } catch (exception: ActivityNotFoundException) {
                 Log.i(LCIMConstants.LCIM_LOG_TAG, exception.toString())
             }
-
         }
     }
 }

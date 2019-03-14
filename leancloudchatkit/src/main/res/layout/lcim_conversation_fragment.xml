@@ -5,6 +5,18 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <TextView
+        android:id="@+id/tv_conversation_closed_hint"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/b8_color"
+        android:gravity="center"
+        android:text="@string/conversation_closed_hint"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/fragment_chat_srl_pullrefresh"
         android:layout_width="match_parent"

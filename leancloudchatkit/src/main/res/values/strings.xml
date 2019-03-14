@@ -6,4 +6,5 @@
     <string name="record_too_long">对讲时间过长</string>
     <string name="record_too_short">按键时间过短</string>
     <string name="doctor_is_busy">医生当前繁忙，敬请谅解</string>
+    <string name="conversation_closed_hint">对话结束，发送消息或点右上方激活对话</string>
 </resources>
