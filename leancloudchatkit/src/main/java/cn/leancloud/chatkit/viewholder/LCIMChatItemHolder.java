@@ -27,7 +27,6 @@ import cn.leancloud.chatkit.LCChatKitUser;
 import cn.leancloud.chatkit.R;
 import cn.leancloud.chatkit.cache.LCIMProfileCache;
 import cn.leancloud.chatkit.event.LCIMMessageResendEvent;
-import cn.leancloud.chatkit.event.LCIMMessageUpdateEvent;
 import cn.leancloud.chatkit.utils.LCIMConstants;
 import cn.leancloud.chatkit.utils.LCIMLogUtils;
 
@@ -183,15 +182,15 @@ public class LCIMChatItemHolder extends LCIMCommonViewHolder {
   }
 
   private void setUpdateMessageEvent() {
-    conventLayout.setOnLongClickListener(new View.OnLongClickListener() {
-      @Override
-      public boolean onLongClick(View v) {
-        LCIMMessageUpdateEvent event = new LCIMMessageUpdateEvent();
-        event.message = message;
-        EventBus.getDefault().post(event);
-        return false;
-      }
-    });
+//    conventLayout.setOnLongClickListener(new View.OnLongClickListener() {
+//      @Override
+//      public boolean onLongClick(View v) {
+//        LCIMMessageUpdateEvent event = new LCIMMessageUpdateEvent();
+//        event.message = message;
+//        EventBus.getDefault().post(event);
+//        return false;
+//      }
+//    });
   }
 
   //TODO 展示更人性一点

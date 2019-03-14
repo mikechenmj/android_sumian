@@ -45,11 +45,11 @@ import java.io.IOException
  * 将聊天相关的封装到此 Fragment 里边，只需要通过 setConversation 传入 Conversation 即可
  */
 class LCIMConversationFragment : Fragment() {
-    protected var mConversation: AVIMConversation? = null
-    protected var itemAdapter: LCIMChatAdapter = LCIMChatAdapter()
-    protected lateinit var layoutManager: LinearLayoutManager
-    // 记录拍照等的文件路径
-    protected lateinit var localCameraPath: String
+    private var mConversation: AVIMConversation? = null
+    private var itemAdapter: LCIMChatAdapter = LCIMChatAdapter()
+    private lateinit var layoutManager: LinearLayoutManager
+    private lateinit var localCameraPath: String
+    private var mIsDoctor = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.lcim_conversation_fragment, container, false)
@@ -498,7 +498,7 @@ class LCIMConversationFragment : Fragment() {
      */
     @JvmOverloads
     fun sendMessage(message: AVIMMessage, addToList: Boolean = true) {
-        closeConversation(0)
+        closeConversation(false)
         if (addToList) {
             itemAdapter.addMessage(message)
         }
@@ -541,13 +541,12 @@ class LCIMConversationFragment : Fragment() {
     }
 
     /**
-     * close: 1 close ,0 open
+     * close: 1 close, 0 open
      */
-    fun closeConversation(close: Int = 1, callback: AVIMConversationCallback? = null) {
+    fun closeConversation(close: Boolean, callback: AVIMConversationCallback? = null) {
         mConversation?.set(ATTR_IS_BLOCKED, close)
         mConversation?.updateInfoInBackground(object : AVIMConversationCallback() {
             override fun done(p0: AVIMException?) {
-                mConversation?.setAttribute(ATTR_IS_BLOCKED, close)
                 updateConversationCloseUI()
                 callback?.done(p0)
             }
@@ -555,8 +554,19 @@ class LCIMConversationFragment : Fragment() {
     }
 
     private fun updateConversationCloseUI() {
-        val isBlocked = (mConversation?.get(ATTR_IS_BLOCKED) ?: 0) as Int
-        tv_conversation_closed_hint.visibility = if (isBlocked == 1) View.VISIBLE else View.GONE
+        val isBlocked = mConversation?.get(ATTR_IS_BLOCKED) == true
+        if (mIsDoctor) {
+            tv_open_conversation_hint.visibility = if (isBlocked) View.VISIBLE else View.GONE
+        } else {
+            fragment_chat_tv_doctor_is_busy.visibility = if (isBlocked) View.VISIBLE else View.GONE
+            fragment_chat_inputbar.visibility = if (!isBlocked) View.VISIBLE else View.GONE
+        }
+    }
+
+    fun setIsDoctor(isDoctor: Boolean) {
+        mIsDoctor = isDoctor
+        updateConversationCloseUI()
+
     }
 
     fun getConversation(): AVIMConversation? {

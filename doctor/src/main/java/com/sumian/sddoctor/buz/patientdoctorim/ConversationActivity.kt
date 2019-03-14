@@ -63,6 +63,7 @@ open class ConversationActivity : SddBaseActivity() {
         mTitleBar.showMoreIcon()
         mTitleBar.mIvMenu.setImageResource(R.drawable.ic_nav_icon_more)
         mTitleBar.mIvMenu.setOnClickListener { showCloseConversationBottomSheet() }
+        mFragment.setIsDoctor(true)
     }
 
     private fun showCloseConversationBottomSheet() {
@@ -92,12 +93,11 @@ open class ConversationActivity : SddBaseActivity() {
     }
 
     private fun closeConversation() {
-        mFragment.closeConversation(1, object : AVIMConversationCallback() {
+        mFragment.closeConversation(true, object : AVIMConversationCallback() {
             override fun done(e: AVIMException?) {
                 if (e != null) {
                     ToastUtils.showShort(e.message)
                 } else {
-                    ToastUtils.showShort("success")
                 }
             }
         })

@@ -53,6 +53,10 @@ class ConversationActivity : BaseActivity() {
         initByIntent(intent ?: return)
     }
 
+    override fun initWidget() {
+        super.initWidget()
+        mFragment.setIsDoctor(false)
+    }
 
     private fun initByIntent(intent: Intent) {
         val extras = intent.extras

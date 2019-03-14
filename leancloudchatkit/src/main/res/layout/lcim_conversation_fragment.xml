@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/tv_conversation_closed_hint"
+        android:id="@+id/tv_open_conversation_hint"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="@color/b8_color"
@@ -44,4 +44,5 @@
         android:text="@string/doctor_is_busy"
         android:visibility="gone"
         tools:visibility="visible" />
+
 </LinearLayout>

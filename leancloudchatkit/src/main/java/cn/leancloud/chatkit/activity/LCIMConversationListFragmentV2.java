@@ -99,6 +99,23 @@ public class LCIMConversationListFragmentV2 extends Fragment {
      * 刷新页面
      */
     private void updateConversationList() {
+//        LCIMManager.getInstance().open(new AVIMClientCallback() {
+//            @Override
+//            public void done(AVIMClient avimClient, AVIMException e) {
+//                AVIMConversationsQuery query = avimClient.getConversationsQuery();
+//                query.limit(100);
+//                query.findInBackground(new AVIMConversationQueryCallback() {
+//                    @Override
+//                    public void done(List<AVIMConversation> list, AVIMException e) {
+//                        for (AVIMConversation conversation : list) {
+//                            System.out.println("conversation unread count" + conversation.getUnreadMessagesCount());
+//                        }
+//                        itemAdapter.setDataList(list);
+//                        itemAdapter.notifyDataSetChanged();
+//                    }
+//                });
+//            }
+//        });
         LCIMManager.getInstance().queryConversationList(10, new AVIMConversationQueryCallback() {
             @Override
             public void done(List<AVIMConversation> list, AVIMException e) {
