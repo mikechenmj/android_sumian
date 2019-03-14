@@ -49,7 +49,7 @@ class IMProfileProvider : LCChatProfileProvider {
                 override fun onSuccess(response: Map<String, ImUser?>?) {
                     for (entity in response!!) {
                         val imUser = entity.value ?: continue
-                        mImUserInfoCache[entity.key] = LCChatKitUser(imUser.imId, imUser.name + "医生", imUser.avatar)
+                        mImUserInfoCache[entity.key] = LCChatKitUser(imUser.imId, imUser.name, imUser.avatar)
                     }
                     returnProfiles(profilesCallBack)
                 }

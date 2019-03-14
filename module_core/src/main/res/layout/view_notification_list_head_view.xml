@@ -111,7 +111,7 @@
             android:text="@string/system_message" />
 
         <View
-            style="@style/HorizontalDividerLine"
+            style="@style/LCIMDividerLine.Horizontal"
             android:layout_gravity="bottom"
             android:layout_marginStart="20dp" />
     </FrameLayout>

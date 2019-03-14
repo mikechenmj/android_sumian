@@ -44,6 +44,7 @@ public final class LCIMManager {
     private LCChatProfileProvider mProfileProvider;
     private String mUserId;
     private List<AVIMConversation> mUnreadConversations = new ArrayList<>();
+    private MutableLiveData<List<AVIMConversation>> mUnreadConversationsLiveData = new MutableLiveData<>();
     private MutableLiveData<Integer> mUnreadCountLiveData = new MutableLiveData<>();
 
     private LCIMManager() {
@@ -115,7 +116,8 @@ public final class LCIMManager {
     }
 
     private void notifyUnreadCountChange() {
-        mUnreadCountLiveData.postValue(getUnreadMessageCount());
+        mUnreadConversationsLiveData.setValue(mUnreadConversations);
+        mUnreadCountLiveData.setValue(getUnreadMessageCount());
     }
 
     @Subscribe
@@ -123,7 +125,7 @@ public final class LCIMManager {
         AVIMConversation conversation = event.conversation;
         int unreadMessagesCount = conversation.getUnreadMessagesCount();
         if (unreadMessagesCount > 0) {
-            mUnreadConversations.add(conversation);
+            mUnreadConversations.add(0, conversation);
         } else {
             mUnreadConversations.remove(conversation);
         }
@@ -262,5 +264,9 @@ public final class LCIMManager {
 
     public LiveData<Integer> getUnreadCountLiveData() {
         return mUnreadCountLiveData;
+    }
+
+    public LiveData<List<AVIMConversation>> getUnreadConversationsLiveData() {
+        return mUnreadConversationsLiveData;
     }
 }

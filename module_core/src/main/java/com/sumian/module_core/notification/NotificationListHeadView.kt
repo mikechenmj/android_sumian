@@ -29,15 +29,15 @@ class NotificationListHeadView(context: Context) : FrameLayout(context) {
      */
     fun showMessage(msg: String) {
         tv_doctor_message.text = msg
-        iv_doctor_message_dot.visibility = View.GONE
+        iv_doctor_message_dot.visibility = View.VISIBLE
     }
 
     fun showNoMessage() {
         tv_doctor_message.text = context.getString(R.string.no_doctor_message_yet)
-        iv_doctor_message_dot.visibility = View.VISIBLE
+        iv_doctor_message_dot.visibility = View.GONE
     }
 
-    fun showEmptyView(show: Boolean) {
+    fun showNoNotificationView(show: Boolean) {
         tv_no_data.visibility = if (show) View.VISIBLE else View.GONE
     }
 }

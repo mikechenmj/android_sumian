@@ -112,7 +112,6 @@ public class LCIMChatItemHolder extends LCIMCommonViewHolder {
       case AVIMMessageStatusSent:
         statusLayout.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.GONE);
-        statusView.setVisibility(View.VISIBLE);
         statusView.setVisibility(View.GONE);
         errorView.setVisibility(View.GONE);
         break;
@@ -135,7 +134,7 @@ public class LCIMChatItemHolder extends LCIMCommonViewHolder {
       AVIMMessage.AVIMMessageStatus.AVIMMessageStatusReceipt == message.getMessageStatus())) {
       timeView.setVisibility(option.isShowTime() ? View.VISIBLE : View.GONE);
 //      nameView.setVisibility(option.isShowName() ? View.VISIBLE : View.GONE);
-      statusView.setVisibility(option.isShowDelivered() || option.isShowRead() ? View.VISIBLE : View.GONE);
+//      statusView.setVisibility(option.isShowDelivered() || option.isShowRead() ? View.VISIBLE : View.GONE);
       statusLayout.setVisibility(option.isShowDelivered() || option.isShowRead() ? View.VISIBLE : View.GONE);
       progressBar.setVisibility(View.GONE);
       errorView.setVisibility(View.GONE);

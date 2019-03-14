@@ -1,7 +1,6 @@
 package cn.leancloud.chatkit.viewholder;
 
 import android.content.ActivityNotFoundException;
-import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
@@ -15,20 +14,17 @@ import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.im.v2.AVIMConversation;
 import com.avos.avoscloud.im.v2.AVIMException;
 import com.avos.avoscloud.im.v2.AVIMMessage;
-import com.avos.avoscloud.im.v2.AVIMReservedMessageType;
-import com.avos.avoscloud.im.v2.AVIMTypedMessage;
 import com.avos.avoscloud.im.v2.callback.AVIMConversationCallback;
-import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import cn.leancloud.chatkit.LCChatMessageInterface;
 import cn.leancloud.chatkit.R;
 import cn.leancloud.chatkit.utils.LCIMConstants;
 import cn.leancloud.chatkit.utils.LCIMConversationUtils;
 import cn.leancloud.chatkit.utils.LCIMLogUtils;
+import cn.leancloud.chatkit.utils.LCIMMessageUtil;
 
 /**
  * Created by wli on 15/10/8.
@@ -51,35 +47,6 @@ public class LCIMConversationItemHolderV2 extends LCIMCommonViewHolder {
     public LCIMConversationItemHolderV2(ViewGroup root) {
         super(root.getContext(), root, R.layout.lcim_conversation_item_v2);
         initView();
-    }
-
-    private static CharSequence getMessageeShorthand(Context context, AVIMMessage message) {
-        if (message instanceof AVIMTypedMessage) {
-            AVIMReservedMessageType type = AVIMReservedMessageType.getAVIMReservedMessageType(
-                    ((AVIMTypedMessage) message).getMessageType());
-            switch (type) {
-                case TextMessageType:
-                    return ((AVIMTextMessage) message).getText();
-                case ImageMessageType:
-                    return context.getString(R.string.lcim_message_shorthand_image);
-                case LocationMessageType:
-                    return context.getString(R.string.lcim_message_shorthand_location);
-                case AudioMessageType:
-                    return context.getString(R.string.lcim_message_shorthand_audio);
-                default:
-                    CharSequence shortHand = "";
-                    if (message instanceof LCChatMessageInterface) {
-                        LCChatMessageInterface messageInterface = (LCChatMessageInterface) message;
-                        shortHand = messageInterface.getShorthand();
-                    }
-                    if (TextUtils.isEmpty(shortHand)) {
-                        shortHand = context.getString(R.string.lcim_message_shorthand_unknown);
-                    }
-                    return shortHand;
-            }
-        } else {
-            return message.getContent();
-        }
     }
 
     public void initView() {
@@ -218,7 +185,7 @@ public class LCIMConversationItemHolderV2 extends LCIMCommonViewHolder {
             Date date = new Date(message.getTimestamp());
             SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd HH:mm");
             timeView.setText(format.format(date));
-            messageView.setText(getMessageeShorthand(getContext(), message));
+            messageView.setText(LCIMMessageUtil.getMessageShorthand(getContext(), message));
         }
     }
 
