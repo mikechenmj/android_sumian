@@ -1,5 +1,6 @@
 package com.sumian.sd.buz.sleepertalk.bean
 
+import com.chad.library.adapter.base.entity.MultiItemEntity
 import com.google.gson.annotations.SerializedName
 
 /**
@@ -25,9 +26,13 @@ data class SleeperTalkData(
         @SerializedName("is_like")
         val isLike: Boolean, // false
         @SerializedName("is_top")
-        val isTop: Int, // 0
+        var isTop: Int, // 0
         @SerializedName("title")
         val title: String, // dbdbdsfbfbweb
         @SerializedName("updated_at")
         val updatedAt: Int // 1552371963
-)
+) : MultiItemEntity {
+    override fun getItemType(): Int {
+        return isTop
+    }
+}

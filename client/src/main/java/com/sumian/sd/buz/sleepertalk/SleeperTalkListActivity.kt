@@ -5,6 +5,7 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
+import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.sumian.common.base.BaseViewModel
@@ -66,7 +67,12 @@ class SleeperTalkListActivity : BaseViewModelActivity<BaseViewModel>(), BaseQuic
         addCall(call)
         call.enqueue(object : BaseSdResponseCallback<PaginationResponseV2<SleeperTalkData>>() {
             override fun onSuccess(response: PaginationResponseV2<SleeperTalkData>?) {
-                mAdapter.addData(response!!.data)
+                val origin = response!!.data
+//                if (origin.size > 2) {
+//                    origin[1].isTop = 1
+//                }
+                var data = origin.sortedWith(compareBy { it.isTop }).reversed()
+                mAdapter.addData(data)
                 mAdapter.setEnableLoadMore(response.meta.pagination.isLastPage())
                 mPage++
             }
@@ -83,7 +89,13 @@ class SleeperTalkListActivity : BaseViewModelActivity<BaseViewModel>(), BaseQuic
         }
     }
 
-    class SleeperTalkAdapter : BaseQuickAdapter<SleeperTalkData, BaseViewHolder>(R.layout.list_item_sleeper_talk_list) {
+    class SleeperTalkAdapter() : BaseMultiItemQuickAdapter<SleeperTalkData, BaseViewHolder>(null) {
+
+        init {
+            addItemType(0, R.layout.list_item_sleeper_talk_list)
+            addItemType(1, R.layout.list_item_sleeper_talk_list_header)
+        }
+
         override fun convert(helper: BaseViewHolder, item: SleeperTalkData) {
             helper.setText(R.id.tv_title, item.title)
             val simpleDateFormat = SimpleDateFormat("yyyy年MM月dd日", Locale.getDefault())
