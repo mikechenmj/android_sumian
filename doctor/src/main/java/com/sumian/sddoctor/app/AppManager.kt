@@ -7,10 +7,10 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ProcessLifecycleOwner
-import cn.leancloud.chatkit.LCChatKit
 import cn.leancloud.chatkit.LCChatKitUser
 import cn.leancloud.chatkit.LCChatProfileProvider
 import cn.leancloud.chatkit.LCChatProfilesCallBack
+import cn.leancloud.chatkit.LCIMManager
 import com.avos.avoscloud.im.v2.AVIMClient
 import com.avos.avoscloud.im.v2.AVIMException
 import com.avos.avoscloud.im.v2.callback.AVIMClientCallback
@@ -130,7 +130,7 @@ object AppManager {
                 BuildConfig.ALIYUN_LOG_LOG_STORE,
                 BuildConfig.ALIYUN_LOG_END_POINT
         )
-        LCChatKit.getInstance().init(mApplication, BuildConfig.LEANCLOUD_APP_ID, BuildConfig.LEANCLOUD_APP_KEY)
+        LCIMManager.getInstance().init(mApplication, BuildConfig.LEANCLOUD_APP_ID, BuildConfig.LEANCLOUD_APP_KEY)
     }
 
     private fun initLeanCloud() {
@@ -220,17 +220,17 @@ object AppManager {
         AppNotificationManager.uploadPushId()
         AppManager.updateDoctorInfo()
 
-        initLCCharData()
+        initLCChatData()
     }
 
-    private fun initLCCharData() {
+    private fun initLCChatData() {
         val doctor = getAccountViewModel().getDoctorInfo().value!!
-        val clientId = doctor.im_id
-        LCChatKit.getInstance().open(clientId, object : AVIMClientCallback() {
+        LCIMManager.getInstance().userId = doctor.im_id!!
+        LCIMManager.getInstance().open(object : AVIMClientCallback() {
             override fun done(p0: AVIMClient?, p1: AVIMException?) {
             }
         })
-        LCChatKit.getInstance().profileProvider = object : LCChatProfileProvider {
+        LCIMManager.getInstance().profileProvider = object : LCChatProfileProvider {
             override fun fetchProfiles(userIdList: MutableList<String>?, profilesCallBack: LCChatProfilesCallBack?) {
                 val userList = ArrayList<LCChatKitUser>()
                 userList.add(LCChatKitUser(doctor.im_id, doctor.name, doctor.avatar))

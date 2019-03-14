@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import cn.leancloud.chatkit.LCChatKit
+import cn.leancloud.chatkit.LCIMManager
 import cn.leancloud.chatkit.activity.LCIMConversationFragment
 import cn.leancloud.chatkit.cache.LCIMConversationItemCache
 import cn.leancloud.chatkit.utils.LCIMConstants
@@ -88,7 +88,7 @@ open class ConversationActivity : SddBaseActivity() {
     }
 
     private fun initByIntent(intent: Intent) {
-        if (null == LCChatKit.getInstance().client) {
+        if (null == LCIMManager.getInstance().client) {
             ToastUtils.showShort("please login first!")
             finish()
             return
@@ -100,7 +100,7 @@ open class ConversationActivity : SddBaseActivity() {
                 getConversation(extras.getString(LCIMConstants.PEER_ID))
             } else if (extras.containsKey(LCIMConstants.CONVERSATION_ID)) {
                 val conversationId = extras.getString(LCIMConstants.CONVERSATION_ID)
-                updateConversation(LCChatKit.getInstance().client!!.getConversation(conversationId))
+                updateConversation(LCIMManager.getInstance().client!!.getConversation(conversationId))
             } else {
                 ToastUtils.showShort("memberId or conversationId is needed")
                 finish()
@@ -109,7 +109,7 @@ open class ConversationActivity : SddBaseActivity() {
     }
 
     private fun getConversation(memberId: String?) {
-        LCChatKit.getInstance().client!!.createConversation(
+        LCIMManager.getInstance().client!!.createConversation(
                 Arrays.asList<String>(memberId), "", null, false, true, object : AVIMConversationCreatedCallback() {
             override fun done(avimConversation: AVIMConversation, e: AVIMException?) {
                 if (null != e) {

@@ -19,8 +19,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import cn.leancloud.chatkit.LCChatKit;
 import cn.leancloud.chatkit.LCChatKitUser;
+import cn.leancloud.chatkit.LCIMManager;
 import cn.leancloud.chatkit.R;
 import cn.leancloud.chatkit.adapter.LCIMCommonListAdapter;
 import cn.leancloud.chatkit.adapter.LCIMMembersAdapter;
@@ -95,7 +95,7 @@ public class LCIMContactFragment extends Fragment {
 
   private void refreshMembers() {
     if (itemAdapter.getItemCount() < 1) {
-      itemAdapter.setMemberList(LCChatKit.getInstance().getProfileProvider().getAllUsers());
+      itemAdapter.setMemberList(LCIMManager.getInstance().getProfileProvider().getAllUsers());
     }
     itemAdapter.notifyDataSetChanged();
     refreshLayout.setRefreshing(false);

@@ -11,8 +11,8 @@ import com.avos.avoscloud.im.v2.AVIMTypedMessage;
 import com.avos.avoscloud.im.v2.AVIMTypedMessageHandler;
 import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
 
-import cn.leancloud.chatkit.LCChatKit;
 import cn.leancloud.chatkit.LCChatKitUser;
+import cn.leancloud.chatkit.LCIMManager;
 import cn.leancloud.chatkit.R;
 import cn.leancloud.chatkit.cache.LCIMConversationItemCache;
 import cn.leancloud.chatkit.cache.LCIMProfileCache;
@@ -43,11 +43,11 @@ public class LCIMMessageHandler extends AVIMTypedMessageHandler<AVIMTypedMessage
       return;
     }
 
-    if (LCChatKit.getInstance().getCurrentUserId() == null) {
-      LCIMLogUtils.d("selfId is null, please call LCChatKit.open!");
+    if (LCIMManager.getInstance().getUserId() == null) {
+      LCIMLogUtils.d("selfId is null, please call LCIMManager.open!");
       client.close(null);
     } else {
-      if (!client.getClientId().equals(LCChatKit.getInstance().getCurrentUserId())) {
+      if (!client.getClientId().equals(LCIMManager.getInstance().getUserId())) {
         client.close(null);
       } else {
         if (LCIMNotificationUtils.isShowNotification(conversation.getConversationId())) {

@@ -29,9 +29,9 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import cn.leancloud.chatkit.LCChatKit;
 import cn.leancloud.chatkit.LCChatKitUser;
 import cn.leancloud.chatkit.LCChatProfilesCallBack;
+import cn.leancloud.chatkit.LCIMManager;
 import cn.leancloud.chatkit.R;
 import cn.leancloud.chatkit.adapter.LCIMCommonListAdapter;
 import cn.leancloud.chatkit.event.LCIMMemberSelectedChangeEvent;
@@ -94,7 +94,7 @@ public class LCIMConversationDetailActivity extends AppCompatActivity {
           return;
         }
         List<String> members = avimConversation.getMembers();
-        LCChatKit.getInstance().getProfileProvider().fetchProfiles(members, new LCChatProfilesCallBack() {
+        LCIMManager.getInstance().getProfileProvider().fetchProfiles(members, new LCChatProfilesCallBack() {
           @Override
           public void done(List<LCChatKitUser> users, Exception exception) {
             if (null != exception) {
@@ -123,7 +123,7 @@ public class LCIMConversationDetailActivity extends AppCompatActivity {
       @Override
       public void onClick(View v) {
         Intent intent = new Intent(LCIMConversationDetailActivity.this, LCIMUserSelectActivity.class);
-        List<LCChatKitUser> users = LCChatKit.getInstance().getProfileProvider().getAllUsers();
+        List<LCChatKitUser> users = LCIMManager.getInstance().getProfileProvider().getAllUsers();
         intent.putExtra(LCIMUserSelectActivity.KEY_USERS, users.toArray());
         intent.putExtra(LCIMUserSelectActivity.KEY_TITLE, "Select Blacklist Contact");
         startActivityForResult(intent, REQUEST_CODE_ADD_BLACKLIST);
@@ -270,7 +270,7 @@ public class LCIMConversationDetailActivity extends AppCompatActivity {
   }
 
   private void initConversation(String conversationId) {
-    avimConversation = LCChatKit.getInstance().getClient().getConversation(conversationId);
+    avimConversation = LCIMManager.getInstance().getClient().getConversation(conversationId);
 
     adminMembers.clear();
     blockedUsers.clear();
@@ -326,7 +326,7 @@ public class LCIMConversationDetailActivity extends AppCompatActivity {
         public void done(AVIMException e) {
           if (null == e) {
             List<String> members = avimConversation.getMembers();
-            LCChatKit.getInstance().getProfileProvider().fetchProfiles(members, new LCChatProfilesCallBack() {
+            LCIMManager.getInstance().getProfileProvider().fetchProfiles(members, new LCChatProfilesCallBack() {
               @Override
               public void done(List<LCChatKitUser> userList, Exception exception) {
                 if (null != exception) {
@@ -341,7 +341,7 @@ public class LCIMConversationDetailActivity extends AppCompatActivity {
       });
     } else {
       List<String> members = avimConversation.getMembers();
-      LCChatKit.getInstance().getProfileProvider().fetchProfiles(members, new LCChatProfilesCallBack() {
+      LCIMManager.getInstance().getProfileProvider().fetchProfiles(members, new LCChatProfilesCallBack() {
         @Override
         public void done(List<LCChatKitUser> userList, Exception exception) {
           if (null != exception) {

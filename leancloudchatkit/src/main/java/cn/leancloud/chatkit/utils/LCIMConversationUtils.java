@@ -9,8 +9,8 @@ import com.avos.avoscloud.im.v2.AVIMConversation;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.leancloud.chatkit.LCChatKit;
 import cn.leancloud.chatkit.LCChatKitUser;
+import cn.leancloud.chatkit.LCIMManager;
 import cn.leancloud.chatkit.cache.LCIMProfileCache;
 
 /**
@@ -94,7 +94,7 @@ public class LCIMConversationUtils {
    */
   private static String getConversationPeerId(AVIMConversation conversation) {
     if (null != conversation && 2 == conversation.getMembers().size()) {
-      String currentUserId = LCChatKit.getInstance().getCurrentUserId();
+      String currentUserId = LCIMManager.getInstance().getUserId();
       String firstMemeberId = conversation.getMembers().get(0);
       return conversation.getMembers().get(firstMemeberId.equals(currentUserId) ? 1 : 0);
     }

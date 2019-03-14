@@ -16,7 +16,7 @@ import java.util.Arrays;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import cn.leancloud.chatkit.LCChatKit;
+import cn.leancloud.chatkit.LCIMManager;
 import cn.leancloud.chatkit.R;
 import cn.leancloud.chatkit.cache.LCIMConversationItemCache;
 import cn.leancloud.chatkit.utils.LCIMConstants;
@@ -48,7 +48,7 @@ public class LCIMConversationActivity extends AppCompatActivity {
   }
 
   private void initByIntent(Intent intent) {
-    if (null == LCChatKit.getInstance().getClient()) {
+      if (null == LCIMManager.getInstance().getClient()) {
       showToast("please login first!");
       finish();
       return;
@@ -60,7 +60,7 @@ public class LCIMConversationActivity extends AppCompatActivity {
         getConversation(extras.getString(LCIMConstants.PEER_ID));
       } else if (extras.containsKey(LCIMConstants.CONVERSATION_ID)) {
         String conversationId = extras.getString(LCIMConstants.CONVERSATION_ID);
-        updateConversation(LCChatKit.getInstance().getClient().getConversation(conversationId));
+          updateConversation(LCIMManager.getInstance().getClient().getConversation(conversationId));
       } else {
         showToast("memberId or conversationId is needed");
         finish();
@@ -124,7 +124,7 @@ public class LCIMConversationActivity extends AppCompatActivity {
    * 为了避免重复的创建，createConversation 参数 isUnique 设为 true·
    */
   protected void getConversation(final String memberId) {
-    LCChatKit.getInstance().getClient().createConversation(
+      LCIMManager.getInstance().getClient().createConversation(
         Arrays.asList(memberId), "", null, false, true, new AVIMConversationCreatedCallback() {
           @Override
           public void done(AVIMConversation avimConversation, AVIMException e) {

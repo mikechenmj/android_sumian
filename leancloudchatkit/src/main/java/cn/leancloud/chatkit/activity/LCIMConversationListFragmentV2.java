@@ -6,15 +6,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.avos.avoscloud.im.v2.AVIMConversation;
+import com.avos.avoscloud.im.v2.AVIMException;
+import com.avos.avoscloud.im.v2.callback.AVIMConversationQueryCallback;
+import com.blankj.utilcode.util.ToastUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import cn.leancloud.chatkit.LCChatKit;
+import cn.leancloud.chatkit.LCIMManager;
 import cn.leancloud.chatkit.R;
 import cn.leancloud.chatkit.adapter.LCIMCommonListAdapter;
 import cn.leancloud.chatkit.cache.LCIMConversationItemCache;
@@ -93,14 +95,17 @@ public class LCIMConversationListFragmentV2 extends Fragment {
      * 刷新页面
      */
     private void updateConversationList() {
-        List<String> convIdList = LCIMConversationItemCache.getInstance().getSortedConversationList();
-        List<AVIMConversation> conversationList = new ArrayList<>();
-        for (String convId : convIdList) {
-            conversationList.add(LCChatKit.getInstance().getClient().getConversation(convId));
-        }
-
-        itemAdapter.setDataList(conversationList);
-        itemAdapter.notifyDataSetChanged();
+        LCIMManager.getInstance().queryConversationList(100, new AVIMConversationQueryCallback() {
+            @Override
+            public void done(List<AVIMConversation> list, AVIMException e) {
+                if (e != null) {
+                    ToastUtils.showShort(e.getMessage());
+                    return;
+                }
+                itemAdapter.setDataList(list);
+                itemAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
     /**

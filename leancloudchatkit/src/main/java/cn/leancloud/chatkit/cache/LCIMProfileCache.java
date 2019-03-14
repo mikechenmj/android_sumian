@@ -12,10 +12,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import cn.leancloud.chatkit.LCChatKit;
 import cn.leancloud.chatkit.LCChatKitUser;
 import cn.leancloud.chatkit.LCChatProfileProvider;
 import cn.leancloud.chatkit.LCChatProfilesCallBack;
+import cn.leancloud.chatkit.LCIMManager;
 
 
 /**
@@ -137,7 +137,7 @@ public class LCIMProfileCache {
    */
   private void getProfilesFromProvider(List<String> idList, final List<LCChatKitUser> profileList,
                                        final AVCallback<List<LCChatKitUser>> callback) {
-    LCChatProfileProvider profileProvider = LCChatKit.getInstance().getProfileProvider();
+    LCChatProfileProvider profileProvider = LCIMManager.getInstance().getProfileProvider();
     if (null != profileProvider) {
       profileProvider.fetchProfiles(idList, new LCChatProfilesCallBack() {
         @Override

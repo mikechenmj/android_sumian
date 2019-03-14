@@ -14,7 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import cn.leancloud.chatkit.LCChatKit;
+import cn.leancloud.chatkit.LCIMManager;
 import cn.leancloud.chatkit.R;
 import cn.leancloud.chatkit.adapter.LCIMCommonListAdapter;
 import cn.leancloud.chatkit.cache.LCIMConversationItemCache;
@@ -99,7 +99,7 @@ public class LCIMConversationListFragment extends Fragment {
     List<String> convIdList = LCIMConversationItemCache.getInstance().getSortedConversationList();
     List<AVIMConversation> conversationList = new ArrayList<>();
     for (String convId : convIdList) {
-      conversationList.add(LCChatKit.getInstance().getClient().getConversation(convId));
+      conversationList.add(LCIMManager.getInstance().getClient().getConversation(convId));
     }
 
     itemAdapter.setDataList(conversationList);
