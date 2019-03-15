@@ -37,5 +37,6 @@ public interface H5Uri {
     String CBTI_RELAXATIONS_SHARE = "cbti/relaxations/{id}?isShare=true";
     String CBTI_SLEEP_HEALTH = "cbti/sleep-health";
     String NATIVE_ROUTE = "native-route?data={pageData}&token={token}";
+    String SLEEPER_TALK_SHARE = "sumian-friends-detail?id={id}";
 
 }
