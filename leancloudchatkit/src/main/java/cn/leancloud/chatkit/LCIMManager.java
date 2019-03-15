@@ -132,6 +132,11 @@ public final class LCIMManager {
         notifyUnreadCountChange();
     }
 
+    public void removeUnreadConversation(AVIMConversation conversation) {
+        mUnreadConversations.remove(conversation);
+        notifyUnreadCountChange();
+    }
+
     /**
      * 获取当前的用户体系
      *
@@ -251,6 +256,7 @@ public final class LCIMManager {
     public void queryConversationList(int limit, AVIMConversationQueryCallback callback) {
         AVIMConversationsQuery query = getClient().getConversationsQuery();
         query.limit(limit);
+//        query.whereEqualTo("conversation_type", "0");
         query.findInBackground(callback);
     }
 

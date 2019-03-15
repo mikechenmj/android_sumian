@@ -116,7 +116,7 @@ public class LCIMConversationListFragmentV2 extends Fragment {
 //                });
 //            }
 //        });
-        LCIMManager.getInstance().queryConversationList(10, new AVIMConversationQueryCallback() {
+        LCIMManager.getInstance().queryConversationList(100, new AVIMConversationQueryCallback() {
             @Override
             public void done(List<AVIMConversation> list, AVIMException e) {
                 if (e != null) {

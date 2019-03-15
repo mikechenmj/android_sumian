@@ -138,6 +138,7 @@ open class ConversationActivity : SddBaseActivity() {
                 println("Conversation expired flag: " + conversation.isExpired)
             }
             mFragment.setConversation(conversation)
+            LCIMManager.getInstance().removeUnreadConversation(conversation)
             LCIMConversationItemCache.getInstance().insertConversation(conversation.conversationId)
             LCIMConversationUtils.getConversationName(conversation, object : AVCallback<String>() {
                 override fun internalDone0(s: String, e: AVException?) {
