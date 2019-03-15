@@ -100,15 +100,17 @@ class LCIMConversationListFragmentV2 : Fragment() {
      */
     private fun updateConversationList() {
         LCIMManager.getInstance().queryConversationList(100, object : AVIMConversationQueryCallback() {
-            override fun done(list: List<AVIMConversation>, e: AVIMException?) {
+            override fun done(list: List<AVIMConversation>?, e: AVIMException?) {
                 if (e != null) {
                     ToastUtils.showShort(e.message)
                     return
                 }
-                for (conversation in list) {
-                    println("conversation unread count" + conversation.unreadMessagesCount)
+                if (list != null) {
+                    for (conversation in list) {
+                        println("conversation unread count" + conversation.unreadMessagesCount)
+                    }
                 }
-                showEmptyView(list.isEmpty())
+                showEmptyView(list == null || list.isEmpty())
                 itemAdapter.dataList = list
                 itemAdapter.notifyDataSetChanged()
             }

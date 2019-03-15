@@ -65,12 +65,20 @@ open class ConversationActivity : SddBaseActivity(), LCIMConversationFragment.Ho
         mTitleBar.mIvMenu.setOnClickListener { showCloseConversationBottomSheet() }
     }
 
+    @Suppress("DEPRECATION")
     private fun showCloseConversationBottomSheet() {
+        val conversationBlocked = mFragment.isConversationBlocked()
         val bottomSheetDialog = BottomSheetDialog(this)
         val content = LayoutInflater.from(this).inflate(R.layout.bottom_sheet_close_conversation, null)
+        content.tv_close_conversation.text = getString(if (conversationBlocked) R.string.unclose_conversation else R.string.close_conversation)
+        content.tv_close_conversation.setTextColor(resources.getColor(if (conversationBlocked) R.color.t1_color else R.color.t4_color))
         bottomSheetDialog.setContentView(content)
         content.tv_close_conversation.setOnClickListener {
-            showCloseConversationDialog()
+            if (conversationBlocked) {
+                closeConversation(false)
+            } else {
+                showCloseConversationDialog()
+            }
             bottomSheetDialog.dismiss()
         }
         content.tv_cancel.setOnClickListener { bottomSheetDialog.dismiss() }
@@ -85,14 +93,14 @@ open class ConversationActivity : SddBaseActivity(), LCIMConversationFragment.Ho
                 .whitenLeft()
                 .setRightBtn(R.string.confirm, object : View.OnClickListener {
                     override fun onClick(v: View?) {
-                        closeConversation()
+                        closeConversation(true)
                     }
                 })
                 .show()
     }
 
-    private fun closeConversation() {
-        mFragment.closeConversation(true, object : AVIMConversationCallback() {
+    private fun closeConversation(close: Boolean) {
+        mFragment.closeConversation(close, object : AVIMConversationCallback() {
             override fun done(e: AVIMException?) {
                 if (e != null) {
                     ToastUtils.showShort(e.message)

@@ -562,7 +562,7 @@ class LCIMConversationFragment : Fragment() {
     }
 
     private fun updateConversationCloseUI() {
-        val isBlocked = mConversation?.get(ATTR_IS_BLOCKED) == true
+        val isBlocked = isConversationBlocked()
         val isDoctor = mHost?.isDoctor() ?: false
         if (isDoctor) {
             tv_open_conversation_hint.visibility = if (isBlocked) View.VISIBLE else View.GONE
@@ -571,6 +571,8 @@ class LCIMConversationFragment : Fragment() {
             fragment_chat_inputbar.visibility = if (!isBlocked) View.VISIBLE else View.GONE
         }
     }
+
+    fun isConversationBlocked() = mConversation?.get(ATTR_IS_BLOCKED) == true
 
     fun getConversation(): AVIMConversation? {
         return mConversation

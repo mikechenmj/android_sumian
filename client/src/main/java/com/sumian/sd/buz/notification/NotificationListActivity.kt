@@ -36,13 +36,11 @@ class NotificationListActivity : BaseViewModelActivity<BaseViewModel>(), Notific
     override fun initWidget() {
         super.initWidget()
         title_bar!!.setOnBackClickListener { v -> finish() }
-        title_bar!!.setOnMenuClickListener { v -> mNotificationListFragment.markAllAsRead() }
         initFragment()
     }
 
     private fun initFragment() {
         val notificationListFragment = NotificationListFragment()
-        notificationListFragment.mHost = this
         supportFragmentManager.beginTransaction().replace(R.id.fragment_container, notificationListFragment).commit()
         mNotificationListFragment = notificationListFragment
     }
@@ -93,6 +91,10 @@ class NotificationListActivity : BaseViewModelActivity<BaseViewModel>(), Notific
 
     override fun launchPatientDoctorMessageListActivity() {
         ConversationListActivity.launch()
+    }
+
+    override fun isDoctor(): Boolean {
+        return false
     }
 
     /**

@@ -105,12 +105,14 @@ public final class LCIMManager {
         queryConversationList(100, new AVIMConversationQueryCallback() {
             @Override
             public void done(List<AVIMConversation> list, AVIMException e) {
-                for (AVIMConversation conversation : list) {
-                    if (conversation.getUnreadMessagesCount() > 0) {
-                        mUnreadConversations.add(conversation);
+                if (list != null) {
+                    for (AVIMConversation conversation : list) {
+                        if (conversation.getUnreadMessagesCount() > 0) {
+                            mUnreadConversations.add(conversation);
+                        }
                     }
+                    notifyUnreadCountChange();
                 }
-                notifyUnreadCountChange();
             }
         });
     }

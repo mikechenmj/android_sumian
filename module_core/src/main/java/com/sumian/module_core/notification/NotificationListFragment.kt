@@ -1,5 +1,6 @@
 package com.sumian.module_core.notification
 
+import android.content.Context
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import cn.leancloud.chatkit.LCIMManager
@@ -44,6 +45,13 @@ class NotificationListFragment : BaseFragment(), BaseQuickAdapter.OnItemClickLis
         return R.layout.fragment_notification_list
     }
 
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        if (context is Host) {
+            mHost = context
+        }
+    }
+
     override fun initWidget() {
         super.initWidget()
         recycler_view.layoutManager = LinearLayoutManager(activity)
@@ -52,15 +60,16 @@ class NotificationListFragment : BaseFragment(), BaseQuickAdapter.OnItemClickLis
         mAdapter!!.onItemClickListener = this
         mAdapter!!.setOnLoadMoreListener({ loadData(false) }, recycler_view)
         initHeadView()
-        LCIMManager.getInstance().unreadConversationsLiveData.observe(this, androidx.lifecycle.Observer<List<AVIMConversation>> { it -> update(it) })
+        LCIMManager.getInstance().unreadConversationsLiveData.observe(this, androidx.lifecycle.Observer<List<AVIMConversation>> { it -> updateImItem(it) })
     }
 
     private fun initHeadView() {
-        mHeaderView = NotificationListHeadView(activity!!)
+        mHeaderView = NotificationListHeadView(activity!!, mHost.isDoctor())
         mHeaderView!!.setOnClickListener { v -> SettingsUtil.launchSettingActivityForResult(this, REQUEST_CODE_OPEN_NOTIFICATION) }
         mAdapter!!.addHeaderView(mHeaderView)
         updateNotificationItem()
         mHeaderView!!.v_doctor_message_item.setOnClickListener { mHost.launchPatientDoctorMessageListActivity() }
+        mHeaderView!!.tv_read_all.setOnClickListener { markAllAsRead() }
     }
 
     override fun initData() {
@@ -120,6 +129,7 @@ class NotificationListFragment : BaseFragment(), BaseQuickAdapter.OnItemClickLis
         fun onNotificationClick(notification: Notification)
         fun showReadAll(show: Boolean)
         fun launchPatientDoctorMessageListActivity()
+        fun isDoctor(): Boolean
     }
 
     private fun loadData(isInitLoad: Boolean) {
@@ -176,30 +186,7 @@ class NotificationListFragment : BaseFragment(), BaseQuickAdapter.OnItemClickLis
         }
     }
 
-//    override fun openEventBus(): Boolean {
-//        return true
-//    }
-
-//    @Subscribe
-//    fun onUnReadImMessageCountChange(event: LCIMOfflineMessageCountChangeEvent) {
-//        val conversation = event.conversation
-//        val unreadMessagesCount = conversation.unreadMessagesCount
-//        if (unreadMessagesCount > 0) {
-//            LCIMConversationUtils.getConversationName(conversation, object : AVCallback<String>() {
-//                override fun internalDone0(s: String, e: AVException?) {
-//                    if (null != e) {
-//                        LCIMLogUtils.logException(e)
-//                    } else {
-//                        mHeaderView?.showMessage(s + ": " + event.lastMessage.content)
-//                    }
-//                }
-//            })
-//        } else {
-//            mHeaderView?.showNoMessage()
-//        }
-//    }
-
-    private fun update(it: List<AVIMConversation>) {
+    private fun updateImItem(it: List<AVIMConversation>) {
         val unreadMessagesCount = LCIMManager.getInstance().unreadMessageCount
         if (unreadMessagesCount > 0) {
             val latestConversation = it[0]
