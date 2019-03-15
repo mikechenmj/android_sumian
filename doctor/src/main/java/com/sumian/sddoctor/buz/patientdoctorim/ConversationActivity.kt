@@ -35,7 +35,7 @@ import java.util.*
  * desc   :
  * version: 1.0
  */
-open class ConversationActivity : SddBaseActivity() {
+open class ConversationActivity : SddBaseActivity(), LCIMConversationFragment.Host {
     private val mFragment: LCIMConversationFragment by lazy {
         supportFragmentManager.findFragmentById(R.id.conversation_fragment) as LCIMConversationFragment
     }
@@ -63,7 +63,6 @@ open class ConversationActivity : SddBaseActivity() {
         mTitleBar.showMoreIcon()
         mTitleBar.mIvMenu.setImageResource(R.drawable.ic_nav_icon_more)
         mTitleBar.mIvMenu.setOnClickListener { showCloseConversationBottomSheet() }
-        mFragment.setIsDoctor(true)
     }
 
     private fun showCloseConversationBottomSheet() {
@@ -166,5 +165,9 @@ open class ConversationActivity : SddBaseActivity() {
                 Log.i(LCIMConstants.LCIM_LOG_TAG, exception.toString())
             }
         }
+    }
+
+    override fun isDoctor(): Boolean {
+        return true
     }
 }

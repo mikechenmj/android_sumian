@@ -49,7 +49,14 @@ class LCIMConversationFragment : Fragment() {
     private var itemAdapter: LCIMChatAdapter = LCIMChatAdapter()
     private lateinit var layoutManager: LinearLayoutManager
     private lateinit var localCameraPath: String
-    private var mIsDoctor = false
+    private var mHost: Host? = null
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        if (context is Host) {
+            mHost = context
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.lcim_conversation_fragment, container, false)
@@ -84,6 +91,7 @@ class LCIMConversationFragment : Fragment() {
                 })
             }
         }
+        fragment_chat_inputbar.showAudioBtn(mHost?.isDoctor() ?: false)
     }
 
     override fun onResume() {
@@ -555,18 +563,13 @@ class LCIMConversationFragment : Fragment() {
 
     private fun updateConversationCloseUI() {
         val isBlocked = mConversation?.get(ATTR_IS_BLOCKED) == true
-        if (mIsDoctor) {
+        val isDoctor = mHost?.isDoctor() ?: false
+        if (isDoctor) {
             tv_open_conversation_hint.visibility = if (isBlocked) View.VISIBLE else View.GONE
         } else {
             fragment_chat_tv_doctor_is_busy.visibility = if (isBlocked) View.VISIBLE else View.GONE
             fragment_chat_inputbar.visibility = if (!isBlocked) View.VISIBLE else View.GONE
         }
-    }
-
-    fun setIsDoctor(isDoctor: Boolean) {
-        mIsDoctor = isDoctor
-        updateConversationCloseUI()
-
     }
 
     fun getConversation(): AVIMConversation? {
@@ -577,5 +580,9 @@ class LCIMConversationFragment : Fragment() {
         private val REQUEST_IMAGE_CAPTURE = 1
         private val REQUEST_IMAGE_PICK = 2
         private val ATTR_IS_BLOCKED = "isBlocked"
+    }
+
+    interface Host {
+        fun isDoctor(): Boolean
     }
 }

@@ -1,6 +1,7 @@
 package com.sumian.sddoctor.buz.patientdoctorim
 
 import android.content.Intent
+import cn.leancloud.chatkit.activity.LCIMConversationListFragmentV2
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.base.SddBaseActivity
@@ -12,7 +13,7 @@ import com.sumian.sddoctor.base.SddBaseActivity
  * desc   :
  * version: 1.0
  */
-class ConversationListActivity : SddBaseActivity() {
+class ConversationListActivity : SddBaseActivity(), LCIMConversationListFragmentV2.Host {
     override fun getLayoutId(): Int {
         return R.layout.activity_conversation_list
     }
@@ -30,5 +31,9 @@ class ConversationListActivity : SddBaseActivity() {
         fun launch() {
             ActivityUtils.startActivity(Intent(ActivityUtils.getTopActivity(), ConversationListActivity::class.java))
         }
+    }
+
+    override fun isDoctor(): Boolean {
+        return true
     }
 }

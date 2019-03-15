@@ -2,6 +2,7 @@ package com.sumian.sd.buz.sleepertalk
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
 import com.sumian.common.image.ImageLoader
@@ -45,7 +46,7 @@ class SleeperTalkHomepageView(context: Context, attributeSet: AttributeSet? = nu
     fun setData(list: List<SleeperTalkData>) {
         v_item_container?.removeAllViews() ?: return
         for (item in list) {
-            val itemView = View.inflate(context, R.layout.list_item_sleeper_talk_homepage, null)
+            val itemView = LayoutInflater.from(context).inflate(R.layout.list_item_sleeper_talk_homepage, v_item_container, false)
             v_item_container.addView(itemView)
             itemView.setOnClickListener { SleeperTalkActivity.launch(item.id) }
             itemView.tv_title.text = item.title

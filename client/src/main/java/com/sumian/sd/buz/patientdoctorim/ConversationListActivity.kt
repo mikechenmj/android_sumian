@@ -1,5 +1,6 @@
 package com.sumian.sd.buz.patientdoctorim
 
+import cn.leancloud.chatkit.activity.LCIMConversationListFragmentV2
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.base.BaseViewModel
 import com.sumian.common.base.BaseViewModelActivity
@@ -12,7 +13,7 @@ import com.sumian.sd.R
  * desc   :
  * version: 1.0
  */
-class ConversationListActivity : BaseViewModelActivity<BaseViewModel>() {
+class ConversationListActivity : BaseViewModelActivity<BaseViewModel>(), LCIMConversationListFragmentV2.Host {
     override fun getLayoutId(): Int {
         return R.layout.activity_patient_doctor_im
     }
@@ -30,5 +31,9 @@ class ConversationListActivity : BaseViewModelActivity<BaseViewModel>() {
         fun launch() {
             ActivityUtils.startActivity(ActivityUtils.getTopActivity(), ConversationListActivity::class.java)
         }
+    }
+
+    override fun isDoctor(): Boolean {
+        return false
     }
 }

@@ -29,7 +29,7 @@ import java.util.*
  * desc   :
  * version: 1.0
  */
-class ConversationActivity : BaseActivity() {
+class ConversationActivity : BaseActivity(), LCIMConversationFragment.Host {
 
     private val mFragment: LCIMConversationFragment by lazy {
         supportFragmentManager.findFragmentById(R.id.conversation_fragment) as LCIMConversationFragment
@@ -51,11 +51,6 @@ class ConversationActivity : BaseActivity() {
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
         initByIntent(intent ?: return)
-    }
-
-    override fun initWidget() {
-        super.initWidget()
-        mFragment.setIsDoctor(false)
     }
 
     private fun initByIntent(intent: Intent) {
@@ -121,5 +116,9 @@ class ConversationActivity : BaseActivity() {
             }
 
         }
+    }
+
+    override fun isDoctor(): Boolean {
+        return false
     }
 }

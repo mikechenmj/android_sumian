@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/empty_view_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="72dp"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/iv_empty_view_icon"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:contentDescription="@null" />
+
+    <TextView
+        android:id="@+id/tv_empty_view_title"
+        style="@style/text_t1_16"
+        android:layout_marginTop="36dp"
+        android:gravity="center"
+        tools:text="没有消息提醒" />
+
+    <TextView
+        android:id="@+id/tv_empty_view_desc"
+        style="@style/text_t2_14"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:gravity="center"
+        android:lineSpacingExtra="4dp"
+        android:textSize="14sp"
+        tools:text="您收到医生回复、建议或报告更新，都会在这里收到消息提醒都会在这里收到消息提醒" />
+
+</LinearLayout>

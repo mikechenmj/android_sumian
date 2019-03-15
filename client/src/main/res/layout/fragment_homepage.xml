@@ -18,7 +18,6 @@
             android:background="@color/white"
             android:gravity="bottom"
             android:paddingStart="@dimen/space_20"
-            android:paddingEnd="@dimen/space_20"
             android:paddingBottom="@dimen/space_20">
 
             <LinearLayout
@@ -38,19 +37,32 @@
                     android:id="@+id/tv_home_random_text"
                     style="@style/text_t2_14"
                     android:layout_marginTop="@dimen/space_10"
-                    android:text="@string/homepage_sleep_slogan" />
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:text="@string/homepage_sleep_slogan"
+                    tools:text="LinearLayoutLinearLayoutLinearLayoutLinearLayoutLinearLayoutLinearLayoutLinearLayout" />
             </LinearLayout>
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/iv_avatar"
                 android:layout_width="@dimen/space_60"
                 android:layout_height="@dimen/space_60"
+                android:visibility="gone"
                 app:civ_border_color="@color/white"
                 app:civ_border_overlay="true"
                 app:civ_border_width="@dimen/space_5"
                 app:civ_circle_background_color="@color/white"
                 app:civ_fill_color="@color/white"
                 tools:src="@mipmap/ic_info_avatar_patient" />
+
+            <ImageView
+                android:id="@+id/home_page_sleep_guide_enter_btn"
+                android:layout_width="135dp"
+                android:layout_height="75dp"
+                android:background="@color/white"
+                android:scaleType="fitXY"
+                android:src="@drawable/sel_sleep_guide_enter_btn"
+                tools:ignore="ContentDescription" />
         </LinearLayout>
 
         <FrameLayout
@@ -93,15 +105,6 @@
             android:layout_marginTop="10dp" />
 
         <include layout="@layout/layout_homepage_fragment_grid_items" />
-
-        <ImageView
-            android:id="@+id/home_page_sleep_guide_enter_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:scaleType="fitXY"
-            android:src="@drawable/sel_sleep_guide_enter_btn"
-            tools:ignore="ContentDescription" />
 
         <com.sumian.sd.buz.homepage.widget.SleepPrescriptionView
             android:id="@+id/sleep_prescription_view"
