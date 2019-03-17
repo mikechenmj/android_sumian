@@ -90,6 +90,19 @@
                     android:paddingBottom="@dimen/space_2"
                     android:text="@string/none_faced" />
 
+                <TextView
+                    android:id="@+id/tv_cbti"
+                    style="@style/text_b2_12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:background="@drawable/shape_rect_b3_solid_4dp_corner"
+                    android:paddingLeft="@dimen/space_4"
+                    android:paddingTop="@dimen/space_2"
+                    android:paddingRight="@dimen/space_4"
+                    android:paddingBottom="@dimen/space_2"
+                    android:text="@string/cbti" />
+
             </LinearLayout>
 
 

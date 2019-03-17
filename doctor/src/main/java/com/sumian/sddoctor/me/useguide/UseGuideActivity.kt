@@ -6,6 +6,7 @@ import android.widget.MediaController
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.base.SddBaseActivity
+import com.sumian.sddoctor.base.StatusBarHelper
 import kotlinx.android.synthetic.main.activity_use_guide.*
 
 /**
@@ -32,11 +33,13 @@ class UseGuideActivity : SddBaseActivity() {
     }
 
     override fun showBackNav(): Boolean {
-        return true
+        return false
     }
 
     override fun initWidget() {
         super.initWidget()
+        title_bar.setOnBackClickListener { finish() }
+        StatusBarHelper.initTitleBarUI(this, mTitleBar)
         tv_useful.setOnClickListener { onTvUsefulClick() }
         val label = resources.getStringArray(R.array.use_guide_labels)[mIndex]
         setTitle(label)

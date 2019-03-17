@@ -107,7 +107,7 @@ public final class LCIMManager {
             public void done(List<AVIMConversation> list, AVIMException e) {
                 if (list != null) {
                     for (AVIMConversation conversation : list) {
-                        if (conversation.getUnreadMessagesCount() > 0) {
+                        if (conversation.getUnreadMessagesCount() > 0 || !mUnreadConversations.contains(conversation)) {
                             mUnreadConversations.add(conversation);
                         }
                     }
@@ -126,7 +126,7 @@ public final class LCIMManager {
     public void onUnReadImMessageCountChange(LCIMOfflineMessageCountChangeEvent event) {
         AVIMConversation conversation = event.conversation;
         int unreadMessagesCount = conversation.getUnreadMessagesCount();
-        if (unreadMessagesCount > 0) {
+        if (unreadMessagesCount > 0 && !mUnreadConversations.contains(conversation)) {
             mUnreadConversations.add(0, conversation);
         } else {
             mUnreadConversations.remove(conversation);

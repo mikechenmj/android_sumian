@@ -37,7 +37,8 @@ data class Patient(var id: Int,
                    var weChat: Any?,
                    var set_password: Boolean,
                    val progress_rate: Int,//CBTI 进度查询时使用
-                   val start_at: Int//CBTI 进度查询时使用
+                   val start_at: Int,//CBTI 进度查询时使用
+                   val cbtis_count: Int
 ) {
 
 

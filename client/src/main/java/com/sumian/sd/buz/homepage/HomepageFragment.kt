@@ -106,7 +106,6 @@ HomepageFragment : BaseViewModelFragment<BaseViewModel>(), OnEnterListener, Last
             StatUtil.event(StatConstants.click_home_page_scale_icon)
         }
         sleep_prescription_view.setOnClickListener { SleepPrescriptionActivity.launch() }
-        iv_avatar.setOnClickListener { onAvatarClick() }
         device_card_view.registerLifecycleOwner(this)
         DeviceManager.tryToConnectCacheMonitor()
         device_card_view.mHost = object : DeviceCardView.Host {
@@ -147,8 +146,6 @@ HomepageFragment : BaseViewModelFragment<BaseViewModel>(), OnEnterListener, Last
         AppManager.getAccountViewModel().liveDataToken.observe(this, Observer<Token> { t ->
             val userProfile = t?.user ?: return@Observer
             tv_name.text = userProfile.nameOrNickname
-            val defaultAvatar = R.mipmap.ic_info_avatar_patient
-            ImageLoader.loadImage(userProfile.avatar, iv_avatar, defaultAvatar)
         })
     }
 
