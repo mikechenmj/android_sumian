@@ -121,9 +121,9 @@ dependencies {
     // utils
     api 'com.blankj:utilcode:1.19.0'
     // LeanCloud 基础包
-    api 'cn.leancloud.android:avoscloud-sdk:v4.7.6'
+    api 'cn.leancloud.android:avoscloud-sdk:v4.7.10'
     // 推送与实时聊天需要的包
-    api('cn.leancloud.android:avoscloud-push:v4.7.6@aar') { transitive = true }
+    api('cn.leancloud.android:avoscloud-push:v4.7.10@aar') { transitive = true }
     // aliyun log
     api 'com.aliyun.openservices:aliyun-log-android-sdk:2.0.0'
     // tencent static
