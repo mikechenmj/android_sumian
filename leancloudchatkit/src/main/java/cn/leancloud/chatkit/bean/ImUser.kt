@@ -1,5 +1,6 @@
 package cn.leancloud.chatkit.bean
 
+import android.text.TextUtils
 import com.google.gson.annotations.SerializedName
 
 data class ImUser(
@@ -17,6 +18,14 @@ data class ImUser(
         val realName: String?
 ) {
     fun getNameOrNickname(): String {
-        return realName ?: name ?: nickname ?: "no name"
+        return if (!TextUtils.isEmpty(realName)) {
+            realName!!
+        } else if (!TextUtils.isEmpty(name)) {
+            name!!
+        } else if (!TextUtils.isEmpty(nickname)) {
+            nickname!!
+        } else {
+            "no name"
+        }
     }
 }
