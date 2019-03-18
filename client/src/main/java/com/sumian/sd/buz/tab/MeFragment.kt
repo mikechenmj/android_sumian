@@ -5,6 +5,7 @@ import android.text.TextUtils
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import cn.leancloud.chatkit.LCIMManager
 import com.blankj.utilcode.util.ActivityUtils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -114,6 +115,11 @@ class MeFragment : BaseViewModelFragment<GetAchievementListPresenter>(), View.On
         VersionManager.mUpgradeMode.observe(this, Observer {
             dv_setting.showRedDot(it == VersionManager.UPGRADE_MODE_FORCE)
         })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        LCIMManager.getInstance().updateUnreadConversation()
     }
 
     override fun showLoading() {

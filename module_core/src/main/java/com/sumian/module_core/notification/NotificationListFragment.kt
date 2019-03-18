@@ -111,6 +111,7 @@ class NotificationListFragment : BaseFragment(), BaseQuickAdapter.OnItemClickLis
     override fun onStart() {
         super.onStart()
         updateNotificationItem()
+        LCIMManager.getInstance().updateUnreadConversation()
     }
 
     fun updateNotificationItem() {

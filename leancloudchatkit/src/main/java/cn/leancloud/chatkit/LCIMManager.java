@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import com.avos.avoscloud.AVCallback;
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVOSCloud;
+import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.AVUtils;
 import com.avos.avoscloud.SignatureFactory;
 import com.avos.avoscloud.im.v2.AVIMClient;
@@ -22,6 +23,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -101,10 +103,11 @@ public final class LCIMManager {
         }
     }
 
-    private void updateUnreadConversation() {
+    public void updateUnreadConversation() {
         queryConversationList(100, new AVIMConversationQueryCallback() {
             @Override
             public void done(List<AVIMConversation> list, AVIMException e) {
+                mUnreadConversations.clear();
                 if (list != null) {
                     for (AVIMConversation conversation : list) {
                         if (conversation.getUnreadMessagesCount() > 0 || !mUnreadConversations.contains(conversation)) {
@@ -135,7 +138,14 @@ public final class LCIMManager {
     }
 
     public void removeUnreadConversation(AVIMConversation conversation) {
-        mUnreadConversations.remove(conversation);
+        Iterator<AVIMConversation> iterator = mUnreadConversations.iterator();
+        while (iterator.hasNext()) {
+            AVIMConversation item = iterator.next();
+            if (item.getConversationId().equals(conversation.getConversationId())) {
+                iterator.remove();
+            }
+        }
+//        mUnreadConversations.remove(conversation);
         notifyUnreadCountChange();
     }
 
@@ -255,10 +265,11 @@ public final class LCIMManager {
         return AVIMClient.getInstance(getUserId());
     }
 
-    public void queryConversationList(int limit, AVIMConversationQueryCallback callback) {
+    public void queryConversationList(final int limit, final AVIMConversationQueryCallback callback) {
         AVIMConversationsQuery query = getClient().getConversationsQuery();
         query.limit(limit);
 //        query.whereEqualTo("conversation_type", "0");
+        query.setQueryPolicy(AVQuery.CachePolicy.NETWORK_ONLY);
         query.findInBackground(callback);
     }
 

@@ -104,6 +104,11 @@ class HomepageFragment : BaseFragment(), DoctorServicesView.OnDoctorServicesCall
         loadData()
     }
 
+    override fun onResume() {
+        super.onResume()
+        LCIMManager.getInstance().updateUnreadConversation()
+    }
+
     private fun updateNotificationIconUI() {
         val notificationCount = mNotificationViewModel.unreadCountLiveData.value
         val hasNotification = notificationCount != null && notificationCount > 0
