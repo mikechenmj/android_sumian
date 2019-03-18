@@ -1,5 +1,6 @@
 package com.sumian.common.notification
 
+import android.app.Activity
 import android.content.Context
 import com.avos.avoscloud.AVOSCloud
 import com.avos.avoscloud.PushService
@@ -16,12 +17,13 @@ import com.avos.avoscloud.im.v2.AVIMClient
  */
 object LeanCloudManager {
 
-    fun init(context: Context, appId: String, appKey: String, pushChannel:String, isDebug: Boolean) {
+    fun init(context: Context, appId: String, appKey: String, pushChannel: String, isDebug: Boolean, cls: Class<out Activity>? = null) {
         PushService.setDefaultChannelId(context, "push_channel")
         AVOSCloud.initialize(context, appId, appKey)
         AVOSCloud.setDebugLogEnabled(isDebug)
         AVIMClient.setAutoOpen(false)
         PushService.setAutoWakeUp(true)
-        PushService.subscribe(context, pushChannel,null)
+        PushService.subscribe(context, pushChannel, null)
+        PushService.setDefaultPushCallback(context, cls)
     }
 }

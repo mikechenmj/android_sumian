@@ -30,13 +30,12 @@ object AppNotificationManager {
     private var mLargeIcon: Int = 0
     private var mUserIdKey = ""
 
-
     fun init(context: Context,
              smallIcon: Int, largeIcon: Int,
              channelId: String, channelName: String,
              notificationDelegate: INotificationDelegate,
              schemeResolver: ISchemeResolver,
-             userIdKey:String) {
+             userIdKey: String) {
         NotificationUtil.createNotificationChannel(context, channelId, channelName)
         mSmallIcon = smallIcon
         mLargeIcon = largeIcon
@@ -114,6 +113,18 @@ object AppNotificationManager {
             return false
         }
         return true
+    }
+
+    fun showNotification(context: Context, title: String, intent: Intent?) {
+        NotificationUtil.showNotification(
+                context,
+                mChannelId,
+                mSmallIcon,
+                mLargeIcon,
+                AppUtils.getAppName(),
+                title,
+                getPendingIntent(context, intent)
+        )
     }
 }
 

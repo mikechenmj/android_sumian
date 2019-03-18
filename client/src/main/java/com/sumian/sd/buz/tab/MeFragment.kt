@@ -60,6 +60,11 @@ class MeFragment : BaseViewModelFragment<GetAchievementListPresenter>(), View.On
 
     private var mPreRequestTimeMills = 0L
 
+    private val mNotificationViewModel by lazy {
+        ViewModelProviders.of(activity!!)
+                .get(NotificationViewModel::class.java)
+    }
+
     override fun getLayoutId(): Int {
         return R.layout.fragment_tab_me
     }
@@ -84,6 +89,7 @@ class MeFragment : BaseViewModelFragment<GetAchievementListPresenter>(), View.On
         dv_device_market.setOnClickListener { MiniProgramHelper.launchYouZanOrWeb(activity!!) }
     }
 
+
     override fun initData() {
         super.initData()
         val userProfile = AppManager.getAccountViewModel().token.user
@@ -95,11 +101,10 @@ class MeFragment : BaseViewModelFragment<GetAchievementListPresenter>(), View.On
                 }
             }
         })
-        ViewModelProviders.of(activity!!)
-                .get(NotificationViewModel::class.java)
+        mNotificationViewModel
                 .unreadCount
-                .observe(this, Observer<Int> { unreadCount -> iv_notification.isActivated = unreadCount != null && unreadCount > 0 })
-
+                .observe(this, Observer<Int> { updateNotificationIcon() })
+        LCIMManager.getInstance().unreadCountLiveData.observe(this, Observer<Int> { updateNotificationIcon() })
         DeviceManager.getMonitorLiveData().observe(this, Observer { blueDevice ->
             var monitorSn: String? = blueDevice?.sn
             if (TextUtils.isEmpty(monitorSn)) {
@@ -119,7 +124,7 @@ class MeFragment : BaseViewModelFragment<GetAchievementListPresenter>(), View.On
 
     override fun onResume() {
         super.onResume()
-        LCIMManager.getInstance().updateUnreadConversation()
+//        LCIMManager.getInstance().updateUnreadConversation()
     }
 
     override fun showLoading() {
@@ -128,6 +133,13 @@ class MeFragment : BaseViewModelFragment<GetAchievementListPresenter>(), View.On
 
     override fun dismissLoading() {
         //super.dismissLoading()
+    }
+
+    private fun updateNotificationIcon() {
+        val notificationCount = mNotificationViewModel.unreadCount.value
+        val hasNotification = notificationCount != null && notificationCount > 0
+        val hasIm = LCIMManager.getInstance().unreadMessageCount > 0
+        iv_notification.isActivated = hasNotification || hasIm
     }
 
     override fun onClick(v: View) {

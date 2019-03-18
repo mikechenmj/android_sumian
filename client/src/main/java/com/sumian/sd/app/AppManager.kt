@@ -43,6 +43,7 @@ import com.sumian.sd.buz.kefu.KefuManager
 import com.sumian.sd.buz.notification.NotificationConst
 import com.sumian.sd.buz.notification.NotificationDelegate
 import com.sumian.sd.buz.notification.SchemeResolver
+import com.sumian.sd.buz.patientdoctorim.IMManagerHost
 import com.sumian.sd.buz.patientdoctorim.IMProfileProvider
 import com.sumian.sd.buz.upgrade.model.VersionModel
 import com.sumian.sd.common.log.LogManager
@@ -231,7 +232,7 @@ object AppManager {
     private fun initLeanCloud() {
         LeanCloudManager.init(mApplication,
                 BuildConfig.LEANCLOUD_APP_ID, BuildConfig.LEANCLOUD_APP_KEY,
-                NotificationConst.PUSH_CHANNEL, BuildConfig.DEBUG)
+                NotificationConst.PUSH_CHANNEL, BuildConfig.DEBUG, MainActivity::class.java)
     }
 
     private fun initWebView(context: Context) {
@@ -308,7 +309,8 @@ object AppManager {
         LCIMManager.getInstance().init(mApplication,
                 BuildConfig.LEANCLOUD_APP_ID, BuildConfig.LEANCLOUD_APP_KEY,
                 getAccountViewModel().userInfo.im_id,
-                IMProfileProvider())
+                IMProfileProvider(),
+                IMManagerHost())
     }
 
     fun onMainActivityRestore() {

@@ -17,6 +17,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import cn.leancloud.chatkit.LCIMManager
 import cn.leancloud.chatkit.R
 import cn.leancloud.chatkit.adapter.LCIMChatAdapter
 import cn.leancloud.chatkit.event.*
@@ -114,6 +115,11 @@ class LCIMConversationFragment : Fragment() {
         EventBus.getDefault().unregister(this)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        LCIMManager.getInstance().setCurrentOpenConversation(null)
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         inflater!!.inflate(R.menu.conv_menu, menu)
     }
@@ -129,6 +135,7 @@ class LCIMConversationFragment : Fragment() {
     }
 
     fun setConversation(conversation: AVIMConversation) {
+        LCIMManager.getInstance().setCurrentOpenConversation(conversation)
         mConversation = conversation
         fragment_chat_srl_pullrefresh.isEnabled = true
         fragment_chat_inputbar.tag = mConversation!!.conversationId

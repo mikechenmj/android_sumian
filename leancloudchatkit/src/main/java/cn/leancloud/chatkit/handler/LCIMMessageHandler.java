@@ -52,7 +52,7 @@ public class LCIMMessageHandler extends AVIMTypedMessageHandler<AVIMTypedMessage
         client.close(null);
       } else {
         if (LCIMNotificationUtils.isShowNotification(conversation.getConversationId())) {
-          sendNotification(message, conversation);
+//          sendNotification(message, conversation);
         }
         LCIMConversationItemCache.getInstance().insertConversation(message.getConversationId());
         if (!message.getFrom().equals(client.getClientId())) {

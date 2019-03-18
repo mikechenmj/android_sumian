@@ -1,7 +1,10 @@
 package cn.leancloud.chatkit;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.avos.avoscloud.AVCallback;
 import com.avos.avoscloud.AVException;
@@ -31,10 +34,12 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import cn.leancloud.chatkit.cache.LCIMConversationItemCache;
 import cn.leancloud.chatkit.cache.LCIMProfileCache;
+import cn.leancloud.chatkit.event.LCIMIMTypeMessageEvent;
 import cn.leancloud.chatkit.event.LCIMOfflineMessageCountChangeEvent;
 import cn.leancloud.chatkit.handler.LCIMClientEventHandler;
 import cn.leancloud.chatkit.handler.LCIMConversationHandler;
 import cn.leancloud.chatkit.handler.LCIMMessageHandler;
+import cn.leancloud.chatkit.utils.LCIMConstants;
 
 /**
  * Created by wli on 16/2/2.
@@ -44,10 +49,14 @@ public final class LCIMManager {
 
     private static LCIMManager sInstance;
     private LCChatProfileProvider mProfileProvider;
+    private Host mHost;
     private String mUserId;
     private List<AVIMConversation> mUnreadConversations = new ArrayList<>();
     private MutableLiveData<List<AVIMConversation>> mUnreadConversationsLiveData = new MutableLiveData<>();
     private MutableLiveData<Integer> mUnreadCountLiveData = new MutableLiveData<>();
+    private AVIMConversation mCurrentOpenConversation = null;
+    @SuppressWarnings("FieldCanBeLocal")
+    private Context mApplicationContext;
 
     private LCIMManager() {
     }
@@ -70,7 +79,8 @@ public final class LCIMManager {
      * @param appId
      * @param appKey
      */
-    public void init(Context context, String appId, String appKey, String userId, LCChatProfileProvider profileProvider) {
+    public void init(Context context, String appId, String appKey, String userId, LCChatProfileProvider profileProvider, Host host) {
+        mApplicationContext = context.getApplicationContext();
         if (TextUtils.isEmpty(appId)) {
             throw new IllegalArgumentException("appId can not be empty!");
         }
@@ -91,6 +101,7 @@ public final class LCIMManager {
 
         mUserId = userId;
         mProfileProvider = profileProvider;
+        mHost = host;
         open(new AVIMClientCallback() {
             @Override
             public void done(AVIMClient avimClient, AVIMException e) {
@@ -137,6 +148,16 @@ public final class LCIMManager {
         notifyUnreadCountChange();
     }
 
+    @Subscribe
+    public void onNewMessageEvent(LCIMIMTypeMessageEvent event) {
+        updateUnreadConversation();
+        AVIMConversation conversation = event.conversation;
+        AVIMTypedMessage message = event.message;
+        if (mCurrentOpenConversation == null || !mCurrentOpenConversation.getConversationId().equals(conversation.getConversationId())) {
+            mHost.onNewMessage(conversation, message);
+        }
+    }
+
     public void removeUnreadConversation(AVIMConversation conversation) {
         Iterator<AVIMConversation> iterator = mUnreadConversations.iterator();
         while (iterator.hasNext()) {
@@ -145,7 +166,6 @@ public final class LCIMManager {
                 iterator.remove();
             }
         }
-//        mUnreadConversations.remove(conversation);
         notifyUnreadCountChange();
     }
 
@@ -287,5 +307,26 @@ public final class LCIMManager {
 
     public LiveData<List<AVIMConversation>> getUnreadConversationsLiveData() {
         return mUnreadConversationsLiveData;
+    }
+
+    public void setCurrentOpenConversation(AVIMConversation conversation) {
+        mCurrentOpenConversation = conversation;
+    }
+
+    public Intent getConversationIntent(Context context, AVIMConversation conversation) {
+        Intent intent = new Intent();
+        try {
+            intent.setPackage(context.getPackageName());
+            intent.setAction(LCIMConstants.CONVERSATION_ITEM_CLICK_ACTION);
+            intent.addCategory(Intent.CATEGORY_DEFAULT);
+            intent.putExtra(LCIMConstants.CONVERSATION_ID, conversation.getConversationId());
+        } catch (ActivityNotFoundException exception) {
+            Log.i(LCIMConstants.LCIM_LOG_TAG, exception.toString());
+        }
+        return intent;
+    }
+
+    public interface Host {
+        void onNewMessage(AVIMConversation conversation, AVIMTypedMessage message);
     }
 }

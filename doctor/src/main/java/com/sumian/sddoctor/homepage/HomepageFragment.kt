@@ -106,7 +106,7 @@ class HomepageFragment : BaseFragment(), DoctorServicesView.OnDoctorServicesCall
 
     override fun onResume() {
         super.onResume()
-        LCIMManager.getInstance().updateUnreadConversation()
+//        LCIMManager.getInstance().updateUnreadConversation()
     }
 
     private fun updateNotificationIconUI() {

@@ -27,6 +27,7 @@ import com.sumian.sddoctor.R
 import com.sumian.sddoctor.account.AccountViewModel
 import com.sumian.sddoctor.account.kefu.KefuManager
 import com.sumian.sddoctor.base.ActivityDelegateFactory
+import com.sumian.sddoctor.buz.patientdoctorim.IMManagerHost
 import com.sumian.sddoctor.buz.patientdoctorim.IMProfileProvider
 import com.sumian.sddoctor.log.SddLogManager
 import com.sumian.sddoctor.login.login.LoginActivity
@@ -129,7 +130,7 @@ object AppManager {
     private fun initLeanCloud() {
         LeanCloudManager.init(mApplication,
                 BuildConfig.LEANCLOUD_APP_ID, BuildConfig.LEANCLOUD_APP_KEY,
-                NotificationConst.PUSH_CHANNEL, BuildConfig.DEBUG)
+                NotificationConst.PUSH_CHANNEL, BuildConfig.DEBUG, MainActivity::class.java)
     }
 
     private fun initStatic(app: Application) {
@@ -219,7 +220,8 @@ object AppManager {
         LCIMManager.getInstance().init(mApplication,
                 BuildConfig.LEANCLOUD_APP_ID, BuildConfig.LEANCLOUD_APP_KEY,
                 getAccountViewModel().getDoctorInfo().value!!.im_id,
-                IMProfileProvider())
+                IMProfileProvider(),
+                IMManagerHost())
     }
 
     fun onLoginSuccess(loginResponse: LoginResponse?, isNewRegister: Boolean = false) {
