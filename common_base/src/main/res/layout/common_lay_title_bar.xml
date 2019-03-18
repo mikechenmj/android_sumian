@@ -25,7 +25,11 @@
         style="@style/text_b2_16"
         android:layout_height="@dimen/tool_bar_height"
         android:layout_gravity="center"
+        android:layout_marginStart="48dp"
+        android:layout_marginEnd="48dp"
+        android:ellipsize="end"
         android:gravity="center"
+        android:maxLines="1"
         tools:ignore="HardcodedText"
         tools:text='Title_Bar' />
 
