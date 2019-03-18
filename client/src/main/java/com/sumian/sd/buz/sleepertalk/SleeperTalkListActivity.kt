@@ -68,10 +68,7 @@ class SleeperTalkListActivity : BaseViewModelActivity<BaseViewModel>(), BaseQuic
         call.enqueue(object : BaseSdResponseCallback<PaginationResponseV2<SleeperTalkData>>() {
             override fun onSuccess(response: PaginationResponseV2<SleeperTalkData>?) {
                 val origin = response!!.data
-//                if (origin.size > 2) {
-//                    origin[1].isTop = 1
-//                }
-                var data = origin.sortedWith(compareBy { it.isTop }).reversed()
+                var data = SleeperTalkDataUtil.sortData(origin)
                 mAdapter.addData(data)
                 mAdapter.setEnableLoadMore(response.meta.pagination.isLastPage())
                 mPage++

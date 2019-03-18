@@ -9,6 +9,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import cn.leancloud.chatkit.LCIMManager
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.SPUtils
 import com.sumian.common.base.BaseActivity
@@ -133,21 +134,26 @@ class MainActivity : BaseActivity(), VersionModel.ShowDotCallback {
         AppManager.onMainActivityRestore()
     }
 
+    private val mNotificationViewModel by lazy {
+        ViewModelProviders.of(this@MainActivity).get(NotificationViewModel::class.java)
+    }
+
     override fun initWidget() {
         super.initWidget()
         showOpenNotificationDialogIfNeeded()
         nav_tab.setOnSelectedTabChangeListener { navigationItem, position -> changeSelectFragment(position) }
         changeSelectTab(TAB_0)
         AppManager.getVersionModel().registerShowDotCallback(this)
-        ViewModelProviders.of(this@MainActivity)
-                .get(NotificationViewModel::class.java)
-                .unreadCount
-                .observe(this, Observer<Int> { unreadCount ->
-                    tb_me?.showDot(if (unreadCount != null && unreadCount > 0) View.VISIBLE else View.GONE)
-                })
-        KefuManager.mMessageCountLiveData.observe(this, Observer {
-            this.tb_doctor?.showDot(if (it > 0) View.VISIBLE else View.GONE)
-        })
+        mNotificationViewModel.unreadCount.observe(this, Observer { updateTabMeDot() })
+        KefuManager.mMessageCountLiveData.observe(this, Observer { updateTabMeDot() })
+        LCIMManager.getInstance().unreadCountLiveData.observe(this, Observer { updateTabMeDot() })
+    }
+
+    private fun updateTabMeDot() {
+        val hasNotification = (mNotificationViewModel.unreadCount.value ?: 0) > 0
+        val hasKefuMsg = (KefuManager.mMessageCountLiveData.value ?: 0) > 0
+        val hasImMsg = LCIMManager.getInstance().unreadMessageCount > 0
+        tb_me?.showDot(if (hasNotification || hasImMsg || hasKefuMsg) View.VISIBLE else View.GONE)
     }
 
     override fun initData() {
@@ -271,8 +277,7 @@ class MainActivity : BaseActivity(), VersionModel.ShowDotCallback {
     }
 
     private fun updateNotificationUnreadCount() {
-        ViewModelProviders.of(this)
-                .get(NotificationViewModel::class.java)
+        mNotificationViewModel
                 .updateUnreadCount()
     }
 

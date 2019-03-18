@@ -26,7 +26,10 @@ class SleeperTalkHomepageView(context: Context, attributeSet: AttributeSet? = nu
     init {
         View.inflate(context, R.layout.view_sleeper_talk_homepage, this)
         tv_more_article.setOnClickListener { SleeperTalkListActivity.launch() }
-
+        for (i in 0..5) {
+            val itemView = LayoutInflater.from(context).inflate(R.layout.list_item_sleeper_talk_homepage, v_item_container, false)
+            v_item_container.addView(itemView)
+        }
         queryData()
     }
 
@@ -35,7 +38,7 @@ class SleeperTalkHomepageView(context: Context, attributeSet: AttributeSet? = nu
         call.enqueue(object : BaseSdResponseCallback<PaginationResponseV2<SleeperTalkData>>() {
             override fun onSuccess(response: PaginationResponseV2<SleeperTalkData>?) {
                 val list = response?.data ?: return
-                setData(list)
+                setData(SleeperTalkDataUtil.sortData(list))
             }
 
             override fun onFailure(errorResponse: ErrorResponse) {
@@ -45,6 +48,7 @@ class SleeperTalkHomepageView(context: Context, attributeSet: AttributeSet? = nu
 
     fun setData(list: List<SleeperTalkData>) {
         v_item_container?.removeAllViews() ?: return
+        v_item_container?.removeAllViews()
         for (item in list) {
             val itemView = LayoutInflater.from(context).inflate(R.layout.list_item_sleeper_talk_homepage, v_item_container, false)
             v_item_container.addView(itemView)

@@ -32,10 +32,6 @@ class SleeperTalkActivity : BaseWebViewActivity() {
         }
     private var mData: SleeperTalkData? = null
 
-//    override fun getLayoutId(): Int {
-//        return R.layout.activity_sleeper_talk
-//    }
-
     override fun showBackNav(): Boolean {
         return true
     }
@@ -44,12 +40,11 @@ class SleeperTalkActivity : BaseWebViewActivity() {
         super.initWidget()
         mTitleBar.showMoreIcon(R.drawable.ic_nav_share)
         mTitleBar.setOnMenuClickListener { showShareDialog() }
-//        iv_like.setOnClickListener { onLikeClick() }
     }
 
     override fun getCompleteUrl(): String {
         val urlContent = H5Uri.NATIVE_ROUTE
-                .replace("{pageData}", H5PayloadData("sumian-friends-detail", mapOf("id" to mEssayId)).toJson())
+                .replace("{pageData}", H5PayloadData(H5Uri.SLEEPER_TALK_PAGE, mapOf("id" to mEssayId)).toJson())
                 .replace("{token}", AppManager.getAccountViewModel().token.token)
         val completeUrl = BuildConfig.BASE_H5_URL + urlContent
         return completeUrl
@@ -63,7 +58,6 @@ class SleeperTalkActivity : BaseWebViewActivity() {
         call.enqueue(object : BaseSdResponseCallback<SleeperTalkData>() {
             override fun onSuccess(response: SleeperTalkData?) {
                 mData = response
-//                updateUI(response ?: return)
             }
 
             override fun onFailure(errorResponse: ErrorResponse) {
@@ -72,48 +66,11 @@ class SleeperTalkActivity : BaseWebViewActivity() {
         })
     }
 
-//    private fun onLikeClick() {
-//        if (iv_like.isSelected) {
-//            cancelLike()
-//        } else {
-//            like()
-//        }
-//
-//    }
-//
-//    private fun like() {
-//        val call = AppManager.getSdHttpService().likeSleeperTalk(mEssayId)
-//        addCall(call)
-//        call.enqueue(object : BaseSdResponseCallback<Any>() {
-//            override fun onSuccess(response: Any?) {
-//                iv_like.isSelected = !iv_like.isSelected
-//            }
-//
-//            override fun onFailure(errorResponse: ErrorResponse) {
-//                ToastUtils.showShort(errorResponse.message)
-//            }
-//        })
-//    }
-//
-//    private fun cancelLike() {
-//        val call = AppManager.getSdHttpService().cancelLikeSleeperTalk(mEssayId)
-//        addCall(call)
-//        call.enqueue(object : BaseSdResponseCallback<Any>() {
-//            override fun onSuccess(response: Any?) {
-//                iv_like.isSelected = !iv_like.isSelected
-//            }
-//
-//            override fun onFailure(errorResponse: ErrorResponse) {
-//                ToastUtils.showShort(errorResponse.message)
-//            }
-//        })
-//    }
-
     private fun showShareDialog() {
         if (mData == null) {
             return
         }
-        val shareUrl = WebViewManger.getInstance().getBaseUrl() + H5Uri.SLEEPER_TALK_SHARE.replace("id", mData!!.id.toString())
+        val shareUrl = WebViewManger.getInstance().getBaseUrl() + H5Uri.SLEEPER_TALK_SHARE.replace("{id}", mData!!.id.toString())
         ShareBottomSheet(this)
                 .setUrl(shareUrl)
                 .setTitle(mData!!.title)
@@ -134,15 +91,6 @@ class SleeperTalkActivity : BaseWebViewActivity() {
                 })
                 .show()
     }
-
-//    private fun updateUI(data: SleeperTalkData) {
-//        setTitle(data.title)
-//        iv_like.isSelected = data.isLike
-//        val completeUrl = H5UrlUtil.getCompleteUrl(BuildConfig.BASE_H5_URL,
-//                AppManager.getAccountViewModel().token.token,
-//                H5PayloadData("sumian-friends-detail", mapOf("id" to data.id)))
-//        web_view.loadUrl(completeUrl)
-//    }
 
     companion object {
         private const val KEY_ID = "KEY_ID"

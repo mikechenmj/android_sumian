@@ -1,6 +1,7 @@
 package com.sumian.sd
 
-import com.sumian.sd.buz.diary.fillsleepdiary.bean.SleepMedicine
+import com.sumian.sd.buz.sleepertalk.SleeperTalkDataUtil
+import com.sumian.sd.buz.sleepertalk.bean.SleeperTalkData
 import org.junit.Test
 
 /**
@@ -15,15 +16,17 @@ import org.junit.Test
 class KotlinTest {
     @Test
     fun test() {
-        var list = ArrayList<SleepMedicine>()
-        list.add(SleepMedicine("1", 1, 1, "1", 1))
-        list.add(SleepMedicine("3", 2, 2, "3", 3))
-        list.add(SleepMedicine("2", 0, 2, "2", 2))
+        var list = ArrayList<SleeperTalkData>()
+        list.add(SleeperTalkData("", "", "", 1, 1, "", true, 0, "", 1))
+        list.add(SleeperTalkData("", "", "", 1, 2, "", true, 0, "", 1))
+        list.add(SleeperTalkData("", "", "", 1, 3, "", true, 1, "", 1))
+        list.add(SleeperTalkData("", "", "", 1, 4, "", true, 0, "", 1))
 
-        val sortedList = list.sortedWith(compareBy(SleepMedicine::weight, SleepMedicine::weight)).reversed().filter { it.enable != 0 }
-        println(sortedList)
-//        val sortedList = list.sortWith(compareBy(SleepMedicine::weight, SleepMedicine::weight))
-//        println(list)
+        val sortedList = SleeperTalkDataUtil.sortData(list)!!
+
+        for (item in sortedList) {
+            println(item.id)
+        }
     }
 
 }
