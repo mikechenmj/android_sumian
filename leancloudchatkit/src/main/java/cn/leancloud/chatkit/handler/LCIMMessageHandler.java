@@ -51,13 +51,8 @@ public class LCIMMessageHandler extends AVIMTypedMessageHandler<AVIMTypedMessage
       if (!client.getClientId().equals(LCIMManager.getInstance().getUserId())) {
         client.close(null);
       } else {
-        if (LCIMNotificationUtils.isShowNotification(conversation.getConversationId())) {
-//          sendNotification(message, conversation);
-        }
         LCIMConversationItemCache.getInstance().insertConversation(message.getConversationId());
-        if (!message.getFrom().equals(client.getClientId())) {
-          sendEvent(message, conversation);
-        }
+        sendEvent(message, conversation);
       }
     }
   }
