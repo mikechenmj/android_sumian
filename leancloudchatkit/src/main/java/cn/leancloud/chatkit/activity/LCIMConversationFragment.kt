@@ -204,16 +204,16 @@ class LCIMConversationFragment : Fragment() {
         if (null != mConversation && null != messageEvent &&
                 mConversation!!.conversationId == messageEvent.conversation.conversationId) {
             println("currentConv unreadCount=" + mConversation!!.unreadMessagesCount)
-//            if (mConversation!!.unreadMessagesCount > 0) {
-//                paddingNewMessage(mConversation)
-//            } else {
-//                itemAdapter.addMessage(messageEvent.message)
-//                itemAdapter.notifyDataSetChanged()
-//                scrollToBottom()
-//            }
-            itemAdapter.addMessage(messageEvent.message)
-            itemAdapter.notifyDataSetChanged()
-            scrollToBottom()
+            if (mConversation!!.unreadMessagesCount > 0) {
+                paddingNewMessage(mConversation)
+            } else {
+                itemAdapter.addMessage(messageEvent.message)
+                itemAdapter.notifyDataSetChanged()
+                scrollToBottom()
+            }
+//            itemAdapter.addMessage(messageEvent.message)
+//            itemAdapter.notifyDataSetChanged()
+//            scrollToBottom()
         }
     }
 
