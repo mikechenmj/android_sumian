@@ -30,10 +30,9 @@ class SleeperTalkHomepageView(context: Context, attributeSet: AttributeSet? = nu
             val itemView = LayoutInflater.from(context).inflate(R.layout.list_item_sleeper_talk_homepage, v_item_container, false)
             v_item_container.addView(itemView)
         }
-        queryData()
     }
 
-    private fun queryData() {
+    fun queryData() {
         val call = AppManager.getSdHttpService().getSleeperTalkList(1, 5)
         call.enqueue(object : BaseSdResponseCallback<PaginationResponseV2<SleeperTalkData>>() {
             override fun onSuccess(response: PaginationResponseV2<SleeperTalkData>?) {
