@@ -289,6 +289,7 @@ public final class LCIMManager {
         AVIMConversationsQuery query = getClient().getConversationsQuery();
         query.limit(limit);
 //        query.whereEqualTo("conversation_type", "0");
+        query.setWithLastMessagesRefreshed(true);
         query.setQueryPolicy(AVQuery.CachePolicy.NETWORK_ONLY);
         query.findInBackground(callback);
     }

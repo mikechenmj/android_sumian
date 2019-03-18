@@ -105,11 +105,6 @@ class LCIMConversationListFragmentV2 : Fragment() {
                     ToastUtils.showShort(e.message)
                     return
                 }
-                if (list != null) {
-                    for (conversation in list) {
-                        println("conversation unread count" + conversation.unreadMessagesCount)
-                    }
-                }
                 showEmptyView(list == null || list.isEmpty())
                 itemAdapter.dataList = list
                 itemAdapter.notifyDataSetChanged()

@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:layout_marginBottom="72dp"
     android:gravity="center"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:visibility="gone">
 
     <ImageView
         android:id="@+id/iv_empty_view_icon"
