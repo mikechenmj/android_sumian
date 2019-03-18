@@ -97,7 +97,8 @@ class SleeperTalkListActivity : BaseViewModelActivity<BaseViewModel>(), BaseQuic
             helper.setText(R.id.tv_title, item.title)
             val simpleDateFormat = SimpleDateFormat("yyyy年MM月dd日", Locale.getDefault())
             val time = simpleDateFormat.format(Date(item.createdAt * 1000L))
-            helper.setText(R.id.tv_sub_title, "${item.author}· $time")
+            helper.setText(R.id.tv_name, item.author)
+            helper.setText(R.id.tv_time, "· $time")
             ImageLoader.loadImage(item.coverUrl, helper.getView(R.id.iv_icon))
         }
     }
