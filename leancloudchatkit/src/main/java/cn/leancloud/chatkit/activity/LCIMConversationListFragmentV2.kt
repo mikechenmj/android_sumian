@@ -56,6 +56,11 @@ class LCIMConversationListFragmentV2 : Fragment() {
         }
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        empty_view_root.setOnClickListener { updateConversationList() }
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 //        updateConversationList()
@@ -103,6 +108,9 @@ class LCIMConversationListFragmentV2 : Fragment() {
             override fun done(list: List<AVIMConversation>?, e: AVIMException?) {
                 if (e != null) {
                     ToastUtils.showShort(e.message)
+                    return
+                }
+                if (isDetached) {
                     return
                 }
                 showEmptyView(list == null || list.isEmpty())
