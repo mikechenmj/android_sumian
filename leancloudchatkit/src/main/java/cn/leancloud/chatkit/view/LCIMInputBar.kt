@@ -1,6 +1,8 @@
 package cn.leancloud.chatkit.view
 
+import android.Manifest
 import android.content.Context
+import android.content.pm.PackageManager
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
@@ -12,6 +14,7 @@ import cn.leancloud.chatkit.R
 import cn.leancloud.chatkit.event.LCIMInputBottomBarEvent
 import cn.leancloud.chatkit.event.LCIMInputBottomBarRecordEvent
 import cn.leancloud.chatkit.event.LCIMInputBottomBarTextEvent
+import cn.leancloud.chatkit.event.LCIMRequestRecordAudioPermission
 import cn.leancloud.chatkit.utils.LCIMPathUtils
 import com.blankj.utilcode.util.KeyboardUtils
 import kotlinx.android.synthetic.main.lcim_input_box.view.*
@@ -68,6 +71,15 @@ class LCIMInputBar(context: Context, attributeSet: AttributeSet? = null) : Linea
     }
 
     fun showRecordVoicePanel(show: Boolean) {
+        if (show) {
+            val pkm = context.packageManager
+            val hasPermission = PackageManager.PERMISSION_GRANTED == pkm.checkPermission(Manifest.permission.RECORD_AUDIO, context.packageName)
+            if (!hasPermission) {
+                EventBus.getDefault().post(LCIMRequestRecordAudioPermission())
+                return
+            }
+        }
+
         iv_switch_voice.isSelected = show
         record_layout.visibility = if (show) View.VISIBLE else View.GONE
         if (show) {

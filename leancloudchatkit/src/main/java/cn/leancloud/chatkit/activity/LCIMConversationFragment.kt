@@ -1,5 +1,6 @@
 package cn.leancloud.chatkit.activity
 
+import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -326,6 +327,11 @@ class LCIMConversationFragment : Fragment() {
         updateConversationCloseUI()
     }
 
+    @Subscribe
+    fun onEvent(event: LCIMRequestRecordAudioPermission) {
+        requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO), REQUEST_CODE_REQUEST_PERMISSION)
+    }
+
     private fun paddingNewMessage(currentConversation: AVIMConversation?) {
         if (null == currentConversation || currentConversation.unreadMessagesCount < 1) {
             return
@@ -592,6 +598,7 @@ class LCIMConversationFragment : Fragment() {
         private val REQUEST_IMAGE_CAPTURE = 1
         private val REQUEST_IMAGE_PICK = 2
         private val ATTR_IS_BLOCKED = "isBlocked"
+        private val REQUEST_CODE_REQUEST_PERMISSION = 100
     }
 
     interface Host {

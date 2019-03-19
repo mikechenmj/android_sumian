@@ -11,4 +11,5 @@
     <string name="lcim_no_doctor_message_hint">如有需要，请使用医生咨询服务或到医院就医</string>
     <string name="lcim_no_patient_message_yet">尚未向患者发起会话</string>
     <string name="lcim_no_patient_message_hint">如有需要，请在患者详情内向患者发消息</string>
+    <string name="no_record_audio_permission">no_record_audio_permission</string>
 </resources>

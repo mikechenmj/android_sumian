@@ -89,6 +89,7 @@ class LCIMRecordLayout(context: Context, attributeSet: AttributeSet) : LinearLay
         mRecordTime = 0
         mStatus = STATUS_NORMAL
         startRecording()
+        iv_record_voice_ripple.startAnimation()
     }
 
     private fun startRecording() {
@@ -138,6 +139,7 @@ class LCIMRecordLayout(context: Context, attributeSet: AttributeSet) : LinearLay
         }
         mAudioRecorder?.stop()
         mAudioRecorder = null
+        iv_record_voice_ripple.stopAnimation()
     }
 
     private fun removeFile() {

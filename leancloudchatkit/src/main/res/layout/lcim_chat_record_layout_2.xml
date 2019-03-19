@@ -31,6 +31,12 @@
         tools:text="@string/record_too_long"
         tools:visibility="visible" />
 
+    <cn.leancloud.chatkit.view.RippleView
+        android:id="@+id/iv_record_voice_ripple"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_centerInParent="true" />
+
     <ImageView
         android:id="@+id/iv_record_voice"
         android:layout_width="wrap_content"
