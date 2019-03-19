@@ -2,7 +2,6 @@ package com.sumian.sddoctor.me.useguide
 
 import android.net.Uri
 import android.os.Bundle
-import android.widget.MediaController
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.statistic.StatUtil
 import com.sumian.sddoctor.R
@@ -56,7 +55,7 @@ class UseGuideActivity : SddBaseActivity() {
         tv_content.text = resources.getStringArray(R.array.use_guide_contents)[mIndex]
 
         video_view.setVideoSize(1080, 1920)
-        video_view.setMediaController(MediaController(this))
+//        video_view.setMediaController(MediaController(this))
         val uri = Uri.parse("android.resource://" + getPackageName() + "/" + mVideoIds[mIndex])!!
         video_view.setVideoURI(uri)
         video_view.start()

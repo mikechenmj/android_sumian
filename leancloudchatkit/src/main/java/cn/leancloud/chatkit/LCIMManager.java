@@ -54,9 +54,10 @@ public final class LCIMManager {
     private List<AVIMConversation> mUnreadConversations = new ArrayList<>();
     private MutableLiveData<List<AVIMConversation>> mUnreadConversationsLiveData = new MutableLiveData<>();
     private MutableLiveData<Integer> mUnreadCountLiveData = new MutableLiveData<>();
-    private AVIMConversation mCurrentOpenConversation = null;
+    private AVIMConversation mCurrentOpenConversation = null; // 记录当前打开的会话，当前会话来新消息不notification
+    private AVIMConversation mLatestConversation = null;
+
     @SuppressWarnings("FieldCanBeLocal")
-    private Context mApplicationContext;
 
     private LCIMManager() {
     }
@@ -80,7 +81,6 @@ public final class LCIMManager {
      * @param appKey
      */
     public void init(Context context, String appId, String appKey, String userId, LCChatProfileProvider profileProvider, Host host) {
-        mApplicationContext = context.getApplicationContext();
         if (TextUtils.isEmpty(appId)) {
             throw new IllegalArgumentException("appId can not be empty!");
         }
@@ -89,7 +89,7 @@ public final class LCIMManager {
         }
         AVOSCloud.initialize(context.getApplicationContext(), appId, appKey);
         // 消息处理 handler
-        AVIMMessageManager.registerMessageHandler(AVIMTypedMessage.class, new LCIMMessageHandler(context));
+        AVIMMessageManager.registerMessageHandler(AVIMTypedMessage.class, LCIMMessageHandler.getInstance());
         // 与网络相关的 handler
         AVIMClient.setClientEventHandler(LCIMClientEventHandler.getInstance());
         AVIMOptions.getGlobalOptions().setResetConnectionWhileBroken(true);
@@ -119,13 +119,16 @@ public final class LCIMManager {
             @Override
             public void done(List<AVIMConversation> list, AVIMException e) {
                 mUnreadConversations.clear();
-                if (list != null) {
+                if (list != null && list.size() > 0) {
+                    mLatestConversation = list.get(0);
                     for (AVIMConversation conversation : list) {
                         if (conversation.getUnreadMessagesCount() > 0 || !mUnreadConversations.contains(conversation)) {
                             mUnreadConversations.add(conversation);
                         }
                     }
                     notifyUnreadCountChange();
+                } else {
+                    mLatestConversation = null;
                 }
             }
         });
@@ -316,6 +319,10 @@ public final class LCIMManager {
 
     public void setCurrentOpenConversation(AVIMConversation conversation) {
         mCurrentOpenConversation = conversation;
+    }
+
+    public AVIMConversation getLatestConversation() {
+        return mLatestConversation;
     }
 
     public Intent getConversationIntent(Context context, AVIMConversation conversation) {

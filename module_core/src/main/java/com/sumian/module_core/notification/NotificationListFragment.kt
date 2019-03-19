@@ -187,10 +187,11 @@ class NotificationListFragment : BaseFragment(), BaseQuickAdapter.OnItemClickLis
         }
     }
 
-    private fun updateImItem(it: List<AVIMConversation>) {
+    private fun updateImItem(list: List<AVIMConversation>) {
         val unreadMessagesCount = LCIMManager.getInstance().unreadMessageCount
-        if (unreadMessagesCount > 0) {
-            val latestConversation = it[0]
+        mHeaderView?.showDot(unreadMessagesCount > 0)
+        if (list.isNotEmpty()) {
+            val latestConversation = LCIMManager.getInstance().latestConversation
             LCIMConversationUtils.getConversationName(latestConversation, object : AVCallback<String>() {
                 override fun internalDone0(name: String, e: AVException?) {
                     if (null != e) {

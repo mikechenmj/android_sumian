@@ -80,7 +80,8 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="16dp"
             android:layout_toEndOf="@id/ic_left"
-            android:text="@string/doctor_message" />
+            android:text="@string/doctor_message"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tv_im_item_message"

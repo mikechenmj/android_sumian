@@ -1,5 +1,6 @@
 package com.sumian.module_core.notification
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.View
 import android.widget.FrameLayout
@@ -15,6 +16,7 @@ import kotlinx.android.synthetic.main.view_notification_list_head_view.view.*
  * version: 1.0
 </pre> *
  */
+@SuppressLint("ViewConstructor")
 class NotificationListHeadView(context: Context, isDoctor: Boolean) : FrameLayout(context) {
     val mIsDoctor = isDoctor
 
@@ -32,16 +34,17 @@ class NotificationListHeadView(context: Context, isDoctor: Boolean) : FrameLayou
      */
     fun showMessage(msg: String) {
         tv_im_item_message.text = msg
-        iv_doctor_message_dot.visibility = View.VISIBLE
     }
 
     fun showNoMessage() {
         tv_im_item_message.text = context.getString(if (mIsDoctor) R.string.no_patient_message_yet else R.string.no_doctor_message_yet)
-        iv_doctor_message_dot.visibility = View.GONE
     }
 
     fun showNoNotificationView(show: Boolean) {
         tv_no_data.visibility = if (show) View.VISIBLE else View.GONE
     }
 
+    fun showDot(show: Boolean) {
+        iv_doctor_message_dot.visibility = if (show) View.VISIBLE else View.GONE
+    }
 }
