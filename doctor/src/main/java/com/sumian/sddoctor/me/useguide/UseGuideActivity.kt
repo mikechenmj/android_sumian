@@ -46,6 +46,7 @@ class UseGuideActivity : SddBaseActivity() {
         tv_use_guide_title.text = label
         tv_content.text = resources.getStringArray(R.array.use_guide_contents)[mIndex]
 
+        video_view.setVideoSize(1080, 1920)
         video_view.setMediaController(MediaController(this))
         val uri = Uri.parse("android.resource://" + getPackageName() + "/" + mVideoIds[mIndex])!!
         video_view.setVideoURI(uri)
