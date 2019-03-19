@@ -1,107 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="wrap_content">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/space_166"
-        android:background="@color/b2_color">
-
-        <com.qmuiteam.qmui.widget.QMUIRadiusImageView
-            android:id="@+id/iv_avatar"
-            android:layout_width="@dimen/space_66"
-            android:layout_height="@dimen/space_66"
-            android:layout_marginLeft="@dimen/space_20"
-            android:layout_marginTop="@dimen/space_24"
-            android:layout_marginRight="@dimen/space_20"
-            android:elevation="@dimen/space_2"
-            android:outlineProvider="background"
-            android:translationZ="@dimen/space_2"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/tv_name"
-            app:layout_constraintTop_toTopOf="parent"
-            app:qmui_border_color="@color/b2_color"
-            app:qmui_border_width="@dimen/space_2"
-            app:qmui_is_circle="true"
-            app:srcCompat="@mipmap/ic_info_avatar_doctor_l" />
-
-        <TextView
-            android:id="@+id/tv_name"
-            style="@style/text_t1_18"
-            android:layout_marginLeft="@dimen/space_20"
-            android:layout_marginRight="@dimen/space_20"
-            android:text="@string/none_nickname"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@id/tv_desc"
-            app:layout_constraintBottom_toTopOf="@+id/tv_desc"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintLeft_toRightOf="@id/iv_avatar"
-            app:layout_constraintTop_toTopOf="@id/iv_avatar" />
-
-        <TextView
-            android:id="@+id/tv_desc"
-            style="@style/text_t2_14"
-            android:layout_marginLeft="@dimen/space_20"
-            android:layout_marginRight="@dimen/space_20"
-            app:layout_constraintBottom_toBottomOf="@id/iv_avatar"
-            app:layout_constraintLeft_toRightOf="@id/iv_avatar"
-            app:layout_constraintTop_toBottomOf="@+id/tv_name"
-            tools:text="华侨医院 睡眠科主任医师" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <include layout="@layout/lay_visitor_tips" />
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/space_10" />
-
-    <com.sumian.sddoctor.widget.divider.SettingDividerView
-        android:id="@+id/sdv_user_info"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:type_desc="@string/person_info"
-        app:type_icon="@mipmap/ic_info_icon_information" />
+        android:orientation="vertical">
 
-    <com.sumian.sddoctor.widget.divider.SettingDividerView
-        android:id="@+id/sdv_my_service"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:type_desc="@string/my_service"
-        app:type_icon="@mipmap/ic_info_service" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_166"
+            android:background="@color/b2_color">
 
-    <com.sumian.sddoctor.widget.divider.SettingDividerView
-        android:id="@+id/sdv_my_wallet"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:type_desc="@string/my_wallet"
-        app:type_icon="@drawable/ic_info_icon_wallet" />
+            <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+                android:id="@+id/iv_avatar"
+                android:layout_width="@dimen/space_66"
+                android:layout_height="@dimen/space_66"
+                android:layout_marginLeft="@dimen/space_20"
+                android:layout_marginTop="@dimen/space_24"
+                android:layout_marginRight="@dimen/space_20"
+                android:elevation="@dimen/space_2"
+                android:outlineProvider="background"
+                android:translationZ="@dimen/space_2"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/tv_name"
+                app:layout_constraintTop_toTopOf="parent"
+                app:qmui_border_color="@color/b2_color"
+                app:qmui_border_width="@dimen/space_2"
+                app:qmui_is_circle="true"
+                app:srcCompat="@mipmap/ic_info_avatar_doctor_l" />
 
-    <com.sumian.sddoctor.widget.divider.SettingDividerView
-        android:id="@+id/sdv_my_kefu"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:type_desc="@string/my_kefu"
-        app:type_icon="@drawable/ic_info_kefu" />
+            <TextView
+                android:id="@+id/tv_name"
+                style="@style/text_t1_18"
+                android:layout_marginLeft="@dimen/space_20"
+                android:layout_marginRight="@dimen/space_20"
+                android:text="@string/none_nickname"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/tv_desc"
+                app:layout_constraintBottom_toTopOf="@+id/tv_desc"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintLeft_toRightOf="@id/iv_avatar"
+                app:layout_constraintTop_toTopOf="@id/iv_avatar" />
 
-    <com.sumian.sddoctor.widget.divider.SettingDividerView
-        android:id="@+id/sdv_user_guid"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:type_desc="@string/use_guide"
-        app:type_icon="@drawable/info_icon_userguides" />
+            <TextView
+                android:id="@+id/tv_desc"
+                style="@style/text_t2_14"
+                android:layout_marginLeft="@dimen/space_20"
+                android:layout_marginRight="@dimen/space_20"
+                app:layout_constraintBottom_toBottomOf="@id/iv_avatar"
+                app:layout_constraintLeft_toRightOf="@id/iv_avatar"
+                app:layout_constraintTop_toBottomOf="@+id/tv_name"
+                tools:text="华侨医院 睡眠科主任医师" />
 
-    <com.sumian.sddoctor.widget.divider.SettingDividerView
-        android:id="@+id/sdv_setting"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:type_desc="@string/setting"
-        app:type_icon="@mipmap/ic_info_icon_set" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-</LinearLayout>
+        <include layout="@layout/lay_visitor_tips" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_10" />
+
+        <com.sumian.sddoctor.widget.divider.SettingDividerView
+            android:id="@+id/sdv_user_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:type_desc="@string/person_info"
+            app:type_icon="@mipmap/ic_info_icon_information" />
+
+        <com.sumian.sddoctor.widget.divider.SettingDividerView
+            android:id="@+id/sdv_my_service"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:type_desc="@string/my_service"
+            app:type_icon="@mipmap/ic_info_service" />
+
+        <com.sumian.sddoctor.widget.divider.SettingDividerView
+            android:id="@+id/sdv_my_wallet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:type_desc="@string/my_wallet"
+            app:type_icon="@drawable/ic_info_icon_wallet" />
+
+        <com.sumian.sddoctor.widget.divider.SettingDividerView
+            android:id="@+id/sdv_my_kefu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:type_desc="@string/my_kefu"
+            app:type_icon="@drawable/ic_info_kefu" />
+
+        <com.sumian.sddoctor.widget.divider.SettingDividerView
+            android:id="@+id/sdv_user_guid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:type_desc="@string/use_guide"
+            app:type_icon="@drawable/info_icon_userguides" />
+
+        <com.sumian.sddoctor.widget.divider.SettingDividerView
+            android:id="@+id/sdv_setting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:type_desc="@string/setting"
+            app:type_icon="@mipmap/ic_info_icon_set" />
+
+    </LinearLayout>
+</ScrollView>
