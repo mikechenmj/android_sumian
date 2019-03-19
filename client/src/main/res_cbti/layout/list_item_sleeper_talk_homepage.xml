@@ -23,12 +23,12 @@
         android:layout_gravity="bottom"
         android:background="@color/black_30"
         android:ellipsize="end"
-        android:gravity="center_vertical"
+        android:gravity="center"
         android:maxLines="1"
         android:orientation="horizontal"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
         android:textSize="15sp"
         android:textStyle="bold"
-        tools:text="只有坚信，才会创造奇迹只有坚信，才会创造奇迹" />
+        tools:text="只有坚信" />
 </androidx.cardview.widget.CardView>

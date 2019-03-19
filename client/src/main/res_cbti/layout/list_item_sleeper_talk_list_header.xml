@@ -40,6 +40,7 @@
                 android:layout_marginBottom="35dp"
                 android:ellipsize="end"
                 android:maxLines="1"
+                android:textStyle="bold"
                 tools:text="现代医学是我的信仰现代医学是我的信仰现代医学是我的信仰" />
 
             <LinearLayout

@@ -58,6 +58,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel:2.0.0'
     // Java8 support for Lifecycles
     implementation 'androidx.lifecycle:lifecycle-common-java8:2.0.0'
+    implementation 'com.makeramen:roundedimageview:2.3.0'
 
 }
 

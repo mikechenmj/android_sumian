@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import cn.leancloud.chatkit.LCIMManager
 import cn.leancloud.chatkit.activity.LCIMConversationFragment
-import cn.leancloud.chatkit.cache.LCIMConversationItemCache
 import cn.leancloud.chatkit.utils.LCIMConstants
 import cn.leancloud.chatkit.utils.LCIMConversationUtils
 import cn.leancloud.chatkit.utils.LCIMLogUtils
@@ -149,7 +148,7 @@ open class ConversationActivity : SddBaseActivity(), LCIMConversationFragment.Ho
             }
             mFragment.setConversation(conversation)
             LCIMManager.getInstance().removeUnreadConversation(conversation)
-            LCIMConversationItemCache.getInstance().insertConversation(conversation.conversationId)
+//            LCIMConversationItemCache.getInstance().insertConversation(conversation.conversationId)
             LCIMConversationUtils.getConversationName(conversation, object : AVCallback<String>() {
                 override fun internalDone0(s: String, e: AVException?) {
                     if (null != e) {
