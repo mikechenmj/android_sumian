@@ -5,7 +5,6 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
-import com.sumian.common.image.ImageLoader
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.network.response.PaginationResponseV2
 import com.sumian.common.statistic.StatUtil
@@ -14,6 +13,7 @@ import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.sleepertalk.bean.SleeperTalkData
 import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
+import io.alterac.blurkit.BlurKit
 import kotlinx.android.synthetic.main.list_item_sleeper_talk_homepage.view.*
 import kotlinx.android.synthetic.main.view_sleeper_talk_homepage.view.*
 
@@ -35,6 +35,7 @@ class SleeperTalkHomepageView(context: Context, attributeSet: AttributeSet? = nu
             val itemView = LayoutInflater.from(context).inflate(R.layout.list_item_sleeper_talk_homepage, v_item_container, false)
             v_item_container.addView(itemView)
         }
+        BlurKit.init(context)
     }
 
     fun queryData() {
@@ -58,7 +59,7 @@ class SleeperTalkHomepageView(context: Context, attributeSet: AttributeSet? = nu
             v_item_container.addView(itemView)
             itemView.setOnClickListener { SleeperTalkActivity.launch(item.id) }
             itemView.tv_title.text = item.title
-            ImageLoader.loadImage(item.coverUrl, itemView.iv_bg)
+            itemView.tv_title.post { itemView.iv_bg.loadUrl(item.coverUrl, itemView.tv_title.height) }
         }
     }
 

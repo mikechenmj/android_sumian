@@ -2,18 +2,19 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_root"
     android:layout_width="210dp"
     android:layout_height="wrap_content"
     android:layout_marginStart="5dp"
     android:layout_marginEnd="5dp"
     app:cardCornerRadius="4dp">
 
-    <ImageView
+    <com.sumian.common.widget.BottomBlurImageView
         android:id="@+id/iv_bg"
         android:layout_width="210dp"
         android:layout_height="110dp"
-        android:src="@color/l3_color"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        android:src="@color/l3_color" />
 
     <TextView
         android:id="@+id/tv_title"
