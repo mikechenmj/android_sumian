@@ -65,7 +65,7 @@ class NotificationListFragment : BaseFragment(), BaseQuickAdapter.OnItemClickLis
 
     private fun initHeadView() {
         mHeaderView = NotificationListHeadView(activity!!, mHost.isDoctor())
-        mHeaderView!!.setOnClickListener { v -> SettingsUtil.launchSettingActivityForResult(this, REQUEST_CODE_OPEN_NOTIFICATION) }
+        mHeaderView!!.v_notification_item.setOnClickListener { v -> SettingsUtil.launchSettingActivityForResult(this, REQUEST_CODE_OPEN_NOTIFICATION) }
         mAdapter!!.addHeaderView(mHeaderView)
         updateNotificationItem()
         mHeaderView!!.v_doctor_message_item.setOnClickListener { mHost.launchPatientDoctorMessageListActivity() }
