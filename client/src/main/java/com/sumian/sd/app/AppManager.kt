@@ -345,6 +345,7 @@ object AppManager {
         ActivityUtils.finishAllActivities()
         LoginActivity.show()
         StatUtil.removeAccount()
+        LCIMManager.getInstance().close()
     }
 
     // ------------ App's important lifecycle events end------------

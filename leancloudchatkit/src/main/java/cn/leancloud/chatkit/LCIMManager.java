@@ -262,6 +262,10 @@ public final class LCIMManager {
         });
     }
 
+    public void close() {
+        close(null);
+    }
+
     /**
      * 获取当前的实时聊天的用户
      *

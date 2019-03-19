@@ -19,6 +19,7 @@ import com.sumian.common.helper.ToastHelper
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.notification.AppNotificationManager
 import com.sumian.common.notification.LeanCloudManager
+import com.sumian.common.notification.NotificationUtil
 import com.sumian.common.social.OpenEngine
 import com.sumian.common.social.login.OpenLogin
 import com.sumian.common.statistic.StatUtil
@@ -237,6 +238,8 @@ object AppManager {
 
     fun onLogout() {
         KefuManager.logout()
+        LCIMManager.getInstance().close()
+        NotificationUtil.cancelAllNotification(App.getAppContext())
     }
 
     @JvmStatic
