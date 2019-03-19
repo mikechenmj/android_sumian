@@ -75,8 +75,8 @@
             tools:visibility="visible" />
 
         <TextView
-            style="@style/text_t1_16"
             android:id="@+id/tv_im_item_title"
+            style="@style/text_t1_16"
             android:layout_marginStart="20dp"
             android:layout_marginTop="16dp"
             android:layout_toEndOf="@id/ic_left"
@@ -89,7 +89,10 @@
             android:layout_marginStart="20dp"
             android:layout_marginBottom="16dp"
             android:layout_toEndOf="@id/ic_left"
-            android:text="@string/no_doctor_message_yet" />
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@string/no_doctor_message_yet"
+            tools:text="123123123123123123123123123123123123123123123123" />
 
         <ImageView
             android:layout_width="wrap_content"

@@ -15,6 +15,7 @@ import com.avos.avoscloud.im.v2.AVIMConversation;
 import com.avos.avoscloud.im.v2.AVIMException;
 import com.avos.avoscloud.im.v2.AVIMMessage;
 import com.avos.avoscloud.im.v2.callback.AVIMConversationCallback;
+import com.blankj.utilcode.util.LogUtils;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
@@ -128,7 +129,7 @@ public class LCIMConversationItemHolderV2 extends LCIMCommonViewHolder {
                 if (null != e) {
                     LCIMLogUtils.logException(e);
                 } else {
-
+                    LogUtils.d("conversation name " + s);
                     nameView.setText(s);
                 }
             }

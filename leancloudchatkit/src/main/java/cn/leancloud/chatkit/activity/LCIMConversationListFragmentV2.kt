@@ -58,7 +58,7 @@ class LCIMConversationListFragmentV2 : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        updateConversationList()
+//        updateConversationList()
     }
 
     override fun onResume() {
