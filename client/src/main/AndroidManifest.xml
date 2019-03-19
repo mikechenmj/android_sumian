@@ -134,7 +134,7 @@
         <activity
             android:name=".buz.doctor.activity.ScanDoctorQrCodeActivity"
             android:launchMode="singleTop"
-            android:theme="@style/Scan_qr_theme" /> <!-- third  loginByCaptcha -->
+            android:theme="@style/BaseAppTheme.Fullscreen" /> <!-- third  loginByCaptcha -->
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
