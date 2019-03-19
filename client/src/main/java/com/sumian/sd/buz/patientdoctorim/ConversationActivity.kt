@@ -19,7 +19,9 @@ import com.avos.avoscloud.im.v2.callback.AVIMConversationCreatedCallback
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.base.BaseActivity
+import com.sumian.common.statistic.StatUtil
 import com.sumian.sd.R
+import com.sumian.sd.buz.stat.StatConstants
 import java.util.*
 
 /**
@@ -46,6 +48,7 @@ class ConversationActivity : BaseActivity(), LCIMConversationFragment.Host {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initByIntent(intent)
+        StatUtil.event(StatConstants.enter_conversation_page)
     }
 
     override fun onNewIntent(intent: Intent?) {

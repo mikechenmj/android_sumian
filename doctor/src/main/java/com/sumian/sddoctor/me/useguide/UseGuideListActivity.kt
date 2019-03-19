@@ -5,9 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.ActivityUtils
+import com.sumian.common.statistic.StatUtil
 import com.sumian.common.widget.CommonDividerItemDecoration
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.base.SddBaseActivity
+import com.sumian.sddoctor.constants.StatConstants
 import kotlinx.android.synthetic.main.activity_my_wallet.*
 import kotlinx.android.synthetic.main.list_item_use_guide.view.*
 
@@ -29,6 +31,10 @@ class UseGuideListActivity : SddBaseActivity() {
 
     override fun showBackNav(): Boolean {
         return true
+    }
+
+    override fun getPageName(): String {
+        return StatConstants.page_use_guide_list
     }
 
     override fun initWidget() {
@@ -54,7 +60,10 @@ class UseGuideListActivity : SddBaseActivity() {
 
         override fun onBindViewHolder(holder: VH, position: Int) {
             holder.itemView.tv_label.text = mData[position]
-            holder.itemView.setOnClickListener { UseGuideActivity.launch(position) }
+            holder.itemView.setOnClickListener {
+                UseGuideActivity.launch(position)
+                StatUtil.event(StatConstants.click_use_guide_list_page_item)
+            }
         }
     }
 

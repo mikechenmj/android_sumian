@@ -1,10 +1,13 @@
 package com.sumian.sd.buz.patientdoctorim
 
+import android.os.Bundle
 import cn.leancloud.chatkit.activity.LCIMConversationListFragmentV2
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.base.BaseViewModel
 import com.sumian.common.base.BaseViewModelActivity
+import com.sumian.common.statistic.StatUtil
 import com.sumian.sd.R
+import com.sumian.sd.buz.stat.StatConstants
 
 /**
  * @author : Zhan Xuzhao
@@ -20,6 +23,11 @@ class ConversationListActivity : BaseViewModelActivity<BaseViewModel>(), LCIMCon
 
     override fun showBackNav(): Boolean {
         return true
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        StatUtil.event(StatConstants.enter_conversation_list_page)
     }
 
     override fun initWidget() {

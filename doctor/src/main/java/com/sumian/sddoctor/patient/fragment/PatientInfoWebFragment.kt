@@ -14,12 +14,14 @@ import com.blankj.utilcode.util.LogUtils
 import com.sumian.common.h5.handler.SBridgeHandler
 import com.sumian.common.h5.widget.SWebView
 import com.sumian.common.network.response.ErrorResponse
+import com.sumian.common.statistic.StatUtil
 import com.sumian.common.utils.JsonUtil
 import com.sumian.module_core.chat.bean.CreateConversationResponse
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.app.AppManager
 import com.sumian.sddoctor.buz.patientdoctorim.ConversationActivity
 import com.sumian.sddoctor.constants.H5Uri
+import com.sumian.sddoctor.constants.StatConstants
 import com.sumian.sddoctor.h5.BaseWebViewFragment
 import com.sumian.sddoctor.me.authentication.AuthenticationHelper
 import com.sumian.sddoctor.network.callback.BaseSdResponseCallback
@@ -152,6 +154,7 @@ class PatientInfoWebFragment : BaseWebViewFragment(), TitleBar.OnMenuClickListen
         imageView.setImageResource(R.drawable.nav_icon_conversation)
         mTitleBar.v_menu_container.addView(imageView)
         imageView.setOnClickListener {
+            StatUtil.event(StatConstants.click_patient_info_page_conversation_btn)
             val call = AppManager.getHttpService().createConversation(mPatientId)
             addCall(call)
             call.enqueue(object : BaseSdResponseCallback<CreateConversationResponse>() {

@@ -8,9 +8,11 @@ import android.widget.LinearLayout
 import com.sumian.common.image.ImageLoader
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.network.response.PaginationResponseV2
+import com.sumian.common.statistic.StatUtil
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.sleepertalk.bean.SleeperTalkData
+import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import kotlinx.android.synthetic.main.list_item_sleeper_talk_homepage.view.*
 import kotlinx.android.synthetic.main.view_sleeper_talk_homepage.view.*
@@ -25,7 +27,10 @@ import kotlinx.android.synthetic.main.view_sleeper_talk_homepage.view.*
 class SleeperTalkHomepageView(context: Context, attributeSet: AttributeSet? = null) : LinearLayout(context, attributeSet) {
     init {
         View.inflate(context, R.layout.view_sleeper_talk_homepage, this)
-        tv_more_article.setOnClickListener { SleeperTalkListActivity.launch() }
+        tv_more_article.setOnClickListener {
+            SleeperTalkListActivity.launch()
+            StatUtil.event(StatConstants.click_homepage_more_sumian_story_btn)
+        }
         for (i in 0..5) {
             val itemView = LayoutInflater.from(context).inflate(R.layout.list_item_sleeper_talk_homepage, v_item_container, false)
             v_item_container.addView(itemView)

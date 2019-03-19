@@ -4,9 +4,11 @@ import android.net.Uri
 import android.os.Bundle
 import android.widget.MediaController
 import com.blankj.utilcode.util.ActivityUtils
+import com.sumian.common.statistic.StatUtil
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.base.SddBaseActivity
 import com.sumian.sddoctor.base.StatusBarHelper
+import com.sumian.sddoctor.constants.StatConstants
 import kotlinx.android.synthetic.main.activity_use_guide.*
 
 /**
@@ -36,11 +38,18 @@ class UseGuideActivity : SddBaseActivity() {
         return false
     }
 
+    override fun getPageName(): String {
+        return StatConstants.page_use_guide
+    }
+
     override fun initWidget() {
         super.initWidget()
         title_bar.setOnBackClickListener { finish() }
         StatusBarHelper.initTitleBarUI(this, mTitleBar)
-        tv_useful.setOnClickListener { onTvUsefulClick() }
+        tv_useful.setOnClickListener {
+            onTvUsefulClick()
+            StatUtil.event(StatConstants.click_use_guide_page_this_is_helpful)
+        }
         val label = resources.getStringArray(R.array.use_guide_labels)[mIndex]
         setTitle(label)
         tv_use_guide_title.text = label

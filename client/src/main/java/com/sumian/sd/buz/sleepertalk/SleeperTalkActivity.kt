@@ -7,10 +7,12 @@ import com.sumian.common.h5.BaseWebViewActivity
 import com.sumian.common.h5.WebViewManger
 import com.sumian.common.h5.bean.H5PayloadData
 import com.sumian.common.network.response.ErrorResponse
+import com.sumian.common.statistic.StatUtil
 import com.sumian.sd.BuildConfig
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.sleepertalk.bean.SleeperTalkData
+import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.h5.H5Uri
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import com.sumian.sd.widget.ShareBottomSheet
@@ -36,10 +38,15 @@ class SleeperTalkActivity : BaseWebViewActivity() {
         return true
     }
 
+    override fun getPageName(): String {
+        return StatConstants.page_sumian_story
+    }
+
     override fun initWidget() {
         super.initWidget()
         mTitleBar.showMoreIcon(R.drawable.ic_nav_share)
         mTitleBar.setOnMenuClickListener { showShareDialog() }
+        StatUtil.event(StatConstants.enter_sumian_story_detail_page)
     }
 
     override fun getCompleteUrl(): String {

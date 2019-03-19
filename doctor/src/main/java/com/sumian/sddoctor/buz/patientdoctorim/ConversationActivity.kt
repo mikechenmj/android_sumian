@@ -22,8 +22,10 @@ import com.avos.avoscloud.im.v2.callback.AVIMConversationCreatedCallback
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.sumian.common.statistic.StatUtil
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.base.SddBaseActivity
+import com.sumian.sddoctor.constants.StatConstants
 import com.sumian.sddoctor.widget.SumianAlertDialog
 import kotlinx.android.synthetic.main.bottom_sheet_close_conversation.view.*
 import java.util.*
@@ -51,6 +53,7 @@ open class ConversationActivity : SddBaseActivity(), LCIMConversationFragment.Ho
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initByIntent(intent)
+        StatUtil.event(StatConstants.enter_conversation_page)
     }
 
     override fun onNewIntent(intent: Intent?) {

@@ -16,6 +16,7 @@ import com.sumian.common.network.response.PaginationResponseV2
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.sleepertalk.bean.SleeperTalkData
+import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import kotlinx.android.synthetic.main.activity_sleeper_talk_list.*
 import java.text.SimpleDateFormat
@@ -42,6 +43,11 @@ class SleeperTalkListActivity : BaseViewModelActivity<BaseViewModel>(), BaseQuic
         return true
     }
 
+
+    override fun getPageName(): String {
+        return StatConstants.page_sumian_story_list
+    }
+
     override fun initWidget() {
         super.initWidget()
         mTitleBar.setTitle(R.string.sleeper_talk)
@@ -50,6 +56,7 @@ class SleeperTalkListActivity : BaseViewModelActivity<BaseViewModel>(), BaseQuic
         recycler_view.layoutManager = LinearLayoutManager(this)
         mAdapter.setOnLoadMoreListener({ loadMore() }, recycler_view)
         mAdapter.setOnItemClickListener(this)
+
     }
 
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {

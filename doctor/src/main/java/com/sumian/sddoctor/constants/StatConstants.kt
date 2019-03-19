@@ -58,6 +58,9 @@ object StatConstants {
     const val page_profile_feedback = "意见反馈页"
     const val page_profile_version = "软件更新页"
     const val page_profile_protocol = "用户协议页"
+    const val page_use_guide_list = "用户指南列表页"
+    const val page_use_guide = "用户指南详情页"
+
 
     // ------ event ------
     const val click_login_page_captcha = "click_login_page_captcha"
@@ -69,5 +72,11 @@ object StatConstants {
     const val enter_home_page = "enter_home_page"
     const val enter_doctor_verify_page = "enter_doctor_verify_page"
     const val click_doctor_verify_page_submit_btn = "click_doctor_verify_page_submit_btn"
+    const val click_patient_info_page_conversation_btn = "click_patient_info_page_conversation_btn"
+    const val enter_conversation_list_page = "enter_conversation_list_page"
+    const val enter_conversation_page = "enter_conversation_page"
+    const val click_me_page_use_guide_item = "click_me_page_use_guide_item"
+    const val click_use_guide_list_page_item = "click_use_guide_list_page_item"
+    const val click_use_guide_page_this_is_helpful = "click_use_guide_page_this_is_helpful"
 
 }
