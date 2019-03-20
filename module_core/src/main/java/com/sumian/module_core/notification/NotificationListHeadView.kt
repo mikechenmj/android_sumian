@@ -23,6 +23,7 @@ class NotificationListHeadView(context: Context, isDoctor: Boolean) : FrameLayou
     init {
         inflate(context, R.layout.view_notification_list_head_view, this)
         tv_im_item_title.text = resources.getString(if (mIsDoctor) R.string.patient_message else R.string.doctor_message)
+        showNoMessage()
     }
 
     fun showNotificationItem(show: Boolean) {
