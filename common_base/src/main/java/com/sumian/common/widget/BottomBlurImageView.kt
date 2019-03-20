@@ -40,7 +40,7 @@ class BottomBlurImageView(context: Context, attributeSet: AttributeSet) : ImageV
             Glide.with(this)
                     .asBitmap()
                     .load(url)
-                    .into(object : SimpleTarget<Bitmap>(width, height) {
+                    .into(object : SimpleTarget<Bitmap>(measuredWidth, measuredHeight) {
                         override fun onResourceReady(bitmap: Bitmap, transition: Transition<in Bitmap>?) {
                             setImageBitmap(bitmap, blurHeight, blurRadius)
                         }

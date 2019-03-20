@@ -84,7 +84,7 @@ HomepageFragment : BaseViewModelFragment<BaseViewModel>(), OnEnterListener, Last
         super.initWidget()
         refresh_layout.setOnRefreshListener {
             refreshData()
-            refresh_layout.postDelayed({ refresh_layout?.hideRefreshAnim() }, 1500)
+            refresh_layout.postDelayed({ refresh_layout?.hideRefreshAnim() }, 1000)
         }
         initUserInfo()
         cbti_progress_view.setOnEnterLearnBtnClickListener(View.OnClickListener {
