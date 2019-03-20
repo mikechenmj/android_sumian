@@ -121,6 +121,9 @@ class LCIMConversationListFragmentV2 : Fragment() {
     }
 
     fun showEmptyView(show: Boolean) {
+        if (empty_view_root == null) {
+            return
+        }
         empty_view_root.visibility = if (show) View.VISIBLE else View.GONE
         val isDoctor = mHost?.isDoctor() ?: false
         iv_empty_view_icon.setImageResource(if (!isDoctor) R.drawable.lcim_emptystate_img_doctormessage else R.drawable.lcim_emptystate_img_patientmessage)

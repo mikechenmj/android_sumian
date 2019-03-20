@@ -100,8 +100,10 @@ class PatientListActivity : SddBaseViewModelActivity<PatientListPresenter>(),
         PatientInfoActivity.show(this@PatientListActivity, item.id, item.consulted)
     }
 
-    override fun getPatientsSuccess(patients: ArrayList<Patient>?) {
-        updatePatients(patients)
+    override fun loadMorePatientsSuccess(patients: ArrayList<Patient>?) {
+//        updatePatients(patients)
+        mPatientAdapter.addAll(patients)
+        mPatientAdapter.notifyDataSetChanged()
     }
 
     override fun getPatientFailed(error: String) {

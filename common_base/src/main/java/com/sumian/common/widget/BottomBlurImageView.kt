@@ -37,6 +37,9 @@ class BottomBlurImageView(context: Context, attributeSet: AttributeSet) : ImageV
 
     fun loadUrl(url: String, blurHeight: Int, blurRadius: Int = 10) {
         post {
+            if (measuredHeight == 0 || measuredHeight == 0) {
+                return@post
+            }
             Glide.with(this)
                     .asBitmap()
                     .load(url)

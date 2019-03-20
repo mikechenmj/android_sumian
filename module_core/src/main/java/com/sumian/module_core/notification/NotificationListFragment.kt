@@ -60,7 +60,7 @@ class NotificationListFragment : BaseFragment(), BaseQuickAdapter.OnItemClickLis
         mAdapter!!.onItemClickListener = this
         mAdapter!!.setOnLoadMoreListener({ loadData(false) }, recycler_view)
         initHeadView()
-        LCIMManager.getInstance().unreadConversationsLiveData.observe(this, androidx.lifecycle.Observer<List<AVIMConversation>> { it -> updateImItem(it) })
+        LCIMManager.getInstance().unreadConversationsLiveData.observe(this, androidx.lifecycle.Observer<List<AVIMConversation>> { updateImItem() })
     }
 
     private fun initHeadView() {
@@ -111,7 +111,7 @@ class NotificationListFragment : BaseFragment(), BaseQuickAdapter.OnItemClickLis
     override fun onStart() {
         super.onStart()
         updateNotificationItem()
-//        LCIMManager.getInstance().updateUnreadConversation()
+        LCIMManager.getInstance().updateUnreadConversation()
     }
 
     fun updateNotificationItem() {
@@ -187,11 +187,12 @@ class NotificationListFragment : BaseFragment(), BaseQuickAdapter.OnItemClickLis
         }
     }
 
-    private fun updateImItem(list: List<AVIMConversation>) {
+    private fun updateImItem() {
         val unreadMessagesCount = LCIMManager.getInstance().unreadMessageCount
         mHeaderView?.showDot(unreadMessagesCount > 0)
-        if (list.isNotEmpty()) {
-            val latestConversation = LCIMManager.getInstance().latestConversation
+
+        val latestConversation = LCIMManager.getInstance().latestConversation
+        if (latestConversation != null) {
             LCIMConversationUtils.getConversationName(latestConversation, object : AVCallback<String>() {
                 override fun internalDone0(name: String, e: AVException?) {
                     if (null != e) {

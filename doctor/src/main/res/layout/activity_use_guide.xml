@@ -49,9 +49,10 @@
             style="@style/text_t2_13"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:drawableLeft="@drawable/sel_use_guide_like"
+            android:layout_marginTop="20dp"
+            android:drawableStart="@drawable/sel_use_guide_like"
             android:drawablePadding="5dp"
+            android:padding="10dp"
             android:text="@string/useful_to_me"
             android:textColor="@color/sel_b3_t2" />
 

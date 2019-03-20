@@ -7,7 +7,7 @@ interface PatientListContract {
 
     interface View : BaseShowLoadingView {
 
-        fun getPatientsSuccess(patients: ArrayList<Patient>?)
+        fun loadMorePatientsSuccess(patients: ArrayList<Patient>?)
 
         fun getPatientFailed(error: String)
 
