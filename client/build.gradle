@@ -107,8 +107,8 @@ android {
             jniDebuggable false
             signingConfig signingConfigs.configs
             useProguard true  //默认 false，如果开启了混淆， 但是我们可以不应用 proguard 文件
-            shrinkResources true
-            minifyEnabled true
+            shrinkResources false
+            minifyEnabled false
             zipAlignEnabled true
             pseudoLocalesEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
