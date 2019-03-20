@@ -1,5 +1,7 @@
 package com.sumian.sddoctor.me.useguide
 
+import android.graphics.Color
+import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
 import com.blankj.utilcode.util.ActivityUtils
@@ -20,7 +22,7 @@ import kotlinx.android.synthetic.main.activity_use_guide.*
 class UseGuideActivity : SddBaseActivity() {
     private val mVideoIds = intArrayOf(
             R.raw.add_patient,
-            R.raw.inspect_patient_info,
+            R.raw.patient_info,
             R.raw.open_service,
             R.raw.withdraw
     )
@@ -53,13 +55,32 @@ class UseGuideActivity : SddBaseActivity() {
         setTitle(label)
         tv_use_guide_title.text = label
         tv_content.text = resources.getStringArray(R.array.use_guide_contents)[mIndex]
+    }
 
-        video_view.setVideoSize(1080, 1920)
-//        video_view.setMediaController(MediaController(this))
+    private fun playVideo() {
         val uri = Uri.parse("android.resource://" + getPackageName() + "/" + mVideoIds[mIndex])!!
+        video_view.setVideoSize(1080, 1920)
         video_view.setVideoURI(uri)
         video_view.start()
         video_view.setOnCompletionListener { video_view.start() }
+        // 解决视频初始化黑屏闪烁的问题
+        video_view.setOnPreparedListener { mp ->
+            mp.setOnInfoListener(
+                    object : MediaPlayer.OnInfoListener {
+                        override fun onInfo(mp: MediaPlayer?, what: Int, extra: Int): Boolean {
+                            if (what == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START) {
+                                video_view.setBackgroundColor(Color.TRANSPARENT)
+                            }
+                            return true
+                        }
+                    }
+            )
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        playVideo()
     }
 
     private fun onTvUsefulClick() {
