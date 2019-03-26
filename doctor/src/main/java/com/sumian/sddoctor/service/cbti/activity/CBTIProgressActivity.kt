@@ -15,9 +15,7 @@ import com.sumian.sddoctor.service.cbti.adapter.CBTIProgressGroupAdapter
 import com.sumian.sddoctor.service.cbti.bean.CBTIProgressGroup
 import com.sumian.sddoctor.service.cbti.contract.CBTILauncherContract
 import com.sumian.sddoctor.service.cbti.contract.CBTIProgressGroupContract
-import com.sumian.sddoctor.service.cbti.presenter.CBTILauncherPresenter
 import com.sumian.sddoctor.service.cbti.presenter.CBTIProgressGroupPresenter
-import com.sumian.sddoctor.service.cbti.widget.CBTIGuidePopView
 import kotlinx.android.synthetic.main.activity_main_cbti_progress.*
 
 /**
@@ -39,9 +37,9 @@ class CBTIProgressActivity : SddBaseViewModelActivity<CBTIProgressGroupPresenter
         CBTIProgressGroupAdapter().setOnTrigger(this)
     }
 
-    private val mCBTIGuiderPopView by lazy {
-        CBTIGuidePopView.create()
-    }
+//    private val mCBTIGuiderPopView by lazy {
+//        CBTIGuidePopView.create()
+//    }
 
     override fun showBackNav(): Boolean {
         return true
@@ -66,12 +64,12 @@ class CBTIProgressActivity : SddBaseViewModelActivity<CBTIProgressGroupPresenter
         mTitleBar.setTvAndIvColor(ColorCompatUtil.getColor(this@CBTIProgressActivity, R.color.t1_color))
         mTitleBar.setBgColor(ColorCompatUtil.getColor(this@CBTIProgressActivity, R.color.b2_color))
         mTitleBar.mIvBack.setColorFilter(ColorCompatUtil.getColor(this@CBTIProgressActivity, R.color.b3_color))
-        iv_cbti_banner.setOnClickListener { CBTILauncherPresenter.create(this).launcherCBTI() }
+//        iv_cbti_banner.setOnClickListener { CBTILauncherPresenter.create(this).launcherCBTI() }
         refresh.setOnRefreshListener(this)
         recycler.itemAnimator = null
         recycler.layoutManager = LinearLayoutManager(this)
         recycler.adapter = cbtiGroupAdapter
-        mCBTIGuiderPopView.showPop(iv_cbti_banner)
+//        mCBTIGuiderPopView.showPop(iv_cbti_banner)
     }
 
     override fun initData() {
@@ -80,10 +78,10 @@ class CBTIProgressActivity : SddBaseViewModelActivity<CBTIProgressGroupPresenter
         mViewModel?.getCBTIProgressGroups()
     }
 
-    override fun onRelease() {
-        super.onRelease()
-        mCBTIGuiderPopView.dismiss()
-    }
+//    override fun onRelease() {
+//        super.onRelease()
+//        mCBTIGuiderPopView.dismiss()
+//    }
 
     override fun showLoading() {
         //super.showLoading()

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -109,9 +110,35 @@
 
                 </FrameLayout>
 
-                <include layout="@layout/layout_homepage_patient_static" />
+                <LinearLayout
+                    android:id="@+id/homepage_fragment_v_cbti"
+                    android:layout_width="match_parent"
+                    android:layout_height="228dp"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/text_t1_16"
+                        android:layout_width="match_parent"
+                        android:layout_height="58dp"
+                        android:gravity="center_vertical"
+                        android:paddingStart="20dp"
+                        android:text="@string/learn_cbti" />
+
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="155dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="15dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_cbti_img_bannner"
+                        app:riv_corner_radius="4dp" />
+
+                </LinearLayout>
 
                 <include layout="@layout/layout_homepage_my_qr" />
+
 
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>

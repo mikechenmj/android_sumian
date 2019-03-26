@@ -142,6 +142,7 @@ dependencies {
     api 'net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:2.2.1'
     api project(':leancloudchatkit')
     api 'io.alterac.blurkit:blurkit:1.1.0'
+    api 'com.makeramen:roundedimageview:2.3.0'
 }
 
 //项目主页

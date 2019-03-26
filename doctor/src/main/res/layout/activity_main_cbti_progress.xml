@@ -19,14 +19,6 @@
             android:focusableInTouchMode="true"
             android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/iv_cbti_banner"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/space_130"
-                android:contentDescription="@null"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_cbti_img_bannner" />
-
             <TextView
                 style="@style/text_t2_14"
                 android:layout_width="match_parent"

@@ -13,10 +13,8 @@ import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.statistic.StatUtil
 import com.sumian.common.utils.SettingsUtil
-import com.sumian.common.utils.SumianExecutor
 import com.sumian.sddoctor.BuildConfig
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.account.activity.UserInfoActivity
@@ -27,14 +25,13 @@ import com.sumian.sddoctor.constants.H5Uri
 import com.sumian.sddoctor.constants.SPKeys
 import com.sumian.sddoctor.constants.StatConstants
 import com.sumian.sddoctor.event.NotificationUnreadCountChangeEvent
-import com.sumian.sddoctor.homepage.bean.PatientDashboardData
 import com.sumian.sddoctor.homepage.widget.DoctorServicesView
 import com.sumian.sddoctor.login.login.bean.DoctorInfo
-import com.sumian.sddoctor.network.callback.BaseSdResponseCallback
 import com.sumian.sddoctor.notification.NotificationListActivity
 import com.sumian.sddoctor.notification.NotificationViewModel
 import com.sumian.sddoctor.service.advisory.activity.AdvisoryListActivity
 import com.sumian.sddoctor.service.cbti.activity.CBTIProgressActivity
+import com.sumian.sddoctor.service.cbti.presenter.CBTILauncherPresenter
 import com.sumian.sddoctor.service.evaluation.activity.WeekEvaluationListActivity
 import com.sumian.sddoctor.util.EventBusUtil
 import com.sumian.sddoctor.util.ImageLoader
@@ -43,7 +40,6 @@ import com.sumian.sddoctor.widget.SumianAlertDialog
 import com.umeng.socialize.bean.SHARE_MEDIA
 import kotlinx.android.synthetic.main.fragment_homepage.*
 import kotlinx.android.synthetic.main.layout_homepage_my_qr.*
-import kotlinx.android.synthetic.main.layout_homepage_patient_static.*
 import org.greenrobot.eventbus.Subscribe
 import java.util.*
 
@@ -83,9 +79,9 @@ class HomepageFragment : BaseFragment(), DoctorServicesView.OnDoctorServicesCall
         doctor_services_view.setOnDoctorServicesCallback(this)
         iv_share_doctor_qr.setOnClickListener { showShareBottomSheet() }
         refresh_layout.setOnRefreshListener {
-            loadData()
             AppManager.updateDoctorInfo()
         }
+        homepage_fragment_v_cbti.setOnClickListener { CBTILauncherPresenter.launcherCBTI() }
     }
 
     override fun initData() {
@@ -101,12 +97,6 @@ class HomepageFragment : BaseFragment(), DoctorServicesView.OnDoctorServicesCall
             ImageLoader.load(activity!!, t?.qr_code_raw, iv_doctor_qr)
             LogUtils.d("qr_code_raw", t?.qr_code_raw)
         })
-        loadData()
-    }
-
-    override fun onResume() {
-        super.onResume()
-//        LCIMManager.getInstance().updateUnreadConversation()
     }
 
     private fun updateNotificationIconUI() {
@@ -114,37 +104,6 @@ class HomepageFragment : BaseFragment(), DoctorServicesView.OnDoctorServicesCall
         val hasNotification = notificationCount != null && notificationCount > 0
         val hasIm = LCIMManager.getInstance().unreadMessageCount > 0
         iv_notification.isActivated = hasNotification || hasIm
-    }
-
-    private fun loadData() {
-        queryPatientDashboard()
-    }
-
-    private fun hideRefreshAnim() {
-        SumianExecutor.runOnUiThread(Runnable { refresh_layout?.hideRefreshAnim() }, 500)
-    }
-
-    private fun queryPatientDashboard() {
-        val call = AppManager.getHttpService().getPatientDashboard()
-        addCall(call)
-        call.enqueue(object : BaseSdResponseCallback<PatientDashboardData>() {
-            override fun onFailure(errorResponse: ErrorResponse) {
-                ToastUtils.showShort(errorResponse.message)
-            }
-
-            override fun onSuccess(response: PatientDashboardData?) {
-                if (response == null) {
-                    return
-                }
-                tv_last_week_new_patient.text = response.new_user_count.toString()
-                tv_last_week_new_cbti.text = response.new_cbti_count.toString()
-            }
-
-            override fun onFinish() {
-                super.onFinish()
-                hideRefreshAnim()
-            }
-        })
     }
 
     private fun updateDoctorInfo(doctorInfo: DoctorInfo?) {
