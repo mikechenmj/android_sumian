@@ -61,6 +61,3 @@ dependencies {
     implementation 'com.makeramen:roundedimageview:2.3.0'
 
 }
-
-//apply from: '../maven_push.gradle'
-

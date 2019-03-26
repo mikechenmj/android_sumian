@@ -277,28 +277,17 @@ dependencies {
     //implementation 'com.belerweb:pinyin4j:2.5.1'
     //scan qr code
     implementation 'cn.bingoogolapple:bga-qrcode-zbar:1.3.4'
-    //implementation 'cn.bingoogolapple:bga-qrcode-zxing:1.2.3'
     // RecyclerViewPager
     implementation 'com.github.lsjwzh.RecyclerViewPager:lib:v1.1.2@aar'
-    //implementation 'com.github.wendux:DSBridge-Android:x5-3.0-SNAPSHOT'
-//    // Base Adapter
-//    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.40'
-//    implementation('com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.40') {
-//        exclude module: 'support-recyclerview'
-//    }
     //hw
     implementation 'no.nordicsemi.android:dfu:1.8.1'
-    //sumian component
-    //implementation 'com.sumian.sd:common:1.0.49'
-    //    implementation 'com.sumian.sd:blue:1.0.2'
-    //    implementation 'com.sumian.sd:kefu-easeui:1.0.3'
-    //    implementation 'com.sumian.sd:jsbridge:1.0.0'
     implementation project(':blue')
     implementation project(':common_base')
     //implementation project(':jsbridge')
     implementation project(':kefu-easeui')
     // round corner image view
     implementation 'com.makeramen:roundedimageview:2.3.0'
+    // LeakCanary
     //debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.3'
     //debugImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3'
     // Optional, if you use support library fragments:
