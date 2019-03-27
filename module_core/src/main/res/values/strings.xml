@@ -19,5 +19,6 @@
     <string name="record_too_long">对讲时间过长</string>
     <string name="record_too_short">按键时间过短</string>
     <string name="read_all">全部已读</string>
+    <string name="patient_weekly_report">患者周报</string>
 
 </resources>

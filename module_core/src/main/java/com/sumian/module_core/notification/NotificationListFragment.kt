@@ -1,6 +1,7 @@
 package com.sumian.module_core.notification
 
 import android.content.Context
+import android.view.LayoutInflater
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import cn.leancloud.chatkit.LCIMManager
@@ -20,6 +21,7 @@ import com.sumian.common.utils.SettingsUtil
 import com.sumian.module_core.R
 import com.sumian.module_core.async.AsyncCallback
 import kotlinx.android.synthetic.main.fragment_notification_list.*
+import kotlinx.android.synthetic.main.item_notification_group.view.*
 import kotlinx.android.synthetic.main.view_notification_list_head_view.view.*
 import java.util.*
 
@@ -206,5 +208,20 @@ class NotificationListFragment : BaseFragment(), BaseQuickAdapter.OnItemClickLis
         } else {
             mHeaderView?.showNoMessage()
         }
+    }
+
+    private fun updateDoctorNotificationList() {
+        val item = inflateItem()
+        item.setOnClickListener { println("hello") }
+        notification_list_fragment_item_container.addView(item)
+    }
+
+    private fun inflateItem(): View {
+        val item = LayoutInflater.from(activity).inflate(R.layout.item_notification_group, notification_list_fragment_item_container, false)
+        //        item.iv_left.setImageResource(R.drawable.)
+        item.tv_label.text = getString(R.string.patient_weekly_report)
+        item.tv_label.tv_content.text = "content"
+        item.tv_label.tv_time.text = "2019.03.01 10:37"
+        return item
     }
 }

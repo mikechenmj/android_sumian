@@ -73,7 +73,7 @@ class NotificationListActivity : BaseActivity(), NotificationListFragment.Host {
                 })
     }
 
-    override fun onNotificationClick(notification: com.sumian.module_core.notification.Notification) {
+    override fun onNotificationClick(notification: Notification) {
         launchActivityIfNeed(notification)
     }
 
