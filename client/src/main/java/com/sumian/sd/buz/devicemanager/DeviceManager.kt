@@ -296,6 +296,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         mIsBluetoothEnableLiveData.value = false
         AppManager.getBlueManager().clearBluePeripheral()
         AppManager.getBlueManager().stopScanForDevice()
+        mMonitorLiveData.value?.resetSleeper()
         LogManager.appendBluetoothLog("蓝牙 turn off")
     }
 
