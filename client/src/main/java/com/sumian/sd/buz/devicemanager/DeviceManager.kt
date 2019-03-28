@@ -27,9 +27,9 @@ import com.sumian.sd.R
 import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.account.bean.UserInfo
+import com.sumian.sd.buz.device.widget.UpgradeFirmwareDialogActivity
 import com.sumian.sd.buz.devicemanager.command.BlueCmd
 import com.sumian.sd.buz.devicemanager.pattern.SyncPatternService
-import com.sumian.sd.buz.device.widget.UpgradeFirmwareDialogActivity
 import com.sumian.sd.buz.devicemanager.uploadsleepdata.SleepDataUploadHelper
 import com.sumian.sd.common.log.LogManager
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
@@ -74,7 +74,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
     val mSleeperNeedUpdateLiveData = MutableLiveData<Boolean>()
     private val mMainHandler = Handler(Looper.getMainLooper())
 
-    fun init(context:Context) {
+    fun init(context: Context) {
         AppManager.getBlueManager().addBlueAdapterCallback(this)
         mIsBluetoothEnableLiveData.value = AppManager.getBlueManager().isEnable
         val monitorCache = getCachedMonitor()
@@ -173,11 +173,14 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
     }
 
     private fun getCachedMonitor(): BlueDevice? {
-        return JsonUtil.fromJson(SPUtils.getInstance().getString(SP_KEY_MONITOR_CACHE), BlueDevice::class.java)
+        val blueDevice = JsonUtil.fromJson(SPUtils.getInstance().getString(SP_KEY_MONITOR_CACHE), BlueDevice::class.java)
+        LogManager.appendMonitorLog("getCachedMonitor $blueDevice")
+        return blueDevice
     }
 
     fun tryToConnectCacheMonitor() {
         if (isMonitorConnected() || isMonitorConnecting() || !isBluetoothEnable()) {
+            LogManager.appendMonitorLog("tryToConnectCacheMonitor failed: isBluetoothEnable():${isMonitorConnected()} isBluetoothEnable():${isMonitorConnecting()} isBluetoothEnable():${isBluetoothEnable()} ")
             return
         }
         getCachedMonitor()?.let {
@@ -186,6 +189,7 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
     }
 
     fun scanAndConnect(monitor: BlueDevice) {
+        LogManager.appendMonitorLog("scanAndConnect")
         monitor.status = BlueDevice.STATUS_CONNECTING
         setMonitorToLiveData(monitor)
         onConnectStart()
