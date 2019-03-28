@@ -36,6 +36,7 @@ import com.sumian.sd.buz.account.bean.UserInfo
 import com.sumian.sd.buz.account.login.LoginActivity
 import com.sumian.sd.buz.account.login.NewUserGuideActivity
 import com.sumian.sd.buz.account.model.AccountViewModel
+import com.sumian.sd.buz.cbti.video.download.VideoDownloadManager
 import com.sumian.sd.buz.devicemanager.DeviceManager
 import com.sumian.sd.buz.devicemanager.FileHelper
 import com.sumian.sd.buz.doctor.model.DoctorViewModel
@@ -177,6 +178,7 @@ object AppManager {
         initStatic(app)
         observeAppLifecycle()
         initWebView(app)
+        VideoDownloadManager.init(app)
     }
 
     private fun initStatic(app: Application) {

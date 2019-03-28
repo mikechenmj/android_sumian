@@ -11,11 +11,13 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import cn.leancloud.chatkit.LCIMManager
 import com.blankj.utilcode.util.ActivityUtils
+import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SPUtils
 import com.sumian.common.base.BaseActivity
 import com.sumian.common.notification.NotificationUtil
 import com.sumian.common.statistic.StatUtil
 import com.sumian.common.utils.SettingsUtil
+import com.sumian.common.utils.Sha1Util
 import com.sumian.sd.R
 import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
@@ -95,6 +97,8 @@ class MainActivity : BaseActivity(), VersionModel.ShowDotCallback {
         super.onCreate(savedInstanceState)
         AppManager.onMainActivityCreate()
         requestPermission()
+
+        LogUtils.d("app sha1: ${Sha1Util.getCertificateSHA1Fingerprint(this)}")
     }
 
     private fun requestPermission() {

@@ -53,6 +53,7 @@ public class UserInfo implements Parcelable, Serializable, Cloneable {
     public Answers answers;
     @SerializedName("set_password")
     public boolean hasPassword;
+    public String[] internal_tag;
 
     protected UserInfo(Parcel in) {
         id = in.readInt();
@@ -534,5 +535,14 @@ public class UserInfo implements Parcelable, Serializable, Cloneable {
 
     public boolean hasDevice() {
         return !TextUtils.isEmpty(monitor_sn);
+    }
+
+    public boolean isInternalPeople() {
+        for (String tag : internal_tag) {
+            if ("internal".equals(tag)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

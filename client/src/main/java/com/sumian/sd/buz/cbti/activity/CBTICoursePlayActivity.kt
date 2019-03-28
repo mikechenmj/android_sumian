@@ -2,6 +2,7 @@
 
 package com.sumian.sd.buz.cbti.activity
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -9,6 +10,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
+import androidx.core.view.isVisible
+import com.aliyun.vodplayer.downloader.AliyunDownloadMediaInfo
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.base.BaseViewModelActivity
@@ -16,6 +19,7 @@ import com.sumian.common.h5.widget.SWebView
 import com.sumian.common.image.ImageLoader
 import com.sumian.sd.BuildConfig
 import com.sumian.sd.R
+import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.cbti.bean.Course
 import com.sumian.sd.buz.cbti.bean.CoursePlayAuth
 import com.sumian.sd.buz.cbti.bean.CoursePlayLog
@@ -27,6 +31,7 @@ import com.sumian.sd.buz.cbti.video.NiceVideoPlayerManager
 import com.sumian.sd.buz.cbti.video.NiceVideoView
 import com.sumian.sd.buz.cbti.video.OnVideoViewEvent
 import com.sumian.sd.buz.cbti.video.TxVideoPlayerController
+import com.sumian.sd.buz.cbti.video.download.VideoDownloadManager
 import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.utils.EventBusUtil
 import com.sumian.sd.widget.TitleBar
@@ -108,6 +113,7 @@ class CBTICoursePlayActivity : BaseViewModelActivity<CBTICoursePlayAuthPresenter
             setOnVideoViewEvent(this@CBTICoursePlayActivity)
             setController(mController)
         }
+        vg_download.setOnClickListener { downloadVideo() }
     }
 
     override fun initData() {
@@ -155,7 +161,7 @@ class CBTICoursePlayActivity : BaseViewModelActivity<CBTICoursePlayAuthPresenter
         if (mIsSelect) {
             mIsSelect = false
         }
-        updateView(coursePlayAuth)
+        onCoursePlayAuthUpdate(coursePlayAuth)
     }
 
     fun onGetCBTIPlayAuthFailed(error: String) {
@@ -241,7 +247,7 @@ class CBTICoursePlayActivity : BaseViewModelActivity<CBTICoursePlayAuthPresenter
     fun onGetCBTINextPlayAuthSuccess(coursePlayAuth: CoursePlayAuth) {
         uploadCBTICourseWatchLog(mCurrentCourse?.id, mCurrentCourse?.video_id)
         mCurrentPosition += 1
-        updateView(coursePlayAuth)
+        onCoursePlayAuthUpdate(coursePlayAuth)
     }
 
     fun onGetCBTINextPlayAuthFailed(error: String) {
@@ -291,8 +297,10 @@ class CBTICoursePlayActivity : BaseViewModelActivity<CBTICoursePlayAuthPresenter
         NiceVideoPlayerManager.instance().suspendNiceVideoPlayer()
     }
 
-    private fun updateView(coursePlayAuth: CoursePlayAuth) {
+    private fun onCoursePlayAuthUpdate(coursePlayAuth: CoursePlayAuth) {
         mCoursePlayAuth = coursePlayAuth
+        VideoDownloadManager.registerDownloadListener(coursePlayAuth.meta.video_id, mAliyunDownloadListener)
+        updateDownloadIcon(if (VideoDownloadManager.getSavedVideoPathByVid(coursePlayAuth.meta.video_id) == null) 0 else 100)
         mCurrentCourse = coursePlayAuth.courses[mCurrentPosition]
         mCurrentCourse?.video_id = coursePlayAuth.meta.video_id
 
@@ -312,7 +320,7 @@ class CBTICoursePlayActivity : BaseViewModelActivity<CBTICoursePlayAuthPresenter
         }
 
         aliyun_player.setSourceData(mCurrentCourse?.id
-                ?: 0, coursePlayAuth.meta.video_id, coursePlayAuth.meta.play_auth)
+                ?: 0, coursePlayAuth.meta.video_id, coursePlayAuth.meta.play_auth, VideoDownloadManager.getSavedVideoPathByVid(coursePlayAuth.meta.video_id))
 
         nav_tab_lesson_practice.visibility = if (coursePlayAuth.isHavePractice()) {
             nav_tab_lesson_practice.setOnClickListener(this)
@@ -370,5 +378,42 @@ class CBTICoursePlayActivity : BaseViewModelActivity<CBTICoursePlayAuthPresenter
 
     fun onFinish() {
 
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun updateDownloadIcon(progress: Int) {
+        vg_download.isVisible = AppManager.getAccountViewModel().userInfo.isInternalPeople
+        iv_download.setImageResource(
+                when (progress) {
+                    0 -> R.drawable.cbti_icon_cache_default
+                    100 -> R.drawable.cbti_icon_cache_complete
+                    else -> R.drawable.cbti_icon_cache_loading
+                }
+        )
+        tv_download_progress.text = "$progress%"
+        tv_download_progress.isVisible = progress in 1..99
+    }
+
+    private val mAliyunDownloadListener = object : VideoDownloadManager.AliyunDownloadInfoListenerEmptyImpl() {
+        override fun onCompletion(p0: AliyunDownloadMediaInfo?) {
+            updateDownloadIcon(100)
+        }
+
+        @SuppressLint("SetTextI18n")
+        override fun onProgress(mediaInfo: AliyunDownloadMediaInfo?, progress: Int) {
+            updateDownloadIcon(progress)
+        }
+    }
+
+    private fun downloadVideo() {
+        if (mCoursePlayAuth == null) {
+            return
+        }
+        VideoDownloadManager.download(mCoursePlayAuth!!.meta.video_id, mCoursePlayAuth!!.meta.play_auth)
+    }
+
+    override fun onDestroy() {
+        VideoDownloadManager.unregisterDownloadListener(mAliyunDownloadListener)
+        super.onDestroy()
     }
 }
