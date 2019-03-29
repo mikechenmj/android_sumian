@@ -855,4 +855,7 @@
     <string name="sleeper_talk">眠友说</string>
     <string name="more_article">更多文章</string>
     <string name="like">点赞</string>
+    <string name="renew">续费</string>
+    <string name="service_package_type">服务包类型</string>
+    <string name="introduction_arrow">介绍 ></string>
 </resources>

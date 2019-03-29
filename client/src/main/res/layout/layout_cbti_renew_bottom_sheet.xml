@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/b1_color"
+    android:orientation="vertical">
+
+    <TextView
+        style="@style/text_t1_14"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/white"
+        android:gravity="center"
+        android:text="@string/service_package_type" />
+
+    <com.bskim.maxheightscrollview.widgets.MaxHeightNestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:maxHeight="280dp">
+
+        <LinearLayout
+            android:id="@+id/vg_package_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"></LinearLayout>
+    </com.bskim.maxheightscrollview.widgets.MaxHeightNestedScrollView>
+
+    <TextView
+        android:id="@+id/tv_cancel"
+        style="@style/text_t1_14"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:gravity="center"
+        android:text="@string/cancel" />
+</LinearLayout>

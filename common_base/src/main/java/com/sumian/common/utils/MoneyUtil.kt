@@ -1,4 +1,4 @@
-package com.sumian.sddoctor.util
+package com.sumian.common.utils
 
 import java.math.BigDecimal
 
@@ -12,9 +12,12 @@ import java.math.BigDecimal
 class MoneyUtil {
     companion object {
 
-        fun fenToYuanString(fen: Long, includeSign: Boolean = false): String {
+        fun fenToYuanString(fen: Long, includeSign: Boolean = false, includeYuanMark: Boolean = false): String {
             val unsignedFen = Math.abs(fen)
             val sb = StringBuilder()
+            if (includeYuanMark) {
+                sb.append("￥")
+            }
             if (includeSign) {
                 sb.append(if (fen > 0) "+" else "-")
             }

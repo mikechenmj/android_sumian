@@ -30,7 +30,8 @@ data class DoctorServicePackage(var id: Int,//服务包模板id
      */
     @Parcelize
     data class ServicePackage(var id: Int,//医生的服务包
-                              var unit_price: Double,//单价
+                              var unit_price: Long,//实际单价
+                              var base_unit_price: Long,//基础单价
                               var doctor_id: Int,//医生id
                               var service_package_id: Int,//服务包模板id
                               var enable: Int,//开启 1：开启 已过滤enable=0情况

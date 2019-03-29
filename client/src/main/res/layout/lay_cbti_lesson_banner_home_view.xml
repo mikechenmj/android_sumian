@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="211dp"
     android:orientation="vertical"
+    tools:background="#3f00"
     tools:ignore="UselessParent">
+
+    <ImageView
+        android:id="@+id/iv_banner"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <TextView
         android:id="@+id/tv_cbti_name"
         style="@style/text_b2_22"
         android:layout_marginLeft="@dimen/space_20"
-        android:layout_marginTop="@dimen/space_44"
+        android:layout_marginTop="57dp"
         android:layout_marginRight="@dimen/space_20"
         android:ellipsize="end"
         android:lines="1"
@@ -25,7 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/space_20"
-        android:layout_marginTop="@dimen/space_10"
+        android:layout_marginTop="97dp"
         android:layout_marginRight="@dimen/space_20"
         android:ellipsize="end"
         android:lineSpacingExtra="@dimen/space_4"
@@ -42,6 +48,7 @@
     <com.sumian.sd.buz.cbti.widget.CBTICoursePlanHomeView
         android:id="@+id/cbti_lesson_plan_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom" />
 
-</merge>
+</FrameLayout>

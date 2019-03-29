@@ -9,6 +9,7 @@ import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.SdBaseWebViewActivity
 import com.sumian.sd.buz.cbti.sheet.CBTIShareBottomSheet
+import com.sumian.sd.buz.kefu.KefuManager
 import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.h5.H5Uri
 
@@ -47,5 +48,14 @@ class CBTIIntroduction2WebActivity : SdBaseWebViewActivity() {
         val urlContent = H5Uri.NATIVE_ROUTE.replace("{pageData}", H5PayloadData(H5Uri.CBTI_INTRODUCTION, mapOf()).toJson())
                 .replace("{token}", AppManager.getAccountViewModel().token.token) + "&analysisSource=mainPage_cbtiBanner"
         return BuildConfig.BASE_H5_URL + urlContent
+    }
+
+    override fun onGoToPage(page: String, rawData: String) {
+        when (page) {
+            "onlineConsult" -> {
+                KefuManager.launchKefuActivity()
+//                StatUtil.event(StatConstants.click_sleep_guide_page_sleep_steward)
+            }
+        }
     }
 }

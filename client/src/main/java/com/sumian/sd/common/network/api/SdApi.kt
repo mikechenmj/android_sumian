@@ -187,10 +187,11 @@ interface SdApi {
     fun getServiceList(): Call<DoctorServiceList>
 
     /**
-     * 服务类型 0：睡眠日记 1：图文咨询 2：电话咨询 3：CBTI
+     * @param type  服务类型 0：睡眠日记 1：图文咨询 2：电话咨询 3：CBTI
+     * @param servicePackageType 服务包类型 0：服务包 1：续费包
      */
     @GET("service")
-    fun getServiceByType(@Query("type") type: Int): Call<DoctorService>
+    fun getServiceByType(@Query("type") type: Int, @Query("service_package_type") servicePackageType: Int = 0): Call<DoctorService>
 
     @GET("services/{id}")
     fun getServiceDetailById(@Path("id") id: Int): Call<DoctorService>

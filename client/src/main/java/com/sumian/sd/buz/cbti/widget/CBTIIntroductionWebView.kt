@@ -22,6 +22,7 @@ import com.sumian.common.widget.TitleBar
 import com.sumian.sd.BuildConfig
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.doctor.bean.H5DoctorServiceShoppingResult
+import com.sumian.sd.buz.kefu.KefuManager
 import com.sumian.sd.common.h5.H5Uri
 import com.sumian.sd.common.pay.activity.PaymentActivity
 import com.tencent.smtt.sdk.WebView
@@ -49,6 +50,13 @@ class CBTIIntroductionWebView : SWebViewLayout {
     private fun initEvent() {
         registerBuyServiceHandler(sWebView)
         registerBaseHandler(sWebView)
+        sWebView.registerHandler("goToPage") { data, function ->
+            run {
+                val page = JsonUtil.getJsonObject(data)?.get("page")?.asString
+                        ?: return@registerHandler
+                onGoToPage(page, data)
+            }
+        }
     }
 
     private fun registerBuyServiceHandler(sWebView: SWebView) {
@@ -112,7 +120,15 @@ class CBTIIntroductionWebView : SWebViewLayout {
                 }
             }
         })
+    }
 
+    fun onGoToPage(page: String, rawData: String) {
+        when (page) {
+            "onlineConsult" -> {
+                KefuManager.launchKefuActivity()
+//                StatUtil.event(StatConstants.click_sleep_guide_page_sleep_steward)
+            }
+        }
     }
 
     fun setTitleBar(titleBar: TitleBar) {

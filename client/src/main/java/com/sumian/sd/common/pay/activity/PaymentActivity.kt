@@ -121,7 +121,7 @@ class PaymentActivity : BaseViewModelActivity<PayPresenter>(), View.OnClickListe
             ImageLoader.loadImage(mDoctorService!!.icon, lay_group_icon)
             tv_name.text = mDoctorService?.name
             tv_desc.text = mServicePackage?.name
-            pay_calculate_item_view.defaultMoney = mPackage?.unit_price!!
+            pay_calculate_item_view.defaultMoney = mPackage?.unit_price!!.toDouble()
         }
 
     }
