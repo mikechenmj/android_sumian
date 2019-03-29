@@ -2,50 +2,26 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="84dp"
+    android:layout_height="65dp"
     android:layout_marginBottom="1dp"
     android:background="@color/white"
-    android:padding="20dp"
-    tools:showIn="@layout/layout_cbti_renew_bottom_sheet">
+    android:padding="20dp">
 
     <TextView
         android:id="@+id/tv_package_title"
         style="@style/text_t1_14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
         android:textStyle="bold"
         tools:text="CBTi体验学习服务包" />
 
     <TextView
-        android:id="@+id/tv_package_content"
-        style="@style/text_t2_13"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:ellipsize="end"
-        android:maxLines="1"
-        tools:text="按周开课，26周内可无限次数观看。" />
-
-    <LinearLayout
+        android:id="@+id/tv_package_price"
+        style="@style/text_t1_18"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|center_vertical"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/tv_package_price"
-            style="@style/text_t1_18"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/t4_color"
-            tools:text="¥50" />
-
-        <TextView
-            android:id="@+id/tv_package_origin_price"
-            style="@style/text_t2_14"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="¥1998" />
-    </LinearLayout>
+        android:textColor="@color/t4_color"
+        tools:text="¥50" />
 </FrameLayout>

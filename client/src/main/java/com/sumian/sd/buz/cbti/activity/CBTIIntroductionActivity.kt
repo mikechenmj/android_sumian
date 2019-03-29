@@ -3,7 +3,6 @@ package com.sumian.sd.buz.cbti.activity
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.graphics.Paint
 import android.text.TextUtils
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -289,12 +288,8 @@ class CBTIIntroductionActivity : BaseActivity(), BaseRecyclerAdapter.OnItemClick
         for (pkg in mRenewService!!.service_packages) {
             val item = LayoutInflater.from(this).inflate(R.layout.item_cbti_renew_package, dialog.vg_package_container, false)
             item.tv_package_title.text = pkg.name
-            item.tv_package_content.text = pkg.introduction
             val detail = pkg.packages[0]
             item.tv_package_price.text = MoneyUtil.fenToYuanString(detail.unit_price, includeSign = false, includeYuanMark = true)
-            item.tv_package_origin_price.text = MoneyUtil.fenToYuanString(detail.base_unit_price, includeSign = false, includeYuanMark = true)
-            item.tv_package_origin_price.isVisible = detail.base_unit_price > 0
-            item.tv_package_origin_price.paint.flags = Paint.STRIKE_THRU_TEXT_FLAG
             item.setOnClickListener {
                 PaymentActivity.startForResult(ActivityUtils.getTopActivity(), mRenewService!!, pkg.id, REQUEST_CODE_BUY_SERVICE)
                 dialog.dismiss()
