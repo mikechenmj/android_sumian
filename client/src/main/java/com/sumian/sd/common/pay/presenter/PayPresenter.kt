@@ -55,7 +55,7 @@ class PayPresenter private constructor(view: PaymentActivity) : BaseViewModel() 
     }
 
     fun createPayOrder(activity: Activity, payOrder: PayOrder) {
-        mView?.onBegin()
+        mView?.showLoading()
         val call: Call<Any> = AppManager.getSdHttpService().createOrder(payOrder)
         addCall(call)
         call.enqueue(object : BaseSdResponseCallback<Any>(), Callback<Any> {
@@ -76,7 +76,7 @@ class PayPresenter private constructor(view: PaymentActivity) : BaseViewModel() 
 
             override fun onFinish() {
                 super.onFinish()
-                mView?.onFinish()
+                mView?.dismissLoading()
             }
 
         })
@@ -85,7 +85,7 @@ class PayPresenter private constructor(view: PaymentActivity) : BaseViewModel() 
 
     fun checkPayOrder() {
         mCheckOrderCount++
-        mView?.onBegin()
+        mView?.showLoading()
         val call = AppManager.getSdHttpService().getOrderDetail(mOrderNo!!)
         addCall(call)
         call.enqueue(object : BaseSdResponseCallback<OrderDetail>() {
@@ -128,28 +128,22 @@ class PayPresenter private constructor(view: PaymentActivity) : BaseViewModel() 
 
             override fun onFinish() {
                 super.onFinish()
-                mView?.onFinish()
+                mView?.dismissLoading()
             }
         })
     }
 
-    fun checkCouponCode(is2Pay: Boolean, couponCode: String, packageId: Int) {
-        mView?.onBegin()
+    fun checkCouponCode(couponCode: String, packageId: Int) {
         val call = AppManager.getSdHttpService().checkCouponCode(couponCode, packageId)
         addCall(call)
         call.enqueue(object : BaseSdResponseCallback<PayCouponCode>() {
 
             override fun onSuccess(response: PayCouponCode?) {
-                mView?.onCheckCouponCodeSuccess(response, couponCode, is2Pay)
+                mView?.onCheckCouponCodeSuccess(response)
             }
 
             override fun onFailure(errorResponse: ErrorResponse) {
-                mView?.onCheckCouponCodeFailed(error = errorResponse.message, code = errorResponse.code, payCouponCodeText = null, is2Pay = is2Pay)
-            }
-
-            override fun onFinish() {
-                super.onFinish()
-                mView?.onFinish()
+                mView?.onCheckCouponCodeFailed(error = errorResponse.message, code = errorResponse.code)
             }
         })
     }

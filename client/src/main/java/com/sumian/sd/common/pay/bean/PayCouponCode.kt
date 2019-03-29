@@ -2,8 +2,9 @@
 
 package com.sumian.sd.common.pay.bean
 
+import android.content.Context
 import com.google.gson.annotations.SerializedName
-import java.util.*
+import com.sumian.sd.R
 
 data class PayCouponCode(
         @SerializedName("code")
@@ -11,7 +12,7 @@ data class PayCouponCode(
         @SerializedName("created_at")
         val createdAt: Int,
         @SerializedName("discount")
-        val discount: Double,//单位  分
+        val discount: Long,//单位  分
         @SerializedName("expired_at")
         val expiredAt: Int,
         @SerializedName("id")
@@ -24,14 +25,20 @@ data class PayCouponCode(
         val updatedAt: Int
 ) {
 
-    fun tips(): CharSequence {
-        return when (status) {
-            1 -> {
-                String.format(Locale.getDefault(), "%s%d%s", "已优惠", (discount / 100).toInt(), "元")
+    fun isValid(): Boolean {
+        return status == 1
+    }
+
+    fun getTips(context: Context, maxDiscount: Long): String {
+        return if (isValid()) {
+            if (maxDiscount - discount > 0) {
+                "已优惠${String.format("%.2f", discount * 1.0 / 100)}元"
+            } else {
+                context.getString(R.string.discount_is_too_much)
             }
-            else -> {
-                "此优惠码无效"
-            }
+        } else {
+            "此优惠码无效"
         }
     }
+
 }

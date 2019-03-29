@@ -136,10 +136,6 @@ interface SdApi {
     @PATCH("user/avatar")
     fun uploadAvatar(): Call<OssResponse>
 
-    @FormUrlEncoded
-    @POST("orders")
-    fun createOrder(@FieldMap map: MutableMap<String, Any>): Call<String>
-
     @GET("orders/{order_no}")
     fun getOrderDetail(@Path("order_no") orderNumber: String): Call<OrderDetail>
 
