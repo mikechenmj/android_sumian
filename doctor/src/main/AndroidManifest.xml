@@ -313,7 +313,12 @@
         <activity
             android:name=".me.useguide.UseGuideActivity"
             android:exported="true" />
-        <activity android:name=".notification.NotificationListActivitySecondary" />
+        <activity
+            android:name=".notification.NotificationListActivitySecondary"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".buz.weeklyreport.WeeklyReportActivity"
+            android:launchMode="singleTop" />
     </application>
 
 </manifest>

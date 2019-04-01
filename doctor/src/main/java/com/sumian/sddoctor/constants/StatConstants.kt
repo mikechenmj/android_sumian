@@ -60,6 +60,7 @@ object StatConstants {
     const val page_profile_protocol = "用户协议页"
     const val page_use_guide_list = "用户指南列表页"
     const val page_use_guide = "用户指南详情页"
+    const val page_weekly_report = "周报告页"
 
 
     // ------ event ------
