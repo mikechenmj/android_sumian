@@ -20,5 +20,6 @@
     <string name="record_too_short">按键时间过短</string>
     <string name="read_all">全部已读</string>
     <string name="patient_weekly_report">患者周报</string>
+    <string name="system_notification">系统通知</string>
 
 </resources>

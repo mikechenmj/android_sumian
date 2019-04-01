@@ -11,6 +11,7 @@ import com.sumian.common.network.error.ErrorCode
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.module_core.async.AsyncCallback
 import com.sumian.module_core.notification.Notification
+import com.sumian.module_core.notification.NotificationCategory
 import com.sumian.module_core.notification.NotificationListFragment
 import com.sumian.module_core.notification.NotificationListResponse
 import com.sumian.sd.R
@@ -63,7 +64,7 @@ class NotificationListActivity : BaseViewModelActivity<BaseViewModel>(), Notific
         })
     }
 
-    override fun readNotificationList(notificationId: String, dataId: Int, callback: AsyncCallback<Any>) {
+    override fun readNotification(notificationId: String, dataId: Int, callback: AsyncCallback<Any>) {
         AppManager.getSdHttpService().readNotification(notificationId, dataId)
                 .enqueue(object : BaseSdResponseCallback<Any>() {
                     override fun onSuccess(response: Any?) {
@@ -117,6 +118,12 @@ class NotificationListActivity : BaseViewModelActivity<BaseViewModel>(), Notific
             return
         }
         startActivity(intent)
+    }
+
+    override fun getNotificationCategoryList(asyncCallback: AsyncCallback<List<NotificationCategory>>) {
+    }
+
+    override fun launchNotificationListSecondaryActivity(category: Int) {
     }
 
     companion object {

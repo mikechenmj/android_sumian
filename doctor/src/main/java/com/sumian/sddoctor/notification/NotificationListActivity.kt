@@ -6,9 +6,7 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.base.BaseActivity
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.module_core.async.AsyncCallback
-import com.sumian.module_core.notification.Notification
-import com.sumian.module_core.notification.NotificationListFragment
-import com.sumian.module_core.notification.NotificationListResponse
+import com.sumian.module_core.notification.*
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.app.AppManager
 import com.sumian.sddoctor.buz.patientdoctorim.ConversationListActivity
@@ -59,7 +57,7 @@ class NotificationListActivity : BaseActivity(), NotificationListFragment.Host {
         })
     }
 
-    override fun readNotificationList(notificationId: String, dataId: Int, callback: AsyncCallback<Any>) {
+    override fun readNotification(notificationId: String, dataId: Int, callback: AsyncCallback<Any>) {
         AppManager.getHttpService().readNotification(notificationId, dataId)
                 .enqueue(object : BaseSdResponseCallback<Any>() {
                     override fun onSuccess(response: Any?) {
@@ -99,5 +97,33 @@ class NotificationListActivity : BaseActivity(), NotificationListFragment.Host {
         if (intent != null) {
             ActivityUtils.startActivity(intent)
         }
+    }
+
+    override fun getNotificationCategoryList(asyncCallback: AsyncCallback<List<NotificationCategory>>) {
+//        val call = AppManager.getHttpService().getNotificationCategoryList()
+//        addCall(call)
+//        call.enqueue(object : BaseSdResponseCallback<List<NotificationCategory>>() {
+//            override fun onSuccess(response: List<NotificationCategory>?) {
+//                asyncCallback.onSuccess(response)
+//            }
+//
+//            override fun onFailure(errorResponse: ErrorResponse) {
+//                asyncCallback.onFailed(errorResponse.code, errorResponse.message)
+//            }
+//
+//            override fun onFinish() {
+//                super.onFinish()
+//                asyncCallback.onFinish()
+//            }
+//        })
+        val list = ArrayList<NotificationCategory>()
+        val readAt = (System.currentTimeMillis() / 1000).toInt()
+        list.add(NotificationCategory(2, Notification("id", 1, "type", NotificationData("content", "scheme", "title"), readAt, readAt), true))
+        list.add(NotificationCategory(0, Notification("id", 1, "type", NotificationData("content", "scheme", "title"), readAt, readAt), false))
+        asyncCallback.onSuccess(list)
+    }
+
+    override fun launchNotificationListSecondaryActivity(category: Int) {
+        NotificationListActivitySecondary.launch(this, category)
     }
 }

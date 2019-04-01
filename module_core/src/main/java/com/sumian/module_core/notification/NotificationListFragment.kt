@@ -3,6 +3,7 @@ package com.sumian.module_core.notification
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import cn.leancloud.chatkit.LCIMManager
 import cn.leancloud.chatkit.utils.LCIMConversationUtils
@@ -23,7 +24,6 @@ import com.sumian.module_core.async.AsyncCallback
 import kotlinx.android.synthetic.main.fragment_notification_list.*
 import kotlinx.android.synthetic.main.item_notification_group.view.*
 import kotlinx.android.synthetic.main.view_notification_list_head_view.view.*
-import java.util.*
 
 /**
  * @author : Zhan Xuzhao
@@ -72,6 +72,7 @@ class NotificationListFragment : BaseFragment(), BaseQuickAdapter.OnItemClickLis
         updateNotificationItem()
         mHeaderView!!.v_doctor_message_item.setOnClickListener { mHost.launchPatientDoctorMessageListActivity() }
         mHeaderView!!.tv_read_all.setOnClickListener { markAllAsRead() }
+        mHeaderView!!.tv_read_all.isVisible = !mHost.isDoctor()
     }
 
     override fun initData() {
@@ -128,14 +129,24 @@ class NotificationListFragment : BaseFragment(), BaseQuickAdapter.OnItemClickLis
 
     interface Host {
         fun getNotificationList(page: Int, perPage: Int, callback: AsyncCallback<NotificationListResponse>)
-        fun readNotificationList(notificationId: String, dataId: Int, callback: AsyncCallback<Any>)
+        fun readNotification(notificationId: String, dataId: Int, callback: AsyncCallback<Any>)
         fun onNotificationClick(notification: Notification)
         fun showReadAll(show: Boolean)
         fun launchPatientDoctorMessageListActivity()
         fun isDoctor(): Boolean
+        fun getNotificationCategoryList(asyncCallback: AsyncCallback<List<NotificationCategory>>)
+        fun launchNotificationListSecondaryActivity(category: Int)
     }
 
     private fun loadData(isInitLoad: Boolean) {
+        if (mHost.isDoctor()) {
+            updateDoctorNotificationList()
+        } else {
+            updateClientNotificationList(isInitLoad)
+        }
+    }
+
+    private fun updateClientNotificationList(isInitLoad: Boolean) {
         if (isInitLoad) {
             mPage = INIT_PAGE
         }
@@ -158,7 +169,7 @@ class NotificationListFragment : BaseFragment(), BaseQuickAdapter.OnItemClickLis
     }
 
     private fun readNotification(notificationId: String, notificationDataId: Int, position: Int) {
-        mHost.readNotificationList(notificationId, notificationDataId, object : AsyncCallback<Any> {
+        mHost.readNotification(notificationId, notificationDataId, object : AsyncCallback<Any> {
             override fun onSuccess(result: Any?) {
                 LogUtils.d(result)
                 onReadSuccess(notificationId, position)
@@ -211,17 +222,34 @@ class NotificationListFragment : BaseFragment(), BaseQuickAdapter.OnItemClickLis
     }
 
     private fun updateDoctorNotificationList() {
-        val item = inflateItem()
-        item.setOnClickListener { println("hello") }
-        notification_list_fragment_item_container.addView(item)
+        mHost.getNotificationCategoryList(object : AsyncCallback<List<NotificationCategory>> {
+            override fun onSuccess(result: List<NotificationCategory>?) {
+                val ncList = result ?: ArrayList<NotificationCategory>()
+                mHeaderView?.showNoNotificationView(ncList.isEmpty())
+                notification_list_fragment_item_container.removeAllViews()
+                for (nc in ncList) {
+                    val item = inflateItem(nc)
+                    item.setOnClickListener { mHost.launchNotificationListSecondaryActivity(nc.category) }
+                    notification_list_fragment_item_container.addView(item)
+                }
+            }
+
+            override fun onFailed(code: Int, message: String?) {
+            }
+
+            override fun onFinish() {
+            }
+        })
     }
 
-    private fun inflateItem(): View {
+    private fun inflateItem(nc: NotificationCategory): View {
         val item = LayoutInflater.from(activity).inflate(R.layout.item_notification_group, notification_list_fragment_item_container, false)
-        //        item.iv_left.setImageResource(R.drawable.)
-        item.tv_label.text = getString(R.string.patient_weekly_report)
-        item.tv_label.tv_content.text = "content"
-        item.tv_label.tv_time.text = "2019.03.01 10:37"
+        item.iv_left.setImageResource(if (nc.category == 2) R.drawable.news_icon_weekly else R.drawable.news_icon_notice)
+        item.tv_label.text = getString(if (nc.category == 2) R.string.patient_weekly_report else R.string.system_notification)
+        item.tv_content.text = nc.notification.data.content
+        item.tv_time.text = nc.notification.getCreatedAtString()
+        item.iv_dot.isVisible = nc.hasUnread
         return item
     }
+
 }

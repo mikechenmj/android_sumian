@@ -5,7 +5,6 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.sumian.common.utils.TimeUtilV2;
 import com.sumian.module_core.R;
 
 import java.util.List;
@@ -38,7 +37,6 @@ public class NotificationListAdapter extends BaseQuickAdapter<Notification, Base
         helper.setTextColor(R.id.tv_title, mContext.getResources().getColor(isUnRead ? R.color.t3_color : R.color.t1_color));
         helper.setText(R.id.tv_title, data.getTitle());
         helper.setText(R.id.tv_content, data.getContent());
-        long time = item.getCreatedAt() * 1000L;
-        helper.setText(R.id.tv_time, TimeUtilV2.Companion.formatYYYYMMDDHHMM(time));
+        helper.setText(R.id.tv_time, item.getCreatedAtString());
     }
 }

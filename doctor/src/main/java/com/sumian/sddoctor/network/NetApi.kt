@@ -4,6 +4,7 @@ import cn.leancloud.chatkit.bean.ImIds
 import cn.leancloud.chatkit.bean.ImUser
 import com.google.gson.JsonObject
 import com.sumian.module_core.chat.bean.CreateConversationResponse
+import com.sumian.module_core.notification.NotificationCategory
 import com.sumian.module_core.notification.NotificationListResponse
 import com.sumian.sddoctor.account.bean.Feedback
 import com.sumian.sddoctor.account.bean.Version
@@ -195,6 +196,19 @@ interface NetApi {
     fun getNotificationList(@Query("page") page: Int,
                             @Query("per_page") perPage: Int,
                             @Query("type") type: String): Call<NotificationListResponse>
+
+    /**
+     * type: all:所有 unread：未读
+     * category: 类别 0:普通消息 2:cbti周报消息 不传取全部消息
+     */
+    @GET("doctor/notifications")
+    fun getNotificationListByCategory(@Query("page") page: Int,
+                                      @Query("per_page") perPage: Int,
+                                      @Query("type") type: String,
+                                      @Query("category") category: Int): Call<NotificationListResponse>
+
+    @GET("doctor/notificationCategory")
+    fun getNotificationCategoryList(): Call<List<NotificationCategory>>
 
     /**
      * notificationId 单消息id

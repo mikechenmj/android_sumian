@@ -67,7 +67,7 @@ abstract class BaseAdapter<T> private constructor(recyclerView: RecyclerView) : 
         if (position >= getHeaderCount() && position <= itemCount - getFooterCount() - getLoadMoreCount() - 1) {
             val data = getData(position) ?: return
             onBindDataViewHolder(holder, data)
-            mOnItemClickListener?.onItemClick(position, holder, data)
+            holder.itemView.setOnClickListener { mOnItemClickListener?.onItemClick(position - getHeaderCount(), holder, data) }
         } else if (position == getLoadMoreItemPosition() && getDataSize() > 0) {
             if (mIsLoadMoreEnable && !mIsLoadingMore) {
                 showLoadMore(true)
@@ -156,9 +156,6 @@ abstract class BaseAdapter<T> private constructor(recyclerView: RecyclerView) : 
 
     fun enableLoadMore(enable: Boolean) {
         mIsLoadMoreEnable = enable
-        if (!enable) {
-            showLoadMore(false)
-        }
     }
 
     fun addData(data: List<T>) {
@@ -188,6 +185,19 @@ abstract class BaseAdapter<T> private constructor(recyclerView: RecyclerView) : 
 
     fun setOnItemClickListener(onItemClickListener: OnItemClickListener<T>?) {
         mOnItemClickListener = onItemClickListener
+    }
+
+    fun getData(): MutableList<T> {
+        return mData
+    }
+
+    fun setData(index: Int, data: T) {
+        mData[index] = data
+        notifyDataItemChange(index)
+    }
+
+    fun notifyDataItemChange(index: Int) {
+        notifyItemChanged(index + getHeaderCount())
     }
 
 }
