@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
+import androidx.core.view.isVisible
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.statistic.StatUtil
 import com.sumian.sddoctor.R
@@ -24,7 +25,8 @@ class UseGuideActivity : SddBaseActivity() {
             R.raw.add_patient,
             R.raw.patient_info,
             R.raw.open_service,
-            R.raw.withdraw
+            R.raw.withdraw,
+            R.raw.cbti
     )
 
     private val mIndex by lazy {
@@ -55,6 +57,13 @@ class UseGuideActivity : SddBaseActivity() {
         setTitle(label)
         tv_use_guide_title.text = label
         tv_content.text = resources.getStringArray(R.array.use_guide_contents)[mIndex]
+        tv_fold.setOnClickListener {
+            tv_fold.isSelected = !tv_fold.isSelected
+            tv_fold.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, if (tv_fold.isSelected) R.drawable.userguides_icon_uparrow else R.drawable.userguides_icon_downarrow, 0)
+            tv_fold.text = getString(if (tv_fold.isSelected) R.string.unfold else R.string.fold)
+            tv_use_guide_title.isVisible = !tv_fold.isSelected
+            tv_content.isVisible = !tv_fold.isSelected
+        }
     }
 
     private fun playVideo() {

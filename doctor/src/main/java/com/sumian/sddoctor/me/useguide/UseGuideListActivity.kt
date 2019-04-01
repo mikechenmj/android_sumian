@@ -1,5 +1,6 @@
 package com.sumian.sddoctor.me.useguide
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -58,8 +59,9 @@ class UseGuideListActivity : SddBaseActivity() {
             return mData.size
         }
 
+        @SuppressLint("SetTextI18n")
         override fun onBindViewHolder(holder: VH, position: Int) {
-            holder.itemView.tv_label.text = mData[position]
+            holder.itemView.tv_label.text = "${position + 1}.${mData[position]}"
             holder.itemView.setOnClickListener {
                 UseGuideActivity.launch(position)
                 StatUtil.event(StatConstants.click_use_guide_list_page_item)
