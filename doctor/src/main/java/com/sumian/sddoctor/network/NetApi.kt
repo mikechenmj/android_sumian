@@ -207,7 +207,7 @@ interface NetApi {
                                       @Query("type") type: String,
                                       @Query("category") category: Int): Call<NotificationListResponse>
 
-    @GET("doctor/notificationCategory")
+    @GET("doctor/notification-profile")
     fun getNotificationCategoryList(): Call<List<NotificationCategory>>
 
     /**

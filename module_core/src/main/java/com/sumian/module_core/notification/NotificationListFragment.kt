@@ -75,9 +75,9 @@ class NotificationListFragment : BaseFragment(), BaseQuickAdapter.OnItemClickLis
         mHeaderView!!.tv_read_all.isVisible = !mHost.isDoctor()
     }
 
-    override fun initData() {
-        super.initData()
-        loadData(true)
+    override fun onResume() {
+        super.onResume()
+        refreshData()
     }
 
     fun refreshData() {
@@ -248,7 +248,7 @@ class NotificationListFragment : BaseFragment(), BaseQuickAdapter.OnItemClickLis
         item.tv_label.text = getString(if (nc.category == 2) R.string.patient_weekly_report else R.string.system_notification)
         item.tv_content.text = nc.notification.data.content
         item.tv_time.text = nc.notification.getCreatedAtString()
-        item.iv_dot.isVisible = nc.hasUnread
+        item.iv_dot.isVisible = nc.hasUnread()
         return item
     }
 

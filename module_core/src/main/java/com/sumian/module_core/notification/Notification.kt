@@ -15,8 +15,12 @@ import com.sumian.common.utils.TimeUtilV2
 data class NotificationCategory(
         @SerializedName("category") val category: Int,  //类别 0:普通消息 2:cbti周报消息
         @SerializedName("notification") val notification: Notification,
-        @SerializedName("hasUnread") val hasUnread: Boolean
-)
+        @SerializedName("unreadCount") val unreadCount: Int
+) {
+    fun hasUnread(): Boolean {
+        return unreadCount > 0
+    }
+}
 
 data class Notification(
         @SerializedName("id") val id: String,
