@@ -49,7 +49,7 @@ public class LCIMConversationUtils {
             getUser(peerId, new AVCallback<LCChatKitUser>() {
                 @Override
                 protected void internalDone0(LCChatKitUser lcChatKitUser, AVException e) {
-                    callback.internalDone(lcChatKitUser.getName(), null);
+                    callback.internalDone(lcChatKitUser == null ? "" : lcChatKitUser.getName(), null);
                 }
             });
         } else {
@@ -90,7 +90,7 @@ public class LCIMConversationUtils {
             getUser(peerId, new AVCallback<LCChatKitUser>() {
                 @Override
                 protected void internalDone0(LCChatKitUser lcChatKitUser, AVException e) {
-                    callback.internalDone(lcChatKitUser.getAvatarUrl(), null);
+                    callback.internalDone(lcChatKitUser == null ? "" : lcChatKitUser.getAvatarUrl(), null);
                 }
             });
         } else if (null != conversation) {
