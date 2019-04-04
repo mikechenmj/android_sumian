@@ -187,8 +187,10 @@ class CBTIIntroductionActivity : BaseActivity(), BaseRecyclerAdapter.OnItemClick
 
     private fun showCBTIIntroductionWebView() {
         coordinator_cbti_info.visibility = View.GONE
-        initCBTIIntroductionWebView()
-        cbti_introduction_webview.visibility = View.VISIBLE
+        if (cbti_introduction_webview.visibility == View.GONE) {
+            cbti_introduction_webview.visibility = View.VISIBLE
+            initCBTIIntroductionWebView()
+        }
     }
 
     private fun hideCBTIIntroductionWebView() {
