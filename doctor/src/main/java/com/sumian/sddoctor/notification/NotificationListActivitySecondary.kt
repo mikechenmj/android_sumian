@@ -48,7 +48,8 @@ class NotificationListActivitySecondary : SddBaseActivity() {
         super.initWidget()
         mTitleBar.setMenuText(getString(R.string.read_all))
         mTitleBar.setOnMenuClickListener { readAll() }
-        setTitle(R.string.system_notification)
+        val title = if (mCategory == 2) R.string.patient_weekly_report else R.string.system_notification
+        setTitle(title)
         recycler_view.layoutManager = LinearLayoutManager(this)
         recycler_view.adapter = mAdapter
         recycler_view.addItemDecoration(CommonDividerItemDecoration(this, DividerItemDecoration.VERTICAL))
