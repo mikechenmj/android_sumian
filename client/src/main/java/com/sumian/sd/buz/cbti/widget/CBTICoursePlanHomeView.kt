@@ -28,7 +28,6 @@ class CBTICoursePlanHomeView : ConstraintLayout, IVisible {
 
     private fun initView(context: Context) {
         View.inflate(context, R.layout.lay_cbti_lesson_introduction_home_view, this)
-        setBackgroundResource(R.drawable.ic_cbti_banner_mask)
     }
 
     fun invalidView(formatExpiredTime: String, formatTotalProgress: String) {

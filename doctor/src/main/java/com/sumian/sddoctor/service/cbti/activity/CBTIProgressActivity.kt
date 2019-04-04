@@ -60,7 +60,7 @@ class CBTIProgressActivity : SddBaseViewModelActivity<CBTIProgressGroupPresenter
 
     override fun initWidget() {
         super.initWidget()
-        mTitleBar.setTitle(R.string.cbti)
+        mTitleBar.setTitle(R.string.cbti_progress)
         mTitleBar.setTvAndIvColor(ColorCompatUtil.getColor(this@CBTIProgressActivity, R.color.t1_color))
         mTitleBar.setBgColor(ColorCompatUtil.getColor(this@CBTIProgressActivity, R.color.b2_color))
         mTitleBar.mIvBack.setColorFilter(ColorCompatUtil.getColor(this@CBTIProgressActivity, R.color.b3_color))

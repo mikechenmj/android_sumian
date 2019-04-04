@@ -1,47 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.sumian.common.widget.refresh.SumianSwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/refresh"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/b1_color_day">
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:focusable="true"
-        android:focusableInTouchMode="true">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:orientation="vertical">
-
-            <TextView
-                style="@style/text_t2_14"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/space_40"
-                android:background="@color/b1_color_day"
-                android:gravity="center|left"
-                android:paddingLeft="@dimen/space_20"
-                android:text="@string/cbti_progress"
-                tools:ignore="RtlHardcoded,RtlSymmetry" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:clipChildren="false"
-                android:clipToPadding="false"
-                android:descendantFocusability="blocksDescendants"
-                android:nestedScrollingEnabled="false" />
-
-        </LinearLayout>
-
-    </androidx.core.widget.NestedScrollView>
+        android:layout_height="0dp"
+        android:paddingTop="10dp"
+        android:layout_weight="1"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:descendantFocusability="blocksDescendants"
+        android:nestedScrollingEnabled="false" />
 
 </com.sumian.common.widget.refresh.SumianSwipeRefreshLayout>
 

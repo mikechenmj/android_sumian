@@ -27,7 +27,7 @@ class CBTIWeekCourseBannerHomeView : LinearLayout {
     private fun initView(context: Context) {
         orientation = VERTICAL
         inflate(context, R.layout.lay_cbti_lesson_banner_home_view, this)
-        iv_banner.setBackgroundResource(R.drawable.ic_cbti_img_banner1)
+//        iv_banner.setImageResource(R.drawable.ic_cbti_img_banner1)
     }
 
     fun invalidateBanner(formatExpiredTime: String, formatTotalProgress: String?) {

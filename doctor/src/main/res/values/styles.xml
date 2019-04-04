@@ -259,23 +259,23 @@
         <item name="android:layout_marginBottom">@dimen/space_20</item>
     </style>
 
-    <style name="DividerLine">
-        <item name="android:layout_width">1dp</item>
-        <item name="android:layout_height">1dp</item>
-        <item name="android:background">@color/l1_color</item>
-    </style>
+    <!--<style name="DividerLine">-->
+    <!--<item name="android:layout_width">1dp</item>-->
+    <!--<item name="android:layout_height">1dp</item>-->
+    <!--<item name="android:background">@color/l1_color</item>-->
+    <!--</style>-->
 
-    <style name="HorizontalDividerLine" parent="DividerLine">
-        <item name="android:layout_width">match_parent</item>
-    </style>
+    <!--<style name="HorizontalDividerLine" parent="DividerLine">-->
+    <!--<item name="android:layout_width">match_parent</item>-->
+    <!--</style>-->
 
-    <style name="HorizontalDividerLineMarginStart20" parent="HorizontalDividerLine">
-        <item name="android:layout_marginStart">@dimen/space_20</item>
-    </style>
+    <!--<style name="HorizontalDividerLineMarginStart20" parent="HorizontalDividerLine">-->
+    <!--<item name="android:layout_marginStart">@dimen/space_20</item>-->
+    <!--</style>-->
 
-    <style name="VerticalDividerLine" parent="DividerLine">
-        <item name="android:layout_height">match_parent</item>
-    </style>
+    <!--<style name="VerticalDividerLine" parent="DividerLine">-->
+    <!--<item name="android:layout_height">match_parent</item>-->
+    <!--</style>-->
 
     <style name="TabTextAppearance" parent="@android:style/TextAppearance">
         <item name="android:textSize">@dimen/font_14</item>

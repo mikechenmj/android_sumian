@@ -10,7 +10,9 @@
     <ImageView
         android:id="@+id/iv_banner"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/tv_cbti_name"
@@ -39,11 +41,6 @@
         android:marqueeRepeatLimit="marquee_forever"
         android:text="失眠认知行为治疗是世界上公认的、非药物治疗失眠的最佳疗法，能使各年龄段的失眠人群获益。"
         tools:ignore="HardcodedText" />
-
-    <Space
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
 
     <com.sumian.sd.buz.cbti.widget.CBTICoursePlanHomeView
         android:id="@+id/cbti_lesson_plan_view"

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/space_62"
-    android:background="@drawable/ic_cbti_banner_mask">
+    android:background="@color/black_60">
 
     <TextView
         android:id="@+id/tv_cbti_progress"
