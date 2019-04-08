@@ -33,7 +33,7 @@ import java.util.*
  * desc   :
  * version: 1.0
  */
-object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeripheralCallback, MonitorEventListener {
+object DeviceManager : BlueAdapterCallback, MonitorEventListener {
 
     private const val SP_KEY_MONITOR_CACHE = "DeviceManager.MonitorCache"
     private var mPackageNumber: Int = 1     // 透传数据 包的index
@@ -163,11 +163,12 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         setMonitorToLiveData(monitor)
         onConnectStart()
         AppManager.getBlueManager().scanForDevice(monitor.mac, object : BlueManager.ScanForDeviceListener {
+
             override fun onDeviceFound(device: BluetoothDevice?) {
                 connect(monitor)
             }
 
-            override fun onScanTimeout() {
+            override fun onScanStop(isTimeout: Boolean) {
                 onConnectFailed()
             }
         })
@@ -192,14 +193,162 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
                     .setRemoteDevice(remoteDevice)
                     .bindWorkThread(AppManager.getBlueManager().workThread)
                     .build()
-            bluePeripheral.addPeripheralDataCallback(this)
-            bluePeripheral.addPeripheralCallback(this)
+            bluePeripheral.addPeripheralDataCallback(mPeripheralDataCallback)
+            bluePeripheral.addPeripheralCallback(mPeripheralCallback)
             bluePeripheral.connect()
             monitor.status = BlueDevice.STATUS_CONNECTING
             setMonitorToLiveData(monitor)
             LogManager.appendMonitorLog("主动连接监测仪  connect to   name=" + remoteDevice.name + "  address=" + remoteDevice.address)
         } else {
             LogManager.appendMonitorLog("主动连接监测仪  connect to  is invalid   because  init bluetoothDevice is null")
+        }
+    }
+
+    private val mPeripheralCallback = object : BluePeripheralCallback {
+        override fun onConnecting(peripheral: BluePeripheral, connectState: Int) {
+            mMonitorLiveData.value?.status = BlueDevice.STATUS_CONNECTING
+            mMonitorLiveData.value?.battery = 0
+            mMonitorLiveData.value?.resetSleeper()
+            notifyMonitorChange()
+            LogManager.appendMonitorLog("监测仪正在连接中 " + peripheral.name)
+        }
+
+        override fun onConnectSuccess(peripheral: BluePeripheral, connectState: Int) {
+            mMonitorLiveData.value?.status = BlueDevice.STATUS_CONNECTED
+            notifyMonitorChange()
+            onConnectSuccess()
+            AppManager.getBlueManager().saveBluePeripheral(peripheral)
+            LogManager.appendMonitorLog("监测仪连接成功 " + peripheral.name)
+        }
+
+        override fun onConnectFailed(peripheral: BluePeripheral, connectState: Int) {
+            if (isSyncing()) {
+                mMonitorLiveData.value?.isSyncing = false
+                onSyncFailed()
+            }
+            onConnectFailed()
+            AppManager.getBlueManager().refresh()
+            LogManager.appendMonitorLog("监测仪连接失败 " + peripheral.name)
+        }
+
+        override fun onDisconnecting(peripheral: BluePeripheral, connectState: Int) {
+            mMonitorLiveData.value?.status = BlueDevice.STATUS_UNCONNECTED
+            mMonitorLiveData.value?.battery = 0
+            mMonitorLiveData.value?.resetSleeper()
+            notifyMonitorChange()
+            AppManager.getBlueManager().refresh()
+            LogManager.appendMonitorLog("监测仪正在断开连接 " + peripheral.name)
+        }
+
+        override fun onDisconnectSuccess(peripheral: BluePeripheral, connectState: Int) {
+            mMonitorLiveData.value?.status = BlueDevice.STATUS_UNCONNECTED
+            mMonitorLiveData.value?.battery = 0
+            mMonitorLiveData.value?.resetSleeper()
+            notifyMonitorChange()
+            mIsUnbinding = false
+            if (mIsUnbinding) {
+                LogManager.appendMonitorLog("解绑监测仪成功 " + peripheral.name)
+            } else {
+                LogManager.appendMonitorLog("监测仪成功断开连接 " + peripheral.name)
+            }
+            AppManager.getBlueManager().refresh()
+            AppManager.getBlueManager().clearBluePeripheral()
+            mSleeperNeedUpdateLiveData.value = false
+            mMonitorNeedUpdateLiveData.value = false
+        }
+
+        override fun onTransportChannelReady(peripheral: BluePeripheral) {
+            mDeviceStateHelper.onTransportChannelReady(peripheral)
+        }
+    }
+
+    private val mPeripheralDataCallback = object : BluePeripheralDataCallback {
+        override fun onSendSuccess(bluePeripheral: BluePeripheral, data: ByteArray) {
+            val cmd = BlueCmd.bytes2HexString(data)
+            if (BlueCmd.formatCmdIndex(cmd) != "8f") {
+                LogManager.appendBluetoothLog("蓝牙发送成功的指令  cmd=$cmd")
+            }
+            when (cmd) {
+                "aa4f0101" -> LogManager.appendMonitorLog("0x4f 主动同步睡眠特征数据指令成功")
+                "aa570101" -> LogManager.appendMonitorLog("0x57 主动 turn on 监测仪的监测模式发送指令成功")
+                "aa570100" -> LogManager.appendMonitorLog("0x57 主动 turn off 监测仪的监测模式发送指令成功")
+                "aa580101" -> LogManager.appendSpeedSleeperLog("0x58 turn on 速眠仪的 pa 模式发送指令成功")
+                else -> Unit
+            }
+        }
+
+        override fun onReceiveSuccess(peripheral: BluePeripheral, data: ByteArray) {
+            val cmd = BlueCmd.bytes2HexString(data)
+            if (TextUtils.isEmpty(cmd) || cmd.length <= 2 || "55" != cmd.substring(0, 2)) {
+                //设备命令出问题
+                //不是设备命令,有可能发生粘包,分包,拆包现象. 需要重新发送该命令,再次请求消息
+                return
+            }
+            val cmdIndex = BlueCmd.formatCmdIndex(cmd)
+            when (cmdIndex) {
+                // sync data
+                "4f"//主动获取睡眠特征数据
+                -> mSyncDataHelper.receiveRequestSleepDataResponse(cmd)
+                "8e" // 开始/结束 透传数据
+                -> mSyncDataHelper.receiveStartOrFinishTransportCmd(peripheral, data, cmd)
+                "8f" // 透传数据
+                -> mSyncDataHelper.receiveSleepData(peripheral, data, cmd)
+
+                // status
+                "40"//校正时区
+                -> mDeviceStateHelper.receiveSyncTimeSuccessCmd()
+                "44"//获取监测仪电量
+                -> mDeviceStateHelper.receiveMonitorBatteryInfo(cmd)
+                "45"//获取速眠仪电量
+                -> mDeviceStateHelper.receiveSleeperBatteryInfo(cmd)
+                "4b" -> mDeviceStateHelper.receiveSetUserInfoResult(cmd)
+                "4e"//获取速眠仪的连接状态
+                -> mDeviceStateHelper.receiveSleeperConnectionStatus(peripheral, cmd)
+                "50"//获取监测仪固件版本信息
+                -> mDeviceStateHelper.receiveMonitorVersionInfo(cmd)
+                "52" -> LogManager.appendBluetoothLog("0x52 正在绑定速眠仪中,$cmd")
+                "53"//获取监测仪的 sn 号
+                -> mDeviceStateHelper.receiveMonitorSnInfo(data, cmd)
+                "54"//获取速眠仪的固件版本信息
+                -> mDeviceStateHelper.receiveSleeperVersionInfo(cmd)
+                "55"//获取监测仪绑定的并且连接着的速眠仪的 sn 号
+                -> mDeviceStateHelper.receiveSleeperSnInfo(data, cmd)
+                "56"//获取监测仪绑定的速眠仪的 mac 地址
+                -> mDeviceStateHelper.receiveSleeperMacInfo(cmd)
+                "57"//开启/关闭监测仪的监测模式  0x01 开启  0x00 关闭
+                -> mDeviceStateHelper.receiveTurnOnOffMonitoringModeResponse(cmd)
+                "58"//使速眠仪进入 pa 模式之后的反馈
+                -> mDeviceStateHelper.receiveSleeperEnterPaModeResponse(cmd)
+                "61"//同步到的监测仪的所有状态,以及与之绑定的速眠仪的所有状态
+                -> mDeviceStateHelper.receiveAllMonitorAndSleeperStatus(peripheral, data, cmd)
+
+                // dfu
+                "59"//使速眠仪进入 dfu 模式开启成功
+                -> receiveSleeperEnterDfuResponse(cmd)
+                "51"//监测仪自己固件 dfu 模式开启成功
+                -> receiveMonitorEnterDfuResponse(cmd)
+
+
+                "d0"//临床原始数据采集时间点
+                -> {
+                    //val unixTime = java.lang.Long.parseLong(cmd.substring(4, 12), 16)
+                }
+                "d1"//采集临床肌电数据   不回响应包
+                -> {
+                    //val emg = BlueByteUtil.formatData(data)
+                }
+                "d2"//采集临床脉率数据   不回响应包
+                -> {
+                    //val pulse = BlueByteUtil.formatData(data)
+                }
+                "d3"//采集临床加速度数据  不回响应包
+                -> {
+                    //val speed = BlueByteUtil.formatData(data)
+                }
+                "4a", "4c" -> {
+                }
+                else -> peripheral.write(BlueCmd.cResponseOk(data[1]))
+            }
         }
     }
 
@@ -257,94 +406,6 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         LogManager.appendBluetoothLog("蓝牙 turn off")
     }
 
-    override fun onSendSuccess(bluePeripheral: BluePeripheral, data: ByteArray) {
-        val cmd = BlueCmd.bytes2HexString(data)
-        if (BlueCmd.formatCmdIndex(cmd) != "8f") {
-            LogManager.appendBluetoothLog("蓝牙发送成功的指令  cmd=$cmd")
-        }
-        when (cmd) {
-            "aa4f0101" -> LogManager.appendMonitorLog("0x4f 主动同步睡眠特征数据指令成功")
-            "aa570101" -> LogManager.appendMonitorLog("0x57 主动 turn on 监测仪的监测模式发送指令成功")
-            "aa570100" -> LogManager.appendMonitorLog("0x57 主动 turn off 监测仪的监测模式发送指令成功")
-            "aa580101" -> LogManager.appendSpeedSleeperLog("0x58 turn on 速眠仪的 pa 模式发送指令成功")
-            else -> Unit
-        }
-    }
-
-    override fun onReceiveSuccess(peripheral: BluePeripheral, data: ByteArray) {
-        val cmd = BlueCmd.bytes2HexString(data)
-        if (TextUtils.isEmpty(cmd) || cmd.length <= 2 || "55" != cmd.substring(0, 2)) {
-            //设备命令出问题
-            //不是设备命令,有可能发生粘包,分包,拆包现象. 需要重新发送该命令,再次请求消息
-            return
-        }
-        val cmdIndex = BlueCmd.formatCmdIndex(cmd)
-        when (cmdIndex) {
-            // sync data
-            "4f"//主动获取睡眠特征数据
-            -> mSyncDataHelper.receiveRequestSleepDataResponse(cmd)
-            "8e" // 开始/结束 透传数据
-            -> mSyncDataHelper.receiveStartOrFinishTransportCmd(peripheral, data, cmd)
-            "8f" // 透传数据
-            -> mSyncDataHelper.receiveSleepData(peripheral, data, cmd)
-
-            // status
-            "40"//校正时区
-            -> mDeviceStateHelper.receiveSyncTimeSuccessCmd()
-            "44"//获取监测仪电量
-            -> mDeviceStateHelper.receiveMonitorBatteryInfo(cmd)
-            "45"//获取速眠仪电量
-            -> mDeviceStateHelper.receiveSleeperBatteryInfo(cmd)
-            "4b" -> mDeviceStateHelper.receiveSetUserInfoResult(cmd)
-            "4e"//获取速眠仪的连接状态
-            -> mDeviceStateHelper.receiveSleeperConnectionStatus(peripheral, cmd)
-            "50"//获取监测仪固件版本信息
-            -> mDeviceStateHelper.receiveMonitorVersionInfo(cmd)
-            "52" -> LogManager.appendBluetoothLog("0x52 正在绑定速眠仪中,$cmd")
-            "53"//获取监测仪的 sn 号
-            -> mDeviceStateHelper.receiveMonitorSnInfo(data, cmd)
-            "54"//获取速眠仪的固件版本信息
-            -> mDeviceStateHelper.receiveSleeperVersionInfo(cmd)
-            "55"//获取监测仪绑定的并且连接着的速眠仪的 sn 号
-            -> mDeviceStateHelper.receiveSleeperSnInfo(data, cmd)
-            "56"//获取监测仪绑定的速眠仪的 mac 地址
-            -> mDeviceStateHelper.receiveSleeperMacInfo(cmd)
-            "57"//开启/关闭监测仪的监测模式  0x01 开启  0x00 关闭
-            -> mDeviceStateHelper.receiveTurnOnOffMonitoringModeResponse(cmd)
-            "58"//使速眠仪进入 pa 模式之后的反馈
-            -> mDeviceStateHelper.receiveSleeperEnterPaModeResponse(cmd)
-            "61"//同步到的监测仪的所有状态,以及与之绑定的速眠仪的所有状态
-            -> mDeviceStateHelper.receiveAllMonitorAndSleeperStatus(peripheral, data, cmd)
-
-            // dfu
-            "59"//使速眠仪进入 dfu 模式开启成功
-            -> receiveSleeperEnterDfuResponse(cmd)
-            "51"//监测仪自己固件 dfu 模式开启成功
-            -> receiveMonitorEnterDfuResponse(cmd)
-
-
-            "d0"//临床原始数据采集时间点
-            -> {
-                //val unixTime = java.lang.Long.parseLong(cmd.substring(4, 12), 16)
-            }
-            "d1"//采集临床肌电数据   不回响应包
-            -> {
-                //val emg = BlueByteUtil.formatData(data)
-            }
-            "d2"//采集临床脉率数据   不回响应包
-            -> {
-                //val pulse = BlueByteUtil.formatData(data)
-            }
-            "d3"//采集临床加速度数据  不回响应包
-            -> {
-                //val speed = BlueByteUtil.formatData(data)
-            }
-            "4a", "4c" -> {
-            }
-            else -> peripheral.write(BlueCmd.cResponseOk(data[1]))
-        }
-    }
-
 
     private fun receiveMonitorEnterDfuResponse(cmd: String) {
         if ("88".equals(cmd.substring(6, 8))) {
@@ -381,61 +442,6 @@ object DeviceManager : BlueAdapterCallback, BluePeripheralDataCallback, BluePeri
         peripheral.write(command)
     }
 
-    override fun onConnecting(peripheral: BluePeripheral, connectState: Int) {
-        mMonitorLiveData.value?.status = BlueDevice.STATUS_CONNECTING
-        mMonitorLiveData.value?.battery = 0
-        mMonitorLiveData.value?.resetSleeper()
-        notifyMonitorChange()
-        LogManager.appendMonitorLog("监测仪正在连接中 " + peripheral.name)
-    }
-
-    override fun onConnectSuccess(peripheral: BluePeripheral, connectState: Int) {
-        mMonitorLiveData.value?.status = BlueDevice.STATUS_CONNECTED
-        notifyMonitorChange()
-        onConnectSuccess()
-        AppManager.getBlueManager().saveBluePeripheral(peripheral)
-        LogManager.appendMonitorLog("监测仪连接成功 " + peripheral.name)
-    }
-
-    override fun onConnectFailed(peripheral: BluePeripheral, connectState: Int) {
-        if (isSyncing()) {
-            mMonitorLiveData.value?.isSyncing = false
-            onSyncFailed()
-        }
-        onConnectFailed()
-        AppManager.getBlueManager().refresh()
-        LogManager.appendMonitorLog("监测仪连接失败 " + peripheral.name)
-    }
-
-    override fun onDisconnecting(peripheral: BluePeripheral, connectState: Int) {
-        mMonitorLiveData.value?.status = BlueDevice.STATUS_UNCONNECTED
-        mMonitorLiveData.value?.battery = 0
-        mMonitorLiveData.value?.resetSleeper()
-        notifyMonitorChange()
-        AppManager.getBlueManager().refresh()
-        LogManager.appendMonitorLog("监测仪正在断开连接 " + peripheral.name)
-    }
-
-    override fun onDisconnectSuccess(peripheral: BluePeripheral, connectState: Int) {
-        mMonitorLiveData.value?.status = BlueDevice.STATUS_UNCONNECTED
-        mMonitorLiveData.value?.battery = 0
-        mMonitorLiveData.value?.resetSleeper()
-        notifyMonitorChange()
-        mIsUnbinding = false
-        if (mIsUnbinding) {
-            LogManager.appendMonitorLog("解绑监测仪成功 " + peripheral.name)
-        } else {
-            LogManager.appendMonitorLog("监测仪成功断开连接 " + peripheral.name)
-        }
-        AppManager.getBlueManager().refresh()
-        AppManager.getBlueManager().clearBluePeripheral()
-        mSleeperNeedUpdateLiveData.value = false
-        mMonitorNeedUpdateLiveData.value = false
-    }
-
-    override fun onTransportChannelReady(peripheral: BluePeripheral) {
-        mDeviceStateHelper.onTransportChannelReady(peripheral)
-    }
 
     fun cacheBlueDevice(blueDevice: BlueDevice) {
         SPUtils.getInstance().put(SP_KEY_MONITOR_CACHE, JsonUtil.toJson(blueDevice))

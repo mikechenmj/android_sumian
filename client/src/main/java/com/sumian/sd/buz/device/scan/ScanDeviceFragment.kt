@@ -141,7 +141,7 @@ class ScanDeviceFragment : BaseFragment() {
             }
         }
 
-        override fun onScanStop() {
+        override fun onScanStop(isTimeout: Boolean) {
             mIsScanning = false
             hideVgs()
             when (mScanResults.size) {
@@ -149,9 +149,6 @@ class ScanDeviceFragment : BaseFragment() {
                 1 -> showOneDeviceUI()
                 else -> showMultiDeviceUI()
             }
-        }
-
-        override fun onScanTimeout() {
         }
     }
 

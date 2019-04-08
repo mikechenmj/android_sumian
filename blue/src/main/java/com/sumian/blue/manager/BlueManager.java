@@ -30,7 +30,7 @@ import java.util.List;
  */
 
 @SuppressWarnings({"deprecation", "ResultOfMethodCallIgnored"})
-public class BlueManager implements BlueScanCallback {
+public class BlueManager {
 
     private static final String TAG = BlueManager.class.getSimpleName();
     private static final long STOP_SCAN_DELAY_MILLIS = 1000L * 17;
@@ -75,17 +75,14 @@ public class BlueManager implements BlueScanCallback {
         this.mBluetoothAdapter = bluetoothManager != null ? bluetoothManager.getAdapter() : null;
     }
 
-    private Runnable mDelayStopScanRunnable = () -> {
-        stopScan();
-        onScanTimeout();
-    };
+    private Runnable mDelayStopScanRunnable = () -> stopScan(true);
 
     public void startScanAndAutoStopAfter(long delayTimes) {
         removeDelayStopScanRunnable();
         if (isEnable()) {
             log("蓝牙 startLeScan");
             clearBluePeripheral();
-            mIsScanning = mBluetoothAdapter.startLeScan(this);
+            mIsScanning = mBluetoothAdapter.startLeScan(mLeScanCallback);
             if (mIsScanning) {
                 onScanStart();
                 postDelayStopScanRunnable(delayTimes);
@@ -100,11 +97,15 @@ public class BlueManager implements BlueScanCallback {
     }
 
     public void stopScan() {
+        stopScan(false);
+    }
+
+    private void stopScan(boolean isTimeout) {
         removeDelayStopScanRunnable();
         Log.d(TAG, "蓝牙 stopLeScan");
-        mBluetoothAdapter.stopLeScan(this);
+        mBluetoothAdapter.stopLeScan(mLeScanCallback);
         mIsScanning = false;
-        onScanStop();
+        onScanStop(isTimeout);
     }
 
     public BluetoothAdapter getBluetoothAdapter() {
@@ -210,50 +211,43 @@ public class BlueManager implements BlueScanCallback {
         }
     }
 
-    @Override
-    public void onLeScan(BluetoothDevice device, int rssi, byte[] scanRecord) {
-        if (device == null || TextUtils.isEmpty(device.getName())) {
-            return;
+    private BluetoothAdapter.LeScanCallback mLeScanCallback = new BluetoothAdapter.LeScanCallback() {
+        @Override
+        public void onLeScan(BluetoothDevice device, int rssi, byte[] scanRecord) {
+            if (device == null || TextUtils.isEmpty(device.getName())) {
+                return;
+            }
+            if (device.getName().startsWith("M-SUMIAN")) {
+                log("onLeScan " + device.getName());
+            }
+            for (BlueScanCallback scanCallback : mBlueScanCallbacks) {
+                scanCallback.onLeScan(device, rssi, scanRecord);
+            }
+            if (mScanForDeviceListener != null && device.getAddress().equals(mScanDeviceMac)) {
+                removeDelayStopScanRunnable();
+                mScanForDeviceListener.onDeviceFound(device);
+                mScanForDeviceListener = null;
+                mScanDeviceMac = null;
+                // 先移除 mScanForDeviceListener，再stop
+                stopScan();
+            }
         }
-        if (device.getName().startsWith("M-SUMIAN")) {
-            log("onLeScan " + device.getName());
-        }
-        for (BlueScanCallback scanCallback : mBlueScanCallbacks) {
-            scanCallback.onLeScan(device, rssi, scanRecord);
-        }
-        if (mScanForDeviceListener != null && device.getAddress().equals(mScanDeviceMac)) {
-            mScanForDeviceListener.onDeviceFound(device);
-            stopScan();
-            removeDelayStopScanRunnable();
-            mScanForDeviceListener = null;
-            mScanDeviceMac = null;
-        }
-    }
+    };
 
-    @Override
-    public void onScanStart() {
+    private void onScanStart() {
         log("onScanStart");
         for (BlueScanCallback blueScanCallback : mBlueScanCallbacks) {
             blueScanCallback.onScanStart();
         }
     }
 
-    @Override
-    public void onScanStop() {
-        log("onScanStop");
+    private void onScanStop(boolean isTimeout) {
+        log("onScanStop: " + isTimeout);
         for (BlueScanCallback blueScanCallback : mBlueScanCallbacks) {
-            blueScanCallback.onScanStop();
-        }
-    }
-
-    @Override
-    public void onScanTimeout() {
-        log("onScanTimeout");
-        for (BlueScanCallback blueScanCallback : mBlueScanCallbacks) {
-            blueScanCallback.onScanTimeout();
+            blueScanCallback.onScanStop(isTimeout);
         }
         if (mScanForDeviceListener != null) {
-            mScanForDeviceListener.onScanTimeout();
+            mScanForDeviceListener.onScanStop(isTimeout);
         }
     }
 
@@ -358,8 +352,10 @@ public class BlueManager implements BlueScanCallback {
     }
 
     public interface ScanForDeviceListener {
+        // 找到设备后，移除监听，不接受onScanStop事件
         void onDeviceFound(BluetoothDevice device);
 
-        void onScanTimeout();
+        // 超时和在搜索过程中调用stopScan()都会执行到onScanStop()
+        void onScanStop(boolean isTimeout);
     }
 }

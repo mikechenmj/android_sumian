@@ -242,15 +242,17 @@ public class DeviceVersionUpgradePresenter extends BaseViewModel implements Blue
                 }
 
                 @Override
-                public void onScanTimeout() {
-                    DeviceVersionUpgradeActivity view = mViewWeakReference.get();
-                    if (view != null) {
-                        view.onScanFailed(mDfuMac);
-                    }
-
-                    if (mVersionType == DeviceVersionUpgradeActivity.VERSION_TYPE_SLEEPY) {
+                public void onScanStop(boolean isTimeout) {
+                    if (isTimeout) {
+                        DeviceVersionUpgradeActivity view = mViewWeakReference.get();
                         if (view != null) {
-                            view.dismissSleepConnectingDialog();
+                            view.onScanFailed(mDfuMac);
+                        }
+
+                        if (mVersionType == DeviceVersionUpgradeActivity.VERSION_TYPE_SLEEPY) {
+                            if (view != null) {
+                                view.dismissSleepConnectingDialog();
+                            }
                         }
                     }
                 }

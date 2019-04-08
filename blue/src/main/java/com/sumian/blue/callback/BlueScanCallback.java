@@ -16,8 +16,6 @@ public interface BlueScanCallback extends BluetoothAdapter.LeScanCallback {
 
     void onLeScan(BluetoothDevice device, int rssi, byte[] scanRecord);
 
-    default void onScanStop() {
+    default void onScanStop(boolean isTimeout) {
     }
-
-    void onScanTimeout();
 }
