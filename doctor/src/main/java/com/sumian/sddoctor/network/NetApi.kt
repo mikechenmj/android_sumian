@@ -1,6 +1,11 @@
 package com.sumian.sddoctor.network
 
+import cn.leancloud.chatkit.bean.ImIds
+import cn.leancloud.chatkit.bean.ImUser
 import com.google.gson.JsonObject
+import com.sumian.module_core.chat.bean.CreateConversationResponse
+import com.sumian.module_core.notification.NotificationCategory
+import com.sumian.module_core.notification.NotificationListResponse
 import com.sumian.sddoctor.account.bean.Feedback
 import com.sumian.sddoctor.account.bean.Version
 import com.sumian.sddoctor.account.kefu.KeFuMessage
@@ -18,7 +23,6 @@ import com.sumian.sddoctor.me.mywallet.bean.*
 import com.sumian.sddoctor.network.bean.PaginationResponse
 import com.sumian.sddoctor.network.bean.PaginationResponseV2
 import com.sumian.sddoctor.network.response.PatientsResponse
-import com.sumian.sddoctor.notification.bean.GetNotificationListResponse
 import com.sumian.sddoctor.notification.bean.SystemNotificationData
 import com.sumian.sddoctor.oss.OssResponse
 import com.sumian.sddoctor.patient.bean.GroupPatientResponse
@@ -191,7 +195,20 @@ interface NetApi {
     @GET("doctor/notifications")
     fun getNotificationList(@Query("page") page: Int,
                             @Query("per_page") perPage: Int,
-                            @Query("type") type: String): Call<GetNotificationListResponse>
+                            @Query("type") type: String): Call<NotificationListResponse>
+
+    /**
+     * type: all:所有 unread：未读
+     * category: 类别 0:普通消息 2:cbti周报消息 不传取全部消息
+     */
+    @GET("doctor/notifications")
+    fun getNotificationListByCategory(@Query("page") page: Int,
+                                      @Query("per_page") perPage: Int,
+                                      @Query("type") type: String,
+                                      @Query("category") category: Int): Call<NotificationListResponse>
+
+    @GET("doctor/notification-profile")
+    fun getNotificationCategoryList(): Call<List<NotificationCategory>>
 
     /**
      * notificationId 单消息id
@@ -545,4 +562,10 @@ interface NetApi {
      */
     @POST("doctor/authorizations/{doctorId}/easemob")
     fun notifyRegisterImServer(@Path("doctorId") userId: Int): Call<KeFuMessage>
+
+    @POST("doctor/user/{userId}/conversations")
+    fun createConversation(@Path("userId") userId: Int): Call<CreateConversationResponse>
+
+    @POST("doctor/user/im-ids")
+    fun queryImUserInfo(@Body imIds: ImIds): Call<Map<String, ImUser?>>
 }

@@ -492,5 +492,27 @@
 
     <string name="assistant_say_hello">您好，我是睡眠助手，很高兴为您服务！</string>
     <string name="online_customer">在线客服</string>
-
+    <string name="patient_message">患者消息</string>
+    <string name="close_conversation">结束对话</string>
+    <string name="unclose_conversation" tools:ignore="ExtraTranslation">激活对话</string>
+    <string name="clocse_conversation_dialog_title">确定要结束此对话？</string>
+    <string name="clocse_conversation_dialog_message">结束后将不再接收患者消息，当您再次发消息或重新激活会话时，才能继续与患者交流</string>
+    <string name="use_guide">使用指导</string>
+    <string name="useful_to_me">对我有帮助</string>
+    <string name="fold">收起</string>
+    <string name="unfold">展开</string>
+    <string-array name="use_guide_labels">
+        <item>添加患者</item>
+        <item>查看患者资料</item>
+        <item>开通服务</item>
+        <item>账户提现</item>
+        <item>体验CBTI</item>
+    </string-array>
+    <string-array name="use_guide_contents">
+        <item>您也可以向我们申请线下物料，如桌面立牌、睡眠健康指导等放于工作区，供患者直接扫码或取用。</item>
+        <item>了解患者睡眠日记及量表结果，获取患者的详细档案如病历病史，查看患者CBTI学习情况。</item>
+        <item>您可以根据需要选择开通的服务类型，并根据服务类型自由设置价格。</item>
+        <item>您的收入可以在“我的钱包”里查看并随时提现到个人账户中。</item>
+        <item>认证通过后，点击首页CBTI，可立即免费体验全部课程。</item>
+    </string-array>
 </resources>

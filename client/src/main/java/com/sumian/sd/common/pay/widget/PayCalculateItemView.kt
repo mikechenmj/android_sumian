@@ -10,7 +10,8 @@ import android.view.Gravity
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
-import com.qmuiteam.qmui.util.QMUISpanHelper
+import androidx.core.view.isVisible
+import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.widget.adapter.EmptyTextWatcher
 import com.sumian.sd.R
 import com.sumian.sd.common.pay.bean.PayCouponCode
@@ -25,7 +26,7 @@ import java.util.*
  * desc:
  */
 
-class PayCalculateItemView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : LinearLayout(context, attrs, defStyleAttr), View.OnClickListener, Runnable {
+class PayCalculateItemView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : LinearLayout(context, attrs, defStyleAttr), View.OnClickListener {
 
     companion object {
         private const val CHECK_DELAY = 2000L
@@ -34,18 +35,20 @@ class PayCalculateItemView @JvmOverloads constructor(context: Context, attrs: At
     var currentBuyCount = 1
         private set
 
-    var defaultMoney = 0.00
+    var defaultMoney = 0L
         set(defaultMoney) {
             field = defaultMoney
-            this.currentMoney = this.defaultMoney * currentBuyCount
+            this.currentMoney = getPayAmount()
             formatMoney(tv_money, this.defaultMoney)
         }
-    var currentMoney = 0.00
+    var currentMoney = 0L
         private set
 
     private var mOnMoneyChangeCallback: OnMoneyChangeCallback? = null
 
-    private var mDiscountMoney = 0.00
+    private var mDiscountMoney = 0L
+    var mIsCouponCodeValid = false
+        private set
 
     init {
         initView(context)
@@ -63,15 +66,16 @@ class PayCalculateItemView @JvmOverloads constructor(context: Context, attrs: At
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 super.onTextChanged(s, start, before, count)
-                removeCallbacks(this@PayCalculateItemView)
+                removeCallbacks(mDelayCheckCouponCodeRunnable)
+                showCheckCouponCodeLoading()
                 if (!TextUtils.isEmpty(s.toString().trim())) {
-                    postDelayed(this@PayCalculateItemView, CHECK_DELAY)
+                    postDelayed(mDelayCheckCouponCodeRunnable, CHECK_DELAY)
                 } else {
                     tv_pay_coupon_money.text = null
                     tv_pay_coupon_code_tips.text = getString(R.string.none_pay_coupon_code)
                     tv_pay_coupon_code_tips.background = null
                     tv_pay_coupon_code_tips.setTextColor(resources.getColor(R.color.t2_color_day))
-                    mDiscountMoney = 0.00
+                    mDiscountMoney = 0
                 }
                 autoUpdateMoney()
             }
@@ -98,18 +102,7 @@ class PayCalculateItemView @JvmOverloads constructor(context: Context, attrs: At
             }
             else -> {
             }
-        }//                @SuppressLint("InflateParams") View rootView = LayoutInflater.from(v.getContext()).inflate(R.layout.lay_pop_pay_faq, null, false);
-        //
-        //                CustomPopWindow popWindow = new CustomPopWindow.PopupWindowBuilder(v.getContext())
-        //                        .setView(rootView)//显示的布局，还可以通过设置一个View
-        //                        //     .size(600,400) //设置显示的大小，不设置就默认包裹内容
-        //                        .setFocusable(true)//是否获取焦点，默认为ture
-        //                        .setOutsideTouchable(true)//是否PopupWindow 以外触摸dissmiss
-        //                        .create()//创建PopupWindow
-        //                        .showAsDropDown(mIvPayFaq, -3 * (mIvPayFaq.getWidth()), (int) (-4.4 * mIvPayFaq.getHeight()), Gravity.TOP | Gravity.CENTER);//显示PopupWindow
-        //
-        //                v.postDelayed(popWindow::dismiss, 3000);
-        //                rootView.setOnClickListener(v1 -> popWindow.dismiss());
+        }
 
         if (currentBuyCount > 1) {
             iv_reduce_duration.isEnabled = true
@@ -131,78 +124,83 @@ class PayCalculateItemView @JvmOverloads constructor(context: Context, attrs: At
         autoUpdateMoney()
     }
 
-    override fun run() {
+    private val mDelayCheckCouponCodeRunnable = Runnable {
         val couponCode = getCouponCode()
-        if (TextUtils.isEmpty(couponCode)) {
-            removeCallbacks(this@PayCalculateItemView)
-        } else {
-            showCheckCouponCodeLoading()
+        if (!TextUtils.isEmpty(couponCode)) {
+//            showCheckCouponCodeLoading()
             mOnMoneyChangeCallback?.onCheckCouponCode(couponCode!!)
         }
     }
 
     @SuppressLint("SetTextI18n")
-    fun updateCouponCodeTips(couponCode: PayCouponCode?) {
+    fun updateCouponCode(couponCode: PayCouponCode?, errorMessage: String?) {
         if (couponCode == null) {
-            this.mDiscountMoney = 0.00
+            mIsCouponCodeValid = false
+            this.mDiscountMoney = 0L
             tv_pay_coupon_money.text = null
-            tv_pay_coupon_code_tips.text = getString(R.string.none_pay_coupon_code)
+            tv_pay_coupon_code_tips.text = if (TextUtils.isEmpty(errorMessage)) getString(R.string.none_pay_coupon_code) else errorMessage
             tv_pay_coupon_code_tips.setTextColor(resources.getColor(R.color.t2_color_day))
             tv_pay_coupon_code_tips.background = null
         } else {
-            tv_pay_coupon_code_tips.text = couponCode.tips()
-            if (couponCode.status == 1) {
-                this.mDiscountMoney = couponCode.discount
-                tv_pay_coupon_code_tips.setTextColor(resources.getColor(R.color.white))
-                tv_pay_coupon_code_tips.setBackgroundResource(R.drawable.shape_rect_b4_corner_4dp)
-                tv_pay_coupon_money.text = String.format(Locale.getDefault(), "%s%.2f%s", "-", couponCode.discount / 100.00f, "元")
-            } else {
-                this.mDiscountMoney = 0.00
-                tv_pay_coupon_money.text = null
-                tv_pay_coupon_code_tips.setTextColor(resources.getColor(R.color.t2_color_day))
-                tv_pay_coupon_code_tips.background = null
+            val isDiscountValid = getPayAmount() - couponCode.discount > 0
+            val isCouponValid = couponCode.isValid() && isDiscountValid
+            if (couponCode.isValid() && !isDiscountValid) {
+                ToastUtils.showShort(context.getString(R.string.discount_is_too_much))
             }
+            tv_pay_coupon_code_tips.setBackgroundResource(if (isCouponValid) R.drawable.shape_rect_b4_corner_4dp else 0)
+            tv_pay_coupon_code_tips.setTextColor(resources.getColor(if (isCouponValid) R.color.white else R.color.t2_color_day))
+            this.mDiscountMoney = if (isCouponValid) couponCode.discount else 0L
+            tv_pay_coupon_code_tips.text = couponCode.getTips(context, getPayAmount())
+            tv_pay_coupon_money.text = if (isCouponValid) String.format(Locale.getDefault(), "%s%.2f%s", "-", couponCode.discount / 100.00f, "元") else null
+            mIsCouponCodeValid = isCouponValid
         }
-
         autoUpdateMoney()
+        iv_loading.isVisible = false
     }
 
     fun closeKeyBoard() {
         UiUtil.closeKeyboard(et_coupon_code)
-        removeCallbacks(this@PayCalculateItemView)
-        postDelayed(this@PayCalculateItemView, 200)
     }
 
-    fun updateCouponCodeFailed(invalidMsg: String) {
-        tv_pay_coupon_code_tips.background = null
-        tv_pay_coupon_code_tips.setTextColor(resources.getColor(R.color.t2_color_day))
-        tv_pay_coupon_code_tips.text = invalidMsg
-        tv_pay_coupon_money.text = null
-    }
+//    fun updateCouponCodeFailed(invalidMsg: String) {
+//        tv_pay_coupon_code_tips.background = null
+//        tv_pay_coupon_code_tips.setTextColor(resources.getColor(R.color.t2_color_day))
+//        tv_pay_coupon_code_tips.text = invalidMsg
+//        tv_pay_coupon_money.text = null
+//        iv_loading.isVisible = false
+//    }
 
     fun showCheckCouponCodeLoading() {
-        val drawable = resources.getDrawable(R.drawable.pay_coupon_code_loading_animation)
-
         tv_pay_coupon_money.text = null
-        val loadingText = QMUISpanHelper.generateSideIconText(false, resources.getDimensionPixelOffset(R.dimen.space_10), tv_pay_coupon_code_tips?.text?.toString()?.trim()
-                ?: "", drawable)
         tv_pay_coupon_code_tips.background = null
         tv_pay_coupon_code_tips.setTextColor(resources.getColor(R.color.t2_color_day))
-        tv_pay_coupon_code_tips.text = loadingText
+        tv_pay_coupon_code_tips.text = tv_pay_coupon_code_tips?.text?.toString()?.trim()
+        iv_loading.isVisible = true
     }
 
-    private fun formatMoney(tv: TextView, money: Double) {
+    private fun formatMoney(tv: TextView, money: Long) {
         tv.text = String.format(Locale.getDefault(), "%.2f", money / 100.00f)
     }
 
     private fun autoUpdateMoney() {
-        this.currentMoney = defaultMoney * currentBuyCount - mDiscountMoney
+        this.currentMoney = getPayAmount() - mDiscountMoney
         mOnMoneyChangeCallback?.onMoneyChange(currentMoney)
         formatMoney(tv_money, this.currentMoney)
     }
 
+    private fun getPayAmount() = defaultMoney * currentBuyCount
+
     interface OnMoneyChangeCallback {
-        fun onMoneyChange(money: Double)
+        fun onMoneyChange(money: Long)
         fun onCheckCouponCode(couponCode: String)
+        fun showLoading()
+    }
+
+    fun getValidCode(): String? {
+        if (mIsCouponCodeValid) {
+            return getCouponCode()
+        } else {
+            return null
+        }
     }
 }

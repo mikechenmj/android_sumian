@@ -41,7 +41,7 @@ android {
         applicationId = "com.sumian.sddoctor"
         applicationIdSuffix = null
         versionCode = new Date().format('yyyyMMddHH').toInteger()
-        versionName = "1.15.0"
+        versionName = "1.17.0"
         versionNameSuffix = null
 
         minSdkVersion rootProject.ext.minSdkVersion
@@ -255,7 +255,7 @@ dependencies {
     implementation 'com.aliyun.dpa:oss-android-sdk:2.9.1'
 
     //sumian component
-    implementation project(':common')
+    implementation project(':common_base')
     //客服
     implementation project(':kefu-easeui')
 
@@ -268,4 +268,5 @@ dependencies {
     implementation('cn.leancloud.android:avoscloud-sdk:v4.7.6')
     // 推送与即时通讯需要的包
     implementation('cn.leancloud.android:avoscloud-push:v4.7.6@aar') { transitive = true }
+    implementation project(':module_core')
 }

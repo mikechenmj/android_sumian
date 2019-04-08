@@ -6,16 +6,25 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.PopupWindow
 import android.widget.TextView
 import androidx.core.widget.PopupWindowCompat
+import com.blankj.utilcode.util.LogUtils
 import com.sumian.common.h5.handler.SBridgeHandler
 import com.sumian.common.h5.widget.SWebView
+import com.sumian.common.network.response.ErrorResponse
+import com.sumian.common.statistic.StatUtil
 import com.sumian.common.utils.JsonUtil
+import com.sumian.module_core.chat.bean.CreateConversationResponse
 import com.sumian.sddoctor.R
+import com.sumian.sddoctor.app.AppManager
+import com.sumian.sddoctor.buz.patientdoctorim.ConversationActivity
 import com.sumian.sddoctor.constants.H5Uri
+import com.sumian.sddoctor.constants.StatConstants
 import com.sumian.sddoctor.h5.BaseWebViewFragment
 import com.sumian.sddoctor.me.authentication.AuthenticationHelper
+import com.sumian.sddoctor.network.callback.BaseSdResponseCallback
 import com.sumian.sddoctor.patient.activity.ModifyPatientTagActivity
 import com.sumian.sddoctor.patient.contract.PatientRecommendContract
 import com.sumian.sddoctor.patient.presenter.PatientRecommendPresenter
@@ -25,6 +34,7 @@ import com.sumian.sddoctor.service.report.activity.ReportActivity
 import com.sumian.sddoctor.service.report.bean.H5ToReportDetail
 import com.sumian.sddoctor.service.scale.activity.ScaleListActivity
 import com.sumian.sddoctor.widget.TitleBar
+import kotlinx.android.synthetic.main.lay_title_bar.view.*
 import java.util.*
 
 @SuppressLint("InflateParams")
@@ -137,6 +147,26 @@ class PatientInfoWebFragment : BaseWebViewFragment(), TitleBar.OnMenuClickListen
         } else {
             mTitleBar.visibility = View.GONE
             mDivider.visibility = View.GONE
+        }
+
+        mTitleBar.iv_menu.visibility = View.VISIBLE
+        val imageView = ImageView(activity)
+        imageView.setImageResource(R.drawable.nav_icon_conversation)
+        mTitleBar.v_menu_container.addView(imageView)
+        imageView.setOnClickListener {
+            StatUtil.event(StatConstants.click_patient_info_page_conversation_btn)
+            val call = AppManager.getHttpService().createConversation(mPatientId)
+            addCall(call)
+            call.enqueue(object : BaseSdResponseCallback<CreateConversationResponse>() {
+                override fun onSuccess(response: CreateConversationResponse?) {
+                    LogUtils.d(response)
+                    ConversationActivity.launch(response?.conversationId ?: return)
+                }
+
+                override fun onFailure(errorResponse: ErrorResponse) {
+                    LogUtils.d(errorResponse)
+                }
+            })
         }
     }
 

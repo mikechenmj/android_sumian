@@ -44,10 +44,11 @@ class PatientListPresenter private constructor(view: PatientListContract.View) :
                         mView?.onRefreshPatientsSuccess(it.data)
                         mIsRefresh = false
                     } else {
-                        mView?.getPatientsSuccess(it.data)
+                        mView?.loadMorePatientsSuccess(it.data)
                     }
                     mIsHaveMore = it.meta.pagination.totalPages > mCurrentPageIndex
                     mView?.onHaveMore(isHaveMore = mIsHaveMore)
+                    mCurrentPageIndex++
                 }
             }
 
@@ -64,7 +65,6 @@ class PatientListPresenter private constructor(view: PatientListContract.View) :
 
      fun getNextPatients() {
         if (!mIsHaveMore) return
-        mCurrentPageIndex++
         getPatients()
     }
 

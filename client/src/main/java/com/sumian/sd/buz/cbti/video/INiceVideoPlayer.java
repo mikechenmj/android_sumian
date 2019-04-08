@@ -16,7 +16,13 @@ public interface INiceVideoPlayer {
      */
     void setUp(String url, Map<String, String> headers);
 
-    void setSourceData(int courseId, String vid, String playAuth);
+    /**
+     * @param courseId courseId
+     * @param vid      vid
+     * @param playAuth playAuth
+     * @param filePath 如果有本地文件，优先使用本地文件
+     */
+    void setSourceData(int courseId, String vid, String playAuth, String filePath);
 
     /**
      * 开始播放

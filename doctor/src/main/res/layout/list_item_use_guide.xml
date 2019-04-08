@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tv_label"
+    style="@style/text_t1_16"
+    android:layout_width="match_parent"
+    android:layout_height="62dp"
+    android:background="@color/white"
+    android:drawableRight="@drawable/ic_arrow_right_light_blue"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:paddingStart="20dp"
+    android:paddingEnd="20dp"
+    tools:text="1. 添加患者" />

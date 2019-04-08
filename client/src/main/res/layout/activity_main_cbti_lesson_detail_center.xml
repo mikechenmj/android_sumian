@@ -7,11 +7,43 @@
     android:background="@color/b1_color"
     android:orientation="vertical">
 
-    <com.sumian.sd.widget.TitleBar
-        android:id="@+id/title_bar"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:text="1-1 睡眠的奥秘" />
+        android:layout_height="@dimen/tool_bar_height">
+
+        <com.sumian.sd.widget.TitleBar
+            android:id="@+id/title_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="1-1 睡眠的奥秘" />
+
+        <FrameLayout
+            android:id="@+id/vg_download"
+            android:layout_width="30dp"
+            android:layout_height="25dp"
+            android:layout_gravity="end|center_vertical"
+            android:layout_marginEnd="15dp"
+            android:visibility="gone"
+            tools:background="@color/colorPrimary">
+
+            <ImageView
+                android:id="@+id/iv_download"
+                android:layout_width="30dp"
+                android:layout_height="25dp"
+                android:src="@drawable/cbti_icon_cache_default"
+                tools:background="@drawable/cbti_icon_cache_loading" />
+
+            <TextView
+                android:id="@+id/tv_download_progress"
+                style="@style/text_white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="4dp"
+                android:textSize="12sp"
+                tools:text="72%" />
+        </FrameLayout>
+    </FrameLayout>
 
     <com.sumian.sd.buz.cbti.video.NiceVideoView
         android:id="@+id/aliyun_player"

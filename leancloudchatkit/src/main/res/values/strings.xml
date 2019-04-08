@@ -1,0 +1,15 @@
+<resources>
+    <string name="core_send">发送</string>
+    <string name="move_right_cancel_send">向右滑动，取消发送</string>
+    <string name="release_finger_cancel_send">松开手指，取消发送</string>
+    <string name="record_will_stop_in_x_sec">%d”后停止语音</string>
+    <string name="record_too_long">对讲时间过长</string>
+    <string name="record_too_short">按键时间过短</string>
+    <string name="doctor_is_busy">医生当前繁忙，敬请谅解</string>
+    <string name="conversation_closed_hint">对话结束，发送消息或点右上方激活对话</string>
+    <string name="lcim_no_doctor_message_yet">尚未收到医生发起的会话</string>
+    <string name="lcim_no_doctor_message_hint">如有需要，请使用医生咨询服务或到医院就医</string>
+    <string name="lcim_no_patient_message_yet">尚未向患者发起会话</string>
+    <string name="lcim_no_patient_message_hint">如有需要，请在患者详情内向患者发消息</string>
+    <string name="no_record_audio_permission">no_record_audio_permission</string>
+</resources>

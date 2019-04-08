@@ -1,7 +1,8 @@
-include ':client',
+include ':client', ':module_core',
         ':doctor',
-        ':common',
+        ':common_base',
         ':blue',
         ':kefu-easeui',
-        ':jsbridge'
+        ':jsbridge' ,
+        ':leancloudchatkit'
 

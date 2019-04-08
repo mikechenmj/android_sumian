@@ -61,7 +61,7 @@ object StatConstants {
     const val page_data_page_sleep_data_tab = "睡眠数据页(TAB)"
     const val page_data_tab = "数据页"
     const val page_weekly_monitor_data = "监测数据周报告页"
-//    const val page_doctor_tab = "提示扫码页"
+    //    const val page_doctor_tab = "提示扫码页"
     const val page_doctor_tab = "医生主页"
     const val page_scan_doctor = "扫一扫页"
     const val page_doctor_introduction = "医生介绍页"
@@ -94,6 +94,8 @@ object StatConstants {
     const val page_sleep_diary_remind_setting = "睡眠日记填写提醒"
     const val page_relaxation_reminder_setting = "放松训练提醒页"
     const val page_anxiety_reminder_setting = "忧虑时间提醒页"
+    const val page_sumian_story = "眠友说详情页"
+    const val page_sumian_story_list = "眠友说列表页"
 
     // ------------ event ------------
 //    const val enter_login_page = "enter_login_page"
@@ -102,7 +104,7 @@ object StatConstants {
     const val click_home_page_cbti_banner = "click_home_page_cbti_banner"
     const val click_sleep_guide_page_cbti_item = "click_sleep_guide_page_cbti_item"
     const val page_cbti_introduction = "page_cbti_introduction"
-//    const val click_cbti_introduction_page_share_btn = "click_cbti_introduction_page_share_btn"
+    //    const val click_cbti_introduction_page_share_btn = "click_cbti_introduction_page_share_btn"
     const val on_cbti_introduction_page_share_success = "on_cbti_introduction_page_share_success"   // h5
     const val click_cbti_introduction_page_video_play_btn = "click_cbti_introduction_page_video_play_btn"// h5
     const val click_cbti_introduction_page_leave_message_tab = "click_cbti_introduction_page_leave_message_tab"// h5
@@ -110,7 +112,7 @@ object StatConstants {
     const val click_leave_message_page_send_btn = "click_leave_message_page_send_btn"// h5
     const val click_cbti_introduction_page_introduction_tab = "click_cbti_introduction_page_introduction_tab"// h5
     const val click_cbti_introduction_page_introduction_join_btn = "click_cbti_introduction_page_introduction_join_btn"// h5
-//    const val click_pay_page_pay_btn = "click_pay_page_pay_btn"
+    //    const val click_pay_page_pay_btn = "click_pay_page_pay_btn"
 //    const val on_cbti_pay_success = "on_cbti_pay_success"
     const val click_cbti_main_page_share_btn = "click_cbti_main_page_share_btn"
     const val on_cbti_main_page_share_success = "on_cbti_main_page_share_success"   // duplicate
@@ -155,5 +157,8 @@ object StatConstants {
     const val click_doctor_introduction_page_bind_btn = "click_doctor_introduction_page_bind_btn"
     const val click_me_page_my_medal_item = "click_me_page_my_medal_item"
     const val click_my_medal_page_medel_icon = "click_my_medal_page_medel_icon"
-
+    const val click_homepage_more_sumian_story_btn = "click_homepage_more_sumian_story_btn"
+    const val enter_sumian_story_detail_page = "enter_sumian_story_detail_page"
+    const val enter_conversation_list_page = "enter_conversation_list_page"
+    const val enter_conversation_page = "enter_conversation_page"
 }

@@ -4,12 +4,12 @@ import android.annotation.SuppressLint
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.network.response.ErrorResponse
+import com.sumian.common.utils.MoneyUtil
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.app.AppManager
 import com.sumian.sddoctor.base.SddBaseActivity
 import com.sumian.sddoctor.me.mywallet.bean.WalletBalance
 import com.sumian.sddoctor.network.callback.BaseSdResponseCallback
-import com.sumian.sddoctor.util.MoneyUtil
 import kotlinx.android.synthetic.main.activity_settling_amount.*
 
 @SuppressLint("SetJavaScriptEnabled")

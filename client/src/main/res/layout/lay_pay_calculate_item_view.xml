@@ -121,10 +121,11 @@
 
     </LinearLayout>
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/space_40"
         android:background="@color/b1_color_day"
+        android:gravity="center_vertical"
         android:paddingStart="@dimen/space_20"
         tools:ignore="RtlSymmetry">
 
@@ -138,7 +139,15 @@
             android:padding="@dimen/space_4"
             android:text="@string/none_pay_coupon_code"
             tools:ignore="RtlHardcoded" />
-    </FrameLayout>
+
+        <ImageView
+            android:id="@+id/iv_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/pay_coupon_code_loading_animation"
+            android:visibility="gone"
+            tools:visibility="visible" />
+    </LinearLayout>
 
     <View
         android:layout_width="match_parent"

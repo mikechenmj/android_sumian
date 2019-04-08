@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <!-- 让status bar 透明（默认主题色），并且 activity 的 view 可以叠在status bar 下方-->
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:launchMode">singleTop</item>
+    </style>
+
+    <style name="app_default_theme" parent="AppTheme">
+
+        <item name="android:configChanges">keyboardHidden|orientation</item>
+        <item name="android:launchMode">singleInstance</item>
+        <item name="android:screenOrientation">portrait</item>
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowSoftInputMode">stateHidden|stateUnchanged</item>
+
+    </style>
+
+    <style name="Theme.Translate" parent="AppTheme">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+    </style>
+
+    <style name="popup_anim_style_alpha" parent="Base.Widget.AppCompat.PopupMenu.Overflow" />
+
+    <style name="App.Theme.Dialog.Alert" parent="ThemeOverlay.AppCompat.Dialog.Alert">
+        <item name="android:textColorPrimary">@color/black_alpha_240</item>
+    </style>
+
+    <style name="SumianDialog">
+        <item name="android:windowMinWidthMinor">90%</item> <!-- 宽度屏占比 -->
+        <!-- 默认背景是白色的圆角矩形，改为透明 -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsFloating">true</item> <!-- 默认平铺在界面顶部，为true之后会悬浮在中间，有阴影 -->
+        <item name="android:windowCloseOnTouchOutside">true</item>
+    </style>
+
+    <style name="SumianLoadingDialog">
+        <!-- 默认背景是白色的圆角矩形，改为透明 -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsFloating">true</item> <!-- 默认平铺在界面顶部，为true之后会悬浮在中间，有阴影 -->
+        <item name="android:windowCloseOnTouchOutside">false</item>
+    </style>
+
+    <style name="SumianLoadingDialog.NotDim">
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
+    <style name="SumianButton">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:background">@drawable/bg_bt</item>
+        <item name="android:textColor">@color/sel_btn_text</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/font_16</item>
+    </style>
+
+    <style name="SumianButton_HorizontalMargin" parent="SumianButton">
+        <item name="android:layout_marginStart">35dp</item>
+        <item name="android:layout_marginEnd">35dp</item>
+    </style>
+
+    <style name="SumianButton_150dp" parent="SumianButton">
+        <item name="android:layout_width">150dp</item>
+    </style>
+
+    <!--<style name="SumianButton.RightCorner">-->
+        <!--<item name="android:background">@drawable/bg_bt_right_corner</item>-->
+        <!--<item name="android:height">@dimen/normal_item_height_62</item>-->
+    <!--</style>-->
+
+
+    <style name="sm_toast_animation" parent="@android:style/Animation.Toast" />
+
+</resources>

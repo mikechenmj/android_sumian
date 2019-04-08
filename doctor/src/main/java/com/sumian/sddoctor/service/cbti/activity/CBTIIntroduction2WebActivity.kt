@@ -75,7 +75,7 @@ class CBTIIntroduction2WebActivity : SddBaseWebViewActivity() {
                         .complete_authentication_to_get_more_service), Gravity.CENTER)
                 return@setOnClickListener
             }
-            CBTILauncherPresenter.create(null).saveLauncherAction()
+            CBTILauncherPresenter.saveLauncherAction()
             CBTIIntroductionActivity.show()
         }
         vg_warning.setOnClickListener {

@@ -5,6 +5,7 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.SurfaceTexture;
 import android.media.AudioManager;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
@@ -13,6 +14,9 @@ import android.view.TextureView;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.blankj.utilcode.util.ToastUtils;
+
+import java.io.IOException;
 import java.util.Map;
 
 import androidx.annotation.NonNull;
@@ -118,7 +122,7 @@ public class NiceVideoView extends FrameLayout implements INiceVideoPlayer, Text
             mp.start();
             // 从上次的保存位置播放
             if (continueFromLastPosition) {
-                long savedPlayPosition = NiceUtil.getSavedPlayPosition(mContext, mCurrentVid);
+                long savedPlayPosition = NiceUtil.getSavedPlayPosition(mContext, formatVideoUrl2SavePlayPosition());
                 if (savedPlayPosition >= 10 * 1000) {
                     savedPlayPosition -= 10000;
                 } else {
@@ -280,7 +284,7 @@ public class NiceVideoView extends FrameLayout implements INiceVideoPlayer, Text
     }
 
     @Override
-    public void setSourceData(int courseId, String vid, String playAuth) {
+    public void setSourceData(int courseId, String vid, String playAuth, String filePath) {
         this.mCBTIChapterId = courseId;
         mCurrentState = STATE_IDLE;
         if (!vid.equals(mCurrentVid)) {
@@ -291,7 +295,16 @@ public class NiceVideoView extends FrameLayout implements INiceVideoPlayer, Text
         mMediaPlayer.stop();
         mMediaPlayer.reset();
         mController.reset();
-        mMediaPlayer.setDataSource(vid, playAuth);
+        if (!TextUtils.isEmpty(filePath)) {
+            try {
+                mMediaPlayer.setDataSource(filePath);
+            } catch (IOException e) {
+                e.printStackTrace();
+                ToastUtils.showShort("播放失败");
+            }
+        } else {
+            mMediaPlayer.setDataSource(vid, playAuth);
+        }
     }
 
     public void setController(NiceVideoPlayerController controller) {

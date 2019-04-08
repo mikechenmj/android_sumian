@@ -37,7 +37,7 @@ class DoctorFragment : BaseViewModelFragment<DoctorPresenter>(), RequestScanQrCo
         super.initWidget()
         DoctorPresenter.init(this)
         doctor_detail_layout?.setOnRefreshListener(this)
-        iv_notification?.setOnClickListener { NotificationListActivity.launch(activity) }
+        iv_notification?.setOnClickListener { NotificationListActivity.launch(activity!!) }
         KefuManager.mMessageCountLiveData.observe(this, Observer {
             showMessageDot(it > 0)
         })

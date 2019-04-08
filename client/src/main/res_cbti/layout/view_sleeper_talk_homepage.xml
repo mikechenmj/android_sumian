@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp">
+
+        <TextView
+            style="@style/text_t1_16"
+            android:text="@string/sleeper_talk" />
+
+        <TextView
+            android:id="@+id/tv_more_article"
+            style="@style/text_b3_14"
+            android:layout_gravity="end|center_vertical"
+            android:text="@string/more_article" />
+    </FrameLayout>
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/v_item_container"
+            android:layout_width="wrap_content"
+            android:layout_height="110dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal" />
+    </HorizontalScrollView>
+</LinearLayout>

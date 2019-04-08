@@ -5,6 +5,7 @@ import android.text.TextUtils
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import cn.leancloud.chatkit.LCIMManager
 import com.blankj.utilcode.util.ActivityUtils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -59,6 +60,11 @@ class MeFragment : BaseViewModelFragment<GetAchievementListPresenter>(), View.On
 
     private var mPreRequestTimeMills = 0L
 
+    private val mNotificationViewModel by lazy {
+        ViewModelProviders.of(activity!!)
+                .get(NotificationViewModel::class.java)
+    }
+
     override fun getLayoutId(): Int {
         return R.layout.fragment_tab_me
     }
@@ -83,6 +89,7 @@ class MeFragment : BaseViewModelFragment<GetAchievementListPresenter>(), View.On
         dv_device_market.setOnClickListener { MiniProgramHelper.launchYouZanOrWeb(activity!!) }
     }
 
+
     override fun initData() {
         super.initData()
         val userProfile = AppManager.getAccountViewModel().token.user
@@ -94,11 +101,10 @@ class MeFragment : BaseViewModelFragment<GetAchievementListPresenter>(), View.On
                 }
             }
         })
-        ViewModelProviders.of(activity!!)
-                .get(NotificationViewModel::class.java)
+        mNotificationViewModel
                 .unreadCount
-                .observe(this, Observer<Int> { unreadCount -> iv_notification.isActivated = unreadCount != null && unreadCount > 0 })
-
+                .observe(this, Observer<Int> { updateNotificationIcon() })
+        LCIMManager.getInstance().unreadCountLiveData.observe(this, Observer<Int> { updateNotificationIcon() })
         DeviceManager.getMonitorLiveData().observe(this, Observer { blueDevice ->
             var monitorSn: String? = blueDevice?.sn
             if (TextUtils.isEmpty(monitorSn)) {
@@ -116,6 +122,11 @@ class MeFragment : BaseViewModelFragment<GetAchievementListPresenter>(), View.On
         })
     }
 
+    override fun onResume() {
+        super.onResume()
+//        LCIMManager.getInstance().updateUnreadConversation()
+    }
+
     override fun showLoading() {
         //super.showLoading()
     }
@@ -124,11 +135,18 @@ class MeFragment : BaseViewModelFragment<GetAchievementListPresenter>(), View.On
         //super.dismissLoading()
     }
 
+    private fun updateNotificationIcon() {
+        val notificationCount = mNotificationViewModel.unreadCount.value
+        val hasNotification = notificationCount != null && notificationCount > 0
+        val hasIm = LCIMManager.getInstance().unreadMessageCount > 0
+        iv_notification.isActivated = hasNotification || hasIm
+    }
+
     override fun onClick(v: View) {
         when (v.id) {
             R.id.iv_modify, R.id.iv_avatar, R.id.tv_nickname -> ActivityUtils.startActivity(UserInfoActivity::class.java)
             R.id.dv_setting -> ActivityUtils.startActivity(SettingActivity::class.java)
-            R.id.iv_notification -> NotificationListActivity.launch(activity)
+            R.id.iv_notification -> NotificationListActivity.launch(activity!!)
             R.id.siv_customer_service -> {
 //                UIProvider.getInstance().clearCacheMsg()
                 KefuManager.launchKefuActivity()
@@ -138,6 +156,7 @@ class MeFragment : BaseViewModelFragment<GetAchievementListPresenter>(), View.On
                 MyAchievementActivity.show()
             }
             R.id.dv_device_manage -> {
+
                 LogManager.appendUserOperationLog("点击【设备管理】")
                 ActivityUtils.startActivity(DeviceManageActivity::class.java)
             }

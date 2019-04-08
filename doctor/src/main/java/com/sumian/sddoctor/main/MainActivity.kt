@@ -76,6 +76,8 @@ class MainActivity : BaseActivity(), BottomNavigationBar.OnSelectedTabChangeList
     override fun onStart() {
         super.onStart()
         mVersionDelegate.checkVersion(this)
+
+//        ConversationListActivity.launch()
     }
 
     override fun onSelectedTabChange(navigationItem: NavigationItem?, position: Int) {

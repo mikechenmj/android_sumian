@@ -6,6 +6,7 @@ import android.net.Uri
 import com.sumian.common.notification.ISchemeResolver
 import com.sumian.common.notification.SchemeResolveUtil
 import com.sumian.sddoctor.booking.BookingDetailActivity
+import com.sumian.sddoctor.buz.weeklyreport.WeeklyReportActivity
 import com.sumian.sddoctor.me.myservice.MyServiceListActivity
 import com.sumian.sddoctor.me.mywallet.PendingIncomeDetailActivity
 import com.sumian.sddoctor.me.mywallet.WalletRecordDetailActivity
@@ -35,8 +36,16 @@ object SchemeResolver : ISchemeResolver {
             "withdrawals" -> resolveWithdrawDetailScheme(context, uri)
             "system-notifications-detail" -> resolveSystemNotificationsDetail(context, uri)
             "pending-income" -> resolvePendingIncomeDetail(context, uri)
+            "cbti-week-report" -> resolveWeeklyReport(context, uri)
             else -> null
         }
+    }
+
+    /**
+     * sd-doctor://cbti-week-report?notification_id=f8a928b0-1cb0-4e9e-b277-02f92e5d10ca&date=1554080408
+     */
+    private fun resolveWeeklyReport(context: Context, uri: Uri): Intent? {
+        return WeeklyReportActivity.getLaunchIntent(uri.getQueryParameter("date")?.toInt() ?: 0)
     }
 
     /**

@@ -102,5 +102,6 @@
 
     <color name="full_general_color">#ff7d8fb3</color>
     <color name="transparent">#00000000</color>
+    <color name="use_guide_fold_tv_bg">#199CBDFF </color>
 
 </resources>

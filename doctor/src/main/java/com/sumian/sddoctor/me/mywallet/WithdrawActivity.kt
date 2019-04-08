@@ -11,12 +11,12 @@ import androidx.lifecycle.ViewModelProviders
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.utils.ColorCompatUtil
+import com.sumian.common.utils.MoneyUtil
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.base.SddBaseViewModelActivity
 import com.sumian.sddoctor.constants.StatConstants
 import com.sumian.sddoctor.me.mywallet.bean.WithdrawRecord
 import com.sumian.sddoctor.me.mywallet.bean.WithdrawRule
-import com.sumian.sddoctor.util.MoneyUtil
 import com.sumian.sddoctor.widget.dialog.SumianDialog
 import com.sumian.sddoctor.widget.edittext.FloatInputFilter
 import com.sumian.sddoctor.widget.text.EmptyTextWatcher

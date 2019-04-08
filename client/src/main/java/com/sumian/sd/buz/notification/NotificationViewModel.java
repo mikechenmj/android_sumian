@@ -2,8 +2,8 @@ package com.sumian.sd.buz.notification;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.sumian.common.network.response.ErrorResponse;
+import com.sumian.module_core.notification.NotificationListResponse;
 import com.sumian.sd.app.AppManager;
-import com.sumian.sd.buz.notification.bean.NotificationListResponse;
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback;
 
 import org.jetbrains.annotations.NotNull;

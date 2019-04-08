@@ -11,6 +11,7 @@ import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.sumian.common.image.ImageLoader
 import com.sumian.sddoctor.R
@@ -85,6 +86,8 @@ class PatientAdapter constructor(context: Context) : BaseRecyclerAdapter<Patient
                 } else {
                     tv_none_faced.visibility = View.VISIBLE
                 }
+
+                tv_cbti.isVisible = item.cbtis_count > 0
 
                 // vDivider.visibility = if (isHideDivider) View.INVISIBLE else View.VISIBLE
             }

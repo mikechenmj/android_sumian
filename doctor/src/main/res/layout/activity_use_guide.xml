@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.sumian.common.player.CustomVideoView
+        android:id="@+id/video_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/b1_color"
+        android:visibility="visible" />
+
+    <com.sumian.common.widget.TitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/use_guide_fold_tv_bg">
+
+            <TextView
+                android:id="@+id/tv_fold"
+                style="@style/text_b3_14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:drawableEnd="@drawable/userguides_icon_downarrow"
+                android:drawablePadding="5dp"
+                android:text="@string/fold" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tv_use_guide_title"
+            style="@style/text_t1_18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            tools:text="开通自由定价服务" />
+
+        <TextView
+            android:id="@+id/tv_content"
+            style="@style/text_t2_14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            tools:text="您可以根据需要选择开通的服务类型，并根据服务类型自由设置价格。" />
+
+        <TextView
+            android:id="@+id/tv_useful"
+            style="@style/text_t2_13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            android:drawableStart="@drawable/sel_use_guide_like"
+            android:drawablePadding="5dp"
+            android:padding="10dp"
+            android:text="@string/useful_to_me"
+            android:textColor="@color/sel_b3_t2" />
+
+    </LinearLayout>
+</FrameLayout>

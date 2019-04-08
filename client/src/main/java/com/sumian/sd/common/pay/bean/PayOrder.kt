@@ -15,7 +15,7 @@ data class PayOrder(
         val resellerId: Int?,//分销 id
         val mobile: String?,//手机号
         val captcha: String?,//验证码
-        val amount: Double = 0.00,//支付总金额（单位：分）
+        val amount: Long = 0L,//支付总金额（单位：分）
         val channel: String = "wx",//付款平台（wx:微信app，alipay：支付宝app，wx_pub:微信公众号）//允许值: {"wx", "alipay", "wx_pub"}
         val currency: String = "cny",//货币代码，目前仅支持人民币 cny 允许值: {"cny"}
         val subject: String,//商品标题

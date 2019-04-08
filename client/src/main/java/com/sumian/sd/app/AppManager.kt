@@ -8,6 +8,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ProcessLifecycleOwner
+import cn.leancloud.chatkit.LCIMManager
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.ToastUtils
@@ -20,6 +21,7 @@ import com.sumian.common.h5.WebViewManger
 import com.sumian.common.helper.ToastHelper
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.notification.AppNotificationManager
+import com.sumian.common.notification.LeanCloudManager
 import com.sumian.common.notification.NotificationUtil
 import com.sumian.common.social.OpenEngine
 import com.sumian.common.social.analytics.OpenAnalytics
@@ -34,6 +36,7 @@ import com.sumian.sd.buz.account.bean.UserInfo
 import com.sumian.sd.buz.account.login.LoginActivity
 import com.sumian.sd.buz.account.login.NewUserGuideActivity
 import com.sumian.sd.buz.account.model.AccountViewModel
+import com.sumian.sd.buz.cbti.video.download.VideoDownloadManager
 import com.sumian.sd.buz.devicemanager.DeviceManager
 import com.sumian.sd.buz.devicemanager.helper.FileHelper
 import com.sumian.sd.buz.doctor.model.DoctorViewModel
@@ -41,6 +44,8 @@ import com.sumian.sd.buz.kefu.KefuManager
 import com.sumian.sd.buz.notification.NotificationConst
 import com.sumian.sd.buz.notification.NotificationDelegate
 import com.sumian.sd.buz.notification.SchemeResolver
+import com.sumian.sd.buz.patientdoctorim.IMManagerHost
+import com.sumian.sd.buz.patientdoctorim.IMProfileProvider
 import com.sumian.sd.buz.upgrade.model.VersionModel
 import com.sumian.sd.common.log.LogManager
 import com.sumian.sd.common.log.SdLogManager
@@ -56,6 +61,8 @@ import com.sumian.sd.main.MainActivity
  */
 
 object AppManager {
+
+    lateinit var mApplication: Application
 
     private val mAccountViewModel: AccountViewModel by lazy {
         AccountViewModel(App.getAppContext())
@@ -161,14 +168,17 @@ object AppManager {
     }
 
     fun initOnAppStart(app: Application) {
+        mApplication = app
         initUtils(app)
         initLeakCanary(app)
         BaseActivityManager.setActivityDelegateFactory(ActivityDelegateFactory())
+        initLeanCloud()
         initAppNotificationManager(app)
         initLogManager(app)
         initStatic(app)
         observeAppLifecycle()
         initWebView(app)
+        VideoDownloadManager.init(app)
     }
 
     private fun initStatic(app: Application) {
@@ -217,10 +227,14 @@ object AppManager {
         AppNotificationManager.init(app,
                 R.drawable.ic_notification_small, R.mipmap.ic_launcher,
                 BuildConfig.LEANCLOUD_APP_ID, BuildConfig.LEANCLOUD_APP_KEY,
-                NotificationConst.PUSH_CHANNEL, BuildConfig.DEBUG,
-                NotificationConst.CHANNEL_ID, NotificationConst.CHANNEL_NAME,
                 NotificationDelegate(), SchemeResolver, NotificationConst.USER_ID_KEY)
 
+    }
+
+    private fun initLeanCloud() {
+        LeanCloudManager.init(mApplication,
+                BuildConfig.LEANCLOUD_APP_ID, BuildConfig.LEANCLOUD_APP_KEY,
+                NotificationConst.PUSH_CHANNEL, BuildConfig.DEBUG, MainActivity::class.java)
     }
 
     private fun initWebView(context: Context) {
@@ -290,6 +304,15 @@ object AppManager {
         DeviceManager.init(App.getAppContext())
         sendHeartbeat()
         syncUserInfo()
+        initImManager()
+    }
+
+    private fun initImManager() {
+        LCIMManager.getInstance().init(mApplication,
+                BuildConfig.LEANCLOUD_APP_ID, BuildConfig.LEANCLOUD_APP_KEY,
+                getAccountViewModel().userInfo.im_id,
+                IMProfileProvider(),
+                IMManagerHost())
     }
 
     fun onMainActivityRestore() {
@@ -324,6 +347,7 @@ object AppManager {
         ActivityUtils.finishAllActivities()
         LoginActivity.show()
         StatUtil.removeAccount()
+        LCIMManager.getInstance().close()
     }
 
     // ------------ App's important lifecycle events end------------

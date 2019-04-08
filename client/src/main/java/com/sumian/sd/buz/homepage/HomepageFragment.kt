@@ -9,13 +9,9 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SPUtils
-import com.google.gson.JsonArray
 import com.sumian.common.base.BaseViewModel
 import com.sumian.common.base.BaseViewModelFragment
-import com.sumian.common.image.ImageLoader
-import com.sumian.common.network.response.BaseResponseCallback
 import com.sumian.common.network.response.ErrorResponse
-import com.sumian.common.network.response.PaginationResponseV2
 import com.sumian.common.statistic.StatUtil
 import com.sumian.common.utils.JsonUtil
 import com.sumian.sd.R
@@ -31,10 +27,10 @@ import com.sumian.sd.buz.cbti.activity.CBTIIntroductionActivity
 import com.sumian.sd.buz.cbti.activity.CbtiFinalReportDialogActivity
 import com.sumian.sd.buz.cbti.event.CBTIProgressChangeEvent
 import com.sumian.sd.buz.cbti.event.CBTIServiceBoughtEvent
-import com.sumian.sd.buz.devicemanager.DeviceManager
-import com.sumian.sd.buz.devicemanager.BlueDevice
 import com.sumian.sd.buz.device.scan.ScanDeviceActivity
 import com.sumian.sd.buz.device.widget.DeviceCardView
+import com.sumian.sd.buz.devicemanager.BlueDevice
+import com.sumian.sd.buz.devicemanager.DeviceManager
 import com.sumian.sd.buz.homepage.banner.BannerContract
 import com.sumian.sd.buz.homepage.banner.BannerPresenter
 import com.sumian.sd.buz.homepage.bean.GetCbtiChaptersResponse
@@ -44,10 +40,8 @@ import com.sumian.sd.buz.relaxation.RelaxationListActivity
 import com.sumian.sd.buz.scale.ScaleListActivity
 import com.sumian.sd.buz.sleepguide.SleepGuideActivity
 import com.sumian.sd.buz.stat.StatConstants
-import com.sumian.sd.buz.stat.StatConstants.click_home_page_anxiety_and_faith
 import com.sumian.sd.common.h5.H5Uri
 import com.sumian.sd.common.h5.SimpleWebActivity
-import com.sumian.sd.common.network.api.SdApi
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import com.sumian.sd.common.utils.EventBusUtil
 import com.sumian.sd.main.MainActivity
@@ -88,6 +82,10 @@ HomepageFragment : BaseViewModelFragment<BaseViewModel>(), OnEnterListener, Last
     var flag = 1
     override fun initWidget() {
         super.initWidget()
+        refresh_layout.setOnRefreshListener {
+            refreshData()
+            refresh_layout.postDelayed({ refresh_layout?.hideRefreshAnim() }, 1000)
+        }
         initUserInfo()
         cbti_progress_view.setOnEnterLearnBtnClickListener(View.OnClickListener {
             CBTIIntroductionActivity.show()
@@ -97,7 +95,7 @@ HomepageFragment : BaseViewModelFragment<BaseViewModel>(), OnEnterListener, Last
             StatUtil.event(StatConstants.click_home_page_relaxation_icon)
         }
         tv_sleep_health.setOnClickListener {
-//            SimpleWebActivity.launch(activity!!, H5Uri.CBTI_SLEEP_HEALTH, StatConstants.page_sleep_health_list)
+            //            SimpleWebActivity.launch(activity!!, H5Uri.CBTI_SLEEP_HEALTH, StatConstants.page_sleep_health_list)
             SimpleWebActivity.launch(activity!!, H5Uri.CBTI_SLEEP_HEALTH)
             StatUtil.event(StatConstants.click_home_page_sleep_health_icon)
         }
@@ -106,7 +104,6 @@ HomepageFragment : BaseViewModelFragment<BaseViewModel>(), OnEnterListener, Last
             StatUtil.event(StatConstants.click_home_page_scale_icon)
         }
         sleep_prescription_view.setOnClickListener { SleepPrescriptionActivity.launch() }
-        iv_avatar.setOnClickListener { onAvatarClick() }
         device_card_view.registerLifecycleOwner(this)
         DeviceManager.tryToConnectCacheMonitor()
         device_card_view.mHost = object : DeviceCardView.Host {
@@ -147,17 +144,12 @@ HomepageFragment : BaseViewModelFragment<BaseViewModel>(), OnEnterListener, Last
         AppManager.getAccountViewModel().liveDataToken.observe(this, Observer<Token> { t ->
             val userProfile = t?.user ?: return@Observer
             tv_name.text = userProfile.nameOrNickname
-            val defaultAvatar = R.mipmap.ic_info_avatar_patient
-            ImageLoader.loadImage(userProfile.avatar, iv_avatar, defaultAvatar)
         })
     }
 
     override fun onStart() {
         super.onStart()
         refreshData()
-
-
-
     }
 
     override fun onResume() {
@@ -201,6 +193,7 @@ HomepageFragment : BaseViewModelFragment<BaseViewModel>(), OnEnterListener, Last
         querySleepPrescription()
         querySentencePool()
         querySleepGuide()
+        sleeper_talk_view.queryData()
     }
 
     private fun querySentencePool() {

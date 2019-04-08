@@ -54,7 +54,8 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths" />
+                android:resource="@xml/provider_paths"
+                tools:replace="android:resource" />
         </provider>
 
         <activity
@@ -194,8 +195,8 @@
         <activity android:name=".service.cbti.activity.CBTIProgressActivity" />
         <activity
             android:name=".me.mywallet.WithdrawActivity"
-            android:windowSoftInputMode="stateVisible"
-            android:exported="true" />
+            android:exported="true"
+            android:windowSoftInputMode="stateVisible" />
         <activity android:name=".me.mywallet.WithdrawRulesActivity" />
         <activity
             android:name=".service.report.activity.ReportActivity"
@@ -229,7 +230,7 @@
 
         <activity
             android:name=".service.cbti.activity.CBTIIntroduction2WebActivity"
-            android:configChanges="keyboardHidden|orientation"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/ActivityTheme"
@@ -254,7 +255,7 @@
 
         <activity
             android:name=".service.cbti.activity.CBTIIntroductionActivity"
-            android:configChanges="keyboardHidden|orientation"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:exported="true"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
@@ -286,9 +287,38 @@
         <activity
             android:name=".me.mywallet.WithdrawAmountActivity"
             android:launchMode="singleTop" />
-        <activity android:name=".me.mywallet.PendingIncomeListActivity" />
-        <activity android:name=".me.mywallet.PendingIncomeDetailActivity" />
-        <activity android:name=".me.mywallet.PendingIncomeAmountActivity" />
+        <activity
+            android:name=".me.mywallet.PendingIncomeListActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".me.mywallet.PendingIncomeDetailActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".me.mywallet.PendingIncomeAmountActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".buz.patientdoctorim.ConversationActivity"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="cn.leancloud.chatkit.conversation_item_click_action" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".buz.patientdoctorim.ConversationListActivity"
+            android:exported="true"
+            android:launchMode="singleTop" />
+        <activity android:name=".me.useguide.UseGuideListActivity" />
+        <activity
+            android:name=".me.useguide.UseGuideActivity"
+            android:exported="true" />
+        <activity
+            android:name=".notification.NotificationListActivitySecondary"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".buz.weeklyreport.WeeklyReportActivity"
+            android:launchMode="singleTop" />
     </application>
 
 </manifest>

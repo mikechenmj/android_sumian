@@ -9,6 +9,7 @@ import android.view.View
 import androidx.lifecycle.Observer
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.helper.ToastHelper
+import com.sumian.common.statistic.StatUtil
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.account.activity.SettingsActivity
 import com.sumian.sddoctor.account.activity.UserInfoActivity
@@ -18,11 +19,13 @@ import com.sumian.sddoctor.account.presenter.LogoutPresenter
 import com.sumian.sddoctor.account.version.VersionManager
 import com.sumian.sddoctor.app.AppManager
 import com.sumian.sddoctor.base.BaseFragment
+import com.sumian.sddoctor.constants.StatConstants
 import com.sumian.sddoctor.login.login.LoginActivity
 import com.sumian.sddoctor.login.login.bean.DoctorInfo
 import com.sumian.sddoctor.me.authentication.AuthenticationActivity
 import com.sumian.sddoctor.me.myservice.MyServiceListActivity
 import com.sumian.sddoctor.me.mywallet.MyWalletActivity
+import com.sumian.sddoctor.me.useguide.UseGuideListActivity
 import com.sumian.sddoctor.util.ImageLoader
 import com.sumian.sddoctor.widget.divider.SettingDividerView
 import kotlinx.android.synthetic.main.fragment_me.*
@@ -75,6 +78,10 @@ class MeFragment : BaseFragment(), LogoutContract.View {
                     Log.e("tag", error)
                 }
             })
+        }
+        sdv_user_guid.setOnClickListener {
+            UseGuideListActivity.launch()
+            StatUtil.event(StatConstants.click_me_page_use_guide_item)
         }
         KefuManager.mMessageCountLiveData.observe(this, Observer {
             showDot(sdv_my_kefu, it > 0)

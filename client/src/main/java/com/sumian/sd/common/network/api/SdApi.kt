@@ -1,8 +1,10 @@
 package com.sumian.sd.common.network.api
 
-import com.google.gson.JsonArray
+import cn.leancloud.chatkit.bean.ImIds
+import cn.leancloud.chatkit.bean.ImUser
 import com.google.gson.JsonObject
 import com.sumian.common.network.response.PaginationResponseV2
+import com.sumian.module_core.notification.NotificationListResponse
 import com.sumian.sd.buz.account.achievement.bean.AchievementData
 import com.sumian.sd.buz.account.achievement.bean.AchievementRecord
 import com.sumian.sd.buz.account.achievement.bean.AchievementResponse
@@ -31,7 +33,6 @@ import com.sumian.sd.buz.homepage.bean.GetCbtiChaptersResponse
 import com.sumian.sd.buz.homepage.bean.SentencePoolText
 import com.sumian.sd.buz.homepage.bean.SleepPrescriptionStatus
 import com.sumian.sd.buz.kefu.KeFuMessage
-import com.sumian.sd.buz.notification.bean.NotificationListResponse
 import com.sumian.sd.buz.notification.bean.SystemNotificationData
 import com.sumian.sd.buz.onlinereport.OnlineReport
 import com.sumian.sd.buz.relaxation.bean.RelaxationData
@@ -47,6 +48,7 @@ import com.sumian.sd.buz.scale.bean.Scale
 import com.sumian.sd.buz.setting.bean.Feedback
 import com.sumian.sd.buz.setting.remind.bean.Reminder
 import com.sumian.sd.buz.setting.version.bean.Version
+import com.sumian.sd.buz.sleepertalk.bean.SleeperTalkData
 import com.sumian.sd.buz.tel.bean.TelBooking
 import com.sumian.sd.common.log.LogOssResponse
 import com.sumian.sd.common.network.response.AppUpgradeInfo
@@ -134,10 +136,6 @@ interface SdApi {
     @PATCH("user/avatar")
     fun uploadAvatar(): Call<OssResponse>
 
-    @FormUrlEncoded
-    @POST("orders")
-    fun createOrder(@FieldMap map: MutableMap<String, Any>): Call<String>
-
     @GET("orders/{order_no}")
     fun getOrderDetail(@Path("order_no") orderNumber: String): Call<OrderDetail>
 
@@ -185,10 +183,11 @@ interface SdApi {
     fun getServiceList(): Call<DoctorServiceList>
 
     /**
-     * 服务类型 0：睡眠日记 1：图文咨询 2：电话咨询 3：CBTI
+     * @param type  服务类型 0：睡眠日记 1：图文咨询 2：电话咨询 3：CBTI
+     * @param servicePackageType 服务包类型 0：服务包 1：续费包
      */
     @GET("service")
-    fun getServiceByType(@Query("type") type: Int): Call<DoctorService>
+    fun getServiceByType(@Query("type") type: Int, @Query("service_package_type") servicePackageType: Int = 0): Call<DoctorService>
 
     @GET("services/{id}")
     fun getServiceDetailById(@Path("id") id: Int): Call<DoctorService>
@@ -609,4 +608,19 @@ interface SdApi {
 
     @GET("medicines")
     fun getMedicines(@Query("page") page: Int = 1, @Query("per_page") perPage: Int = 100): Call<PaginationResponseV2<SleepMedicine>>
+
+    @GET("essays/{id}")
+    fun getSleeperTalkDetail(@Path("id") id: Int): Call<SleeperTalkData>
+
+    @GET("essays")
+    fun getSleeperTalkList(@Query("page") page: Int = 1, @Query("per_page") perPage: Int = 16): Call<PaginationResponseV2<SleeperTalkData>>
+
+    @POST("essays/{id}/likes")
+    fun likeSleeperTalk(@Path("id") id: Int): Call<Any>
+
+    @DELETE("essays/{id}/likes")
+    fun cancelLikeSleeperTalk(@Path("id") id: Int): Call<Any>
+
+    @POST("doctor/im-ids")
+    fun queryImUserInfo(@Body imIds: ImIds): Call<Map<String, ImUser?>>
 }

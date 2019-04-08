@@ -84,7 +84,7 @@
             <com.sumian.common.h5.widget.SWebView
                 android:id="@+id/web_view_share"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="120dp"
                 android:layout_marginLeft="@dimen/space_40"
                 android:layout_marginTop="@dimen/space_20"
                 android:layout_marginRight="@dimen/space_40"

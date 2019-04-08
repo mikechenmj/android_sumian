@@ -3,7 +3,6 @@ package com.sumian.sd.common.pay.activity
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import com.blankj.utilcode.util.ToastUtils
@@ -21,7 +20,6 @@ import com.sumian.sd.common.pay.presenter.PayPresenter
 import com.sumian.sd.common.pay.widget.PayCalculateItemView
 import com.sumian.sd.common.pay.widget.PayItemGroupView
 import com.sumian.sd.widget.TitleBar
-import com.sumian.sd.widget.dialog.ActionLoadingDialogV2
 import kotlinx.android.synthetic.main.activity_main_shopping_car.*
 
 /**
@@ -56,9 +54,9 @@ class PaymentActivity : BaseViewModelActivity<PayPresenter>(), View.OnClickListe
 
     private var mPayChannel = WECHAT_PAY_TYPE
 
-    private val mActionLoadingDialog: ActionLoadingDialogV2  by lazy {
-        ActionLoadingDialogV2(this)
-    }
+//    private val mActionLoadingDialog: ActionLoadingDialogV2  by lazy {
+//        ActionLoadingDialogV2(this)
+//    }
 
     private val mPayDialog: PayDialog  by lazy {
         val payDialog = PayDialog(this, object : PayDialog.Listener {
@@ -70,15 +68,9 @@ class PaymentActivity : BaseViewModelActivity<PayPresenter>(), View.OnClickListe
         payDialog.bindPresenter(mViewModel!!)
         return@lazy payDialog
     }
-
     private var mDoctorService: DoctorService? = null
-
     private var mServicePackage: DoctorServicePackage? = null
-
     private var mPackage: DoctorServicePackage.ServicePackage? = null
-
-    private var mIsCheckCouponCode = false
-    private var mGoNextPay = false
 
     override fun initBundle(bundle: Bundle) {
         bundle.let {
@@ -160,15 +152,14 @@ class PaymentActivity : BaseViewModelActivity<PayPresenter>(), View.OnClickListe
         finish()
     }
 
-    override fun onMoneyChange(money: Double) {
+    override fun onMoneyChange(money: Long) {
         bt_pay.isEnabled = money > 0.00f
         bt_pay.alpha = if (money > 0.00f) 1.00f else 0.50f
     }
 
     override fun onCheckCouponCode(couponCode: String) {
         Log.e(TAG, "onCheckCouponCode: -------->")
-        mGoNextPay = false
-        checkCouponCode(false)
+        checkCouponCode()
     }
 
     fun setPresenter(presenter: PayPresenter) {
@@ -177,14 +168,6 @@ class PaymentActivity : BaseViewModelActivity<PayPresenter>(), View.OnClickListe
 
     fun onFailure(error: String) {
         ToastUtils.showShort(error)
-        dismissLoading()
-    }
-
-    fun onBegin() {
-        showLoading()
-    }
-
-    fun onFinish() {
         dismissLoading()
     }
 
@@ -247,72 +230,37 @@ class PaymentActivity : BaseViewModelActivity<PayPresenter>(), View.OnClickListe
         finish()
     }
 
-    fun onCheckCouponCodeSuccess(payCouponCode: PayCouponCode?, payCouponCodeText: String, is2Pay: Boolean) {
-        mIsCheckCouponCode = false
-        mGoNextPay = false
-        pay_calculate_item_view.updateCouponCodeTips(payCouponCode)
-        if (is2Pay) {
-            val payOrder = PayOrder(payCouponCodeText, null, null, null, pay_calculate_item_view.currentMoney, mPayChannel, "cny", mDoctorService!!.name, mDoctorService!!.description, null, mPackage!!.id, pay_calculate_item_view.currentBuyCount)
-            mViewModel?.createPayOrder(this, payOrder)
-        }
+    fun onCheckCouponCodeSuccess(payCouponCode: PayCouponCode?) {
+        pay_calculate_item_view.updateCouponCode(payCouponCode, null)
     }
 
-    fun onCheckCouponCodeFailed(error: String, code: Int, payCouponCodeText: String?, is2Pay: Boolean) {
-        mIsCheckCouponCode = false
-        if (code == 1) {
-            pay_calculate_item_view.updateCouponCodeTips(null)
-            pay_calculate_item_view.updateCouponCodeFailed(error)
-            ToastUtils.showShort(error)
-        } else {
-            ToastUtils.showShort(error)
-            pay_calculate_item_view.updateCouponCodeTips(null)
-        }
-        if (code == 1 && is2Pay) {
-            mGoNextPay = true
-            ToastUtils.showShort(error)
-        }
+    fun onCheckCouponCodeFailed(error: String, code: Int) {
+        ToastUtils.showShort(error)
+        pay_calculate_item_view.updateCouponCode(null, error)
     }
 
     override fun showLoading() {
-        if (mIsCheckCouponCode) {
-            bt_pay.isEnabled = false
-            return
-        }
-        mActionLoadingDialog.show()
+        super.showLoading()
+        bt_pay.isEnabled = false
     }
 
     override fun dismissLoading() {
+        super.dismissLoading()
         bt_pay.isEnabled = true
-        if (mActionLoadingDialog.isShowing) {
-            mActionLoadingDialog.dismiss()
-        }
     }
 
     private fun pay() {
         Log.e(TAG, "go pay: -------->")
-        if (mGoNextPay) {
-            mIsCheckCouponCode = false
-            val payOrder = PayOrder(null, null, null, null, pay_calculate_item_view.currentMoney, mPayChannel, "cny", mDoctorService!!.name, mDoctorService!!.description, null, mPackage!!.id, pay_calculate_item_view.currentBuyCount)
-            mViewModel?.createPayOrder(this, payOrder)
-        } else {
-            checkCouponCode(true)
-        }
+        val payOrder = PayOrder(pay_calculate_item_view.getValidCode(), null, null, null, pay_calculate_item_view.currentMoney, mPayChannel, "cny", mDoctorService!!.name, mDoctorService!!.description, null, mPackage!!.id, pay_calculate_item_view.currentBuyCount)
+        mViewModel?.createPayOrder(this, payOrder)
     }
 
-    private fun checkCouponCode(is2Pay: Boolean) {
+    private fun checkCouponCode() {
         val payCouponCodeText = pay_calculate_item_view.getCouponCode()
-        if (TextUtils.isEmpty(payCouponCodeText)) {
-            mIsCheckCouponCode = false
-            val payOrder = PayOrder(null, null, null, null, pay_calculate_item_view.currentMoney, mPayChannel, "cny", mDoctorService!!.name, mDoctorService!!.description, null, mPackage!!.id, pay_calculate_item_view.currentBuyCount)
-            mViewModel?.createPayOrder(this, payOrder)
-        } else {
-            mIsCheckCouponCode = true
-            mViewModel?.checkCouponCode(is2Pay, payCouponCodeText!!, mPackage!!.id)
-        }
+        mViewModel?.checkCouponCode(payCouponCodeText!!, mPackage!!.id)
     }
 
     private fun cancelPayDialog() {
-        mIsCheckCouponCode = false
         if (mPayDialog.isShowing) {
             mPayDialog.cancel()
         }

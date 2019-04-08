@@ -7,6 +7,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.utils.ColorCompatUtil
+import com.sumian.common.utils.MoneyUtil
 import com.sumian.common.utils.TimeUtilV2
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.app.AppManager
@@ -15,7 +16,6 @@ import com.sumian.sddoctor.constants.StatConstants
 import com.sumian.sddoctor.me.mywallet.bean.SettlingRecord
 import com.sumian.sddoctor.network.bean.PaginationResponseV2
 import com.sumian.sddoctor.network.callback.BaseSdResponseCallback
-import com.sumian.sddoctor.util.MoneyUtil
 import com.sumian.sddoctor.widget.EmptyViewCreator
 import kotlinx.android.synthetic.main.layout_recycler_view_padding_top_10.*
 

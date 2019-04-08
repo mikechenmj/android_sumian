@@ -848,4 +848,15 @@
     <string name="doctor_say_hello">您好，我是您的睡眠管家，很高兴为您服务！</string>
     <string name="sleep_restriction_hint">睡眠限制：了解它与睡眠日记的关系</string>
     <string name="sleep_restriction_treatment">睡眠限制法</string>
+    <string name="doctor_message">医生消息</string>
+    <string name="system_message">系统消息</string>
+    <string name="no_doctor_message_yet">尚未收到医生发起的会话</string>
+    <string name="no_system_notification_yet">- 暂无系统消息 -</string>
+    <string name="sleeper_talk">眠友说</string>
+    <string name="more_article">更多文章</string>
+    <string name="like">点赞</string>
+    <string name="renew">续费</string>
+    <string name="service_package_type">服务包类型</string>
+    <string name="introduction_arrow">介绍 ></string>
+    <string name="discount_is_too_much">优惠金额超出上限</string>
 </resources>

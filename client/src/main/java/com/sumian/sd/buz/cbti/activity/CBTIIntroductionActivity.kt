@@ -1,27 +1,42 @@
 package com.sumian.sd.buz.cbti.activity
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.text.TextUtils
 import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ActivityUtils
+import com.blankj.utilcode.util.ToastUtils
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.sumian.common.base.BaseActivity
 import com.sumian.common.base.BaseRecyclerAdapter
-import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.helper.ToastHelper
+import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.statistic.StatUtil
+import com.sumian.common.utils.MoneyUtil
 import com.sumian.common.widget.dialog.SumianDialog
 import com.sumian.sd.R
+import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.cbti.adapter.CBTIIntroductionAdapter
-import com.sumian.sd.buz.cbti.contract.CBTIIntroductionContract
 import com.sumian.sd.buz.cbti.event.CBTIServiceBoughtEvent
-import com.sumian.sd.buz.cbti.presenter.CBTIIntroductionPresenter
 import com.sumian.sd.buz.cbti.sheet.CBTIShareBottomSheet
+import com.sumian.sd.buz.doctor.bean.DoctorService
 import com.sumian.sd.buz.homepage.bean.CbtiChapterData
+import com.sumian.sd.buz.homepage.bean.GetCbtiChaptersResponse
 import com.sumian.sd.buz.stat.StatConstants
+import com.sumian.sd.common.network.callback.BaseSdResponseCallback
+import com.sumian.sd.common.pay.activity.PaymentActivity
 import com.sumian.sd.common.utils.EventBusUtil
+import com.sumian.sd.common.utils.TimeUtil
 import kotlinx.android.synthetic.main.activity_main_cbti_introduction.*
+import kotlinx.android.synthetic.main.item_cbti_renew_package.view.*
+import kotlinx.android.synthetic.main.lay_cbti_lesson_banner_home_view.view.*
+import kotlinx.android.synthetic.main.lay_cbti_lesson_introduction_home_view.view.*
+import kotlinx.android.synthetic.main.layout_cbti_renew_bottom_sheet.*
 
 /**
  * Created by jzz
@@ -31,15 +46,20 @@ import kotlinx.android.synthetic.main.activity_main_cbti_introduction.*
  * desc:CBTI 课程介绍页  (已购买/未购买状态) 包括课程列表、banner，学习进度，过期时间，了解更多 h5
  *
  */
-class CBTIIntroductionActivity : BaseViewModelActivity<CBTIIntroductionPresenter>(), CBTIIntroductionContract.View,
-        BaseRecyclerAdapter.OnItemClickListener {
+class CBTIIntroductionActivity : BaseActivity(), BaseRecyclerAdapter.OnItemClickListener {
 
     companion object {
+        private const val REQUEST_CODE_BUY_SERVICE = 100
+
         @JvmStatic
         fun show() {
             ActivityUtils.getTopActivity()?.let {
                 it.startActivity(Intent(it, CBTIIntroductionActivity::class.java))
             }
+        }
+
+        fun getLaunchIntent(context: Context): Intent {
+            return Intent(context, CBTIIntroductionActivity::class.java)
         }
     }
 
@@ -49,17 +69,14 @@ class CBTIIntroductionActivity : BaseViewModelActivity<CBTIIntroductionPresenter
         adapter
     }
 
+    private var mRenewService: DoctorService? = null
+
     override fun showBackNav(): Boolean {
         return true
     }
 
     override fun getLayoutId(): Int {
         return R.layout.activity_main_cbti_introduction
-    }
-
-    override fun initWidgetBefore() {
-        super.initWidgetBefore()
-        this.mViewModel = CBTIIntroductionPresenter.init(this)
     }
 
     override fun initWidget() {
@@ -74,6 +91,7 @@ class CBTIIntroductionActivity : BaseViewModelActivity<CBTIIntroductionPresenter
         recycler.adapter = mAdapter
         recycler.itemAnimator = null
         recycler.layoutManager = LinearLayoutManager(this)
+        cbti_introduction_list_home_banner.cbti_lesson_plan_view.tv_renew.setOnClickListener { showRenewDialog() }
     }
 
     override fun onResume() {
@@ -125,28 +143,19 @@ class CBTIIntroductionActivity : BaseViewModelActivity<CBTIIntroductionPresenter
         }
     }
 
-    override fun getCBTIIntroductionListSuccess(cbtiChapterDataList: List<CbtiChapterData>) {
-        mAdapter.resetItem(cbtiChapterDataList)
-    }
-
-    override fun getCBTIIntroductionListFailed(error: String) {
+    fun getCBTIIntroductionListFailed(error: String) {
         ToastHelper.show(this, error, Gravity.CENTER)
     }
 
-    override fun getBannerInfo(formatExpiredTime: String, formatTotalProgress: String) {
-        cbti_introduction_list_home_banner.invalidateBanner(formatExpiredTime, formatTotalProgress)
-    }
-
-    override fun getCBTIServiceDetailSuccess(name: String, introduction: String, bannerUrl: String) {
+    fun getCBTIServiceDetailSuccess(name: String, introduction: String, bannerUrl: String) {
         cbti_introduction_list_home_banner.invalidateBannerExtras(bannerUrl, name, introduction)
     }
 
-    override fun getCBTIServiceDetailFailed(error: String) {
+    fun getCBTIServiceDetailFailed(error: String) {
         getCBTIIntroductionListFailed(error)
     }
 
-    override fun onCBTIServiceIsExpired(isExpired: Boolean) {
-        // finish()
+    fun onCBTIServiceIsExpired(isExpired: Boolean) {
         if (isExpired) {
             showCBTIIntroductionWebView()
             StatUtil.trackBeginPage(this, StatConstants.page_cbti_introduction_from_banner)
@@ -155,7 +164,6 @@ class CBTIIntroductionActivity : BaseViewModelActivity<CBTIIntroductionPresenter
             hideCBTIIntroductionWebView()
             StatUtil.trackBeginPage(this, StatConstants.page_cbti_chapter_list)
         }
-        // CBTIIntroductionWebActivity.show()//已过期，跳转去购买服务
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -167,45 +175,130 @@ class CBTIIntroductionActivity : BaseViewModelActivity<CBTIIntroductionPresenter
     }
 
     private fun requestData() {
-        mViewModel?.getCBTIServiceDetail()
-        mViewModel?.getCBTIIntroductionList()
+        getCBTIServiceDetail()
+        getRenewCBTIService()
+        getCBTIIntroductionList()
     }
 
     private fun initCBTIIntroductionWebView() {
-        // if (mCbtiIntroductionWebView == null) {
-        // val cbtiIntroductionWebView = CBTIIntroductionWebView(this)
-        //  cbtiIntroductionWebView.post {
         cbti_introduction_webview?.setTitleBar(mTitleBar)
         cbti_introduction_webview?.requestCBTIIntroductionUrl()
-        //  }
-        //  val layoutParams = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
-        // layoutParams.gravity = Gravity.CENTER
-        //cbti_introduction_container.addView(cbtiIntroductionWebView, layoutParams)
-        // this.mCbtiIntroductionWebView = cbtiIntroductionWebView
-        // Log.e("TAG", "initCBTIIntroductionWebView: --------init---->")
-        //  } else {
-        //     mCbtiIntroductionWebView?.requestCBTIIntroductionUrl()
-        //   Log.e("TAG", "initCBTIIntroductionWebView: --------直接 request---->")
-        // }
     }
 
     private fun showCBTIIntroductionWebView() {
         coordinator_cbti_info.visibility = View.GONE
-        initCBTIIntroductionWebView()
-        cbti_introduction_webview.visibility = View.VISIBLE
+        if (cbti_introduction_webview.visibility == View.GONE) {
+            cbti_introduction_webview.visibility = View.VISIBLE
+            initCBTIIntroductionWebView()
+        }
     }
 
     private fun hideCBTIIntroductionWebView() {
         coordinator_cbti_info.visibility = View.VISIBLE
         cbti_introduction_webview.visibility = View.GONE
-        //mCbtiIntroductionWebView?.let {
-        //    cbti_introduction_container.removeViewInLayout(it)
-        //}
-        // releaseWebView()
-        //mCbtiIntroductionWebView = null
     }
 
     private fun releaseWebView() {
         cbti_introduction_webview?.destroyWebView()
+    }
+
+    fun getCBTIServiceDetail() {
+        showLoading()
+        val call = AppManager.getSdHttpService().getServiceByType(DoctorService.SERVICE_TYPE_CBTI)
+        addCall(call)
+        call.enqueue(object : BaseSdResponseCallback<DoctorService>() {
+            override fun onSuccess(response: DoctorService?) {
+                response?.let {
+                    getCBTIServiceDetailSuccess(it.name, it.introduction, it.picture)
+                }
+            }
+
+            override fun onFailure(errorResponse: ErrorResponse) {
+                getCBTIServiceDetailFailed(errorResponse.message)
+            }
+
+            override fun onFinish() {
+                super.onFinish()
+                dismissLoading()
+            }
+        })
+    }
+
+    fun getRenewCBTIService() {
+        showLoading()
+        val call = AppManager.getSdHttpService().getServiceByType(DoctorService.SERVICE_TYPE_CBTI, 1)
+        addCall(call)
+        call.enqueue(object : BaseSdResponseCallback<DoctorService>() {
+            override fun onSuccess(response: DoctorService?) {
+                if (response == null) {
+                    return
+                }
+                mRenewService = response
+            }
+
+            override fun onFailure(errorResponse: ErrorResponse) {
+                getCBTIServiceDetailFailed(errorResponse.message)
+            }
+
+            override fun onFinish() {
+                super.onFinish()
+                dismissLoading()
+            }
+        })
+    }
+
+    fun getCBTIIntroductionList() {
+        showLoading()
+        val call = AppManager.getSdHttpService().getCbtiChapters("courses")
+        addCall(call)
+        call.enqueue(object : BaseSdResponseCallback<GetCbtiChaptersResponse>() {
+            override fun onSuccess(response: GetCbtiChaptersResponse?) {
+                response?.let {
+                    val data = it.data
+                    updateIntroduction(data, it)
+                }
+            }
+
+            override fun onFailure(errorResponse: ErrorResponse) {
+                getCBTIIntroductionListFailed(errorResponse.message)
+            }
+
+            override fun onFinish() {
+                super.onFinish()
+                dismissLoading()
+            }
+
+        })
+    }
+
+    private fun updateIntroduction(data: List<CbtiChapterData>, it: GetCbtiChaptersResponse) {
+        mAdapter.resetItem(data)
+        onCBTIServiceIsExpired(it.meta.isLock)
+        val formatExpiredDate = TimeUtil.formatDate("yyyy.MM.dd 到期", it.meta.expiredAt * 1000L)
+        cbti_introduction_list_home_banner.invalidateBanner(formatExpiredDate, it.meta.totalProgressText)
+        cbti_introduction_list_home_banner.cbti_lesson_plan_view.tv_renew.isVisible = true
+    }
+
+    private fun showRenewDialog() {
+        if (mRenewService == null) {
+            ToastUtils.showShort("no data")
+            return
+        }
+        val dialog = BottomSheetDialog(this)
+        dialog.setContentView(R.layout.layout_cbti_renew_bottom_sheet)
+        dialog.vg_package_container.setOnClickListener { dialog.dismiss() }
+        for (pkg in mRenewService!!.service_packages) {
+            val item = LayoutInflater.from(this).inflate(R.layout.item_cbti_renew_package, dialog.vg_package_container, false)
+            item.tv_package_title.text = pkg.name
+            val detail = pkg.packages[0]
+            item.tv_package_price.text = MoneyUtil.fenToYuanString(detail.unit_price, includeSign = false, includeYuanMark = true)
+            item.setOnClickListener {
+                PaymentActivity.startForResult(ActivityUtils.getTopActivity(), mRenewService!!, pkg.id, REQUEST_CODE_BUY_SERVICE)
+                dialog.dismiss()
+            }
+            dialog.vg_package_container.addView(item)
+        }
+        dialog.tv_cancel.setOnClickListener { dialog.dismiss() }
+        dialog.show()
     }
 }

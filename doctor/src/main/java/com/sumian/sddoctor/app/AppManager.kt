@@ -7,6 +7,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ProcessLifecycleOwner
+import cn.leancloud.chatkit.LCIMManager
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.Utils
@@ -17,6 +18,8 @@ import com.sumian.common.h5.WebViewManger
 import com.sumian.common.helper.ToastHelper
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.notification.AppNotificationManager
+import com.sumian.common.notification.LeanCloudManager
+import com.sumian.common.notification.NotificationUtil
 import com.sumian.common.social.OpenEngine
 import com.sumian.common.social.login.OpenLogin
 import com.sumian.common.statistic.StatUtil
@@ -25,6 +28,8 @@ import com.sumian.sddoctor.R
 import com.sumian.sddoctor.account.AccountViewModel
 import com.sumian.sddoctor.account.kefu.KefuManager
 import com.sumian.sddoctor.base.ActivityDelegateFactory
+import com.sumian.sddoctor.buz.patientdoctorim.IMManagerHost
+import com.sumian.sddoctor.buz.patientdoctorim.IMProfileProvider
 import com.sumian.sddoctor.log.SddLogManager
 import com.sumian.sddoctor.login.login.LoginActivity
 import com.sumian.sddoctor.login.login.SetInviteCodeActivity
@@ -48,6 +53,7 @@ import com.sumian.sddoctor.notification.SchemeResolver
  * </pre>
  */
 object AppManager {
+    private lateinit var mApplication: Application
 
     private val mAccountViewModel: AccountViewModel by lazy {
         AccountViewModel(App.getAppContext())
@@ -102,10 +108,12 @@ object AppManager {
     }
 
     fun init(application: Application) {
+        mApplication = application
         Utils.init(application)
         observeTokenInvalidation()
         ToastHelper.init(application)
         OpenEngine.init(application, BuildConfig.DEBUG, BuildConfig.UMENG_APP_KEY, BuildConfig.UMENG_CHANNEL, BuildConfig.UMENG_PUSH_SECRET)
+        initLeanCloud()
         initNotification(application)
         initWebView(application)
         initStatic(application)
@@ -118,6 +126,12 @@ object AppManager {
                 BuildConfig.ALIYUN_LOG_LOG_STORE,
                 BuildConfig.ALIYUN_LOG_END_POINT
         )
+    }
+
+    private fun initLeanCloud() {
+        LeanCloudManager.init(mApplication,
+                BuildConfig.LEANCLOUD_APP_ID, BuildConfig.LEANCLOUD_APP_KEY,
+                NotificationConst.PUSH_CHANNEL, BuildConfig.DEBUG, MainActivity::class.java)
     }
 
     private fun initStatic(app: Application) {
@@ -141,8 +155,6 @@ object AppManager {
     private fun initNotification(app: Application) {
         AppNotificationManager.init(app,
                 R.drawable.ic_notification_small, R.mipmap.ic_launcher,
-                BuildConfig.LEANCLOUD_APP_ID, BuildConfig.LEANCLOUD_APP_KEY,
-                NotificationConst.PUSH_CHANNEL, BuildConfig.DEBUG,
                 NotificationConst.CHANNEL_ID, NotificationConst.CHANNEL_NAME,
                 NotificationDelegate(), SchemeResolver, NotificationConst.USER_ID_KEY)
     }
@@ -202,6 +214,15 @@ object AppManager {
         KefuManager.loginAndQueryUnreadMsg()
         AppNotificationManager.uploadPushId()
         AppManager.updateDoctorInfo()
+        initImManager()
+    }
+
+    private fun initImManager() {
+        LCIMManager.getInstance().init(mApplication,
+                BuildConfig.LEANCLOUD_APP_ID, BuildConfig.LEANCLOUD_APP_KEY,
+                getAccountViewModel().getDoctorInfo().value!!.im_id,
+                IMProfileProvider(),
+                IMManagerHost())
     }
 
     fun onLoginSuccess(loginResponse: LoginResponse?, isNewRegister: Boolean = false) {
@@ -217,6 +238,8 @@ object AppManager {
 
     fun onLogout() {
         KefuManager.logout()
+        LCIMManager.getInstance().close()
+        NotificationUtil.cancelAllNotification(App.getAppContext())
     }
 
     @JvmStatic

@@ -7,6 +7,7 @@ import android.view.Surface;
 import android.view.SurfaceHolder;
 
 import com.alivc.player.MediaPlayer;
+import com.aliyun.vodplayer.media.AliyunLocalSource;
 import com.aliyun.vodplayer.media.AliyunPlayAuth;
 import com.aliyun.vodplayer.media.AliyunVodPlayer;
 import com.aliyun.vodplayer.media.IAliyunVodPlayer;
@@ -29,6 +30,7 @@ public class AliyunPlayer extends AbstractMediaPlayer {
     private AliyunVodPlayer mAliyunPlayer;
 
     private AliyunPlayAuth mAliyunPlayAuth;
+    private AliyunLocalSource mAliyunLocalSource;
     private boolean mIsLooping;
 
     public AliyunPlayer(Context context) {
@@ -82,6 +84,7 @@ public class AliyunPlayer extends AbstractMediaPlayer {
         playAuthBuilder.setPlayAuth(playAuth);
         playAuthBuilder.setQuality(IAliyunVodPlayer.QualityValue.QUALITY_HIGH);
         this.mAliyunPlayAuth = playAuthBuilder.build();
+        mAliyunLocalSource = null;
     }
 
     @Override
@@ -90,13 +93,20 @@ public class AliyunPlayer extends AbstractMediaPlayer {
     }
 
     @Override
-    public void setDataSource(String var1) throws IllegalArgumentException, SecurityException, IllegalStateException {
-
+    public void setDataSource(String videoFile) throws IllegalArgumentException, SecurityException, IllegalStateException {
+        AliyunLocalSource.AliyunLocalSourceBuilder asb = new AliyunLocalSource.AliyunLocalSourceBuilder();
+        asb.setSource(videoFile);
+        mAliyunLocalSource = asb.build();
+        mAliyunPlayAuth = null;
     }
 
     @Override
     public void prepareAsync() throws IllegalStateException {
-        this.mAliyunPlayer.prepareAsync(mAliyunPlayAuth);
+        if (mAliyunLocalSource != null) {
+            this.mAliyunPlayer.prepareAsync(mAliyunLocalSource);
+        } else {
+            this.mAliyunPlayer.prepareAsync(mAliyunPlayAuth);
+        }
     }
 
     @Override

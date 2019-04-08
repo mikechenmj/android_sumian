@@ -7,7 +7,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.sumian.common.utils.TimeUtilV2;
 import com.sumian.sd.R;
-import com.sumian.sd.buz.notification.bean.Data;
+import com.sumian.sd.buz.notification.bean.NotificationData;
 import com.sumian.sd.buz.notification.bean.Notification;
 
 import java.util.List;
@@ -34,7 +34,7 @@ public class NotificationListAdapter extends BaseQuickAdapter<Notification, Base
 
     @Override
     protected void convert(BaseViewHolder helper, Notification item) {
-        Data data = item.getData();
+        NotificationData data = item.getData();
         boolean isUnRead = item.getReadAt() == 0;
         helper.getView(R.id.v_red_dot).setVisibility(isUnRead ? View.VISIBLE : View.GONE);
         helper.setTextColor(R.id.tv_title, mContext.getResources().getColor(isUnRead ? R.color.t3_color : R.color.t1_color));

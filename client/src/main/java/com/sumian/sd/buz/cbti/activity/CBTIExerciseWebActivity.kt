@@ -1,14 +1,18 @@
 package com.sumian.sd.buz.cbti.activity
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import com.google.gson.reflect.TypeToken
+import com.sumian.common.h5.bean.NativeRouteData
 import com.sumian.common.h5.bean.SBridgeResult
 import com.sumian.common.h5.handler.SBridgeHandler
 import com.sumian.common.h5.widget.SWebView
 import com.sumian.common.utils.JsonUtil
 import com.sumian.sd.base.SdBaseWebViewActivity
+import com.sumian.sd.buz.diary.fillsleepdiary.FillSleepDiaryActivity
+import com.sumian.sd.buz.homepage.SleepPrescriptionActivity
 import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.h5.H5Uri
 import java.util.*
@@ -26,7 +30,7 @@ class CBTIExerciseWebActivity : SdBaseWebViewActivity() {
     private var mQuitWithoutCheck = false
 
     companion object {
-
+        private const val REQUEST_CODE_FILL_DIARY = 1000
         private const val EXTRAS_COURSE_ID = "com.sumian.sleepdoctor.extras.course.id"
 
         fun show(context: Context, courseId: Int) {
@@ -78,6 +82,26 @@ class CBTIExerciseWebActivity : SdBaseWebViewActivity() {
                 mQuitWithoutCheck = true
             }
         })
+    }
+
+    override fun onGoToPage(page: String, rawData: String) {
+        when (page) {
+            "sleepDiarySubmit" -> {
+                val date = JsonUtil.fromJson<NativeRouteData<SleepPrescriptionActivity.DateBean>>(rawData, object : TypeToken<NativeRouteData<SleepPrescriptionActivity.DateBean>>() {}.type)
+                        ?: return
+                FillSleepDiaryActivity.startForResult(this@CBTIExerciseWebActivity, date.data?.date!! * 1000L, REQUEST_CODE_FILL_DIARY)
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == REQUEST_CODE_FILL_DIARY) {
+            if (resultCode == Activity.RESULT_OK) {
+                reload()
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data)
+        }
     }
 
 }
