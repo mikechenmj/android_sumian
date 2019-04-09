@@ -42,7 +42,9 @@ public class BlueDevice implements Serializable, Comparable<BlueDevice> {
     public String mac;
     public String sn;
     public String version;
-    public String bomVersion;
+    public String bomVersion;//硬件版本号
+    public String heartBeatVersion;//心率库版本号
+    public String sleepAlgorithmVersion;//睡眠算法版本号
     public transient int channelType = CHANNEL_TYPE_UNKNOWN; //临床版，正式版
     /**
      * @see #STATUS_UNCONNECTED
@@ -59,8 +61,9 @@ public class BlueDevice implements Serializable, Comparable<BlueDevice> {
     public String sleeperName;
     public String sleeperMac;
     public String sleeperSn;
-    public String sleeperVersion;
-    public String sleeperBomVersion;
+    public String sleeperVersion;//速眠仪软件版本号
+    public String sleeperBomVersion;//速眠仪硬件版本号
+    public String sleeperHeadMonitorAlgorithmVersion;//速眠仪头部检测算法版本号
     public transient int sleeperStatus;
     public transient int sleeperBattery;
     public transient int sleeperPaStatus;

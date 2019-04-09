@@ -305,14 +305,23 @@ class DeviceStateHelper(deviceManager: DeviceManager) {
         LogManager.appendSpeedSleeperLog("0x4e 收到速眠仪的连接状态变化------>$sleepyConnectState  cmd=$cmd")
     }
 
+    /**
+     * v1:  55 50 03 【09 05 01】
+     * v2:  55 50 07 【00 09 09】 【0e】 【0b 00 00】【软件版本】【临床0C/正式0E】【bom版本号】
+     * v3:  55 50 0e 【00 09 09】 【0e】 【43 31 31】 【00 00 42】 【30 30 30 4a】【软件版本】【临床0C/正式0E】【bom版本号】【心率库版本号】【睡眠算法版本号】
+     */
     fun receiveMonitorVersionInfo(cmd: String) {
         // 55 50 03 【09 05 01】 老版本
         // 55 50 07 【01 00 02】 【0E】 【08 00 00】 新版本 【软件版本】【临床0C/正式0E】【bom版本号】
         val monitorFirmwareVersion = getVersionFromCmd(cmd, 6)
         mMonitorLiveData.value?.version = monitorFirmwareVersion
-        if (cmd.length == 20) {
+        if (cmd.length >= 20) {
             mMonitorLiveData.value?.channelType = if (cmd.substring(12, 14).equals("0C")) BlueDevice.CHANNEL_TYPE_CLINIC else BlueDevice.CHANNEL_TYPE_NORMAL
             mMonitorLiveData.value?.bomVersion = getVersionFromCmd(cmd, 14)
+            if (cmd.length >= 34) {
+                mMonitorLiveData.value?.heartBeatVersion = getVersionFromCmd(cmd, 20)
+                mMonitorLiveData.value?.sleepAlgorithmVersion = cmd.substring(26)
+            }
         }
         notifyMonitorChange()
         LogManager.appendSpeedSleeperLog("0x50 监测仪的固件版本信息$monitorFirmwareVersion  cmd=$cmd")
@@ -392,11 +401,19 @@ class DeviceStateHelper(deviceManager: DeviceManager) {
         }
     }
 
+    /**
+     * v1:  55 54 06 【xx xx xx】
+     * v2:  55 54 06 【xx xx xx】 【yy yy yy】
+     * v3:  55 54 06 【xx xx xx】 【yy yy yy】 【zz zz zz】【速眠仪软件版本号】【速眠仪硬件版本号】【速眠仪头部检测算法版本号】
+     */
     fun receiveSleeperVersionInfo(cmd: String) {
         val sleepyFirmwareVersion = getVersionFromCmd(cmd, 6)
         mMonitorLiveData.value?.sleeperVersion = sleepyFirmwareVersion
-        if (cmd.length == 18) {
+        if (cmd.length >= 18) {
             mMonitorLiveData.value?.sleeperBomVersion = getVersionFromCmd(cmd, 12)
+            if (cmd.length >= 24) {
+                mMonitorLiveData.value?.sleeperHeadMonitorAlgorithmVersion = getVersionFromCmd(cmd, 16)
+            }
         }
         notifyMonitorChange()
         LogManager.appendSpeedSleeperLog("0x54 速眠仪的固件版本信息$sleepyFirmwareVersion  cmd=$cmd")
