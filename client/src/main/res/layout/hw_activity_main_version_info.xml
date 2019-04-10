@@ -37,19 +37,6 @@
                 android:layout_height="50dp" />
 
             <TextView
-                android:id="@+id/tv_app_version_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:gravity="center"
-                android:textColor="@color/t2_color"
-                android:textSize="@dimen/font_16"
-                android:visibility="gone"
-                tools:text="APP 版本: 0.0.1"
-                tools:visibility="visible" />
-
-            <TextView
                 android:id="@+id/tv_monitor_version_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -74,14 +61,6 @@
             <Space
                 android:layout_width="0dp"
                 android:layout_height="60dp" />
-
-            <com.sumian.sd.widget.VersionInfoView
-                android:id="@+id/app_version_info"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                app:upgrade_label="@string/app_upgrade"
-                tools:visibility="visible" />
 
             <com.sumian.sd.widget.VersionInfoView
                 android:id="@+id/monitor_version_info"

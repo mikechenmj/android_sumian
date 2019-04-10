@@ -5,6 +5,7 @@ package com.sumian.sd.buz.setting
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import com.avos.avoscloud.AVInstallation
 import com.blankj.utilcode.util.ActivityUtils
@@ -28,6 +29,7 @@ import com.sumian.sd.buz.upgrade.activity.DeviceVersionNoticeActivity
 import com.sumian.sd.common.h5.H5Uri
 import com.sumian.sd.common.h5.SimpleWebActivity
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
+import com.sumian.sd.common.network.response.FirmwareInfo
 import com.sumian.sd.common.utils.UiUtils
 import com.sumian.sd.widget.TitleBar
 import com.sumian.sd.widget.dialog.SumianAlertDialog
@@ -65,16 +67,16 @@ class SettingActivity : BaseActivity(), TitleBar.OnBackClickListener, View.OnCli
         findViewById<View>(R.id.sdv_feedback).setOnClickListener(this)
         findViewById<View>(R.id.sdv_modify_password).setOnClickListener(this)
         findViewById<View>(R.id.sdv_clear_cache).setOnClickListener(this)
-
-        VersionManager.queryVersion()
-        VersionManager.mUpgradeMode.observe(this, Observer {
+        val packageInfo = UiUtils.getPackageInfo(this)
+        val versionName = packageInfo!!.versionName
+        mSdvAppVersion.setContent(versionName)
+        VersionManager.queryAppVersion()
+        VersionManager.mAppUpgradeMode.observe(this, Observer {
             sdv_app_version.showRedDot(it >= VersionManager.UPGRADE_MODE_NORMAL)
         })
-    }
-
-    override fun initData() {
-        super.initData()
-        invalidVersion()
+        VersionManager.mFirmwareVersionInfoLD.observe(this, Observer<FirmwareInfo> {
+            sdv_device_version.v_dot.isVisible = VersionManager.hasNewMonitorVersion() || VersionManager.hasNewSleeperVersion()
+        })
     }
 
     override fun onBack(v: View) {
@@ -121,13 +123,6 @@ class SettingActivity : BaseActivity(), TitleBar.OnBackClickListener, View.OnCli
             else -> {
             }
         }
-    }
-
-    private fun invalidVersion() {
-        val packageInfo = UiUtils.getPackageInfo(this)
-        val versionName = packageInfo!!.versionName
-        mSdvAppVersion.setContent(versionName)
-        sdv_device_version.v_dot.visibility = if (DeviceManager.hasFirmwareNeedUpdate()) View.VISIBLE else View.GONE
     }
 
     private fun showLogoutDialog() {

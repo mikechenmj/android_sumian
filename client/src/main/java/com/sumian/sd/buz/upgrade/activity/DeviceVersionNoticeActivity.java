@@ -7,19 +7,12 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.sumian.common.base.BaseViewModelActivity;
-import com.sumian.common.helper.ToastHelper;
 import com.sumian.common.widget.TitleBar;
 import com.sumian.common.widget.refresh.SumianSwipeRefreshLayout;
 import com.sumian.sd.R;
-import com.sumian.sd.app.App;
-import com.sumian.sd.app.AppManager;
 import com.sumian.sd.buz.devicemanager.DeviceManager;
-import com.sumian.sd.buz.devicemanager.BlueDevice;
+import com.sumian.sd.buz.setting.version.VersionManager;
 import com.sumian.sd.buz.upgrade.bean.VersionInfo;
-import com.sumian.sd.buz.upgrade.model.VersionModel;
-import com.sumian.sd.buz.upgrade.presenter.DeviceVersionNoticeViewModel;
-import com.sumian.sd.common.network.response.AppUpgradeInfo;
-import com.sumian.sd.common.utils.UiUtil;
 import com.sumian.sd.widget.VersionInfoView;
 
 import java.util.Locale;
@@ -34,18 +27,13 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
  */
 
 public class DeviceVersionNoticeActivity extends BaseViewModelActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener,
-        TitleBar.OnBackClickListener, VersionModel.ShowDotCallback {
+        TitleBar.OnBackClickListener {
 
     private SumianSwipeRefreshLayout mRefresh;
-    private TextView mTvAppVersionName;
     private TextView mTvMonitorVersionName;
     private TextView mTvSleepyVersionName;
-    private VersionInfoView mAppVersionInfo;
     private VersionInfoView mMonitorVersionInfo;
     private VersionInfoView mSleepVersionInfo;
-
-    private DeviceVersionNoticeViewModel mPresenter;
-    private Handler mHandler = new Handler();
 
     public static void show(Context context) {
         context.startActivity(new Intent(context, DeviceVersionNoticeActivity.class));
@@ -64,44 +52,48 @@ public class DeviceVersionNoticeActivity extends BaseViewModelActivity implement
         mRefresh = findViewById(R.id.refresh);
         mRefresh.setOnRefreshListener(this);
 
-        mTvAppVersionName = findViewById(R.id.tv_app_version_name);
         mTvMonitorVersionName = findViewById(R.id.tv_monitor_version_name);
         mTvSleepyVersionName = findViewById(R.id.tv_sleepy_version_name);
-        mAppVersionInfo = findViewById(R.id.app_version_info);
         mMonitorVersionInfo = findViewById(R.id.monitor_version_info);
         mSleepVersionInfo = findViewById(R.id.sleepy_version_info);
 
-        findViewById(R.id.app_version_info).setOnClickListener(this);
         findViewById(R.id.monitor_version_info).setOnClickListener(this);
         findViewById(R.id.sleepy_version_info).setOnClickListener(this);
+        VersionManager.INSTANCE.getMFirmwareVersionInfoLD().observe(this, firmwareInfo -> {
+            mRefresh.setRefreshing(false);
+            mMonitorVersionInfo.setVisibility(DeviceManager.INSTANCE.isMonitorConnected() ? View.VISIBLE : View.GONE);
+            mSleepVersionInfo.setVisibility(DeviceManager.INSTANCE.isSleeperConnected() ? View.VISIBLE : View.GONE);
+            mMonitorVersionInfo.updateUpgradeInfo(VersionManager.INSTANCE.hasNewMonitorVersion(), DeviceManager.INSTANCE.getMonitorSn());
+            mSleepVersionInfo.updateUpgradeInfo(VersionManager.INSTANCE.hasNewSleeperVersion(), DeviceManager.INSTANCE.getSleeperSn());
 
-        AppManager.getVersionModel().registerShowDotCallback(this);
-        DeviceVersionNoticeViewModel.init(this);
+            mTvMonitorVersionName.setText(
+                    String.format(Locale.getDefault(),
+                            getString(R.string.version_name_hint),
+                            getString(R.string.monitor),
+                            getVersionString(DeviceManager.INSTANCE.getMonitorVersion())));
+            mTvSleepyVersionName.setText(
+                    String.format(Locale.getDefault(),
+                            getString(R.string.version_name_hint),
+                            getString(R.string.speed_sleeper),
+                            getVersionString(DeviceManager.INSTANCE.getSleeperVersion())));
+
+        });
     }
 
     @Override
     protected void initData() {
         super.initData();
-        DeviceManager.INSTANCE.getAndCheckFirmVersion();
-    }
-
-    @Override
-    protected void onRelease() {
-        AppManager.getVersionModel().unRegisterShowDotCallback(this);
-        super.onRelease();
+        VersionManager.INSTANCE.getAndCheckFirmVersionShowUpgradeDialogIfNeed(true);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.app_version_info:
-                UiUtil.openAppInMarket(v.getContext());
-                break;
             case R.id.monitor_version_info:
-                DeviceVersionUpgradeActivity.show(this, DeviceVersionUpgradeActivity.VERSION_TYPE_MONITOR, AppManager.getVersionModel().isShowMonitorVersionDot());
+                DeviceVersionUpgradeActivity.show(this, DeviceVersionUpgradeActivity.VERSION_TYPE_MONITOR, VersionManager.INSTANCE.hasNewMonitorVersion());
                 break;
             case R.id.sleepy_version_info:
-                DeviceVersionUpgradeActivity.show(this, DeviceVersionUpgradeActivity.VERSION_TYPE_SLEEPY, AppManager.getVersionModel().isShowSleepyVersionDot());
+                DeviceVersionUpgradeActivity.show(this, DeviceVersionUpgradeActivity.VERSION_TYPE_SLEEPY, VersionManager.INSTANCE.hasNewSleeperVersion());
                 break;
         }
     }
@@ -109,7 +101,7 @@ public class DeviceVersionNoticeActivity extends BaseViewModelActivity implement
     @Override
     public void onRefresh() {
         mRefresh.setRefreshing(true);
-        mPresenter.syncMonitorVersionInfo();
+        VersionManager.INSTANCE.getAndCheckFirmVersionShowUpgradeDialogIfNeed(false);
     }
 
     @Override
@@ -123,61 +115,11 @@ public class DeviceVersionNoticeActivity extends BaseViewModelActivity implement
         finish();
     }
 
-    public void setPresenter(DeviceVersionNoticeViewModel presenter) {
-        this.mPresenter = presenter;
-    }
-
-    public void onSyncMonitorCallback(VersionInfo versionInfo) {
-        setText(mTvMonitorVersionName, String.format(Locale.getDefault(), getString(R.string.version_name_hint),
-                getString(R.string.monitor), versionInfo.getVersion()));
-    }
-
-    public void onSyncSleepyCallback(VersionInfo versionInfo) {
-        setText(mTvSleepyVersionName, String.format(Locale.getDefault(), getString(R.string.version_name_hint),
-                getString(R.string.speed_sleeper), versionInfo.getVersion()));
-    }
-
-    public void onSyncAppVersionCallback(AppUpgradeInfo appUpgradeInfo) {
-        setText(mTvAppVersionName, String.format(Locale.getDefault(), getString(R.string.version_name_hint),
-                "APP", appUpgradeInfo.version));
-    }
-
-    @Override
-    public void showDot(boolean isShowAppDot, boolean isShowMonitorDot, boolean isShowSleepyDot) {
-        mHandler.post(() -> {
-            boolean isDeviceConnected = DeviceManager.INSTANCE.isMonitorConnected();
-            if (!isDeviceConnected) {
-                setText(mTvMonitorVersionName, String.format(Locale.getDefault(), getString(R.string.version_name_hint),
-                        getString(R.string.monitor), App.Companion.getAppContext().getString(R.string.none_connected_state_hint)));
-                setText(mTvSleepyVersionName, String.format(Locale.getDefault(), getString(R.string.version_name_hint),
-                        getString(R.string.speed_sleeper), App.Companion.getAppContext().getString(R.string.none_connected_state_hint)));
-            }
-            mAppVersionInfo.updateUpgradeInfo(isShowAppDot, null);
-            mMonitorVersionInfo.updateUpgradeInfo(isShowMonitorDot, DeviceManager.INSTANCE.getMonitorSn());
-            mSleepVersionInfo.updateUpgradeInfo(isShowSleepyDot, DeviceManager.INSTANCE.getSleeperSn());
-
-            if (isDeviceConnected) {
-                mMonitorVersionInfo.show();
-            }
-            if (isDeviceConnected && DeviceManager.INSTANCE.getSleeperStatus() == BlueDevice.STATUS_CONNECTED) {
-                mSleepVersionInfo.show();
-            }
-        });
-    }
-
-    private void setText(TextView tv, String text) {
-        mHandler.post(() -> tv.setText(text));
-    }
-
-    public void onFailure(String error) {
-        ToastHelper.show(error);
-    }
-
-    public void onBegin() {
-        mRefresh.setRefreshing(true);
-    }
-
     public void onFinish() {
         mRefresh.setRefreshing(false);
+    }
+
+    private String getVersionString(String version) {
+        return version == null ? getString(R.string.none_connected_state_hint) : version;
     }
 }

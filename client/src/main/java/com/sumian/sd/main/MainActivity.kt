@@ -22,7 +22,6 @@ import com.sumian.sd.R
 import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.devicemanager.AutoSyncDeviceDataUtil
-import com.sumian.sd.buz.devicemanager.DeviceManager
 import com.sumian.sd.buz.diary.DataFragment
 import com.sumian.sd.buz.homepage.HomepageFragment
 import com.sumian.sd.buz.kefu.KefuManager
@@ -32,8 +31,6 @@ import com.sumian.sd.buz.setting.version.delegate.VersionDelegate
 import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.buz.tab.DoctorFragment
 import com.sumian.sd.buz.tab.MeFragment
-import com.sumian.sd.buz.upgrade.activity.DeviceVersionNoticeActivity
-import com.sumian.sd.buz.upgrade.model.VersionModel
 import com.sumian.sd.common.log.LogManager
 import com.sumian.sd.common.utils.EventBusUtil
 import com.sumian.sd.common.utils.FragmentUtil
@@ -45,7 +42,7 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import pub.devrel.easypermissions.EasyPermissions
 
-class MainActivity : BaseActivity(), VersionModel.ShowDotCallback {
+class MainActivity : BaseActivity() {
 
     companion object {
         const val TAB_INVALID = -1
@@ -147,7 +144,6 @@ class MainActivity : BaseActivity(), VersionModel.ShowDotCallback {
         showOpenNotificationDialogIfNeeded()
         nav_tab.setOnSelectedTabChangeListener { navigationItem, position -> changeSelectFragment(position) }
         changeSelectTab(TAB_0)
-        AppManager.getVersionModel().registerShowDotCallback(this)
         mNotificationViewModel.unreadCount.observe(this, Observer { updateTabMeDot() })
         KefuManager.mMessageCountLiveData.observe(this, Observer { updateTabMeDot() })
         LCIMManager.getInstance().unreadCountLiveData.observe(this, Observer { updateTabMeDot() })
@@ -191,11 +187,6 @@ class MainActivity : BaseActivity(), VersionModel.ShowDotCallback {
      */
     private fun changeSelectTab(position: Int) {
         nav_tab.selectItem(position, true)
-    }
-
-    override fun onRelease() {
-        super.onRelease()
-        AppManager.getVersionModel().unRegisterShowDotCallback(this)
     }
 
     private fun showOpenNotificationDialogIfNeeded() {
@@ -283,39 +274,6 @@ class MainActivity : BaseActivity(), VersionModel.ShowDotCallback {
     private fun updateNotificationUnreadCount() {
         mNotificationViewModel
                 .updateUnreadCount()
-    }
-
-    override fun showDot(isShowAppDot: Boolean, isShowMonitorDot: Boolean, isShowSleepyDot: Boolean) {
-
-        if (mIsResume && DeviceManager.isMonitorConnected()) {
-            var titleResId = R.string.monitor_version_title
-            var message = R.string.monitor_version_message
-
-            if (isShowSleepyDot) {
-                titleResId = R.string.sleep_version_title
-                message = R.string.sleep_version_message
-            }
-            if (isShowMonitorDot) {
-                titleResId = R.string.monitor_version_title
-                message = R.string.monitor_version_message
-            }
-            if (mDeviceVersionDialog.isShowing) {
-                mDeviceVersionDialog.hide()
-            }
-            mDeviceVersionDialog
-                    .setCancelable(true)
-                    .setCloseIconVisible(false)
-                    .hideTopIcon(true)
-                    .setTitle(titleResId)
-                    .setMessage(message)
-                    .whitenLeft()
-                    .setLeftBtn(R.string.cancel, null)
-                    .setRightBtn(R.string.sure) {
-                        mDeviceVersionDialog.hide()
-                        DeviceVersionNoticeActivity.show(this@MainActivity)
-                    }
-                    .show()
-        }
     }
 
     private fun invalidToken() {

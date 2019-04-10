@@ -2,6 +2,8 @@ package com.sumian.sd.common.network.response;
 
 import com.sumian.sd.buz.upgrade.bean.VersionInfo;
 
+import androidx.annotation.Nullable;
+
 /**
  * Created by jzz
  * on 2017/10/31.
@@ -11,8 +13,8 @@ import com.sumian.sd.buz.upgrade.bean.VersionInfo;
 
 public class FirmwareInfo {
 
-    public VersionInfo monitor;
-    public VersionInfo sleeper;
+    public @Nullable VersionInfo monitor;
+    public @Nullable VersionInfo sleeper;
 
     @Override
     public String toString() {

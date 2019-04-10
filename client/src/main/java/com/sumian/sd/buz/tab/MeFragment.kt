@@ -41,7 +41,6 @@ import com.sumian.sd.buz.setting.SettingActivity
 import com.sumian.sd.buz.setting.version.VersionManager
 import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.buz.tel.activity.TelBookingListActivity
-import com.sumian.sd.buz.upgrade.model.VersionModel
 import com.sumian.sd.common.h5.SleepFileWebActivity
 import com.sumian.sd.common.log.LogManager
 import com.sumian.sd.main.OnEnterListener
@@ -56,7 +55,7 @@ import kotlinx.android.synthetic.main.fragment_tab_me.*
  * desc:
  */
 
-class MeFragment : BaseViewModelFragment<GetAchievementListPresenter>(), View.OnClickListener, PatientServiceTips.OnServiceTipsCallback, PatientRecordTips.OnRecordTipsCallback, OnEnterListener, VersionModel.ShowDotCallback, GetAchievementListContract.View {
+class MeFragment : BaseViewModelFragment<GetAchievementListPresenter>(), View.OnClickListener, PatientServiceTips.OnServiceTipsCallback, PatientRecordTips.OnRecordTipsCallback, OnEnterListener, GetAchievementListContract.View {
 
     private var mPreRequestTimeMills = 0L
 
@@ -112,12 +111,9 @@ class MeFragment : BaseViewModelFragment<GetAchievementListPresenter>(), View.On
             }
             dv_device_manage.setContent(monitorSn!!)
         })
-//        DeviceManager.mMonitorNeedUpdateLiveData.observe(this, Observer { dv_setting.showRedDot(DeviceManager.hasFirmwareNeedUpdate()) })
-//        DeviceManager.mSleeperNeedUpdateLiveData.observe(this, Observer { dv_setting.showRedDot(DeviceManager.hasFirmwareNeedUpdate()) })
-//        VersionDelegate.init().checkVersionCallback(activity!!, Runnable { dv_setting.showRedDot(true) }, Runnable { dv_setting.showRedDot(false) })
         mViewModel?.getAchievementList()
-        VersionManager.queryVersion()
-        VersionManager.mUpgradeMode.observe(this, Observer {
+        VersionManager.queryAppVersion()
+        VersionManager.mAppUpgradeMode.observe(this, Observer {
             dv_setting.showRedDot(it == VersionManager.UPGRADE_MODE_FORCE)
         })
     }
@@ -201,10 +197,6 @@ class MeFragment : BaseViewModelFragment<GetAchievementListPresenter>(), View.On
         if (isCanRequest()) {
             mViewModel?.getAchievementList()
         }
-    }
-
-    override fun showDot(isShowAppDot: Boolean, isShowMonitorDot: Boolean, isShowSleepyDot: Boolean) {
-
     }
 
     override fun onGetAchievementListSuccess(achievementRecordList: List<AchievementRecord>) {

@@ -46,7 +46,7 @@ import com.sumian.sd.buz.notification.NotificationDelegate
 import com.sumian.sd.buz.notification.SchemeResolver
 import com.sumian.sd.buz.patientdoctorim.IMManagerHost
 import com.sumian.sd.buz.patientdoctorim.IMProfileProvider
-import com.sumian.sd.buz.upgrade.model.VersionModel
+import com.sumian.sd.buz.setting.version.VersionManager
 import com.sumian.sd.common.log.LogManager
 import com.sumian.sd.common.log.SdLogManager
 import com.sumian.sd.common.network.NetworkManager
@@ -74,10 +74,6 @@ object AppManager {
     private val mOpenEngine: OpenEngine by lazy {
         OpenEngine.init(App.getAppContext(), BuildConfig.DEBUG, BuildConfig.UMENG_APP_KEY, BuildConfig.UMENG_CHANNEL, BuildConfig.UMENG_PUSH_SECRET)
         OpenEngine().create(App.getAppContext(), BuildConfig.DEBUG, BuildConfig.WECHAT_APP_ID, BuildConfig.WECHAT_APP_SECRET)
-    }
-
-    private val mVersionModel: VersionModel by lazy {
-        VersionModel()
     }
 
     private val mNetworkManager: NetworkManager  by lazy {
@@ -129,12 +125,6 @@ object AppManager {
     @Synchronized
     fun getDoctorViewModel(): DoctorViewModel {
         return mDoctorViewModel
-    }
-
-    @JvmStatic
-    @Synchronized
-    fun getVersionModel(): VersionModel {
-        return mVersionModel
     }
 
     @JvmStatic
@@ -290,7 +280,7 @@ object AppManager {
         LogManager.appendUserOperationLog("App 进入 前台")
         DeviceManager.tryToConnectCacheMonitor()
         sendHeartbeat()
-        DeviceManager.getAndCheckFirmVersion()
+        VersionManager.getAndCheckFirmVersionShowUpgradeDialogIfNeed(true)
     }
 
     fun onAppBackground() {

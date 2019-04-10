@@ -21,6 +21,7 @@ import com.sumian.common.widget.TitleBar;
 import com.sumian.sd.R;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.buz.devicemanager.DeviceManager;
+import com.sumian.sd.buz.setting.version.VersionManager;
 import com.sumian.sd.buz.upgrade.dialog.Version2ConnectingDialog;
 import com.sumian.sd.buz.upgrade.dialog.VersionDialog;
 import com.sumian.sd.buz.upgrade.presenter.DeviceVersionUpgradePresenter;
@@ -152,15 +153,12 @@ public class DeviceVersionUpgradeActivity extends BaseViewModelActivity implemen
             switch (mVersionType) {
                 case VERSION_TYPE_MONITOR:
                     stringId = R.string.firmware_upgrade_success_hint;
-                    AppManager.getVersionModel().notifyMonitorDot(false);
-                    DeviceManager.INSTANCE.getMMonitorNeedUpdateLiveData().setValue(false);
                     break;
                 case VERSION_TYPE_SLEEPY:
                     stringId = R.string.sleeper_firmware_upgrade_success_hint;
-                    AppManager.getVersionModel().notifySleepyDot(false);
-                    DeviceManager.INSTANCE.getMSleeperNeedUpdateLiveData().setValue(false);
                     break;
             }
+            VersionManager.INSTANCE.getAndCheckFirmVersionShowUpgradeDialogIfNeed(false);
             ToastUtils.showLong(stringId);
             LogManager.appendUserOperationLog("设备 dfu固件升级完成  mac=" + deviceAddress);
             SumianExecutor.INSTANCE.runOnUiThread(DeviceManager.INSTANCE::tryToConnectCacheMonitor, UPGRADE_RECONNECT_WAIT_DURATION);
@@ -226,11 +224,11 @@ public class DeviceVersionUpgradeActivity extends BaseViewModelActivity implemen
         String currentVersion = null;
         switch (mVersionType) {
             case VERSION_TYPE_MONITOR:
-                newVersion = AppManager.getVersionModel().getMonitorVersion().getVersion();
+                newVersion = VersionManager.INSTANCE.getMFirmwareVersionInfoLD().getValue().monitor.getVersion();
                 currentVersion = DeviceManager.INSTANCE.getMonitorVersion();
                 break;
             case VERSION_TYPE_SLEEPY:
-                newVersion = AppManager.getVersionModel().getSleepyVersion().getVersion();
+                newVersion = VersionManager.INSTANCE.getMFirmwareVersionInfoLD().getValue().sleeper.getVersion();
                 currentVersion = DeviceManager.INSTANCE.getSleeperVersion();
                 break;
             default:
@@ -277,7 +275,9 @@ public class DeviceVersionUpgradeActivity extends BaseViewModelActivity implemen
         String[] perms = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
         if (EasyPermissions.hasPermissions(this, perms)) {
             ToastHelper.show(R.string.firmware_downloading_hint);
-            mPresenter.downloadFile(mVersionType, mVersionType == VERSION_TYPE_MONITOR ? AppManager.getVersionModel().getMonitorVersion() : AppManager.getVersionModel().getSleepyVersion());
+            mPresenter.downloadFile(mVersionType, mVersionType == VERSION_TYPE_MONITOR
+                    ? VersionManager.INSTANCE.getMFirmwareVersionInfoLD().getValue().monitor
+                    : VersionManager.INSTANCE.getMFirmwareVersionInfoLD().getValue().sleeper);
         } else {
             EasyPermissions.requestPermissions(this, "没有权限,你需要去设置中开启文件读写权限.", REQUEST_WRITE_PERMISSION, perms);
         }

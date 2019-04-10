@@ -461,10 +461,11 @@ interface SdApi {
     fun getFaiths(@Query("page") page: Int = 1,
                   @Query("per_page") perPage: Int = 15): Call<PaginationResponseV2<FaithData>>
 
-    // hw api start ---
-    @Headers("Accept: application/vnd.sumianapi.v2+json")
     @GET("firmware/latest")
-    fun syncFirmwareInfo(): Call<FirmwareInfo>
+    fun getFirmwareLatestVersion(
+            @Query("monitor_hw_version") monitorHardwareVersion: String?,
+            @Query("sleeper_hw_version") sleeperHardwareVersion: String?
+    ): Call<FirmwareInfo>
 
     @GET("app-version/latest")
     fun syncUpgradeAppInfo(@QueryMap map: MutableMap<String, String>): Call<AppUpgradeInfo>

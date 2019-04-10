@@ -3,25 +3,22 @@ package com.sumian.sd.buz.devicemanager.helper
 import android.os.Handler
 import android.os.Looper
 import android.text.TextUtils
-import android.text.format.DateUtils
 import androidx.annotation.StringRes
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SPUtils
 import com.sumian.blue.model.BluePeripheral
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.utils.JsonUtil
-import com.sumian.common.utils.VersionUtil
 import com.sumian.sd.R
 import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.account.bean.UserInfo
-import com.sumian.sd.buz.device.widget.UpgradeFirmwareDialogActivity
 import com.sumian.sd.buz.devicemanager.BlueDevice
 import com.sumian.sd.buz.devicemanager.DeviceManager
 import com.sumian.sd.buz.devicemanager.command.BlueCmd
+import com.sumian.sd.buz.setting.version.VersionManager
 import com.sumian.sd.common.log.LogManager
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
-import com.sumian.sd.common.network.response.FirmwareInfo
 import java.util.*
 
 /**
@@ -42,8 +39,6 @@ class DeviceStateHelper(deviceManager: DeviceManager) {
     private val mMonitorLiveData = mDeviceManager.getMonitorLiveData()
     private var mIsMonitoring: Boolean = false
     private val mMainHandler = Handler(Looper.getMainLooper())
-    private val mMonitorNeedUpdateLiveData = mDeviceManager.mMonitorNeedUpdateLiveData
-    private val mSleeperNeedUpdateLiveData = mDeviceManager.mSleeperNeedUpdateLiveData
 
 
     fun receiveAllMonitorAndSleeperStatus(peripheral: BluePeripheral, data: ByteArray, cmd: String) {
@@ -341,36 +336,13 @@ class DeviceStateHelper(deviceManager: DeviceManager) {
     }
 
     fun getAndCheckFirmVersion() {
-        val call = AppManager.getSdHttpService().syncFirmwareInfo()
-        call.enqueue(object : BaseSdResponseCallback<FirmwareInfo>() {
-            override fun onSuccess(response: FirmwareInfo?) {
-                checkFirmVersion(response ?: return)
-            }
-
-            override fun onFailure(errorResponse: ErrorResponse) {
-                LogUtils.d(errorResponse.message)
-            }
-        })
+        mMainHandler.removeCallbacks(mDelayCheckFirmwareVersionRunnable)
+        // 延时，防止先后获取监测仪、速眠仪版本信息重复查询。
+        mMainHandler.postDelayed(mDelayCheckFirmwareVersionRunnable, 3000)
     }
 
-    fun checkFirmVersion(firmwareInfo: FirmwareInfo) {
-        val monitorVersion = mMonitorLiveData.value?.version
-        val sleeperVersion = mMonitorLiveData.value?.sleeperVersion
-        mMonitorNeedUpdateLiveData.value = hasNewFirmwareVersion(monitorVersion, firmwareInfo.monitor.version)
-        mSleeperNeedUpdateLiveData.value = hasNewFirmwareVersion(sleeperVersion, firmwareInfo.sleeper.version)
-        if (mMonitorNeedUpdateLiveData.value == true || mSleeperNeedUpdateLiveData.value == true) {
-            val spKey = SHOW_UPGRADE_MONITOR_DIALOG_TIME
-            if (System.currentTimeMillis() - SPUtils.getInstance().getLong(spKey) < DateUtils.DAY_IN_MILLIS) {
-                return
-            }
-            UpgradeFirmwareDialogActivity.start(if (mMonitorNeedUpdateLiveData.value == true) 0 else 1)
-            SPUtils.getInstance().put(spKey, System.currentTimeMillis())
-        }
-    }
+    private val mDelayCheckFirmwareVersionRunnable = Runnable { VersionManager.getAndCheckFirmVersionShowUpgradeDialogIfNeed(true) }
 
-    fun hasNewFirmwareVersion(currentVersion: String?, latestVersion: String): Boolean {
-        return !TextUtils.isEmpty(currentVersion) && !VersionUtil.isVersionZero(currentVersion!!) && VersionUtil.hasNewVersion(latestVersion, currentVersion)
-    }
 
     fun receiveMonitorSnInfo(data: ByteArray, cmd: String) {
         val monitorSn = BlueCmd.formatSn(data)

@@ -42,8 +42,6 @@ object DeviceManager : BlueAdapterCallback, MonitorEventListener {
     private val mIsBluetoothEnableLiveData = MutableLiveData<Boolean>()
     private val mMonitorEventListeners = HashSet<MonitorEventListener>()
     private val mIsUploadingSleepDataToServerLiveData = MutableLiveData<Boolean>()
-    val mMonitorNeedUpdateLiveData = MutableLiveData<Boolean>()
-    val mSleeperNeedUpdateLiveData = MutableLiveData<Boolean>()
     private val mSyncDataHelper = SyncDeviceDataHelper(this)
     private val mDeviceStateHelper = DeviceStateHelper(this)
 
@@ -105,12 +103,27 @@ object DeviceManager : BlueAdapterCallback, MonitorEventListener {
         return macSb.toString().toUpperCase(Locale.getDefault())
     }
 
+    private fun formatVersion(version: String?): String? {
+        return if (version == null || version == "0.0.0") {
+            null
+        } else version
+
+    }
+
     fun getMonitorVersion(): String? {
-        return mMonitorLiveData.value?.version
+        return formatVersion(mMonitorLiveData.value?.version)
     }
 
     fun getSleeperVersion(): String? {
-        return mMonitorLiveData.value?.sleeperVersion
+        return formatVersion(mMonitorLiveData.value?.sleeperVersion)
+    }
+
+    fun getMonitorBomVersion(): String? {
+        return formatVersion(mMonitorLiveData.value?.bomVersion)
+    }
+
+    fun getSleeperBomVersion(): String? {
+        return formatVersion(mMonitorLiveData.value?.sleeperBomVersion)
     }
 
     fun getMonitorStatus(): Int {
@@ -253,8 +266,8 @@ object DeviceManager : BlueAdapterCallback, MonitorEventListener {
             }
             AppManager.getBlueManager().refresh()
             AppManager.getBlueManager().clearBluePeripheral()
-            mSleeperNeedUpdateLiveData.value = false
-            mMonitorNeedUpdateLiveData.value = false
+//            mSleeperNeedUpdateLiveData.value = false
+//            mMonitorNeedUpdateLiveData.value = false
         }
 
         override fun onTransportChannelReady(peripheral: BluePeripheral) {
@@ -561,13 +574,13 @@ object DeviceManager : BlueAdapterCallback, MonitorEventListener {
         mIsUploadingSleepDataToServerLiveData.postValue(isUploading)
     }
 
-    fun getAndCheckFirmVersion() {
-        mDeviceStateHelper.getAndCheckFirmVersion()
-    }
-
-    fun hasFirmwareNeedUpdate(): Boolean {
-        return mMonitorNeedUpdateLiveData.value == true || mSleeperNeedUpdateLiveData.value == true
-    }
+//    fun getAndCheckFirmVersion() {
+//        mDeviceStateHelper.getAndCheckFirmVersion()
+//    }
+//
+//    fun hasFirmwareNeedUpdate(): Boolean {
+//        return mMonitorNeedUpdateLiveData.value == true || mSleeperNeedUpdateLiveData.value == true
+//    }
 }
 
 interface MonitorEventListener {
