@@ -17,7 +17,7 @@ import com.sumian.sd.buz.diary.sleeprecord.bean.ShareInfo
 import com.sumian.sd.buz.diary.sleeprecord.bean.SleepRecord
 import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
-import com.sumian.sd.widget.dialog.SumianAlertDialogV2
+import com.sumian.sd.widget.dialog.SumianImageAlertDialog
 import kotlinx.android.synthetic.main.fragment_sleep_diary.*
 import kotlinx.android.synthetic.main.view_sleep_record_view.*
 
@@ -57,7 +57,7 @@ class SleepDiaryFragment : BaseViewModelFragment<BaseViewModel>() {
     }
 
     private fun showRefillNotEnableDialog() {
-        SumianAlertDialogV2(activity!!)
+        SumianImageAlertDialog(activity!!)
                 .setMessageText(R.string.only_last_3_days_can_refill_sleep_diary)
                 .setTopIcon(R.mipmap.ic_msg_icon_abnormal)
                 .setOnBtnClickListener(R.string.hao_de, null)

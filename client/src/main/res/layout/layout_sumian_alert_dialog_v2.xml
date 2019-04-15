@@ -11,12 +11,14 @@
         android:layout_width="0dp"
         android:layout_height="40dp" />
 
-    <ImageView
-        android:id="@+id/iv_top"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
-        android:contentDescription="@null"
-        tools:src="@mipmap/ic_msg_icon_abnormal"/>
+    <TextView
+        android:id="@+id/tv_title"
+        style="@style/text_t3_18"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:gravity="center"
+        android:textStyle="bold"
+        tools:text="Title" />
 
     <Space
         android:layout_width="0dp"
@@ -29,17 +31,37 @@
         android:layout_marginEnd="20dp"
         android:gravity="center"
         android:textSize="@dimen/font_14"
-        tools:text="MessageMessageMessageMessageMessageMessageMessageMessageMessage"/>
+        tools:text="Message Message Message Message Message Message Message Message " />
 
-    <Space
-        android:layout_width="0dp"
-        android:layout_height="30dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn"
-        style="@style/SumianButton"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="30dp"
-        tools:text="@string/cancel" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_left"
+            style="@style/SumianButton"
+            android:layout_height="@dimen/space_50"
+            android:layout_marginStart="@dimen/space_20"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp"
+            android:layout_weight="1"
+            tools:background="@drawable/bg_btn_white"
+            tools:text="@string/confirm"
+            tools:textColor="@color/t5_color" />
+
+        <Space
+            android:id="@+id/space"
+            android:layout_width="@dimen/space_20"
+            android:layout_height="wrap_content" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_right"
+            style="@style/SumianButton"
+            android:layout_height="@dimen/space_50"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="30dp"
+            android:layout_weight="1"
+            tools:text="@string/cancel" />
+    </LinearLayout>
 </LinearLayout>

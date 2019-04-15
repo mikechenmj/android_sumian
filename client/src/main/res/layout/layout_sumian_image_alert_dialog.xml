@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_rect_solid_white_radius_4dp"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="40dp" />
+
+    <ImageView
+        android:id="@+id/iv_top"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:contentDescription="@null"
+        tools:src="@mipmap/ic_msg_icon_abnormal" />
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="20dp" />
+
+    <TextView
+        android:id="@+id/tv_message"
+        style="@style/text_t1_14"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:gravity="center"
+        android:textSize="@dimen/font_14"
+        tools:text="MessageMessageMessageMessageMessageMessageMessageMessageMessage" />
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="30dp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn"
+        style="@style/SumianButton"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="30dp"
+        tools:text="@string/cancel" />
+</LinearLayout>

@@ -75,16 +75,11 @@ class NightWakeOrDaySleepFragment : BaseFillSleepDiaryFragment() {
                 getString(if (mType == TYPE_NIGHT_WAKE) R.string.night_wake_times_and_duration else R.string.day_sleep_times_and_duration),
                 createPickerData(),
                 object : WheelPickerBottomSheet.Listener {
-                    override fun onConfirmClick(values: List<Int>) {
+                    override fun onConfirmClick(values: List<Int>): Boolean {
                         val times = values[0] + 1
                         val duration = (values[1] + 1) * 5
-//                        if (mType == TYPE_NIGHT_WAKE) {
-//                            if (duration * DateUtils.MINUTE_IN_MILLIS > mFillDiaryViewModel.getSleepDuration()) {
-//                                ToastUtils.showShort(R.string.night_wake_time_cant_bigger_than_sleep_time)
-//                                return
-//                            }
-//                        }
                         setDataByType(times, duration)
+                        return true
                     }
                 })
                 .show()

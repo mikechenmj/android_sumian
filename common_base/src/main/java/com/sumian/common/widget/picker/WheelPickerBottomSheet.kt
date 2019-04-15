@@ -32,8 +32,9 @@ class WheelPickerBottomSheet(context: Context,
             for (picker in mPickers) {
                 mValues.add(picker.value)
             }
-            listener.onConfirmClick(mValues)
-            dismiss()
+            if (listener.onConfirmClick(mValues)) {
+                dismiss()
+            }
         }
     }
 
@@ -53,6 +54,6 @@ class WheelPickerBottomSheet(context: Context,
         /**
          * @param values pickers' selected index list
          */
-        fun onConfirmClick(values: List<Int>)
+        fun onConfirmClick(values: List<Int>): Boolean
     }
 }

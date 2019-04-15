@@ -24,7 +24,7 @@
         android:layout_marginTop="@dimen/space_20"
         android:layout_marginRight="@dimen/space_30"
         android:lineSpacingExtra="@dimen/space_4"
-        android:text="您还未绑定主治医生，点击下方扫码按钮，扫描医生二维码进行绑定。"
+        android:text="@string/you_have_not_bound_doctor_yet_scan_to_bind"
         android:textSize="@dimen/font_16"
         tools:ignore="HardcodedText" />
 

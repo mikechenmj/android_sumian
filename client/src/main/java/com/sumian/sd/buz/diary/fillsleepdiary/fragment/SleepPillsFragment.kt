@@ -1,6 +1,7 @@
 package com.sumian.sd.buz.diary.fillsleepdiary.fragment
 
 import android.os.Bundle
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import com.sumian.common.widget.SimpleViewHolder
 import com.sumian.common.widget.picker.WheelPickerBottomSheet
 import com.sumian.sd.R
 import com.sumian.sd.buz.diary.sleeprecord.bean.SleepPill
+import com.sumian.sd.widget.dialog.SumianAlertDialogV2
 import kotlinx.android.synthetic.main.fragment_sleep_pills.*
 import kotlinx.android.synthetic.main.list_item_pills.view.*
 import java.util.*
@@ -73,13 +75,14 @@ class SleepPillsFragment : BaseFillSleepDiaryFragment() {
                 getString(R.string.take_pills_record),
                 createPickerData(),
                 object : WheelPickerBottomSheet.Listener {
-                    override fun onConfirmClick(values: List<Int>) {
+                    override fun onConfirmClick(values: List<Int>): Boolean {
                         val pill = SleepPill(
                                 mPillNameOptions[values[0]]!!,
                                 mPillAmountOptions[values[1]],
                                 mPillTimeOptions[values[2]]
                         )
                         addPill(pill)
+                        return true
                     }
                 }
         )
@@ -92,8 +95,34 @@ class SleepPillsFragment : BaseFillSleepDiaryFragment() {
     }
 
     private fun addPill(pill: SleepPill) {
-        mAdapter.addData(pill)
-        mFillDiaryViewModel.mPillsLiveData.value = mAdapter.mData
+        val list = mAdapter.mData
+        var repeatIndex = -1
+        for ((index, data) in list.withIndex()) {
+            if (data.time == pill.time && data.name == pill.name) {
+                repeatIndex = index
+                break
+            }
+        }
+        if (repeatIndex >= 0) {
+            val pillString = "【${pill.name}, ${pill.amount}, ${pill.time}】"
+            val message = Html.fromHtml("<font color=#6595F4>$pillString</font>，是否覆盖？")
+            SumianAlertDialogV2(activity!!)
+                    .setTitleText(getString(R.string.you_have_add_this_pill))
+                    .setMessageText(message)
+                    .setLeftBtnOnClickListener(R.string.cancel, null)
+                    .whitenLeft()
+                    .setRightBtnOnClickListener(R.string.cover, object : View.OnClickListener {
+                        override fun onClick(v: View?) {
+                            mAdapter.mData[repeatIndex] = pill
+                            mAdapter.notifyDataSetChanged()
+                            mFillDiaryViewModel.mPillsLiveData.value = mAdapter.mData
+                        }
+                    })
+                    .show()
+        } else {
+            mAdapter.addData(pill)
+            mFillDiaryViewModel.mPillsLiveData.value = mAdapter.mData
+        }
     }
 
     private fun createPickerData(): ArrayList<Pair<Array<String?>, Int>> {

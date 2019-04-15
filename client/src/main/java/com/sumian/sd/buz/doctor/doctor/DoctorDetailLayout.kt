@@ -37,7 +37,6 @@ class DoctorDetailLayout @JvmOverloads constructor(context: Context, attrs: Attr
                 ?: "", iv_avatar, R.mipmap.ic_info_avatar_doctor, R.mipmap.ic_info_avatar_doctor)
         tv_name?.text = doctor.name
         tv_department?.text = String.format(Locale.getDefault(), "%s %s", doctor.hospital, doctor.department)
-        fold_layout?.setText(doctor.introduction_no_tag ?: "")
         siv_customer_service?.setOnClickListener {
             KefuManager.launchKefuActivity()
             StatUtil.event(StatConstants.click_doctor_page_sleep_steward)
@@ -46,7 +45,7 @@ class DoctorDetailLayout @JvmOverloads constructor(context: Context, attrs: Attr
         doctor_info?.setOnClickListener { v ->
             SumianTitleMessageDialog(v.context)
                     .showCloseIv(true)
-                    .setTitle(v.resources.getString(R.string.doctor_info))
+                    .setTitle(v.resources.getString(R.string.personal_intro))
                     .setMessage(doctor.introduction_no_tag!!)
                     .show()
         }

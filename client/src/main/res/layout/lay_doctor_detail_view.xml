@@ -87,43 +87,6 @@
             android:scaleType="fitXY"
             android:src="@drawable/ic_info_customerservice" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_10"
-            android:layout_marginBottom="@dimen/space_10"
-            android:background="@color/b2_color"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <TextView
-                style="@style/text_t2_style"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/space_20"
-                android:layout_marginTop="@dimen/space_20"
-                android:layout_marginRight="@dimen/space_20"
-                android:layout_marginBottom="@dimen/space_20"
-                android:gravity="center"
-                android:text="@string/doctor_summary"
-                android:textColor="@color/t1_color" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/space_1"
-                android:layout_marginLeft="@dimen/space_20"
-                android:background="@color/l1_color"
-                tools:ignore="RtlHardcoded" />
-
-            <com.sumian.sd.widget.fold.FoldLayout
-                android:id="@+id/fold_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_20"
-                android:paddingLeft="@dimen/space_20"
-                android:paddingRight="@dimen/space_20" />
-
-        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/lay_doctor_service_container"
@@ -143,7 +106,7 @@
                 android:layout_marginRight="@dimen/space_20"
                 android:layout_marginBottom="@dimen/space_20"
                 android:gravity="center"
-                android:text="@string/doctor_service"
+                android:text="@string/service"
                 android:textColor="@color/t1_color" />
 
             <View
