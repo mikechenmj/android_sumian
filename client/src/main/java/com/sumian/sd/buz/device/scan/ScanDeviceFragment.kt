@@ -6,7 +6,6 @@ import android.Manifest
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.content.Intent
-import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import androidx.annotation.StringRes
@@ -20,8 +19,8 @@ import com.sumian.common.statistic.StatUtil
 import com.sumian.common.widget.dialog.SumianDialog
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.buz.devicemanager.DeviceManager
 import com.sumian.sd.buz.devicemanager.BlueDevice
+import com.sumian.sd.buz.devicemanager.DeviceManager
 import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.log.LogManager
 import com.sumian.sd.common.utils.LocationManagerUtil
@@ -91,11 +90,6 @@ class ScanDeviceFragment : BaseFragment() {
     private fun registerBlueCallback() {
         mBlueManager.addBlueAdapterCallback(mBlueAdapterEnableListener)
         mBlueManager.addBlueScanCallback(mScanCallback)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        registerBlueCallback()
-        super.onViewCreated(view, savedInstanceState)
     }
 
     override fun onDestroyView() {
@@ -250,6 +244,7 @@ class ScanDeviceFragment : BaseFragment() {
     }
 
     private fun startScan(isScanMore: Boolean = false) {
+        registerBlueCallback()
         if (!isScanMore) {
             resetScanResults()
             mHandler.postDelayed({ checkScanResult() }, SCAN_CHECK_DURATION)
