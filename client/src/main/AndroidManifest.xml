@@ -88,20 +88,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".buz.account.userProfile.ImproveUserProfileOneActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme"
-            android:windowSoftInputMode="stateHidden|stateUnchanged" />
-        <activity
-            android:name=".buz.account.userProfile.ImproveUserProfileTwoActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@style/BaseAppTheme"
-            android:windowSoftInputMode="stateHidden|stateUnchanged" />
-        <activity
             android:name=".buz.account.userProfile.UserInfoActivity"
             android:configChanges="keyboardHidden|orientation"
             android:exported="true"

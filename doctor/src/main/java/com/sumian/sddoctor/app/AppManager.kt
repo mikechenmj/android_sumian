@@ -31,8 +31,8 @@ import com.sumian.sddoctor.base.ActivityDelegateFactory
 import com.sumian.sddoctor.buz.patientdoctorim.IMManagerHost
 import com.sumian.sddoctor.buz.patientdoctorim.IMProfileProvider
 import com.sumian.sddoctor.log.SddLogManager
+import com.sumian.sddoctor.login.login.ChooseIdentityActivity
 import com.sumian.sddoctor.login.login.LoginActivity
-import com.sumian.sddoctor.login.login.SetInviteCodeActivity
 import com.sumian.sddoctor.login.login.bean.DoctorInfo
 import com.sumian.sddoctor.login.login.bean.LoginResponse
 import com.sumian.sddoctor.main.MainActivity
@@ -229,7 +229,7 @@ object AppManager {
         AppManager.getAccountViewModel().updateTokenInfoAndDoctorInfo(loginResponse)
         ActivityUtils.finishAllActivities()
         if (loginResponse?.is_new == true) {
-            ActivityUtils.startActivity(SetInviteCodeActivity::class.java)
+            ActivityUtils.startActivity(ChooseIdentityActivity::class.java)
         } else {
             ActivityUtils.startActivity(MainActivity::class.java)
         }

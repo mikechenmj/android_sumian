@@ -84,7 +84,7 @@
                     android:layout_marginRight="@dimen/space_10"
                     android:scaleType="centerCrop"
                     app:qmui_corner_radius="@dimen/space_4"
-                    app:srcCompat="@drawable/ic_default_banner" />
+                    app:srcCompat="@drawable/ic_cbti_banner_homepage" />
 
             </FrameLayout>
 

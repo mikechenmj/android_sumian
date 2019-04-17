@@ -111,7 +111,7 @@ class HomepageFragment : BaseFragment(), DoctorServicesView.OnDoctorServicesCall
             return
         }
         tv_name.text = doctorInfo.name
-        tv_introduction.text = doctorInfo.hospital
+        tv_introduction.text = doctorInfo.getDescString(activity!!)
         tv_introduction.visibility = if (TextUtils.isEmpty(doctorInfo.hospital)) View.GONE else View.VISIBLE
         ImageLoader.load(context!!, doctorInfo.avatar, iv_avatar)
     }

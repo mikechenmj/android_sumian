@@ -19,7 +19,7 @@ object AuthenticationHelper {
         when (authenticateStatus) {
             0 -> {
                 SumianDialog(context)
-                        .setTitleText(R.string.doctor_authentication)
+                        .setTitleText(R.string.identity_authentication)
                         .setMessageText(context.getString(messageRes))
                         .setRightBtn(R.string.go_authenticate, View.OnClickListener { AuthenticationActivity.start() })
                         .setLeftBtn(R.string.next_time_talk_about, null)

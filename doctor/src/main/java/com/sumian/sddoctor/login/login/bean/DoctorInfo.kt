@@ -1,8 +1,11 @@
 package com.sumian.sddoctor.login.login.bean
 
+import android.content.Context
+import android.os.Parcelable
 import com.sumian.sddoctor.BuildConfig
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.app.App
+import kotlinx.android.parcel.Parcelize
 
 /**
  * <pre>
@@ -13,6 +16,7 @@ import com.sumian.sddoctor.app.App
  *     version: 1.0
  * </pre>
  */
+@Parcelize
 data class DoctorInfo(
         var id: Int,
         var retailer_id: Int,
@@ -37,8 +41,9 @@ data class DoctorInfo(
         var review_status: Int, //审核状态 0:未认证 1:审核中 2:已认证
         var set_password: Boolean = false,
         var im_id: String? = null,
-        var im_password: String? = null
-        ) {
+        var im_password: String? = null,
+        var identity: Int = 0
+) : Parcelable {
     companion object {
         const val AUTHENTICATION_STATE_NOT_AUTHENTICATED = 0
         const val AUTHENTICATION_STATE_IS_AUTHENTICATING = 1
@@ -61,4 +66,22 @@ data class DoctorInfo(
     fun isVisitorAccount(): Boolean {
         return mobile == BuildConfig.VISITOR_MOBILE
     }
+
+    fun getIdentityString(context: Context): String {
+        return context.getString(if (isDoctor()) R.string.doctor else R.string.counselor)
+    }
+
+    fun getDescString(context: Context): String {
+        if (review_status == AUTHENTICATION_STATE_AUTHENTICATED) {
+            return context.getString(if (isDoctor()) R.string.doctor else R.string.counselor)
+        } else {
+            return if (isDoctor()) {
+                return hospital
+            } else {
+                return hospital
+            }
+        }
+    }
+
+    private fun isDoctor() = identity == 0
 }

@@ -55,12 +55,12 @@ class BannerAdapter constructor(context: Context, private val banners: List<Bann
             }
             //bannerView.loadImage(banner.url, R.drawable.ic_cbti_img_banner2, R.drawable.ic_cbti_img_banner2)
             val options = RequestOptions
-                    .placeholderOf(R.drawable.ic_default_banner)
-                    .error(R.drawable.ic_default_banner)
+                    .placeholderOf(R.drawable.ic_cbti_banner_homepage)
+                    .error(R.drawable.ic_cbti_banner_homepage)
                     .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
             Glide.with(container).asBitmap().load(banner.url).apply(options).listener(object : RequestListener<Bitmap> {
                 override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Bitmap>?, isFirstResource: Boolean): Boolean {
-                    bannerView.setImageResource(R.drawable.ic_default_banner)
+                    bannerView.setImageResource(R.drawable.ic_cbti_banner_homepage)
                     return true
                 }
 

@@ -319,6 +319,13 @@
         <activity
             android:name=".buz.weeklyreport.WeeklyReportActivity"
             android:launchMode="singleTop" />
+        <activity
+            android:name=".login.login.ChooseIdentityActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".account.activity.SetPersonalIntroductionActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.Fullscreen" />
     </application>
 
 </manifest>

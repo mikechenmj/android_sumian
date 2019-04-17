@@ -1,136 +1,208 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <com.sumian.sddoctor.widget.TitleBar
-        android:id="@+id/title_bar"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:text="@string/user_info_center" />
+        android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/lay_avatar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_10"
-        android:background="@color/b2_color"
-        android:foreground="@drawable/bg_material_ripple"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:paddingLeft="@dimen/space_20"
-        android:paddingTop="@dimen/space_20"
-        android:paddingRight="@dimen/space_12"
-        android:paddingBottom="@dimen/space_20"
-        tools:ignore="RtlHardcoded">
-
-        <TextView
-            style="@style/text_t1_style"
-            android:layout_width="wrap_content"
+        <com.sumian.sddoctor.widget.TitleBar
+            android:id="@+id/title_bar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:text="@string/user_info_center" />
+
+        <LinearLayout
+            android:id="@+id/lay_avatar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_10"
+            android:background="@color/b2_color"
             android:gravity="center"
-            android:text="@string/avatar" />
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/space_20"
+            android:paddingTop="@dimen/space_20"
+            android:paddingRight="@dimen/space_12"
+            android:paddingBottom="@dimen/space_20"
+            tools:ignore="RtlHardcoded">
+
+            <TextView
+                style="@style/text_t1_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/avatar" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+                android:id="@+id/iv_avatar"
+                android:layout_width="@dimen/space_56"
+                android:layout_height="@dimen/space_56"
+                android:layout_marginLeft="@dimen/space_16"
+                android:layout_marginRight="@dimen/space_10"
+                android:contentDescription="@null"
+                app:qmui_is_circle="true"
+                app:srcCompat="@mipmap/ic_info_avatar_doctor_s" />
+
+            <ImageView
+                android:layout_width="@dimen/space_32"
+                android:layout_height="@dimen/space_32"
+                android:contentDescription="@null"
+                android:paddingLeft="@dimen/space_8"
+                android:paddingTop="@dimen/space_8"
+                android:paddingBottom="@dimen/space_8"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/ic_arrow_right_light_blue"
+                tools:ignore="RtlHardcoded,RtlSymmetry" />
+        </LinearLayout>
+
+        <View
+            style="@style/HorizontalDividerLine"
+            android:layout_height="@dimen/space_1"
+            android:background="@color/b1_color" />
+
+        <com.sumian.sddoctor.widget.divider.SettingDividerView
+            android:id="@+id/dv_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:divider_line_visible="invisible"
+            app:divider_more_visible="gone"
+            app:type_content="@string/none_nickname"
+            app:type_desc="@string/name" />
 
         <Space
             android:layout_width="0dp"
+            android:layout_height="@dimen/space_10" />
+
+        <com.sumian.sddoctor.widget.divider.SettingDividerView
+            android:id="@+id/dv_authentication"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            app:divider_line_visible="invisible"
+            app:type_content="@string/not_authenticated"
+            app:type_desc="@string/identity_authentication" />
 
-        <com.qmuiteam.qmui.widget.QMUIRadiusImageView
-            android:id="@+id/iv_avatar"
-            android:layout_width="@dimen/space_56"
-            android:layout_height="@dimen/space_56"
-            android:layout_marginLeft="@dimen/space_16"
-            android:layout_marginRight="@dimen/space_10"
-            android:contentDescription="@null"
-            app:qmui_is_circle="true"
-            app:srcCompat="@mipmap/ic_info_avatar_doctor_s" />
+        <!-- doctor -->
+        <LinearLayout
+            android:id="@+id/vg_doctor_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-        <ImageView
-            android:layout_width="@dimen/space_32"
-            android:layout_height="@dimen/space_32"
-            android:contentDescription="@null"
-            android:paddingLeft="@dimen/space_8"
-            android:paddingTop="@dimen/space_8"
-            android:paddingBottom="@dimen/space_8"
-            android:scaleType="centerInside"
-            app:srcCompat="@drawable/ic_arrow_right_light_blue"
-            tools:ignore="RtlHardcoded,RtlSymmetry" />
+            <com.sumian.sddoctor.widget.divider.SettingDividerView
+                android:id="@+id/dv_hospital_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:divider_more_visible="gone"
+                app:type_content="未填写"
+                app:type_desc="@string/hospital"
+                tools:type_content="华侨医院" />
+
+            <com.sumian.sddoctor.widget.divider.SettingDividerView
+                android:id="@+id/dv_department"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:divider_more_visible="gone"
+                app:type_content="未选择"
+                app:type_desc="@string/department"
+                tools:type_content="心理科" />
+
+            <com.sumian.sddoctor.widget.divider.SettingDividerView
+                android:id="@+id/dv_job_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:divider_line_visible="invisible"
+                app:divider_more_visible="gone"
+                app:type_content="未选择"
+                app:type_desc="@string/job_title"
+                tools:type_content="主任医师" />
+        </LinearLayout>
+
+        <!-- counselor -->
+        <LinearLayout
+            android:id="@+id/vg_counselor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.sumian.sddoctor.widget.divider.SettingDividerView
+                android:id="@+id/dv_counselor_qualification"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:divider_line_visible="visible"
+                app:divider_more_visible="gone"
+                app:type_desc="@string/counselor_qualification"
+                tools:type_content="国家二级心理咨询师" />
+
+            <com.sumian.sddoctor.widget.divider.SettingDividerView
+                android:id="@+id/dv_counselor_experience"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:divider_line_visible="visible"
+                app:divider_more_visible="gone"
+                app:type_desc="@string/work_experience"
+                tools:type_content="3年" />
+
+            <com.sumian.sddoctor.widget.divider.SettingDividerView
+                android:id="@+id/dv_counselor_experience_hours"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:divider_line_visible="visible"
+                app:divider_more_visible="gone"
+                app:type_desc="@string/work_experience_hours"
+                tools:type_content="200" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/vg_personal_intro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:padding="20dp">
+
+            <TextView
+                style="@style/text_t1_16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/person_info" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:src="@drawable/ic_arrow_right_light_blue" />
+
+            <TextView
+                android:id="@+id/tv_personal_intro"
+                style="@style/text_t2_16"
+                android:layout_marginTop="34dp"
+                android:text="@string/no_personal_intro_yet" />
+
+        </FrameLayout>
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/space_10" />
+
+        <com.sumian.sddoctor.widget.divider.SettingDividerView
+            android:id="@+id/dv_invite_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:divider_line_visible="invisible"
+            app:divider_more_visible="gone"
+            app:show_iv="false"
+            app:type_desc="我的邀请码"
+            tools:type_content="SM00AA" />
+
     </LinearLayout>
-
-    <View
-        style="@style/HorizontalDividerLine"
-        android:layout_height="@dimen/space_1"
-        android:background="@color/b1_color" />
-
-    <com.sumian.sddoctor.widget.divider.SettingDividerView
-        android:id="@+id/dv_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:divider_line_visible="invisible"
-        app:type_content="@string/none_nickname"
-        app:divider_more_visible="gone"
-        app:type_desc="@string/name" />
-
-    <Space
-        android:layout_width="0dp"
-        android:layout_height="@dimen/space_10" />
-
-    <com.sumian.sddoctor.widget.divider.SettingDividerView
-        android:id="@+id/dv_authentication"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:divider_line_visible="invisible"
-        app:type_content="@string/not_authenticated"
-        app:type_desc="@string/doctor_authentication" />
-
-    <!--<Space-->
-    <!--android:layout_width="0dp"-->
-    <!--android:layout_height="@dimen/space_10" />-->
-
-    <com.sumian.sddoctor.widget.divider.SettingDividerView
-        android:id="@+id/dv_hospital_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:divider_more_visible="gone"
-        app:type_content="未填写"
-        app:type_desc="@string/hospital"
-        tools:type_content="华侨医院" />
-
-    <com.sumian.sddoctor.widget.divider.SettingDividerView
-        android:id="@+id/dv_department"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:divider_more_visible="gone"
-        app:type_content="未选择"
-        app:type_desc="@string/department"
-        tools:type_content="心理科" />
-
-    <com.sumian.sddoctor.widget.divider.SettingDividerView
-        android:id="@+id/dv_job_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:divider_line_visible="invisible"
-        app:divider_more_visible="gone"
-        app:type_content="未选择"
-        app:type_desc="@string/job_title"
-        tools:type_content="主任医师" />
-
-    <Space
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/space_10" />
-
-    <com.sumian.sddoctor.widget.divider.SettingDividerView
-        android:id="@+id/dv_invite_code"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:divider_line_visible="invisible"
-        app:divider_more_visible="gone"
-        app:show_iv="false"
-        app:type_desc="我的邀请码"
-        tools:type_content="SM00AA" />
-
-</LinearLayout>
+</ScrollView>

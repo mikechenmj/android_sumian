@@ -114,7 +114,7 @@ class MeFragment : BaseFragment(), LogoutContract.View {
         doctorInfo?.let {
             ImageLoader.load(context!!, R.mipmap.ic_info_avatar_doctor_s, doctorInfo.avatar, iv_avatar)
             tv_name.text = doctorInfo.name
-            tv_desc.text = doctorInfo.hospital
+            tv_desc.text = doctorInfo.getDescString(activity!!)
         }
     }
 

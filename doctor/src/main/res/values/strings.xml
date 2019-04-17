@@ -55,6 +55,8 @@
     <string name="cellphone_verification">手机验证</string>
     <string name="set_password" tools:ignore="ExtraTranslation">设置密码</string>
     <string name="doctor_authentication">医生认证</string>
+    <string name="identity_authentication">身份认证</string>
+    <string name="authentication_center">认证中心</string>
     <string name="hospital_name">医院名</string>
 
     <!-- booking -->
@@ -116,6 +118,7 @@
     <string name="none_nickname">匿名</string>
     <string name="user_info_center">个人信息</string>
     <string name="person_info">个人信息</string>
+    <string name="person_introduction">个人简介</string>
     <string name="setting">设置</string>
     <string name="avatar">头像</string>
     <string name="my_service">我的服务</string>
@@ -501,6 +504,14 @@
     <string name="useful_to_me">对我有帮助</string>
     <string name="fold">收起</string>
     <string name="unfold">展开</string>
+    <string name="choose_identity">选择身份</string>
+    <string name="i_am">我是</string>
+    <string name="doctor">医生</string>
+    <string name="counselor">咨询师</string>
+    <string name="counselor_qualification">专业资质</string>
+    <string name="work_experience">从业经验</string>
+    <string name="work_experience_hours">累积个案时长(小时)</string>
+    <string name="no_personal_intro_yet">暂未填写个人简介</string>
     <string-array name="use_guide_labels">
         <item>添加患者</item>
         <item>查看患者资料</item>

@@ -50,11 +50,6 @@
         <attr name="use_circle_type_iv" format="boolean" />
     </declare-styleable>
 
-    <!-- CountDownTextView -->
-    <declare-styleable name="RegisterProgressView">
-
-    </declare-styleable>
-
     <declare-styleable name="EmptyErrorView">
         <attr name="eev_icon" format="reference" />
         <attr name="eev_title" format="string|reference" />

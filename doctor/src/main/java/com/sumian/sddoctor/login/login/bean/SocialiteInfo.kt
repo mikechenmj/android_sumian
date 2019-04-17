@@ -1,7 +1,10 @@
 package com.sumian.sddoctor.login.login.bean
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class SocialiteInfo(
         @SerializedName("id") val id: Int,
         @SerializedName("type") val type: Int,
@@ -12,4 +15,4 @@ data class SocialiteInfo(
         @SerializedName("app") val app: Int,
         @SerializedName("created_at") val createdAt: Int,
         @SerializedName("updated_at") val updatedAt: Int
-)
+) : Parcelable

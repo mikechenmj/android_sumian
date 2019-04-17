@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        style="@style/text_t1_16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/i_am" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp">
+
+        <TextView
+            android:id="@+id/tv_doctor"
+            style="@style/text_t2_16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/userguides_icon_downarrow"
+            android:drawablePadding="10dp"
+            android:text="@string/doctor" />
+
+        <Space
+            android:layout_width="100dp"
+            android:layout_height="0dp" />
+
+        <TextView
+            android:id="@+id/tv_counselor"
+            style="@style/text_t2_16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/userguides_icon_downarrow"
+            android:drawablePadding="10dp"
+            android:text="@string/counselor" />
+
+    </LinearLayout>
+
+</LinearLayout>
