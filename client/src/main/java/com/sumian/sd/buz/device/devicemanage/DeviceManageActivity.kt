@@ -2,10 +2,10 @@ package com.sumian.sd.buz.device.devicemanage
 
 import com.sumian.common.base.BaseActivity
 import com.sumian.sd.R
-import com.sumian.sd.buz.devicemanager.AutoSyncDeviceDataUtil
-import com.sumian.sd.buz.devicemanager.DeviceManager
-import com.sumian.sd.buz.devicemanager.BlueDevice
 import com.sumian.sd.buz.device.scan.ScanDeviceFragment
+import com.sumian.sd.buz.devicemanager.AutoSyncDeviceDataUtil
+import com.sumian.sd.buz.devicemanager.BlueDevice
+import com.sumian.sd.buz.devicemanager.DeviceManager
 import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.utils.FragmentUtil
 import com.sumian.sd.common.utils.FragmentUtil.Companion.switchFragment
@@ -83,7 +83,7 @@ class DeviceManageActivity : BaseActivity() {
 
     private val mOnDeviceSelectedListener = object : ScanDeviceFragment.OnDeviceSelectedListener {
         override fun onDeviceSelected(device: BlueDevice) {
-            DeviceManager.scanAndConnect(device)
+            DeviceManager.connectMonitor(device)
             switchFragment(0)
         }
     }

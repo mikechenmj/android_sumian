@@ -13,11 +13,11 @@ import com.sumian.common.base.BaseFragment
 import com.sumian.common.dialog.SumianImageTextDialog
 import com.sumian.common.utils.ColorCompatUtil
 import com.sumian.sd.R
-import com.sumian.sd.common.utils.BluetoothUtil
+import com.sumian.sd.buz.device.widget.SyncAnimatorUtil
+import com.sumian.sd.buz.devicemanager.BlueDevice
 import com.sumian.sd.buz.devicemanager.DeviceManager
 import com.sumian.sd.buz.devicemanager.MonitorEventListener
-import com.sumian.sd.buz.devicemanager.BlueDevice
-import com.sumian.sd.buz.device.widget.SyncAnimatorUtil
+import com.sumian.sd.common.utils.BluetoothUtil
 import com.sumian.sd.widget.dialog.SumianAlertDialog
 import kotlinx.android.synthetic.main.fragment_device_manage.*
 
@@ -131,7 +131,7 @@ class DeviceManageFragment : BaseFragment() {
         bt_turn_on_pa.setOnClickListener { DeviceManager.turnOnSleeperPaMode() }
         iv_device.setOnClickListener {
             if (mMonitor != null && mMonitor!!.status == BlueDevice.STATUS_UNCONNECTED) {
-                DeviceManager.scanAndConnect(mMonitor!!)
+                DeviceManager.connectMonitor(mMonitor!!)
             }
         }
         iv_float_menu.setOnClickListener { showUnbindPopup() }

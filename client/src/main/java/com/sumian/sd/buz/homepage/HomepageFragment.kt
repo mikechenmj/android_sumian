@@ -286,7 +286,7 @@ HomepageFragment : BaseViewModelFragment<BaseViewModel>(), OnEnterListener, Last
             if (resultCode == Activity.RESULT_OK) {
                 val deviceJson = data?.getStringExtra(ScanDeviceActivity.DATA)
                 val blueDevice = JsonUtil.fromJson(deviceJson, BlueDevice::class.java) ?: return
-                DeviceManager.scanAndConnect(blueDevice)
+                DeviceManager.connectMonitor(blueDevice)
             }
         }
     }
