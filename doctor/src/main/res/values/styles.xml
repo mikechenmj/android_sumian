@@ -426,4 +426,9 @@
         <attr name="tv_end" format="string|reference" />
     </declare-styleable>
 
+    <style name="RadioButtonStyle" parent="@android:style/Widget.CompoundButton.RadioButton">
+        <item name="android:button">@null</item>
+        <item name="android:drawableLeft">@drawable/sel_radio_button</item>
+    </style>
+
 </resources>

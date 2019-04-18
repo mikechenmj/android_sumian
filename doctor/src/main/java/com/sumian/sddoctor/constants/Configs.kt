@@ -27,5 +27,7 @@ class Configs {
         const val DEPARTMENT_NAME_MAX_LENGTH = 10
         const val JOB_TITLE_NAME_MIN_LENGTH = 2
         const val JOB_TITLE_NAME_MAX_LENGTH = 10
+        const val COUNSELOR_QUALIFICATION_MIN_LENGTH = 2
+        const val COUNSELOR_QUALIFICATION_MAX_LENGTH = 20
     }
 }

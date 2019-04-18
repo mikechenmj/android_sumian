@@ -171,9 +171,10 @@
     <!-- register-->
     <string name="please_input_your_name">请输入您的姓名</string>
     <string name="please_input_your_hospital">请输入所在医院</string>
-    <string name="upload_your_doctor_license">上传医生身份证明材料</string>
     <string name="please_upload_your_doctor_license">上传医生身份证明材料</string>
+    <string name="please_upload_your_counselor_license">请上传咨询师身份证明材料</string>
     <string name="please_upload_your_doctor_license_desc">可上传工作证、职业证、资格证、专业技术资格证(职称证)</string>
+    <string name="please_upload_your_counselor_license_desc">可上传执业证、资格证、专业技术资格证（职称证）</string>
     <string name="submit_audit">提交审核</string>
     <string name="please_choose_department">请选择科室</string>
     <string name="please_choose_job_title">请选择职称</string>
@@ -508,10 +509,11 @@
     <string name="i_am">我是</string>
     <string name="doctor">医生</string>
     <string name="counselor">咨询师</string>
-    <string name="counselor_qualification">专业资质</string>
+    <!--<string name="counselor_qualification">专业资质</string>-->
     <string name="work_experience">从业经验</string>
     <string name="work_experience_hours">累积个案时长(小时)</string>
     <string name="no_personal_intro_yet">暂未填写个人简介</string>
+    <string name="please_input_your_work_experience_hours">请输入累积个案时长</string>
     <string-array name="use_guide_labels">
         <item>添加患者</item>
         <item>查看患者资料</item>
@@ -526,4 +528,69 @@
         <item>您的收入可以在“我的钱包”里查看并随时提现到个人账户中。</item>
         <item>认证通过后，点击首页CBTI，可立即免费体验全部课程。</item>
     </string-array>
+
+    <string-array name="duration">
+        <item>20时</item>
+        <item>0时</item>
+        <item>4时</item>
+        <item>12时</item>
+    </string-array>
+
+    <string-array name="cbti_group_arrays">
+        <item>第1周</item>
+        <item>第2周</item>
+        <item>第3周</item>
+        <item>第4周</item>
+        <item>第5周</item>
+        <item>第6周</item>
+        <item>已达标</item>
+        <item>未达标</item>
+    </string-array>
+
+
+    <string-array name="departments">
+        <item>睡眠医学科</item>
+        <item>精神医学科</item>
+        <item>神经内科</item>
+        <item>呼吸内科</item>
+        <item>心理科</item>
+        <!--<item>心理行为医学科</item>-->
+        <!--<item>心身医学科</item>-->
+    </string-array>
+
+    <string-array name="job_titles">
+        <item>主治医师</item>
+        <item>副主任医师</item>
+        <item>主任医师</item>
+        <item>教授</item>
+        <item>副教授</item>
+        <item>助理教授</item>
+    </string-array>
+
+    <string-array name="counselor_qualification_list">
+        <item>国家三级心理咨询师</item>
+        <item>国家二级心理咨询师</item>
+        <item>心理治疗师初级</item>
+        <item>心理治疗师中级</item>
+        <item>心理治疗师高级</item>
+        <item>中国心理学会注册心理师</item>
+        <item>中国心理学会注册督导师</item>
+        <item>国家婚姻家庭咨询师</item>
+    </string-array>
+
+    <string name="counselor_qualification">专业资质</string>
+    <string name="counselor_qualification_list_page_title">选择专业资质</string>
+    <string name="counselor_qualification_add_hint">没有您的专业资质？点击添加</string>
+    <string name="counselor_qualification_input_page_title">添加专业资质</string>
+    <string name="counselor_qualification_input_hint">请输入专业资质（2-20字）</string>
+
+    <string-array name="counselor_experience_years">
+        <item>1年</item>
+        <item>2年</item>
+        <item>3年</item>
+        <item>4年</item>
+        <item>5年及以上</item>
+    </string-array>
+
+    <string name="counselor_experience_years_list_page_title">选择从业经验</string>
 </resources>

@@ -231,6 +231,7 @@ object AppManager {
         if (loginResponse?.is_new == true) {
             ActivityUtils.startActivity(ChooseIdentityActivity::class.java)
         } else {
+            ActivityUtils.startActivity(ChooseIdentityActivity::class.java) // todo remove
             ActivityUtils.startActivity(MainActivity::class.java)
         }
         sendHeartbeat()

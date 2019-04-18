@@ -6,6 +6,7 @@ import android.text.TextUtils
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProviders
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ToastUtils
@@ -16,6 +17,7 @@ import com.sumian.sddoctor.app.AppManager
 import com.sumian.sddoctor.base.BaseFragment
 import com.sumian.sddoctor.constants.Configs
 import com.sumian.sddoctor.constants.StatConstants
+import com.sumian.sddoctor.login.login.bean.DoctorInfo
 import com.sumian.sddoctor.login.register.AuthenticateViewModel
 import com.sumian.sddoctor.login.register.bean.RegisterInfo
 import com.sumian.sddoctor.network.callback.BaseSdResponseCallback
@@ -41,7 +43,10 @@ class AuthenticationFragment : BaseFragment() {
 //    private var mHospital: String? = null
     private var mDepartment: String? = null
     private var mJobTitle: String? = null
+    private var mCounselorQuality: String? = null
+    private var mCounselorExperience: String? = null
     private var mDoctorLicensePath: String? = null
+    private val mDoctorInfo: DoctorInfo by lazy { AppManager.getAccountViewModel().getDoctorInfo().value!! }
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_register_authentication
@@ -50,6 +55,8 @@ class AuthenticationFragment : BaseFragment() {
     companion object {
         private const val REQUEST_CODE_GET_DEPARTMENT = 100
         private const val REQUEST_CODE_GET_JOB_TITLE = 101
+        private const val REQUEST_CODE_GET_COUNSELOR_QUALITY = 102
+        private const val REQUEST_CODE_GET_COUNSELOR_EXPERIENCE = 103
     }
 
     override fun initWidget(root: View?) {
@@ -60,25 +67,74 @@ class AuthenticationFragment : BaseFragment() {
         }
         sdv_department.setOnClickListener { startActivityForString(REQUEST_CODE_GET_DEPARTMENT) }
         sdv_job_title.setOnClickListener { startActivityForString(REQUEST_CODE_GET_JOB_TITLE) }
+        sdv_counselor_experience.setOnClickListener { startActivityForString(REQUEST_CODE_GET_COUNSELOR_EXPERIENCE) }
+        sdv_counselor_qualification.setOnClickListener { startActivityForString(REQUEST_CODE_GET_COUNSELOR_QUALITY) }
         ll_doctor_license_container.setOnClickListener { addPhotoIfNeed() }
         iv_doctor_license_delete.setOnClickListener { updateDoctorLicensePath(null) }
+        vg_doctor.isVisible = mDoctorInfo.isDoctor()
+        vg_counselor.isVisible = !mDoctorInfo.isDoctor()
     }
 
     private fun startActivityForString(requestCode: Int) {
-        ChooseStringActivity.launchForResult(this,
-                requestCode,
-                getString(if (requestCode == REQUEST_CODE_GET_DEPARTMENT) R.string.choose_department else R.string.choose_job_title),
-                getString(if (requestCode == REQUEST_CODE_GET_DEPARTMENT) R.string.add_department else R.string.add_job_title),
-                activity!!.resources.getStringArray(if (requestCode == REQUEST_CODE_GET_DEPARTMENT) R.array.departments else R.array.job_titles),
-                if (requestCode == REQUEST_CODE_GET_DEPARTMENT) true else true,
-                getString(if (requestCode == REQUEST_CODE_GET_DEPARTMENT) R.string.add_department_hint else R.string.add_job_title_hint),
-                getString(if (requestCode == REQUEST_CODE_GET_DEPARTMENT) R.string.save else R.string.save),
-                getString(if (requestCode == REQUEST_CODE_GET_DEPARTMENT) R.string.department else R.string.job_title),
-                getString(if (requestCode == REQUEST_CODE_GET_DEPARTMENT) R.string.department else R.string.job_title),
-                getString(if (requestCode == REQUEST_CODE_GET_DEPARTMENT) R.string.input_department_hint else R.string.input_job_title_hint),
-                if (requestCode == REQUEST_CODE_GET_DEPARTMENT) Configs.DEPARTMENT_NAME_MIN_LENGTH else Configs.JOB_TITLE_NAME_MIN_LENGTH,
-                if (requestCode == REQUEST_CODE_GET_DEPARTMENT) Configs.DEPARTMENT_NAME_MAX_LENGTH else Configs.JOB_TITLE_NAME_MAX_LENGTH
-        )
+        val params = when (requestCode) {
+            REQUEST_CODE_GET_DEPARTMENT -> ChooseStringActivity.createParams(
+                    context = activity!!,
+                    title = R.string.choose_department,
+                    stringArr = R.array.departments,
+                    canAddMore = true,
+                    addMoreHint = R.string.add_department_hint,
+                    inputStringPageTitle = R.string.add_department,
+                    inputStringPageMenu = R.string.save,
+                    inputStringPageLabel = R.string.department,
+                    inputStringPageFieldName = R.string.department,
+                    inputStringPageInputHint = R.string.input_department_hint,
+                    inputStringPageInputMinLength = Configs.DEPARTMENT_NAME_MIN_LENGTH,
+                    inputStringPageInputMaxLength = Configs.DEPARTMENT_NAME_MAX_LENGTH
+            )
+            REQUEST_CODE_GET_JOB_TITLE -> ChooseStringActivity.createParams(
+                    context = activity!!,
+                    title = R.string.choose_job_title,
+                    stringArr = R.array.job_titles,
+                    canAddMore = true,
+                    addMoreHint = R.string.add_job_title_hint,
+                    inputStringPageTitle = R.string.add_job_title,
+                    inputStringPageMenu = R.string.save,
+                    inputStringPageLabel = R.string.job_title,
+                    inputStringPageFieldName = R.string.job_title,
+                    inputStringPageInputHint = R.string.input_job_title_hint,
+                    inputStringPageInputMinLength = Configs.JOB_TITLE_NAME_MIN_LENGTH,
+                    inputStringPageInputMaxLength = Configs.JOB_TITLE_NAME_MAX_LENGTH
+            )
+            REQUEST_CODE_GET_COUNSELOR_QUALITY -> ChooseStringActivity.createParams(
+                    context = activity!!,
+                    title = R.string.counselor_qualification_list_page_title,
+                    stringArr = R.array.counselor_qualification_list,
+                    canAddMore = true,
+                    addMoreHint = R.string.counselor_qualification_add_hint,
+                    inputStringPageTitle = R.string.counselor_qualification_input_page_title,
+                    inputStringPageMenu = R.string.save,
+                    inputStringPageLabel = R.string.counselor_qualification,
+                    inputStringPageFieldName = R.string.counselor_qualification,
+                    inputStringPageInputHint = R.string.counselor_qualification_input_hint,
+                    inputStringPageInputMinLength = Configs.COUNSELOR_QUALIFICATION_MIN_LENGTH,
+                    inputStringPageInputMaxLength = Configs.COUNSELOR_QUALIFICATION_MAX_LENGTH
+            )
+            else -> ChooseStringActivity.createParams(
+                    context = activity!!,
+                    title = R.string.counselor_experience_years_list_page_title,
+                    stringArr = R.array.counselor_experience_years,
+                    canAddMore = false,
+                    addMoreHint = 0,
+                    inputStringPageTitle = 0,
+                    inputStringPageMenu = 0,
+                    inputStringPageLabel = 0,
+                    inputStringPageFieldName = 0,
+                    inputStringPageInputHint = 0,
+                    inputStringPageInputMinLength = 0,
+                    inputStringPageInputMaxLength = 0
+            )
+        }
+        ChooseStringActivity.launchForResult(this, requestCode, params)
     }
 
     override fun initData() {
@@ -159,7 +215,7 @@ class AuthenticationFragment : BaseFragment() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        val string = ChooseStringActivity.getString(data)
+        val string = ChooseStringActivity.getResult(data)
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 REQUEST_CODE_GET_DEPARTMENT -> {
@@ -169,6 +225,14 @@ class AuthenticationFragment : BaseFragment() {
                 REQUEST_CODE_GET_JOB_TITLE -> {
                     sdv_job_title.setContentText(string)
                     mJobTitle = string
+                }
+                REQUEST_CODE_GET_COUNSELOR_QUALITY -> {
+                    sdv_counselor_qualification.setContentText(string)
+                    mCounselorQuality = string
+                }
+                REQUEST_CODE_GET_COUNSELOR_EXPERIENCE -> {
+                    sdv_counselor_experience.setContentText(string)
+                    mCounselorExperience = string
                 }
                 else -> super.onActivityResult(requestCode, resultCode, data)
             }

@@ -48,7 +48,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/normal_item_height_62"
-                android:layout_marginTop="@dimen/space_10"
                 android:background="@color/white"
                 android:gravity="center_vertical"
                 android:paddingStart="@dimen/space_20"
@@ -58,39 +57,151 @@
                     style="@style/text_t1_16"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/hospital" />
+                    android:text="@string/i_am" />
 
-                <EditText
-                    android:id="@+id/et_hospital"
-                    style="@style/SumianEditText"
-                    android:layout_marginStart="@dimen/space_20"
-                    android:background="@null"
-                    android:hint="@string/please_input_your_hospital"
-                    android:inputType="text"
-                    tools:ignore="Autofill" />
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/tb_doctor"
+                        style="@style/RadioButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="10dp"
+                        android:text="@string/doctor"
+                        tools:checked="true" />
+
+                    <RadioButton
+                        android:id="@+id/rb_counselor"
+                        style="@style/RadioButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="40dp"
+                        android:drawablePadding="10dp"
+                        android:text="@string/counselor"
+                        tools:checked="false" />
+                </RadioGroup>
+
             </LinearLayout>
 
-            <View style="@style/HorizontalDividerLine" />
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="10dp" />
 
-            <com.sumian.sddoctor.widget.divider.SettingDividerView
-                android:id="@+id/sdv_department"
+            <LinearLayout
+                android:id="@+id/vg_doctor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:divider_line_visible="gone"
-                app:type_content="@string/not_choose_yet"
-                app:type_desc="@string/department" />
+                android:orientation="vertical"
+                android:visibility="gone"
+                tools:visibility="visible">
 
-            <View style="@style/HorizontalDividerLine" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/normal_item_height_62"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:paddingStart="@dimen/space_20"
+                    android:paddingEnd="@dimen/space_20">
 
-            <com.sumian.sddoctor.widget.divider.SettingDividerView
-                android:id="@+id/sdv_job_title"
+                    <TextView
+                        style="@style/text_t1_16"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/hospital" />
+
+                    <EditText
+                        android:id="@+id/et_hospital"
+                        style="@style/SumianEditText"
+                        android:layout_marginStart="@dimen/space_20"
+                        android:background="@null"
+                        android:hint="@string/please_input_your_hospital"
+                        android:inputType="text"
+                        tools:ignore="Autofill" />
+                </LinearLayout>
+
+                <View style="@style/HorizontalDividerLine" />
+
+                <com.sumian.sddoctor.widget.divider.SettingDividerView
+                    android:id="@+id/sdv_department"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:divider_line_visible="gone"
+                    app:type_content="@string/not_choose_yet"
+                    app:type_desc="@string/department" />
+
+                <View style="@style/HorizontalDividerLine" />
+
+                <com.sumian.sddoctor.widget.divider.SettingDividerView
+                    android:id="@+id/sdv_job_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:divider_line_visible="gone"
+                    app:type_content="@string/not_choose_yet"
+                    app:type_desc="@string/job_title" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/vg_counselor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:divider_line_visible="gone"
-                app:type_content="@string/not_choose_yet"
-                app:type_desc="@string/job_title" />
+                android:orientation="vertical"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <View style="@style/HorizontalDividerLine" />
+
+                <com.sumian.sddoctor.widget.divider.SettingDividerView
+                    android:id="@+id/sdv_counselor_qualification"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:divider_line_visible="gone"
+                    app:type_content="@string/not_choose_yet"
+                    app:type_desc="@string/counselor_qualification" />
+
+                <View style="@style/HorizontalDividerLine" />
+
+                <com.sumian.sddoctor.widget.divider.SettingDividerView
+                    android:id="@+id/sdv_counselor_experience"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:divider_line_visible="gone"
+                    app:type_content="@string/not_choose_yet"
+                    app:type_desc="@string/work_experience" />
+
+                <View style="@style/HorizontalDividerLine" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/normal_item_height_62"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:paddingStart="@dimen/space_20"
+                    android:paddingEnd="@dimen/space_20">
+
+                    <TextView
+                        style="@style/text_t1_16"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/work_experience_hours" />
+
+                    <EditText
+                        android:id="@+id/et_work_experience_hours"
+                        style="@style/SumianEditText"
+                        android:layout_marginStart="@dimen/space_20"
+                        android:background="@null"
+                        android:hint="@string/please_input_your_work_experience_hours"
+                        android:inputType="text"
+                        tools:ignore="Autofill" />
+                </LinearLayout>
+            </LinearLayout>
 
             <TextView
+                android:id="@+id/tv_upload_material_label"
                 style="@style/text_t1_16"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/normal_item_height_62"
@@ -98,7 +209,7 @@
                 android:background="@color/white"
                 android:gravity="center_vertical"
                 android:paddingStart="@dimen/space_20"
-                android:text="@string/upload_your_doctor_license"
+                android:text="@string/please_upload_your_doctor_license"
                 tools:ignore="RtlSymmetry" />
 
             <View style="@style/HorizontalDividerLineMarginStart20" />
@@ -143,10 +254,12 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/tv_upload_material_sub_label"
                         style="@style/text_t1_16"
                         android:text="@string/please_upload_your_doctor_license" />
 
                     <TextView
+                        android:id="@+id/tv_upload_material_desc"
                         style="@style/text_t2_13"
                         android:layout_marginTop="6dp"
                         android:text="@string/please_upload_your_doctor_license_desc" />

@@ -42,12 +42,14 @@ data class DoctorInfo(
         var set_password: Boolean = false,
         var im_id: String? = null,
         var im_password: String? = null,
-        var identity: Int = 0
+        var type: Int = 0 // 0:医生 1:咨询师 默认:0
 ) : Parcelable {
     companion object {
         const val AUTHENTICATION_STATE_NOT_AUTHENTICATED = 0
         const val AUTHENTICATION_STATE_IS_AUTHENTICATING = 1
         const val AUTHENTICATION_STATE_AUTHENTICATED = 2
+        const val TYPE_DOCTOR = 0
+        const val TYPE_COUNSELOR = 1
 
     }
 
@@ -83,5 +85,5 @@ data class DoctorInfo(
         }
     }
 
-    private fun isDoctor() = identity == 0
+    fun isDoctor() = type == 0
 }

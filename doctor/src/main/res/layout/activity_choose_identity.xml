@@ -21,7 +21,8 @@
             style="@style/text_t2_16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableTop="@drawable/userguides_icon_downarrow"
+            android:drawableTop="@drawable/login_icon_doctor_default"
+            android:gravity="center"
             android:drawablePadding="10dp"
             android:text="@string/doctor" />
 
@@ -33,8 +34,9 @@
             android:id="@+id/tv_counselor"
             style="@style/text_t2_16"
             android:layout_width="wrap_content"
+            android:drawableTop="@drawable/login_icon_counselor_default"
             android:layout_height="wrap_content"
-            android:drawableTop="@drawable/userguides_icon_downarrow"
+            android:gravity="center"
             android:drawablePadding="10dp"
             android:text="@string/counselor" />
 

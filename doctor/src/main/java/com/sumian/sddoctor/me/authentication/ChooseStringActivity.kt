@@ -1,13 +1,16 @@
 package com.sumian.sddoctor.me.authentication
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.os.Parcelable
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.base.SddBaseActivity
+import kotlinx.android.parcel.Parcelize
 import kotlinx.android.synthetic.main.activity_choose_string.*
 
 /**
@@ -18,19 +21,7 @@ import kotlinx.android.synthetic.main.activity_choose_string.*
  * version: 1.0
  */
 class ChooseStringActivity : SddBaseActivity() {
-    private lateinit var mTitle: String
-    private lateinit var mStringArr: Array<String>
-    private var mCanAddMore: Boolean = false
-    private lateinit var mAddMoreHint: String
-
-    // input string data
-    private lateinit var mTitle2: String
-    private lateinit var mMenu: String
-    private lateinit var mLabel: String
-    private lateinit var mFieldName: String
-    private lateinit var mInputHint: String
-    private var mInputMinLength: Int = 0
-    private var mInputMaxLength: Int = 0
+    private lateinit var mParams: ChooseStringParams
 
     override fun getLayoutId(): Int {
         return R.layout.activity_choose_string
@@ -41,44 +32,47 @@ class ChooseStringActivity : SddBaseActivity() {
     }
 
     companion object {
-        private const val KEY_TITLE = "KEY_TITLE"
-        private const val KEY_TITLE2 = "KEY_TITLE2"
-        private const val KEY_STRING_ARR = "KEY_STRING_ARR"
-        private const val KEY_CAN_ADD_MORE = "KEY_CAN_ADD_MORE"
-        private const val KEY_ADD_MORE_HINT = "KEY_ADD_MORE_HINT"
         private const val KEY_INPUT_VALUE = "KEY_INPUT_VALUE"
+        private const val KEY_PARAMS = "KEY_PARAMS"
         private const val REQUEST_CODE = 100
 
         fun launchForResult(fragment: Fragment,
                             requestCode: Int,
-                            title: String,
-                            title2: String,
-                            stringArr: Array<String>,
-                            canAddMore: Boolean = false,
-                            addMoreHint: String = "",
-                            menu: String = "",
-                            label: String = "",
-                            fieldName: String = "",
-                            inputHint: String = "",
-                            inputMinLength: Int = 0,
-                            inputMaxLength: Int = 0) {
+                            params: ChooseStringParams) {
             val intent = Intent(fragment.activity, ChooseStringActivity::class.java)
-            intent.putExtra(KEY_TITLE, title)
-            intent.putExtra(KEY_TITLE2, title2)
-            intent.putExtra(KEY_STRING_ARR, stringArr)
-            intent.putExtra(KEY_CAN_ADD_MORE, canAddMore)
-            intent.putExtra(KEY_ADD_MORE_HINT, addMoreHint)
-            // input string data
-            intent.putExtra(InputStringActivity.KEY_MENU, menu)
-            intent.putExtra(InputStringActivity.KEY_LABEL, label)
-            intent.putExtra(InputStringActivity.KEY_FIELD_NAME, fieldName)
-            intent.putExtra(InputStringActivity.KEY_INPUT_HINT, inputHint)
-            intent.putExtra(InputStringActivity.KEY_INPUT_MIN_LENGTH, inputMinLength)
-            intent.putExtra(InputStringActivity.KEY_INPUT_MAX_LENGTH, inputMaxLength)
+            intent.putExtra(KEY_PARAMS, params)
             fragment.startActivityForResult(intent, requestCode)
         }
 
-        fun getString(intent: Intent?): String? {
+        fun createParams(context: Context,
+                         title: Int,
+                         stringArr: Int,
+                         canAddMore: Boolean = false,
+                         addMoreHint: Int,
+                         inputStringPageTitle: Int,
+                         inputStringPageMenu: Int,
+                         inputStringPageLabel: Int,
+                         inputStringPageFieldName: Int,
+                         inputStringPageInputHint: Int,
+                         inputStringPageInputMinLength: Int = 0,
+                         inputStringPageInputMaxLength: Int = 0
+        ): ChooseStringParams {
+            return ChooseStringParams(
+                    context.getString(title),
+                    context.resources.getStringArray(stringArr),
+                    canAddMore,
+                    if (canAddMore) context.getString(addMoreHint) else "",
+                    if (canAddMore) InputStringActivity.InputStringParams(
+                            context.getString(inputStringPageTitle),
+                            context.getString(inputStringPageMenu),
+                            context.getString(inputStringPageLabel),
+                            context.getString(inputStringPageFieldName),
+                            context.getString(inputStringPageInputHint),
+                            inputStringPageInputMinLength,
+                            inputStringPageInputMaxLength) else null)
+        }
+
+        fun getResult(intent: Intent?): String? {
             return intent?.getStringExtra(KEY_INPUT_VALUE)
         }
 
@@ -86,20 +80,9 @@ class ChooseStringActivity : SddBaseActivity() {
 
     override fun initWidget() {
         super.initWidget()
-        mTitle = intent.getStringExtra(KEY_TITLE)
-        mStringArr = intent.getStringArrayExtra(KEY_STRING_ARR)
-        mCanAddMore = intent.getBooleanExtra(KEY_CAN_ADD_MORE, false)
-        mAddMoreHint = intent.getStringExtra(KEY_ADD_MORE_HINT)
-        // input string data
-        mTitle2 = intent.getStringExtra(KEY_TITLE2)
-        mMenu = intent.getStringExtra(InputStringActivity.KEY_MENU)
-        mLabel = intent.getStringExtra(InputStringActivity.KEY_LABEL)
-        mFieldName = intent.getStringExtra(InputStringActivity.KEY_FIELD_NAME)
-        mInputHint = intent.getStringExtra(InputStringActivity.KEY_INPUT_HINT)
-        mInputMinLength = intent.getIntExtra(InputStringActivity.KEY_INPUT_MIN_LENGTH, 0)
-        mInputMaxLength = intent.getIntExtra(InputStringActivity.KEY_INPUT_MAX_LENGTH, 0)
+        mParams = intent.getParcelableExtra(KEY_PARAMS)
 
-        setTitle(mTitle)
+        setTitle(mParams.title)
         recycler_view.layoutManager = LinearLayoutManager(this)
         recycler_view.adapter = createAdapter()
 
@@ -112,10 +95,8 @@ class ChooseStringActivity : SddBaseActivity() {
                 if (position < adapter.data.size - 1) {
                     finishWithData(adapter.getItem(position))
                 } else {
-                    if (mCanAddMore) {
-                        InputStringActivity.launchForResult(this, REQUEST_CODE,
-                                mTitle2, mMenu, mLabel, mFieldName, mInputHint,
-                                mInputMinLength, mInputMaxLength)
+                    if (mParams.canAddMore) {
+                        InputStringActivity.launchForResult(this, REQUEST_CODE, mParams.inputStringParams!!)
                     } else {
                         finishWithData(adapter.getItem(position))
                     }
@@ -123,9 +104,9 @@ class ChooseStringActivity : SddBaseActivity() {
             }
 
         }
-        val dataList = mStringArr.toMutableList()
-        if (mCanAddMore) {
-            dataList.add(mAddMoreHint)
+        val dataList = mParams.stringArr.toMutableList()
+        if (mParams.canAddMore) {
+            dataList.add(mParams.addMoreHint)
         }
         adapter.addData(dataList)
         return adapter
@@ -154,5 +135,14 @@ class ChooseStringActivity : SddBaseActivity() {
             super.onActivityResult(requestCode, resultCode, data)
         }
     }
+
+    @Parcelize
+    data class ChooseStringParams(
+            val title: String, // list page title
+            val stringArr: Array<String>, // list
+            val canAddMore: Boolean = false, //can add more
+            val addMoreHint: String = "",   // list page add more hint
+            val inputStringParams: InputStringActivity.InputStringParams?
+    ) : Parcelable
 
 }

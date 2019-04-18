@@ -135,7 +135,6 @@
         <activity android:name=".homepage.FreeAnonymousCallActivity" />
         <activity android:name=".account.activity.ModifyDoctorInfoActivity" />
         <activity android:name=".account.activity.ModifyPasswordActivity" />
-        <activity android:name=".login.register.RegisterActivity" />
         <activity android:name=".account.activity.VersionActivity" />
         <activity android:name=".notification.NotificationListActivity" />
         <activity android:name=".patient.activity.PatientInfoActivity" />
