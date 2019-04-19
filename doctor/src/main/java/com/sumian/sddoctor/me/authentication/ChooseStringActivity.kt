@@ -22,6 +22,7 @@ import kotlinx.android.synthetic.main.activity_choose_string.*
  */
 class ChooseStringActivity : SddBaseActivity() {
     private lateinit var mParams: ChooseStringParams
+    private val mAdapter by lazy { createAdapter() }
 
     override fun getLayoutId(): Int {
         return R.layout.activity_choose_string
@@ -33,6 +34,7 @@ class ChooseStringActivity : SddBaseActivity() {
 
     companion object {
         private const val KEY_INPUT_VALUE = "KEY_INPUT_VALUE"
+        private const val KEY_CLICK_INDEX = "KEY_CLICK_INDEX"
         private const val KEY_PARAMS = "KEY_PARAMS"
         private const val REQUEST_CODE = 100
 
@@ -72,34 +74,33 @@ class ChooseStringActivity : SddBaseActivity() {
                             inputStringPageInputMaxLength) else null)
         }
 
-        fun getResult(intent: Intent?): String? {
+        fun getResultString(intent: Intent?): String? {
             return intent?.getStringExtra(KEY_INPUT_VALUE)
+        }
+
+        fun getResultIndex(intent: Intent?): Int {
+            return intent?.getIntExtra(KEY_CLICK_INDEX, 0) ?: 0
         }
 
     }
 
+
     override fun initWidget() {
         super.initWidget()
         mParams = intent.getParcelableExtra(KEY_PARAMS)
-
         setTitle(mParams.title)
         recycler_view.layoutManager = LinearLayoutManager(this)
-        recycler_view.adapter = createAdapter()
-
+        recycler_view.adapter = mAdapter
     }
 
     private fun createAdapter(): ItemAdapter {
         val adapter = ItemAdapter()
         adapter.setOnItemClickListener { adt, view, position ->
             run {
-                if (position < adapter.data.size - 1) {
-                    finishWithData(adapter.getItem(position))
+                if (mParams.canAddMore && position == adapter.data.size - 1) {
+                    InputStringActivity.launchForResult(this, REQUEST_CODE, mParams.inputStringParams!!)
                 } else {
-                    if (mParams.canAddMore) {
-                        InputStringActivity.launchForResult(this, REQUEST_CODE, mParams.inputStringParams!!)
-                    } else {
-                        finishWithData(adapter.getItem(position))
-                    }
+                    finishWithData(position, adapter.getItem(position))
                 }
             }
 
@@ -112,8 +113,9 @@ class ChooseStringActivity : SddBaseActivity() {
         return adapter
     }
 
-    private fun finishWithData(text: String?) {
+    private fun finishWithData(position: Int, text: String?) {
         val intent = Intent()
+        intent.putExtra(KEY_CLICK_INDEX, position)
         intent.putExtra(KEY_INPUT_VALUE, text)
         setResult(Activity.RESULT_OK, intent)
         finish()
@@ -129,7 +131,7 @@ class ChooseStringActivity : SddBaseActivity() {
         if (requestCode == REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
                 val string = InputStringActivity.getString(data)
-                finishWithData(string)
+                finishWithData(mAdapter.data.size - 1, string)
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data)

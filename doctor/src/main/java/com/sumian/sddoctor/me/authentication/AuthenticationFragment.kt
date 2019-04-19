@@ -19,7 +19,6 @@ import com.sumian.sddoctor.constants.Configs
 import com.sumian.sddoctor.constants.StatConstants
 import com.sumian.sddoctor.login.login.bean.DoctorInfo
 import com.sumian.sddoctor.login.register.AuthenticateViewModel
-import com.sumian.sddoctor.login.register.bean.RegisterInfo
 import com.sumian.sddoctor.network.callback.BaseSdResponseCallback
 import com.sumian.sddoctor.oss.OssEngine
 import com.sumian.sddoctor.oss.OssResponse
@@ -39,14 +38,14 @@ import kotlinx.android.synthetic.main.fragment_register_authentication.*
  */
 class AuthenticationFragment : BaseFragment() {
     private lateinit var mViewModel: AuthenticateViewModel
-    //    private var mName: String? = null
-//    private var mHospital: String? = null
     private var mDepartment: String? = null
     private var mJobTitle: String? = null
     private var mCounselorQuality: String? = null
     private var mCounselorExperience: String? = null
+    private var mCounselorExperienceIndex = 0
     private var mDoctorLicensePath: String? = null
     private val mDoctorInfo: DoctorInfo by lazy { AppManager.getAccountViewModel().getDoctorInfo().value!! }
+    private var mType = mDoctorInfo.type
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_register_authentication
@@ -71,8 +70,28 @@ class AuthenticationFragment : BaseFragment() {
         sdv_counselor_qualification.setOnClickListener { startActivityForString(REQUEST_CODE_GET_COUNSELOR_QUALITY) }
         ll_doctor_license_container.setOnClickListener { addPhotoIfNeed() }
         iv_doctor_license_delete.setOnClickListener { updateDoctorLicensePath(null) }
-        vg_doctor.isVisible = mDoctorInfo.isDoctor()
-        vg_counselor.isVisible = !mDoctorInfo.isDoctor()
+        switchUIByType()
+        val isDoctor = mType == DoctorInfo.TYPE_DOCTOR
+        rb_doctor.isChecked = isDoctor
+        rb_counselor.isChecked = !isDoctor
+        vg_type.setOnCheckedChangeListener { _, checkedId ->
+            run {
+                mType = if (checkedId == R.id.rb_doctor) DoctorInfo.TYPE_DOCTOR else DoctorInfo.TYPE_COUNSELOR
+                switchUIByType()
+            }
+        }
+    }
+
+    /**
+     * 根据用户类型改变UI
+     */
+    private fun switchUIByType() {
+        val isDoctor = isDoctor()
+        vg_doctor.isVisible = isDoctor
+        vg_counselor.isVisible = !isDoctor
+        tv_upload_material_label.text = getString(if (isDoctor) R.string.please_upload_your_doctor_license else R.string.please_upload_your_counselor_license)
+        tv_upload_material_sub_label.text = getString(if (isDoctor) R.string.please_upload_your_doctor_license else R.string.please_upload_your_counselor_license)
+        tv_upload_material_desc.text = getString(if (isDoctor) R.string.please_upload_your_doctor_license_desc else R.string.please_upload_your_counselor_license_desc)
     }
 
     private fun startActivityForString(requestCode: Int) {
@@ -142,32 +161,61 @@ class AuthenticationFragment : BaseFragment() {
         mViewModel = ViewModelProviders.of(activity!!).get(AuthenticateViewModel::class.java)
     }
 
+    private fun isDoctor(): Boolean {
+        return mType == DoctorInfo.TYPE_DOCTOR
+    }
+
     private fun onSubmitClick() {
         if (!InputCheckUtil.checkInput(et_name, getString(R.string.name), Configs.DOCTOR_NAME_MIN_LENGTH, Configs.DOCTOR_NAME_MAX_LENGTH)) {
             return
         }
-        if (!InputCheckUtil.checkInput(et_hospital, getString(R.string.hospital_name), Configs.HOSPITAL_NAME_MIN_LENGTH, Configs.HOSPITAL_NAME_MAX_LENGTH)) {
-            return
-        }
-        if (TextUtils.isEmpty(mDepartment)) {
-            ToastUtils.showShort(getString(R.string.please_choose_department))
-            return
-        }
-        if (TextUtils.isEmpty(mJobTitle)) {
-            ToastUtils.showShort(getString(R.string.please_choose_job_title))
-            return
+
+        val map: MutableMap<String, Any> = mutableMapOf("name" to et_name.text.toString())
+        if (isDoctor()) {
+            val hospital = et_hospital.text.toString()
+            if (!InputCheckUtil.checkInput(hospital, getString(R.string.hospital_name), Configs.HOSPITAL_NAME_MIN_LENGTH, Configs.HOSPITAL_NAME_MAX_LENGTH)) {
+                return
+            }
+            if (TextUtils.isEmpty(mDepartment)) {
+                ToastUtils.showShort(getString(R.string.please_choose_department))
+                return
+            }
+            if (TextUtils.isEmpty(mJobTitle)) {
+                ToastUtils.showShort(getString(R.string.please_choose_job_title))
+                return
+            }
+            map["hospital"] = hospital
+            map["department"] = mDepartment!!
+            map["title"] = mJobTitle!!
+        } else {
+            if (TextUtils.isEmpty(mCounselorQuality)) {
+                ToastUtils.showShort(getString(R.string.please_input_counselor_qualification))
+                return
+            }
+            if (TextUtils.isEmpty(mCounselorExperience)) {
+                ToastUtils.showShort(getString(R.string.please_input_counselor_experience))
+                return
+            }
+            val caseHours = et_work_experience_hours.text.toString()
+            if (TextUtils.isEmpty(caseHours)) {
+                ToastUtils.showShort(getString(R.string.please_input_counselor_case_hours))
+                return
+            }
+            val caseHoursInt = caseHours.toInt()
+            if (caseHoursInt > 300_000) {
+                ToastUtils.showShort(getString(R.string.counselor_case_hours_too_long))
+                return
+            }
+            map["qualification"] = mCounselorQuality!!
+            map["experience"] = mCounselorExperienceIndex
+            map["cases_time"] = caseHoursInt
         }
         if (TextUtils.isEmpty(mDoctorLicensePath)) {
-            ToastUtils.showShort(getString(R.string.please_upload_doctor_license))
+            ToastUtils.showShort(getString(R.string.please_upload_identity_material))
             return
         }
-        val registerInfo = RegisterInfo(
-                et_name.text.toString(),
-                et_hospital.text.toString(),
-                mDepartment!!,
-                mJobTitle!!)
         showLoading()
-        val call = AppManager.getHttpService().register(registerInfo)
+        val call = AppManager.getHttpService().register(map)
         addCall(call)
         call.enqueue(object : BaseSdResponseCallback<OssResponse>() {
             override fun onSuccess(response: OssResponse?) {
@@ -215,7 +263,8 @@ class AuthenticationFragment : BaseFragment() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        val string = ChooseStringActivity.getResult(data)
+        val index = ChooseStringActivity.getResultIndex(data)
+        val string = ChooseStringActivity.getResultString(data)
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 REQUEST_CODE_GET_DEPARTMENT -> {
@@ -233,6 +282,7 @@ class AuthenticationFragment : BaseFragment() {
                 REQUEST_CODE_GET_COUNSELOR_EXPERIENCE -> {
                     sdv_counselor_experience.setContentText(string)
                     mCounselorExperience = string
+                    mCounselorExperienceIndex = index
                 }
                 else -> super.onActivityResult(requestCode, resultCode, data)
             }

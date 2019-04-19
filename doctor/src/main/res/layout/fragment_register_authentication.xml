@@ -60,13 +60,14 @@
                     android:text="@string/i_am" />
 
                 <RadioGroup
+                    android:id="@+id/vg_type"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:orientation="horizontal">
 
                     <RadioButton
-                        android:id="@+id/tb_doctor"
+                        android:id="@+id/rb_doctor"
                         style="@style/RadioButtonStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -194,8 +195,10 @@
                         style="@style/SumianEditText"
                         android:layout_marginStart="@dimen/space_20"
                         android:background="@null"
+                        android:gravity="end|center_vertical"
                         android:hint="@string/please_input_your_work_experience_hours"
-                        android:inputType="text"
+                        android:inputType="number"
+                        android:maxLines="1"
                         tools:ignore="Autofill" />
                 </LinearLayout>
             </LinearLayout>

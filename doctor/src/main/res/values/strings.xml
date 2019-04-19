@@ -179,6 +179,14 @@
     <string name="please_choose_department">请选择科室</string>
     <string name="please_choose_job_title">请选择职称</string>
     <string name="please_upload_doctor_license">请上传医师执照</string>
+
+    <string name="please_upload_identity_material">请上传身份证明材料</string>
+    <string name="please_input_name">请填写姓名</string>
+    <string name="please_input_counselor_qualification">请选择专业资质</string>
+    <string name="please_input_counselor_experience">请选择从业经验</string>
+    <string name="please_input_counselor_case_hours">请填写累积个案时长</string>
+    <string name="counselor_case_hours_too_long">累积个案时长不能大于300，000小时</string>
+
     <string name="take_photo">拍照</string>
     <string name="select_picture_from_album">从手机相册选择</string>
     <string name="str_request_camera_message">请求获取相机权限</string>

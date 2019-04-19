@@ -19,7 +19,7 @@ class AuthenticateViewModel : ViewModel() {
     }
 
     fun goNextStep() {
-        mProgressLiveData.value = mProgressLiveData.value ?: 0 + 1
+        mProgressLiveData.value = mProgressLiveData.value ?: 1
     }
 
 }

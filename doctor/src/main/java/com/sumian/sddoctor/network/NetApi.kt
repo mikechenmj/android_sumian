@@ -15,7 +15,6 @@ import com.sumian.sddoctor.homepage.bean.PatientDashboardData
 import com.sumian.sddoctor.login.login.bean.DoctorInfo
 import com.sumian.sddoctor.login.login.bean.LoginResponse
 import com.sumian.sddoctor.login.login.bean.SocialiteInfo
-import com.sumian.sddoctor.login.register.bean.RegisterInfo
 import com.sumian.sddoctor.login.register.bean.ValidateRegisterCaptchaResponse
 import com.sumian.sddoctor.me.myservice.bean.DoctorService
 import com.sumian.sddoctor.me.myservice.bean.Packages
@@ -94,7 +93,7 @@ interface NetApi {
 
     @POST("doctor/registrations")
     @Headers("Accept: application/vnd.sd.v2+json")
-    fun register(@Body registerInfo: RegisterInfo): Call<OssResponse>
+    fun register(@Body registerInfo: Map<String, @JvmSuppressWildcards Any>): Call<OssResponse>
 
     @POST("doctor/registrations")
     fun registerV2(): Call<OssResponse>
