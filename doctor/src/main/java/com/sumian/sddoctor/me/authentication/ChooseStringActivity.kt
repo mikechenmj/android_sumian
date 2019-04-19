@@ -147,4 +147,7 @@ class ChooseStringActivity : SddBaseActivity() {
             val inputStringParams: InputStringActivity.InputStringParams?
     ) : Parcelable
 
+    override fun onBackPressed() {
+        // not backable
+    }
 }

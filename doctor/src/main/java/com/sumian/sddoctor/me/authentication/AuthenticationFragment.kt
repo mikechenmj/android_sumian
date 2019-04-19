@@ -170,7 +170,7 @@ class AuthenticationFragment : BaseFragment() {
             return
         }
 
-        val map: MutableMap<String, Any> = mutableMapOf("name" to et_name.text.toString())
+        val map: MutableMap<String, Any> = mutableMapOf("type" to mType, "name" to et_name.text.toString())
         if (isDoctor()) {
             val hospital = et_hospital.text.toString()
             if (!InputCheckUtil.checkInput(hospital, getString(R.string.hospital_name), Configs.HOSPITAL_NAME_MIN_LENGTH, Configs.HOSPITAL_NAME_MAX_LENGTH)) {

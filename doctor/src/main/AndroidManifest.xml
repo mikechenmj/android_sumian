@@ -323,8 +323,7 @@
             android:launchMode="singleTop" />
         <activity
             android:name=".account.activity.SetPersonalIntroductionActivity"
-            android:launchMode="singleTop"
-            android:theme="@style/AppTheme.Fullscreen" />
+            android:launchMode="singleTop" />
     </application>
 
 </manifest>

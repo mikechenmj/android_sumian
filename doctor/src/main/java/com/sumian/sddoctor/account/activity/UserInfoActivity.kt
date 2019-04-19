@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.text.TextUtils
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
@@ -17,6 +18,8 @@ import com.sumian.sddoctor.app.AppManager
 import com.sumian.sddoctor.base.SddBaseActivity
 import com.sumian.sddoctor.constants.StatConstants
 import com.sumian.sddoctor.login.login.bean.DoctorInfo
+import com.sumian.sddoctor.login.login.bean.DoctorInfo.Companion.AUTHENTICATION_STATE_IS_AUTHENTICATING
+import com.sumian.sddoctor.login.login.bean.DoctorInfo.Companion.AUTHENTICATION_STATE_NOT_AUTHENTICATED
 import com.sumian.sddoctor.me.authentication.AuthenticationActivity
 import com.sumian.sddoctor.widget.divider.SettingDividerView
 import com.sumian.sddoctor.widget.sheet.SelectPictureBottomSheet
@@ -42,6 +45,7 @@ class UserInfoActivity : SddBaseActivity(), UserAvatarContract.View {
 
     override fun initWidget() {
         super.initWidget()
+        setTitle(R.string.person_info)
         mPresenter = UserAvatarPresenter.init(this@UserInfoActivity)
         AppManager.getAccountViewModel().getDoctorInfo().observe(this, Observer<DoctorInfo> { this.updateDoctorInfo(it) })
         lay_avatar.setOnClickListener { SelectPictureBottomSheet.show(supportFragmentManager) { filePath -> mPresenter!!.uploadAvatar(filePath) } }
@@ -63,32 +67,39 @@ class UserInfoActivity : SddBaseActivity(), UserAvatarContract.View {
 
     private fun updateDoctorInfo(doctorInfo: DoctorInfo?) {
         mDoctorInfo = doctorInfo
-        if (doctorInfo != null) {
-            ImageLoader.loadImage(doctorInfo.avatar, iv_avatar!!, R.mipmap.ic_info_avatar_doctor_s, R.mipmap.ic_info_avatar_doctor_s)
-            dv_name!!.setContentText(doctorInfo.name)
-            sedItemContentText(doctorInfo.getAuthenticationString(), "未认证", dv_authentication!!)
-            sedItemContentText(doctorInfo.department, "未选择", dv_department!!)
-            sedItemContentText(doctorInfo.title, "未选择", dv_job_title!!)
-            sedItemContentText(doctorInfo.hospital, "未填写", dv_hospital_name!!)
-            sedItemContentText(doctorInfo.invitation_code, "未设置", dv_invite_code!!)
-
-            // update doctor authentication info visibility
-            val authenticationState = doctorInfo.getAuthenticationState()
-            val showDoctorInfo = authenticationState == DoctorInfo.AUTHENTICATION_STATE_AUTHENTICATED
-            val doctorInfoVisibility = if (showDoctorInfo) View.VISIBLE else View.GONE
-            dv_authentication!!.visibility = if (!showDoctorInfo) View.VISIBLE else View.GONE
-            dv_name!!.visibility = doctorInfoVisibility
-            dv_department!!.visibility = doctorInfoVisibility
-            dv_job_title!!.visibility = doctorInfoVisibility
-            dv_hospital_name!!.visibility = doctorInfoVisibility
-            var authenticationTvColor = R.color.t1_color
-            if (authenticationState == DoctorInfo.AUTHENTICATION_STATE_NOT_AUTHENTICATED) {
-                authenticationTvColor = R.color.t4_color
-            } else if (authenticationState == DoctorInfo.AUTHENTICATION_STATE_IS_AUTHENTICATING) {
-                authenticationTvColor = R.color.b3_color
-            }
-            dv_authentication!!.setTvContentColor(ColorCompatUtil.getColor(this, authenticationTvColor))
+        if (doctorInfo == null) {
+            return
         }
+        val isDoctor = doctorInfo.isDoctor()
+        val isAuthenticated = doctorInfo.isAuthenticated()
+        ImageLoader.loadImage(doctorInfo.avatar, iv_avatar!!, R.mipmap.ic_info_avatar_doctor_s, R.mipmap.ic_info_avatar_doctor_s)
+        // update doctor authentication info visibility
+        dv_authentication!!.isVisible = !isAuthenticated
+        dv_name!!.isVisible = isAuthenticated
+        vg_personal_intro.isVisible = isAuthenticated
+        if (isAuthenticated) {
+            vg_doctor_info.isVisible = isDoctor
+            vg_counselor.isVisible = !isDoctor
+            dv_name!!.setContentText(doctorInfo.name)
+            tv_personal_intro.text = doctorInfo.introduction
+            if (isDoctor) {
+                sedItemContentText(doctorInfo.department, "未选择", dv_department!!)
+                sedItemContentText(doctorInfo.title, "未选择", dv_job_title!!)
+                sedItemContentText(doctorInfo.hospital, "未填写", dv_hospital_name!!)
+            } else {
+                sedItemContentText(doctorInfo.qualification, "未选择", dv_counselor_qualification!!)
+                sedItemContentText(doctorInfo.getExperienceString(this), "未选择", dv_counselor_experience!!)
+                sedItemContentText(doctorInfo.casesTime.toString(), "未填写", dv_counselor_experience_hours!!)
+            }
+        } else {
+            sedItemContentText(doctorInfo.getAuthenticationString(), "未认证", dv_authentication!!)
+            dv_authentication!!.setTvContentColor(ColorCompatUtil.getColor(this, when (doctorInfo.getAuthenticationState()) {
+                AUTHENTICATION_STATE_NOT_AUTHENTICATED -> R.color.t4_color
+                AUTHENTICATION_STATE_IS_AUTHENTICATING -> R.color.b3_color
+                else -> R.color.t1_color
+            }))
+        }
+        sedItemContentText(doctorInfo.invitationCode, "未设置", dv_invite_code!!)
     }
 
     override fun onDestroy() {
@@ -98,7 +109,7 @@ class UserInfoActivity : SddBaseActivity(), UserAvatarContract.View {
         super.onDestroy()
     }
 
-    private fun sedItemContentText(content: String, defaultContent: String, sdv: SettingDividerView) {
+    private fun sedItemContentText(content: String?, defaultContent: String, sdv: SettingDividerView) {
         sdv.setContentText(if (TextUtils.isEmpty(content)) defaultContent else content)
     }
 

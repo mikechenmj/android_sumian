@@ -70,7 +70,7 @@ class ModifyPasswordActivity : SddBaseActivity() {
     }
 
     private fun hasOldPassword() =
-            AppManager.getAccountViewModel().getDoctorInfo().value?.set_password == true
+            AppManager.getAccountViewModel().getDoctorInfo().value?.setPassword == true
 
     private fun doResetPwd(oldPwd: String?, newPwd: String, newPwdConfirmation: String) {
         showLoading()

@@ -56,9 +56,11 @@
             tools:text="国家二级心理咨询师，从业经验3年，2015年度、2016年度河南省心理咨询师协会“优秀心理咨询师”。" />
 
         <TextView
+            android:id="@+id/tv_text_length"
             style="@style/text_t2_13"
             android:layout_gravity="end"
             android:layout_marginTop="20dp"
+            android:maxLines="500"
             android:text="0/500" />
 
     </LinearLayout>

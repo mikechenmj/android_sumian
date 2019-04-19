@@ -87,8 +87,8 @@ object KefuManager {
 
     private fun loginEasemob(loginCallback: LoginCallback?) {
         val userInfo = AppManager.getAccountViewModel().getDoctorInfo().value ?: return
-        val imId = userInfo.im_id
-        val md5Pwd = userInfo.im_password
+        val imId = userInfo.imId
+        val md5Pwd = userInfo.imPassword
         if (TextUtils.isEmpty(imId) || TextUtils.isEmpty(md5Pwd)) {//可能账号未在环信注册，提醒后台去注册环信账号
             UIProvider.getInstance().isLogin = false
             val notifyCount = 0
@@ -222,7 +222,7 @@ object KefuManager {
     private fun getChatRoomLaunchIntent(): Intent {
         val userInfo = AppManager.getAccountViewModel().getDoctorInfo().value
         val visitorInfo = ContentFactory.createVisitorInfo(null)
-                .nickName(userInfo?.nickname)
+                .nickName(userInfo?.name)
                 .name(userInfo?.name)
                 .phone(userInfo?.mobile)
                 .description("医生")

@@ -220,7 +220,7 @@ object AppManager {
     private fun initImManager() {
         LCIMManager.getInstance().init(mApplication,
                 BuildConfig.LEANCLOUD_APP_ID, BuildConfig.LEANCLOUD_APP_KEY,
-                getAccountViewModel().getDoctorInfo().value!!.im_id,
+                getAccountViewModel().getDoctorInfo().value!!.imId,
                 IMProfileProvider(),
                 IMManagerHost())
     }

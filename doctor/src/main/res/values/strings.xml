@@ -116,7 +116,6 @@
 
     <!-- me -->
     <string name="none_nickname">匿名</string>
-    <string name="user_info_center">个人信息</string>
     <string name="person_info">个人信息</string>
     <string name="person_introduction">个人简介</string>
     <string name="setting">设置</string>
