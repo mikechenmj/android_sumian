@@ -161,4 +161,5 @@ object StatConstants {
     const val enter_sumian_story_detail_page = "enter_sumian_story_detail_page"
     const val enter_conversation_list_page = "enter_conversation_list_page"
     const val enter_conversation_page = "enter_conversation_page"
+    const val connect_device = "connect_device"
 }

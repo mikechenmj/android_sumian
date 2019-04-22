@@ -13,6 +13,7 @@ import com.sumian.blue.callback.BluePeripheralDataCallback
 import com.sumian.blue.constant.BlueConstant
 import com.sumian.blue.model.BluePeripheral
 import com.sumian.blue.model.bean.BlueUuidConfig
+import com.sumian.common.statistic.StatUtil
 import com.sumian.common.utils.JsonUtil
 import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
@@ -21,7 +22,9 @@ import com.sumian.sd.buz.devicemanager.helper.DeviceStateHelper
 import com.sumian.sd.buz.devicemanager.helper.SyncDeviceDataHelper
 import com.sumian.sd.buz.devicemanager.pattern.SyncPatternService
 import com.sumian.sd.buz.devicemanager.uploadsleepdata.SleepDataUploadHelper
+import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.log.LogManager
+import com.sumian.sd.common.utils.SystemUtil
 import java.util.*
 
 /**
@@ -46,6 +49,7 @@ object DeviceManager : BlueAdapterCallback, MonitorEventListener {
     private val mDeviceStateHelper = DeviceStateHelper(this)
     private var mConnectMonitor: BlueDevice? = null     // 等待被连接的monitor，用于重连
     private var mConnectRetryTimes = 0  // 连接失败重连次数
+    private val mPhoneInfo = SystemUtil.getDeviceBrand() + " " + SystemUtil.getSystemModel()
 
     fun init(context: Context) {
         AppManager.getBlueManager().addBlueAdapterCallback(this)
@@ -184,6 +188,7 @@ object DeviceManager : BlueAdapterCallback, MonitorEventListener {
      */
     private fun connectMonitor(monitor: BlueDevice, isRetry: Boolean = false) {
         if (!isRetry) {
+//            StatUtil.trackCustomBeginKVEvent(StatConstants.connect_device)
             mStartConnectTime = System.currentTimeMillis()
             mConnectRetryTimes = 0
             onConnectStart()
@@ -230,7 +235,12 @@ object DeviceManager : BlueAdapterCallback, MonitorEventListener {
             notifyMonitorChange()
             onConnectSuccess()
             AppManager.getBlueManager().saveBluePeripheral(peripheral)
-            LogManager.appendMonitorLog("监测仪连接成功 " + peripheral.name)
+            LogManager.appendMonitorLog("监测仪连接成功，耗时${System.currentTimeMillis() - mStartConnectTime}ms")
+            StatUtil.event(StatConstants.connect_device, mapOf(
+                    "connect_time" to (System.currentTimeMillis() - mStartConnectTime).toString(),
+                    "phone_info" to mPhoneInfo,
+                    "result" to "success"))
+//            StatUtil.trackCustomEndKVEvent(StatConstants.connect_device)
         }
 
         override fun onConnectFailed(peripheral: BluePeripheral, connectState: Int) {
@@ -241,7 +251,12 @@ object DeviceManager : BlueAdapterCallback, MonitorEventListener {
                 }
                 onConnectFailed()
                 AppManager.getBlueManager().refresh()
-                LogManager.appendMonitorLog("监测仪连接失败 " + peripheral.name)
+                LogManager.appendMonitorLog("监测仪连接失败，耗时${System.currentTimeMillis() - mStartConnectTime}ms")
+                StatUtil.event(StatConstants.connect_device, mapOf(
+                        "connect_time" to (System.currentTimeMillis() - mStartConnectTime).toString(),
+                        "phone_info" to mPhoneInfo,
+                        "result" to "fail"))
+//                StatUtil.trackCustomEndKVEvent(StatConstants.connect_device)
             } else {
                 LogManager.appendMonitorLog("监测仪连接失败 尝试重连 第 ${mConnectRetryTimes + 1} 次 ${peripheral.name}")
                 connectMonitor(mConnectMonitor ?: return, true)

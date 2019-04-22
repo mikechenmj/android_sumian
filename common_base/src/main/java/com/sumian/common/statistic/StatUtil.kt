@@ -69,15 +69,20 @@ object StatUtil {
     }
 
     @JvmOverloads
-    fun event(eventId: String, properties: Map<String, String>? = null) {
+    fun event(eventId: String, properties: Map<String, Any>? = null) {
+        val prop = map2prop(properties)
+        logEvent(eventId)
+        StatService.trackCustomKVEvent(mContext, eventId, prop)
+    }
+
+    private fun map2prop(properties: Map<String, Any>?): Properties {
         val prop = Properties()
         if (properties != null) {
             for ((key, value) in properties) {
                 prop[key] = value
             }
         }
-        logEvent(eventId)
-        StatService.trackCustomKVEvent(mContext, eventId, prop)
+        return prop
     }
 
     fun onEventStart(eventId: String, vararg data: String) {
@@ -115,5 +120,13 @@ object StatUtil {
 
     private fun log(msg: String) {
         Log.d(TAG, msg)
+    }
+
+    fun trackCustomBeginKVEvent(eventName: String, prop: Map<String, String>? = null) {
+        StatService.trackCustomBeginKVEvent(mContext, eventName, map2prop(prop))
+    }
+
+    fun trackCustomEndKVEvent(eventName: String, prop: Map<String, String>? = null) {
+        StatService.trackCustomEndKVEvent(mContext, eventName, map2prop(prop))
     }
 }
