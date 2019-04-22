@@ -43,12 +43,13 @@ public class LCIMChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     protected List<AVIMMessage> messageList = new ArrayList<AVIMMessage>();
     private boolean isShowUserName = true;
     private Set<String> messageIdSet = new HashSet<>();
-
     private long lastDeliveredAt = 0;
     private long lastReadAt = 0;
+    private LCIMChatItemHolder.Host mChatItemHolderHost;
 
-    public LCIMChatAdapter() {
+    public LCIMChatAdapter(LCIMChatItemHolder.Host host) {
         super();
+        mChatItemHolderHost = host;
     }
 
     public void setMessageList(List<AVIMMessage> messages) {
@@ -115,29 +116,42 @@ public class LCIMChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        LCIMChatItemHolder holder;
         switch (viewType) {
             case ITEM_LEFT:
             case ITEM_LEFT_TEXT:
-                return new LCIMChatItemTextHolder(parent.getContext(), parent, true);
+                holder = new LCIMChatItemTextHolder(parent.getContext(), parent, true);
+                break;
             case ITEM_LEFT_IMAGE:
-                return new LCIMChatItemImageHolder(parent.getContext(), parent, true);
+                holder = new LCIMChatItemImageHolder(parent.getContext(), parent, true);
+                break;
             case ITEM_LEFT_AUDIO:
-                return new LCIMChatItemAudioHolder(parent.getContext(), parent, true);
+                holder = new LCIMChatItemAudioHolder(parent.getContext(), parent, true);
+                break;
             case ITEM_LEFT_LOCATION:
-                return new LCIMChatItemLocationHolder(parent.getContext(), parent, true);
+                holder = new LCIMChatItemLocationHolder(parent.getContext(), parent, true);
+                break;
             case ITEM_RIGHT:
             case ITEM_RIGHT_TEXT:
-                return new LCIMChatItemTextHolder(parent.getContext(), parent, false);
+                holder = new LCIMChatItemTextHolder(parent.getContext(), parent, false);
+                break;
             case ITEM_RIGHT_IMAGE:
-                return new LCIMChatItemImageHolder(parent.getContext(), parent, false);
+                holder = new LCIMChatItemImageHolder(parent.getContext(), parent, false);
+                break;
             case ITEM_RIGHT_AUDIO:
-                return new LCIMChatItemAudioHolder(parent.getContext(), parent, false);
+                holder = new LCIMChatItemAudioHolder(parent.getContext(), parent, false);
+                break;
             case ITEM_RIGHT_LOCATION:
-                return new LCIMChatItemLocationHolder(parent.getContext(), parent, false);
+                holder = new LCIMChatItemLocationHolder(parent.getContext(), parent, false);
+                break;
             default:
-                return new LCIMChatItemTextHolder(parent.getContext(), parent, true);
+                holder = new LCIMChatItemTextHolder(parent.getContext(), parent, true);
+                break;
         }
+        holder.setHost(mChatItemHolderHost);
+        return holder;
     }
+
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {

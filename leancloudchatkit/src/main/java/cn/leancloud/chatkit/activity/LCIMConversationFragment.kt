@@ -18,11 +18,14 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import cn.leancloud.chatkit.LCChatKitUser
 import cn.leancloud.chatkit.LCIMManager
 import cn.leancloud.chatkit.R
 import cn.leancloud.chatkit.adapter.LCIMChatAdapter
 import cn.leancloud.chatkit.event.*
 import cn.leancloud.chatkit.utils.*
+import cn.leancloud.chatkit.viewholder.LCIMChatItemHolder
+import com.avos.avoscloud.AVCallback
 import com.avos.avoscloud.AVException
 import com.avos.avoscloud.im.v2.AVIMConversation
 import com.avos.avoscloud.im.v2.AVIMException
@@ -48,7 +51,7 @@ import java.io.IOException
  */
 class LCIMConversationFragment : Fragment() {
     private var mConversation: AVIMConversation? = null
-    private var itemAdapter: LCIMChatAdapter = LCIMChatAdapter()
+    private val itemAdapter: LCIMChatAdapter by lazy { LCIMChatAdapter(mChatItemHolderHost) }
     private lateinit var layoutManager: LinearLayoutManager
     private lateinit var localCameraPath: String
     private var mHost: Host? = null
@@ -592,6 +595,33 @@ class LCIMConversationFragment : Fragment() {
 
     fun getConversation(): AVIMConversation? {
         return mConversation
+    }
+
+    private val mChatItemHolderHost by lazy {
+        LCIMChatItemHolder.Host { userId, callback ->
+            val conversationType = LCIMConversationUtils.getConversationType(mConversation)
+            if (conversationType == 0 || LCIMConversationUtils.isMe(userId)) {
+                queryUserById(userId, callback)
+            } else if (conversationType == 1) {
+                if (LCIMConversationUtils.isMe(userId)) {
+                    queryUserById(userId, callback)
+                } else {
+                    LCIMConversationUtils.getUserByConversationType(conversationType, object : AVCallback<LCChatKitUser>() {
+                        override fun internalDone0(p0: LCChatKitUser?, p1: AVException?) {
+                            callback.internalDone(p0, p1)
+                        }
+                    })
+                }
+            }
+        }
+    }
+
+    private fun queryUserById(userId: String?, callback: AVCallback<LCChatKitUser>) {
+        LCIMConversationUtils.getUser(userId, object : AVCallback<LCChatKitUser>() {
+            override fun internalDone0(p0: LCChatKitUser?, p1: AVException?) {
+                callback.internalDone(p0, p1)
+            }
+        })
     }
 
     companion object {

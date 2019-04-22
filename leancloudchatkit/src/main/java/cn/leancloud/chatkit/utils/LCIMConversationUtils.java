@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import com.avos.avoscloud.AVCallback;
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.im.v2.AVIMConversation;
+import com.avos.avoscloud.im.v2.AVIMTypedMessage;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -43,9 +44,19 @@ public class LCIMConversationUtils {
             callback.internalDone(conversation.getName(), null);
         } else if (conversation.isTransient()) {
             callback.internalDone(conversation.getName(), null);
+        } else if (isCbtiTreatConversation(conversation)) {
+            getUserByConversationType(getConversationType(conversation), new AVCallback<LCChatKitUser>() {
+                @Override
+                protected void internalDone0(LCChatKitUser user, AVException e) {
+                    if (user != null) {
+                        callback.internalDone(user.getName(), null);
+                    } else {
+                        callback.internalDone(null, e);
+                    }
+                }
+            });
         } else if (2 == conversation.getMembers().size()) {
             String peerId = getConversationPeerId(conversation);
-//            LCIMProfileCache.getInstance().getUserName(peerId, callback);
             getUser(peerId, new AVCallback<LCChatKitUser>() {
                 @Override
                 protected void internalDone0(LCChatKitUser lcChatKitUser, AVException e) {
@@ -81,22 +92,32 @@ public class LCIMConversationUtils {
      * @param callback
      */
     public static void getConversationPeerIcon(final AVIMConversation conversation, final AVCallback<String> callback) {
-        if (null != conversation && !conversation.isTransient() && !conversation.getMembers().isEmpty()) {
+        if (conversation == null) {
+            callback.internalDone(null, new AVException(new Throwable("cannot find icon!")));
+        } else if (isCbtiTreatConversation(conversation)) {
+            getUserByConversationType(getConversationType(conversation), new AVCallback<LCChatKitUser>() {
+                @Override
+                protected void internalDone0(LCChatKitUser user, AVException e) {
+                    if (user != null) {
+                        callback.internalDone(user.getAvatarUrl(), null);
+                    } else {
+                        callback.internalDone(null, e);
+                    }
+                }
+            });
+        } else if (!conversation.isTransient() && !conversation.getMembers().isEmpty()) {
             String peerId = getConversationPeerId(conversation);
             if (1 == conversation.getMembers().size()) {
                 peerId = conversation.getMembers().get(0);
             }
-//            LCIMProfileCache.getInstance().getUserAvatar(peerId, callback);
             getUser(peerId, new AVCallback<LCChatKitUser>() {
                 @Override
                 protected void internalDone0(LCChatKitUser lcChatKitUser, AVException e) {
                     callback.internalDone(lcChatKitUser == null ? "" : lcChatKitUser.getAvatarUrl(), null);
                 }
             });
-        } else if (null != conversation) {
-            callback.internalDone("", null);
         } else {
-            callback.internalDone(null, new AVException(new Throwable("cannot find icon!")));
+            callback.internalDone("", null);
         }
     }
 
@@ -131,5 +152,32 @@ public class LCIMConversationUtils {
                 callback.internalDone(user, null);
             }
         });
+    }
+
+    public static void getUserByConversationType(int conversationType, final AVCallback<LCChatKitUser> callback) {
+        LCIMManager.getInstance().getProfileProvider().fetchProfileByConversationType(conversationType, new AVCallback<LCChatKitUser>() {
+            @Override
+            protected void internalDone0(LCChatKitUser lcChatKitUser, AVException e) {
+                callback.internalDone(lcChatKitUser, e);
+            }
+        });
+    }
+
+    public static boolean isCbtiTreatConversation(AVIMConversation conversation) {
+        return getConversationType(conversation) == 1;
+    }
+
+    public static int getConversationType(AVIMConversation conversation) {
+        return (int) conversation.getAttribute("conversation_type");
+    }
+
+    public static boolean isMe(AVIMTypedMessage msg) {
+        String selfId = LCIMManager.getInstance().getUserId();
+        return msg.getFrom() != null && msg.getFrom().equals(selfId);
+    }
+
+    public static boolean isMe(String userId) {
+        String selfId = LCIMManager.getInstance().getUserId();
+        return userId != null && userId.equals(selfId);
     }
 }

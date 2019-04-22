@@ -80,7 +80,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="16dp"
             android:layout_toEndOf="@id/ic_left"
-            android:text="@string/doctor_message"
+            tools:text="@string/patient_message"
             android:textStyle="bold" />
 
         <TextView
@@ -92,7 +92,6 @@
             android:layout_toEndOf="@id/ic_left"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="@string/no_doctor_message_yet"
             tools:text="123123123123123123123123123123123123123123123123" />
 
         <ImageView

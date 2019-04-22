@@ -5,8 +5,13 @@ import cn.leancloud.chatkit.LCChatProfileProvider
 import cn.leancloud.chatkit.LCChatProfilesCallBack
 import cn.leancloud.chatkit.bean.ImIds
 import cn.leancloud.chatkit.bean.ImUser
+import com.avos.avoscloud.AVCallback
+import com.avos.avoscloud.AVException
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.network.response.ErrorResponse
+import com.sumian.common.utils.ResUtil
+import com.sumian.sddoctor.R
+import com.sumian.sddoctor.app.App
 import com.sumian.sddoctor.app.AppManager
 import com.sumian.sddoctor.network.callback.BaseSdResponseCallback
 import java.util.ArrayList
@@ -58,6 +63,25 @@ class IMProfileProvider : LCChatProfileProvider {
                     ToastUtils.showShort(errorResponse.message)
                 }
             })
+        }
+    }
+
+    //    override fun fetchProfileByConversationType(conversationType: Int, callback: AsyncCallback<LCChatKitUser>?) {
+//        when (conversationType) {
+//            1 -> callback?.onSuccess(LCChatKitUser("",
+//                    App.getAppContext().resources.getString(R.string.cbti_therapist),
+//                    ResUtil.resIdToUrl(R.drawable.img_consultant))
+//            )
+//            else -> callback?.onFail(1, "wrong type")
+//        }
+//    }
+    override fun fetchProfileByConversationType(conversationType: Int, callback: AVCallback<LCChatKitUser>?) {
+        when (conversationType) {
+            1 -> {
+                val user = LCChatKitUser("", App.getAppContext().resources.getString(R.string.cbti_therapist), ResUtil.resIdToUrl(R.drawable.img_consultant))
+                callback?.internalDone(user, null)
+            }
+            else -> callback?.internalDone(null, AVException(1, "wrong type"))
         }
     }
 

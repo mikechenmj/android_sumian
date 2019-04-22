@@ -59,7 +59,6 @@
         android:layout_toEndOf="@id/iv_left"
         android:ellipsize="end"
         android:maxLines="1"
-        android:text="@string/no_doctor_message_yet"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/iv_arrow"
         app:layout_constraintStart_toStartOf="@+id/guideline"
@@ -74,7 +73,6 @@
         android:layout_toEndOf="@id/iv_left"
         android:ellipsize="end"
         android:maxLines="1"
-        android:text="@string/no_doctor_message_yet"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         tools:text="2019.03.01 10:37" />

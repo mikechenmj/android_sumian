@@ -1,5 +1,7 @@
 package cn.leancloud.chatkit;
 
+import com.avos.avoscloud.AVCallback;
+
 import java.util.List;
 
 /**
@@ -8,5 +10,7 @@ import java.util.List;
  */
 public interface LCChatProfileProvider {
   void fetchProfiles(List<String> userIdList, LCChatProfilesCallBack profilesCallBack);
+
+  void fetchProfileByConversationType(int conversationType, AVCallback<LCChatKitUser> profilesCallBack);
   List<LCChatKitUser> getAllUsers();
 }

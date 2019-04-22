@@ -45,7 +45,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginBottom="16dp"
         android:layout_toEndOf="@id/ic_left"
-        android:text="@string/no_doctor_message_yet" />
+        tools:text="no_doctor_message_yet" />
 
     <TextView
         android:id="@+id/tv_time"
