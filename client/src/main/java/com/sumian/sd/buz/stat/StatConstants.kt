@@ -162,4 +162,5 @@ object StatConstants {
     const val enter_conversation_list_page = "enter_conversation_list_page"
     const val enter_conversation_page = "enter_conversation_page"
     const val connect_device = "connect_device"
+    const val sync_sleep_data_finish = "sync_sleep_data_finish"
 }

@@ -3,12 +3,14 @@ package com.sumian.sd.buz.devicemanager.helper
 import android.os.Handler
 import android.os.Looper
 import com.sumian.blue.model.BluePeripheral
+import com.sumian.common.statistic.StatUtil
 import com.sumian.sd.buz.devicemanager.AutoSyncDeviceDataUtil
 import com.sumian.sd.buz.devicemanager.DeviceManager
 import com.sumian.sd.buz.devicemanager.uploadsleepdata.SleepDataUploadHelper
+import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.log.LogManager
 import com.sumian.sd.common.utils.StorageUtil
-import java.util.ArrayList
+import java.util.*
 
 /**
  * @author : Zhan Xuzhao
@@ -56,6 +58,8 @@ class SyncDeviceDataHelper(deviceManager: DeviceManager) {
         }
     }
 
+    private var mTransformStartTime = 0L;
+
     /**
      * 开始 55 8e 1 06a 01 5c665b03 5c5ec240 01 01 006a
      * 结束 55 8e 1 06a 0f 5c665b03
@@ -91,6 +95,7 @@ class SyncDeviceDataHelper(deviceManager: DeviceManager) {
                     mCurrentPackageIndex = subHexStringToInt(cmd, 28, 30)
                     if (mCurrentPackageIndex == 1) {
                         mTotalProgress = 0
+                        mTransformStartTime = System.currentTimeMillis()
                     }
                     mTotalDataCount = subHexStringToInt(cmd, 30, 34)
                 }
@@ -131,6 +136,11 @@ class SyncDeviceDataHelper(deviceManager: DeviceManager) {
                     }
                     if (mTotalDataCount != 0) { // new monitor
                         if (mTotalProgress == mTotalDataCount) {
+                            StatUtil.event(StatConstants.sync_sleep_data_finish, mapOf(
+                                    "duration" to (System.currentTimeMillis() - mTransformStartTime).toString(),
+                                    "total_count" to mTotalDataCount.toString()
+                            ))
+                            LogManager.appendMonitorLog("0x8e0f 所有数据传输完毕， 共计${mTotalDataCount}条， 耗时${System.currentTimeMillis() - mTransformStartTime}")
                             onSyncSuccess()
                         }
                     } else { // old monitor
