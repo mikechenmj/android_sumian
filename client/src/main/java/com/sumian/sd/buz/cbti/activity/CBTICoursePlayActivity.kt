@@ -315,7 +315,7 @@ class CBTICoursePlayActivity : BaseViewModelActivity<CBTICoursePlayAuthPresenter
             setChapterId(this@CBTICoursePlayActivity, mCourse?.cbti_chapter_id!!, mCurrentPosition)
 
             if (!isDestroyed) {
-                ImageLoader.loadImage(coursePlayAuth.banner, imageView(), R.mipmap.ic_img_cbti_banner, R.mipmap.ic_img_cbti_banner)
+                ImageLoader.loadImage(coursePlayAuth.meta.video_cover, imageView(), R.mipmap.ic_img_cbti_banner, R.mipmap.ic_img_cbti_banner)
             }
         }
 

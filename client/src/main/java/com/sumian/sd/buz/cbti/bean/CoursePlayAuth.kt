@@ -19,6 +19,7 @@ data class CoursePlayAuth(var id: Int,
 
     data class Meta(var play_auth: String,//播放凭证 填入aliyun播放器
                     var video_id: String,//video-id
+                    var video_cover: String,
                     var course_log: PlayLog,//视频播放记录 如果是首次播放 null
                     var is_pop_questionnaire: Boolean,
                     var questionnaire: List<Questionnaire>,
