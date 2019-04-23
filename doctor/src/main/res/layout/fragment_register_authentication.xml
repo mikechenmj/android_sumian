@@ -199,6 +199,7 @@
                         android:hint="@string/please_input_your_work_experience_hours"
                         android:inputType="number"
                         android:maxLines="1"
+                        android:maxLength="8"
                         tools:ignore="Autofill" />
                 </LinearLayout>
             </LinearLayout>

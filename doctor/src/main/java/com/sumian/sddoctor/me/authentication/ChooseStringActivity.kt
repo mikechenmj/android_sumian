@@ -146,8 +146,4 @@ class ChooseStringActivity : SddBaseActivity() {
             val addMoreHint: String = "",   // list page add more hint
             val inputStringParams: InputStringActivity.InputStringParams?
     ) : Parcelable
-
-    override fun onBackPressed() {
-        // not backable
-    }
 }

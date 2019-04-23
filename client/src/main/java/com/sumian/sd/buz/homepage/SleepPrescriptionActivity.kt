@@ -10,10 +10,12 @@ import com.sumian.common.h5.bean.H5BaseResponse
 import com.sumian.common.h5.bean.NativeRouteData
 import com.sumian.common.h5.handler.SBridgeHandler
 import com.sumian.common.h5.widget.SWebView
+import com.sumian.common.statistic.StatUtil
 import com.sumian.common.utils.JsonUtil
 import com.sumian.sd.R
 import com.sumian.sd.base.SdBaseWebViewActivity
 import com.sumian.sd.buz.diary.fillsleepdiary.FillSleepDiaryActivity
+import com.sumian.sd.buz.diary.fillsleepdiary.SleepDiaryActivity
 import com.sumian.sd.buz.homepage.bean.SleepPrescriptionWrapper
 import com.sumian.sd.buz.homepage.event.SleepPrescriptionUpdatedEvent
 import com.sumian.sd.buz.stat.StatConstants
@@ -79,6 +81,10 @@ class SleepPrescriptionActivity : SdBaseWebViewActivity() {
                 val date = JsonUtil.fromJson<NativeRouteData<DateBean>>(rawData, object : TypeToken<NativeRouteData<DateBean>>() {}.type)
                         ?: return
                 FillSleepDiaryActivity.startForResult(this@SleepPrescriptionActivity, date.data?.date!! * 1000L, REQUEST_CODE_FILL_DIARY)
+            }
+            "sleepDiary" -> {
+                ActivityUtils.startActivity(SleepDiaryActivity::class.java)
+                StatUtil.event(StatConstants.click_sleep_guide_page_sleep_restrction_item)
             }
         }
     }

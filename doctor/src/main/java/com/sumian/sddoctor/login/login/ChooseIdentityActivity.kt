@@ -25,6 +25,7 @@ class ChooseIdentityActivity : SddBaseActivity() {
     override fun initWidget() {
         super.initWidget()
         setTitle(R.string.choose_identity)
+        mTitleBar.showBackArrow(false)
         tv_doctor.setOnClickListener { changeIdentity(DoctorInfo.TYPE_DOCTOR) }
         tv_counselor.setOnClickListener { changeIdentity(DoctorInfo.TYPE_COUNSELOR) }
     }

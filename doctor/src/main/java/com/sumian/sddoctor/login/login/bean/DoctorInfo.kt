@@ -114,14 +114,14 @@ data class DoctorInfo(
     }
 
     fun getDescString(context: Context): String {
-        if (review_status == AUTHENTICATION_STATE_AUTHENTICATED) {
-            return context.getString(if (isDoctor()) R.string.doctor else R.string.counselor)
-        } else {
-            return if (isDoctor()) {
+        return if (review_status == AUTHENTICATION_STATE_AUTHENTICATED) {
+            if (isDoctor()) {
                 return hospital
             } else {
                 return qualification
             }
+        } else {
+            return context.getString(if (isDoctor()) R.string.doctor else R.string.counselor)
         }
     }
 

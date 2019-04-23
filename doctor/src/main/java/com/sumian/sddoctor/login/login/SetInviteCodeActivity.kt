@@ -1,6 +1,5 @@
 package com.sumian.sddoctor.login.login
 
-import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.network.response.ErrorResponse
@@ -33,7 +32,6 @@ class SetInviteCodeActivity : SddBaseActivity() {
     override fun initWidget() {
         super.initWidget()
         StatUtil.event(StatConstants.enter_fill_invite_code_page)
-        mTitleBar.mIvBack.visibility = View.GONE
         setTitle(R.string.invite_code)
         mTitleBar.setMenuText(getString(R.string.skip))
         mTitleBar.setOnMenuClickListener {

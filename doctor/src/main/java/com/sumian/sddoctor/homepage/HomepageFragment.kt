@@ -2,9 +2,9 @@ package com.sumian.sddoctor.homepage
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import cn.leancloud.chatkit.LCIMManager
@@ -112,7 +112,7 @@ class HomepageFragment : BaseFragment(), DoctorServicesView.OnDoctorServicesCall
         }
         tv_name.text = doctorInfo.name
         tv_introduction.text = doctorInfo.getDescString(activity!!)
-        tv_introduction.visibility = if (TextUtils.isEmpty(doctorInfo.hospital)) View.GONE else View.VISIBLE
+        tv_introduction.isVisible = doctorInfo.isAuthenticated()
         ImageLoader.load(context!!, doctorInfo.avatar, iv_avatar)
     }
 
