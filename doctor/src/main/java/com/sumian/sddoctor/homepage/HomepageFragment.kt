@@ -15,6 +15,7 @@ import com.blankj.utilcode.util.ToastUtils
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.sumian.common.statistic.StatUtil
 import com.sumian.common.utils.SettingsUtil
+import com.sumian.module_core.async.AsyncCallback
 import com.sumian.sddoctor.BuildConfig
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.account.activity.UserInfoActivity
@@ -79,7 +80,11 @@ class HomepageFragment : BaseFragment(), DoctorServicesView.OnDoctorServicesCall
         doctor_services_view.setOnDoctorServicesCallback(this)
         iv_share_doctor_qr.setOnClickListener { showShareBottomSheet() }
         refresh_layout.setOnRefreshListener {
-            AppManager.updateDoctorInfo()
+            AppManager.updateDoctorInfo(object : AsyncCallback<DoctorInfo?> {
+                override fun onFinish() {
+                    refresh_layout?.hideRefreshAnim()
+                }
+            })
         }
         homepage_fragment_v_cbti.setOnClickListener { CBTILauncherPresenter.launcherCBTI() }
     }

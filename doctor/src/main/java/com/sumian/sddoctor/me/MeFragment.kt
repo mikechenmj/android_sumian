@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.helper.ToastHelper
 import com.sumian.common.statistic.StatUtil
+import com.sumian.module_core.async.AsyncCallback
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.account.activity.SettingsActivity
 import com.sumian.sddoctor.account.activity.UserInfoActivity
@@ -91,6 +92,13 @@ class MeFragment : BaseFragment(), LogoutContract.View {
         VersionManager.mUpgradeMode.observe(this, Observer {
             sdv_setting.showRedDot(it == VersionManager.UPGRADE_MODE_FORCE)
         })
+        refresh_layout.setOnRefreshListener {
+            AppManager.updateDoctorInfo(object : AsyncCallback<DoctorInfo?> {
+                override fun onFinish() {
+                    refresh_layout?.hideRefreshAnim()
+                }
+            })
+        }
     }
 
     private fun showDot(settingDividerView: SettingDividerView, isHaveDot: Boolean) {

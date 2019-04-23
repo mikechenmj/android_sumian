@@ -8,7 +8,7 @@ package com.sumian.module_core.async
  * version: 1.0
  */
 interface AsyncCallback<T> {
-    fun onSuccess(result: T?)
-    fun onFailed(code: Int, message: String?)
-    fun onFinish()
+    fun onSuccess(result: T?) {}
+    fun onFailed(code: Int, message: String?) {}
+    fun onFinish() {}
 }

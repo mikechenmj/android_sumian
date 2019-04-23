@@ -23,6 +23,7 @@ import com.sumian.common.notification.NotificationUtil
 import com.sumian.common.social.OpenEngine
 import com.sumian.common.social.login.OpenLogin
 import com.sumian.common.statistic.StatUtil
+import com.sumian.module_core.async.AsyncCallback
 import com.sumian.sddoctor.BuildConfig
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.account.AccountViewModel
@@ -181,18 +182,23 @@ object AppManager {
         }
     }
 
-    fun updateDoctorInfo(successRunnable: Runnable? = null, failedRunnable: Runnable? = null) {
+    fun updateDoctorInfo(callback: AsyncCallback<DoctorInfo?>? = null) {
         AppManager.getHttpService()
                 .getDoctorInfo()
                 .enqueue(object : BaseSdResponseCallback<DoctorInfo>() {
                     override fun onFailure(errorResponse: ErrorResponse) {
                         LogUtils.d(errorResponse.message)
-                        failedRunnable?.run()
+                        callback?.onFailed(errorResponse.code, errorResponse.message)
                     }
 
                     override fun onSuccess(response: DoctorInfo?) {
                         AppManager.getAccountViewModel().updateDoctorInfo(response)
-                        successRunnable?.run()
+                        callback?.onSuccess(response)
+                    }
+
+                    override fun onFinish() {
+                        super.onFinish()
+                        callback?.onFinish()
                     }
                 })
     }
@@ -201,7 +207,7 @@ object AppManager {
 
     fun onAppForeground() {
         if (AppManager.getAccountViewModel().getToken() != null) {
-            AppManager.updateDoctorInfo()
+            updateDoctorInfo()
         }
         sendHeartbeat()
     }
@@ -213,7 +219,7 @@ object AppManager {
         initKefu(App.getAppContext())
         KefuManager.loginAndQueryUnreadMsg()
         AppNotificationManager.uploadPushId()
-        AppManager.updateDoctorInfo()
+        updateDoctorInfo()
         initImManager()
     }
 
