@@ -87,7 +87,7 @@ class AccountViewModel(application: Application) : AndroidViewModel(application)
     }
 
     fun getAuthenticateStatus(): Int {
-        return mDoctorInfo.value?.review_status ?: 0
+        return mDoctorInfo.value?.reviewStatus ?: 0
     }
 
     fun isVisitorAccount(): Boolean {

@@ -29,7 +29,7 @@ object CBTILauncherPresenter : BaseViewModel() {
         } else {
             val doctorInfo = AppManager.getAccountViewModel().getDoctorInfo().value
             val id = doctorInfo?.id ?: 0
-            val isLookAccount = doctorInfo?.review_status != 2
+            val isLookAccount = doctorInfo?.reviewStatus != 2
             val isVisitorAccount = doctorInfo?.isVisitorAccount() ?: true
             if (isLookAccount || isVisitorAccount) {//未认证/正在认证中/体验账号
                 onLauncherCBTIIntroductionWeb()

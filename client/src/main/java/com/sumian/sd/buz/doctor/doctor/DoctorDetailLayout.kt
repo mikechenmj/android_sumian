@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
+import androidx.core.view.isVisible
 import com.sumian.common.image.ImageLoader
 import com.sumian.common.statistic.StatUtil
 import com.sumian.common.widget.refresh.SumianSwipeRefreshLayout
@@ -15,7 +16,6 @@ import com.sumian.sd.buz.kefu.KefuManager
 import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.widget.dialog.SumianTitleMessageDialog
 import kotlinx.android.synthetic.main.lay_doctor_detail_view.view.*
-import java.util.*
 
 /**
  * Created by sm
@@ -36,7 +36,8 @@ class DoctorDetailLayout @JvmOverloads constructor(context: Context, attrs: Attr
         ImageLoader.loadImage(doctor.avatar
                 ?: "", iv_avatar, R.mipmap.ic_info_avatar_doctor, R.mipmap.ic_info_avatar_doctor)
         tv_name?.text = doctor.name
-        tv_department?.text = String.format(Locale.getDefault(), "%s %s", doctor.hospital, doctor.department)
+        tv_desc?.text = doctor.getDesc(context)
+        tv_desc.isVisible = doctor.isAuthenticated()
         siv_customer_service?.setOnClickListener {
             KefuManager.launchKefuActivity()
             StatUtil.event(StatConstants.click_doctor_page_sleep_steward)
@@ -46,7 +47,7 @@ class DoctorDetailLayout @JvmOverloads constructor(context: Context, attrs: Attr
             SumianTitleMessageDialog(v.context)
                     .showCloseIv(true)
                     .setTitle(v.resources.getString(R.string.personal_intro))
-                    .setMessage(doctor.introduction_no_tag!!)
+                    .setMessage(doctor.introduction!!)
                     .show()
         }
 

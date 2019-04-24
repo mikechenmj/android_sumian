@@ -5,11 +5,14 @@
     <string name="record_will_stop_in_x_sec">%d”后停止语音</string>
     <string name="record_too_long">对讲时间过长</string>
     <string name="record_too_short">按键时间过短</string>
+    <string name="opposite_is_busy">对方当前繁忙，敬请谅解</string>
     <string name="doctor_is_busy">医生当前繁忙，敬请谅解</string>
+    <string name="counselor_is_busy">咨询师当前繁忙，敬请谅解</string>
+    <string name="therapist_is_busy">治疗师当前繁忙，敬请谅解</string>
     <string name="conversation_closed_hint">对话结束，发送消息或点右上方激活对话</string>
     <string name="lcim_no_doctor_message_yet">尚未收到任何会话</string>
     <string name="lcim_no_doctor_message_hint">如有需要，请购买咨询服务或到医院就医</string>
     <string name="lcim_no_patient_message_yet">尚未向患者发起会话</string>
     <string name="lcim_no_patient_message_hint">如有需要，请在患者详情内向患者发消息</string>
-    <string name="no_record_audio_permission">no_record_audio_permission</string>
+    <string name="no_record_audio_permission">没有录音权限</string>
 </resources>

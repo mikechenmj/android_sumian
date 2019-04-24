@@ -34,7 +34,7 @@ class DoctorQrCodeActivity : BaseActivity() {
         super.initWidget()
         title_bar.setOnBackClickListener { finish() }
         AppManager.getAccountViewModel().getDoctorInfo().observe(this, Observer<DoctorInfo> { t ->
-            val qrCodeUrl = t?.qr_code_raw
+            val qrCodeUrl = t?.qrCodeRaw
             ImageLoader.load(this, qrCodeUrl ?: return@Observer, iv_qr)
             tv_add_doctor_hint.text = getString(R.string.add_xx_doctor, t.name)
             mDoctorInfo = t

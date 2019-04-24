@@ -37,6 +37,7 @@ class SetPersonalIntroductionActivity : SddBaseActivity() {
         })
         et_intro.setText(intent.getStringExtra(KEY_INTRO))
         tv_save.setOnClickListener { saveIntro() }
+        tv_cancel.setOnClickListener { finish() }
     }
 
     private fun saveIntro() {

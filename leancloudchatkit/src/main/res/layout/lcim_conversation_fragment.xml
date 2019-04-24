@@ -41,7 +41,7 @@
         android:layout_height="50dp"
         android:background="@color/b5_color"
         android:gravity="center"
-        android:text="@string/doctor_is_busy"
+        android:text="@string/opposite_is_busy"
         android:visibility="gone"
         tools:visibility="visible" />
 

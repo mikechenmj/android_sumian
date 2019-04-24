@@ -1,7 +1,6 @@
 package com.sumian.sddoctor.account.presenter
 
 import android.text.TextUtils
-import com.blankj.utilcode.util.LogUtils
 import com.sumian.common.base.BaseViewModel
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sddoctor.account.contract.UserAvatarContract
@@ -49,9 +48,7 @@ open class UserAvatarPresenter private constructor(view: UserAvatarContract.View
                                         val userProfile = AppManager.getAccountViewModel().getDoctorInfo().value
                                         userProfile?.let {
                                             userProfile.avatar = avatarUrl
-                                            LogUtils.d("qr_code_raw", userProfile.qr_code_raw)
                                             userProfile.qr_code_raw = qrCodeRaw
-                                            LogUtils.d("qr_code_raw", userProfile.qr_code_raw)
                                             AppManager.getAccountViewModel().updateDoctorInfo(userProfile)
                                         }
                                     }

@@ -9,7 +9,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import cn.leancloud.chatkit.LCIMManager
 import com.blankj.utilcode.util.ActivityUtils
-import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -99,8 +98,7 @@ class HomepageFragment : BaseFragment(), DoctorServicesView.OnDoctorServicesCall
                 .observe(this, Observer<Int> { unreadCount -> updateNotificationIconUI() })
         LCIMManager.getInstance().unreadCountLiveData.observe(this, Observer<Int> { it -> updateNotificationIconUI() })
         AppManager.getAccountViewModel().getDoctorInfo().observe(this, Observer<DoctorInfo> { t ->
-            ImageLoader.load(activity!!, t?.qr_code_raw, iv_doctor_qr)
-            LogUtils.d("qr_code_raw", t?.qr_code_raw)
+            ImageLoader.load(activity!!, t?.qrCodeRaw, iv_doctor_qr)
         })
     }
 

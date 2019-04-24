@@ -61,12 +61,13 @@ data class DoctorInfo(
         var qrCode: String, // https://sd-dev-oss-cdn.sumian.com/doctors/qr_code/doctor_qr_bg_86_1555661837.png
         @SerializedName("qr_code_raw")
         var qr_code_raw: String, // https://sd-dev-oss-cdn.sumian.com/doctors/qr_code/doctor_qr_86_1555661836.png
+        var qrCodeRaw: String, // https://sd-dev-oss-cdn.sumian.com/doctors/qr_code/doctor_qr_86_1555661836.png
         @SerializedName("qualification")
         var qualification: String,
         @SerializedName("retailer_id")
         var retailerId: Int, // 0
         @SerializedName("review_status")
-        var review_status: Int, // 审核状态 0:未认证 1:审核中 2:已认证
+        var reviewStatus: Int, // 审核状态 0:未认证 1:审核中 2:已认证
         @SerializedName("set_password")
         var setPassword: Boolean, // false
         @SerializedName("socialite")
@@ -88,11 +89,11 @@ data class DoctorInfo(
     }
 
     fun getAuthenticationState(): Int {
-        return review_status
+        return reviewStatus
     }
 
     fun isAuthenticated(): Boolean {
-        return review_status == AUTHENTICATION_STATE_AUTHENTICATED
+        return reviewStatus == AUTHENTICATION_STATE_AUTHENTICATED
     }
 
     fun getAuthenticationString(): String {
@@ -114,7 +115,7 @@ data class DoctorInfo(
     }
 
     fun getDescString(context: Context): String {
-        return if (review_status == AUTHENTICATION_STATE_AUTHENTICATED) {
+        return if (reviewStatus == AUTHENTICATION_STATE_AUTHENTICATED) {
             if (isDoctor()) {
                 return hospital
             } else {
@@ -129,7 +130,8 @@ data class DoctorInfo(
         if (!isAuthenticated()) {
             return null
         }
-        return context.resources.getStringArray(R.array.counselor_experience_years)[experience]
+        val array = context.resources.getStringArray(R.array.counselor_experience_years)
+        return array[Math.min(experience, array.size - 1)]
     }
 
     fun isDoctor() = type == 0

@@ -113,7 +113,7 @@ class MeFragment : BaseFragment(), LogoutContract.View {
     @SuppressLint("SetTextI18n")
     private fun invalidDoctorInfo(doctorInfo: DoctorInfo?) {
         val visitorAccount = doctorInfo?.isVisitorAccount() == true
-        vg_warning.visibility = if (visitorAccount || doctorInfo?.review_status == 0) {
+        vg_warning.visibility = if (visitorAccount || doctorInfo?.reviewStatus == 0) {
             View.VISIBLE
         } else {
             View.GONE

@@ -46,13 +46,13 @@
                 android:singleLine="true"
                 android:textColor="@color/b2_color"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/tv_department"
+                app:layout_constraintBottom_toTopOf="@+id/tv_desc"
                 app:layout_constraintLeft_toRightOf="@+id/iv_avatar"
                 app:layout_constraintTop_toTopOf="@id/iv_avatar"
                 tools:text="张三" />
 
             <TextView
-                android:id="@+id/tv_department"
+                android:id="@+id/tv_desc"
                 style="@style/text_t1_style"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -68,6 +68,7 @@
                 app:layout_constraintLeft_toRightOf="@+id/iv_avatar"
                 app:layout_constraintRight_toRightOf="@id/space"
                 app:layout_constraintTop_toBottomOf="@id/tv_name"
+                tools:visibility="visible"
                 tools:text="哈尔滨医科大学附属第一医院 睡眠医学中心睡眠医学中心科室dadasdadaddsada" />
 
             <Space

@@ -558,14 +558,14 @@ class LCIMConversationFragment : Fragment() {
         }
     }
 
-    fun showInputBar(show: Boolean) {
-        fragment_chat_inputbar.visibility = if (show) View.VISIBLE else View.GONE
-        fragment_chat_tv_doctor_is_busy.visibility = if (!show) View.VISIBLE else View.GONE
-    }
-
-    fun showAudioBtn(show: Boolean) {
-        fragment_chat_inputbar.showAudioBtn(show)
-    }
+//    fun showInputBar(show: Boolean) {
+//        fragment_chat_inputbar.visibility = if (show) View.VISIBLE else View.GONE
+//        fragment_chat_tv_doctor_is_busy.visibility = if (!show) View.VISIBLE else View.GONE
+//    }
+//
+//    fun showAudioBtn(show: Boolean) {
+//        fragment_chat_inputbar.showAudioBtn(show)
+//    }
 
     /**
      * close: 1 close, 0 open

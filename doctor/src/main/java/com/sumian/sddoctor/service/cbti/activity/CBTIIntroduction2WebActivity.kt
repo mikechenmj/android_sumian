@@ -70,7 +70,7 @@ class CBTIIntroduction2WebActivity : SddBaseWebViewActivity() {
                 ToastHelper.show(this@CBTIIntroduction2WebActivity, getString(R.string
                         .visitor_to_get_more_service), Gravity.CENTER)
                 return@setOnClickListener
-            } else if (doctorInfo?.review_status != 2) {
+            } else if (doctorInfo?.reviewStatus != 2) {
                 ToastHelper.show(this@CBTIIntroduction2WebActivity, getString(R.string
                         .complete_authentication_to_get_more_service), Gravity.CENTER)
                 return@setOnClickListener
@@ -97,7 +97,7 @@ class CBTIIntroduction2WebActivity : SddBaseWebViewActivity() {
                 iv_nav.visibility = View.VISIBLE
                 View.VISIBLE
             }
-            doctorInfo?.review_status != 2 -> {
+            doctorInfo?.reviewStatus != 2 -> {
                 tv_warning.text = getString(R.string.complete_authentication_to_get_more_service)
                 bt_go_to_cbti.setTextColor(resources.getColor(R.color.t2_color_day))
                 bt_go_to_cbti.setBackgroundColor(resources.getColor(R.color.l3_color_day))
