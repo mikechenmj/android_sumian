@@ -11,14 +11,14 @@ import androidx.annotation.Nullable;
  * desc:
  */
 
-public class FirmwareInfo {
+public class FirmwareVersionInfo {
 
     public @Nullable VersionInfo monitor;
     public @Nullable VersionInfo sleeper;
 
     @Override
     public String toString() {
-        return "FirmwareInfo{" +
+        return "FirmwareVersionInfo{" +
             "monitor=" + monitor +
             ", sleeper=" + sleeper +
             '}';

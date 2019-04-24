@@ -10,7 +10,7 @@ import com.sumian.sd.buz.device.widget.UpgradeFirmwareDialogActivity
 import com.sumian.sd.buz.devicemanager.DeviceManager
 import com.sumian.sd.buz.setting.version.bean.Version
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
-import com.sumian.sd.common.network.response.FirmwareInfo
+import com.sumian.sd.common.network.response.FirmwareVersionInfo
 import com.sumian.sd.common.utils.UiUtils
 
 /**
@@ -29,7 +29,7 @@ object VersionManager {
     private const val VERSION_TYPE_MONITOR = 0
     private const val VERSION_TYPE_SLEEPER = 1
 
-    val mFirmwareVersionInfoLD = MutableLiveData<FirmwareInfo>()
+    val mFirmwareVersionInfoLD = MutableLiveData<FirmwareVersionInfo>()
 
     val mAppUpgradeMode by lazy {
         val liveData = MutableLiveData<Int>()
@@ -69,14 +69,18 @@ object VersionManager {
         })
     }
 
+    fun updateFirmVersion() {
+        getAndCheckFirmVersionShowUpgradeDialogIfNeed(false)
+    }
+
     fun getAndCheckFirmVersionShowUpgradeDialogIfNeed(showDialogIfNeed: Boolean) {
         val call = AppManager.getSdHttpService().getFirmwareLatestVersion(
                 DeviceManager.getMonitorBomVersion(),
                 DeviceManager.getSleeperBomVersion())
-        call.enqueue(object : BaseSdResponseCallback<FirmwareInfo>() {
+        call.enqueue(object : BaseSdResponseCallback<FirmwareVersionInfo>() {
             override fun onFailure(errorResponse: ErrorResponse) {}
 
-            override fun onSuccess(response: FirmwareInfo?) {
+            override fun onSuccess(response: FirmwareVersionInfo?) {
                 if (response == null) return
                 mFirmwareVersionInfoLD.value = response
                 if (showDialogIfNeed) {
@@ -90,11 +94,11 @@ object VersionManager {
         })
     }
 
-    private fun hasNewVersion(versionType: Int, firmwareInfo: FirmwareInfo?): Boolean {
-        if (firmwareInfo == null) return false
+    private fun hasNewVersion(versionType: Int, firmwareVersionInfo: FirmwareVersionInfo?): Boolean {
+        if (firmwareVersionInfo == null) return false
         val isConnected = if (versionType == VERSION_TYPE_MONITOR) DeviceManager.isMonitorConnected() else DeviceManager.isSleeperConnected()
         val currentVersionInfo = if (versionType == VERSION_TYPE_MONITOR) DeviceManager.getMonitorVersion() else DeviceManager.getSleeperVersion()
-        val newVersionInfo = if (versionType == VERSION_TYPE_MONITOR) firmwareInfo.monitor else firmwareInfo.sleeper
+        val newVersionInfo = if (versionType == VERSION_TYPE_MONITOR) firmwareVersionInfo.monitor else firmwareVersionInfo.sleeper
         return (isConnected
                 && newVersionInfo != null
                 && currentVersionInfo != null

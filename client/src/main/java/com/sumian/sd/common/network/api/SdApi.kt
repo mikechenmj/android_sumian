@@ -52,7 +52,7 @@ import com.sumian.sd.buz.sleepertalk.bean.SleeperTalkData
 import com.sumian.sd.buz.tel.bean.TelBooking
 import com.sumian.sd.common.log.LogOssResponse
 import com.sumian.sd.common.network.response.AppUpgradeInfo
-import com.sumian.sd.common.network.response.FirmwareInfo
+import com.sumian.sd.common.network.response.FirmwareVersionInfo
 import com.sumian.sd.common.oss.OssResponse
 import com.sumian.sd.common.pay.bean.OrderDetail
 import com.sumian.sd.common.pay.bean.PayCouponCode
@@ -465,7 +465,7 @@ interface SdApi {
     fun getFirmwareLatestVersion(
             @Query("monitor_hw_version") monitorHardwareVersion: String?,
             @Query("sleeper_hw_version") sleeperHardwareVersion: String?
-    ): Call<FirmwareInfo>
+    ): Call<FirmwareVersionInfo>
 
     @GET("app-version/latest")
     fun syncUpgradeAppInfo(@QueryMap map: MutableMap<String, String>): Call<AppUpgradeInfo>

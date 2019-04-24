@@ -29,7 +29,7 @@ import com.sumian.sd.buz.upgrade.activity.DeviceVersionNoticeActivity
 import com.sumian.sd.common.h5.H5Uri
 import com.sumian.sd.common.h5.SimpleWebActivity
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
-import com.sumian.sd.common.network.response.FirmwareInfo
+import com.sumian.sd.common.network.response.FirmwareVersionInfo
 import com.sumian.sd.common.utils.UiUtils
 import com.sumian.sd.widget.TitleBar
 import com.sumian.sd.widget.dialog.SumianAlertDialog
@@ -74,13 +74,18 @@ class SettingActivity : BaseActivity(), TitleBar.OnBackClickListener, View.OnCli
         VersionManager.mAppUpgradeMode.observe(this, Observer {
             sdv_app_version.showRedDot(it >= VersionManager.UPGRADE_MODE_NORMAL)
         })
-        VersionManager.mFirmwareVersionInfoLD.observe(this, Observer<FirmwareInfo> {
+        VersionManager.mFirmwareVersionInfoLD.observe(this, Observer<FirmwareVersionInfo> {
             sdv_device_version.v_dot.isVisible = VersionManager.hasNewMonitorVersion() || VersionManager.hasNewSleeperVersion()
         })
     }
 
     override fun onBack(v: View) {
         finish()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        VersionManager.updateFirmVersion()
     }
 
     override fun onClick(v: View) {
