@@ -6,6 +6,7 @@ import android.Manifest
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.content.Intent
+import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import androidx.annotation.StringRes
@@ -54,7 +55,8 @@ class ScanDeviceFragment : BaseFragment() {
 
     companion object {
         private const val REQUEST_CODE_ENABLE_BT = 1
-        private const val REQUEST_CODE_ENABLE_LOCATION = 2
+        private const val REQUEST_PERMISSION_BLUETOOTH = 2
+        private const val REQUEST_PERMISSION_LOCATION = 3
         private const val SCAN_CHECK_DURATION = 3000L
         private const val SCAN_DURATION = 17 * 1000L
     }
@@ -64,7 +66,6 @@ class ScanDeviceFragment : BaseFragment() {
     override fun initWidget() {
         super.initWidget()
         iv_bt.setOnClickListener { startActivityForResult(Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), REQUEST_CODE_ENABLE_BT) }
-        vg_bt_not_enable.visibility = if (mBlueManager.isEnable) View.GONE else View.VISIBLE
         tv_scan_more.setOnClickListener { startScan(true) }
         tv_rescan.setOnClickListener { startScan() }
         recycler_view.layoutManager = LinearLayoutManager(activity!!)
@@ -87,20 +88,25 @@ class ScanDeviceFragment : BaseFragment() {
         }
     }
 
-    private fun registerBlueCallback() {
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         mBlueManager.addBlueAdapterCallback(mBlueAdapterEnableListener)
-        mBlueManager.addBlueScanCallback(mScanCallback)
     }
 
     override fun onDestroyView() {
+        mBlueManager.removeBlueAdapterCallback(mBlueAdapterEnableListener)
         unregisterBlueCallbacks()
         mHandler.removeCallbacks(null)
         stopScanIfIsScanning()
         super.onDestroyView()
     }
 
+    private fun registerBlueCallback() {
+        mBlueManager.addBlueScanCallback(mScanCallback)
+    }
+
     private fun unregisterBlueCallbacks() {
-        mBlueManager.removeBlueAdapterCallback(mBlueAdapterEnableListener)
         mBlueManager.removeBlueScanCallback(mScanCallback)
     }
 
@@ -197,7 +203,7 @@ class ScanDeviceFragment : BaseFragment() {
         tv_sub_title.text = subTitle
     }
 
-    @AfterPermissionGranted(REQUEST_CODE_ENABLE_BT)
+    @AfterPermissionGranted(REQUEST_PERMISSION_BLUETOOTH)
     private fun checkPermissionStartScan() {
         val perms = arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.WRITE_EXTERNAL_STORAGE)
         if (EasyPermissions.hasPermissions(activity!!, *perms)) {
@@ -205,8 +211,13 @@ class ScanDeviceFragment : BaseFragment() {
                 startScan()
             }
         } else {
-            EasyPermissions.requestPermissions(this, resources.getString(R.string.request_permission_hint), REQUEST_CODE_ENABLE_BT, *perms)
+            EasyPermissions.requestPermissions(this, resources.getString(R.string.request_permission_hint), REQUEST_PERMISSION_BLUETOOTH, *perms)
         }
+    }
+
+    private fun hasBluetoothPermissions(): Boolean {
+        val perms = arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        return EasyPermissions.hasPermissions(activity!!, *perms)
     }
 
     private fun checkLocationService(): Boolean {
@@ -217,7 +228,7 @@ class ScanDeviceFragment : BaseFragment() {
             SumianDialog(context!!)
                     .setTitleText(R.string.open_location_service_dialog_title)
                     .setMessageText(R.string.open_location_service_for_blue_scan_hint)
-                    .setRightBtn(R.string.confirm, View.OnClickListener { LocationManagerUtil.startLocationSettingActivityForResult(this@ScanDeviceFragment, REQUEST_CODE_ENABLE_LOCATION) })
+                    .setRightBtn(R.string.confirm, View.OnClickListener { LocationManagerUtil.startLocationSettingActivityForResult(this@ScanDeviceFragment, REQUEST_PERMISSION_LOCATION) })
                     .setCanceledOnTouchOutsideV2(false)
                     .show()
             false
@@ -236,7 +247,7 @@ class ScanDeviceFragment : BaseFragment() {
             } else {
                 ToastUtils.showShort("蓝牙未开启，无法搜索蓝牙设备")
             }
-        } else if (requestCode == REQUEST_CODE_ENABLE_LOCATION) {
+        } else if (requestCode == REQUEST_PERMISSION_LOCATION) {
             checkPermissionStartScan()
         } else {
             super.onActivityResult(requestCode, resultCode, data)
@@ -285,13 +296,22 @@ class ScanDeviceFragment : BaseFragment() {
     }
 
     private fun showEnableBtnOrStartScan() {
-        if (mBlueManager.isEnable) {
-            checkPermissionStartScan()
-        } else {
-            hideVgs()
-            vg_bt_not_enable.visibility = View.VISIBLE
-            setTitles(R.string.open_bluetooth, R.string.please_turn_on_bluetooth_adapter)
+        if (!isBluetoothEnableAndHasPermissions()) {
+            showEnableBluetoothUI()
         }
+        if (isBluetoothEnable()) {
+            checkPermissionStartScan()
+        }
+    }
+
+    private fun isBluetoothEnable() = mBlueManager.isEnable
+
+    private fun isBluetoothEnableAndHasPermissions() = isBluetoothEnable() && hasBluetoothPermissions()
+
+    private fun showEnableBluetoothUI() {
+        hideVgs()
+        vg_bt_not_enable.visibility = View.VISIBLE
+        setTitles(R.string.open_bluetooth, R.string.please_turn_on_bluetooth_adapter)
     }
 
     interface OnDeviceSelectedListener {

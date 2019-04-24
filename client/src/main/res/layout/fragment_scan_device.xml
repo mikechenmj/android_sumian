@@ -35,7 +35,7 @@
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
         android:visibility="gone"
-        tools:visibility="visible">
+        tools:visibility="gone">
 
         <TextView
             style="@style/text_t1_16"
@@ -81,7 +81,7 @@
         android:gravity="center"
         android:orientation="vertical"
         android:visibility="gone"
-        tools:visibility="visible">
+        tools:visibility="gone">
 
         <Space
             android:layout_width="0dp"
@@ -111,6 +111,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        tools:visibility="visible"
         android:visibility="gone">
 
         <FrameLayout
@@ -118,8 +119,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:gravity="center_horizontal"
-            android:orientation="vertical"
-            tools:visibility="visible">
+            android:orientation="vertical">
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -163,7 +163,7 @@
             android:layout_height="80dp"
             android:gravity="center"
             android:visibility="gone"
-            tools:visibility="visible">
+            tools:visibility="gone">
 
             <TextView
                 style="@style/text_t2_13"
@@ -183,7 +183,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:visibility="gone"
-        tools:visibility="visible">
+        tools:visibility="gone">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
