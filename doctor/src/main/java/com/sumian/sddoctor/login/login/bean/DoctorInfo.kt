@@ -60,7 +60,6 @@ data class DoctorInfo(
         @SerializedName("qr_code")
         var qrCode: String, // https://sd-dev-oss-cdn.sumian.com/doctors/qr_code/doctor_qr_bg_86_1555661837.png
         @SerializedName("qr_code_raw")
-        var qr_code_raw: String, // https://sd-dev-oss-cdn.sumian.com/doctors/qr_code/doctor_qr_86_1555661836.png
         var qrCodeRaw: String, // https://sd-dev-oss-cdn.sumian.com/doctors/qr_code/doctor_qr_86_1555661836.png
         @SerializedName("qualification")
         var qualification: String,

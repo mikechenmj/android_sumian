@@ -48,7 +48,7 @@ open class UserAvatarPresenter private constructor(view: UserAvatarContract.View
                                         val userProfile = AppManager.getAccountViewModel().getDoctorInfo().value
                                         userProfile?.let {
                                             userProfile.avatar = avatarUrl
-                                            userProfile.qr_code_raw = qrCodeRaw
+                                            userProfile.qrCodeRaw = qrCodeRaw
                                             AppManager.getAccountViewModel().updateDoctorInfo(userProfile)
                                         }
                                     }
