@@ -42,7 +42,7 @@ class SleepGuideActivity : SimpleWebActivity() {
     override fun onGoToPage(page: String, rawData: String) {
         when (page) {
             "sleepDiary" -> {
-                ActivityUtils.startActivity(SleepDiaryActivity::class.java)
+                SleepDiaryActivity.start(true)
                 StatUtil.event(StatConstants.click_sleep_guide_page_sleep_restrction_item)
             }
             "relaxation" -> {

@@ -327,6 +327,7 @@ class LCIMConversationFragment : Fragment() {
         if (mConversation!!.conversationId != event.mConversation.conversationId) {
             return
         }
+        mConversation = event.mConversation
         updateConversationCloseUI()
     }
 
@@ -591,7 +592,7 @@ class LCIMConversationFragment : Fragment() {
         }
     }
 
-    fun isConversationBlocked() = mConversation?.get(ATTR_IS_BLOCKED) == true
+    fun isConversationBlocked() = mConversation?.get(ATTR_IS_BLOCKED) == true || mConversation?.get(ATTR_IS_BLOCKED) == 1
 
     fun getConversation(): AVIMConversation? {
         return mConversation

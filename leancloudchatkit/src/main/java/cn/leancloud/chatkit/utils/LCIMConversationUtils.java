@@ -168,7 +168,12 @@ public class LCIMConversationUtils {
     }
 
     public static int getConversationType(AVIMConversation conversation) {
-        return (int) conversation.getAttribute("conversation_type");
+        Object conversationType = conversation.getAttribute("conversation_type");
+        if (conversationType instanceof Integer) {
+            return (int) conversationType;
+        } else {
+            return 0;
+        }
     }
 
     public static boolean isMe(AVIMTypedMessage msg) {

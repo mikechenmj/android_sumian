@@ -83,7 +83,7 @@ class SleepPrescriptionActivity : SdBaseWebViewActivity() {
                 FillSleepDiaryActivity.startForResult(this@SleepPrescriptionActivity, date.data?.date!! * 1000L, REQUEST_CODE_FILL_DIARY)
             }
             "sleepDiary" -> {
-                ActivityUtils.startActivity(SleepDiaryActivity::class.java)
+                SleepDiaryActivity.start(false)
                 StatUtil.event(StatConstants.click_sleep_guide_page_sleep_restrction_item)
             }
         }

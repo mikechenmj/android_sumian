@@ -1,5 +1,7 @@
 package com.sumian.sd.buz.diary.fillsleepdiary
 
+import android.os.Bundle
+import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.base.BaseActivity
 import com.sumian.common.statistic.StatUtil
 import com.sumian.sd.R
@@ -21,14 +23,27 @@ class SleepDiaryActivity : BaseActivity() {
     override fun getPageName(): String {
         return StatConstants.page_sleep_diary_detail
     }
+
     override fun initWidget() {
         super.initWidget()
         StatUtil.event(StatConstants.enter_sleep_diary_detail_page)
         setTitle(R.string.sleep_diary)
-        SleepRestrictionIntroductionDialogActivity.start()
+        if (intent.getBooleanExtra(KEY_SHOW_DIALOG, false)) {
+            SleepRestrictionIntroductionDialogActivity.start()
+        }
     }
 
     override fun showBackNav(): Boolean {
         return true
+    }
+
+    companion object {
+        private const val KEY_SHOW_DIALOG = "KEY_SHOW_DIALOG"
+
+        fun start(showDialog: Boolean) {
+            val bundle = Bundle()
+            bundle.putBoolean(KEY_SHOW_DIALOG, showDialog)
+            ActivityUtils.startActivity(bundle, SleepDiaryActivity::class.java)
+        }
     }
 }
