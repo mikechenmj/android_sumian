@@ -858,7 +858,7 @@
     <string name="introduction_arrow">介绍 ></string>
     <string name="discount_is_too_much">优惠金额超出上限</string>
     <string name="pill_repeat_warn">不能添加重复的服药记录</string>
-    <string name="you_have_not_bound_doctor_yet_scan_to_bind">您还未绑定医生或咨询师，点击下方扫码钮，扫描医生二维码进行绑定。</string>
+    <string name="you_have_not_bound_doctor_yet_scan_to_bind">您还未绑定医生或咨询师，点击下方扫码钮，扫描二维码进行绑定。</string>
     <string name="service">服务</string>
     <string name="personal_intro">个人简介</string>
     <string name="you_have_add_this_pill">您已添加了以下服药记录</string>
