@@ -3,7 +3,6 @@ package com.sumian.sddoctor.account.activity
 import android.app.Activity
 import android.content.Intent
 import android.text.TextUtils
-import android.view.View
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import com.blankj.utilcode.util.ActivityUtils
@@ -81,7 +80,7 @@ class UserInfoActivity : SddBaseActivity(), UserAvatarContract.View {
             vg_doctor_info.isVisible = isDoctor
             vg_counselor.isVisible = !isDoctor
             dv_name!!.setContentText(doctorInfo.name)
-            tv_personal_intro.text = doctorInfo.introduction
+            tv_personal_intro.text = if (TextUtils.isEmpty(doctorInfo.introduction)) getString(R.string.no_personal_intro_yet) else doctorInfo.introduction
             if (isDoctor) {
                 sedItemContentText(doctorInfo.department, "未选择", dv_department!!)
                 sedItemContentText(doctorInfo.title, "未选择", dv_job_title!!)

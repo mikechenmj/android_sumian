@@ -794,9 +794,9 @@
         <item>6片</item>
     </string-array>
     <string-array name="pill_time_options">
-        <item>早饭前／后</item>
-        <item>午饭前／后</item>
-        <item>晚饭前／后</item>
+        <item>早饭前/后</item>
+        <item>午饭前/后</item>
+        <item>晚饭前/后</item>
         <item>睡前</item>
     </string-array>
     <string-array name="fill_diary_remark_options">

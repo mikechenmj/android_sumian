@@ -390,7 +390,8 @@
     <string name="save">保存</string>
     <string name="input_job_title_hint" tools:ignore="TypographyDashes">请输入您的所在职称（2-10字）</string>
     <string name="input_department_hint" tools:ignore="TypographyDashes">请输入您的所在科室（2-10字）</string>
-    <string name="complete_authentication_to_get_more_service">完成认证，可体验 CBTI 更多内容</string>
+    <string name="complete_authentication_to_get_more_service">完成身份认证，可开启更多服务</string>
+    <string name="complete_authentication_to_explore_more_cbti">完成认证，可体验 CBTI 更多内容</string>
     <string name="visitor_to_get_more_service">登录认证后可查看更多CBTI内容</string>
     <string name="authenticate_is_going_please_wait">认证资料审核中，请您在审核通过后再开启服务。</string>
     <string name="after_authentication_you_can_open_service">通过医生认证后，才能开通收费服务</string>

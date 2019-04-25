@@ -123,7 +123,7 @@
                 android:id="@+id/dv_job_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:divider_line_visible="invisible"
+                app:divider_line_visible="visible"
                 app:divider_more_visible="gone"
                 app:type_content="未选择"
                 app:type_desc="@string/job_title"

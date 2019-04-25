@@ -39,7 +39,7 @@ class ShareSleepDiaryDialogActivity : BaseDialogViewModelActivity<BaseViewModel>
                     "        \"sleep_knowledge\":{\n" +
                     "            \"id\":2,\n" +
                     "            \"question\":\"qqq2\",\n" +
-                    "            \"answer\":\"aa \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  a2\"\n" +
+                    "            \"answer\":\"aa \na2\"\n" +
                     "        },\n" +
                     "        \"official_qr_code\":\"https://sleep-doctor-dev.oss-cn-shenzhen.aliyuncs.com/official_account/diary_achievement.png\"\n" +
                     "    }"
@@ -105,6 +105,11 @@ class ShareSleepDiaryDialogActivity : BaseDialogViewModelActivity<BaseViewModel>
     override fun onDestroy() {
         super.onDestroy()
         StatUtil.event(StatConstants.click_sleep_diary_share_cancel)
+    }
+
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(0, 0)
     }
 
 }

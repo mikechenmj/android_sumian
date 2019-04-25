@@ -195,7 +195,7 @@
                         style="@style/SumianEditText"
                         android:layout_marginStart="@dimen/space_20"
                         android:background="@null"
-                        android:gravity="end|center_vertical"
+                        android:gravity="center_vertical"
                         android:hint="@string/please_input_your_work_experience_hours"
                         android:inputType="number"
                         android:maxLines="1"
