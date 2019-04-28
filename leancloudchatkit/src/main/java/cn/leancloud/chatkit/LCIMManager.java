@@ -26,6 +26,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -295,7 +296,8 @@ public final class LCIMManager {
     public void queryConversationList(final int limit, final AVIMConversationQueryCallback callback) {
         AVIMConversationsQuery query = getClient().getConversationsQuery();
         query.limit(limit);
-//        query.whereEqualTo("conversation_type", "0");
+        query.whereContains("m", mUserId);
+        query.whereContainsIn("attr.conversation_type", Arrays.asList(0, 1));
         query.setWithLastMessagesRefreshed(true);
         query.setQueryPolicy(AVQuery.CachePolicy.NETWORK_ONLY);
         query.findInBackground(callback);
