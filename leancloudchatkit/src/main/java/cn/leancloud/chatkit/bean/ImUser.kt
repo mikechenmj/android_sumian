@@ -15,7 +15,9 @@ data class ImUser(
         @SerializedName("nickname")
         val nickname: String, // test詹徐照
         @SerializedName("real_name")
-        val realName: String?
+        val realName: String?,
+        @SerializedName("type")
+        val type: Int  //0:医生 1:咨询师
 ) {
     fun getNameOrNickname(): String {
         return if (!TextUtils.isEmpty(realName)) {
@@ -26,6 +28,18 @@ data class ImUser(
             nickname!!
         } else {
             "no name"
+        }
+    }
+
+    fun isDoctor(): Boolean {
+        return type == 0
+    }
+
+    fun getNameSuffix(): String {
+        return if (type == 0) {
+            "医生"
+        } else {
+            "咨询师"
         }
     }
 }
