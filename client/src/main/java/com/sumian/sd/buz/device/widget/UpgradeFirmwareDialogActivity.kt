@@ -37,7 +37,7 @@ class UpgradeFirmwareDialogActivity : BaseActivity() {
             }
             SPUtils.getInstance().put(spKey, System.currentTimeMillis())
             val intent = Intent(ActivityUtils.getTopActivity(), UpgradeFirmwareDialogActivity::class.java)
-            intent.putExtra(KEY_TYPE, if (monitorHasNewVersion) KEY_TYPE_MONITOR else KEY_TYPE_MONITOR)
+            intent.putExtra(KEY_TYPE, if (monitorHasNewVersion) KEY_TYPE_MONITOR else KEY_TYPE_SLEEPER)
             ActivityUtils.startActivity(intent)
         }
     }
