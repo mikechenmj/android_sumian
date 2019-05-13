@@ -93,7 +93,7 @@ class SyncDeviceDataHelper(deviceManager: DeviceManager) {
                 if (cmd.length == 34) {
                     mTotalPackageCount = subHexStringToInt(cmd, 26, 28)
                     mCurrentPackageIndex = subHexStringToInt(cmd, 28, 30)
-                    if (mCurrentPackageIndex == 1) {
+                    if (mCurrentPackageIndex == 1 || mTranType == 2) { // type = 2 时 获取不到current package index
                         mTotalProgress = 0
                         mTransformStartTime = System.currentTimeMillis()
                     }
