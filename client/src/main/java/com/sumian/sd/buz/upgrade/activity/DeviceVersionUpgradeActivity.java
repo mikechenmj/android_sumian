@@ -22,10 +22,12 @@ import com.sumian.sd.R;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.buz.devicemanager.DeviceManager;
 import com.sumian.sd.buz.setting.version.VersionManager;
+import com.sumian.sd.buz.upgrade.bean.VersionInfo;
 import com.sumian.sd.buz.upgrade.dialog.Version2ConnectingDialog;
 import com.sumian.sd.buz.upgrade.dialog.VersionDialog;
 import com.sumian.sd.buz.upgrade.presenter.DeviceVersionUpgradePresenter;
 import com.sumian.sd.common.log.LogManager;
+import com.sumian.sd.common.network.response.FirmwareVersionInfo;
 import com.sumian.sd.widget.dialog.SumianAlertDialog;
 
 import java.util.List;
@@ -47,7 +49,6 @@ import pub.devrel.easypermissions.EasyPermissions;
  * desc:固件升级提醒模块
  */
 
-@SuppressWarnings("ConstantConditions")
 public class DeviceVersionUpgradeActivity extends BaseViewModelActivity implements View.OnClickListener, TitleBar.OnBackClickListener
         , EasyPermissions.PermissionCallbacks {
     public static final int VERSION_TYPE_MONITOR = 0x02;
@@ -222,14 +223,25 @@ public class DeviceVersionUpgradeActivity extends BaseViewModelActivity implemen
         super.initData();
         String newVersion = null;
         String currentVersion = null;
+        FirmwareVersionInfo firmwareVersionInfo = VersionManager.INSTANCE.getMFirmwareVersionInfoLD().getValue();
         switch (mVersionType) {
             case VERSION_TYPE_MONITOR:
-                newVersion = VersionManager.INSTANCE.getMFirmwareVersionInfoLD().getValue().monitor.getVersion();
                 currentVersion = DeviceManager.INSTANCE.getMonitorVersion();
+                if (firmwareVersionInfo != null) {
+                    VersionInfo monitor = firmwareVersionInfo.monitor;
+                    if (monitor != null) {
+                        newVersion = monitor.getVersion();
+                    }
+                }
                 break;
             case VERSION_TYPE_SLEEPY:
-                newVersion = VersionManager.INSTANCE.getMFirmwareVersionInfoLD().getValue().sleeper.getVersion();
                 currentVersion = DeviceManager.INSTANCE.getSleeperVersion();
+                if (firmwareVersionInfo != null) {
+                    VersionInfo sleeper = firmwareVersionInfo.sleeper;
+                    if (sleeper != null) {
+                        newVersion = sleeper.getVersion();
+                    }
+                }
                 break;
             default:
                 break;

@@ -49,7 +49,7 @@ public class VersionInfoView extends LinearLayout {
     public void updateUpgradeInfo(boolean isShowDot, String sn) {
         mTvSn.setText(sn);
         mUpgradeDot.setVisibility(isShowDot ? VISIBLE : GONE);
-        setVisibility(isShowDot ? VISIBLE : GONE);
+//        setVisibility(isShowDot ? VISIBLE : GONE);
     }
 
     public void hide() {
