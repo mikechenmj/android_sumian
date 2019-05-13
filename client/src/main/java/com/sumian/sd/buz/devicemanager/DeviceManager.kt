@@ -2,6 +2,7 @@
 
 package com.sumian.sd.buz.devicemanager
 
+import android.bluetooth.BluetoothDevice
 import android.content.Context
 import android.text.TextUtils
 import androidx.lifecycle.MutableLiveData
@@ -11,6 +12,7 @@ import com.sumian.blue.callback.BlueAdapterCallback
 import com.sumian.blue.callback.BluePeripheralCallback
 import com.sumian.blue.callback.BluePeripheralDataCallback
 import com.sumian.blue.constant.BlueConstant
+import com.sumian.blue.manager.BlueManager
 import com.sumian.blue.model.BluePeripheral
 import com.sumian.blue.model.bean.BlueUuidConfig
 import com.sumian.common.statistic.StatUtil
@@ -47,8 +49,6 @@ object DeviceManager : BlueAdapterCallback, MonitorEventListener {
     private val mIsUploadingSleepDataToServerLiveData = MutableLiveData<Boolean>()
     private val mSyncDataHelper = SyncDeviceDataHelper(this)
     private val mDeviceStateHelper = DeviceStateHelper(this)
-    private var mConnectMonitor: BlueDevice? = null     // 等待被连接的monitor，用于重连
-    private var mConnectRetryTimes = 0  // 连接失败重连次数
     private val mPhoneInfo = SystemUtil.getDeviceBrand() + " " + SystemUtil.getSystemModel()
 
     fun init(context: Context) {
@@ -180,20 +180,30 @@ object DeviceManager : BlueAdapterCallback, MonitorEventListener {
     private var mStartConnectTime = 0L // log connect time
 
     fun connectMonitor(monitor: BlueDevice) {
-        connectMonitor(monitor, false)
+        scanAndConnect(monitor)
+    }
+
+    fun scanAndConnect(monitor: BlueDevice) {
+        monitor.status = BlueDevice.STATUS_CONNECTING
+        setMonitorToLiveData(monitor)
+        onConnectStart()
+        AppManager.getBlueManager().scanForDevice(monitor.mac, object : BlueManager.ScanForDeviceListener {
+
+            override fun onDeviceFound(device: BluetoothDevice?) {
+                connectMonitor(monitor, false)
+            }
+
+            override fun onScanStop(isTimeout: Boolean) {
+                onConnectFailed()
+            }
+        })
     }
 
     /**
      * 断开蓝牙后直接connect连不上，需要先扫描，再连接
      */
     private fun connectMonitor(monitor: BlueDevice, isRetry: Boolean = false) {
-        if (!isRetry) {
-//            StatUtil.trackCustomBeginKVEvent(StatConstants.connect_device)
-            mStartConnectTime = System.currentTimeMillis()
-            mConnectRetryTimes = 0
-            onConnectStart()
-        }
-        mConnectMonitor = monitor
+        mStartConnectTime = System.currentTimeMillis()
         AppManager.getBlueManager().clearBluePeripheral()
         val remoteDevice = AppManager.getBlueManager().getBluetoothDeviceFromMac(monitor.mac)
         if (remoteDevice != null) {
@@ -240,27 +250,21 @@ object DeviceManager : BlueAdapterCallback, MonitorEventListener {
                     "connect_time" to (System.currentTimeMillis() - mStartConnectTime).toString(),
                     "phone_info" to mPhoneInfo,
                     "result" to "success"))
-//            StatUtil.trackCustomEndKVEvent(StatConstants.connect_device)
         }
 
         override fun onConnectFailed(peripheral: BluePeripheral, connectState: Int) {
-            if (mConnectRetryTimes > MAX_CONNECT_RETRY_TIMES) {
-                if (isSyncing()) {
-                    mMonitorLiveData.value?.isSyncing = false
-                    onSyncFailed()
-                }
-                onConnectFailed()
-                AppManager.getBlueManager().refresh()
-                LogManager.appendMonitorLog("监测仪连接失败，耗时${System.currentTimeMillis() - mStartConnectTime}ms")
-                StatUtil.event(StatConstants.connect_device, mapOf(
-                        "connect_time" to (System.currentTimeMillis() - mStartConnectTime).toString(),
-                        "phone_info" to mPhoneInfo,
-                        "result" to "fail"))
-//                StatUtil.trackCustomEndKVEvent(StatConstants.connect_device)
-            } else {
-                LogManager.appendMonitorLog("监测仪连接失败 尝试重连 第 ${mConnectRetryTimes + 1} 次 ${peripheral.name}")
-                connectMonitor(mConnectMonitor ?: return, true)
+            if (isSyncing()) {
+                mMonitorLiveData.value?.isSyncing = false
+                onSyncFailed()
             }
+            onConnectFailed()
+            AppManager.getBlueManager().refresh()
+            LogManager.appendMonitorLog("监测仪连接失败 " + peripheral.name)
+
+            StatUtil.event(StatConstants.connect_device, mapOf(
+                    "connect_time" to (System.currentTimeMillis() - mStartConnectTime).toString(),
+                    "phone_info" to mPhoneInfo,
+                    "result" to "fail"))
         }
 
         override fun onDisconnecting(peripheral: BluePeripheral, connectState: Int) {
