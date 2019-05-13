@@ -62,10 +62,12 @@ class SyncDeviceDataHelper(deviceManager: DeviceManager) {
 
     /**
      * 开始 55 8e 1 06a 01 5c665b03 5c5ec240 01 01 006a
+     * 开始 55 8e 2 02f 01 5cd93917 5cd93917
      * 结束 55 8e 1 06a 0f 5c665b03
      * 55 指令头 1 byte，
      * 8e 指令类型 1 byte，
-     * 1 06a 数据类型 4 bit，数据长度 12 bit，
+     * 1  数据类型 4 bit，
+     * 06a  数据长度 12 bit，
      * 01 起始标记 1 byte，
      * 5c46833f 传输id 4 byte，
      * 386cd300 睡眠数据采集开始时间 4 byte
@@ -93,11 +95,14 @@ class SyncDeviceDataHelper(deviceManager: DeviceManager) {
                 if (cmd.length == 34) {
                     mTotalPackageCount = subHexStringToInt(cmd, 26, 28)
                     mCurrentPackageIndex = subHexStringToInt(cmd, 28, 30)
-                    if (mCurrentPackageIndex == 1 || mTranType == 2) { // type = 2 时 获取不到current package index
+                    if (mCurrentPackageIndex == 1) {
                         mTotalProgress = 0
                         mTransformStartTime = System.currentTimeMillis()
                     }
                     mTotalDataCount = subHexStringToInt(cmd, 30, 34)
+                } else if (mTranType == 2) {// type = 2 时 获取不到current package index
+                    mTotalProgress = 0
+                    mTotalDataCount = dataCount
                 }
                 LogManager.appendMonitorLog("开始透传 mCurrentPackageIndex: ${mCurrentPackageIndex}， mTotalPackageCount: $mTotalPackageCount, mTotalDataCount: $mTotalDataCount")
                 if (isAvailableStorageEnough(dataCount)) {
