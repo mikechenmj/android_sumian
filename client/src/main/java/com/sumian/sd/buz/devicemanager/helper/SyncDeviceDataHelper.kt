@@ -121,7 +121,7 @@ class SyncDeviceDataHelper(deviceManager: DeviceManager) {
             -> {
                 mPackageNumber++
                 @Suppress("UNCHECKED_CAST")
-                if (dataCount == m8fTransData.size) {
+                if (m8fTransData.size >= dataCount) {
                     val sleepData = m8fTransData.clone() as ArrayList<String>
                     m8fTransData.clear()
                     if (isAvailableStorageEnough(dataCount)) {
@@ -152,6 +152,7 @@ class SyncDeviceDataHelper(deviceManager: DeviceManager) {
                         postDelaySyncSuccess()
                     }
                 } else {
+                    onSyncFailed()
                     LogManager.appendMonitorLog(
                             "0x8e0f 透传数据" + dataCount + "包接收失败,原因是包数量不一致 实际收到包数量 RealDataCount="
                                     + mPackageCurrentIndex + " 重新透传数据已准备,等待设备重新透传  cmd=" + cmd)
@@ -263,11 +264,12 @@ class SyncDeviceDataHelper(deviceManager: DeviceManager) {
     }
 
     fun onSyncProgressChange(packageNumber: Int, packageProgress: Int, packageTotalCount: Int) {
-        mDeviceManager.onSyncProgressChange(packageNumber, packageProgress, packageTotalCount)
+        mDeviceManager.onSyncProgressChange(packageNumber, Math.min(packageProgress, packageTotalCount), packageTotalCount)
     }
 
     fun onSyncProgressChangeV2(packageNumber: Int, totalProgress: Int, totalCount: Int) {
-        mDeviceManager.onSyncProgressChangeV2(packageNumber, totalProgress, totalCount)
+        // Math.min 避免监督超过100%，遇到过传输数据比预先应答的长的情况
+        mDeviceManager.onSyncProgressChangeV2(packageNumber, Math.min(totalProgress, totalCount), totalCount)
     }
 
 }
