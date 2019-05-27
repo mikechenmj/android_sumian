@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/vg_device"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:ignore="HardcodedText">
+
+    <FrameLayout
+        android:id="@+id/vg_device_info_label"
+        android:layout_width="match_parent"
+        android:layout_height="32dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:paddingStart="8dp"
+            android:text="Device info" />
+
+        <ImageView
+            android:id="@+id/sw_show_device_info"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="end"
+            android:scaleType="centerInside"
+            android:src="@drawable/sel_expend_more" />
+
+    </FrameLayout>
+
+    <include layout="@layout/layout_divider_line_horizontal" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/vg_device_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_monitor_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="mnt address: " />
+
+                <TextView
+                    android:id="@+id/tv_monitor_sn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="mnt sn: " />
+
+                <TextView
+                    android:id="@+id/tv_connect_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="mnt status: " />
+
+
+                <TextView
+                    android:id="@+id/tv_monitor_battery"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="mnt battery: " />
+
+                <TextView
+                    android:id="@+id/tv_connect_time_cost"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="mnt connect time: " />
+
+                <TextView
+                    android:id="@+id/tv_monitor_sw_version"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="mnt sw version: " />
+
+                <TextView
+                    android:id="@+id/tv_monitor_hw_version"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="mnt hw version: " />
+
+                <TextView
+                    android:id="@+id/tv_monitor_hl_version"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="mnt hbl version: " />
+
+                <TextView
+                    android:id="@+id/tv_monitor_sa_version"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="mnt sa version: " />
+
+                <TextView
+                    android:id="@+id/tv_monitor_is_syncing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="mnt is syncing: " />
+
+                <TextView
+                    android:id="@+id/tv_monitor_sync_progress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="mnt sync progress: 0 / 100 " />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_sm_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="sm address: " />
+
+                <TextView
+                    android:id="@+id/tv_sm_sn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="sm sn: " />
+
+
+                <TextView
+                    android:id="@+id/tv_sm_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="sm status: " />
+
+                <TextView
+                    android:id="@+id/tv_sm_battery"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="sm battery: " />
+
+                <TextView
+                    android:id="@+id/tv_sm_pa_on"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="sm pa on: " />
+
+                <TextView
+                    android:id="@+id/tv_sm_sw_version"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="sm sw version: " />
+
+                <TextView
+                    android:id="@+id/tv_sm_hw_version"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="sm hw version: " />
+
+                <TextView
+                    android:id="@+id/tv_sm_ha_version"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="sm ha version: " />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <include layout="@layout/layout_divider_line_horizontal" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/bt_disconnect"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="disconnect"
+            android:visibility="visible" />
+
+        <Button
+            android:id="@+id/bt_connect"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="connect" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/bt_write_mock_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="write data"
+            android:visibility="visible" />
+
+        <Button
+            android:id="@+id/bt_sync_data"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="sync data"
+            android:visibility="visible" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/bt_login"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="login"
+            android:visibility="visible" />
+
+        <Button
+            android:id="@+id/bt_upload_data"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="upload data"
+            android:visibility="visible" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/bt_upgrade"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="upgrade"
+            android:visibility="visible" />
+
+        <!--<Button-->
+        <!--android:id="@+id/bt_upload_data"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_weight="1"-->
+        <!--android:text="upload data"-->
+        <!--android:visibility="visible" />-->
+    </LinearLayout>
+
+    <include layout="@layout/layout_divider_line_horizontal" />
+
+</LinearLayout>

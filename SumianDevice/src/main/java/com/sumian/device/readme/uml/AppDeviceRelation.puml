@@ -1,0 +1,8 @@
+@startuml
+agent "App" as a
+agent "监测仪" as m
+agent "速眠仪" as s
+
+a <-> m
+m <-> s
+@enduml

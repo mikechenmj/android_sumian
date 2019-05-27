@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">SumianMonitor</string>
+
+    <!--turn on sleep master pa mode error message -->
+    <string name="sleepy_not_connected_monitor">监测仪未连接速眠仪,请让监测仪连接上速眠仪</string>
+    <string name="not_wear_monitor">监测仪未佩戴,请佩戴监测仪</string>
+    <string name="head_not_at_pillow">头部未在枕头上</string>
+    <string name="monitor_is_charging">速眠仪不能开启工作模式，原因是设备正在充电</string>
+    <string name="not_turn_on_pa_mode">设备独立模式已开启,不能开启,请先关闭独立模式</string>
+    <string name="not_turn_on_pa_mode_in_sleep_time">正在睡眠中,请勿再次开启</string>
+    <string name="turn_on_sleepy_pa_mode_error_unknown">未知错误,请重启设备或联系客服</string>
+
+    <string name="error_unknown">未知错误</string>
+    <string name="monitor_is_syncing_please_try_it_later">监测仪同步中，请稍后重试</string>
+    <string name="monitor_energy_is_low_please_try_it_later">监测仪电量过低，请充点后重试</string>
+</resources>

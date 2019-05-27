@@ -1,0 +1,220 @@
+package com.sumian.devicedemo.sleepdata.ui
+
+import android.content.Intent
+import android.os.Bundle
+import android.text.format.DateUtils
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
+import com.blankj.utilcode.util.ActivityUtils
+import com.blankj.utilcode.util.ToastUtils
+import com.google.gson.JsonObject
+import com.google.gson.reflect.TypeToken
+import com.sumian.device.net.NetworkManager
+import com.sumian.device.util.JsonUtil
+import com.sumian.devicedemo.R
+import com.sumian.devicedemo.base.BaseActivity
+import com.sumian.devicedemo.sleepdata.data.CalendarItemSleepReport
+import com.sumian.devicedemo.sleepdata.util.TimeUtilV2
+import com.sumian.devicedemo.sleepdata.widget.calendarView.CalendarView
+import com.sumian.devicedemo.sleepdata.widget.custom.CalendarPopup
+import com.sumian.devicedemo.sleepdata.widget.custom.SleepCalendarViewWrapper.PRELOAD_THRESHOLD
+import kotlinx.android.synthetic.main.activity_weekly_report.*
+import org.json.JSONArray
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.util.*
+import kotlin.collections.ArrayList
+
+/**
+ * @author : Zhan Xuzhao
+ * e-mail : xuzhao.z@sumian.com
+ * time   : 2018/10/12 16:37
+ * desc   :
+ * version: 1.0
+ */
+class WeeklyReportActivity : BaseActivity() {
+    private val mAdapter by lazy { InnerPagerAdapter(supportFragmentManager!!) }
+
+    companion object {
+        private const val KEY_SCROLL_TIME = "scroll_time"
+
+        fun launch(time: Long) {
+            val intent = Intent(ActivityUtils.getTopActivity(), WeeklyReportActivity::class.java)
+            intent.putExtra(KEY_SCROLL_TIME, time)
+            ActivityUtils.startActivity(intent)
+        }
+    }
+
+//    override fun showBackNav(): Boolean {
+//        return true
+//    }
+
+    override fun getLayoutId(): Int {
+        return R.layout.activity_weekly_report
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+//        setTitle(R.string.weekly_data)
+        initDateBar()
+        initViewPager()
+    }
+
+    private fun initViewPager() {
+        view_pager.adapter = mAdapter
+        mAdapter.addDays(TimeUtilV2.getDayStartTime(getInitTime()), PRELOAD_THRESHOLD * 2, true)
+        view_pager.setCurrentItem(mAdapter.count - 1, false)
+        view_pager.addOnPageChangeListener(object :
+                androidx.viewpager.widget.ViewPager.OnPageChangeListener {
+            override fun onPageScrollStateChanged(state: Int) {
+                val currentItem = view_pager.currentItem
+                date_bar.setCurrentTime(mAdapter.times[currentItem])
+                if (state == androidx.viewpager.widget.ViewPager.SCROLL_STATE_IDLE && currentItem < PRELOAD_THRESHOLD) {
+                    mAdapter.addDays(mAdapter.times[0], PRELOAD_THRESHOLD, false)
+                }
+            }
+
+            override fun onPageScrolled(
+                    position: Int,
+                    positionOffset: Float,
+                    positionOffsetPixels: Int
+            ) {
+            }
+
+            override fun onPageSelected(position: Int) {
+            }
+        })
+    }
+
+    /**
+     * 监测数据是每天20：00开放 第二天的日期
+     */
+    private fun getInitTime(): Long {
+        val calendar = Calendar.getInstance()
+        if (calendar.get(Calendar.HOUR_OF_DAY) >= 20) {
+            TimeUtilV2.rollDay(calendar, 1)
+        }
+        return calendar.timeInMillis
+    }
+
+    private fun initDateBar() {
+        val calendar = Calendar.getInstance()
+        val previewDays = if (calendar.get(Calendar.HOUR_OF_DAY) >= 20) 1 else 0
+        date_bar.setPreviewDays(previewDays)
+        date_bar.setCurrentTime(getInitTime())
+        date_bar.setDataLoader(object : CalendarPopup.DataLoader {
+            override fun loadData(startMonthTime: Long, monthCount: Int, isInit: Boolean) {
+                val map = HashMap<String, Any>(0)
+                map["date"] = (startMonthTime / 1000).toInt()
+                map["page_size"] = monthCount
+                map["is_include"] = if (isInit) 1 else 0
+                val call = NetworkManager.getApi().getCalendarSleepReport(map)
+                call.enqueue(object : Callback<JsonObject> {
+                    override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                        ToastUtils.showShort(t.message)
+                    }
+
+                    override fun onResponse(
+                            call: Call<JsonObject>,
+                            response: Response<JsonObject>
+                    ) {
+                        if (response.isSuccessful) {
+                            val body = response.body()
+                            val hasDataDays = HashSet<Long>()
+                            val entries = body!!.entrySet()
+                            for ((_, value) in entries) {
+                                if (value is JSONArray) {
+                                    val calendarItemSleepReports =
+                                            JsonUtil.fromJson<List<CalendarItemSleepReport>>(
+                                                    value.toString(),
+                                                    object :
+                                                            TypeToken<ArrayList<CalendarItemSleepReport>>() {}.type
+                                            )
+                                    for (report in calendarItemSleepReports!!) {
+                                        hasDataDays.add(report.dateInMillis)
+                                    }
+                                }
+                            }
+                            date_bar.addMonthAndData(startMonthTime, hasDataDays, isInit)
+                        }
+                    }
+
+                    //                    override fun onSuccess(response: JsonObject?) {
+//                        val hasDataDays = HashSet<Long>()
+//                        val jsonObject = JSON.parseObject(response.toString())
+//                        val entries = jsonObject.entries
+//                        for ((_, value) in entries) {
+//                            if (value is JSONArray) {
+//                                val calendarItemSleepReports = value.toJavaList(
+//                                    CalendarItemSleepReport::class.java)
+//                                for (report in calendarItemSleepReports) {
+//                                    hasDataDays.add(report.dateInMillis)
+//                                }
+//                            }
+//                        }
+//                        date_bar.addMonthAndData(startMonthTime, hasDataDays, isInit)
+//                    }
+//
+//                    override fun onFailure(errorResponse: ErrorResponse) {
+//                        LogUtils.d(errorResponse.message)
+//                    }
+                })
+            }
+        })
+        date_bar.setOnDateClickListener(CalendarView.OnDateClickListener { time ->
+            scrollToTime(
+                    TimeUtilV2.getWeekStartDayTime(time)
+            )
+        })
+    }
+
+    private fun scrollToTime(time: Long) {
+        val firstTime = mAdapter.times[0]
+        if (time < firstTime) {
+            val count = (firstTime - time) / DateUtils.WEEK_IN_MILLIS + PRELOAD_THRESHOLD
+            mAdapter.addDays(firstTime, count.toInt(), false)
+        }
+        view_pager.setCurrentItem(mAdapter.times.indexOf(time), false)
+    }
+
+    class InnerPagerAdapter(fragmentManager: FragmentManager) :
+            FragmentPagerAdapter(fragmentManager) {
+        val times = ArrayList<Long>()
+
+        override fun getItem(position: Int): Fragment {
+            return WeeklyReportFragmentV2.newInstance(times[position])
+        }
+
+        override fun getItemId(position: Int): Long {
+            return times[position]
+        }
+
+        override fun getCount(): Int {
+            return times.size
+        }
+
+        override fun getItemPosition(obj: Any): Int {
+            return if (obj is WeeklyReportFragmentV2) {
+                val positionByTime = times.indexOf(obj.getSelectedTime())
+                positionByTime
+            } else {
+                super.getItemPosition(obj)
+            }
+        }
+
+        private fun createWeeks(
+                time: Long,
+                dayCount: Int = PRELOAD_THRESHOLD,
+                include: Boolean
+        ): ArrayList<Long> {
+            return TimeUtilV2.createWeeks(time, dayCount, false, include)
+        }
+
+        fun addDays(time: Long, dayCount: Int = PRELOAD_THRESHOLD, include: Boolean) {
+            times.addAll(0, createWeeks(time, dayCount, include))
+            notifyDataSetChanged()
+        }
+    }
+}

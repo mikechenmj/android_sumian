@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:skin="http://schemas.android.com/android/skin"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tv_label"
+        style="@style/text_t1_14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_20"
+        android:gravity="center"
+        android:text="@string/week_sleep_average_duration"
+        android:textColor="@color/t1_color_day"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        skin:enable="true"
+        tools:ignore="MissingPrefix" />
+
+    <com.sumian.devicedemo.sleepdata.widget.CountSleepDurationTextView
+        android:id="@+id/tv_duration"
+        style="@style/text_b3_14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_20"
+        android:layout_marginTop="@dimen/space_6"
+        android:gravity="center"
+        android:textStyle="bold"
+        app:csdtv_default_drawable="@drawable/bg_text_t5"
+        app:csdtv_number_text_size="@dimen/font_21"
+        app:csdtv_unit_text_size="@dimen/font_13"
+        app:layout_constraintLeft_toLeftOf="@id/tv_label"
+        app:layout_constraintRight_toRightOf="@id/tv_label"
+        app:layout_constraintTop_toBottomOf="@+id/tv_label"
+        skin:enable="true" />
+
+    <TextView
+        android:id="@+id/tv_compare_label"
+        style="@style/text_t1_14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/space_32"
+        android:text="@string/compare_week_hint"
+        android:textColor="@color/t1_color_day"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        skin:enable="true"
+        tools:ignore="MissingPrefix" />
+
+    <TextView
+        android:id="@+id/tv_compare_duration"
+        style="@style/text_b3_14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_6"
+        android:gravity="center"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="@id/tv_compare_label"
+        app:layout_constraintRight_toRightOf="@id/tv_compare_label"
+        app:layout_constraintTop_toBottomOf="@+id/tv_compare_label" />
+
+    <View
+        android:id="@+id/v_divider"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_1"
+        android:layout_marginStart="@dimen/space_20"
+        android:layout_marginTop="@dimen/space_20"
+        android:layout_marginEnd="@dimen/space_20"
+        android:background="@color/l1_color_day"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="@id/tv_duration"
+        app:layout_constraintRight_toRightOf="@id/tv_compare_duration"
+        app:layout_constraintTop_toBottomOf="@id/tv_duration"
+        skin:enable="true"
+        tools:ignore="MissingPrefix" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

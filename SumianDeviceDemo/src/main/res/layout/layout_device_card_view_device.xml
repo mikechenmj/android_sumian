@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_device"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:visibility="gone"
+    tools:background="@color/white"
+    tools:visibility="visible">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:enabled="false"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tv_sync"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:background="@drawable/shape_device_sync_bg"
+                android:enabled="false"
+                android:gravity="center"
+                android:paddingStart="28dp"
+                android:paddingEnd="10dp"
+                android:text="@string/syncing"
+                android:textColor="@color/sel_home_sync_tv" />
+
+            <ImageView
+                android:id="@+id/iv_sync"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="10dp"
+                android:src="@drawable/sel_home_sync_tv_bg"
+                tools:ignore="ContentDescription" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tv_progress"
+            style="@style/text_t2_14"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="20dp"
+            android:textStyle="bold"
+            tools:text="(90%)" />
+
+        <Space style="@style/space_horizontal_weight_1" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            tools:ignore="NestedWeights">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/text_t3_16"
+                    android:text="@string/monitor" />
+
+                <Space
+                    android:layout_width="10dp"
+                    android:layout_height="0dp" />
+
+                <TextView
+                    android:id="@+id/tv_monitor_status"
+                    style="@style/text_t2_14"
+                    android:padding="2dp"
+                    android:text="@string/already_connected" />
+            </LinearLayout>
+
+            <com.sumian.devicedemo.device.widget.BatteryView
+                android:id="@+id/monitor_battery_view"
+                android:layout_width="100dp"
+                android:layout_height="55dp"
+                android:layout_marginTop="10dp" />
+
+        </LinearLayout>
+
+        <View
+            style="@style/VerticalDividerLine"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="40dp" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/text_t3_16"
+                    android:text="@string/speed_sleeper" />
+
+                <Space
+                    android:layout_width="10dp"
+                    android:layout_height="0dp" />
+
+                <TextView
+                    android:id="@+id/tv_sleep_master_status"
+                    style="@style/text_t2_14"
+                    android:padding="2dp"
+                    android:text="@string/already_connected" />
+            </LinearLayout>
+
+            <com.sumian.devicedemo.device.widget.BatteryView
+                android:id="@+id/sleeper_battery_view"
+                android:layout_width="100dp"
+                android:layout_height="55dp"
+                android:layout_marginTop="10dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_bottom_hint"
+        style="@style/text_t2_14"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:text="@string/monitor_is_connect_please_check_sleepers_connectivity" />
+
+    <FrameLayout
+        android:id="@+id/fl_turn_pa_bt_container"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center_vertical">
+
+        <View style="@style/HorizontalDividerLineMarginStart20" />
+
+        <TextView
+            style="@style/text_t1_14"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="20dp"
+            android:text="@string/speed_sleeper_already" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_turn_on_pa"
+            style="@style/SumianButton"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_gravity="end|center_vertical"
+            android:layout_marginEnd="20dp"
+            android:drawablePadding="10dp"
+            android:text="@string/start_work" />
+    </FrameLayout>
+
+    <View style="@style/HorizontalDividerLineMarginStart20" />
+
+</LinearLayout>

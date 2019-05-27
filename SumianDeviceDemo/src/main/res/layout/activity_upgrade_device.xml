@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context=".device.UpgradeDeviceActivity">
+
+    <ImageView
+        android:id="@+id/iv_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:src="@drawable/ic_upgrade_device_download" />
+
+
+    <TextView
+        android:id="@+id/tv_current_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        tools:text="@string/current_version_s" />
+
+
+    <TextView
+        android:id="@+id/tv_latest_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        tools:text="@string/latest_version_s" />
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="64dp" />
+
+    <TextView
+        android:id="@+id/bt_download"
+        style="@style/SumianButton"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:text="下载"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/bt_upgrade"
+        style="@style/SumianButton"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:text="升级"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+</LinearLayout>

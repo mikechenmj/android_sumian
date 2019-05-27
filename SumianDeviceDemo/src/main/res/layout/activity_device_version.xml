@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context=".device.DeviceVersionActivity"
+    tools:ignore="HardcodedText">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:src="@drawable/ic_logo" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        tools:text="监测仪版本：1.0.0" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        tools:text="速眠仪版本：1.0.0" />
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="64dp" />
+
+    <include
+        android:id="@+id/item_monitor"
+        layout="@layout/layout_label_content_item" />
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="1dp" />
+
+    <include
+        android:id="@+id/item_sleep_master"
+        layout="@layout/layout_label_content_item" />
+
+</LinearLayout>

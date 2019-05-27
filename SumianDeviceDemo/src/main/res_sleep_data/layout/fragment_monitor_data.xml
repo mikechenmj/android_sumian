@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nested_scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <com.sumian.devicedemo.sleepdata.widget.TouchDailySleepHistogramView
+                    android:id="@+id/day_sleep_histogram_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/space_200"
+                    android:gravity="center"
+                    app:tdshv_coordinate_color="@color/l3_color_day"
+                    app:tdshv_deep_color="@color/g1_color_day"
+                    app:tdshv_empty_text_color="@color/t5_color_day"
+                    app:tdshv_eog_color="@color/g2_color_day"
+                    app:tdshv_light_color="@color/g2_color_day"
+                    app:tdshv_sober_color="@color/g3_color_day" />
+
+                <com.sumian.devicedemo.sleepdata.widget.ReportIndicatorRuleView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/space_26" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_10"
+                    android:layout_marginTop="@dimen/space_24"
+                    android:layout_marginRight="@dimen/space_10"
+                    android:layout_marginBottom="@dimen/space_20"
+                    app:cardBackgroundColor="@color/b2_color_day"
+                    app:cardCornerRadius="@dimen/space_4"
+                    app:cardElevation="0dp"
+                    app:contentPadding="@dimen/space_20">
+
+                    <com.sumian.devicedemo.sleepdata.widget.ReportSleepDurationView
+                        android:id="@+id/report_sleep_duration_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</FrameLayout>

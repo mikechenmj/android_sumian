@@ -1,0 +1,193 @@
+@startuml
+
+class DeviceManager {
+'   monitor status
+    + monitorStatus: DeviceStatus
+    + sleeperStatus: DeviceStatus
+    + isSyncing:Boolean
+    + isUpgrading:Boolean
+
+    + monitorBattery: Int   // 0-100
+    + sleeperBattery: Int   // 0-100
+    + isSleepMasterPaModeOn: Boolean
+
+    + monitorSoftwareVersion: String
+    + monitorHardwareVersion: String
+    + sleepMasterSoftwareVersion: String
+    + sleepMasterHardwareVersion: String
+
+    + init()
+
+    + setUserInfo(float weight, float height, ...)
+
+'    device status listener
+    + registerDeviceStatusChangeListener(DeviceStatusListener listener)
+    + unregisterDeviceStatusChangeListener(DeviceStatusListener listener)
+    + registerBluetoothStatusListener(BluetoothStatusListener listener)
+
+'   device scan
+    + scan(filters: List<ScanFilter> ,settings: ScanSettings, ScanDeviceCallback callback)
+    + stopScan()
+    + isSumianDevice(BluetoothDevice device)
+    
+'    device bind
+    + hasBoundDevice(): Boolean
+    + getBoundDeviceAddress(): BluetoothDevice
+    + bindMonitor(String monitorAddress, ConnectDeviceCallback callback)
+    + unbindMonitor()
+    + bindSleepMaster(String sleepMasterSn, BindSleepMasterCallback callback)
+
+'    device connect
+    + connectDevice(String address, ConnectDeviceCallback callback)
+    + connectBoundDevice(ConnectDeviceCallback callback)
+    + disconnectDevice()
+
+    + turnOnOrOffSleepMasterWorkMode(Boolean on, TurnOnOrOffSleepMasterWorkModeCallback callback)
+    + syncSleepData(SyncSleepDataListener listener)
+
+
+'    sleep data
+    + getSleepDataSummary(int date, int pageSize, int isInclude, AsyncCallback<Map<int, SleepDataSummary>> callback)
+    + getSleepData(int date, int pageSize, int isInclude, AsyncCallback<Map<int, SleepData>> callback)
+
+    + checkMonitorVersionValidation():Int // 0 ok, 1 app need upgrade, 2 device need upgrade, 3 device not connected
+    + checkSleepMasterVersionValidation():Int // 0 ok, 1 app need upgrade, 2 device need upgrade, 3 device not connected
+
+    + getLatestVersionInfosFromServer(AsyncCallback<LatestVersionInfos> callback)
+    + getLatestVersionInfos():LatestVersionInfos
+    + hasNewVersion(String currentVersion, String newVersion):Boolean
+    + downloadFile(DownloadFileListener listener)
+    + upgradeMonitor(String filePath, UpgradeDeviceListener listener)
+    + upgradeSleepMaster(String filePath, UpgradeDeviceListener listener)
+
+'    高级用法
+    + writeData(byte[] data)
+    + registerDataListener(BleDataListener listener)
+}
+
+interface SimpleCallback {
+    onSuccess()
+    onFail(int code, String msg)
+}
+
+interface BleDataListener {
+    onDataReceived(byte[] bytes)
+}
+
+interface BluetoothStatusListener {
+    + onBluetoothStateChange(enable:Boolean)
+}
+
+interface ScanDeviceCallback {
+    onStart()
+    onStop()
+    onDeviceFound(BluetoothDevice device)
+}
+
+interface ConnectDeviceCallback {
+    onStart()
+    onSuccess()
+    onFail(int code, String msg)
+}
+
+interface TurnOnOrOffSleepMasterWorkModeCallback {
+    onStart()
+    onSuccess()
+    onFail(int code, String msg)
+}
+
+interface SyncSleepDataListener {
+    onStart()
+    onProgressChange(int progress, int total)
+    onFail(int code, String msg)
+    onFinish()
+}
+
+class BluetoothDevice {
+    String name
+    String address
+}
+
+class SleepDataSummary {
+    int id
+    int date
+    int isRead
+    ...
+}
+
+class SleepData {
+    int id
+    int sleep_duration
+    int awake_duration
+    ...
+}
+
+class AsyncCallback<T> {
+    onSuccess(T data)
+    onFail(int code, String msg)
+}
+
+enum DeviceStatus{
+    DISCONNECTED
+    DISCONNECTING
+    CONNECTING
+    IDLE
+}
+
+'interface DownloadFileListener{
+'    onStart()
+'    onProgressChange()
+'    onFail(int code, String msg)
+'    onSuccess(String filePath)
+'}
+'
+'interface UpgradeListener {
+'    onStart()
+'    onProgressChange()
+'    onFail(int code, String msg)
+'    onSuccess()
+'}
+
+class VersionInfo {
+    latestVersion:String
+    versionCode:Int
+    url:String
+    md5:String
+    desc:String
+    upgradeMode:Int // 0 normal, 1 force, 2 silent
+}
+
+class LatestVersionInfos {
+    monitor: VersionInfo
+    sleepMaster: VersionInfo
+}
+
+interface UpgradeDeviceListener() {
+    onStart()
+    onDownloadFileProgressChange(int progress)
+    onDownloadSuccess()
+    onUpgradeProgressChange(int progress)
+    onUpgradeSuccess()
+    onFail(int code, String msg)
+}
+
+abstract class DeviceStatusListener {
+'    onMonitorStateChange(MonitorState state)
+'    onSleepMasterStateChange(SleepMasterState state)
+'    onMonitorBatteryChange(int battery)
+'    onSleepMasterBatteryChange(int battery)
+'    onSyncSleepDataProgressChange(int progress, int total)
+'    onMonitorSoftwareVersionReceived(String version)
+'    onMonitorHardwareVersionReceived(String version)
+'    onSleepMasterSoftwareVersionReceived(String version)
+'    onSleepMasterHardwareVersionReceived(String version)
+'    onSleepDataUploadProgressChange(int progress, int total)
+
+    onStatusChange(StatusType type)
+}
+
+enum StatusType{
+    MONITOR_BATTERY
+}
+
+@enduml

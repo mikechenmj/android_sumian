@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:skin="http://schemas.android.com/android/skin"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/vg_calendar_bar"
+    android:layout_width="match_parent"
+    android:layout_height="62dp"
+    android:background="@color/b2_color_day"
+    skin:enable="true"
+    tools:ignore="MissingPrefix"
+    tools:showIn="@layout/hw_lay_item_week_report">
+
+
+    <TextView
+        android:id="@+id/tv_week_quantum"
+        style="@style/text_t2_14"
+        android:layout_width="100dp"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:text="09-08 - 09-14"
+        skin:enable="true"
+        tools:ignore="HardcodedText" />
+
+    <ImageView
+        android:id="@+id/iv_pre"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_centerVertical="true"
+        android:layout_toStartOf="@id/tv_week_quantum"
+        android:background="@drawable/bg_material_ripple"
+        android:contentDescription="@null"
+        android:padding="@dimen/space_14"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_arrow_left_light_blue"
+        skin:enable="true" />
+
+    <ImageView
+        android:id="@+id/iv_next"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@id/tv_week_quantum"
+        android:background="@drawable/bg_material_ripple"
+        android:contentDescription="@null"
+        android:padding="@dimen/space_14"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_arrow_right_light_blue"
+        android:visibility="gone"
+        skin:enable="true"
+        tools:visibility="visible" />
+
+</RelativeLayout>

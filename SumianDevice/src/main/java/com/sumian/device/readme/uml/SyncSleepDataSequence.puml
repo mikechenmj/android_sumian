@@ -1,0 +1,39 @@
+@startuml
+
+participant "App" as a
+participant "Monitor" as m
+
+note over a, m: 1. App 发起同步请求
+a -> m: 请求数据 cmd:aa4f
+m -[#blue]> a: 应答是否有数据 cmd:554f..[88]
+
+note over a, m: 2. 监测仪透传单段数据
+m -[#blue]> a: 数据透传开始 cmd:558e..[01]
+a -> m: 应答 cmd:aa8e..[88]
+m -[#blue]> a: 第 1 条数据 cmd:558f..[type][index][data]
+'note right
+'原来这里App要回复
+'aa8f..[88]才往下走，
+'现在不要了。
+'end note
+... ... ...
+m -[#blue]> a: 第 n 条数据 cmd:558f..[type][index][data]
+m -[#blue]> a: 确认单段数据发送完毕 cmd:558e..[0f]
+a -> m: 确认收到 cmd: aa8e..[01]
+
+note over a, m: 3. App请求丢包数据
+a -> m: 请求第 x 条数据 cmd: aa8f..[type][index][ff]
+'note right: 3秒未收到回复，重发。最多重试3次。
+m -[#blue]> a: 第 x 条数据 cmd:558f..[type][index][data]
+
+... ... ...
+a -> m: 请求第 z 条数据 cmd: aa8f..[type][index][ff]
+m -[#blue]> a: 第 z 条数据 cmd:558f..[type][index][data]
+a -> m: 确认单段数据接收完毕 cmd: aa8e..[88]
+
+note over a, m
+    4. 监测仪判断是否还有其他段数据，
+    若有则循环第2-3步，直到数据同步完毕。
+end note
+
+@enduml

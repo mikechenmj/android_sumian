@@ -1,0 +1,33 @@
+@startuml
+
+participant "App" as a
+participant "Monitor" as m
+
+note over a, m: 1. App request to start sync
+a -> m: Is there any sleep data for syncing?\n cmd: aa4f
+m -[#blue]> a: Yes/No \ncmd:554f
+
+note over a, m: 2. Monitor send sleep data
+m -[#blue]> a: Sync start \ncmd:558e..[01]
+a -> m: OK \ncmd:aa8e..[88]
+m -[#blue]> a: data frame[1] \ncmd:558f..[type][index][data]
+m -[#blue]> a: ... ... ...
+m -[#blue]> a: data frame[n] \ncmd:558f..[type][index][data]
+m -[#blue]> a: The data of this package is all sent \ncmd:558e..[0f]
+a -> m: OK \ncmd: aa8e..[01]
+
+note over a, m: 3. App request lost data of previous transmission
+a -> m: Request lost data frame[x] \ncmd: aa8f..[type][index][ff]
+m -[#blue]> a: data frame[x] \ncmd:558f..[type][index][data]
+a <-> m: ... ... ...
+a -> m: Request lost data frame[z] \ncmd: aa8f..[type][index][ff]
+m -[#blue]> a: data frame[z] \ncmd:558f..[type][index][data]
+a -> m: All the data is received \ncmd: aa8e..[88]
+
+note over a, m
+    4. If monitor has another data package，
+    repeat step 2-3, util all the data is sent to App
+end note
+
+@enduml
+

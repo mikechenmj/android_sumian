@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/device_card_view_height"
+    android:background="@color/b2_color"
+    android:orientation="vertical"
+    tools:layout_height="320dp">
+
+    <include layout="@layout/layout_device_card_view_no_device" />
+
+    <include layout="@layout/layout_device_card_view_device" />
+
+    <TextView
+        android:id="@+id/tv_device_data"
+        style="@style/text_b3_14"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_gravity="end|top"
+        android:drawableStart="@drawable/home_icon_devicedate"
+        android:drawablePadding="5dp"
+        android:gravity="center"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:text="@string/data"
+        android:visibility="visible" />
+</FrameLayout>

@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">DeviceDemo</string>
+    <string name="data">数据</string>
+    <string name="know_device">了解更多</string>
+    <string name="bluetooth_not_open">手机蓝牙未开启</string>
+    <string name="please_open_bluetooth_and_connect_monitor">请打开手机蓝牙，与监测仪进行连接</string>
+    <string name="syncing">同步中...</string>
+    <string name="start_work">开启工作</string>
+    <string name="speed_sleeper_already">速眠仪已就绪</string>
+    <string name="monitor_is_connect_please_check_sleepers_connectivity">监测仪已连接，请检查速眠仪是否开启</string>
+    <string name="monitor">监测仪</string>
+    <string name="not_connected">未连接</string>
+    <string name="already_connected">已连接</string>
+    <string name="speed_sleeper">速眠仪</string>
+    <string name="you_do_not_bind_device_click_add">您尚未绑定速眠仪设备，点击添加设备</string>
+    <string name="add_device">添加设备</string>
+    <string name="monitor_not_connect">监测仪未连接</string>
+    <string name="click_card_try_to_connect_monitor">点击卡片，尝试连接监测仪</string>
+    <string name="monitor_is_connecting">监测仪连接中…</string>
+    <string name="please_keep_monito_in_5m">请保持监测仪与手机距离在5米内</string>
+    <string name="sync">同步</string>
+    <string name="sleeper_is_working_please_sleep">速眠仪正常工作中，请安心入睡</string>
+    <string name="starting_work">开启中...</string>
+    <string name="working">工作中</string>
+    <string name="scanning_device">设备搜索中…</string>
+    <string name="scan_label_h2">点击需要连接的监测仪屏幕按键，搜索设备。</string>
+    <string name="already_latest_data">已是最新数据</string>
+    <string name="sync_fail">同步失败</string>
+    <string name="confirm">确认</string>
+    <string name="cancel">取消</string>
+    <string name="current_version_s">当前版本：%s</string>
+    <string name="latest_version_s">最新版本：%s</string>
+    <string name="already_latest_version">已是最新版本</string>
+
+    <!--<string name=""></string>-->
+    <!--<string name=""></string>-->
+    <!--<string name=""></string>-->
+    <!--<string name=""></string>-->
+
+</resources>

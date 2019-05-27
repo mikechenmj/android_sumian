@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--itemTab-->
+    <declare-styleable name="NavigationItem">
+        <attr name="tab_icon" format="reference" />
+        <attr name="tab_text" format="string|reference" />
+        <attr name="tab_text_size" format="dimension|reference" />
+        <attr name="tab_text_color" format="color|reference" />
+    </declare-styleable>
+
+    <!--divider view-->
+    <declare-styleable name="SettingDividerView">
+        <attr name="type_icon" format="reference" />
+        <attr name="type_desc" format="string|reference" />
+        <attr name="type_desc_text_color" format="color|reference" />
+        <attr name="type_desc_text_size" format="dimension|reference" />
+        <attr name="dot_color" format="color|reference" />
+        <attr name="type_content" format="string|reference" />
+        <attr name="type_content_text_color" format="color|reference" />
+        <attr name="type_content_text_size" format="dimension|reference" />
+        <attr name="divider_line_color" format="color|reference" />
+        <attr name="divider_line_size" format="dimension|reference" />
+        <attr name="divider_line_visible" format="enum">
+            <enum name="gone" value="0x00000008" />
+            <enum name="visible" value="0x00000000" />
+            <enum name="invisible" value="0x00000004" />
+        </attr>
+        <attr name="divider_more_visible" format="enum">
+            <enum name="gone" value="0x00000008" />
+            <enum name="visible" value="0x00000000" />
+            <enum name="invisible" value="0x00000004" />
+        </attr>
+        <attr name="show_switch" format="boolean" />
+        <attr name="bg_color" format="color|reference" />
+    </declare-styleable>
+
+    <!--title bar-->
+    <declare-styleable name="TitleBar">
+        <attr name="text" format="string|reference" />
+        <attr name="text_size" format="dimension|reference" />
+        <attr name="show_back" format="boolean|reference" />
+        <attr name="show_spanner" format="boolean|reference" />
+        <attr name="menu_icon" format="reference" />
+        <attr name="menu_text" format="string|reference" />
+        <attr name="tb_dark_theme" format="boolean|reference" />
+    </declare-styleable>
+
+    <!--pay item view-->
+    <declare-styleable name="PayItemView">
+        <attr name="icon" format="reference" />
+        <attr name="desc" format="string|reference" />
+        <attr name="is_select" format="boolean|reference" />
+    </declare-styleable>
+
+    <declare-styleable name="PaletteImageView">
+        <attr name="paletteRadius" format="dimension" />
+        <attr name="paletteSrc" format="reference" />
+        <attr name="palettePadding" format="dimension" />
+        <attr name="paletteOffsetX" format="dimension" />
+        <attr name="paletteOffsetY" format="dimension" />
+        <attr name="paletteShadowRadius" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="ShapeImageView">
+        <attr name="riv_border_color" format="color" />
+        <attr name="riv_border_width" format="dimension" />
+        <attr name="riv_corner_radius" format="dimension" />
+        <attr name="riv_is_circle" format="boolean" />
+        <attr name="riv_pressed_border_color" format="color" />
+        <attr name="riv_pressed_border_width" format="dimension" />
+        <attr name="riv_pressed_mask_color" format="color" />
+        <attr name="riv_pressed_mode_enabled" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="CircleProgressView">
+        <attr name="cpv_progressNormalColor" format="color" />
+        <attr name="cpv_progressReachColor" format="color" />
+        <attr name="cpv_progressTextColor" format="color" />
+        <attr name="cpv_progressTextSize" format="dimension" />
+        <attr name="cpv_progressTextOffset" format="dimension" />
+        <attr name="cpv_progressNormalSize" format="dimension" />
+        <attr name="cpv_progressReachSize" format="dimension" />
+        <attr name="cpv_radius" format="dimension" />
+        <attr name="cpv_progressTextVisible" format="boolean" />
+        <attr name="cpv_progressStartArc" format="integer" />
+        <attr name="cpv_progressTextSkewX" format="dimension" />
+        <attr name="cpv_progressTextPrefix" format="string" />
+        <attr name="cpv_progressTextSuffix" format="string" />
+        <attr name="cpv_innerBackgroundColor" format="color" />
+        <attr name="cpv_progressStyle" format="enum">
+            <enum name="Normal" value="0" />
+            <enum name="FillInner" value="1" />
+            <enum name="FillInnerArc" value="2" />
+        </attr>
+        <attr name="cpv_innerProgressColor" format="color" />
+        <attr name="cpv_innerPadding" format="dimension" />
+        <attr name="cpv_outerColor" format="color" />
+        <attr name="cpv_outerSize" format="dimension" />
+        <attr name="cpv_reachCapRound" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="DoctorServiceItemView">
+        <attr name="dsiv_title" format="string" />
+        <attr name="dsiv_desc" format="string" />
+        <attr name="dsiv_show_price" format="boolean" />
+        <attr name="dsiv_price" format="float" />
+        <attr name="dsiv_image" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="ColorfulProgressView">
+        <attr name="cpv_ring_width" format="float|dimension" />
+        <attr name="cpv_ring_bg_color" format="color|reference" />
+        <attr name="cpv_high_start_color" format="color|reference" />
+        <attr name="cpv_high_end_color" format="color|reference" />
+        <attr name="cpv_middle_start_color" format="color|reference" />
+        <attr name="cpv_middle_end_color" format="color|reference" />
+        <attr name="cpv_low_start_color" format="color|reference" />
+        <attr name="cpv_low_end_color" format="color|reference" />
+    </declare-styleable>
+
+    <declare-styleable name="ProgressView">
+        <attr name="pv_ring_width" format="float|dimension" />
+        <attr name="pv_ring_bg_color" format="color|reference" />
+        <attr name="pv_progress_color" format="color|reference" />
+        <attr name="pv_progress" format="integer|reference" />
+        <attr name="pv_max_progress" format="integer|reference" />
+    </declare-styleable>
+
+    <declare-styleable name="RingProgressView">
+        <attr name="rpv_ring_width" format="float|dimension" />
+        <attr name="rpv_ring_bg_color" format="color|reference" />
+        <attr name="rpv_progress_color" format="color|reference" />
+        <attr name="rpv_progress" format="integer|reference" />
+        <attr name="rpv_max_progress" format="integer|reference" />
+    </declare-styleable>
+
+    <declare-styleable name="WithLineProgressView">
+        <attr name="wlpv_show_line" format="boolean|reference" />
+    </declare-styleable>
+
+    <declare-styleable name="PickerView">
+        <attr name="lineColor" format="color|reference" />
+        <attr name="selectedTextColor" format="color|reference" />
+        <attr name="textSize" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="TouchDailySleepHistogramView">
+        <attr name="tdshv_label_text_size" format="dimension|reference" />
+        <attr name="tdshv_label_text_color" format="color|reference" />
+        <attr name="tdshv_empty_text" format="string|reference" />
+        <attr name="tdshv_empty_text_color" format="color|reference" />
+        <attr name="tdshv_empty_text_size" format="dimension|reference" />
+        <attr name="tdshv_deep_color" format="color|reference" />
+        <attr name="tdshv_light_color" format="color|reference" />
+        <attr name="tdshv_eog_color" format="color|reference" />
+        <attr name="tdshv_sober_color" format="color|reference" />
+        <attr name="tdshv_coordinate_color" format="color|reference" />
+        <attr name="tdshv_coordinate_size" format="dimension|reference" />
+    </declare-styleable>
+
+    <declare-styleable name="SleepHistogramView">
+        <attr name="label_text_size" format="dimension|reference" />
+        <attr name="label_text_color" format="color|reference" />
+        <attr name="x_max_progress" format="integer|reference" />
+        <attr name="y_max_progress" format="integer|reference" />
+        <attr name="histogram_type" format="enum|reference">
+            <enum name="WEEK" value="0" />
+            <enum name="MONTH" value="1" />
+            <enum name="YEAR" value="2" />
+        </attr>
+        <attr name="empty_text" format="string|reference" />
+        <attr name="empty_text_size" format="dimension|reference" />
+        <attr name="empty_text_color" format="color|reference" />
+        <attr name="deep_color" format="color|reference" />
+        <attr name="light_color" format="color|reference" />
+        <attr name="eog_color" format="color|reference" />
+        <attr name="sober_color" format="color|reference" />
+        <attr name="coordinate_color" format="color|reference" />
+        <attr name="coordinate_size" format="dimension|reference" />
+    </declare-styleable>
+
+    <declare-styleable name="VersionInfoView">
+        <attr name="upgrade_label" format="string|reference" />
+    </declare-styleable>
+
+    <!--睡眠数据均值对比统计 view-->
+    <declare-styleable name="SleepAvgAndCompareView">
+        <attr name="label_text" format="string|reference" />
+        <attr name="label_icon" format="reference" />
+        <attr name="compare_label_text" format="string|reference" />
+        <attr name="is_gone_divider" format="boolean|reference" />
+    </declare-styleable>
+
+    <declare-styleable name="CountDownTextView">
+        <attr name="cdtv_normal_text" format="string|reference" />
+        <attr name="cdtv_count_down_text" format="reference" />
+        <attr name="cdtv_count_down_time" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="SumianEditText">
+        <attr name="set_hint" format="string|reference" />
+        <attr name="set_text" format="string|reference" />
+        <attr name="set_validation_regex" format="string|reference" />
+        <attr name="set_show_bg" format="boolean|reference" />
+        <attr name="set_show_password_icon" format="boolean|reference" />
+        <attr name="set_highlightable" format="boolean|reference" />
+        <attr name="set_input_type" format="enum">
+            <enum name="text" value="0" />
+            <enum name="number" value="1" />
+            <enum name="textPassword" value="2" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="EmptyErrorView">
+        <attr name="eev_icon" format="reference" />
+        <attr name="eev_title" format="string|reference" />
+        <attr name="eev_desc" format="string|reference" />
+        <attr name="eev_auto_hide" format="boolean|reference" />
+        <attr name="eev_show_service" format="boolean|reference" />
+    </declare-styleable>
+
+    <declare-styleable name="SleepRecordProgressView">
+        <attr name="srpv_show_center_message" format="boolean|reference" />
+        <attr name="srpv_center_message" format="string|reference" />
+        <attr name="srpv_ring_width" format="dimension|reference" />
+    </declare-styleable>
+
+    <declare-styleable name="CountSleepDurationTextView">
+        <attr name="csdtv_number_text_size" format="reference|dimension" />
+        <attr name="csdtv_unit_text_size" format="reference|dimension" />
+        <attr name="csdtv_default_drawable" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="TabIndicatorItemView">
+        <attr name="enable_tab" format="boolean" />
+    </declare-styleable>
+
+</resources>

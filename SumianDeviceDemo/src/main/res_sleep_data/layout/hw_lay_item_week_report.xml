@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/b1_color_day"
+    android:orientation="vertical">
+
+    <include layout="@layout/weekly_report_calendar_bar" />
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nested_scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <!--<SleepHistogramView-->
+                <com.sumian.devicedemo.sleepdata.widget.SleepHistogramView
+                    android:id="@+id/week_sleep_histogram_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_8"
+                    android:paddingBottom="@dimen/space_4"
+                    app:coordinate_color="@color/l3_color_day"
+                    app:coordinate_size="@dimen/divider_px_1"
+                    app:deep_color="@color/g1_color_day"
+                    app:empty_text="@string/none_week_have_sleep_data"
+                    app:empty_text_color="@color/t5_color_day"
+                    app:empty_text_size="@dimen/font_16"
+                    app:eog_color="@color/g2_color_day"
+                    app:label_text_color="@color/t2_color_day"
+                    app:light_color="@color/g2_color_day"
+                    app:sober_color="@color/g3_color_day" />
+
+                <com.sumian.devicedemo.sleepdata.widget.ReportIndicatorRuleView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/space_26"
+                    android:layout_marginTop="@dimen/space_16" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_10"
+                    android:layout_marginTop="@dimen/space_24"
+                    android:layout_marginRight="@dimen/space_10"
+                    android:layout_marginBottom="@dimen/space_10"
+                    app:cardBackgroundColor="@color/b2_color_day"
+                    app:cardCornerRadius="@dimen/space_4"
+                    app:cardElevation="0dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <com.sumian.devicedemo.sleepdata.widget.SleepAvgAndCompareView
+                            android:id="@+id/daily_sleep_avg_compare_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/space_20"
+                            app:compare_label_text="@string/compare_week_hint"
+                            app:label_icon="@drawable/ic_home_sleep_time_day"
+                            app:label_text="@string/week_sleep_average_duration" />
+
+                        <com.sumian.devicedemo.sleepdata.widget.SleepAvgAndCompareView
+                            android:id="@+id/daily_sleep_light_avg_compare_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/space_20"
+                            app:compare_label_text="@string/compare_week_hint"
+                            app:label_icon="@drawable/ic_report_light_sleep_day"
+                            app:label_text="@string/week_sleep_light_average_duration" />
+
+                        <com.sumian.devicedemo.sleepdata.widget.SleepAvgAndCompareView
+                            android:id="@+id/daily_sleep_deep_avg_compare_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/space_20"
+                            app:compare_label_text="@string/compare_week_hint"
+                            app:label_icon="@drawable/ic_report_deep_sleep_day"
+                            app:label_text="@string/week_sleep_deep_average_duration" />
+
+                        <com.sumian.devicedemo.sleepdata.widget.SleepAvgAndCompareView
+                            android:id="@+id/daily_sleep_awake_avg_compare_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/space_20"
+                            android:layout_marginBottom="@dimen/space_20"
+                            app:compare_label_text="@string/compare_week_hint"
+                            app:is_gone_divider="true"
+                            app:label_icon="@drawable/ic_report_awake_day"
+                            app:label_text="@string/week_sleep_sober_average_duration" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <include layout="@layout/lay_sleep_data_less" />
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</LinearLayout>

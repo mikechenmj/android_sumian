@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:skin="http://schemas.android.com/android/skin"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.sumian.devicedemo.sleepdata.widget.ColorfulProgressView
+        android:id="@+id/progress_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        app:cpv_high_end_color="@color/b7_color_day"
+        app:cpv_high_start_color="@color/b6_color_day"
+        app:cpv_low_end_color="@color/b7_color_day"
+        app:cpv_low_start_color="@color/b6_color_day"
+        app:cpv_middle_end_color="@color/b7_color_day"
+        app:cpv_middle_start_color="@color/b6_color_day"
+        app:cpv_ring_width="@dimen/space_5"
+        skin:enable="true" />
+
+    <com.sumian.devicedemo.sleepdata.widget.CountSleepDurationTextView
+        android:id="@+id/count_duration_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textColor="@color/b3_color_day"
+        android:textStyle="bold"
+        app:csdtv_default_drawable="@drawable/bg_text_b3"
+        app:csdtv_number_text_size="@dimen/font_21"
+        app:csdtv_unit_text_size="@dimen/font_13"
+        skin:enable="true"
+        tools:text="123" />
+
+</merge>

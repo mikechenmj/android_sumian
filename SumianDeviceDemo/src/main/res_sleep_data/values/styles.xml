@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="text_t5" parent="BaseText">
+        <item name="android:textSize">@dimen/font_14</item>
+        <item name="android:textColor">@color/t5_color_day</item>
+    </style>
+
+    <style name="text_t5_14" parent="text_t5">
+        <item name="android:textSize">@dimen/font_14</item>
+    </style>
+
+    <style name="text_t5_21" parent="text_t5">
+        <item name="android:textSize">@dimen/font_21</item>
+    </style>
+
+    <style name="SumianDialog">
+        <item name="android:windowMinWidthMinor">90%</item> <!-- 宽度屏占比 -->
+        <!-- 默认背景是白色的圆角矩形，改为透明 -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsFloating">true</item> <!-- 默认平铺在界面顶部，为true之后会悬浮在中间，有阴影 -->
+        <item name="android:windowCloseOnTouchOutside">true</item>
+    </style>
+</resources>
