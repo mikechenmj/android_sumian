@@ -190,7 +190,7 @@ object DeviceManager {
         BleScanner.getInstance().stopLeScan()
     }
 
-    fun bind(address: String, callback: ConnectDeviceCallback) {
+    fun bind(address: String, callback: ConnectDeviceCallback?) {
         SPUtils.getInstance().put(SP_KEY_BOUND_DEVICE_ADDRESS, address)
         mSumianDevice = getBoundDevice()
         connectDevice(address, callback, false)
@@ -207,7 +207,7 @@ object DeviceManager {
         return !TextUtils.isEmpty(getBoundDeviceAddress())
     }
 
-    fun connectBoundDevice(callback: ConnectDeviceCallback?) {
+    fun connectBoundDevice(callback: ConnectDeviceCallback? = null) {
         val boundDeviceAddress = getBoundDeviceAddress()
         if (TextUtils.isEmpty(boundDeviceAddress)) {
             return
@@ -328,7 +328,9 @@ object DeviceManager {
     }
 
     fun startSyncSleepData() {
-        SyncSleepDataHelper.startSyncData()
+        if (isMonitorConnected() && !isSyncingSleepData()) {
+            SyncSleepDataHelper.startSyncData()
+        }
     }
 
     fun toggleSleeperWorkMode(on: Boolean, callback: AsyncCallback<Any?>) {
@@ -479,4 +481,16 @@ object DeviceManager {
     }
 
     data class Params(var baseUrl: String, var isDebug: Boolean = false)
+
+    fun getMonitorSoftwareVersion(): String? {
+        return mSumianDevice?.monitorVersionInfo?.softwareVersion
+    }
+
+    fun getSleepMasterSoftwareVersion(): String? {
+        return mSumianDevice?.sleepMasterVersionInfo?.softwareVersion
+    }
+
+    fun setSleepMasterSn(sn: String) {
+        mSumianDevice?.sleepMasterSn = sn
+    }
 }

@@ -20,8 +20,8 @@ class Version2ConnectingDialog : BaseDialogFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog?.window!!.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
         val rootView = inflater.inflate(layout, container, false)
         initView(rootView)
         return rootView

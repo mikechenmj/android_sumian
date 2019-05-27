@@ -172,7 +172,7 @@
             </intent-filter>
         </receiver>
         <!-- 反馈组件（需要加入以下声明）START -->
-        <activity android:name="com.avos.avoscloud.feedback.ThreadActivity"></activity>
+        <activity android:name="com.avos.avoscloud.feedback.ThreadActivity" />
         <!-- 实时通信模块、推送 END -->
         <activity
             android:name=".buz.doctor.activity.DoctorWebActivity"
@@ -388,10 +388,6 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.TranslucentStatus" />
-
-        <service
-            android:name=".buz.devicemanager.pattern.SyncPatternService"
-            android:exported="false" />
 
         <activity
             android:name=".buz.diaryevaluation.DiaryEvaluationListActivity"

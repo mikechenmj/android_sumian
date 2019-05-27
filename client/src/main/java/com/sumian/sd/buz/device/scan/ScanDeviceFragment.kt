@@ -18,10 +18,10 @@ import com.sumian.blue.callback.BlueScanCallback
 import com.sumian.common.base.BaseFragment
 import com.sumian.common.statistic.StatUtil
 import com.sumian.common.widget.dialog.SumianDialog
+import com.sumian.device.manager.DeviceManager
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.devicemanager.BlueDevice
-import com.sumian.sd.buz.devicemanager.DeviceManager
 import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.log.LogManager
 import com.sumian.sd.common.utils.LocationManagerUtil
@@ -287,7 +287,7 @@ class ScanDeviceFragment : BaseFragment() {
         StatUtil.event(StatConstants.on_bind_device_success)
         unregisterBlueCallbacks()
         stopScanIfIsScanning()
-        DeviceManager.cacheBlueDevice(device)
+        DeviceManager.bind(device.mac, null)
         mOnDeviceSelectedListener?.onDeviceSelected(device)
     }
 

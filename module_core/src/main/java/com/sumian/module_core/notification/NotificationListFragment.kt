@@ -47,7 +47,7 @@ class NotificationListFragment : BaseFragment(), BaseQuickAdapter.OnItemClickLis
         return R.layout.fragment_notification_list
     }
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is Host) {
             mHost = context

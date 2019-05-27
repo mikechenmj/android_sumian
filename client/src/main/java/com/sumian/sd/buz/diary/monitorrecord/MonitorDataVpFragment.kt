@@ -6,7 +6,6 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import androidx.lifecycle.Observer
 import com.alibaba.fastjson.JSON
 import com.alibaba.fastjson.JSONArray
 import com.blankj.utilcode.util.LogUtils
@@ -15,13 +14,13 @@ import com.sumian.common.base.BaseFragment
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.statistic.StatUtil
 import com.sumian.common.utils.TimeUtilV2
+import com.sumian.device.manager.DeviceManager
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.buz.devicemanager.DeviceManager
+import com.sumian.sd.buz.devicemanager.uploadsleepdata.UploadSleepDataFinishedEvent
 import com.sumian.sd.buz.diary.event.UpdateMonitorDataEvent
 import com.sumian.sd.buz.diary.sleeprecord.calendar.calendarView.CalendarView
 import com.sumian.sd.buz.diary.sleeprecord.calendar.custom.CalendarPopup
-import com.sumian.sd.buz.devicemanager.uploadsleepdata.UploadSleepDataFinishedEvent
 import com.sumian.sd.buz.report.weeklyreport.CalendarItemSleepReport
 import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
@@ -54,9 +53,11 @@ class MonitorDataVpFragment : BaseFragment() {
         super.initWidget()
         initDateBar()
         initViewPager()
-        DeviceManager.getMonitorLiveData().observe(this, Observer {
-            tv_is_syncing_hint.visibility = if (it?.isSyncing == true) View.VISIBLE else View.GONE
-        })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        tv_is_syncing_hint.visibility = if (DeviceManager.isSyncingSleepData()) View.VISIBLE else View.GONE
     }
 
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)

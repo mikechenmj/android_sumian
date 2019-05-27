@@ -7,8 +7,8 @@ import android.widget.LinearLayout;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.sumian.common.base.BaseFragment;
+import com.sumian.device.manager.DeviceManager;
 import com.sumian.sd.R;
-import com.sumian.sd.buz.devicemanager.DeviceManager;
 import com.sumian.sd.buz.qrcode.activity.QrCodeActivity;
 import com.sumian.sd.widget.RequestQrCodeView;
 

@@ -1,4 +1,4 @@
-package com.sumian.devicedemo.device
+package com.sumian.sd.buz.device.widget
 
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
@@ -9,6 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.blankj.utilcode.util.ToastUtils
+import com.sumian.common.base.BaseFragment
+import com.sumian.common.statistic.StatUtil
 import com.sumian.device.callback.AsyncCallback
 import com.sumian.device.callback.ConnectDeviceCallback
 import com.sumian.device.callback.DeviceStatusListener
@@ -16,14 +18,19 @@ import com.sumian.device.data.DeviceConnectStatus
 import com.sumian.device.data.SleepMasterWorkModeStatus
 import com.sumian.device.data.SumianDevice
 import com.sumian.device.manager.DeviceManager
-import com.sumian.devicedemo.R
-import com.sumian.devicedemo.base.BaseFragment
-import com.sumian.devicedemo.sleepdata.SleepDataActivity
-import com.sumian.devicedemo.util.SyncAnimatorUtil
-import com.sumian.devicedemo.widget.SumianImageTextToast
-import kotlinx.android.synthetic.main.fragment_device_card.*
+import com.sumian.sd.R
+import com.sumian.sd.buz.device.scan.ScanDeviceActivity
+import com.sumian.sd.buz.diary.DataFragment
+import com.sumian.sd.buz.diary.event.ChangeDataFragmentTabEvent
+import com.sumian.sd.buz.stat.StatConstants
+import com.sumian.sd.common.utils.EventBusUtil
+import com.sumian.sd.main.MainActivity
+import com.sumian.sd.main.event.ChangeMainTabEvent
+import com.sumian.sd.widget.dialog.SumianImageTextToast
+import com.sumian.sd.wxapi.MiniProgramHelper
 import kotlinx.android.synthetic.main.layout_device_card_view_device.*
 import kotlinx.android.synthetic.main.layout_device_card_view_no_device.*
+import kotlinx.android.synthetic.main.view_device_card.*
 
 
 /**
@@ -43,7 +50,7 @@ class DeviceCardFragment : BaseFragment() {
     private var mRotateAnimator: ObjectAnimator? = null
 
     override fun getLayoutId(): Int {
-        return R.layout.fragment_device_card
+        return R.layout.view_device_card
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -60,7 +67,7 @@ class DeviceCardFragment : BaseFragment() {
                 }
             })
         }
-        mRootView.setOnClickListener {
+        vg_device_card_view.setOnClickListener {
             val monitor = DeviceManager.getDevice()
             if (monitor == null) {
                 ScanDeviceActivity.startForResult(
@@ -72,13 +79,19 @@ class DeviceCardFragment : BaseFragment() {
                     DeviceManager.enableBluetooth()
                 } else {
                     if (monitor.monitorConnectStatus == DeviceConnectStatus.DISCONNECTED) {
-                        DeviceManager.tryToConnectBoundDevice(mConnectDeviceCallback)
+                        DeviceManager.connectBoundDevice(mConnectDeviceCallback)
                     }
                 }
             }
-            tv_device_data.setOnClickListener {
-                startActivity(Intent(this.context, SleepDataActivity::class.java))
-            }
+        }
+        tv_device_data.setOnClickListener {
+            StatUtil.event(StatConstants.click_home_page_device_data_icon)
+            EventBusUtil.postStickyEvent(ChangeMainTabEvent(MainActivity.TAB_1))
+            EventBusUtil.postStickyEvent(ChangeDataFragmentTabEvent(DataFragment.TAB_1))
+        }
+        tv_know_device.setOnClickListener {
+            StatUtil.event(StatConstants.click_home_page_learn_more_about_device)
+            MiniProgramHelper.launchYouZanOrWeb(activity!!)
         }
     }
 
@@ -173,6 +186,8 @@ class DeviceCardFragment : BaseFragment() {
                 device != null && isBluetoothEnable && device.isMonitorConnected()
         ll_device.visibility = if (deviceNotConnected) View.VISIBLE else View.GONE
         vg_no_device.visibility = if (!deviceNotConnected) View.VISIBLE else View.GONE
+        tv_know_device.visibility = if (device == null) View.VISIBLE else View.GONE
+        tv_device_data.visibility = if (device != null) View.VISIBLE else View.GONE
         if (device == null) {
             updateNoDeviceUI(
                     R.drawable.ic_home_icon_adddevice,
@@ -272,10 +287,10 @@ class DeviceCardFragment : BaseFragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_CODE_SCAN_DEVICE) {
             if (resultCode == Activity.RESULT_OK) {
-                DeviceManager.bind(
-                        ScanDeviceActivity.getDeviceMacFromIntent(data!!)!!,
-                        mConnectDeviceCallback
-                )
+//                DeviceManager.bind(
+//                        ScanDeviceActivity.getDeviceMacFromIntent(data!!)!!,
+//                        mConnectDeviceCallback
+//                )
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data)

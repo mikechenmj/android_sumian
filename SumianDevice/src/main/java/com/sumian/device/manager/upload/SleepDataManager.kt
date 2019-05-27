@@ -150,7 +150,7 @@ object SleepDataManager {
         if (!dir.exists()) {
             dir.mkdirs()
         }
-        val fileName = createFileName(transType, transId, monitorSn!!)
+        val fileName = createFileName(transType, transId, monitorSn ?: "sn")
         val file = File(dir, fileName)
         file.printWriter().use {
             for (cmd in sleepData) {

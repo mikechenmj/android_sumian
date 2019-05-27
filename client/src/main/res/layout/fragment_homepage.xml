@@ -108,10 +108,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp" />
 
-            <com.sumian.sd.buz.device.widget.DeviceCardView
+            <fragment
                 android:id="@+id/device_card_view"
+                android:name="com.sumian.sd.buz.device.widget.DeviceCardFragment"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/device_card_view_height"
                 android:layout_marginTop="10dp" />
 
             <Space

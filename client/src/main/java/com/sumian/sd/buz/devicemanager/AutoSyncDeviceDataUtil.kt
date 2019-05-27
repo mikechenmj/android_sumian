@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.PowerManager
+import com.sumian.device.manager.DeviceManager
 import com.sumian.sd.app.App
 import com.sumian.sd.common.log.LogManager
 import com.sumian.sd.common.utils.SpUtil
@@ -76,11 +77,10 @@ object AutoSyncDeviceDataUtil {
     fun autoSyncSleepData() {
         val powerManager = App.getAppContext().getSystemService(Context.POWER_SERVICE) as PowerManager
 
-        if (DeviceManager.isMonitorConnected() && !DeviceManager.isSyncing()
-                && powerManager.isInteractive
+        if (powerManager.isInteractive
                 && (getAutoSyncTime() == 0L || ((System.currentTimeMillis() - getAutoSyncTime()) / 1000L) > 5)) {
             LogManager.appendPhoneLog("app  主动同步睡眠数据,原因是上一次同步的时间超过5s")
-            DeviceManager.syncSleepData()
+            DeviceManager.startSyncSleepData()
         }
     }
 

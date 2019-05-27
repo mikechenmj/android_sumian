@@ -1,11 +1,13 @@
 package com.sumian.sd.buz.device.devicemanage
 
+import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.base.BaseActivity
+import com.sumian.device.callback.ConnectDeviceCallback
+import com.sumian.device.manager.DeviceManager
 import com.sumian.sd.R
 import com.sumian.sd.buz.device.scan.ScanDeviceFragment
 import com.sumian.sd.buz.devicemanager.AutoSyncDeviceDataUtil
 import com.sumian.sd.buz.devicemanager.BlueDevice
-import com.sumian.sd.buz.devicemanager.DeviceManager
 import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.utils.FragmentUtil
 import com.sumian.sd.common.utils.FragmentUtil.Companion.switchFragment
@@ -83,7 +85,17 @@ class DeviceManageActivity : BaseActivity() {
 
     private val mOnDeviceSelectedListener = object : ScanDeviceFragment.OnDeviceSelectedListener {
         override fun onDeviceSelected(device: BlueDevice) {
-            DeviceManager.connectMonitor(device)
+            DeviceManager.bind(device.mac, object : ConnectDeviceCallback {
+                override fun onStart() {
+                }
+
+                override fun onSuccess() {
+                }
+
+                override fun onFail(code: Int, msg: String) {
+                    ToastUtils.showShort(msg)
+                }
+            })
             switchFragment(0)
         }
     }

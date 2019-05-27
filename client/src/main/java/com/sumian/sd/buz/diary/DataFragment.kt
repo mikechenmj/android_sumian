@@ -1,19 +1,17 @@
 package com.sumian.sd.buz.diary
 
 import android.view.View
-import androidx.lifecycle.Observer
 import com.sumian.common.base.BaseFragment
 import com.sumian.common.statistic.StatUtil
 import com.sumian.common.utils.ColorCompatUtil
+import com.sumian.device.manager.DeviceManager
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.devicemanager.AutoSyncDeviceDataUtil
-import com.sumian.sd.buz.devicemanager.DeviceManager
 import com.sumian.sd.buz.diary.event.ChangeDataFragmentTabEvent
 import com.sumian.sd.buz.diary.monitorrecord.MonitorDataVpFragment
 import com.sumian.sd.buz.diary.sleeprecord.SleepDiaryVpFragment
 import com.sumian.sd.buz.stat.StatConstants
-import com.sumian.sd.buz.stat.StatConstants.enter_sleep_diary_detail_tab
 import com.sumian.sd.common.log.LogManager
 import com.sumian.sd.common.utils.EventBusUtil
 import com.sumian.sd.common.utils.FragmentUtil
@@ -46,10 +44,6 @@ class DataFragment : BaseFragment() {
 
     override fun initWidget() {
         super.initWidget()
-        DeviceManager.getMonitorLiveData().observe(this, Observer {
-            val hasDevice = it != null || AppManager.getAccountViewModel().liveDataToken.value?.user?.hasDevice() == true
-            switchTabUI(hasDevice)
-        })
         tab_sleep_diary.setOnClickListener { selectTab(0) }
         tab_monitor_data.setOnClickListener { selectTab(1) }
         selectTab(0, true)
@@ -68,6 +62,7 @@ class DataFragment : BaseFragment() {
     override fun onStart() {
         super.onStart()
         EventBusUtil.register(this)
+        switchTabUI(DeviceManager.hasBoundDevice() || AppManager.getAccountViewModel().liveDataToken.value?.user?.hasDevice() == true)
     }
 
     override fun onStop() {

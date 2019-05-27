@@ -18,7 +18,6 @@ import com.sumian.common.base.BaseViewModel;
 import com.sumian.sd.R;
 import com.sumian.sd.app.App;
 import com.sumian.sd.app.AppManager;
-import com.sumian.sd.buz.devicemanager.DeviceManager;
 import com.sumian.sd.buz.devicemanager.command.BlueCmd;
 import com.sumian.sd.buz.devicemanager.util.HashUtils;
 import com.sumian.sd.buz.upgrade.activity.DeviceVersionUpgradeActivity;
@@ -305,10 +304,11 @@ public class DeviceVersionUpgradePresenter extends BaseViewModel implements Blue
                 onEnterMonitorDfuModeResponse(cmd);
                 break;
             case "56"://获取监测仪绑定的速眠仪的 mac 地址
-                String mac = cmd.substring(6);
-                DeviceManager.INSTANCE.setSleeperMac(mac);
-                this.mDfuMac = DeviceManager.INSTANCE.getSleeperDfuMac();
-                peripheral.writeDelay(BlueCmd.cDoSleepyDfuMode(), 200);
+//                String mac = cmd.substring(6);
+//                DeviceManagerV1.INSTANCE.setSleeperMac(mac);
+//                this.mDfuMac = DeviceManagerV1.INSTANCE.getSleeperDfuMac();
+//                peripheral.writeDelay(BlueCmd.cDoSleepyDfuMode(), 200);
+                // todo refactory
                 break;
             case "59"://使速眠仪进入 dfu 模式开启成功
                 onEnterSleeperDfuResponse(cmd);

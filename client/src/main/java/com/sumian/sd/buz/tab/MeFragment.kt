@@ -18,6 +18,7 @@ import com.qmuiteam.qmui.util.QMUISpanHelper
 import com.sumian.common.base.BaseViewModelFragment
 import com.sumian.common.image.loadImage
 import com.sumian.common.statistic.StatUtil
+import com.sumian.device.manager.DeviceManager
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.account.achievement.MyAchievementActivity
@@ -30,7 +31,6 @@ import com.sumian.sd.buz.account.userProfile.UserInfoActivity
 import com.sumian.sd.buz.advisory.activity.AdvisoryListActivity
 import com.sumian.sd.buz.coupon.activity.CouponCenterActivity
 import com.sumian.sd.buz.device.devicemanage.DeviceManageActivity
-import com.sumian.sd.buz.devicemanager.DeviceManager
 import com.sumian.sd.buz.diaryevaluation.DiaryEvaluationListActivity
 import com.sumian.sd.buz.kefu.KefuManager
 import com.sumian.sd.buz.notification.NotificationListActivity
@@ -104,13 +104,7 @@ class MeFragment : BaseViewModelFragment<GetAchievementListPresenter>(), View.On
                 .unreadCount
                 .observe(this, Observer<Int> { updateNotificationIcon() })
         LCIMManager.getInstance().unreadCountLiveData.observe(this, Observer<Int> { updateNotificationIcon() })
-        DeviceManager.getMonitorLiveData().observe(this, Observer { blueDevice ->
-            var monitorSn: String? = blueDevice?.sn
-            if (TextUtils.isEmpty(monitorSn)) {
-                monitorSn = getString(R.string.add_new_device)
-            }
-            dv_device_manage.setContent(monitorSn!!)
-        })
+
         mViewModel?.getAchievementList()
         VersionManager.queryAppVersion()
         VersionManager.mAppUpgradeMode.observe(this, Observer {
@@ -120,6 +114,12 @@ class MeFragment : BaseViewModelFragment<GetAchievementListPresenter>(), View.On
 
     override fun onResume() {
         super.onResume()
+        val device = DeviceManager.getDevice()
+        var monitorSn: String? = device?.monitorSn
+        if (TextUtils.isEmpty(monitorSn)) {
+            monitorSn = getString(R.string.add_new_device)
+        }
+        dv_device_manage.setContent(monitorSn!!)
 //        LCIMManager.getInstance().updateUnreadConversation()
     }
 

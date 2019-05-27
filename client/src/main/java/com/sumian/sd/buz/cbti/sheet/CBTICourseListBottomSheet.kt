@@ -89,12 +89,12 @@ class CBTICourseListBottomSheet : BaseBottomSheetView(), CBTIWeekLessonContract.
         ToastHelper.show(context, error, Gravity.CENTER)
     }
 
-    override fun onDismiss(dialog: DialogInterface?) {
+    override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
         cbtiLessonListCallback?.onDismiss()
     }
 
-    override fun onCancel(dialog: DialogInterface?) {
+    override fun onCancel(dialog: DialogInterface) {
         super.onCancel(dialog)
         cbtiLessonListCallback?.onDismiss()
     }

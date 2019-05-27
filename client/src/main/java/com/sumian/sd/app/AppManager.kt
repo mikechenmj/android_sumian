@@ -28,6 +28,7 @@ import com.sumian.common.social.analytics.OpenAnalytics
 import com.sumian.common.social.login.OpenLogin
 import com.sumian.common.statistic.StatUtil
 import com.sumian.common.utils.SumianExecutor
+import com.sumian.device.manager.DeviceManager
 import com.sumian.sd.BuildConfig
 import com.sumian.sd.R
 import com.sumian.sd.base.ActivityDelegateFactory
@@ -37,7 +38,6 @@ import com.sumian.sd.buz.account.login.LoginActivity
 import com.sumian.sd.buz.account.login.NewUserGuideActivity
 import com.sumian.sd.buz.account.model.AccountViewModel
 import com.sumian.sd.buz.cbti.video.download.VideoDownloadManager
-import com.sumian.sd.buz.devicemanager.DeviceManager
 import com.sumian.sd.buz.devicemanager.helper.FileHelper
 import com.sumian.sd.buz.doctor.model.DoctorViewModel
 import com.sumian.sd.buz.kefu.KefuManager
@@ -278,7 +278,9 @@ object AppManager {
 
     fun onAppForeground() {
         LogManager.appendUserOperationLog("App 进入 前台")
-        DeviceManager.tryToConnectCacheMonitor()
+        if (!DeviceManager.isMonitorConnected()) {
+            DeviceManager.connectBoundDevice(null)
+        }
         sendHeartbeat()
         VersionManager.getAndCheckFirmVersionShowUpgradeDialogIfNeed(true)
     }
@@ -291,18 +293,19 @@ object AppManager {
         initKefu(App.getAppContext())
         KefuManager.loginAndQueryUnreadMsg()
         AppNotificationManager.uploadPushId()
-        DeviceManager.init(App.getAppContext())
+        DeviceManager.init(application = App.getAppContext(), params = DeviceManager.Params(baseUrl = BuildConfig.BASE_URL))
         sendHeartbeat()
         syncUserInfo()
         initImManager()
     }
 
     private fun initImManager() {
-        LCIMManager.getInstance().init(mApplication,
-                BuildConfig.LEANCLOUD_APP_ID, BuildConfig.LEANCLOUD_APP_KEY,
-                getAccountViewModel().userInfo.im_id,
-                IMProfileProvider(),
-                IMManagerHost())
+        LCIMManager.getInstance()
+                .init(mApplication,
+                        BuildConfig.LEANCLOUD_APP_ID, BuildConfig.LEANCLOUD_APP_KEY,
+                        getAccountViewModel().userInfo.im_id,
+                        IMProfileProvider(),
+                        IMManagerHost())
     }
 
     fun onMainActivityRestore() {
@@ -325,7 +328,7 @@ object AppManager {
         AppManager.getOpenAnalytics().onProfileSignOff()
         // release bluetooth
         SumianExecutor.runOnBackgroundThread { BlueManager.getInstance().stopScan() }
-        AppManager.getBlueManager().release()
+//        AppManager.getBlueManager().release()
         KefuManager.logout()
         // cancel notification
         NotificationUtil.cancelAllNotification(App.getAppContext())

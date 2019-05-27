@@ -18,9 +18,9 @@ import com.sumian.common.base.BaseViewModelActivity;
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.common.utils.SumianExecutor;
 import com.sumian.common.widget.TitleBar;
+import com.sumian.device.data.SumianDevice;
+import com.sumian.device.manager.DeviceManager;
 import com.sumian.sd.R;
-import com.sumian.sd.app.AppManager;
-import com.sumian.sd.buz.devicemanager.DeviceManager;
 import com.sumian.sd.buz.setting.version.VersionManager;
 import com.sumian.sd.buz.upgrade.bean.VersionInfo;
 import com.sumian.sd.buz.upgrade.dialog.Version2ConnectingDialog;
@@ -162,7 +162,7 @@ public class DeviceVersionUpgradeActivity extends BaseViewModelActivity implemen
             VersionManager.INSTANCE.getAndCheckFirmVersionShowUpgradeDialogIfNeed(false);
             ToastUtils.showLong(stringId);
             LogManager.appendUserOperationLog("设备 dfu固件升级完成  mac=" + deviceAddress);
-            SumianExecutor.INSTANCE.runOnUiThread(DeviceManager.INSTANCE::tryToConnectCacheMonitor, UPGRADE_RECONNECT_WAIT_DURATION);
+//            todo SumianExecutor.INSTANCE.runOnUiThread(DeviceManager.INSTANCE::tryToConnectBoundDevice, UPGRADE_RECONNECT_WAIT_DURATION);
             finish();
         }
 
@@ -185,7 +185,7 @@ public class DeviceVersionUpgradeActivity extends BaseViewModelActivity implemen
                 SumianExecutor.INSTANCE.runOnUiThread(() -> mPresenter.upgrade(mVersionType), 1000);
             }
             if (error == 4096) {
-                AppManager.getBlueManager().refresh();
+//                AppManager.getBlueManager().refresh();
             }
             LogManager.appendUserOperationLog("设备 dfu 固件升级失败  mac=" + deviceAddress + "  error=" + error + "  errorMessage=" + message);
         }
@@ -226,7 +226,7 @@ public class DeviceVersionUpgradeActivity extends BaseViewModelActivity implemen
         FirmwareVersionInfo firmwareVersionInfo = VersionManager.INSTANCE.getMFirmwareVersionInfoLD().getValue();
         switch (mVersionType) {
             case VERSION_TYPE_MONITOR:
-                currentVersion = DeviceManager.INSTANCE.getMonitorVersion();
+                currentVersion = DeviceManager.INSTANCE.getMonitorSoftwareVersion();
                 if (firmwareVersionInfo != null) {
                     VersionInfo monitor = firmwareVersionInfo.monitor;
                     if (monitor != null) {
@@ -235,7 +235,7 @@ public class DeviceVersionUpgradeActivity extends BaseViewModelActivity implemen
                 }
                 break;
             case VERSION_TYPE_SLEEPY:
-                currentVersion = DeviceManager.INSTANCE.getSleeperVersion();
+                currentVersion = DeviceManager.INSTANCE.getSleepMasterSoftwareVersion();
                 if (firmwareVersionInfo != null) {
                     VersionInfo sleeper = firmwareVersionInfo.sleeper;
                     if (sleeper != null) {
@@ -332,7 +332,7 @@ public class DeviceVersionUpgradeActivity extends BaseViewModelActivity implemen
                 }
                 break;
             case VERSION_TYPE_SLEEPY:
-                if (!DeviceManager.INSTANCE.isSleeperConnected()) {
+                if (!DeviceManager.INSTANCE.isSleepMasterConnected()) {
                     ToastUtils.showShort(R.string.device_not_connected);
                     return;
                 }
@@ -451,7 +451,8 @@ public class DeviceVersionUpgradeActivity extends BaseViewModelActivity implemen
     }
 
     private boolean monitorBatteryLow() {
-        return DeviceManager.INSTANCE.getMonitorBattery() < 50;
+        SumianDevice device = DeviceManager.INSTANCE.getDevice();
+        return device != null && device.getMonitorBattery() < 50;
     }
 
     private boolean mobileBatteryLow() {
@@ -468,6 +469,7 @@ public class DeviceVersionUpgradeActivity extends BaseViewModelActivity implemen
     }
 
     private boolean sleepyBatterLow() {
-        return DeviceManager.INSTANCE.getSleeperBattery() < 50;
+        SumianDevice device = DeviceManager.INSTANCE.getDevice();
+        return device != null && device.getSleepMasterBattery() < 50;
     }
 }

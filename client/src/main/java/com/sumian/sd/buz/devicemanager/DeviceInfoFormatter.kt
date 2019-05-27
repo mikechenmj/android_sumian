@@ -1,6 +1,9 @@
 package com.sumian.sd.buz.devicemanager
 
 import com.blankj.utilcode.util.LogUtils
+import com.sumian.device.data.MonitorChannel
+import com.sumian.device.data.SumianDevice
+import com.sumian.device.manager.DeviceManager
 import com.sumian.sd.app.App
 import com.sumian.sd.common.utils.SystemUtil
 
@@ -20,10 +23,11 @@ class DeviceInfoFormatter {
 
         fun getFormatedDeviceInfo(): String {
             //Device-Info": "app_version=速眠-test_1.2.3.1&model=iPhone10,3&system=iOS_11.3.1&monitor_fw=&monitor_sn=&sleeper_fw=&sleeper_sn="
-            val monitorFw = formatMonitorInfo(getFormatMonitorFw())
-            val monitorSn = formatMonitorInfo(DeviceManager.getMonitorSn())
-            val sleeperFw = formatSpeedSleeperInfo(getFormatSleeperFw())
-            val sleeperSn = formatSpeedSleeperInfo(DeviceManager.getSleeperSn())
+            val device = DeviceManager.getDevice()
+            val monitorFw = formatMonitorInfo(getFormatMonitorFw(device))
+            val monitorSn = formatMonitorInfo(device?.monitorSn)
+            val sleeperFw = formatSpeedSleeperInfo(getFormatSleeperFw(device))
+            val sleeperSn = formatSpeedSleeperInfo(device?.sleepMasterSn)
             val deviceInfo = ("app_version=" + appVersion
                     + WITH_SIGN + "model=" + model
                     + WITH_SIGN + "system=" + systemVersion
@@ -36,10 +40,11 @@ class DeviceInfoFormatter {
         }
 
         fun getDeviceInfoMap(): Map<String, String> {
-            val monitorFw = formatMonitorInfo(getFormatMonitorFw())
-            val monitorSn = formatMonitorInfo(DeviceManager.getMonitorSn())
-            val sleeperFw = formatSpeedSleeperInfo(getFormatSleeperFw())
-            val sleeperSn = formatSpeedSleeperInfo(DeviceManager.getSleeperSn())
+            val device = DeviceManager.getDevice()
+            val monitorFw = formatMonitorInfo(getFormatMonitorFw(device))
+            val monitorSn = formatMonitorInfo(device?.monitorSn)
+            val sleeperFw = formatSpeedSleeperInfo(getFormatSleeperFw(device))
+            val sleeperSn = formatSpeedSleeperInfo(device?.sleepMasterSn)
             return mapOf("system_ver" to systemVersion,
                     "monitor_fw" to monitorFw,
                     "sleeper_fw" to sleeperFw,
@@ -48,23 +53,21 @@ class DeviceInfoFormatter {
             )
         }
 
-        private fun getFormatMonitorFw(): String? {
-            val monitor = DeviceManager.getMonitorLiveData().value ?: return null
-            val channel = when (monitor.channelType) {
-                BlueDevice.CHANNEL_TYPE_CLINIC -> "临床"
-                BlueDevice.CHANNEL_TYPE_NORMAL -> "正式"
+        private fun getFormatMonitorFw(device: SumianDevice?): String? {
+            val channel = when (device?.monitorVersionInfo?.channel) {
+                MonitorChannel.CLINIC -> "临床"
+                MonitorChannel.NORMAL -> "正式"
                 else -> "null"
             }
-            val bomVersion = monitor.bomVersion
+            val bomVersion = device?.monitorVersionInfo?.hardwareVersion
             val bomVersionStr = if (bomVersion == null) "null" else "V$bomVersion"
-            return "${monitor.version}-$channel-$bomVersionStr"
+            return "${device?.monitorVersionInfo?.softwareVersion}-$channel-$bomVersionStr"
         }
 
-        private fun getFormatSleeperFw(): String? {
-            val monitor = DeviceManager.getMonitorLiveData().value ?: return null
-            val sleeperBomVersion = monitor.sleeperBomVersion
+        private fun getFormatSleeperFw(device: SumianDevice?): String? {
+            val sleeperBomVersion = device?.sleepMasterVersionInfo?.hardwareVersion
             val sleeperBomVersionStr = if (sleeperBomVersion == null) "null" else "V$sleeperBomVersion"
-            return "${monitor.sleeperVersion}-$sleeperBomVersionStr"
+            return "${device?.sleepMasterVersionInfo?.softwareVersion}-$sleeperBomVersionStr"
         }
 
         private fun formatMonitorInfo(monitorInfo: String?): String {
@@ -78,8 +81,8 @@ class DeviceInfoFormatter {
             if (!DeviceManager.isMonitorConnected()) {
                 return ""
             }
-            val monitor = DeviceManager.getMonitorLiveData().value
-            return if (monitor == null || monitor.sleeperStatus != BlueDevice.STATUS_CONNECTED) {
+            val device = DeviceManager.getDevice()
+            return if (device == null || !device.isSleepMasterConnected()) {
                 ""
             } else {
                 speedSleeperInfo ?: ""

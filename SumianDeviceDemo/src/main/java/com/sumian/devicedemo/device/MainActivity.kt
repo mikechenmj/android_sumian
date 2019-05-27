@@ -75,7 +75,7 @@ class MainActivity : BaseActivity() {
         bt_sync_pattern.setOnClickListener { DeviceManager.syncPattern() }
         updateButtonEnable()
         DeviceManager.registerDeviceStatusListener(mDeviceStatusListener)
-        DeviceManager.connectBoundDevice(object : ConnectDeviceCallback {
+        DeviceManager.tryToConnectBoundDevice(object : ConnectDeviceCallback {
             override fun onStart() {
             }
 

@@ -1,19 +1,17 @@
 package com.sumian.sd.buz.homepage
 
 import android.app.Activity
-import android.bluetooth.BluetoothAdapter
 import android.content.Intent
 import android.view.View
 import androidx.lifecycle.Observer
-import com.blankj.utilcode.util.ActivityUtils
-import com.blankj.utilcode.util.AppUtils
-import com.blankj.utilcode.util.LogUtils
-import com.blankj.utilcode.util.SPUtils
+import com.blankj.utilcode.util.*
 import com.sumian.common.base.BaseViewModel
 import com.sumian.common.base.BaseViewModelFragment
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.statistic.StatUtil
 import com.sumian.common.utils.JsonUtil
+import com.sumian.device.callback.ConnectDeviceCallback
+import com.sumian.device.manager.DeviceManager
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.account.achievement.MyAchievementShareActivity
@@ -28,9 +26,7 @@ import com.sumian.sd.buz.cbti.activity.CbtiFinalReportDialogActivity
 import com.sumian.sd.buz.cbti.event.CBTIProgressChangeEvent
 import com.sumian.sd.buz.cbti.event.CBTIServiceBoughtEvent
 import com.sumian.sd.buz.device.scan.ScanDeviceActivity
-import com.sumian.sd.buz.device.widget.DeviceCardView
 import com.sumian.sd.buz.devicemanager.BlueDevice
-import com.sumian.sd.buz.devicemanager.DeviceManager
 import com.sumian.sd.buz.homepage.banner.BannerContract
 import com.sumian.sd.buz.homepage.banner.BannerPresenter
 import com.sumian.sd.buz.homepage.bean.GetCbtiChaptersResponse
@@ -104,18 +100,18 @@ HomepageFragment : BaseViewModelFragment<BaseViewModel>(), OnEnterListener, Last
             StatUtil.event(StatConstants.click_home_page_scale_icon)
         }
         sleep_prescription_view.setOnClickListener { SleepPrescriptionActivity.launch() }
-        device_card_view.registerLifecycleOwner(this)
-        DeviceManager.tryToConnectCacheMonitor()
-        device_card_view.mHost = object : DeviceCardView.Host {
-            override fun scanForDevice() {
-                StatUtil.event(StatConstants.click_home_page_add_device)
-                ScanDeviceActivity.startForResult(this@HomepageFragment, REQUEST_CODE_SCAN_DEVICE)
-            }
-
-            override fun enableBluetooth() {
-                startActivityForResult(Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), REQUEST_CODE_ENABLE_BLUETOOTH)
-            }
-        }
+//        device_card_view.registerLifecycleOwner(this)
+        DeviceManager.connectBoundDevice()
+//        device_card_view.mHost = object : DeviceCardFragment.Host {
+//            override fun scanForDevice() {
+//                StatUtil.event(StatConstants.click_home_page_add_device)
+//                ScanDeviceActivity.startForResult(this@HomepageFragment, REQUEST_CODE_SCAN_DEVICE)
+//            }
+//
+//            override fun enableBluetooth() {
+//                startActivityForResult(Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), REQUEST_CODE_ENABLE_BLUETOOTH)
+//            }
+//        }
         tv_anxious_and_faith.setOnClickListener {
             StatUtil.event(StatConstants.click_home_page_anxiety_and_faith)
             ActivityUtils.startActivity(AnxiousAndFaithActivity::class.java)
@@ -154,13 +150,13 @@ HomepageFragment : BaseViewModelFragment<BaseViewModel>(), OnEnterListener, Last
 
     override fun onResume() {
         super.onResume()
-        device_card_view.onResume()
+//        device_card_view.onResume()
         LastAchievementPresenter.init(this).getLastAchievement()
     }
 
     override fun onPause() {
         super.onPause()
-        device_card_view.onPause()
+//        device_card_view.onPause()
         cbti_banner_view_pager.pauseLoop()
     }
 
@@ -286,7 +282,18 @@ HomepageFragment : BaseViewModelFragment<BaseViewModel>(), OnEnterListener, Last
             if (resultCode == Activity.RESULT_OK) {
                 val deviceJson = data?.getStringExtra(ScanDeviceActivity.DATA)
                 val blueDevice = JsonUtil.fromJson(deviceJson, BlueDevice::class.java) ?: return
-                DeviceManager.connectMonitor(blueDevice)
+                DeviceManager.bind(blueDevice.mac, object : ConnectDeviceCallback {
+                    override fun onStart() {
+                    }
+
+                    override fun onSuccess() {
+                    }
+
+                    override fun onFail(code: Int, msg: String) {
+                        ToastUtils.showShort(msg)
+                    }
+                })
+
             }
         }
     }

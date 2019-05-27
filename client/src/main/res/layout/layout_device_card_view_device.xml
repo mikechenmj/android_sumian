@@ -126,7 +126,7 @@
                     android:layout_height="0dp" />
 
                 <TextView
-                    android:id="@+id/tv_speed_sleeper_status"
+                    android:id="@+id/tv_sleep_master_status"
                     style="@style/text_t2_14"
                     android:padding="2dp"
                     android:text="@string/already_connected" />

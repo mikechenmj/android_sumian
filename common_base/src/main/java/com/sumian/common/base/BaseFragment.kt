@@ -33,7 +33,7 @@ abstract class BaseFragment : Fragment(), BaseShowLoadingView {
         LoadingDialog(activity!!)
     }
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
         arguments?.let {
             initBundle(it)

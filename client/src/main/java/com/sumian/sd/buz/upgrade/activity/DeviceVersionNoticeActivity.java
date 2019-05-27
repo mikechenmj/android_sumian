@@ -2,17 +2,16 @@ package com.sumian.sd.buz.upgrade.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
 import android.view.View;
 import android.widget.TextView;
 
 import com.sumian.common.base.BaseViewModelActivity;
 import com.sumian.common.widget.TitleBar;
 import com.sumian.common.widget.refresh.SumianSwipeRefreshLayout;
+import com.sumian.device.data.SumianDevice;
+import com.sumian.device.manager.DeviceManager;
 import com.sumian.sd.R;
-import com.sumian.sd.buz.devicemanager.DeviceManager;
 import com.sumian.sd.buz.setting.version.VersionManager;
-import com.sumian.sd.buz.upgrade.bean.VersionInfo;
 import com.sumian.sd.widget.VersionInfoView;
 
 import java.util.Locale;
@@ -61,21 +60,23 @@ public class DeviceVersionNoticeActivity extends BaseViewModelActivity implement
         findViewById(R.id.sleepy_version_info).setOnClickListener(this);
         VersionManager.INSTANCE.getMFirmwareVersionInfoLD().observe(this, firmwareInfo -> {
             mRefresh.setRefreshing(false);
-            mMonitorVersionInfo.setVisibility(DeviceManager.INSTANCE.isMonitorConnected() ? View.VISIBLE : View.GONE);
-            mSleepVersionInfo.setVisibility(DeviceManager.INSTANCE.isSleeperConnected() ? View.VISIBLE : View.GONE);
-            mMonitorVersionInfo.updateUpgradeInfo(VersionManager.INSTANCE.hasNewMonitorVersion(), DeviceManager.INSTANCE.getMonitorSn());
-            mSleepVersionInfo.updateUpgradeInfo(VersionManager.INSTANCE.hasNewSleeperVersion(), DeviceManager.INSTANCE.getSleeperSn());
+            DeviceManager deviceManager = DeviceManager.INSTANCE;
+            mMonitorVersionInfo.setVisibility(deviceManager.isMonitorConnected() ? View.VISIBLE : View.GONE);
+            mSleepVersionInfo.setVisibility(deviceManager.isSleepMasterConnected() ? View.VISIBLE : View.GONE);
+            SumianDevice device = deviceManager.getDevice();
+            mMonitorVersionInfo.updateUpgradeInfo(VersionManager.INSTANCE.hasNewMonitorVersion(), device == null ? "" : device.getMonitorSn());
+            mSleepVersionInfo.updateUpgradeInfo(VersionManager.INSTANCE.hasNewSleeperVersion(), device == null ? "" : device.getSleepMasterSn());
 
             mTvMonitorVersionName.setText(
                     String.format(Locale.getDefault(),
                             getString(R.string.version_name_hint),
                             getString(R.string.monitor),
-                            getVersionString(DeviceManager.INSTANCE.getMonitorVersion())));
+                            getVersionString(device == null ? "" : device.getMonitorVersionInfo().getSoftwareVersion())));
             mTvSleepyVersionName.setText(
                     String.format(Locale.getDefault(),
                             getString(R.string.version_name_hint),
                             getString(R.string.speed_sleeper),
-                            getVersionString(DeviceManager.INSTANCE.getSleeperVersion())));
+                            getVersionString(device == null ? "" : device.getSleepMasterVersionInfo().getSoftwareVersion())));
 
         });
     }
