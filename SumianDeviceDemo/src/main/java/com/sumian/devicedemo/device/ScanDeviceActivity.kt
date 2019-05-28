@@ -79,10 +79,10 @@ class ScanDeviceActivity : BaseActivity() {
         override fun onStart(success: Boolean) {
         }
 
-        override fun onDeviceFound(bluetoothDevice: BluetoothDevice) {
-            val name = bluetoothDevice.name
+        override fun onLeScan(device: BluetoothDevice, rssi: Int, scanRecord: ByteArray) {
+            val name = device.name
             if (name != null && name.startsWith(DeviceManager.SUMIAN_DEVICE_NAME_PREFIX)) {
-                mAdapter.addData(bluetoothDevice)
+                mAdapter.addData(device)
             }
         }
 

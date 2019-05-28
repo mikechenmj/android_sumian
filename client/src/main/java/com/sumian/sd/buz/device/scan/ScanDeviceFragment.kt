@@ -13,14 +13,12 @@ import androidx.annotation.StringRes
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ToastUtils
-import com.sumian.blue.callback.BlueAdapterCallback
-import com.sumian.blue.callback.BlueScanCallback
 import com.sumian.common.base.BaseFragment
 import com.sumian.common.statistic.StatUtil
 import com.sumian.common.widget.dialog.SumianDialog
+import com.sumian.device.callback.ScanCallback
 import com.sumian.device.manager.DeviceManager
 import com.sumian.sd.R
-import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.devicemanager.BlueDevice
 import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.log.LogManager
@@ -42,7 +40,6 @@ import java.util.*
  */
 class ScanDeviceFragment : BaseFragment() {
 
-    private val mBlueManager = AppManager.getBlueManager()
     private val mScanResults = ArrayList<BlueDevice>()
     private val mHandler = Handler()
     private var mIsScanMore = false
@@ -78,57 +75,43 @@ class ScanDeviceFragment : BaseFragment() {
         showEnableBtnOrStartScan()
     }
 
-    private val mBlueAdapterEnableListener = object : BlueAdapterCallback {
-        override fun onAdapterEnable() {
-            showEnableBtnOrStartScan()
-        }
-
-        override fun onAdapterDisable() {
+    private val mBluetoothStateChangeListener = object : DeviceManager.BluetoothAdapterStateChangeListener {
+        override fun onStateChange(on: Boolean) {
             showEnableBtnOrStartScan()
         }
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mBlueManager.addBlueAdapterCallback(mBlueAdapterEnableListener)
+        DeviceManager.registerBluetoothAdapterStateChangeListener(mBluetoothStateChangeListener)
     }
 
     override fun onDestroyView() {
-        mBlueManager.removeBlueAdapterCallback(mBlueAdapterEnableListener)
-        unregisterBlueCallbacks()
-        mHandler.removeCallbacks(null)
-        stopScanIfIsScanning()
+        DeviceManager.unregisterBluetoothAdapterStateChangeListener(mBluetoothStateChangeListener)
+        mHandler.removeCallbacks(mCheckScanResultRunnable)
+        stopScan()
         super.onDestroyView()
     }
 
-    private fun registerBlueCallback() {
-        mBlueManager.addBlueScanCallback(mScanCallback)
-    }
-
-    private fun unregisterBlueCallbacks() {
-        mBlueManager.removeBlueScanCallback(mScanCallback)
-    }
-
-    private val mScanCallback = object : BlueScanCallback {
-
-        override fun onScanStart() {
+    private val mScanDeviceCallback = object : ScanCallback {
+        override fun onStart(success: Boolean) {
             mIsScanning = true
         }
 
-        override fun onLeScan(device: BluetoothDevice, rssi: Int, scanRecord: ByteArray?) {
-            if (!device.name.startsWith("M-SUMIAN") || rssi <= -80) {
+        override fun onLeScan(device: BluetoothDevice, rssi: Int, scanRecord: ByteArray) {
+            val deviceName = device.name
+            if (deviceName == null || !deviceName.startsWith("M-SUMIAN") || rssi <= -80) {
                 return
             }
             val blueDevice = BlueDevice()
-            blueDevice.name = device.name
+            blueDevice.name = deviceName
             blueDevice.mac = device.address
             blueDevice.rssi = rssi
             val isDeviceVersionValid = DeviceValidateUtil.isDeviceValid(scanRecord, blueDevice.name, blueDevice.mac)
             LogManager.appendBluetoothLog(
                     String.format(Locale.getDefault(),
                             "搜索到 %s %s, isVersionValid: %b",
-                            device.name,
+                            deviceName,
                             device.address,
                             isDeviceVersionValid))
             if (isDeviceVersionValid && !mScanResults.contains(blueDevice)) {
@@ -137,25 +120,25 @@ class ScanDeviceFragment : BaseFragment() {
                 mDeviceAdapter.setData(mScanResults)
             }
             if (System.currentTimeMillis() - mStartScanTime > SCAN_CHECK_DURATION && !mIsScanMore) {
-                stopScanIfIsScanning()
+                stopScan()
             }
         }
 
-        override fun onScanStop(isTimeout: Boolean) {
+        override fun onStop() {
             mIsScanning = false
-            hideVgs()
-            when (mScanResults.size) {
-                0 -> showNoDeviceUI()
-                1 -> showOneDeviceUI()
-                else -> showMultiDeviceUI()
+            if (vg_bt_not_enable != null) {
+                hideVgs()
+                when (mScanResults.size) {
+                    0 -> showNoDeviceUI()
+                    1 -> showOneDeviceUI()
+                    else -> showMultiDeviceUI()
+                }
             }
         }
     }
 
-    private fun stopScanIfIsScanning() {
-        if (mIsScanning) {
-            mBlueManager.stopScan()
-        }
+    private fun stopScan() {
+        DeviceManager.stopScan()
         mIsScanning = false
     }
 
@@ -242,7 +225,7 @@ class ScanDeviceFragment : BaseFragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_CODE_ENABLE_BT) {
-            if (mBlueManager.isEnable) {
+            if (isBluetoothEnable()) {
                 checkPermissionStartScan()
             } else {
                 ToastUtils.showShort("蓝牙未开启，无法搜索蓝牙设备")
@@ -255,24 +238,28 @@ class ScanDeviceFragment : BaseFragment() {
     }
 
     private fun startScan(isScanMore: Boolean = false) {
-        registerBlueCallback()
+//        registerBlueCallback()
         if (!isScanMore) {
             resetScanResults()
-            mHandler.postDelayed({ checkScanResult() }, SCAN_CHECK_DURATION)
+            mHandler.postDelayed(mCheckScanResultRunnable, SCAN_CHECK_DURATION)
             iv_device.visibility = View.GONE
             vg_scan_more_tvs.visibility = View.GONE
             ripple_view.startAnimation()
         }
 
         mIsScanMore = isScanMore
-        mBlueManager.startScanAndAutoStopAfter(SCAN_DURATION)
+        DeviceManager.scan(mScanDeviceCallback)
         mStartScanTime = System.currentTimeMillis()
         switchDeviceListUI(isScanMore)
     }
 
+    private val mCheckScanResultRunnable = Runnable {
+        checkScanResult()
+    }
+
     private fun checkScanResult() {
         if (mScanResults.size == 1) {
-            stopScanIfIsScanning()
+            stopScan()
         } else if (mScanResults.size > 1) {
             showMultiDeviceUI()
         }
@@ -285,8 +272,7 @@ class ScanDeviceFragment : BaseFragment() {
 
     private fun onDeviceSelected(device: BlueDevice) {
         StatUtil.event(StatConstants.on_bind_device_success)
-        unregisterBlueCallbacks()
-        stopScanIfIsScanning()
+        stopScan()
         DeviceManager.bind(device.mac, null)
         mOnDeviceSelectedListener?.onDeviceSelected(device)
     }
@@ -304,7 +290,7 @@ class ScanDeviceFragment : BaseFragment() {
         }
     }
 
-    private fun isBluetoothEnable() = mBlueManager.isEnable
+    private fun isBluetoothEnable() = DeviceManager.isBluetoothEnable()
 
     private fun isBluetoothEnableAndHasPermissions() = isBluetoothEnable() && hasBluetoothPermissions()
 

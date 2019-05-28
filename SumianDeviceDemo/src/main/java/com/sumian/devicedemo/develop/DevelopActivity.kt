@@ -84,11 +84,11 @@ class DevelopActivity : AppCompatActivity() {
             progress_bar.isVisible = true
         }
 
-        override fun onDeviceFound(bluetoothDevice: BluetoothDevice) {
-            LogManager.log("$bluetoothDevice, ${bluetoothDevice.name}")
-            val name = bluetoothDevice.name
+        override fun onLeScan(device: BluetoothDevice, rssi: Int, scanRecord: ByteArray) {
+            LogManager.log("$device, ${device.name}")
+            val name = device.name
             if (name.isNullOrEmpty() || !name.startsWith("M-SUMIAN")) return
-            mDeviceAdapter.addData(bluetoothDevice)
+            mDeviceAdapter.addData(device)
         }
 
         override fun onStop() {

@@ -329,10 +329,6 @@
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
 
-        <service
-            android:name=".buz.upgrade.service.DfuService"
-            tools:ignore="ExportedService" />
-
         <activity
             android:name=".buz.qrcode.activity.QrCodeActivity"
             android:configChanges="keyboardHidden|orientation"

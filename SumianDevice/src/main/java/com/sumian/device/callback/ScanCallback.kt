@@ -12,8 +12,6 @@ import android.bluetooth.BluetoothDevice
 interface ScanCallback {
 
     fun onStart(success: Boolean)
-
-    fun onDeviceFound(bluetoothDevice: BluetoothDevice)
-
+    fun onLeScan(device: BluetoothDevice, rssi: Int, scanRecord: ByteArray)
     fun onStop()
 }

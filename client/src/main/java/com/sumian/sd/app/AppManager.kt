@@ -13,7 +13,6 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.blankj.utilcode.util.Utils
-import com.sumian.blue.manager.BlueManager
 import com.sumian.common.base.BaseActivityManager
 import com.sumian.common.dns.HttpDnsEngine
 import com.sumian.common.dns.IHttpDns
@@ -27,7 +26,6 @@ import com.sumian.common.social.OpenEngine
 import com.sumian.common.social.analytics.OpenAnalytics
 import com.sumian.common.social.login.OpenLogin
 import com.sumian.common.statistic.StatUtil
-import com.sumian.common.utils.SumianExecutor
 import com.sumian.device.manager.DeviceManager
 import com.sumian.sd.BuildConfig
 import com.sumian.sd.R
@@ -38,7 +36,6 @@ import com.sumian.sd.buz.account.login.LoginActivity
 import com.sumian.sd.buz.account.login.NewUserGuideActivity
 import com.sumian.sd.buz.account.model.AccountViewModel
 import com.sumian.sd.buz.cbti.video.download.VideoDownloadManager
-import com.sumian.sd.buz.devicemanager.helper.FileHelper
 import com.sumian.sd.buz.doctor.model.DoctorViewModel
 import com.sumian.sd.buz.kefu.KefuManager
 import com.sumian.sd.buz.notification.NotificationConst
@@ -79,19 +76,6 @@ object AppManager {
     private val mNetworkManager: NetworkManager  by lazy {
         //注册网络引擎框架
         NetworkManager.create()
-    }
-
-    private val mBlueManager: BlueManager by lazy {
-        SumianExecutor.runOnBackgroundThread {
-            val externalStorageWritable = FileHelper.init().isExternalStorageWritable
-            if (externalStorageWritable) {
-                FileHelper.createSDDir(FileHelper.FILE_DIR)
-            }
-        }
-        val blueManager = BlueManager.getInstance()
-        blueManager.with(App.getAppContext())
-        blueManager.setLog { s -> LogManager.appendMonitorLog(s) }
-        blueManager
     }
 
     private val mSdApi: SdApi by lazy {
@@ -143,12 +127,6 @@ object AppManager {
     @Synchronized
     fun getOpenAnalytics(): OpenAnalytics {
         return mOpenEngine.openAnalytics!!
-    }
-
-    @JvmStatic
-    @Synchronized
-    fun getBlueManager(): BlueManager {
-        return mBlueManager
     }
 
     @JvmStatic
@@ -327,7 +305,7 @@ object AppManager {
         // user report
         AppManager.getOpenAnalytics().onProfileSignOff()
         // release bluetooth
-        SumianExecutor.runOnBackgroundThread { BlueManager.getInstance().stopScan() }
+//        SumianExecutor.runOnBackgroundThread { BlueManager.getInstance().stopScan() }
 //        AppManager.getBlueManager().release()
         KefuManager.logout()
         // cancel notification

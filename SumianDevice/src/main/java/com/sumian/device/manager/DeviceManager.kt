@@ -112,7 +112,17 @@ object DeviceManager {
             override fun onReceive(context: Context, intent: Intent) {
                 val action = intent.action
                 if (action == BluetoothAdapter.ACTION_STATE_CHANGED) {
-                    onBluetoothStatusChange()
+
+                    when (intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, BluetoothAdapter.STATE_OFF)) {
+                        BluetoothAdapter.STATE_ON -> {
+                            onBluetoothStateChange(true)
+                        }
+                        BluetoothAdapter.STATE_OFF -> {
+                            onBluetoothStateChange(false)
+                        }
+                        else -> {
+                        }
+                    }
                 }
             }
         }
@@ -121,8 +131,11 @@ object DeviceManager {
         context.registerReceiver(blueReceiver, filter)
     }
 
-    private fun onBluetoothStatusChange() {
-        if (!isBluetoothEnable()) {
+    private fun onBluetoothStateChange(on: Boolean) {
+        for (listener in mBluetoothAdapterStateChangeListeners) {
+            listener.onStateChange(on)
+        }
+        if (!on) {
             BleManager.getInstance().disconnectAllDevice()
             mSumianDevice = getBoundDevice()
             mGatt = null
@@ -181,7 +194,7 @@ object DeviceManager {
             }
 
             override fun onScanning(bleDevice: BleDevice?) {
-                callback.onDeviceFound(bleDevice?.device ?: return)
+                callback.onLeScan(bleDevice?.device ?: return, bleDevice.rssi, bleDevice.scanRecord)
             }
         })
     }
@@ -240,8 +253,8 @@ object DeviceManager {
             override fun onStart(success: Boolean) {
             }
 
-            override fun onDeviceFound(bluetoothDevice: BluetoothDevice) {
-                if (address == bluetoothDevice.address) {
+            override fun onLeScan(device: BluetoothDevice, rssi: Int, scanRecord: ByteArray) {
+                if (address == device.address) {
                     mFound = true
                     connectWithoutScan(address, callback)
                     stopScan()
@@ -493,4 +506,21 @@ object DeviceManager {
     fun setSleepMasterSn(sn: String) {
         mSumianDevice?.sleepMasterSn = sn
     }
+
+    interface BluetoothAdapterStateChangeListener {
+        fun onStateChange(on: Boolean)
+    }
+
+    private val mBluetoothAdapterStateChangeListeners = ArrayList<BluetoothAdapterStateChangeListener>()
+
+    fun registerBluetoothAdapterStateChangeListener(listener: BluetoothAdapterStateChangeListener) {
+        if (!mBluetoothAdapterStateChangeListeners.contains(listener)) {
+            mBluetoothAdapterStateChangeListeners.add(listener)
+        }
+    }
+
+    fun unregisterBluetoothAdapterStateChangeListener(listener: BluetoothAdapterStateChangeListener) {
+        mBluetoothAdapterStateChangeListeners.remove(listener)
+    }
+
 }

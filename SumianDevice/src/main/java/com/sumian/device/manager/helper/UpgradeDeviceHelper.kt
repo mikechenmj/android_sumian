@@ -102,8 +102,8 @@ object UpgradeDeviceHelper {
             override fun onStart(success: Boolean) {
             }
 
-            override fun onDeviceFound(bluetoothDevice: BluetoothDevice) {
-                if (bluetoothDevice.address.toUpperCase() == dfuMac.toUpperCase()) {
+            override fun onLeScan(device: BluetoothDevice, rssi: Int, scanRecord: ByteArray) {
+                if (device.address.toUpperCase() == dfuMac.toUpperCase()) {
                     mDeviceFound = true
                     DeviceManager.stopScan()
                     startDfu(dfuMac, filePath)

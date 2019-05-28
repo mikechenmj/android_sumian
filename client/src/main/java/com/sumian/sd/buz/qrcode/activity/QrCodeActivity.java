@@ -7,15 +7,15 @@ import android.view.View;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.android.material.tabs.TabLayout;
-import com.sumian.blue.callback.BluePeripheralDataCallback;
-import com.sumian.blue.model.BluePeripheral;
 import com.sumian.common.base.BaseViewModelActivity;
 import com.sumian.common.widget.TitleBar;
+import com.sumian.device.callback.AsyncCallback;
+import com.sumian.device.manager.DeviceManager;
 import com.sumian.sd.R;
-import com.sumian.sd.app.AppManager;
-import com.sumian.sd.buz.devicemanager.command.BlueCmd;
 import com.sumian.sd.buz.qrcode.fragment.InputSnFragment;
 import com.sumian.sd.buz.qrcode.fragment.QrCodeFragment;
+
+import org.jetbrains.annotations.NotNull;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -23,11 +23,10 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 @SuppressWarnings("ConstantConditions")
-public class QrCodeActivity extends BaseViewModelActivity implements TitleBar.OnBackClickListener, BluePeripheralDataCallback {
+public class QrCodeActivity extends BaseViewModelActivity implements TitleBar.OnBackClickListener {
 
     private ViewPager mViewPager;
     private TitleBar mTitleBar;
-    private BluePeripheral mBluePeripheral;
     private TabLayout mTabLayout;
 
     public static void show(Context context) {
@@ -44,21 +43,22 @@ public class QrCodeActivity extends BaseViewModelActivity implements TitleBar.On
     }
 
     public void bindSn(String sn) {
-        mBluePeripheral = AppManager.getBlueManager().getBluePeripheral();
-        if (mBluePeripheral == null || !mBluePeripheral.isConnected()) {
+        if (!DeviceManager.INSTANCE.isMonitorConnected()) {
             ToastUtils.showShort("监测仪未连接,无法绑定速眠仪,请先连接监测仪");
             return;
         }
-        mBluePeripheral.addPeripheralDataCallback(this);
-        mBluePeripheral.writeDelay(BlueCmd.cDoMonitor2BindSleepySnNumber(sn), 200);
-    }
+        DeviceManager.INSTANCE.changeSleepMaster(sn, new AsyncCallback<Object>() {
+            @Override
+            public void onSuccess(@org.jetbrains.annotations.Nullable Object data) {
+                ToastUtils.showShort("绑定速眠仪成功");
+                finish();
+            }
 
-    @Override
-    protected void onRelease() {
-        super.onRelease();
-        if (mBluePeripheral != null) {
-            mBluePeripheral.removePeripheralDataCallback(this);
-        }
+            @Override
+            public void onFail(int code, @NotNull String msg) {
+                ToastUtils.showShort("绑定速眠仪失败,请重新扫码绑定");
+            }
+        });
     }
 
     @Override
@@ -134,41 +134,6 @@ public class QrCodeActivity extends BaseViewModelActivity implements TitleBar.On
     @Override
     public void onBack(View v) {
         finish();
-    }
-
-    @Override
-    public void onSendSuccess(BluePeripheral bluePeripheral, byte[] data) {
-        String cmd = BlueCmd.bytes2HexString(data);
-        String cmdIndex = BlueCmd.formatCmdIndex(cmd);
-        switch (cmdIndex) {
-            case "52":
-                ToastUtils.showShort("正在绑定速眠仪中...");
-                break;
-            default:
-                break;
-        }
-    }
-
-    @Override
-    public void onReceiveSuccess(BluePeripheral bluePeripheral, byte[] data) {
-        String cmd = BlueCmd.bytes2HexString(data);
-        String cmdIndex = BlueCmd.formatCmdIndex(cmd);
-        switch (cmdIndex) {
-            case "52":
-                if ("55520188".equals(cmd)) {
-                    if (mBluePeripheral != null) {
-                        mBluePeripheral.writeDelay(BlueCmd.cSleepySnNumber(), 200);
-                    }
-                    ToastUtils.showShort("绑定速眠仪成功");
-                    finish();
-                } else {
-                    ToastUtils.showShort("绑定速眠仪失败,请重新扫码绑定");
-                }
-                break;
-            default:
-                break;
-        }
-
     }
 
     private void autoScan(boolean isStartSpot) {
