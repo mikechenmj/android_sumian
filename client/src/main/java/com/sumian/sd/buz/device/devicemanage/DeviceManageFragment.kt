@@ -23,6 +23,7 @@ import com.sumian.sd.buz.devicemanager.BlueDevice
 import com.sumian.sd.common.utils.BluetoothUtil
 import com.sumian.sd.widget.dialog.SumianAlertDialog
 import kotlinx.android.synthetic.main.fragment_device_manage.*
+import kotlinx.android.synthetic.main.layout_device_manage_fragment_no_device.*
 
 /**
  * @author : Zhan Xuzhao
@@ -70,6 +71,7 @@ class DeviceManageFragment : BaseFragment() {
 
                 }
             }
+            updateUI()
         }
     }
 
