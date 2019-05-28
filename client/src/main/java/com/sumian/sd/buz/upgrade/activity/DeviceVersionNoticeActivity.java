@@ -71,12 +71,12 @@ public class DeviceVersionNoticeActivity extends BaseViewModelActivity implement
                     String.format(Locale.getDefault(),
                             getString(R.string.version_name_hint),
                             getString(R.string.monitor),
-                            getVersionString(device == null ? "" : device.getMonitorVersionInfo().getSoftwareVersion())));
+                            getVersionString(device == null ? "" : DeviceManager.INSTANCE.getMonitorSoftwareVersion())));
             mTvSleepyVersionName.setText(
                     String.format(Locale.getDefault(),
                             getString(R.string.version_name_hint),
                             getString(R.string.speed_sleeper),
-                            getVersionString(device == null ? "" : device.getSleepMasterVersionInfo().getSoftwareVersion())));
+                            getVersionString(device == null ? "" : DeviceManager.INSTANCE.getSleepMasterSoftwareVersion())));
 
         });
     }
@@ -91,10 +91,10 @@ public class DeviceVersionNoticeActivity extends BaseViewModelActivity implement
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.monitor_version_info:
-                DeviceVersionUpgradeActivity.show(this, DeviceVersionUpgradeActivity.VERSION_TYPE_MONITOR, VersionManager.INSTANCE.hasNewMonitorVersion());
+                DeviceVersionUpgradeActivity.Companion.show(this, DeviceVersionUpgradeActivity.TYPE_MONITOR, VersionManager.INSTANCE.hasNewMonitorVersion());
                 break;
             case R.id.sleepy_version_info:
-                DeviceVersionUpgradeActivity.show(this, DeviceVersionUpgradeActivity.VERSION_TYPE_SLEEPY, VersionManager.INSTANCE.hasNewSleeperVersion());
+                DeviceVersionUpgradeActivity.Companion.show(this, DeviceVersionUpgradeActivity.TYPE_SLEEP_MASTER, VersionManager.INSTANCE.hasNewSleeperVersion());
                 break;
         }
     }

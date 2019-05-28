@@ -66,6 +66,21 @@
             android:visibility="gone"
             tools:visibility="visible" />
 
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_upgrade"
+            style="@style/SumianButton"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_50"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/space_32"
+            android:layout_marginRight="@dimen/space_32"
+            android:gravity="center"
+            android:text="@string/firmware_upgrade_hint"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_20"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
     </LinearLayout>
 
 </LinearLayout>
