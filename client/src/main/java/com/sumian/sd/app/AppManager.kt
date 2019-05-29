@@ -34,7 +34,7 @@ import com.sumian.sd.buz.account.bean.Token
 import com.sumian.sd.buz.account.bean.UserInfo
 import com.sumian.sd.buz.account.login.LoginActivity
 import com.sumian.sd.buz.account.login.NewUserGuideActivity
-import com.sumian.sd.buz.account.model.AccountViewModel
+import com.sumian.sd.buz.account.model.AccountManager
 import com.sumian.sd.buz.cbti.video.download.VideoDownloadManager
 import com.sumian.sd.buz.doctor.model.DoctorViewModel
 import com.sumian.sd.buz.kefu.KefuManager
@@ -60,10 +60,6 @@ import com.sumian.sd.main.MainActivity
 object AppManager {
 
     lateinit var mApplication: Application
-
-    private val mAccountViewModel: AccountViewModel by lazy {
-        AccountViewModel(App.getAppContext())
-    }
 
     private val mDoctorViewModel: DoctorViewModel by lazy {
         DoctorViewModel()
@@ -101,8 +97,8 @@ object AppManager {
 
     @JvmStatic
     @Synchronized
-    fun getAccountViewModel(): AccountViewModel {
-        return mAccountViewModel
+    fun getAccountViewModel(): AccountManager {
+        return AccountManager
     }
 
     @JvmStatic
@@ -147,6 +143,16 @@ object AppManager {
         observeAppLifecycle()
         initWebView(app)
         VideoDownloadManager.init(app)
+        initDeviceManager()
+    }
+
+    private fun initDeviceManager() {
+        DeviceManager.init(application = App.getAppContext(), params = DeviceManager.Params(baseUrl = BuildConfig.BASE_URL))
+        AccountManager.registerTokenChangeListener(object : AccountManager.TokenChangeListener {
+            override fun onTokenChange(token: Token?) {
+                DeviceManager.setToken(token?.token)
+            }
+        })
     }
 
     private fun initStatic(app: Application) {
@@ -213,7 +219,7 @@ object AppManager {
             webViewManger.registerHttpDnsEngine(it)
         }
         webViewManger.setDebug(BuildConfig.DEBUG)
-        mAccountViewModel.liveDataToken.observeForever { token ->
+        AccountManager.liveDataToken.observeForever { token ->
             webViewManger.setToken(token = token?.token)
         }
     }
@@ -244,10 +250,6 @@ object AppManager {
         }
     }
 
-    fun getMainClass(): Class<MainActivity> {
-        return MainActivity::class.java
-    }
-
     fun isAppForeground(): Boolean {
         return AppUtils.isAppForeground()
     }
@@ -271,7 +273,6 @@ object AppManager {
         initKefu(App.getAppContext())
         KefuManager.loginAndQueryUnreadMsg()
         AppNotificationManager.uploadPushId()
-        DeviceManager.init(application = App.getAppContext(), params = DeviceManager.Params(baseUrl = BuildConfig.BASE_URL))
         sendHeartbeat()
         syncUserInfo()
         initImManager()
@@ -281,7 +282,7 @@ object AppManager {
         LCIMManager.getInstance()
                 .init(mApplication,
                         BuildConfig.LEANCLOUD_APP_ID, BuildConfig.LEANCLOUD_APP_KEY,
-                        getAccountViewModel().userInfo.im_id,
+                        getAccountViewModel().userInfo?.im_id,
                         IMProfileProvider(),
                         IMManagerHost())
     }
@@ -295,8 +296,9 @@ object AppManager {
             ToastUtils.showShort(R.string.error)
             return
         }
-        AppManager.getAccountViewModel().updateToken(token)
-        AppManager.launchMainOrNewUserGuide()
+        getAccountViewModel().updateToken(token)
+        getAccountViewModel().updateUserInfo(token.user)
+        launchMainOrNewUserGuide()
         StatUtil.reportAccount(token.user.mobile, token.expired_at.toLong())
         sendHeartbeat()
     }
@@ -311,7 +313,7 @@ object AppManager {
         // cancel notification
         NotificationUtil.cancelAllNotification(App.getAppContext())
         // update token
-        AppManager.getAccountViewModel().updateToken(null)
+        AppManager.getAccountViewModel().clearToken()
         // update WeChat token cache
         AppManager.getOpenLogin().deleteWechatTokenCache(ActivityUtils.getTopActivity(), null)
         // finish all and start LoginActivity

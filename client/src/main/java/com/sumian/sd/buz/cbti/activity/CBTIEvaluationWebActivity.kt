@@ -57,7 +57,7 @@ class CBTIEvaluationWebActivity : SdBaseWebViewActivity() {
         map["chapter_id"] = chapterId
         map["scale_id"] = scaleIds
         val urlContent = H5Uri.NATIVE_ROUTE.replace("{pageData}", H5PayloadData(H5Uri.CBTI_OPEN_SCALES, map).toJson())
-                .replace("{token}", AppManager.getAccountViewModel().token.token)
+                .replace("{token}", AppManager.getAccountViewModel().token!!.token)
         return BuildConfig.BASE_H5_URL + urlContent
     }
 

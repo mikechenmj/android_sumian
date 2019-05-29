@@ -28,9 +28,9 @@ class BindDoctorPresenter private constructor(view: DoctorWebActivity) : BaseVie
 
     fun checkBindDoctorState(sBridgeResult: SBridgeResult<Doctor>) {
         if (sBridgeResult.code == 0) {
-            if (AppManager.getAccountViewModel().userInfo.isBindDoctor) {
+            if (AppManager.getAccountViewModel().userInfo!!.isBindDoctor) {
                 val doctor = sBridgeResult.result
-                if (AppManager.getAccountViewModel().userInfo.isSameDoctor(doctor.id)) {
+                if (AppManager.getAccountViewModel().userInfo!!.isSameDoctor(doctor.id)) {
                     mView?.onIsSameDoctorCallback(sBridgeResult.message)
                 } else {
                     mView?.onBindDoctorFailed(App.getAppContext().getString(R.string.bind_other_doctor_state))

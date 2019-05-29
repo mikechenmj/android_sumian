@@ -41,7 +41,7 @@ class NotificationDelegate : INotificationDelegate {
     }
 
     override fun getUserId(): Int {
-        return AppManager.getAccountViewModel().userInfo.id
+        return AppManager.getAccountViewModel().userInfo!!.id
     }
 
     override fun notifyNotificationCountChange() {

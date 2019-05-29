@@ -382,7 +382,7 @@ class CBTICoursePlayActivity : BaseViewModelActivity<CBTICoursePlayAuthPresenter
 
     @SuppressLint("SetTextI18n")
     private fun updateDownloadIcon(progress: Int) {
-        vg_download.isVisible = AppManager.getAccountViewModel().userInfo.isInternalPeople
+        vg_download.isVisible = AppManager.getAccountViewModel().userInfo!!.isInternalPeople
         iv_download.setImageResource(
                 when (progress) {
                     0 -> R.drawable.cbti_icon_cache_default

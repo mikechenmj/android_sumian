@@ -142,7 +142,7 @@ class CBTIIntroductionWebView : SWebViewLayout {
 
     fun requestCBTIIntroductionUrl() {
         val urlContent = H5Uri.NATIVE_ROUTE.replace("{pageData}", H5PayloadData(H5Uri.CBTI, mapOf()).toJson())
-                .replace("{token}", AppManager.getAccountViewModel().token.token)
+                .replace("{token}", AppManager.getAccountViewModel().token!!.token)
         val requestUrl = BuildConfig.BASE_H5_URL + urlContent
         loadRequestUrl(requestUrl)
     }

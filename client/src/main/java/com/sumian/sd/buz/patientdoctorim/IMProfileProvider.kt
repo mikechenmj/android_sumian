@@ -1,7 +1,5 @@
 package com.sumian.sd.buz.patientdoctorim
 
-import cn.leancloud.chatkit.LCChatKitUser
-import cn.leancloud.chatkit.LCChatProfileProvider
 import cn.leancloud.chatkit.LCChatProfilesCallBack
 import cn.leancloud.chatkit.bean.ImIds
 import cn.leancloud.chatkit.bean.ImUser
@@ -34,7 +32,7 @@ class IMProfileProvider : LCChatProfileProvider {
 
     private fun initAppUserInfo() {
         val userInfo = AppManager.getAccountViewModel().userInfo
-        mImUserInfoCache.put(userInfo.im_id!!, LCChatKitUser(userInfo.im_id, userInfo.name, userInfo.avatar))
+        mImUserInfoCache.put(userInfo!!.im_id!!, LCChatKitUser(userInfo.im_id, userInfo.name, userInfo.avatar))
     }
 
     override fun fetchProfiles(userIdList: MutableList<String>, profilesCallBack: LCChatProfilesCallBack?) {

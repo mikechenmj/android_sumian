@@ -52,7 +52,7 @@ class SleeperTalkActivity : BaseWebViewActivity() {
     override fun getCompleteUrl(): String {
         val urlContent = H5Uri.NATIVE_ROUTE
                 .replace("{pageData}", H5PayloadData(H5Uri.SLEEPER_TALK_PAGE, mapOf("id" to mEssayId)).toJson())
-                .replace("{token}", AppManager.getAccountViewModel().token.token)
+                .replace("{token}", AppManager.getAccountViewModel().token!!.token)
         val completeUrl = BuildConfig.BASE_H5_URL + urlContent
         return completeUrl
     }

@@ -312,7 +312,7 @@ class PublishAdvisoryRecordActivity : BaseViewModelActivity<PublishAdvisoryRecor
         val perms = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
         if (EasyPermissions.hasPermissions(this, *perms)) {
 
-            cameraFile = File(generateImagePath(AppManager.getAccountViewModel().token.user.id.toString(), App.getAppContext()), (AppManager.getAccountViewModel().token.user.id + System.currentTimeMillis()).toString() + ".jpg")
+            cameraFile = File(generateImagePath(AppManager.getAccountViewModel().userInfo!!.id.toString(), App.getAppContext()), (AppManager.getAccountViewModel().userInfo!!.id + System.currentTimeMillis()).toString() + ".jpg")
 
             cameraFile?.parentFile?.mkdirs()
 

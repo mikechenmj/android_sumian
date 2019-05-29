@@ -74,7 +74,7 @@ open class SimpleWebActivity : SdBaseWebViewActivity() {
         fun getLaunchIntentWithRouteData(context: Context, routePageData: String, cls: Class<out SimpleWebActivity> = SimpleWebActivity::class.java, pageNameForStat: String? = null): Intent {
             val urlContent = H5Uri.NATIVE_ROUTE
                     .replace("{pageData}", routePageData)
-                    .replace("{token}", AppManager.getAccountViewModel().token.token)
+                    .replace("{token}", AppManager.getAccountViewModel().token!!.token)
             val completeUrl = BuildConfig.BASE_H5_URL + urlContent
             return getLaunchIntentWithCompleteUrl(context, completeUrl, cls, pageNameForStat)
         }

@@ -223,7 +223,7 @@ object KefuManager {
     private fun getChatRoomLaunchIntent(): Intent {
         val userInfo = AppManager.getAccountViewModel().userInfo
         val visitorInfo = ContentFactory.createVisitorInfo(null)
-                .nickName(userInfo.getNickname())
+                .nickName(userInfo!!.getNickname())
                 .name(userInfo.getName())
                 .phone(userInfo.getMobile())
                 .description("患者APP")
@@ -261,7 +261,7 @@ object KefuManager {
         UIProvider.getInstance().setUserProfileProvider { context, message, userAvatarView, usernickView ->
             if (Message.Direct.SEND == message.direct()) {
                 userAvatarView?.let {
-                    ImageLoader.loadImage(AppManager.getAccountViewModel().userInfo.getAvatar(), userAvatarView, R.mipmap.ic_chat_right_default, R.mipmap.ic_chat_right_default)
+                    ImageLoader.loadImage(AppManager.getAccountViewModel().userInfo!!.getAvatar(), userAvatarView, R.mipmap.ic_chat_right_default, R.mipmap.ic_chat_right_default)
                 }
             }
         }

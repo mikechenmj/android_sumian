@@ -88,7 +88,7 @@ class ModifyUserInfoPresenter private constructor(private val mView: ModifyUserI
 
         mView.transformTitle(when (modifyKey) {
             ImproveUserProfileContract.IMPROVE_WEIGHT_KEY -> {
-                transformWeight(MIN_WEIGHT, MAX_WEIGHT, userInfo)
+                transformWeight(MIN_WEIGHT, MAX_WEIGHT, userInfo!!)
 
                 mView.showOnePicker(View.VISIBLE)
                 mView.showTwoPicker(View.VISIBLE)
@@ -97,7 +97,7 @@ class ModifyUserInfoPresenter private constructor(private val mView: ModifyUserI
             }
             ImproveUserProfileContract.IMPROVE_HEIGHT_KEY
             -> {
-                transformHeight(MIN_HEIGHT, MAX_HEIGHT, userInfo)
+                transformHeight(MIN_HEIGHT, MAX_HEIGHT, userInfo!!)
 
                 mView.showOnePicker(View.VISIBLE)
                 mView.showTwoPicker(View.GONE)
@@ -106,7 +106,7 @@ class ModifyUserInfoPresenter private constructor(private val mView: ModifyUserI
             }
             ImproveUserProfileContract.IMPROVE_BIRTHDAY_KEY
             -> {
-                transformBirthday(MIN_YEAR, userInfo)
+                transformBirthday(MIN_YEAR, userInfo!!)
 
                 mView.showOnePicker(View.VISIBLE)
                 mView.showTwoPicker(View.VISIBLE)
@@ -118,7 +118,7 @@ class ModifyUserInfoPresenter private constructor(private val mView: ModifyUserI
 
                 val genders: Array<out String> = App.getAppContext().resources.getStringArray(R.array.gender)
                 genders.forEachIndexed { index, gender ->
-                    if (gender == userInfo.formatGander()) {
+                    if (gender == userInfo!!.formatGander()) {
                         position = index
                     }
                 }
@@ -136,7 +136,7 @@ class ModifyUserInfoPresenter private constructor(private val mView: ModifyUserI
 
                 val eduLevels: Array<out String> = App.getAppContext().resources.getStringArray(R.array.edu_level)
                 eduLevels.forEachIndexed { index, eduLevel ->
-                    if (eduLevel == userInfo.education) {
+                    if (eduLevel == userInfo?.education) {
                         position = index
                     }
                 }
@@ -149,7 +149,7 @@ class ModifyUserInfoPresenter private constructor(private val mView: ModifyUserI
             }
             ImproveUserProfileContract.IMPROVE_MEDICINE_HISTORY
             -> {
-                val position = if (userInfo.sleep_pills == 1) 1 else 0
+                val position = if (userInfo!!.sleep_pills == 1) 1 else 0
                 val displayedValues: Array<out String> = App.getAppContext().resources.getStringArray(R.array.medicine_history)
                 mView.transformOneDisplayedValues(position, null, displayedValues)
                 mView.showOnePicker(View.VISIBLE)
@@ -347,7 +347,7 @@ class ModifyUserInfoPresenter private constructor(private val mView: ModifyUserI
             while (i < len) {
                 val province = provinces[i]
                 val name = province.name
-                if (name != null && name == AppManager.getAccountViewModel().userInfo.addressArray[0]) {
+                if (name != null && name == AppManager.getAccountViewModel().userInfo!!.addressArray[0]) {
                     position = i
                 }
                 provinceNames[i] = name
@@ -377,7 +377,7 @@ class ModifyUserInfoPresenter private constructor(private val mView: ModifyUserI
         for (i in cities.indices) {
             val city = cities[i]
             cityName = city.name
-            if (cityName != null && cityName == AppManager.getAccountViewModel().userInfo.addressArray[1]) {
+            if (cityName != null && cityName == AppManager.getAccountViewModel().userInfo!!.addressArray[1]) {
                 position = i
             }
             if ("其他" == cityName || "其他市" == cityName) continue
@@ -395,7 +395,7 @@ class ModifyUserInfoPresenter private constructor(private val mView: ModifyUserI
         var position = 0
         for (i in areas.indices) {
             val areaName = areas[i]
-            if (areaName == AppManager.getAccountViewModel().userInfo.addressArray[2]) {
+            if (areaName == AppManager.getAccountViewModel().userInfo!!.addressArray[2]) {
                 position = i
             }
             if ("其他" == areaName) areas.remove(areaName)

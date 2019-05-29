@@ -19,6 +19,7 @@ import com.clj.fastble.data.BleDevice
 import com.clj.fastble.exception.BleException
 import com.clj.fastble.scan.BleScanner
 import com.clj.fastble.utils.HexUtil
+import com.sumian.device.authentication.AuthenticationManager
 import com.sumian.device.callback.*
 import com.sumian.device.data.*
 import com.sumian.device.manager.blecommunicationcontroller.BleCommunicationController
@@ -521,6 +522,10 @@ object DeviceManager {
 
     fun unregisterBluetoothAdapterStateChangeListener(listener: BluetoothAdapterStateChangeListener) {
         mBluetoothAdapterStateChangeListeners.remove(listener)
+    }
+
+    fun setToken(token: String?) {
+        AuthenticationManager.mToken = token
     }
 
 }

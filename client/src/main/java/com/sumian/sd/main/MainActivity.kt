@@ -276,13 +276,6 @@ class MainActivity : BaseActivity() {
                 .updateUnreadCount()
     }
 
-    private fun invalidToken() {
-        val viewModel = AppManager.getAccountViewModel()
-        val token = viewModel.token
-        token.token = "123"
-        viewModel.updateToken(token)
-    }
-
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
     fun onChangeTabEvent(event: ChangeMainTabEvent) {
         EventBusUtil.removeStickyEvent(event)

@@ -91,7 +91,7 @@ class MeFragment : BaseViewModelFragment<GetAchievementListPresenter>(), View.On
 
     override fun initData() {
         super.initData()
-        val userProfile = AppManager.getAccountViewModel().token.user
+        val userProfile = AppManager.getAccountViewModel().userInfo!!
         updateUserProfile(userProfile)
         AppManager.getAccountViewModel().liveDataToken.observe(this, Observer<Token> { token ->
             run {

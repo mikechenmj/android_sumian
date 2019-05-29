@@ -72,7 +72,7 @@ class DeviceCardFragment : BaseFragment() {
                     DeviceManager.enableBluetooth()
                 } else {
                     if (monitor.monitorConnectStatus == DeviceConnectStatus.DISCONNECTED) {
-                        DeviceManager.tryToConnectBoundDevice(mConnectDeviceCallback)
+                        DeviceManager.connectBoundDevice(mConnectDeviceCallback)
                     }
                 }
             }

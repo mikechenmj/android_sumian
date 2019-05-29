@@ -46,7 +46,8 @@ class CBTIIntroduction2WebActivity : SdBaseWebViewActivity() {
 
     override fun getCompleteUrl(): String {
         val urlContent = H5Uri.NATIVE_ROUTE.replace("{pageData}", H5PayloadData(H5Uri.CBTI_INTRODUCTION, mapOf()).toJson())
-                .replace("{token}", AppManager.getAccountViewModel().token.token) + "&analysisSource=mainPage_cbtiBanner"
+                .replace("{token}", AppManager.getAccountViewModel().token?.token
+                        ?: "") + "&analysisSource=mainPage_cbtiBanner"
         return BuildConfig.BASE_H5_URL + urlContent
     }
 
