@@ -1,6 +1,6 @@
 include ':patient',
         ':doctor',
-        ':common_base',
+        ':common',
         ':kefu-easeui',
         ':jsbridge',
         ':leancloudchatkit',

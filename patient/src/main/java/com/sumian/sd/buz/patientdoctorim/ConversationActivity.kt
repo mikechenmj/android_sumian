@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import cn.leancloud.chatkit.LCIMManager
+import cn.leancloud.chatkit.activity.LCIMConversationFragment
 import cn.leancloud.chatkit.cache.LCIMConversationItemCache
 import cn.leancloud.chatkit.utils.LCIMConstants
 import cn.leancloud.chatkit.utils.LCIMConversationUtils

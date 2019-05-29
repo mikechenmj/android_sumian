@@ -1,0 +1,82 @@
+package com.sumian.common.media;
+
+
+import android.content.Context;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+
+import com.sumian.common.R;
+import com.sumian.common.base.BaseRecyclerAdapter;
+
+import org.jetbrains.annotations.NotNull;
+
+import androidx.recyclerview.widget.RecyclerView;
+
+/**
+ * Created by haibin
+ * on 17/2/27.
+ */
+class ImageAdapter extends BaseRecyclerAdapter<Image> {
+
+    private boolean isSingleSelect;
+
+    ImageAdapter(Context context) {
+        super(context);
+    }
+
+    void setSingleSelect(boolean singleSelect) {
+        isSingleSelect = singleSelect;
+    }
+
+    @SuppressWarnings("ConstantConditions")
+    @Override
+    public int getItemViewType(int position) {
+        Image image = getItem(position);
+        return image == null || image.getId() == 0 ? 0 : 1;
+    }
+
+    @Override
+    protected RecyclerView.ViewHolder onCreateDefaultViewHolder(ViewGroup parent, int type) {
+        if (type == 0)
+            return new CamViewHolder(mInflater.inflate(R.layout.item_list_cam, parent, false));
+        return new ImageViewHolder(mInflater.inflate(R.layout.item_list_image, parent, false));
+    }
+
+    @Override
+    protected void onBindViewHolder(@NotNull RecyclerView.ViewHolder holder, @NotNull Image item, int position) {
+        if (item.getId() != 0) {
+            ImageViewHolder h = (ImageViewHolder) holder;
+            h.mCheckView.setSelected(item.isSelect());
+            h.mMaskView.setVisibility(item.isSelect() ? View.VISIBLE : View.GONE);
+
+            // Show gif mask
+            h.mGifMask.setVisibility(item.getPath().toLowerCase().endsWith("gif") ?
+                View.VISIBLE : View.GONE);
+
+            mLoader.load(item.getPath()).into(h.mImageView);
+            h.mCheckView.setVisibility(isSingleSelect ? View.GONE : View.VISIBLE);
+        }
+    }
+
+    private static class CamViewHolder extends RecyclerView.ViewHolder {
+        CamViewHolder(View itemView) {
+            super(itemView);
+        }
+    }
+
+    private static class ImageViewHolder extends RecyclerView.ViewHolder {
+        ImageView mImageView;
+        ImageView mCheckView;
+        ImageView mGifMask;
+        View mMaskView;
+
+        ImageViewHolder(View itemView) {
+            super(itemView);
+            mImageView = (ImageView) itemView.findViewById(R.id.iv_image);
+            mCheckView = (ImageView) itemView.findViewById(R.id.cb_selected);
+            mMaskView = itemView.findViewById(R.id.lay_mask);
+            mGifMask = (ImageView) itemView.findViewById(R.id.iv_is_gif);
+        }
+    }
+}
