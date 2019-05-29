@@ -1,5 +1,7 @@
 package com.sumian.sd.buz.patientdoctorim
 
+import cn.leancloud.chatkit.LCChatKitUser
+import cn.leancloud.chatkit.LCChatProfileProvider
 import cn.leancloud.chatkit.LCChatProfilesCallBack
 import cn.leancloud.chatkit.bean.ImIds
 import cn.leancloud.chatkit.bean.ImUser

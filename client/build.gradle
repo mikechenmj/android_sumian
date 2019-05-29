@@ -289,7 +289,7 @@ dependencies {
     //debugImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3'
     // Optional, if you use support library fragments:
     //debugImplementation 'com.squareup.leakcanary:leakcanary-support-fragment:1.6.3'
-    implementation project(':module_core')
+//    implementation project(':module_core')
     implementation project(':SumianDevice')
     // file download
     implementation 'com.liulishuo.filedownloader:library:1.7.6'

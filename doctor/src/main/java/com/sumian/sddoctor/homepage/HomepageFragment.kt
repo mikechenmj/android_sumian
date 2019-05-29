@@ -12,9 +12,9 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.sumian.common.buz.async.AsyncCallback
 import com.sumian.common.statistic.StatUtil
 import com.sumian.common.utils.SettingsUtil
-import com.sumian.module_core.async.AsyncCallback
 import com.sumian.sddoctor.BuildConfig
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.account.activity.UserInfoActivity

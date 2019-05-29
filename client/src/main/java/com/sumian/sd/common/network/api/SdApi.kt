@@ -3,8 +3,8 @@ package com.sumian.sd.common.network.api
 import cn.leancloud.chatkit.bean.ImIds
 import cn.leancloud.chatkit.bean.ImUser
 import com.google.gson.JsonObject
+import com.sumian.common.buz.notification.NotificationListResponse
 import com.sumian.common.network.response.PaginationResponseV2
-import com.sumian.module_core.notification.NotificationListResponse
 import com.sumian.sd.buz.account.achievement.bean.AchievementData
 import com.sumian.sd.buz.account.achievement.bean.AchievementRecord
 import com.sumian.sd.buz.account.achievement.bean.AchievementResponse

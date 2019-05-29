@@ -8,9 +8,9 @@ import android.view.Gravity
 import android.view.View
 import androidx.lifecycle.Observer
 import com.blankj.utilcode.util.ActivityUtils
+import com.sumian.common.buz.async.AsyncCallback
 import com.sumian.common.helper.ToastHelper
 import com.sumian.common.statistic.StatUtil
-import com.sumian.module_core.async.AsyncCallback
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.account.activity.SettingsActivity
 import com.sumian.sddoctor.account.activity.UserInfoActivity

@@ -1,8 +1,8 @@
 package com.sumian.sddoctor.notification;
 
 import com.blankj.utilcode.util.LogUtils;
+import com.sumian.common.buz.notification.NotificationListResponse;
 import com.sumian.common.network.response.ErrorResponse;
-import com.sumian.module_core.notification.NotificationListResponse;
 import com.sumian.sddoctor.app.AppManager;
 import com.sumian.sddoctor.network.callback.BaseSdResponseCallback;
 

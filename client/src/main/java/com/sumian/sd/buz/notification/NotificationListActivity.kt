@@ -7,13 +7,13 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.sumian.common.base.BaseViewModel
 import com.sumian.common.base.BaseViewModelActivity
+import com.sumian.common.buz.async.AsyncCallback
+import com.sumian.common.buz.notification.Notification
+import com.sumian.common.buz.notification.NotificationCategory
+import com.sumian.common.buz.notification.NotificationListFragment
+import com.sumian.common.buz.notification.NotificationListResponse
 import com.sumian.common.network.error.ErrorCode
 import com.sumian.common.network.response.ErrorResponse
-import com.sumian.module_core.async.AsyncCallback
-import com.sumian.module_core.notification.Notification
-import com.sumian.module_core.notification.NotificationCategory
-import com.sumian.module_core.notification.NotificationListFragment
-import com.sumian.module_core.notification.NotificationListResponse
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.patientdoctorim.ConversationListActivity
@@ -82,7 +82,7 @@ class NotificationListActivity : BaseViewModelActivity<BaseViewModel>(), Notific
                 })
     }
 
-    override fun onNotificationClick(notification: com.sumian.module_core.notification.Notification) {
+    override fun onNotificationClick(notification: com.sumian.common.buz.notification.Notification) {
         launchActivityIfNeed(notification)
     }
 

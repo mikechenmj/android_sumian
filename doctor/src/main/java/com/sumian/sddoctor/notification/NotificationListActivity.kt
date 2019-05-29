@@ -4,12 +4,12 @@ import android.content.Intent
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.base.BaseActivity
+import com.sumian.common.buz.async.AsyncCallback
+import com.sumian.common.buz.notification.Notification
+import com.sumian.common.buz.notification.NotificationCategory
+import com.sumian.common.buz.notification.NotificationListFragment
+import com.sumian.common.buz.notification.NotificationListResponse
 import com.sumian.common.network.response.ErrorResponse
-import com.sumian.module_core.async.AsyncCallback
-import com.sumian.module_core.notification.Notification
-import com.sumian.module_core.notification.NotificationCategory
-import com.sumian.module_core.notification.NotificationListFragment
-import com.sumian.module_core.notification.NotificationListResponse
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.app.AppManager
 import com.sumian.sddoctor.buz.patientdoctorim.ConversationListActivity

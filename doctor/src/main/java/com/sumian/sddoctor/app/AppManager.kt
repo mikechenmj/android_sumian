@@ -12,6 +12,7 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.Utils
 import com.sumian.common.base.BaseActivityManager
+import com.sumian.common.buz.async.AsyncCallback
 import com.sumian.common.dns.HttpDnsEngine
 import com.sumian.common.dns.IHttpDns
 import com.sumian.common.h5.WebViewManger
@@ -23,7 +24,6 @@ import com.sumian.common.notification.NotificationUtil
 import com.sumian.common.social.OpenEngine
 import com.sumian.common.social.login.OpenLogin
 import com.sumian.common.statistic.StatUtil
-import com.sumian.module_core.async.AsyncCallback
 import com.sumian.sddoctor.BuildConfig
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.account.AccountViewModel

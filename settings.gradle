@@ -1,4 +1,4 @@
-include ':client', ':module_core',
+include ':client',
         ':doctor',
         ':common_base',
         ':kefu-easeui',

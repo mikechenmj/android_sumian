@@ -3,9 +3,9 @@ package com.sumian.sddoctor.network
 import cn.leancloud.chatkit.bean.ImIds
 import cn.leancloud.chatkit.bean.ImUser
 import com.google.gson.JsonObject
-import com.sumian.module_core.chat.bean.CreateConversationResponse
-import com.sumian.module_core.notification.NotificationCategory
-import com.sumian.module_core.notification.NotificationListResponse
+import com.sumian.common.buz.chat.bean.CreateConversationResponse
+import com.sumian.common.buz.notification.NotificationCategory
+import com.sumian.common.buz.notification.NotificationListResponse
 import com.sumian.sddoctor.account.bean.Feedback
 import com.sumian.sddoctor.account.bean.Version
 import com.sumian.sddoctor.account.kefu.KeFuMessage

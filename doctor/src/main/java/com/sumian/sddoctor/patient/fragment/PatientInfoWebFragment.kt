@@ -11,12 +11,12 @@ import android.widget.PopupWindow
 import android.widget.TextView
 import androidx.core.widget.PopupWindowCompat
 import com.blankj.utilcode.util.LogUtils
+import com.sumian.common.buz.chat.bean.CreateConversationResponse
 import com.sumian.common.h5.handler.SBridgeHandler
 import com.sumian.common.h5.widget.SWebView
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.statistic.StatUtil
 import com.sumian.common.utils.JsonUtil
-import com.sumian.module_core.chat.bean.CreateConversationResponse
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.app.AppManager
 import com.sumian.sddoctor.buz.patientdoctorim.ConversationActivity

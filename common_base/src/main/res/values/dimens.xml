@@ -292,6 +292,7 @@
 
     <dimen name="airPanelMinHeight">86dp</dimen>
     <dimen name="airPanelMaxHeight">300dp</dimen>
+    <dimen name="im_message_item_text_max_width">215dp</dimen>
 
 </resources>
 
