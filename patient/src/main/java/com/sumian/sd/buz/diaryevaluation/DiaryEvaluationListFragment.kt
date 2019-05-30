@@ -97,6 +97,7 @@ class DiaryEvaluationListFragment : BaseFragment(), androidx.swiperefreshlayout.
             mPage = 1
         }
         val call = AppManager.getSdHttpService().getDiaryEvaluations(type, null, mPage, PAGE_SIZE)
+        addCall(call)
         call.enqueue(object : BaseSdResponseCallback<PaginationResponseV2<DiaryEvaluationData>>() {
             override fun onFailure(errorResponse: ErrorResponse) {
                 LogUtils.d(errorResponse.message)
@@ -127,7 +128,7 @@ class DiaryEvaluationListFragment : BaseFragment(), androidx.swiperefreshlayout.
 
             override fun onFinish() {
                 super.onFinish()
-                refresh.hideRefreshAnim()
+                refresh?.hideRefreshAnim()
             }
         })
     }

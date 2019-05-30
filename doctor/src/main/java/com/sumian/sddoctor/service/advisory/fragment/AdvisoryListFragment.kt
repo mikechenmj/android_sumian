@@ -114,7 +114,7 @@ class AdvisoryListFragment : BaseViewModelFragment<AdvisoryListPresenter>(), Adv
     override fun dismissLoading() {
         //super.dismissLoading()
         mIsInit = false
-        refresh.hideRefreshAnim()
+        refresh?.hideRefreshAnim()
     }
 
     override fun onGetAdvisoriesSuccess(advisories: List<Advisory>) {
