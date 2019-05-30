@@ -112,8 +112,7 @@ dependencies {
     api 'com.squareup.retrofit2:retrofit:2.5.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.11.0'
-    //api project(':jsbridge')
-    api 'com.sumian.sd:jsbridge:1.0.2'
+    api project(':jsbridge')
     //aliyun httpdns
     implementation('com.aliyun.ams:alicloud-android-httpdns:1.1.7@aar') {
         transitive true
@@ -144,4 +143,6 @@ dependencies {
     api 'io.alterac.blurkit:blurkit:1.1.0'
     api 'com.makeramen:roundedimageview:2.3.0'
     api 'com.bskim:maxheightscrollview:1.0.0@aar'
+    //客服
+    implementation project(':kefu-easeui')
 }

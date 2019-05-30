@@ -280,8 +280,6 @@ dependencies {
     // RecyclerViewPager
     implementation 'com.github.lsjwzh.RecyclerViewPager:lib:v1.1.2@aar'
     implementation project(':common')
-    //implementation project(':jsbridge')
-    implementation project(':kefu-easeui')
     // round corner image view
     implementation 'com.makeramen:roundedimageview:2.3.0'
     // LeakCanary

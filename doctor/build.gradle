@@ -256,9 +256,6 @@ dependencies {
 
     //sumian component
     implementation project(':common')
-    //客服
-    implementation project(':kefu-easeui')
-
     //aliyun player sdk
     implementation(name: 'AlivcReporter-1.2', ext: 'aar')
     implementation(name: 'AlivcPlayer-3.4.8', ext: 'aar')
@@ -268,5 +265,4 @@ dependencies {
     implementation('cn.leancloud.android:avoscloud-sdk:v4.7.6')
     // 推送与即时通讯需要的包
     implementation('cn.leancloud.android:avoscloud-push:v4.7.6@aar') { transitive = true }
-//    implementation project(':module_core')
 }
