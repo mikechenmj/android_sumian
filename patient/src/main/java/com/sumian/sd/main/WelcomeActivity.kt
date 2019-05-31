@@ -5,7 +5,6 @@ import com.sumian.common.base.BaseActivity
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.account.login.LoginActivity
-import com.sumian.sd.buz.kefu.KefuManager
 import com.sumian.sd.common.utils.StatusBarUtil
 
 /**
@@ -37,10 +36,10 @@ class WelcomeActivity : BaseActivity() {
             val login = AppManager.getAccountViewModel().isLogin
             if (login) {
                 AppManager.launchMain()
-                val launchCustomerServiceActivity = intent.getBooleanExtra("key_launch_online_customer_service_activity", false)
-                if (launchCustomerServiceActivity) {
-                    KefuManager.launchKefuActivity()
-                }
+//                val launchCustomerServiceActivity = intent.getBooleanExtra("key_launch_online_customer_service_activity", false)
+//                if (launchCustomerServiceActivity) {
+//                    KefuManager.launchKefuActivity(this)
+//                }
             } else {
                 LoginActivity.show()
             }

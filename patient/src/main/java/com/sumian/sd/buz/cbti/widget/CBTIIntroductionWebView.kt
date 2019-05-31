@@ -10,6 +10,7 @@ import com.blankj.utilcode.util.LogUtils
 import com.github.lzyzsd.jsbridge.BridgeHandler
 import com.github.lzyzsd.jsbridge.CallBackFunction
 import com.google.gson.reflect.TypeToken
+import com.sumian.common.buz.kefu.KefuManager
 import com.sumian.common.dialog.SumianImageTextDialog
 import com.sumian.common.h5.bean.H5BaseResponse
 import com.sumian.common.h5.bean.H5PayloadData
@@ -22,7 +23,6 @@ import com.sumian.common.widget.TitleBar
 import com.sumian.sd.BuildConfig
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.doctor.bean.H5DoctorServiceShoppingResult
-import com.sumian.sd.buz.kefu.KefuManager
 import com.sumian.sd.common.h5.H5Uri
 import com.sumian.sd.common.pay.activity.PaymentActivity
 import com.tencent.smtt.sdk.WebView
@@ -125,7 +125,7 @@ class CBTIIntroductionWebView : SWebViewLayout {
     fun onGoToPage(page: String, rawData: String) {
         when (page) {
             "onlineConsult" -> {
-                KefuManager.launchKefuActivity()
+                KefuManager.launchKefuActivity(context)
 //                StatUtil.event(StatConstants.click_sleep_guide_page_sleep_steward)
             }
         }

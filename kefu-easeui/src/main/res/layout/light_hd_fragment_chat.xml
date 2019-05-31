@@ -14,7 +14,7 @@
         easemob:titleBarBackground="#6595F4"
         easemob:titleBarLeftImage="@drawable/ic_nav_icon_back_white"
         easemob:titleBarTextColor="#FFFFFF"
-        easemob:titleBarTitle="@string/sleep_housekeeper" />
+        easemob:titleBarTitle="@string/sleep_steward" />
 
     <TextView
         android:id="@+id/tv_username"

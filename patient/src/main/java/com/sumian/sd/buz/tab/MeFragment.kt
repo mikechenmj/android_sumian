@@ -16,6 +16,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import com.qmuiteam.qmui.util.QMUISpanHelper
 import com.sumian.common.base.BaseViewModelFragment
+import com.sumian.common.buz.kefu.KefuManager
 import com.sumian.common.image.loadImage
 import com.sumian.common.statistic.StatUtil
 import com.sumian.device.manager.DeviceManager
@@ -32,7 +33,6 @@ import com.sumian.sd.buz.advisory.activity.AdvisoryListActivity
 import com.sumian.sd.buz.coupon.activity.CouponCenterActivity
 import com.sumian.sd.buz.device.devicemanage.DeviceManageActivity
 import com.sumian.sd.buz.diaryevaluation.DiaryEvaluationListActivity
-import com.sumian.sd.buz.kefu.KefuManager
 import com.sumian.sd.buz.notification.NotificationListActivity
 import com.sumian.sd.buz.notification.NotificationViewModel
 import com.sumian.sd.buz.onlinereport.OnlineReportListActivity
@@ -145,7 +145,7 @@ class MeFragment : BaseViewModelFragment<GetAchievementListPresenter>(), View.On
             R.id.iv_notification -> NotificationListActivity.launch(activity!!)
             R.id.siv_customer_service -> {
 //                UIProvider.getInstance().clearCacheMsg()
-                KefuManager.launchKefuActivity()
+                KefuManager.launchKefuActivity(activity!!)
             }
             R.id.dv_my_metal -> {
                 StatUtil.event(StatConstants.click_me_page_my_medal_item)

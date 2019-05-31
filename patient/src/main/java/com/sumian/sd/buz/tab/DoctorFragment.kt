@@ -7,13 +7,13 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.base.BaseViewModelFragment
+import com.sumian.common.buz.kefu.KefuManager
 import com.sumian.common.utils.ColorCompatUtil
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.doctor.activity.ScanDoctorQrCodeActivity
 import com.sumian.sd.buz.doctor.bean.Doctor
 import com.sumian.sd.buz.doctor.presenter.DoctorPresenter
-import com.sumian.sd.buz.kefu.KefuManager
 import com.sumian.sd.buz.notification.NotificationListActivity
 import com.sumian.sd.main.OnEnterListener
 import com.sumian.sd.widget.RequestScanQrCodeView
@@ -38,7 +38,7 @@ class DoctorFragment : BaseViewModelFragment<DoctorPresenter>(), RequestScanQrCo
         DoctorPresenter.init(this)
         doctor_detail_layout?.setOnRefreshListener(this)
         iv_notification?.setOnClickListener { NotificationListActivity.launch(activity!!) }
-        KefuManager.mMessageCountLiveData.observe(this, Observer {
+        KefuManager.mUnreadCountLiveData.observe(this, Observer {
             showMessageDot(it > 0)
         })
     }

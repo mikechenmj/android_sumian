@@ -14,6 +14,7 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SPUtils
 import com.sumian.common.base.BaseActivity
+import com.sumian.common.buz.kefu.KefuManager
 import com.sumian.common.notification.NotificationUtil
 import com.sumian.common.statistic.StatUtil
 import com.sumian.common.utils.SettingsUtil
@@ -24,7 +25,6 @@ import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.devicemanager.AutoSyncDeviceDataUtil
 import com.sumian.sd.buz.diary.DataFragment
 import com.sumian.sd.buz.homepage.HomepageFragment
-import com.sumian.sd.buz.kefu.KefuManager
 import com.sumian.sd.buz.notification.NotificationUnreadCountChangeEvent
 import com.sumian.sd.buz.notification.NotificationViewModel
 import com.sumian.sd.buz.setting.version.delegate.VersionDelegate
@@ -145,13 +145,13 @@ class MainActivity : BaseActivity() {
         nav_tab.setOnSelectedTabChangeListener { navigationItem, position -> changeSelectFragment(position) }
         changeSelectTab(TAB_0)
         mNotificationViewModel.unreadCount.observe(this, Observer { updateTabMeDot() })
-        KefuManager.mMessageCountLiveData.observe(this, Observer { updateTabMeDot() })
+        KefuManager.mUnreadCountLiveData.observe(this, Observer { updateTabMeDot() })
         LCIMManager.getInstance().unreadCountLiveData.observe(this, Observer { updateTabMeDot() })
     }
 
     private fun updateTabMeDot() {
         val hasNotification = (mNotificationViewModel.unreadCount.value ?: 0) > 0
-        val hasKefuMsg = (KefuManager.mMessageCountLiveData.value ?: 0) > 0
+        val hasKefuMsg = (KefuManager.mUnreadCountLiveData.value ?: 0) > 0
         val hasImMsg = LCIMManager.getInstance().unreadMessageCount > 0
         tb_me?.showDot(if (hasNotification || hasImMsg || hasKefuMsg) View.VISIBLE else View.GONE)
     }
@@ -173,6 +173,15 @@ class MainActivity : BaseActivity() {
     }
 
     override fun initBundle(bundle: Bundle) {
+        if (KefuManager.isFromUnicorn(bundle)) {
+            intent = Intent()   // 将intent清掉，以免从堆栈恢复时又打开客服窗口
+            KefuManager.launchKefuActivity(this)
+        } else {
+            switchTabByBundle(bundle)
+        }
+    }
+
+    private fun switchTabByBundle(bundle: Bundle) {
         var launchTabPosition = bundle.getInt(KEY_TAB_INDEX, mCurrentPosition)
         mLaunchTabData = bundle.getString(KEY_TAB_DATA)
         if (launchTabPosition == TAB_INVALID) {

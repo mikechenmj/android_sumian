@@ -14,6 +14,7 @@ import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.blankj.utilcode.util.Utils
 import com.sumian.common.base.BaseActivityManager
+import com.sumian.common.buz.kefu.KefuManager
 import com.sumian.common.dns.HttpDnsEngine
 import com.sumian.common.dns.IHttpDns
 import com.sumian.common.h5.WebViewManger
@@ -37,7 +38,6 @@ import com.sumian.sd.buz.account.login.NewUserGuideActivity
 import com.sumian.sd.buz.account.model.AccountManager
 import com.sumian.sd.buz.cbti.video.download.VideoDownloadManager
 import com.sumian.sd.buz.doctor.model.DoctorViewModel
-import com.sumian.sd.buz.kefu.KefuManager
 import com.sumian.sd.buz.notification.NotificationConst
 import com.sumian.sd.buz.notification.NotificationDelegate
 import com.sumian.sd.buz.notification.SchemeResolver
@@ -49,6 +49,7 @@ import com.sumian.sd.common.log.SdLogManager
 import com.sumian.sd.common.network.NetworkManager
 import com.sumian.sd.common.network.api.SdApi
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
+import com.sumian.sd.common.utils.getString
 import com.sumian.sd.main.MainActivity
 
 /**
@@ -144,6 +145,16 @@ object AppManager {
         initWebView(app)
         VideoDownloadManager.init(app)
         initDeviceManager()
+        initKefu(app)
+    }
+
+    private fun initKefu(app: Application) {
+        KefuManager.init(app,
+                KefuManager.KefuParams(
+                        getString(R.string.sleep_steward),
+                        MainActivity::class.java,
+                        R.drawable.ic_notification_small)
+        )
     }
 
     private fun initDeviceManager() {
@@ -224,13 +235,6 @@ object AppManager {
         }
     }
 
-    @JvmStatic
-    fun initKefu(context: Context) {
-        synchronized(AppManager::class) {
-            KefuManager.init(context)
-        }
-    }
-
     fun launchMainAndFinishAll() {
         ActivityUtils.finishAllActivities()
         launchMain()
@@ -270,8 +274,7 @@ object AppManager {
     }
 
     fun onMainActivityCreate() {
-        initKefu(App.getAppContext())
-        KefuManager.loginAndQueryUnreadMsg()
+//        KefuManagerV1.loginAndQueryUnreadMsg()
         AppNotificationManager.uploadPushId()
         sendHeartbeat()
         syncUserInfo()

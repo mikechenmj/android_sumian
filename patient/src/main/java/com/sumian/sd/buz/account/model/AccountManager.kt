@@ -6,6 +6,7 @@ import androidx.annotation.MainThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.blankj.utilcode.util.SPUtils
+import com.sumian.common.buz.kefu.KefuManager
 import com.sumian.common.utils.JsonUtil
 import com.sumian.device.manager.DeviceManager
 import com.sumian.sd.buz.account.bean.Token
@@ -93,15 +94,18 @@ object AccountManager {
     }
 
     fun updateToken(token: Token?) {
-        mTokenLiveData.run { setValue(token) }
+        mTokenLiveData.value = token
         persistentToken(token)
-        DeviceManager.setToken(token!!.token)
+        DeviceManager.setToken(token?.token)
     }
 
     @MainThread
     fun updateUserInfo(userInfo: UserInfo?) {
         mUserInfoLiveData.value = userInfo
         persistUserInfo(userInfo)
+        if (userInfo != null) {
+            KefuManager.setUserInfo(KefuManager.UserInfo(userInfo.id.toString(), userInfo.name, userInfo.avatar))
+        }
     }
 
     fun clearToken() {

@@ -145,4 +145,5 @@ dependencies {
     api 'com.bskim:maxheightscrollview:1.0.0@aar'
     //客服
     implementation project(':kefu-easeui')
+    api 'com.qiyukf.unicorn:unicorn:4.12.0'
 }

@@ -8,10 +8,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.sumian.common.buz.kefu.KefuManager;
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.common.statistic.StatUtil;
 import com.sumian.sd.R;
-import com.sumian.sd.buz.kefu.KefuManager;
 import com.sumian.sd.buz.stat.StatConstants;
 
 import java.lang.ref.WeakReference;
@@ -129,7 +129,7 @@ public class RequestScanQrCodeView extends LinearLayout implements View.OnClickL
                 requestCodeQRCodePermissions();
                 break;
             case R.id.siv_customer_service:
-                KefuManager.launchKefuActivity();
+                KefuManager.INSTANCE.launchKefuActivity(getContext());
                 break;
         }
     }

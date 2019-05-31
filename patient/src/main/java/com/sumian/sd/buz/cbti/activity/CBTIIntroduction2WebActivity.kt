@@ -2,6 +2,7 @@ package com.sumian.sd.buz.cbti.activity
 
 import android.content.Intent
 import com.blankj.utilcode.util.ActivityUtils
+import com.sumian.common.buz.kefu.KefuManager
 import com.sumian.common.h5.bean.H5PayloadData
 import com.sumian.common.statistic.StatUtil
 import com.sumian.sd.BuildConfig
@@ -9,7 +10,6 @@ import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.SdBaseWebViewActivity
 import com.sumian.sd.buz.cbti.sheet.CBTIShareBottomSheet
-import com.sumian.sd.buz.kefu.KefuManager
 import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.h5.H5Uri
 
@@ -54,7 +54,7 @@ class CBTIIntroduction2WebActivity : SdBaseWebViewActivity() {
     override fun onGoToPage(page: String, rawData: String) {
         when (page) {
             "onlineConsult" -> {
-                KefuManager.launchKefuActivity()
+                KefuManager.launchKefuActivity(this)
 //                StatUtil.event(StatConstants.click_sleep_guide_page_sleep_steward)
             }
         }
