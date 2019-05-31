@@ -7,8 +7,10 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.lifecycle.MutableLiveData
+import com.blankj.utilcode.util.AppUtils
 import com.qiyukf.nimlib.sdk.NimIntent
 import com.qiyukf.unicorn.api.*
+import com.sumian.common.R
 import com.sumian.common.utils.JsonUtil
 
 /**
@@ -47,11 +49,17 @@ object KefuManager {
 
     private fun options(params: KefuParams): YSFOptions {
         val options = YSFOptions()
-
+        // notification
         val notificationConfig = StatusBarNotificationConfig()
         notificationConfig.notificationSmallIconId = params.notificationSmallIconId
         notificationConfig.notificationEntrance = params.notificationEntrance
         options.statusBarNotificationConfig = notificationConfig
+        // ui
+        val uiCustomization = UICustomization()
+        uiCustomization.leftAvatar = Uri.parse("android.resource://${AppUtils.getAppPackageName()}/" + R.drawable.news_icon_notice).toString()
+        uiCustomization.rightAvatar = params.userAvatar
+        options.uiCustomization = uiCustomization
+        // bot event
         options.onBotEventListener = object : OnBotEventListener() {
             override fun onUrlClick(context: Context?, url: String?): Boolean {
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
@@ -72,8 +80,9 @@ object KefuManager {
     }
 
     data class KefuParams(
-            var kefuActivityTitle: String,
             var notificationEntrance: Class<out Activity>,
+            var kefuActivityTitle: String,
+            var userAvatar: String? = null,
             var notificationSmallIconId: Int)
 
     data class UserInfoDataItem(val key: String, val value: String)

@@ -36,10 +36,6 @@ class WelcomeActivity : BaseActivity() {
             val login = AppManager.getAccountViewModel().isLogin
             if (login) {
                 AppManager.launchMain()
-//                val launchCustomerServiceActivity = intent.getBooleanExtra("key_launch_online_customer_service_activity", false)
-//                if (launchCustomerServiceActivity) {
-//                    KefuManager.launchKefuActivity(this)
-//                }
             } else {
                 LoginActivity.show()
             }

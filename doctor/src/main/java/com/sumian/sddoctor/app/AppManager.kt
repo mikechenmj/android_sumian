@@ -13,6 +13,7 @@ import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.Utils
 import com.sumian.common.base.BaseActivityManager
 import com.sumian.common.buz.async.AsyncCallback
+import com.sumian.common.buz.kefu.KefuManager
 import com.sumian.common.dns.HttpDnsEngine
 import com.sumian.common.dns.IHttpDns
 import com.sumian.common.h5.WebViewManger
@@ -27,7 +28,6 @@ import com.sumian.common.statistic.StatUtil
 import com.sumian.sddoctor.BuildConfig
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.account.AccountViewModel
-import com.sumian.sddoctor.account.kefu.KefuManager
 import com.sumian.sddoctor.base.ActivityDelegateFactory
 import com.sumian.sddoctor.buz.patientdoctorim.IMManagerHost
 import com.sumian.sddoctor.buz.patientdoctorim.IMProfileProvider
@@ -216,8 +216,7 @@ object AppManager {
     }
 
     fun onMainActivityCreate() {
-        initKefu(App.getAppContext())
-        KefuManager.loginAndQueryUnreadMsg()
+        initKefu(mApplication)
         AppNotificationManager.uploadPushId()
         updateDoctorInfo()
         initImManager()
@@ -251,7 +250,12 @@ object AppManager {
 
     @JvmStatic
     fun initKefu(context: Context) {
-        KefuManager.init(context)
+        KefuManager.init(mApplication,
+                KefuManager.KefuParams(
+                        MainActivity::class.java,
+                        context.resources.getString(R.string.sleep_steward),
+                        getAccountViewModel().getDoctorInfo().value?.avatar,
+                        R.drawable.ic_notification_small))
     }
 
     // ------------ App's important lifecycle events end  ------------

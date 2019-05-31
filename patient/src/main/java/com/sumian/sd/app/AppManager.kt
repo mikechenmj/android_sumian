@@ -145,14 +145,14 @@ object AppManager {
         initWebView(app)
         VideoDownloadManager.init(app)
         initDeviceManager()
-        initKefu(app)
     }
 
     private fun initKefu(app: Application) {
         KefuManager.init(app,
                 KefuManager.KefuParams(
-                        getString(R.string.sleep_steward),
                         MainActivity::class.java,
+                        getString(R.string.sleep_steward),
+                        getAccountViewModel().userInfo?.avatar,
                         R.drawable.ic_notification_small)
         )
     }
@@ -274,7 +274,7 @@ object AppManager {
     }
 
     fun onMainActivityCreate() {
-//        KefuManagerV1.loginAndQueryUnreadMsg()
+        initKefu(mApplication)
         AppNotificationManager.uploadPushId()
         sendHeartbeat()
         syncUserInfo()

@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.blankj.utilcode.util.SPUtils
+import com.sumian.common.buz.kefu.KefuManager
 import com.sumian.sddoctor.login.login.bean.DoctorInfo
 import com.sumian.sddoctor.login.login.bean.LoginResponse
 import com.sumian.sddoctor.util.JsonUtil
@@ -54,6 +55,9 @@ class AccountViewModel(application: Application) : AndroidViewModel(application)
         mDoctorInfo.value = doctorInfo
         if (persist) {
             SPUtils.getInstance().put(KEY_DOCTOR_INFO, JsonUtil.toJson(doctorInfo))
+        }
+        if (doctorInfo != null) {
+            KefuManager.setUserInfo(KefuManager.UserInfo(doctorInfo.id.toString(), doctorInfo.name, doctorInfo.avatar))
         }
     }
 

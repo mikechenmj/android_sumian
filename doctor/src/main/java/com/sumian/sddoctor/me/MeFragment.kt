@@ -3,19 +3,18 @@
 package com.sumian.sddoctor.me
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import androidx.lifecycle.Observer
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.buz.async.AsyncCallback
+import com.sumian.common.buz.kefu.KefuManager
 import com.sumian.common.helper.ToastHelper
 import com.sumian.common.statistic.StatUtil
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.account.activity.SettingsActivity
 import com.sumian.sddoctor.account.activity.UserInfoActivity
 import com.sumian.sddoctor.account.contract.LogoutContract
-import com.sumian.sddoctor.account.kefu.KefuManager
 import com.sumian.sddoctor.account.presenter.LogoutPresenter
 import com.sumian.sddoctor.account.version.VersionManager
 import com.sumian.sddoctor.app.AppManager
@@ -68,23 +67,13 @@ class MeFragment : BaseFragment(), LogoutContract.View {
         sdv_my_service.setOnClickListener { ActivityUtils.startActivity(MyServiceListActivity::class.java) }
         sdv_my_wallet.setOnClickListener { ActivityUtils.startActivity(MyWalletActivity::class.java) }
         sdv_my_kefu.setOnClickListener {
-            KefuManager.loginAndQueryUnreadMsg(object : KefuManager.LoginCallback {
-                override fun onSuccess() {
-                    KefuManager.launchKefuActivity()
-                    Log.e("tag", "登录成功")
-                }
-
-                override fun onFailed(error: String) {
-                    super.onFailed(error)
-                    Log.e("tag", error)
-                }
-            })
+            KefuManager.launchKefuActivity(activity!!)
         }
         sdv_user_guid.setOnClickListener {
             UseGuideListActivity.launch()
             StatUtil.event(StatConstants.click_me_page_use_guide_item)
         }
-        KefuManager.mMessageCountLiveData.observe(this, Observer {
+        KefuManager.mUnreadCountLiveData.observe(this, Observer {
             showDot(sdv_my_kefu, it > 0)
         })
         AppManager.getAccountViewModel().getDoctorInfo().observe(this, Observer { invalidDoctorInfo(it) })

@@ -6,7 +6,6 @@ import androidx.lifecycle.Observer
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.sddoctor.R
 import com.sumian.sddoctor.account.TokenInfo
-import com.sumian.sddoctor.account.kefu.KefuManager
 import com.sumian.sddoctor.app.AppManager
 import com.sumian.sddoctor.login.login.LoginActivity
 import com.sumian.sddoctor.main.MainActivity
@@ -29,10 +28,6 @@ class WelcomeActivity : AppCompatActivity() {
         SumianExecutor.runOnUiThread({
             if (tokenInfo != null && !tokenInfo.isExpired()) {
                 ActivityUtils.startActivity(MainActivity::class.java)
-                val launchCustomerServiceActivity = intent.getBooleanExtra("key_launch_online_customer_service_activity", false)
-                if (launchCustomerServiceActivity) {
-                    KefuManager.launchKefuActivity()
-                }
             } else {
                 ActivityUtils.startActivity(LoginActivity::class.java)
             }
