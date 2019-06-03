@@ -20,6 +20,8 @@ object SyncSleepDataHelper {
     private var mIsSyncing = false
     private const val PAYLOAD_TIMEOUT_TIME = 1000L * 5
     private const val TAG = "[SyncSleepData]"
+    private const val SYNC_TYPE_SLEEP_DATA = 1
+    private const val SYNC_TYPE_SLEEP_MASTER_LOG = 2
 
     private val mMainHandler = Handler(Looper.getMainLooper())
     private var mPackageTotalDataCount: Int = 0 // 透传单段数据总数
@@ -67,8 +69,13 @@ object SyncSleepDataHelper {
     }
 
 
-    fun startSyncData() {
+    fun startSyncSleepData() {
         DeviceManager.writeData(BleCmdUtil.createDataFromString(BleCmd.SYNC_DATA, "01"))
+    }
+
+
+    private fun startSyncSleepMasterLog() {
+        DeviceManager.writeData(BleCmdUtil.createDataFromString(BleCmd.SYNC_DATA, "02"))
     }
 
     /**
@@ -95,18 +102,23 @@ object SyncSleepDataHelper {
     }
 
     /**
-     * 开始 55 8e 1 06a 01 5c665b03 5c5ec240 01 01 006a
-     * 结束 55 8e 1 06a 0f 5c665b03
-     * 55 指令头 1 byte，
-     * 8e 指令类型 1 byte，
-     * 1 06a 数据类型 4 bit，数据长度 12 bit，
-     * 01 起始标记 1 byte，
-     * 5c46833f 传输id 4 byte，
-     * 386cd300 睡眠数据采集开始时间 4 byte
-     * 后4byte是扩展字段
-     * 01 总段数 1 byte [27-28]
-     * 01 当前段 1 byte [29-30]
-     * 006a 所有0x8F 类型数据包 2 byte [31-34]
+     * 开始
+     *  55 8e A BBB CC DDDDDDDD EEEEEEEE FF GG HHHH
+     *  55 8e 1 06a 01 5c665b03 5c5ec240 01 01 006a
+     *  55 8e 2 02e 01 4b3cce28 4b3cce28 01 01 002e
+     *
+     * 结束
+     * 55 8e 1 06a 0f 5c665b03
+     * 55 8e 1 06a 0f 5c665b03
+     *
+     * A 数据类型 ，1 睡眠特征， 2 速眠仪日志
+     * B 当前段数据总数
+     * C 01：当前段发送开始，0f 当前段发送结束
+     * D 传输开始时间，
+     * E 当前段睡眠数据采集开始时间
+     * F 总段数
+     * G 当前段
+     * H 所有0x8F 类型数据包 2 byte [31-34]
      *
      */
     fun receiveStartOrFinishTransportCmd(data: ByteArray, cmd: String) {
@@ -124,8 +136,8 @@ object SyncSleepDataHelper {
         log("on sync start: $cmd")
         val typeAndCount = Integer.parseInt(cmd.substring(4, 8), 16)
         //16 bit 包括4bit 类型 12bit 长度 向右移12位,得到高4位的透传数据类型
-        val tranType = typeAndCount shr 12
-        val dataCount: Int = getDataCountFromCmd(cmd)
+        val tranType = cmd.substring(4, 5).toInt()
+        val dataCount: Int = subHexStringToInt(cmd, 5, 8)
         mTransData = arrayOfNulls(dataCount)
         mTranType = tranType
         mBeginCmd = cmd
@@ -314,25 +326,32 @@ object SyncSleepDataHelper {
 
     private fun onSyncStart() {
         mIsSyncing = true
-        DeviceManager.postEvent(DeviceManager.EVENT_SYNC_SLEEP_DATA_START, null)
+        if (isSyncSleepData()) DeviceManager.postEvent(DeviceManager.EVENT_SYNC_SLEEP_DATA_START, null)
     }
 
     private fun onSyncSuccess() {
         mIsSyncing = false
-        DeviceManager.postEvent(DeviceManager.EVENT_SYNC_SLEEP_DATA_SUCCESS, null)
+        if (isSyncSleepData()) {
+            DeviceManager.postEvent(DeviceManager.EVENT_SYNC_SLEEP_DATA_SUCCESS, null)
+            startSyncSleepMasterLog()
+        }
     }
 
     private fun onSyncFailed() {
         mIsSyncing = false
-        DeviceManager.postEvent(DeviceManager.EVENT_SYNC_SLEEP_DATA_FAIL, null)
+        if (isSyncSleepData()) DeviceManager.postEvent(DeviceManager.EVENT_SYNC_SLEEP_DATA_FAIL, null)
     }
 
     fun onSyncProgressChange(progress: Int, totalCount: Int) {
-        DeviceManager.postEvent(
-                DeviceManager.EVENT_SYNC_SLEEP_DATA_SYNC_PROGRESS_CHANGE,
-                intArrayOf(progress, totalCount)
-        )
+        if (isSyncSleepData()) {
+            DeviceManager.postEvent(
+                    DeviceManager.EVENT_SYNC_SLEEP_DATA_SYNC_PROGRESS_CHANGE,
+                    intArrayOf(progress, totalCount)
+            )
+        }
     }
+
+    private fun isSyncSleepData() = mTranType == SYNC_TYPE_SLEEP_DATA
 
     /**
      * 2byte 前4bit，后12bit转换为2个数字

@@ -343,7 +343,7 @@ object DeviceManager {
 
     fun startSyncSleepData() {
         if (isMonitorConnected() && !isSyncingSleepData()) {
-            SyncSleepDataHelper.startSyncData()
+            SyncSleepDataHelper.startSyncSleepData()
         }
     }
 

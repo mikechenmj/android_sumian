@@ -222,7 +222,7 @@ class DevelopActivity : AppCompatActivity() {
         vg_device_info_label.setOnClickListener { switchVg(sw_show_device_info, vg_device_info) }
         vg_scan_result_label.setOnClickListener { switchVg(sw_scan_result, vg_scan_result) }
         bt_sync_data.setOnClickListener { DeviceManager.startSyncSleepData() }
-        bt_write_mock_date.setOnClickListener { DeviceManager.writeData(HexUtil.hexStringToBytes("aa1201030521")) }
+        bt_write_mock_date.setOnClickListener { DeviceManager.writeData(HexUtil.hexStringToBytes("aa1203030601")) }
         bt_login.setOnClickListener { AuthenticationManager.login() }
         bt_upload_data.setOnClickListener { SleepDataManager.uploadNextTask() }
         bt_upgrade.setOnClickListener { upgradeMonitor() }
