@@ -55,6 +55,16 @@ object DeviceStatusHelper {
                 else -> {
                 }
             }
+
+            when (BleCmdUtil.getCmdType(hexString)) {
+                BleCmd.QUERY_MONITOR_BATTERY, // "44" 监测仪电量
+                BleCmd.QUERY_SLEEP_MASTER_BATTERY, // "45" 速眠仪电量
+                BleCmd.QUERY_SLEEP_MASTER_CONNECT_STATUS, // "4e" 速眠仪的连接状态
+                BleCmd.QUERY_MONITOR_SLEEP_MASTER_WORK_MODE // "61" 同步到的监测仪的所有状态,以及与之绑定的速眠仪的所有状态
+                -> BleCommunicationController.makeSuccessResponse(hexString)
+                else -> {
+                }
+            }
         }
     }
 
@@ -65,8 +75,8 @@ object DeviceStatusHelper {
                 { queryMonitorSn() },
                 { queryMonitorVersion() },
                 { queryMonitorBattery() },
-                { querySleepMasterConnectStatus() }
-//            { DeviceManager.startSyncSleepData() }
+                { querySleepMasterConnectStatus() },
+                { SyncPatternHelper.syncPattern() }
         )
     }
 
@@ -95,6 +105,7 @@ object DeviceStatusHelper {
                         createSetTimeData()
                 ), object : BleRequestCallback {
             override fun onResponse(data: ByteArray, hexString: String) {
+                BleCommunicationController.makeSuccessResponse(hexString)
             }
 
             override fun onFail(code: Int, msg: String) {
@@ -140,12 +151,11 @@ object DeviceStatusHelper {
     }
 
     private fun receiveAllMonitorAndSleepMasterStatus(data: ByteArray, cmd: String) {
-        //55 61 xx [aa] [bb]
+        //55 61 02 [aa] [bb]
         //aa 监测仪 监测模式 状态
         //bb 速眠仪 pa模式状态
         val monitorStatus = Integer.parseInt(cmd.substring(6, 8), 16)
         val sleepMasterStatus = Integer.parseInt(cmd.substring(8, 10), 16)
-        DeviceManager.writeData(BleCmdUtil.createSuccessResponse(cmd.substring(2, 4)))
         val isMonitoring = monitorStatus > 0
         val isPa = sleepMasterStatus > 0
         LogManager.monitorLog("0x61 监测仪监测模式=$monitorStatus  cmd=$cmd")
@@ -236,6 +246,7 @@ object DeviceStatusHelper {
                     )
                     callback.onFail(1, errorMessage)
                 }
+                BleCommunicationController.makeSuccessResponse(hexString)
             }
 
             override fun onFail(code: Int, msg: String) {
@@ -267,6 +278,7 @@ object DeviceStatusHelper {
                                 DeviceManager.EVENT_RECEIVE_SLEEP_MASTER_VERSION_INFO,
                                 versionInfo
                         )
+                        BleCommunicationController.makeSuccessResponse(hexString)
                     }
 
                     override fun onFail(code: Int, msg: String) {
@@ -281,6 +293,7 @@ object DeviceStatusHelper {
                     override fun onResponse(data: ByteArray, hexString: String) {
                         val sn = String(BleCmdUtil.getContentFromData(data)!!)
                         DeviceManager.postEvent(DeviceManager.EVENT_RECEIVE_SLEEP_MASTER_SN, sn)
+                        BleCommunicationController.makeSuccessResponse(hexString)
                     }
 
                     override fun onFail(code: Int, msg: String) {
@@ -297,6 +310,7 @@ object DeviceStatusHelper {
                                 DeviceManager.EVENT_RECEIVE_SLEEP_MASTER_MAC,
                                 MacUtil.getStringMacFromCmdBytes(data)
                         )
+                        BleCommunicationController.makeSuccessResponse(hexString)
                     }
 
                     override fun onFail(code: Int, msg: String) {
@@ -330,6 +344,7 @@ object DeviceStatusHelper {
                                         sleepAlgorithmVersion
                                 )
                         )
+                        BleCommunicationController.makeSuccessResponse(hexString)
                     }
 
                     override fun onFail(code: Int, msg: String) {
@@ -344,6 +359,7 @@ object DeviceStatusHelper {
                     override fun onResponse(data: ByteArray, hexString: String) {
                         val sn = String(BleCmdUtil.getContentFromData(data)!!)
                         DeviceManager.postEvent(DeviceManager.EVENT_RECEIVE_MONITOR_SN, sn)
+                        BleCommunicationController.makeSuccessResponse(hexString)
                     }
 
                     override fun onFail(code: Int, msg: String) {
@@ -356,6 +372,7 @@ object DeviceStatusHelper {
                 BleCmdUtil.createDataFromString(BleCmd.SET_USER_INFO, "ffffffff"),
                 object : BleRequestCallback {
                     override fun onResponse(data: ByteArray, hexString: String) {
+                        BleCommunicationController.makeSuccessResponse(hexString)
                     }
 
                     override fun onFail(code: Int, msg: String) {
@@ -378,6 +395,7 @@ object DeviceStatusHelper {
                     override fun onResponse(data: ByteArray, hexString: String) {
                         if (BleCmdUtil.getContentFromData(hexString) == "88") {
                             callback.onSuccess()
+                            BleCommunicationController.makeSuccessResponse(hexString)
                         } else {
                             callback.onFail(1, "绑定速眠仪失败,请重新扫码绑定")
                         }

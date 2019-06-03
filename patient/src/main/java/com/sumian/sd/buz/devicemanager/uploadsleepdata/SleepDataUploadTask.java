@@ -8,7 +8,6 @@ import com.sumian.common.network.error.ErrorCode;
 import com.sumian.common.network.response.ErrorResponse;
 import com.sumian.common.utils.SumianExecutor;
 import com.sumian.sd.app.AppManager;
-import com.sumian.sd.buz.devicemanager.AutoSyncDeviceDataUtil;
 import com.sumian.sd.buz.report.bean.DailyReport;
 import com.sumian.sd.common.log.LogManager;
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback;
@@ -116,9 +115,6 @@ public class SleepDataUploadTask implements Serializable, Cloneable {
                 boolean isSuccess = false;
                 if (errorResponse.getCode() == ErrorCode.FORBIDDEN) {
                     LogManager.appendTransparentLog("2.该组透传数据已存在服务器,403 禁止再次上传 error=" + errorResponse.getMessage() + "， fileName: " + fileName);
-                    if (transDataType == 1) {
-                        AutoSyncDeviceDataUtil.INSTANCE.saveAutoSyncTime();
-                    }
                     // 该组透传数据已存在服务器, 当做成功
                     isSuccess = true;
                 } else {
@@ -145,9 +141,6 @@ public class SleepDataUploadTask implements Serializable, Cloneable {
                     return;
                 }
                 LogManager.appendTransparentLog("oss onSuccess" + response);
-                if (trasDataType == 0x01) {
-                    AutoSyncDeviceDataUtil.INSTANCE.saveAutoSyncTime();
-                }
                 boolean success = false;
                 boolean retry = true;
                 if (!TextUtils.isEmpty(response)) {

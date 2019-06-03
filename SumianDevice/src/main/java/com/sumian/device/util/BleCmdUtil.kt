@@ -14,10 +14,10 @@ import com.sumian.device.cmd.BleCmd
 class BleCmdUtil {
 
     companion object {
-        fun createDataFromBytes(cmd: String, data: ByteArray? = null): ByteArray {
+        fun createDataFromBytes(cmdType: String, data: ByteArray? = null): ByteArray {
             val sb = StringBuilder()
             sb.append(BleCmd.APP_CMD_HEADER)
-            sb.append(cmd)
+            sb.append(cmdType)
             if (data != null) {
                 sb.append(String.format("%02X", data.size))
                 sb.append(HexUtil.encodeHexStr(data))
@@ -25,8 +25,8 @@ class BleCmdUtil {
             return HexUtil.hexStringToBytes(sb.toString())
         }
 
-        fun createDataFromString(cmd: String, content: String? = null): ByteArray {
-            return createDataFromBytes(cmd, HexUtil.hexStringToBytes(content))
+        fun createDataFromString(cmdType: String, content: String? = null): ByteArray {
+            return createDataFromBytes(cmdType, HexUtil.hexStringToBytes(content))
         }
 
         /**
@@ -74,12 +74,12 @@ class BleCmdUtil {
             return java.lang.Long.parseLong(s, 16)
         }
 
-        fun createSuccessResponse(cmd: String): ByteArray {
-            return createDataFromString(cmd, BleCmd.RESPONSE_CODE_SUCCESS)
+        fun createSuccessResponse(cmdType: String): ByteArray {
+            return createDataFromString(cmdType, BleCmd.RESPONSE_CODE_SUCCESS)
         }
 
-        fun createNotSupportResponse(cmd: String): ByteArray {
-            return createDataFromString(cmd, BleCmd.RESPONSE_CODE_UNSUPPORT_CMD)
+        fun createNotSupportResponse(cmdType: String): ByteArray {
+            return createDataFromString(cmdType, BleCmd.RESPONSE_CODE_UNSUPPORT_CMD)
         }
     }
 

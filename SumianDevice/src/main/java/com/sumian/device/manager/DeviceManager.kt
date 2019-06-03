@@ -429,7 +429,6 @@ object DeviceManager {
             }
             EVENT_SYNC_SLEEP_DATA_SUCCESS -> {
                 mSumianDevice?.isSyncing = false
-                syncPattern()
             }
             EVENT_SYNC_SLEEP_DATA_FAIL -> {
                 mSumianDevice?.isSyncing = false

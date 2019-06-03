@@ -12,6 +12,7 @@ import com.sumian.device.callback.BleCommunicationWatcher
 import com.sumian.device.callback.BleRequestCallback
 import com.sumian.device.callback.WriteBleDataCallback
 import com.sumian.device.cmd.BleCmd
+import com.sumian.device.util.BleCmdUtil
 import com.sumian.device.util.LogManager
 import java.lang.ref.WeakReference
 
@@ -225,5 +226,10 @@ object BleCommunicationController {
                     override fun onNotifySuccess() {
                     }
                 })
+    }
+
+    fun makeSuccessResponse(hexString: String) {
+        val cmdType = BleCmdUtil.getCmdType(hexString)
+        writeData(BleCmdUtil.createSuccessResponse(cmdType))
     }
 }

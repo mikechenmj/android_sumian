@@ -37,6 +37,7 @@ import com.sumian.sd.buz.account.login.LoginActivity
 import com.sumian.sd.buz.account.login.NewUserGuideActivity
 import com.sumian.sd.buz.account.model.AccountManager
 import com.sumian.sd.buz.cbti.video.download.VideoDownloadManager
+import com.sumian.sd.buz.devicemanager.AutoSyncDeviceDataUtil
 import com.sumian.sd.buz.doctor.model.DoctorViewModel
 import com.sumian.sd.buz.notification.NotificationConst
 import com.sumian.sd.buz.notification.NotificationDelegate
@@ -267,6 +268,7 @@ object AppManager {
         }
         sendHeartbeat()
         VersionManager.getAndCheckFirmVersionShowUpgradeDialogIfNeed(true)
+        AutoSyncDeviceDataUtil.autoSyncSleepData()
     }
 
     fun onAppBackground() {

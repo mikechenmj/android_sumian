@@ -116,13 +116,12 @@ class MainActivity : BaseActivity() {
     override fun onResume() {
         super.onResume()
         mIsResume = true
-        AutoSyncDeviceDataUtil.register(this)
+        AutoSyncDeviceDataUtil.autoSyncSleepData()
     }
 
     override fun onPause() {
         super.onPause()
         mIsResume = false
-        AutoSyncDeviceDataUtil.unRegister(this)
     }
 
     override fun onStop() {
