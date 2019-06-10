@@ -12,7 +12,8 @@ data class MonitorVersionInfo(
         var softwareVersion: String? = null,
         var hardwareVersion: String? = null,
         var heartBeatLibVersion: String? = null,    //心率库版本号
-        var sleepAlgorithmVersion: String? = null    //睡眠算法版本号
+        var sleepAlgorithmVersion: String? = null,    //睡眠算法版本号
+        var protocolVersion: Int // 协议版本号
 )
 
 enum class MonitorChannel {

@@ -27,6 +27,7 @@ import com.sumian.common.social.OpenEngine
 import com.sumian.common.social.analytics.OpenAnalytics
 import com.sumian.common.social.login.OpenLogin
 import com.sumian.common.statistic.StatUtil
+import com.sumian.device.callback.DeviceStatusListener
 import com.sumian.device.manager.DeviceManager
 import com.sumian.sd.BuildConfig
 import com.sumian.sd.R
@@ -37,6 +38,7 @@ import com.sumian.sd.buz.account.login.LoginActivity
 import com.sumian.sd.buz.account.login.NewUserGuideActivity
 import com.sumian.sd.buz.account.model.AccountManager
 import com.sumian.sd.buz.cbti.video.download.VideoDownloadManager
+import com.sumian.sd.buz.device.widget.UpgradeFirmwareDialogActivity
 import com.sumian.sd.buz.devicemanager.AutoSyncDeviceDataUtil
 import com.sumian.sd.buz.doctor.model.DoctorViewModel
 import com.sumian.sd.buz.notification.NotificationConst
@@ -163,6 +165,26 @@ object AppManager {
         AccountManager.registerTokenChangeListener(object : AccountManager.TokenChangeListener {
             override fun onTokenChange(token: Token?) {
                 DeviceManager.setToken(token?.token)
+            }
+        })
+        DeviceManager.registerDeviceStatusListener(object : DeviceStatusListener {
+            override fun onStatusChange(type: String) {
+                when (type) {
+                    DeviceManager.EVENT_RECEIVE_MONITOR_VERSION_INFO -> {
+                        val compatibility = DeviceManager.checkMonitorVersionCompatibility()
+                        when (compatibility) {
+                            DeviceManager.PROTOCOL_VERSION_TO_HIGH -> UpgradeFirmwareDialogActivity.start(UpgradeFirmwareDialogActivity.TYPE_APP)
+                            DeviceManager.PROTOCOL_VERSION_TO_LOW -> UpgradeFirmwareDialogActivity.start(UpgradeFirmwareDialogActivity.TYPE_MONITOR)
+                        }
+                    }
+                    DeviceManager.EVENT_RECEIVE_SLEEP_MASTER_VERSION_INFO -> {
+                        val compatibility = DeviceManager.checkSleepMasterVersionCompatibility()
+                        when (compatibility) {
+                            DeviceManager.PROTOCOL_VERSION_TO_HIGH -> UpgradeFirmwareDialogActivity.start(UpgradeFirmwareDialogActivity.TYPE_APP)
+                            DeviceManager.PROTOCOL_VERSION_TO_LOW -> UpgradeFirmwareDialogActivity.start(UpgradeFirmwareDialogActivity.TYPE_SLEEP_MASTER)
+                        }
+                    }
+                }
             }
         })
     }

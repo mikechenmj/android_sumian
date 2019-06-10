@@ -24,13 +24,12 @@ import com.sumian.device.callback.*
 import com.sumian.device.data.*
 import com.sumian.device.manager.blecommunicationcontroller.BleCommunicationController
 import com.sumian.device.manager.helper.*
-import com.sumian.device.manager.helper.DeviceStatusHelper.syncState
+import com.sumian.device.manager.helper.DeviceStateHelper.syncState
 import com.sumian.device.manager.upload.SleepDataManager
 import com.sumian.device.net.NetworkManager
 import com.sumian.device.util.LogManager
 import retrofit2.Call
 import retrofit2.Response
-import java.lang.ref.WeakReference
 
 /**
  * @author : Zhan Xuzhao
@@ -63,6 +62,15 @@ object DeviceManager {
     const val EVENT_SYNC_SLEEP_DATA_FAIL = "SleepDataSyncFail"
     const val EVENT_SYNC_SLEEP_DATA_SUCCESS = "SleepDataSyncSuccess"
 
+    // version compatibility
+    const val PROTOCOL_VERSION_TO_HIGH = 1
+    const val PROTOCOL_VERSION_COMPATIBLE = 0
+    const val PROTOCOL_VERSION_TO_LOW = -1
+    const val PROTOCOL_VERSION_INVALID = -2
+
+    const val COMPAT_MONITOR_PROTOCOL_VERSION = 1
+    const val COMPAT_SLEEP_MASTER_PROTOCOL_VERSION = 1
+
     // bluetooth
     const val EVENT_BLUETOOTH_STATUS_CHANGE = "BluetoothStatusChange"
 
@@ -80,18 +88,12 @@ object DeviceManager {
     private var mGatt: BluetoothGatt? = null
     private var mBleDevice: BleDevice? = null // 负责connect，disconnect
     private val mDataHandlerList = ArrayList<BleDataHandler>()
-    private val mDeviceStatusListenerList = ArrayList<WeakReference<DeviceStatusListener>>()
+    private val mDeviceStatusListenerList = ArrayList<DeviceStatusListener>()
     private val mDeviceStatusListener = object : DeviceStatusListener {
         override fun onStatusChange(event: String) {
             val iterator = mDeviceStatusListenerList.iterator()
-            while (iterator.hasNext()) {
-                val next = iterator.next()
-                val listener = next.get()
-                if (listener != null) {
-                    listener.onStatusChange(event)
-                } else {
-                    iterator.remove()
-                }
+            for (listener in mDeviceStatusListenerList) {
+                listener.onStatusChange(event)
             }
         }
     }
@@ -104,7 +106,7 @@ object DeviceManager {
         SleepDataManager.init(application)
         BleCommunicationController.init()
         SyncSleepDataHelper.init()
-        DeviceStatusHelper.init(application.applicationContext)
+        DeviceStateHelper.init(application.applicationContext)
         initBoundDevice()
     }
 
@@ -342,13 +344,17 @@ object DeviceManager {
     }
 
     fun startSyncSleepData() {
-        if (isMonitorConnected() && !isSyncingSleepData()) {
+        if (isMonitorConnected()
+                && !isSyncingSleepData()
+                && checkMonitorVersionCompatibility() == PROTOCOL_VERSION_COMPATIBLE
+                && (!isSleepMasterConnected() || checkMonitorVersionCompatibility() == PROTOCOL_VERSION_COMPATIBLE)
+        ) {
             SyncSleepDataHelper.startSyncSleepData()
         }
     }
 
     fun toggleSleeperWorkMode(on: Boolean, callback: AsyncCallback<Any?>) {
-        DeviceStatusHelper.toggleSleepMasterWorkMode(on, callback)
+        DeviceStateHelper.toggleSleepMasterWorkMode(on, callback)
     }
 
     fun isMonitorConnected(): Boolean {
@@ -360,14 +366,14 @@ object DeviceManager {
     }
 
     fun registerDeviceStatusListener(listener: DeviceStatusListener) {
-        mDeviceStatusListenerList.add(WeakReference(listener))
+        mDeviceStatusListenerList.add(listener)
     }
 
     fun unregisterDeviceStatusListener(listener: DeviceStatusListener) {
         val iterator = mDeviceStatusListenerList.iterator()
         while (iterator.hasNext()) {
             val next = iterator.next()
-            if (next.get() == listener) {
+            if (next == listener) {
                 iterator.remove()
             }
         }
@@ -463,7 +469,7 @@ object DeviceManager {
     }
 
     fun changeSleepMaster(sleepMasterSn: String?, callback: AsyncCallback<Any>) {
-        DeviceStatusHelper.changeSleepMaster(sleepMasterSn, callback)
+        DeviceStateHelper.changeSleepMaster(sleepMasterSn, callback)
     }
 
     fun getLatestVersionInfo(callback: AsyncCallback<DeviceVersionInfo>) {
@@ -525,6 +531,25 @@ object DeviceManager {
 
     fun setToken(token: String?) {
         AuthenticationManager.mToken = token
+    }
+
+    fun checkMonitorVersionCompatibility(): Int {
+        return checkDeviceVersionCompatibility(mSumianDevice?.monitorVersionInfo?.protocolVersion, COMPAT_MONITOR_PROTOCOL_VERSION)
+    }
+
+    fun checkSleepMasterVersionCompatibility(): Int {
+        return checkDeviceVersionCompatibility(mSumianDevice?.sleepMasterVersionInfo?.protocolVersion, COMPAT_SLEEP_MASTER_PROTOCOL_VERSION)
+    }
+
+    private fun checkDeviceVersionCompatibility(deviceVersion: Int?, compatVersion: Int): Int {
+        if (deviceVersion == null) {
+            return PROTOCOL_VERSION_INVALID
+        }
+        return when {
+            deviceVersion == compatVersion -> PROTOCOL_VERSION_COMPATIBLE
+            deviceVersion < compatVersion -> PROTOCOL_VERSION_TO_LOW
+            else -> PROTOCOL_VERSION_TO_HIGH
+        }
     }
 
 }

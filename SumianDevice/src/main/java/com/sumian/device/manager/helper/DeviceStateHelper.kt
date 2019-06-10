@@ -29,10 +29,11 @@ import java.util.*
  */
 @Suppress("MemberVisibilityCanBePrivate")
 @SuppressLint("StaticFieldLeak")
-object DeviceStatusHelper {
+object DeviceStateHelper {
     private lateinit var mContext: Context
+    private const val DEFAULT_PROTOCOL_VERSION = 0
 
-    fun init(context: Context): DeviceStatusHelper {
+    fun init(context: Context): DeviceStateHelper {
         mContext = context.applicationContext
         DeviceManager.registerBleCommunicationWatcher(mBleCommunicationWatcher)
         return this
@@ -167,15 +168,18 @@ object DeviceStatusHelper {
         return mContext.resources.getString(res)
     }
 
-    private fun getVersionFromCmd(cmd: String, startIndex: Int): String? {
+    private fun getVersionFromCmd(cmd: String, startIndex: Int, versionNumberCount: Int = 3): String? {
         return if (startIndex + 6 > cmd.length) {
             null
         } else {
-            "${cmdToInt(cmd, startIndex, startIndex + 2)}.${cmdToInt(
-                    cmd,
-                    startIndex + 2,
-                    startIndex + 4
-            )}.${cmdToInt(cmd, startIndex + 4, startIndex + 6)}"
+            val sb = StringBuilder()
+            for (i in 1..versionNumberCount) {
+                if (i != 1) {
+                    sb.append(".")
+                }
+                sb.append(cmdToInt(cmd, startIndex, startIndex + 2 * i))
+            }
+            sb.toString()
         }
     }
 
@@ -261,18 +265,33 @@ object DeviceStatusHelper {
     }
 
     private fun querySleepMasterVersion() {
+        // ```
+        // A: aa 54
+        // M: 55 54 06 [aaaaaa bbbbbb cccccccc pp]
+        // ```
+        // 字段|解释
+        // ---|---
+        // a| 速眠仪软件版本号
+        // b| 速眠仪硬件版本号
+        // c| 速眠仪头部检测算法版本号
+        // p| 协议版本号
         BleCommunicationController.requestByCmd(
                 BleCmd.QUERY_SLEEP_MASTER_VERSION,
                 object : BleRequestCallback {
                     override fun onResponse(data: ByteArray, hexString: String) {
-                        // 55 54 06 【xx xx xx】 【yy yy yy】 【zz zz zz】【速眠仪软件版本号】【速眠仪硬件版本号】【速眠仪头部检测算法版本号】
                         val softwareVersion = getVersionFromCmd(hexString, 6)
                         val hardwareVersion = getVersionFromCmd(hexString, 12)
-                        val headDetectAlgorithmVersion = getVersionFromCmd(hexString, 16)
+                        val headDetectAlgorithmVersion = getVersionFromCmd(hexString, 18, 4)
+                        val protocolVersion = if (hexString.length >= 28) {
+                            Integer.parseInt(hexString.substring(26), 16)
+                        } else {
+                            DEFAULT_PROTOCOL_VERSION
+                        }
                         val versionInfo = SleepMasterVersionInfo(
                                 softwareVersion,
                                 hardwareVersion,
-                                headDetectAlgorithmVersion
+                                headDetectAlgorithmVersion,
+                                protocolVersion
                         )
                         DeviceManager.postEvent(
                                 DeviceManager.EVENT_RECEIVE_SLEEP_MASTER_VERSION_INFO,
@@ -319,11 +338,23 @@ object DeviceStatusHelper {
     }
 
     private fun queryMonitorVersion() {
+        // ```
+        // A: aa 50
+        // M: 55 50 xx [aaaaaa bb cccccc dddddd eeeeeeee pp]
+        // ```
+        // 字段|解释
+        // ---|---
+        // a| 软件版本, 每byte（无符号byte）代表版本号一段，格式形如 10.01.01
+        // b| 渠道：临床0C， 正式0E
+        // c| 硬件版本
+        // d| 心率库版本
+        // e| 睡眠算法版本号
+        // p| 协议版本号
         BleCommunicationController.requestByCmd(
                 BleCmd.QUERY_MONITOR_VERSION,
                 object : BleRequestCallback {
                     override fun onResponse(data: ByteArray, hexString: String) {
-                        // 55 50 0e 【00 09 09】 【0e】 【43 31 31】 【00 00 42】 【30 30 30 4a】【软件版本】【临床0C/正式0E】【bom版本号】【心率库版本号】【睡眠算法版本号】
+                        // 55 50 0e 【00 09 09】 【0e】 【43 31 31】 【00 00 42】 【30 30 30 4a】【pp】【软件版本】【临床0C/正式0E】【bom版本号】【心率库版本号】【睡眠算法版本号】【协议版本号】
                         val softwareVersion = getVersionFromCmd(hexString, 6)
                         val deviceChannel =
                                 if (hexString.substring(
@@ -333,7 +364,12 @@ object DeviceStatusHelper {
                                 ) MonitorChannel.CLINIC else MonitorChannel.NORMAL
                         val hardwareVersion = getVersionFromCmd(hexString, 14)
                         val heartBeatVersion = getVersionFromCmd(hexString, 20)
-                        val sleepAlgorithmVersion = getVersionFromCmd(hexString, 26)
+                        val sleepAlgorithmVersion = getVersionFromCmd(hexString, 26, 4)
+                        val protocolVersion = if (hexString.length >= 36) {
+                            Integer.parseInt(hexString.substring(34), 16)
+                        } else {
+                            DEFAULT_PROTOCOL_VERSION
+                        }
                         DeviceManager.postEvent(
                                 DeviceManager.EVENT_RECEIVE_MONITOR_VERSION_INFO,
                                 MonitorVersionInfo(
@@ -341,7 +377,8 @@ object DeviceStatusHelper {
                                         softwareVersion,
                                         hardwareVersion,
                                         heartBeatVersion,
-                                        sleepAlgorithmVersion
+                                        sleepAlgorithmVersion,
+                                        protocolVersion
                                 )
                         )
                         BleCommunicationController.makeSuccessResponse(hexString)

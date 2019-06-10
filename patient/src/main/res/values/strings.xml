@@ -812,6 +812,10 @@
         <item>天气太热</item>
     </string-array>
 
+    <string name="app_upgrade_dialog_title">APP版本更新啦～</string>
+    <string name="app_upgrade_dialog_hint">您当前的APP版本过低，会影响设备的使用，为了不影响您的体验，非常建议您更新APP哦～</string>
+    <string name="device_upgrade_dialog_title">设备固件版本更新啦～</string>
+    <string name="device_upgrade_dialog_hint">当前设备的版本过低，为了不影响您的体验，非常建议您更新固件版本哦～</string>
     <string name="monitor_firmware_upgrade">监测仪固件升级</string>
     <string name="monitor_firmware_upgrade_hint">监测仪固件发布了新版本，为了保证给您最佳的体验，请及时升级</string>
     <string name="sleeper_firmware_upgrade">速眠仪固件升级</string>
@@ -863,6 +867,8 @@
     <string name="personal_intro">个人简介</string>
     <string name="you_have_add_this_pill">您已添加了以下服药记录</string>
     <string name="cover">覆盖</string>
+    <string name="app_need_upgrade">APP版本过低，请及时更新！</string>
+    <string name="device_need_upgrade">设备版本过低，请前往[我的-设置]升级固件版本</string>
 
     <string-array name="counselor_experience_years">
         <item>1年</item>
@@ -873,4 +879,5 @@
     </string-array>
 
     <string name="counselor_desc">%s、%s从业经验、累积个案时长%d小时</string>
+    <string name="upgrade_now">立即更新</string>
 </resources>

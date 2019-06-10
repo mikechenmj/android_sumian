@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:visibility="gone"
-        tools:visibility="gone">
+        tools:visibility="visible">
 
         <LinearLayout
             android:id="@+id/vg_monitor"
@@ -141,6 +141,7 @@
                 android:layout_marginTop="270dp"
                 android:gravity="center"
                 android:visibility="gone"
+                tools:visibility="visible"
                 tools:text="正在同步睡眠数据\n第 1 段 (100%)" />
 
             <androidx.appcompat.widget.AppCompatButton

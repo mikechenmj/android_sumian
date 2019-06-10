@@ -238,10 +238,14 @@ class DeviceCardFragment : BaseFragment() {
                 @Suppress("DEPRECATION")
                 tv_sleep_master_status.background =
                         if (isWorkModeOn) resources.getDrawable(R.drawable.bg_sleeper_pa_tv) else null
+
                 tv_bottom_hint.text =
                         getString(if (isWorkModeOn) R.string.sleeper_is_working_please_sleep else R.string.monitor_is_connect_please_check_sleepers_connectivity)
                 tv_bottom_hint.visibility =
                         if (!device.isSleepMasterConnected() || isWorkModeOn) View.VISIBLE else View.GONE
+
+
+
                 fl_turn_pa_bt_container.visibility =
                         if (device.isSleepMasterConnected() && !isWorkModeOn) View.VISIBLE else View.GONE
                 val isTurningOnPa =
@@ -258,6 +262,10 @@ class DeviceCardFragment : BaseFragment() {
             else -> {
             }
         }
+    }
+
+    private fun isAppNeedUpgrade() {
+
     }
 
     private fun showMessageDialog(success: Boolean, message: String?) {

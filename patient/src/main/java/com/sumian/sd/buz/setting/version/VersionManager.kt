@@ -86,7 +86,7 @@ object VersionManager {
                 mFirmwareVersionInfoLD.value = response
                 if (showDialogIfNeed) {
                     if (hasNewMonitorVersion() || hasNewSleeperVersion()) {
-                        UpgradeFirmwareDialogActivity.start(hasNewMonitorVersion())
+                        UpgradeFirmwareDialogActivity.start(if (hasNewMonitorVersion()) VERSION_TYPE_MONITOR else VERSION_TYPE_SLEEPER)
                     }
                 }
             }
@@ -113,4 +113,5 @@ object VersionManager {
     fun hasNewSleeperVersion(): Boolean {
         return hasNewVersion(VERSION_TYPE_SLEEPER, mFirmwareVersionInfoLD.value)
     }
+
 }

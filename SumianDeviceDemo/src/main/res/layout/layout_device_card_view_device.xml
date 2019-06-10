@@ -144,6 +144,16 @@
         android:gravity="center"
         android:text="@string/monitor_is_connect_please_check_sleepers_connectivity" />
 
+    <TextView
+        android:id="@+id/tv_bottom_upgrade_hint"
+        style="@style/text_t2_14"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:visibility="gone"
+        tools:text="@string/monitor_is_connect_please_check_sleepers_connectivity"
+        tools:visibility="visible" />
+
     <FrameLayout
         android:id="@+id/fl_turn_pa_bt_container"
         android:layout_width="match_parent"

@@ -10,5 +10,6 @@ package com.sumian.device.data
 data class SleepMasterVersionInfo(
         var softwareVersion: String? = null,
         var hardwareVersion: String? = null,
-        var headDetectAlgorithmVersion: String? = null
+        var headDetectAlgorithmVersion: String? = null,
+        var protocolVersion: Int // 协议版本号
 )

@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupWindow
+import androidx.core.view.isVisible
 import com.blankj.utilcode.util.LogUtils
 import com.sumian.common.base.BaseFragment
 import com.sumian.common.dialog.SumianImageTextDialog
@@ -64,8 +65,7 @@ class DeviceManageFragment : BaseFragment() {
                     dismissOldCreateNewSumianImageTextDialog().show(SumianImageTextDialog.TYPE_SUCCESS, resources.getString(R.string.already_latest_data), 0, SumianImageTextDialog.SHOW_DURATION_SHORT)
                 }
                 DeviceManager.EVENT_SYNC_SLEEP_DATA_SYNC_PROGRESS_CHANGE -> {
-                    val device = DeviceManager.getDevice()!!
-                    tv_bottom_progress.text = getString(R.string.sync_progress_package_progress, 0, device.syncProgress * 100 / device.syncTotalCount)
+
                 }
                 DeviceManager.EVENT_MONITOR_CONNECT_STATUS_CHANGE -> {
 
@@ -211,7 +211,6 @@ class DeviceManageFragment : BaseFragment() {
         iv_device_bg.setImageResource(if (monitor.isSyncing) R.drawable.ic_equip_bg_synchronization else R.drawable.ic_equip_bg)
         iv_device_bg.visibility = if (monitor.monitorConnectStatus == DeviceConnectStatus.CONNECTING) View.GONE else View.VISIBLE
         iv_device.alpha = if (monitor.monitorConnectStatus == DeviceConnectStatus.DISCONNECTED) .5f else 1f
-        bt_turn_on_pa.visibility = if (monitor.isMonitorConnected() && !monitor.isSyncing && monitor.isSleepMasterConnected() && !monitor.isSleepMasterWorkModeOn()) View.VISIBLE else View.GONE
     }
 
     private fun showAddDeviceOrOpenBluetoothUI(showAddDevice: Boolean) {
@@ -248,19 +247,38 @@ class DeviceManageFragment : BaseFragment() {
     }
 
     private fun updateBottomTv(monitor: SumianDevice) {
-        tv_bottom_hint.text = getString(if (monitor.monitorConnectStatus == DeviceConnectStatus.DISCONNECTED) {
-            R.string.monitor_not_connect_click_upper_to_connect
-        } else if (monitor.monitorConnectStatus == DeviceConnectStatus.CONNECTING) {
-            R.string.monitor_is_connecting
-        } else {
-            if (monitor.sleepMasterConnectStatus == DeviceConnectStatus.DISCONNECTED) {
-                R.string.monitor_is_connected_please_check_sleeper
-            } else {
-                if (monitor.isSleepMasterWorkModeOn()) R.string.sleeper_is_working else R.string.sleeper_is_idle
-            }
-        })
-        tv_bottom_hint.visibility = if (monitor.isSyncing) View.GONE else View.VISIBLE
-        tv_bottom_progress.visibility = if (monitor.isSyncing) View.VISIBLE else View.GONE
+
+
+        val monitorCompatibility = DeviceManager.checkMonitorVersionCompatibility()
+        val sleepMasterCompatibility = DeviceManager.checkSleepMasterVersionCompatibility()
+        val appNeedUpgrade = monitorCompatibility == DeviceManager.PROTOCOL_VERSION_TO_HIGH
+                || sleepMasterCompatibility == DeviceManager.PROTOCOL_VERSION_TO_HIGH
+        val deviceNeedUpgrade = monitorCompatibility == DeviceManager.PROTOCOL_VERSION_TO_LOW
+                || sleepMasterCompatibility == DeviceManager.PROTOCOL_VERSION_TO_LOW
+        tv_bottom_hint.isVisible = !monitor.isSyncing || appNeedUpgrade || deviceNeedUpgrade
+        tv_bottom_hint.text =
+                getString(when {
+                    appNeedUpgrade -> R.string.app_need_upgrade
+                    deviceNeedUpgrade -> R.string.device_need_upgrade
+                    else -> if (monitor.monitorConnectStatus == DeviceConnectStatus.DISCONNECTED) {
+                        R.string.monitor_not_connect_click_upper_to_connect
+                    } else if (monitor.monitorConnectStatus == DeviceConnectStatus.CONNECTING) {
+                        R.string.monitor_is_connecting
+                    } else {
+                        if (monitor.sleepMasterConnectStatus == DeviceConnectStatus.DISCONNECTED) {
+                            R.string.monitor_is_connected_please_check_sleeper
+                        } else {
+                            if (monitor.isSleepMasterWorkModeOn()) R.string.sleeper_is_working else R.string.sleeper_is_idle
+                        }
+                    }
+                })
+
+        tv_bottom_progress.text = getString(R.string.sync_progress_package_progress, 0, monitor.syncProgress * 100 / monitor.syncTotalCount)
+        tv_bottom_progress.visibility = if (monitor.isSyncing && !appNeedUpgrade && !deviceNeedUpgrade) View.VISIBLE else View.GONE
+
+        bt_turn_on_pa.isVisible = monitor.isMonitorConnected() && !monitor.isSyncing
+                && monitor.isSleepMasterConnected()
+                && !monitor.isSleepMasterWorkModeOn() && !appNeedUpgrade && !deviceNeedUpgrade
     }
 
     private fun updateSleeperUI(monitor: SumianDevice?) {
