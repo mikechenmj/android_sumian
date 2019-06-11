@@ -129,7 +129,6 @@ class DeviceCardFragment : BaseFragment() {
                     showMessageDialog(false, resources.getString(R.string.sync_fail))
                 }
                 DeviceManager.EVENT_SYNC_SLEEP_DATA_SYNC_PROGRESS_CHANGE -> {
-                    tv_progress.text = "${device!!.syncProgress * 100 / device.syncTotalCount}%"
                 }
             }
             updateDevice()
@@ -208,6 +207,7 @@ class DeviceCardFragment : BaseFragment() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun updateDeviceUI(device: SumianDevice) {
         when (device.monitorConnectStatus) {
             DeviceConnectStatus.DISCONNECTED -> {
@@ -225,13 +225,22 @@ class DeviceCardFragment : BaseFragment() {
                 )
             }
             DeviceConnectStatus.CONNECTED -> {
+                val monitorCompatibility = DeviceManager.checkMonitorVersionCompatibility()
+                val sleepMasterCompatibility = DeviceManager.checkSleepMasterVersionCompatibility()
+                val appNeedUpgrade = monitorCompatibility == DeviceManager.PROTOCOL_VERSION_TO_HIGH
+                        || sleepMasterCompatibility == DeviceManager.PROTOCOL_VERSION_TO_HIGH
+                val deviceNeedUpgrade = monitorCompatibility == DeviceManager.PROTOCOL_VERSION_TO_LOW
+                        || sleepMasterCompatibility == DeviceManager.PROTOCOL_VERSION_TO_LOW
+
                 // sync ui
+                vg_sync.isVisible = !appNeedUpgrade && !deviceNeedUpgrade
                 val isSyncing = device.isSyncing
                 iv_sync.isEnabled = !isSyncing
                 tv_sync.isEnabled = !isSyncing
                 tv_sync.text =
                         resources.getString(if (isSyncing) R.string.syncing else R.string.sync)
                 tv_progress.visibility = if (isSyncing) View.VISIBLE else View.GONE
+                tv_progress.text = "${device.syncProgress * 100 / device.syncTotalCount}%"
                 if (isSyncing && (mRotateAnimator == null || !mRotateAnimator!!.isRunning)) {
                     startSyncAnimation()
                 }
@@ -256,12 +265,6 @@ class DeviceCardFragment : BaseFragment() {
                         if (isWorkModeOn) resources.getDrawable(R.drawable.bg_sleeper_pa_tv) else null
 
                 // bottom tv
-                val monitorCompatibility = DeviceManager.checkMonitorVersionCompatibility()
-                val sleepMasterCompatibility = DeviceManager.checkSleepMasterVersionCompatibility()
-                val appNeedUpgrade = monitorCompatibility == DeviceManager.PROTOCOL_VERSION_TO_HIGH
-                        || sleepMasterCompatibility == DeviceManager.PROTOCOL_VERSION_TO_HIGH
-                val deviceNeedUpgrade = monitorCompatibility == DeviceManager.PROTOCOL_VERSION_TO_LOW
-                        || sleepMasterCompatibility == DeviceManager.PROTOCOL_VERSION_TO_LOW
                 tv_bottom_hint.visibility =
                         if (!device.isSleepMasterConnected() || isWorkModeOn || appNeedUpgrade || deviceNeedUpgrade) View.VISIBLE else View.GONE
                 tv_bottom_hint.text =
