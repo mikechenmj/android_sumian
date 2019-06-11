@@ -76,7 +76,8 @@ class SleepRecordView @JvmOverloads constructor(context: Context, attrs: Attribu
         tv_sleep_quality.text = getSleepQualityString(sleepRecord.energetic)
         iv_emotion.setImageResource(getSleepQualityIcon(sleepRecord.energetic))
         // 夜醒
-        tv_night_wake_up_duration.text = getWakeupOrOtherSleepString("没醒过", sleepRecord.wakeTimes, sleepRecord.wakeMinutes * 60)
+        tv_night_wake_up_duration.text = if (isNoSleep()) "——" else
+            getWakeupOrOtherSleepString("没醒过", sleepRecord.wakeTimes, sleepRecord.wakeMinutes * 60)
         // 小睡
         tv_little_sleep_duration.text = getWakeupOrOtherSleepString("没小睡", sleepRecord.otherSleepTimes, sleepRecord.otherSleepTotalMinutes * 60)
         // 服药
@@ -85,6 +86,10 @@ class SleepRecordView @JvmOverloads constructor(context: Context, attrs: Attribu
         // 睡眠备注
         vg_sleep_desc.visibility = if (TextUtils.isEmpty(sleepRecord.remark)) View.GONE else View.VISIBLE
         tv_sleep_desc.text = sleepRecord.remark
+    }
+
+    private fun isNoSleep(): Boolean {
+        return mSleepRecord?.sleepAt == mSleepRecord?.wakeUpAt && mSleepRecord?.wakeUpAt == mSleepRecord?.getUpAt
     }
 
     private fun getWakeupOrOtherSleepString(emptyString: String, times: Int, duration: Int): String {

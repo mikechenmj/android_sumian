@@ -112,15 +112,17 @@ class SleepRecordDiagramView(context: Context, attributeSet: AttributeSet) : Vie
         // draw text
         drawText(canvas, "${timeToString(t0)} 睡觉", x0, true, false)
         drawText(canvas, "${timeToString(t3)} 起床", x3, true, true)
-        val doubleTextWidth = textWidth * 2 + textPadding
-        if (x2 - x1 > doubleTextWidth) {
-            drawText(canvas, "${timeToString(t1)} 睡着", x1, false, false)
-            drawText(canvas, "${timeToString(t2)} 醒来", x2, false, true)
-        } else {
-            val combineText = "${timeToString(t1)} 睡着  ${timeToString(t2)} 醒来"
-            val x = if (x1 < x3 - doubleTextWidth) x1 else x3
-            val orientation = x1 >= x3 - doubleTextWidth
-            drawText(canvas, combineText, x, false, orientation)
+        if (!isNoSleep()) {
+            val doubleTextWidth = textWidth * 2 + textPadding
+            if (x2 - x1 > doubleTextWidth) {
+                drawText(canvas, "${timeToString(t1)} 睡着", x1, false, false)
+                drawText(canvas, "${timeToString(t2)} 醒来", x2, false, true)
+            } else {
+                val combineText = "${timeToString(t1)} 睡着  ${timeToString(t2)} 醒来"
+                val x = if (x1 < x3 - doubleTextWidth) x1 else x3
+                val orientation = x1 >= x3 - doubleTextWidth
+                drawText(canvas, combineText, x, false, orientation)
+            }
         }
     }
 
@@ -180,5 +182,9 @@ class SleepRecordDiagramView(context: Context, attributeSet: AttributeSet) : Vie
     private fun timeToString(time: Long): String? {
         val simpleDateFormat = SimpleDateFormat("HH:mm", Locale.US)
         return simpleDateFormat.format(Date(time))
+    }
+
+    private fun isNoSleep(): Boolean {
+        return t1 == t2 && t2 == t3
     }
 }

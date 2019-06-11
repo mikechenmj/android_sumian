@@ -2,6 +2,7 @@ package com.sumian.sd.buz.diary.fillsleepdiary.fragment
 
 import android.os.Bundle
 import android.text.format.DateUtils
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import com.blankj.utilcode.util.LogUtils
 import com.sumian.common.utils.SumianExecutor
@@ -10,6 +11,7 @@ import com.sumian.common.widget.picker.NumberPickerView
 import com.sumian.sd.R
 import com.sumian.sd.buz.diary.fillsleepdiary.bean.SleepTimeData
 import kotlinx.android.synthetic.main.layout_choose_sleep_time.*
+import kotlinx.android.synthetic.main.view_fill_diary_container.*
 
 /**
  * @author : Zhan Xuzhao
@@ -52,11 +54,19 @@ class ChooseSleepTimeFragment : BaseFillSleepDiaryFragment() {
     override fun initWidget() {
         super.initWidget()
         initPicker()
+        tv_no_sleep.isVisible = mType == TYPE_FALL_ASLEEP_TIME
+        tv_no_sleep.setOnClickListener {
+            val times = mFillDiaryViewModel.mSleepTimeLiveData.value!!.mTimeArray
+            mFillDiaryViewModel.setSleepTime(TYPE_FALL_ASLEEP_TIME, times[0])
+            mFillDiaryViewModel.setSleepTime(TYPE_WAKEUP_TIME, times[0])
+            mFillDiaryViewModel.noSleep()
+        }
     }
 
     override fun initData() {
         super.initData()
         mFillDiaryViewModel.mSleepTimeLiveData.observe(this, Observer {
+            fill_sleep_diagram_view.mNoSleep = mFillDiaryViewModel.mNoSleep
             fill_sleep_diagram_view.setTimeAndCurrentIndex(it.mTimeArray, mTimeIndex)
             updateTodayYesterdayUI(it.mTimeArray[mTimeIndex] >= SleepTimeData.TODAY_00_00)
         })

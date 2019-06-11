@@ -8,7 +8,7 @@ import java.util.*
  * @author : Zhan Xuzhao
  * e-mail : 649912323@qq.com
  * time   : 2018/12/13 18:03
- * desc   : 详情参考v1.14.0需求文档
+ * desc   : 详情参考 v1.14.0 & v1.26.0 需求文档。
  * version: 1.0
  */
 class SleepTimeData {
@@ -179,5 +179,17 @@ class SleepTimeData {
 
     fun getTime(index: Int): Long {
         return mTimeArray[index]
+    }
+
+    private fun getDefaultGetUpTimeWhenNoSleep(): Long {
+        return if (mTimeArray[0] < DEFAULT_INIT_TIME_OF_WAKEUP_TIME) {
+            DEFAULT_INIT_TIME_OF_WAKEUP_TIME
+        } else {
+            mTimeArray[0] + FIVE_MIN
+        }
+    }
+
+    fun refreshGetUpTimeWhenNoSleep() {
+        mTimeArray[3] = getDefaultGetUpTimeWhenNoSleep()
     }
 }

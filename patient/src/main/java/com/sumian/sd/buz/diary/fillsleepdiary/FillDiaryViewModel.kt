@@ -30,11 +30,12 @@ class FillDiaryViewModel : BaseViewModel() {
     val mDaySleepLiveData = MutableLiveData<Pair<Int, Int>>()    // x time, y minus
     val mFeelingLiveData = MutableLiveData<Int>()    // 0-4
     val mPillsLiveData = MutableLiveData<List<SleepPill>>()
-    var mHasHistoryPills = false;
+    var mHasHistoryPills = false
     val mRemarkLiveData = MutableLiveData<String>()
     var mProgressListener: ProgressListener? = null
     var mDayTime = System.currentTimeMillis()
     var mMedicines = ArrayList<String>()
+    var mNoSleep = false
 
     companion object {
         const val TOTAL_PAGE = 9
@@ -70,7 +71,12 @@ class FillDiaryViewModel : BaseViewModel() {
     }
 
     fun previous() {
-        mProgressListener?.onProgressChange(--mCurrentProgress, false)
+        if (mNoSleep && (mCurrentProgress == 3 || mCurrentProgress == 5)) {
+            mCurrentProgress -= 2
+            mProgressListener?.onProgressChange(mCurrentProgress, false)
+        } else {
+            mProgressListener?.onProgressChange(--mCurrentProgress, false)
+        }
     }
 
     fun next() {
@@ -88,12 +94,25 @@ class FillDiaryViewModel : BaseViewModel() {
             postDiaryToServer()
             return
         }
-        mCurrentProgress++
+        mCurrentProgress += if (mNoSleep && mCurrentProgress == 3) 2 else 1
         // update next sleep time
         when (mCurrentProgress) {
             in 1..3 -> mSleepTimeLiveData.value!!.updateTimeInNeed(mCurrentProgress)
             else -> Unit
         }
+        mProgressListener?.onProgressChange(mCurrentProgress, true)
+        if (mCurrentProgress == 2) {
+            mNoSleep = false
+        }
+    }
+
+    /**
+     * 整夜未睡，跳过睡着时间和醒来时间（两者上报的时候按起床时间计算），
+     */
+    fun noSleep() {
+        mNoSleep = true
+        mCurrentProgress = 3
+        mSleepTimeLiveData.value?.refreshGetUpTimeWhenNoSleep()
         mProgressListener?.onProgressChange(mCurrentProgress, true)
     }
 
@@ -101,11 +120,11 @@ class FillDiaryViewModel : BaseViewModel() {
         val sleepDiaryData = SleepDiaryData(
                 (mDayTime / 1000).toInt(),
                 getRealSleepTimeInSecond(0),
-                getRealSleepTimeInSecond(1),
-                getRealSleepTimeInSecond(2),
+                getRealSleepTimeInSecond(if (mNoSleep) 3 else 1),
+                getRealSleepTimeInSecond(if (mNoSleep) 3 else 2),
                 getRealSleepTimeInSecond(3),
-                mNightWakeLiveData.value!!.first,
-                mNightWakeLiveData.value!!.second,
+                if (mNoSleep) 0 else mNightWakeLiveData.value!!.first,
+                if (mNoSleep) 0 else mNightWakeLiveData.value!!.second,
                 mDaySleepLiveData.value!!.first,
                 mDaySleepLiveData.value!!.second,
                 mFeelingLiveData.value!!,

@@ -22,6 +22,7 @@ import java.util.*
 class FillSleepDiagramView(context: Context, attributeSet: AttributeSet) : FrameLayout(context, attributeSet) {
     private val mFocusedTvColor = ColorCompatUtil.getColor(context, R.color.b3_color)
     private val mUnfocusedTvColor = ColorCompatUtil.getColor(context, R.color.t2_color)
+    var mNoSleep = false
 
     init {
         LayoutInflater.from(context).inflate(R.layout.fill_sleep_diagram, this, true)
@@ -38,7 +39,11 @@ class FillSleepDiagramView(context: Context, attributeSet: AttributeSet) : Frame
             val topTv = getTvTopByIndex(i)
             val bottomTv = getTvBottomByIndex(i)
             topTv.text =
-                    if (i <= currentIndex) getFormatTime(timeArray[i]) else context.getString(R.string.question_mark_x3)
+                    if (i <= currentIndex) {
+                        if (mNoSleep && (i == 1 || i == 2)) "—" else getFormatTime(timeArray[i])
+                    } else {
+                        context.getString(R.string.question_mark_x3)
+                    }
             val textColor = if (i == currentIndex) mFocusedTvColor else mUnfocusedTvColor
             topTv.setTextColor(textColor)
             topTv.setTypeface(topTv.typeface, if (i <= currentIndex) Typeface.BOLD else Typeface.NORMAL)
