@@ -86,7 +86,7 @@ object VersionManager {
                 mFirmwareVersionInfoLD.value = response
                 if (showDialogIfNeed) {
                     if (hasNewMonitorVersion() || hasNewSleeperVersion()) {
-                        UpgradeFirmwareDialogActivity.start(if (hasNewMonitorVersion()) VERSION_TYPE_MONITOR else VERSION_TYPE_SLEEPER)
+                        UpgradeFirmwareDialogActivity.start(if (hasNewMonitorVersion()) VERSION_TYPE_MONITOR else VERSION_TYPE_SLEEPER, false)
                     }
                 }
             }

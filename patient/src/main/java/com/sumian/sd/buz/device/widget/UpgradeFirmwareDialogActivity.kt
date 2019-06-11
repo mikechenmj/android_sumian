@@ -27,15 +27,20 @@ class UpgradeFirmwareDialogActivity : BaseActivity() {
         const val TYPE_SLEEP_MASTER = 1
         const val TYPE_APP = 2
         private const val SHOW_UPGRADE_MONITOR_DIALOG_TIME = "SHOW_UPGRADE_MONITOR_DIALOG_TIME"
+        private const val SHOW_UPGRADE_MONITOR_DIALOG_TIME_FORCE = "SHOW_UPGRADE_MONITOR_DIALOG_TIME_FORCE"
 
         /**
          * @param type
          * @see TYPE_MONITOR,
          * @see TYPE_SLEEP_MASTER
+         * @see TYPE_APP
+         *
+         * @param force 固件强制升级，每次连接都弹，普通升级 每天弹一次
          */
-        fun start(type: Int) {
-            val spKey = SHOW_UPGRADE_MONITOR_DIALOG_TIME
-            if (System.currentTimeMillis() - SPUtils.getInstance().getLong(spKey) < DateUtils.DAY_IN_MILLIS) {
+        fun start(type: Int, force: Boolean = true) {
+            val spKey = if (force) SHOW_UPGRADE_MONITOR_DIALOG_TIME_FORCE else SHOW_UPGRADE_MONITOR_DIALOG_TIME
+            val showDialogInterval = if (force) DateUtils.SECOND_IN_MILLIS * 3 else DateUtils.DAY_IN_MILLIS
+            if (System.currentTimeMillis() - SPUtils.getInstance().getLong(spKey) < showDialogInterval) {
                 return
             }
             SPUtils.getInstance().put(spKey, System.currentTimeMillis())
