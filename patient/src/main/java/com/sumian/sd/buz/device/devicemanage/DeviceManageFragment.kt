@@ -110,8 +110,8 @@ class DeviceManageFragment : BaseFragment() {
             })
         }
         iv_device.setOnClickListener {
-            if (mMonitor != null && mMonitor!!.status == BlueDevice.STATUS_UNCONNECTED) {
-                DeviceManager.connectDevice(mMonitor!!.mac, object : ConnectDeviceCallback {
+            if (!DeviceManager.isMonitorConnected()) {
+                DeviceManager.connectBoundDevice(object : ConnectDeviceCallback {
                     override fun onStart() {
                         showRipple(true)
                     }

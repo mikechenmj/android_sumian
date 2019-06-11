@@ -27,6 +27,7 @@ import com.sumian.device.manager.helper.*
 import com.sumian.device.manager.helper.DeviceStateHelper.syncState
 import com.sumian.device.manager.upload.SleepDataManager
 import com.sumian.device.net.NetworkManager
+import com.sumian.device.util.ILogger
 import com.sumian.device.util.LogManager
 import retrofit2.Call
 import retrofit2.Response
@@ -550,6 +551,10 @@ object DeviceManager {
             deviceVersion < compatVersion -> PROTOCOL_VERSION_TO_LOW
             else -> PROTOCOL_VERSION_TO_HIGH
         }
+    }
+
+    fun setLogger(logger: ILogger) {
+        LogManager.setLogger(logger)
     }
 
 }

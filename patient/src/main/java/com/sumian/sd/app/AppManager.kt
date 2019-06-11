@@ -3,6 +3,7 @@ package com.sumian.sd.app
 import android.app.Application
 import android.content.Context
 import android.os.Build
+import android.util.Log
 import android.view.Gravity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
@@ -29,6 +30,7 @@ import com.sumian.common.social.login.OpenLogin
 import com.sumian.common.statistic.StatUtil
 import com.sumian.device.callback.DeviceStatusListener
 import com.sumian.device.manager.DeviceManager
+import com.sumian.device.util.ILogger
 import com.sumian.sd.BuildConfig
 import com.sumian.sd.R
 import com.sumian.sd.base.ActivityDelegateFactory
@@ -162,6 +164,12 @@ object AppManager {
 
     private fun initDeviceManager() {
         DeviceManager.init(application = App.getAppContext(), params = DeviceManager.Params(baseUrl = BuildConfig.BASE_URL))
+        DeviceManager.setLogger(object : ILogger {
+            override fun log(tag: String, log: String) {
+                SdLogManager.logDevice("[$tag] $log")
+                Log.d(tag, log)
+            }
+        })
         AccountManager.registerTokenChangeListener(object : AccountManager.TokenChangeListener {
             override fun onTokenChange(token: Token?) {
                 DeviceManager.setToken(token?.token)

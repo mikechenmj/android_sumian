@@ -1,7 +1,5 @@
 package com.sumian.device.util
 
-import android.util.Log
-
 object LogManager {
 
     private const val TAG_DEFAULT = "LogManager"
@@ -9,6 +7,8 @@ object LogManager {
     private const val TAG_SLEEP_MASTER = "速眠仪"
     private const val TAG_TRANSPARENT_DATA = "透传数据"
     private const val TAG_UPLOAD_SLEEP_DATA = "上传数据"
+
+    private var sLogger: ILogger? = null
 
     fun log() {
 
@@ -35,9 +35,15 @@ object LogManager {
     }
 
     fun log(tag: String?, log: String?) {
-        val tagCompat = tag ?: TAG_DEFAULT
-        val logCompat = log ?: ""
-        Log.d(tagCompat, logCompat)
+        sLogger?.log(tag ?: TAG_DEFAULT, log ?: "")
     }
 
+    fun setLogger(logger: ILogger) {
+        sLogger = logger
+    }
+
+}
+
+interface ILogger {
+    fun log(tag: String, log: String)
 }
