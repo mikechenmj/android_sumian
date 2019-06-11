@@ -144,6 +144,8 @@ object DeviceManager {
             mSumianDevice = getBoundDevice()
             mGatt = null
             mBleDevice = null
+        } else {
+            connectBoundDevice()
         }
         postEvent(EVENT_BLUETOOTH_STATUS_CHANGE)
     }
@@ -235,11 +237,18 @@ object DeviceManager {
     private fun getBoundDeviceAddress() =
             SPUtils.getInstance().getString(SP_KEY_BOUND_DEVICE_ADDRESS, null)
 
+    /**
+     * @param scanFirst 是否 先扫描再连接，大大减少聊不上的概率
+     */
     fun connectDevice(
             address: String,
             callback: ConnectDeviceCallback?,
             scanFirst: Boolean = false
     ) {
+        if (mSumianDevice?.monitorConnectStatus == DeviceConnectStatus.CONNECTING
+                || mSumianDevice?.monitorConnectStatus == DeviceConnectStatus.CONNECTED) {
+            return
+        }
         disconnect()
         if (scanFirst) {
             scanAndConnect(address, callback)

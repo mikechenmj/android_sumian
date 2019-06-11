@@ -381,7 +381,6 @@ class DevelopActivity : AppCompatActivity() {
         doItOrRequestPermission(Runnable { connectDevice(address) })
     }
 
-
     private fun connectDevice(address: String) {
         DeviceManager.connectDevice(address, mConnectCallback)
     }

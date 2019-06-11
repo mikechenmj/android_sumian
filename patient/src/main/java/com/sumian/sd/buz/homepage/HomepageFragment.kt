@@ -100,18 +100,6 @@ HomepageFragment : BaseViewModelFragment<BaseViewModel>(), OnEnterListener, Last
             StatUtil.event(StatConstants.click_home_page_scale_icon)
         }
         sleep_prescription_view.setOnClickListener { SleepPrescriptionActivity.launch() }
-//        device_card_view.registerLifecycleOwner(this)
-        DeviceManager.connectBoundDevice()
-//        device_card_view.mHost = object : DeviceCardFragment.Host {
-//            override fun scanForDevice() {
-//                StatUtil.event(StatConstants.click_home_page_add_device)
-//                ScanDeviceActivity.startForResult(this@HomepageFragment, REQUEST_CODE_SCAN_DEVICE)
-//            }
-//
-//            override fun enableBluetooth() {
-//                startActivityForResult(Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), REQUEST_CODE_ENABLE_BLUETOOTH)
-//            }
-//        }
         tv_anxious_and_faith.setOnClickListener {
             StatUtil.event(StatConstants.click_home_page_anxiety_and_faith)
             ActivityUtils.startActivity(AnxiousAndFaithActivity::class.java)
