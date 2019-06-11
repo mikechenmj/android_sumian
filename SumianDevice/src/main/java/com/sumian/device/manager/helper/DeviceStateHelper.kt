@@ -169,7 +169,7 @@ object DeviceStateHelper {
     }
 
     private fun getVersionFromCmd(cmd: String, startIndex: Int, versionNumberCount: Int = 3): String? {
-        return if (startIndex + 6 > cmd.length) {
+        return if (startIndex + 2 * versionNumberCount > cmd.length) {
             null
         } else {
             val sb = StringBuilder()
@@ -177,7 +177,7 @@ object DeviceStateHelper {
                 if (i != 1) {
                     sb.append(".")
                 }
-                sb.append(cmdToInt(cmd, startIndex, startIndex + 2 * i))
+                sb.append(cmdToInt(cmd, startIndex + 2 * (i - 1), startIndex + 2 * i))
             }
             sb.toString()
         }
