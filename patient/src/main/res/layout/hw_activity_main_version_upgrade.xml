@@ -50,6 +50,10 @@
             android:textColor="@color/t2_color"
             android:textSize="@dimen/font_16" />
 
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="100dp" />
+
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/bt_download"
             style="@style/SumianButton"
@@ -57,7 +61,6 @@
             android:layout_height="@dimen/space_50"
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/space_32"
-            android:layout_marginTop="@dimen/space_100"
             android:layout_marginRight="@dimen/space_32"
             android:gravity="center"
             android:text="@string/firmware_download_hint"
