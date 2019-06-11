@@ -32,7 +32,7 @@ object SyncSleepDataHelper {
     private var mCurrentPackageIndex: Int = 0    // 当前段
     private var mTransData = arrayOfNulls<String?>(0)
     private var mTransDataId: String? = null
-    private var mTranType: Int = 0
+    private var mTranType: Int = SYNC_TYPE_SLEEP_DATA
     private var mBeginCmd: String? = null
     private var mEndCmd: String? = null
     private var mBeginBytes: ByteArray? = null
@@ -79,11 +79,12 @@ object SyncSleepDataHelper {
     }
 
     /**
-     * 554f020188
-     * 554f020100
-     * 554f0201ff
+     * 55 4f 02 01 88
+     * 55 4f 02 01 00
+     * 55 4f 02 01 ff
      */
     fun receiveRequestSleepDataResponse(cmd: String) {
+        mTranType = Integer.parseInt(cmd.substring(6, 8), 16)
         when (cmd.substring(cmd.length - 2)) {
             "88" -> {
                 log("收到0x4f回复 发现设备有睡眠特征数据,准备同步中  cmd=$cmd")
@@ -134,12 +135,9 @@ object SyncSleepDataHelper {
 
     private fun onReceiveSleepDataStart(cmd: String, data: ByteArray) {
         log("on sync start: $cmd")
-        val typeAndCount = Integer.parseInt(cmd.substring(4, 8), 16)
-        //16 bit 包括4bit 类型 12bit 长度 向右移12位,得到高4位的透传数据类型
-        val tranType = cmd.substring(4, 5).toInt()
         val dataCount: Int = subHexStringToInt(cmd, 5, 8)
         mTransData = arrayOfNulls(dataCount)
-        mTranType = tranType
+        mTranType = cmd.substring(4, 5).toInt()
         mBeginCmd = cmd
         mTransDataId = cmd.substring(10, 18)
         mBeginBytes = data
