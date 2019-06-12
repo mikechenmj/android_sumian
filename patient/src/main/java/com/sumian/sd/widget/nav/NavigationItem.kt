@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.LinearLayout
 import androidx.annotation.AttrRes
 import androidx.annotation.DrawableRes
+import androidx.core.view.isVisible
 import com.sumian.sd.R
 import kotlinx.android.synthetic.main.lay_nav_tab_item.view.*
 
@@ -49,8 +50,8 @@ class NavigationItem @JvmOverloads constructor(context: Context, attrs: Attribut
     }
 
 
-    fun showDot(show: Int) {
-        tab_dot.visibility = show
+    fun showDot(show: Boolean) {
+        tab_dot.isVisible = show
     }
 
     override fun onDetachedFromWindow() {

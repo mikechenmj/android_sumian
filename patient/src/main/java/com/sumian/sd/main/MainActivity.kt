@@ -5,7 +5,6 @@ package com.sumian.sd.main
 import android.Manifest
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -141,16 +140,18 @@ class MainActivity : BaseActivity() {
         showOpenNotificationDialogIfNeeded()
         nav_tab.setOnSelectedTabChangeListener { navigationItem, position -> changeSelectFragment(position) }
         changeSelectTab(TAB_0)
-        mNotificationViewModel.unreadCount.observe(this, Observer { updateTabMeDot() })
-        KefuManager.mUnreadCountLiveData.observe(this, Observer { updateTabMeDot() })
-        LCIMManager.getInstance().unreadCountLiveData.observe(this, Observer { updateTabMeDot() })
+        mNotificationViewModel.unreadCount.observe(this, Observer { updateTabDot() })
+        KefuManager.mUnreadCountLiveData.observe(this, Observer { updateTabDot() })
+        LCIMManager.getInstance().unreadCountLiveData.observe(this, Observer { updateTabDot() })
     }
 
-    private fun updateTabMeDot() {
+    private fun updateTabDot() {
         val hasNotification = (mNotificationViewModel.unreadCount.value ?: 0) > 0
-        val hasKefuMsg = (KefuManager.mUnreadCountLiveData.value ?: 0) > 0
         val hasImMsg = LCIMManager.getInstance().unreadMessageCount > 0
-        tb_me?.showDot(if (hasNotification || hasImMsg || hasKefuMsg) View.VISIBLE else View.GONE)
+        tb_me?.showDot(hasNotification || hasImMsg)
+
+        val hasKefuMsg = (KefuManager.mUnreadCountLiveData.value ?: 0) > 0
+        tb_doctor.showDot(hasKefuMsg)
     }
 
     override fun initData() {

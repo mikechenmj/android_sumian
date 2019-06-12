@@ -57,7 +57,7 @@ class AccountViewModel(application: Application) : AndroidViewModel(application)
             SPUtils.getInstance().put(KEY_DOCTOR_INFO, JsonUtil.toJson(doctorInfo))
         }
         if (doctorInfo != null) {
-            KefuManager.setUserInfo(KefuManager.UserInfo(doctorInfo.id.toString(), doctorInfo.name, doctorInfo.avatar))
+            KefuManager.setUserInfo(KefuManager.UserInfo(doctorInfo.id.toString(), doctorInfo.name, doctorInfo.avatar, doctorInfo.mobile))
         }
     }
 

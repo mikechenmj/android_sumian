@@ -98,7 +98,7 @@ object AccountManager {
         mUserInfoLiveData.value = userInfo
         persistUserInfo(userInfo)
         if (userInfo != null) {
-            KefuManager.setUserInfo(KefuManager.UserInfo(userInfo.id.toString(), userInfo.name, userInfo.avatar))
+            KefuManager.setUserInfo(KefuManager.UserInfo(userInfo.id.toString(), userInfo.name, userInfo.avatar, userInfo.mobile))
         }
     }
 

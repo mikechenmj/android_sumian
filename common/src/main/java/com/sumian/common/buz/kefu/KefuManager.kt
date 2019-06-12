@@ -40,8 +40,7 @@ object KefuManager {
         val list = ArrayList<UserInfoDataItem>()
         list.add(UserInfoDataItem("real_name", userInfo.name))
         list.add(UserInfoDataItem("avatar", userInfo.avatar))
-        list.add(UserInfoDataItem("email", "6499@qq.com"))
-        list.add(UserInfoDataItem("mobile_phone", "135123123123"))
+        list.add(UserInfoDataItem("mobile_phone", userInfo.mobile))
         ysfUserInfo.data = JsonUtil.toJson(list)
         ysfUserInfo.userId = userInfo.id
         Unicorn.setUserInfo(ysfUserInfo)
@@ -56,7 +55,7 @@ object KefuManager {
         options.statusBarNotificationConfig = notificationConfig
         // ui
         val uiCustomization = UICustomization()
-        uiCustomization.leftAvatar = Uri.parse("android.resource://${AppUtils.getAppPackageName()}/" + R.drawable.news_icon_notice).toString()
+        uiCustomization.leftAvatar = Uri.parse("android.resource://${AppUtils.getAppPackageName()}/" + R.drawable.ic_chat_assiant_default).toString()
         uiCustomization.rightAvatar = params.userAvatar
         options.uiCustomization = uiCustomization
         // bot event
@@ -88,5 +87,5 @@ object KefuManager {
     data class UserInfoDataItem(val key: String, val value: String)
 
     //https://qiyukf.com/docs/guide/android/Android_SDK_Guide.html#%E5%85%B3%E8%81%94%E7%94%A8%E6%88%B7%E5%92%8C%E8%B5%84%E6%96%99
-    data class UserInfo(val id: String, val name: String, val avatar: String)
+    data class UserInfo(val id: String, val name: String, val avatar: String, val mobile: String)
 }
