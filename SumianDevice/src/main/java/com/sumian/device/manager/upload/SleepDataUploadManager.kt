@@ -174,6 +174,10 @@ object SleepDataUploadManager {
         mUploadListener = listener
     }
 
+    fun clearAllTask() {
+        setAllTasks(ArrayList())
+    }
+
     interface UploadListener {
         fun onAllFileUploaded()
     }

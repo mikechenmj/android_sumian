@@ -567,4 +567,8 @@ object DeviceManager {
         LogManager.setLogger(logger)
     }
 
+    fun clearPendingUploadSleepDataFile() {
+        SleepDataUploadManager.clearAllTask()
+    }
+
 }

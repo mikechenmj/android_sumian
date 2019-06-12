@@ -340,16 +340,15 @@ object AppManager {
     }
 
     fun logoutAndLaunchLoginActivity() {
+        DeviceManager.disconnect()
         // user report
         AppManager.getOpenAnalytics().onProfileSignOff()
         // release bluetooth
-//        SumianExecutor.runOnBackgroundThread { BlueManager.getInstance().stopScan() }
-//        AppManager.getBlueManager().release()
         KefuManager.logout()
         // cancel notification
         NotificationUtil.cancelAllNotification(App.getAppContext())
         // update token
-        AppManager.getAccountViewModel().clearToken()
+        getAccountViewModel().clearToken()
         // update WeChat token cache
         AppManager.getOpenLogin().deleteWechatTokenCache(ActivityUtils.getTopActivity(), null)
         // finish all and start LoginActivity
