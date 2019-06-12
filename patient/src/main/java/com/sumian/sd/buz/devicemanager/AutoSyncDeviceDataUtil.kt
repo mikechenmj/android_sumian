@@ -47,7 +47,7 @@ object AutoSyncDeviceDataUtil {
     /**
      * 保存同步事件时间戳
      */
-    fun saveAutoSyncTime() {
+    private fun saveAutoSyncTime() {
         SPUtils.getInstance().put(AUTO_SYNC_KEY, System.currentTimeMillis())
     }
 
