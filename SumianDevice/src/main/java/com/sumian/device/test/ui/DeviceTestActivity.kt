@@ -32,7 +32,7 @@ import com.sumian.device.data.DeviceConnectStatus
 import com.sumian.device.data.DeviceType
 import com.sumian.device.manager.DeviceManager
 import com.sumian.device.manager.helper.DfuCallback
-import com.sumian.device.manager.upload.SleepDataManager
+import com.sumian.device.manager.upload.SleepDataUploadManager
 import com.sumian.device.util.CmdConstans
 import com.sumian.device.util.LogManager
 import com.sumian.devicedemo.base.AdapterHost
@@ -224,7 +224,7 @@ class DeviceTestActivity : AppCompatActivity() {
             writeAndSendCmd(cmd)
         }
         bt_login.setOnClickListener { AuthenticationManager.login() }
-        bt_upload_data.setOnClickListener { SleepDataManager.uploadNextTask() }
+        bt_upload_data.setOnClickListener { SleepDataUploadManager.uploadNextTask() }
         bt_upgrade.setOnClickListener { upgradeMonitor() }
     }
 

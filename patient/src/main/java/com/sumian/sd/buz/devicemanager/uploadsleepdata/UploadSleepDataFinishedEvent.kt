@@ -7,4 +7,4 @@ package com.sumian.sd.buz.devicemanager.uploadsleepdata
  * desc   :
  * version: 1.0
  */
-data class UploadSleepDataFinishedEvent(val success: Boolean)
+class UploadSleepDataFinishedEvent

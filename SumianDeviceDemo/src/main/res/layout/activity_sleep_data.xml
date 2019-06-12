@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/fragment_monitor_data"
-        android:name="com.sumian.devicedemo.sleepdata.MonitorDataVpFragment"
+        android:name="com.sumian.devicedemo.sleepdata.ui.MonitorDataVpFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

@@ -15,16 +15,17 @@ import java.io.File
  * @author : Zhan Xuzhao
  * e-mail : 649912323@qq.com
  * time   : 2019/5/6 18:15
- * desc   :
+ * desc   : 调度上传任务
  * version: 1.0
  */
 @SuppressLint("StaticFieldLeak")
-object SleepDataManager {
+object SleepDataUploadManager {
     private const val SP_KEY_TASKS = "UploadSleepFileTasks"
     private const val MAX_RETRY_COUNT = 3
     private lateinit var mContext: Context
     private var mIsUploading = false
     private var mRetryCount = 0
+    private var mUploadListener: UploadListener? = null
 
     fun init(context: Context) {
         mContext = context.applicationContext
@@ -77,7 +78,11 @@ object SleepDataManager {
                 mIsUploading = false
                 mRetryCount = 0
                 removeTask(task)
-                uploadNextTask()
+                if (getAllTasks().size == 0) {
+                    mUploadListener?.onAllFileUploaded()
+                } else {
+                    uploadNextTask()
+                }
             }
 
             override fun onFail(code: Int, msg: String?) {
@@ -136,7 +141,7 @@ object SleepDataManager {
     }
 
     private fun getSp(): SPUtils {
-        return SPUtils.getInstance(SleepDataManager.javaClass.simpleName)
+        return SPUtils.getInstance(SleepDataUploadManager.javaClass.simpleName)
     }
 
     private fun saveDataToFile(
@@ -165,7 +170,11 @@ object SleepDataManager {
     }
 
 
-    private fun log(log: String) {
+    fun setUploadListener(listener: UploadListener) {
+        mUploadListener = listener
+    }
 
+    interface UploadListener {
+        fun onAllFileUploaded()
     }
 }

@@ -1,30 +1,29 @@
-package com.sumian.devicedemo.sleepdata
+package com.sumian.devicedemo.sleepdata.ui
 
 import android.os.Handler
 import android.text.format.DateUtils
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
+import com.sumian.device.callback.DeviceStatusListener
+import com.sumian.device.manager.DeviceManager
 import com.sumian.device.net.NetworkManager
 import com.sumian.device.util.JsonUtil
 import com.sumian.devicedemo.R
 import com.sumian.devicedemo.base.BaseFragment
+import com.sumian.devicedemo.sleepdata.MonitorDataFragment
 import com.sumian.devicedemo.sleepdata.data.CalendarItemSleepReport
 import com.sumian.devicedemo.sleepdata.event.UpdateMonitorDataEvent
-import com.sumian.devicedemo.sleepdata.event.UploadSleepDataFinishedEvent
-import com.sumian.devicedemo.sleepdata.ui.WeeklyReportActivity
 import com.sumian.devicedemo.sleepdata.util.TimeUtilV2
 import com.sumian.devicedemo.sleepdata.widget.calendarView.CalendarView
 import com.sumian.devicedemo.sleepdata.widget.custom.CalendarPopup
 import com.sumian.devicedemo.util.EventBusUtil
 import kotlinx.android.synthetic.main.fragment_monitor_data_vp.*
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 import org.json.JSONArray
 import retrofit2.Call
 import retrofit2.Callback
@@ -54,28 +53,33 @@ class MonitorDataVpFragment : BaseFragment() {
         super.initWidget()
         initDateBar()
         initViewPager()
-//        DeviceManager.getMonitorLiveData().observe(this, Observer {
-//            tv_is_syncing_hint.visibility = if (it?.isSyncing == true) View.VISIBLE else View.GONE
-//        })
+        DeviceManager.registerDeviceStatusListener(mDeviceStatusListener)
     }
 
-    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
-    fun onUploadSleepDataFinishedEvent(event: UploadSleepDataFinishedEvent) {
-        LogUtils.d(event)
-        mHandler.removeCallbacks(mDismissBottomHintRunnable)
-        if (event.success) {
-        } else {
-            tv_sync_fail_hint.visibility = View.VISIBLE
-            mHandler.postDelayed(mDismissBottomHintRunnable, 3000)
+    override fun onDestroyView() {
+        DeviceManager.unregisterDeviceStatusListener(mDeviceStatusListener)
+        super.onDestroyView()
+    }
+
+    private val mDeviceStatusListener = object : DeviceStatusListener {
+        override fun onStatusChange(type: String) {
+            when (type) {
+                DeviceManager.EVENT_SYNC_SLEEP_DATA_FAIL -> {
+                    mHandler.removeCallbacks(mDismissBottomHintRunnable)
+                    tv_sync_fail_hint?.visibility = View.VISIBLE
+                    mHandler.postDelayed(mDismissBottomHintRunnable, 3000)
+                }
+            }
+            tv_is_syncing_hint?.isVisible = DeviceManager.isSyncingSleepData()
         }
     }
 
     private val mDismissBottomHintRunnable = {
-        tv_sync_fail_hint.visibility = View.GONE
+        tv_sync_fail_hint?.visibility = View.GONE
     }
 
     override fun onDestroy() {
-        mHandler.removeCallbacks(null)
+        mHandler.removeCallbacks(mDismissBottomHintRunnable)
         super.onDestroy()
     }
 

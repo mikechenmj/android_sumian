@@ -5,7 +5,7 @@ import android.os.Looper
 import com.sumian.device.callback.BleCommunicationWatcher
 import com.sumian.device.cmd.BleCmd
 import com.sumian.device.manager.DeviceManager
-import com.sumian.device.manager.upload.SleepDataManager
+import com.sumian.device.manager.upload.SleepDataUploadManager
 import com.sumian.device.util.BleCmdUtil
 import com.sumian.device.util.LogManager
 
@@ -66,6 +66,11 @@ object SyncSleepDataHelper {
 
     fun init() {
         DeviceManager.registerBleCommunicationWatcher(mBleCommunicationWatcher)
+        SleepDataUploadManager.setUploadListener(object : SleepDataUploadManager.UploadListener {
+            override fun onAllFileUploaded() {
+                DeviceManager.postEvent(DeviceManager.EVENT_ALL_SLEEP_DATA_UPLOADED)
+            }
+        })
     }
 
 
@@ -233,7 +238,7 @@ object SyncSleepDataHelper {
         sleepData.addAll(mTransData.toMutableList())
         sleepData.add(mEndCmd)
         log("0x8e0f 透传数据" + mTransData.size + "包接收成功,准备写入本地文件 cmd=" + mEndCmd)
-        SleepDataManager
+        SleepDataUploadManager
                 .saveAndUploadData(
                         DeviceManager.mApplication,
                         sleepData,

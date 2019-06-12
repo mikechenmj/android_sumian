@@ -3,6 +3,7 @@ package com.sumian.sd.buz.diary.monitorrecord
 import android.os.Handler
 import android.text.format.DateUtils
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
@@ -14,6 +15,7 @@ import com.sumian.common.base.BaseFragment
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.statistic.StatUtil
 import com.sumian.common.utils.TimeUtilV2
+import com.sumian.device.callback.DeviceStatusListener
 import com.sumian.device.manager.DeviceManager
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
@@ -26,8 +28,6 @@ import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import com.sumian.sd.common.utils.EventBusUtil
 import kotlinx.android.synthetic.main.fragment_monitor_data_vp.*
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 import java.util.*
 
 /**
@@ -57,22 +57,19 @@ class MonitorDataVpFragment : BaseFragment() {
 
     override fun onResume() {
         super.onResume()
+        DeviceManager.registerDeviceStatusListener(mDeviceStatusListener)
         tv_is_syncing_hint.visibility = if (DeviceManager.isSyncingSleepData()) View.VISIBLE else View.GONE
     }
 
-    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
-    fun onUploadSleepDataFinishedEvent(event: UploadSleepDataFinishedEvent) {
-        LogUtils.d(event)
-        mHandler.removeCallbacks(mDismissBottomHintRunnable)
-        if (event.success) {
-        } else {
-            tv_sync_fail_hint.visibility = View.VISIBLE
-            mHandler.postDelayed(mDismissBottomHintRunnable, 3000)
+    private val mDeviceStatusListener = object : DeviceStatusListener {
+        override fun onStatusChange(type: String) {
+            when (type) {
+                DeviceManager.EVENT_ALL_SLEEP_DATA_UPLOADED -> {
+                    EventBusUtil.postStickyEvent(UploadSleepDataFinishedEvent())
+                }
+            }
+            tv_is_syncing_hint?.isVisible = DeviceManager.isSyncingSleepData()
         }
-    }
-
-    private val mDismissBottomHintRunnable = {
-        tv_sync_fail_hint.visibility = View.GONE
     }
 
     override fun onDestroy() {

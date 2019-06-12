@@ -22,7 +22,7 @@ import java.util.*
  * @author : Zhan Xuzhao
  * e-mail : 649912323@qq.com
  * time   : 2019/5/14 17:01
- * desc   :
+ * desc   : 上传数据
  * version: 1.0
  */
 class SleepFileUploadUtil {

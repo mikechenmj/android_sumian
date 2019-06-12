@@ -25,7 +25,7 @@ import com.sumian.device.data.*
 import com.sumian.device.manager.blecommunicationcontroller.BleCommunicationController
 import com.sumian.device.manager.helper.*
 import com.sumian.device.manager.helper.DeviceStateHelper.syncState
-import com.sumian.device.manager.upload.SleepDataManager
+import com.sumian.device.manager.upload.SleepDataUploadManager
 import com.sumian.device.net.NetworkManager
 import com.sumian.device.util.ILogger
 import com.sumian.device.util.LogManager
@@ -62,6 +62,7 @@ object DeviceManager {
     const val EVENT_SYNC_SLEEP_DATA_START = "SleepDataSyncStart"
     const val EVENT_SYNC_SLEEP_DATA_FAIL = "SleepDataSyncFail"
     const val EVENT_SYNC_SLEEP_DATA_SUCCESS = "SleepDataSyncSuccess"
+    const val EVENT_ALL_SLEEP_DATA_UPLOADED = "AllSleepDataUploaded"
 
     // version compatibility
     const val PROTOCOL_VERSION_TO_HIGH = 1
@@ -104,7 +105,7 @@ object DeviceManager {
         initBleManager(application)
         NetworkManager.init(params.baseUrl)
         registerBluetoothReceiver(application)
-        SleepDataManager.init(application)
+        SleepDataUploadManager.init(application)
         BleCommunicationController.init()
         SyncSleepDataHelper.init()
         DeviceStateHelper.init(application.applicationContext)

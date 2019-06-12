@@ -66,9 +66,7 @@ class MonitorDataFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
     fun onUploadSleepDataFinishedEvent(event: UploadSleepDataFinishedEvent) {
         LogUtils.d(event)
-        if (event.success) {
-            updateCurrentTimeData() // refresh
-        }
+        updateCurrentTimeData() // refresh
         EventBusUtil.removeStickyEvent(event)
     }
 
