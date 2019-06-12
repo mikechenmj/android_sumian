@@ -1,7 +1,10 @@
 package com.sumian.sd.buz.version.ui
 
+import android.content.DialogInterface
 import android.content.Intent
+import android.text.TextUtils
 import android.text.format.DateUtils
+import android.view.KeyEvent
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.SPUtils
@@ -9,7 +12,6 @@ import com.sumian.common.base.BaseActivity
 import com.sumian.common.widget.dialog.SumianDialog
 import com.sumian.sd.R
 import com.sumian.sd.app.App
-import com.sumian.sd.buz.upgrade.activity.DeviceVersionNoticeActivity
 import com.sumian.sd.common.utils.UiUtils
 
 /**
@@ -22,30 +24,21 @@ import com.sumian.sd.common.utils.UiUtils
 class AppUpgradeDialogActivity : BaseActivity() {
 
     companion object {
-        private const val KEY_TYPE = "KEY_TYPE"
-        const val TYPE_MONITOR = 0
-        const val TYPE_SLEEP_MASTER = 1
-        const val TYPE_APP = 2
-        private const val SHOW_UPGRADE_MONITOR_DIALOG_TIME = "SHOW_UPGRADE_MONITOR_DIALOG_TIME"
-        private const val SHOW_UPGRADE_MONITOR_DIALOG_TIME_FORCE = "SHOW_UPGRADE_MONITOR_DIALOG_TIME_FORCE"
+        private const val KEY_FORCE = "KEY_FORCE"
+        private const val KEY_MSG = "KEY_MSG"
+        private const val SHOW_UPGRADE_DIALOG_TIME = "SHOW_UPGRADE_DIALOG_TIME"
 
-        /**
-         * @param type
-         * @see TYPE_MONITOR,
-         * @see TYPE_SLEEP_MASTER
-         * @see TYPE_APP
-         *
-         * @param force 固件强制升级，每次连接都弹，普通升级 每天弹一次
-         */
-        fun start(type: Int, force: Boolean = true) {
-            val spKey = if (force) SHOW_UPGRADE_MONITOR_DIALOG_TIME_FORCE else SHOW_UPGRADE_MONITOR_DIALOG_TIME
-            val showDialogInterval = if (force) DateUtils.SECOND_IN_MILLIS * 3 else DateUtils.DAY_IN_MILLIS
-            if (System.currentTimeMillis() - SPUtils.getInstance().getLong(spKey) < showDialogInterval) {
-                return
+        fun start(force: Boolean = true, msg: String?) {
+            val spKey = SHOW_UPGRADE_DIALOG_TIME
+            if (!force) {
+                if (System.currentTimeMillis() - SPUtils.getInstance().getLong(spKey) < DateUtils.DAY_IN_MILLIS) {
+                    return
+                }
             }
             SPUtils.getInstance().put(spKey, System.currentTimeMillis())
             val intent = Intent(ActivityUtils.getTopActivity(), AppUpgradeDialogActivity::class.java)
-            intent.putExtra(KEY_TYPE, type)
+            intent.putExtra(KEY_FORCE, force)
+            intent.putExtra(KEY_MSG, msg)
             ActivityUtils.startActivity(intent)
         }
     }
@@ -60,27 +53,39 @@ class AppUpgradeDialogActivity : BaseActivity() {
 
     override fun initWidget() {
         super.initWidget()
-        showUpgradeFirmwareDialog(intent.getIntExtra(KEY_TYPE, 0))
+        val force = isForceUpgrade()
+        val msg = intent.getStringExtra(KEY_MSG)
+        showDialog(force, msg)
     }
 
-    /**
-     * @param type 0 monitor 1 sleeper
-     */
-    private fun showUpgradeFirmwareDialog(type: Int) {
-        val dialog = SumianDialog(this)
-                .setTitleText(if (type == TYPE_APP) R.string.app_upgrade_dialog_title else R.string.device_upgrade_dialog_title)
-                .setMessageText(if (type == TYPE_APP) R.string.app_upgrade_dialog_hint else R.string.device_upgrade_dialog_hint)
-                .setTopIcon(R.drawable.popups_icon_update)
-                .showCloseIcon(true)
-                .setRightBtn(R.string.upgrade_now, View.OnClickListener {
-                    if (type == TYPE_APP) {
-                        UiUtils.openAppInMarket(App.getAppContext())
-                    } else {
-                        ActivityUtils.startActivity(DeviceVersionNoticeActivity::class.java)
+    private fun isForceUpgrade() = intent.getBooleanExtra(KEY_FORCE, false)
+
+    private fun showDialog(force: Boolean, msg: String) {
+        SumianDialog(this)
+                .setTopIcon(R.drawable.ic_notification_alert)
+                .showCloseIcon(!force)
+                .setTitleText(R.string.version_upgrade_title)
+                .setMessageText(if (TextUtils.isEmpty(msg)) App.getAppContext().getString(R.string.have_a_new_version) else msg)
+                .setRightBtn(R.string.go_to_experience, View.OnClickListener { UiUtils.openAppInMarket(App.getAppContext()) })
+                .setCanceledOnTouchOutsideWrap(false)
+                .setOnDismissListenerWrap(DialogInterface.OnDismissListener { finish() })
+                .setOnKeyListenerWrap(object : DialogInterface.OnKeyListener {
+                    override fun onKey(dialog: DialogInterface, keyCode: Int, event: KeyEvent): Boolean {
+                        if (force && keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_DOWN && event.repeatCount == 0) {
+                            dialog.cancel()
+                            finishAffinity()
+                            return true
+                        }
+                        return false
                     }
                 })
-                .whitenLeft()
-        dialog.setOnDismissListener { finish() }
-        dialog.show()
+                .show()
     }
+
+    override fun onBackPressed() {
+        if (!isForceUpgrade()) {
+            super.onBackPressed()
+        }
+    }
+
 }

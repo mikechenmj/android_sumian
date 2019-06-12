@@ -297,7 +297,7 @@ object AppManager {
             DeviceManager.connectBoundDevice(null)
         }
         sendHeartbeat()
-        VersionManager.getAndCheckFirmVersionShowUpgradeDialogIfNeed(true)
+        VersionManager.checkDeviceVersion()
         AutoSyncDeviceDataUtil.autoSyncSleepData()
     }
 

@@ -12,7 +12,7 @@ import com.sumian.common.statistic.StatUtil
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.stat.StatConstants
-import com.sumian.sd.buz.version.delegate.VersionDelegate
+import com.sumian.sd.buz.version.VersionManager
 import com.sumian.sd.common.h5.H5Uri
 import com.sumian.sd.common.h5.SimpleWebActivity
 import com.sumian.sd.common.utils.StatusBarUtil
@@ -25,10 +25,6 @@ class LoginActivity : BaseViewModelActivity<LoginPresenter>(), LoginContract.Vie
         fun show() {
             ActivityUtils.startActivity(LoginActivity::class.java)
         }
-    }
-
-    private val mVersionDelegate: VersionDelegate by lazy {
-        VersionDelegate.init()
     }
 
     override fun getLayoutId(): Int {
@@ -85,7 +81,7 @@ class LoginActivity : BaseViewModelActivity<LoginPresenter>(), LoginContract.Vie
     override fun onStart() {
         super.onStart()
         AppManager.getAccountViewModel().clearToken()
-        mVersionDelegate.checkVersion(this)
+        VersionManager.checkAppVersion()
     }
 
     private fun onLoginClick() {

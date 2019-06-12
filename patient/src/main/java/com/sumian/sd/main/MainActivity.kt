@@ -30,7 +30,7 @@ import com.sumian.sd.buz.notification.NotificationViewModel
 import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.buz.tab.DoctorFragment
 import com.sumian.sd.buz.tab.MeFragment
-import com.sumian.sd.buz.version.delegate.VersionDelegate
+import com.sumian.sd.buz.version.VersionManager
 import com.sumian.sd.common.log.LogManager
 import com.sumian.sd.common.utils.EventBusUtil
 import com.sumian.sd.common.utils.FragmentUtil
@@ -78,10 +78,6 @@ class MainActivity : BaseActivity() {
     private var mIsResume = false
     var mCurrentPosition = TAB_INVALID
 
-    private val mVersionDelegate: VersionDelegate  by lazy {
-        VersionDelegate.init()
-    }
-
     private val mDeviceVersionDialog: SumianAlertDialog by lazy {
         SumianAlertDialog(this@MainActivity)
     }
@@ -108,7 +104,7 @@ class MainActivity : BaseActivity() {
 
     override fun onStart() {
         super.onStart()
-        mVersionDelegate.checkVersion(this)
+        VersionManager.checkAppVersion()
         updateNotificationUnreadCount()
         EventBusUtil.register(this)
     }

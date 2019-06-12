@@ -85,7 +85,7 @@ class SettingActivity : BaseActivity(), TitleBar.OnBackClickListener, View.OnCli
 
     override fun onStart() {
         super.onStart()
-        VersionManager.updateFirmVersion()
+        VersionManager.updateDeviceVersion()
     }
 
     override fun onClick(v: View) {

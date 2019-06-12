@@ -212,7 +212,7 @@ class ScanDeviceFragment : BaseFragment() {
                     .setTitleText(R.string.open_location_service_dialog_title)
                     .setMessageText(R.string.open_location_service_for_blue_scan_hint)
                     .setRightBtn(R.string.confirm, View.OnClickListener { LocationManagerUtil.startLocationSettingActivityForResult(this@ScanDeviceFragment, REQUEST_PERMISSION_LOCATION) })
-                    .setCanceledOnTouchOutsideV2(false)
+                    .setCanceledOnTouchOutsideWrap(false)
                     .show()
             false
         }

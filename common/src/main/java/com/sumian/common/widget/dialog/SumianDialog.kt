@@ -108,7 +108,7 @@ class SumianDialog(context: Context) : Dialog(context, R.style.SumianDialog) {
         return this
     }
 
-    fun setCanceledOnTouchOutsideV2(cancel: Boolean): SumianDialog {
+    fun setCanceledOnTouchOutsideWrap(cancel: Boolean): SumianDialog {
         super.setCanceledOnTouchOutside(cancel)
         return this
     }
@@ -118,8 +118,13 @@ class SumianDialog(context: Context) : Dialog(context, R.style.SumianDialog) {
         return this
     }
 
-    fun setOnDismissListenerWithReturn(listener: DialogInterface.OnDismissListener): SumianDialog {
+    fun setOnDismissListenerWrap(listener: DialogInterface.OnDismissListener): SumianDialog {
         setOnDismissListener(listener)
+        return this
+    }
+
+    fun setOnKeyListenerWrap(listener: DialogInterface.OnKeyListener): SumianDialog {
+        super.setOnKeyListener(listener)
         return this
     }
 }

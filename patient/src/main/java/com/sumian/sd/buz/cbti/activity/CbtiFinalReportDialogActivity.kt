@@ -93,7 +93,7 @@ class CbtiFinalReportDialogActivity : BaseDialogViewModelActivity<BaseViewModel>
                 .setTitleText(R.string.cbti_final_report)
                 .setMessageText(R.string.cbti_final_report_dialog_message)
                 .setRightBtn(R.string.go_to_evaluation, View.OnClickListener { launchFinalReportActivity() })
-                .setOnDismissListenerWithReturn(DialogInterface.OnDismissListener { finish() })
+                .setOnDismissListenerWrap(DialogInterface.OnDismissListener { finish() })
                 .show()
     }
 

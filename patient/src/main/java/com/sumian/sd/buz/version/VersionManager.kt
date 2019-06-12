@@ -8,6 +8,7 @@ import com.sumian.device.manager.DeviceManager
 import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.version.bean.Version
+import com.sumian.sd.buz.version.ui.AppUpgradeDialogActivity
 import com.sumian.sd.buz.version.ui.DeviceUpgradeDialogActivity
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import com.sumian.sd.common.network.response.FirmwareVersionInfo
@@ -37,6 +38,8 @@ object VersionManager {
         liveData
     }
 
+    val mAppVersionInfo = MutableLiveData<Version>()
+
     init {
         queryAppVersion()
     }
@@ -54,12 +57,17 @@ object VersionManager {
 
             override fun onSuccess(response: Version?) {
                 response?.let { it ->
+                    mAppVersionInfo.value = response
                     it.version?.let {
                         val currentVersionCodes = currentVersion.split(".")
                         val onlineVersionCodes = it.split(".")
                         val isHaveUpgrade = VersionUtil.hasNewVersion(onlineVersionCodes, currentVersionCodes)
                         if (isHaveUpgrade) {
-                            mAppUpgradeMode.value = response.show_update_mode
+                            val mode = response.show_update_mode
+                            mAppUpgradeMode.value = mode
+                            if (showDialogIfNeed && mode != UPGRADE_MODE_MUTE) {
+                                AppUpgradeDialogActivity.start(mode == UPGRADE_MODE_FORCE, response.description)
+                            }
                         } else {
                             mAppUpgradeMode.value = UPGRADE_MODE_NO_UPGRADE
                         }
@@ -69,11 +77,19 @@ object VersionManager {
         })
     }
 
-    fun updateFirmVersion() {
-        getAndCheckFirmVersionShowUpgradeDialogIfNeed(false)
+    fun checkAppVersion() {
+        queryAppVersion(true)
     }
 
-    fun getAndCheckFirmVersionShowUpgradeDialogIfNeed(showDialogIfNeed: Boolean) {
+    fun updateDeviceVersion() {
+        queryDeviceVersion()
+    }
+
+    fun checkDeviceVersion() {
+        queryDeviceVersion(true)
+    }
+
+    private fun queryDeviceVersion(showDialogIfNeed: Boolean = false) {
         val device = DeviceManager.getDevice()
         val call = AppManager.getSdHttpService().getFirmwareLatestVersion(
                 device?.monitorVersionInfo?.hardwareVersion,
