@@ -23,9 +23,9 @@ import com.sumian.device.data.DeviceType
 import com.sumian.device.manager.DeviceManager
 import com.sumian.device.manager.helper.DfuCallback
 import com.sumian.sd.R
-import com.sumian.sd.buz.setting.version.VersionManager
 import com.sumian.sd.buz.upgrade.bean.VersionInfo
 import com.sumian.sd.buz.upgrade.dialog.VersionDialog
+import com.sumian.sd.buz.version.VersionManager
 import com.sumian.sd.common.log.LogManager
 import com.sumian.sd.widget.dialog.SumianAlertDialog
 import kotlinx.android.synthetic.main.hw_activity_main_version_upgrade.*

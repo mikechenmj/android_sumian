@@ -22,10 +22,10 @@ import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.account.login.SettingPasswordActivity
 import com.sumian.sd.buz.qrcode.activity.QrCodeActivity
 import com.sumian.sd.buz.setting.remind.RemindSettingActivity
-import com.sumian.sd.buz.setting.version.VersionActivity
-import com.sumian.sd.buz.setting.version.VersionManager
 import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.buz.upgrade.activity.DeviceVersionNoticeActivity
+import com.sumian.sd.buz.version.VersionActivity
+import com.sumian.sd.buz.version.VersionManager
 import com.sumian.sd.common.h5.H5Uri
 import com.sumian.sd.common.h5.SimpleWebActivity
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback

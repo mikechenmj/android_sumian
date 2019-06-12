@@ -47,9 +47,9 @@ import com.sumian.sd.buz.scale.bean.NotFilledScale
 import com.sumian.sd.buz.scale.bean.Scale
 import com.sumian.sd.buz.setting.bean.Feedback
 import com.sumian.sd.buz.setting.remind.bean.Reminder
-import com.sumian.sd.buz.setting.version.bean.Version
 import com.sumian.sd.buz.sleepertalk.bean.SleeperTalkData
 import com.sumian.sd.buz.tel.bean.TelBooking
+import com.sumian.sd.buz.version.bean.Version
 import com.sumian.sd.common.log.LogOssResponse
 import com.sumian.sd.common.network.response.AppUpgradeInfo
 import com.sumian.sd.common.network.response.FirmwareVersionInfo

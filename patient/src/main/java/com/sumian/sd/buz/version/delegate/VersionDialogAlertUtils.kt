@@ -1,4 +1,4 @@
-package com.sumian.sd.buz.setting.version.delegate
+package com.sumian.sd.buz.version.delegate
 
 import android.content.Context
 import com.sumian.sd.app.App

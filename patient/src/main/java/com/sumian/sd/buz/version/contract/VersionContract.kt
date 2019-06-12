@@ -1,7 +1,7 @@
-package com.sumian.sd.buz.setting.version.contract
+package com.sumian.sd.buz.version.contract
 
 import com.sumian.common.base.BaseViewModel
-import com.sumian.sd.buz.setting.version.bean.Version
+import com.sumian.sd.buz.version.bean.Version
 
 /**
  * <pre>

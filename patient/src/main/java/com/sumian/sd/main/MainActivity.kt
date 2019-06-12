@@ -27,10 +27,10 @@ import com.sumian.sd.buz.diary.DataFragment
 import com.sumian.sd.buz.homepage.HomepageFragment
 import com.sumian.sd.buz.notification.NotificationUnreadCountChangeEvent
 import com.sumian.sd.buz.notification.NotificationViewModel
-import com.sumian.sd.buz.setting.version.delegate.VersionDelegate
 import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.buz.tab.DoctorFragment
 import com.sumian.sd.buz.tab.MeFragment
+import com.sumian.sd.buz.version.delegate.VersionDelegate
 import com.sumian.sd.common.log.LogManager
 import com.sumian.sd.common.utils.EventBusUtil
 import com.sumian.sd.common.utils.FragmentUtil

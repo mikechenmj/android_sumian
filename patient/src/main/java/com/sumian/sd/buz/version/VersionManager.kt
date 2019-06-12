@@ -1,4 +1,4 @@
-package com.sumian.sd.buz.setting.version
+package com.sumian.sd.buz.version
 
 import androidx.lifecycle.MutableLiveData
 import com.blankj.utilcode.util.LogUtils
@@ -7,8 +7,8 @@ import com.sumian.common.utils.VersionUtil
 import com.sumian.device.manager.DeviceManager
 import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.buz.device.widget.UpgradeFirmwareDialogActivity
-import com.sumian.sd.buz.setting.version.bean.Version
+import com.sumian.sd.buz.version.bean.Version
+import com.sumian.sd.buz.version.ui.DeviceUpgradeDialogActivity
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import com.sumian.sd.common.network.response.FirmwareVersionInfo
 import com.sumian.sd.common.utils.UiUtils
@@ -41,7 +41,7 @@ object VersionManager {
         queryAppVersion()
     }
 
-    fun queryAppVersion() {
+    fun queryAppVersion(showDialogIfNeed: Boolean = false) {
         var currentVersion = UiUtils.getPackageInfo(App.getAppContext()).versionName
         if (currentVersion.indexOf("-") != -1) {
             currentVersion = currentVersion.subSequence(0, currentVersion.indexOf("-")).toString()
@@ -86,7 +86,7 @@ object VersionManager {
                 mFirmwareVersionInfoLD.value = response
                 if (showDialogIfNeed) {
                     if (hasNewMonitorVersion() || hasNewSleeperVersion()) {
-                        UpgradeFirmwareDialogActivity.start(if (hasNewMonitorVersion()) VERSION_TYPE_MONITOR else VERSION_TYPE_SLEEPER, false)
+                        DeviceUpgradeDialogActivity.start(if (hasNewMonitorVersion()) VERSION_TYPE_MONITOR else VERSION_TYPE_SLEEPER, false)
                     }
                 }
             }

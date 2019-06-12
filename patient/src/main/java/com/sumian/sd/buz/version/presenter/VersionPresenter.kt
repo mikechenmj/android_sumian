@@ -1,14 +1,14 @@
 @file:Suppress("REDUNDANT_LABEL_WARNING", "NOT_A_FUNCTION_LABEL_WARNING")
 
-package com.sumian.sd.buz.setting.version.presenter
+package com.sumian.sd.buz.version.presenter
 
 import com.sumian.common.base.BaseViewModel
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.utils.VersionUtil
 import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.buz.setting.version.bean.Version
-import com.sumian.sd.buz.setting.version.contract.VersionContract
+import com.sumian.sd.buz.version.bean.Version
+import com.sumian.sd.buz.version.contract.VersionContract
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import com.sumian.sd.common.utils.UiUtils
 

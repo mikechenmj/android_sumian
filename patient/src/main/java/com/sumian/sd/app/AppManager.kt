@@ -40,7 +40,6 @@ import com.sumian.sd.buz.account.login.LoginActivity
 import com.sumian.sd.buz.account.login.NewUserGuideActivity
 import com.sumian.sd.buz.account.model.AccountManager
 import com.sumian.sd.buz.cbti.video.download.VideoDownloadManager
-import com.sumian.sd.buz.device.widget.UpgradeFirmwareDialogActivity
 import com.sumian.sd.buz.devicemanager.AutoSyncDeviceDataUtil
 import com.sumian.sd.buz.doctor.model.DoctorViewModel
 import com.sumian.sd.buz.notification.NotificationConst
@@ -48,7 +47,8 @@ import com.sumian.sd.buz.notification.NotificationDelegate
 import com.sumian.sd.buz.notification.SchemeResolver
 import com.sumian.sd.buz.patientdoctorim.IMManagerHost
 import com.sumian.sd.buz.patientdoctorim.IMProfileProvider
-import com.sumian.sd.buz.setting.version.VersionManager
+import com.sumian.sd.buz.version.VersionManager
+import com.sumian.sd.buz.version.ui.DeviceUpgradeDialogActivity
 import com.sumian.sd.common.log.LogManager
 import com.sumian.sd.common.log.SdLogManager
 import com.sumian.sd.common.network.NetworkManager
@@ -181,15 +181,15 @@ object AppManager {
                     DeviceManager.EVENT_RECEIVE_MONITOR_VERSION_INFO -> {
                         val compatibility = DeviceManager.checkMonitorVersionCompatibility()
                         when (compatibility) {
-                            DeviceManager.PROTOCOL_VERSION_TO_HIGH -> UpgradeFirmwareDialogActivity.start(UpgradeFirmwareDialogActivity.TYPE_APP)
-                            DeviceManager.PROTOCOL_VERSION_TO_LOW -> UpgradeFirmwareDialogActivity.start(UpgradeFirmwareDialogActivity.TYPE_MONITOR)
+                            DeviceManager.PROTOCOL_VERSION_TO_HIGH -> DeviceUpgradeDialogActivity.start(DeviceUpgradeDialogActivity.TYPE_APP)
+                            DeviceManager.PROTOCOL_VERSION_TO_LOW -> DeviceUpgradeDialogActivity.start(DeviceUpgradeDialogActivity.TYPE_MONITOR)
                         }
                     }
                     DeviceManager.EVENT_RECEIVE_SLEEP_MASTER_VERSION_INFO -> {
                         val compatibility = DeviceManager.checkSleepMasterVersionCompatibility()
                         when (compatibility) {
-                            DeviceManager.PROTOCOL_VERSION_TO_HIGH -> UpgradeFirmwareDialogActivity.start(UpgradeFirmwareDialogActivity.TYPE_APP)
-                            DeviceManager.PROTOCOL_VERSION_TO_LOW -> UpgradeFirmwareDialogActivity.start(UpgradeFirmwareDialogActivity.TYPE_SLEEP_MASTER)
+                            DeviceManager.PROTOCOL_VERSION_TO_HIGH -> DeviceUpgradeDialogActivity.start(DeviceUpgradeDialogActivity.TYPE_APP)
+                            DeviceManager.PROTOCOL_VERSION_TO_LOW -> DeviceUpgradeDialogActivity.start(DeviceUpgradeDialogActivity.TYPE_SLEEP_MASTER)
                         }
                     }
                 }

@@ -38,9 +38,9 @@ import com.sumian.sd.buz.notification.NotificationViewModel
 import com.sumian.sd.buz.onlinereport.OnlineReportListActivity
 import com.sumian.sd.buz.scale.ScaleListActivity
 import com.sumian.sd.buz.setting.SettingActivity
-import com.sumian.sd.buz.setting.version.VersionManager
 import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.buz.tel.activity.TelBookingListActivity
+import com.sumian.sd.buz.version.VersionManager
 import com.sumian.sd.common.h5.SleepFileWebActivity
 import com.sumian.sd.common.log.LogManager
 import com.sumian.sd.main.OnEnterListener

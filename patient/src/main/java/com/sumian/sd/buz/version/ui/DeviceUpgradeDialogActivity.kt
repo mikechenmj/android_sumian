@@ -1,4 +1,4 @@
-package com.sumian.sd.buz.device.widget
+package com.sumian.sd.buz.version.ui
 
 import android.content.Intent
 import android.text.format.DateUtils
@@ -19,7 +19,7 @@ import com.sumian.sd.common.utils.UiUtils
  * desc   :
  * version: 1.0
  */
-class UpgradeFirmwareDialogActivity : BaseActivity() {
+class DeviceUpgradeDialogActivity : BaseActivity() {
 
     companion object {
         private const val KEY_TYPE = "KEY_TYPE"
@@ -44,7 +44,7 @@ class UpgradeFirmwareDialogActivity : BaseActivity() {
                 return
             }
             SPUtils.getInstance().put(spKey, System.currentTimeMillis())
-            val intent = Intent(ActivityUtils.getTopActivity(), UpgradeFirmwareDialogActivity::class.java)
+            val intent = Intent(ActivityUtils.getTopActivity(), DeviceUpgradeDialogActivity::class.java)
             intent.putExtra(KEY_TYPE, type)
             ActivityUtils.startActivity(intent)
         }

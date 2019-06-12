@@ -1,6 +1,6 @@
 @file:Suppress("DEPRECATION")
 
-package com.sumian.sd.buz.setting.version.delegate
+package com.sumian.sd.buz.version.delegate
 
 import android.app.Activity
 import android.content.DialogInterface
@@ -10,10 +10,10 @@ import android.view.View
 import com.sumian.sd.R
 import com.sumian.sd.app.App
 import com.sumian.sd.buz.account.login.LoginActivity
-import com.sumian.sd.buz.setting.version.bean.Version
-import com.sumian.sd.buz.setting.version.contract.VersionContract
-import com.sumian.sd.buz.setting.version.presenter.VersionPresenter
-import com.sumian.sd.buz.setting.version.widget.AppVersionUpgradeDialog
+import com.sumian.sd.buz.version.bean.Version
+import com.sumian.sd.buz.version.contract.VersionContract
+import com.sumian.sd.buz.version.presenter.VersionPresenter
+import com.sumian.sd.buz.version.widget.AppVersionUpgradeDialog
 import com.sumian.sd.common.utils.UiUtils
 import com.sumian.sd.main.MainActivity
 import com.sumian.sd.widget.dialog.theme.ITheme
@@ -47,9 +47,6 @@ open class VersionDelegate private constructor() : VersionContract.View, View.On
 
     private lateinit var mActivity: Activity
 
-    private var showDotRunnable: Runnable? = null
-    private var hideDotRunnable: Runnable? = null
-
     override fun onGetVersionSuccess(version: Version) {
         this.mVersion = version
     }
@@ -58,7 +55,6 @@ open class VersionDelegate private constructor() : VersionContract.View, View.On
     }
 
     override fun onHaveUpgrade(isHaveUpgrade: Boolean, isHaveForce: Boolean, isShowDialog: Boolean, versionMsg: String?) {
-        hideDotRunnable?.run()
         if (isHaveForce) {
             AppVersionUpgradeDialog(mActivity)
                     .setTopIconResource(R.drawable.ic_popups_update)
@@ -75,17 +71,10 @@ open class VersionDelegate private constructor() : VersionContract.View, View.On
                     .show()
             VersionDialogAlertUtils.saveAlertTime()
 
-            showDotRunnable?.run()
         } else {
 
             if (!isShowDialog) {
-                showDotRunnable?.run()
                 return
-            }
-            if (isHaveUpgrade) {
-                showDotRunnable?.run()
-            } else {
-                hideDotRunnable?.run()
             }
 
             if (isHaveUpgrade && VersionDialogAlertUtils.isCanAlert()) {
@@ -137,11 +126,5 @@ open class VersionDelegate private constructor() : VersionContract.View, View.On
         this.mPresenter.getVersion()
     }
 
-    fun checkVersionCallback(activity: Activity, showDotRunnable: Runnable?, hideDotRunnable: Runnable?) {
-        this.mActivity = activity
-        this.mPresenter.getVersion()
-        this.showDotRunnable = showDotRunnable
-        this.hideDotRunnable = hideDotRunnable
-    }
 
 }

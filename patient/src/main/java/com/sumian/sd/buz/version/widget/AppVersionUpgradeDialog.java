@@ -1,4 +1,4 @@
-package com.sumian.sd.buz.setting.version.widget;
+package com.sumian.sd.buz.version.widget;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;

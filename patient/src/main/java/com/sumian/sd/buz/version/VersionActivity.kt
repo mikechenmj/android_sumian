@@ -1,13 +1,13 @@
-package com.sumian.sd.buz.setting.version
+package com.sumian.sd.buz.version
 
 import android.annotation.SuppressLint
 import android.view.View
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.sd.R
-import com.sumian.sd.buz.setting.version.bean.Version
-import com.sumian.sd.buz.setting.version.contract.VersionContract
-import com.sumian.sd.buz.setting.version.presenter.VersionPresenter
+import com.sumian.sd.buz.version.bean.Version
+import com.sumian.sd.buz.version.contract.VersionContract
+import com.sumian.sd.buz.version.presenter.VersionPresenter
 import com.sumian.sd.common.utils.UiUtils
 import kotlinx.android.synthetic.main.activity_main_version.*
 import java.util.*

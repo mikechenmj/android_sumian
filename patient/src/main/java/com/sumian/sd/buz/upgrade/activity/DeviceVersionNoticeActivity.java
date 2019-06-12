@@ -11,7 +11,7 @@ import com.sumian.common.widget.refresh.SumianSwipeRefreshLayout;
 import com.sumian.device.data.SumianDevice;
 import com.sumian.device.manager.DeviceManager;
 import com.sumian.sd.R;
-import com.sumian.sd.buz.setting.version.VersionManager;
+import com.sumian.sd.buz.version.VersionManager;
 import com.sumian.sd.widget.VersionInfoView;
 
 import java.util.Locale;

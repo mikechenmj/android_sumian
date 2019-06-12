@@ -11,8 +11,8 @@ import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.statistic.StatUtil
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.buz.setting.version.delegate.VersionDelegate
 import com.sumian.sd.buz.stat.StatConstants
+import com.sumian.sd.buz.version.delegate.VersionDelegate
 import com.sumian.sd.common.h5.H5Uri
 import com.sumian.sd.common.h5.SimpleWebActivity
 import com.sumian.sd.common.utils.StatusBarUtil

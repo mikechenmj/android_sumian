@@ -273,7 +273,7 @@
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name=".buz.setting.version.VersionActivity"
+            android:name="com.sumian.sd.buz.version.VersionActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
@@ -507,7 +507,11 @@
             android:name=".buz.diary.fillsleepdiary.FillSleepDiaryActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name=".buz.device.widget.UpgradeFirmwareDialogActivity"
+            android:name=".buz.version.ui.DeviceUpgradeDialogActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/DialogActivity" />
+        <activity
+            android:name=".buz.version.ui.AppUpgradeDialogActivity"
             android:launchMode="singleTop"
             android:theme="@style/DialogActivity" />
         <activity
