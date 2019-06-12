@@ -1,6 +1,7 @@
 package com.sumian.sd.buz.version.ui
 
 import android.content.Intent
+import android.os.Bundle
 import android.text.format.DateUtils
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
@@ -26,8 +27,8 @@ class DeviceUpgradeDialogActivity : BaseActivity() {
         const val TYPE_MONITOR = 0
         const val TYPE_SLEEP_MASTER = 1
         const val TYPE_APP = 2
-        private const val SHOW_UPGRADE_MONITOR_DIALOG_TIME = "SHOW_UPGRADE_MONITOR_DIALOG_TIME"
-        private const val SHOW_UPGRADE_MONITOR_DIALOG_TIME_FORCE = "SHOW_UPGRADE_MONITOR_DIALOG_TIME_FORCE"
+        private const val SHOW_UPGRADE_DIALOG_TIME = "SHOW_UPGRADE_DIALOG_TIME"
+        private const val SHOW_UPGRADE_DIALOG_TIME_FORCE = "SHOW_UPGRADE_DIALOG_TIME_FORCE"
 
         /**
          * @param type
@@ -38,7 +39,10 @@ class DeviceUpgradeDialogActivity : BaseActivity() {
          * @param force 固件强制升级，每次连接都弹，普通升级 每天弹一次
          */
         fun start(type: Int, force: Boolean = true) {
-            val spKey = if (force) SHOW_UPGRADE_MONITOR_DIALOG_TIME_FORCE else SHOW_UPGRADE_MONITOR_DIALOG_TIME
+            if (DialogManager.isAppUpgradeDialogShowing) {
+                return
+            }
+            val spKey = if (force) SHOW_UPGRADE_DIALOG_TIME_FORCE else SHOW_UPGRADE_DIALOG_TIME
             val showDialogInterval = if (force) DateUtils.SECOND_IN_MILLIS * 3 else DateUtils.DAY_IN_MILLIS
             if (System.currentTimeMillis() - SPUtils.getInstance().getLong(spKey) < showDialogInterval) {
                 return
@@ -47,6 +51,7 @@ class DeviceUpgradeDialogActivity : BaseActivity() {
             val intent = Intent(ActivityUtils.getTopActivity(), DeviceUpgradeDialogActivity::class.java)
             intent.putExtra(KEY_TYPE, type)
             ActivityUtils.startActivity(intent)
+            DialogManager.isDeviceForceUpgrade = force
         }
     }
 
@@ -61,6 +66,16 @@ class DeviceUpgradeDialogActivity : BaseActivity() {
     override fun initWidget() {
         super.initWidget()
         showUpgradeFirmwareDialog(intent.getIntExtra(KEY_TYPE, 0))
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        DialogManager.isDeviceUpgradeDialogShowing = true
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        DialogManager.isDeviceUpgradeDialogShowing = false
     }
 
     /**

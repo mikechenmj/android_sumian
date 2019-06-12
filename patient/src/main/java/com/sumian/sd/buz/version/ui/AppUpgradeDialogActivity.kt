@@ -2,6 +2,7 @@ package com.sumian.sd.buz.version.ui
 
 import android.content.DialogInterface
 import android.content.Intent
+import android.os.Bundle
 import android.text.TextUtils
 import android.text.format.DateUtils
 import android.view.KeyEvent
@@ -29,6 +30,9 @@ class AppUpgradeDialogActivity : BaseActivity() {
         private const val SHOW_UPGRADE_DIALOG_TIME = "SHOW_UPGRADE_DIALOG_TIME"
 
         fun start(force: Boolean = true, msg: String?) {
+            if (DialogManager.isDeviceUpgradeDialogShowing) {
+                return
+            }
             val spKey = SHOW_UPGRADE_DIALOG_TIME
             if (!force) {
                 if (System.currentTimeMillis() - SPUtils.getInstance().getLong(spKey) < DateUtils.DAY_IN_MILLIS) {
@@ -40,6 +44,7 @@ class AppUpgradeDialogActivity : BaseActivity() {
             intent.putExtra(KEY_FORCE, force)
             intent.putExtra(KEY_MSG, msg)
             ActivityUtils.startActivity(intent)
+            DialogManager.isAppForceUpgrade = force
         }
     }
 
@@ -56,6 +61,17 @@ class AppUpgradeDialogActivity : BaseActivity() {
         val force = isForceUpgrade()
         val msg = intent.getStringExtra(KEY_MSG)
         showDialog(force, msg)
+    }
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        DialogManager.isAppUpgradeDialogShowing = true
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        DialogManager.isAppUpgradeDialogShowing = false
     }
 
     private fun isForceUpgrade() = intent.getBooleanExtra(KEY_FORCE, false)
