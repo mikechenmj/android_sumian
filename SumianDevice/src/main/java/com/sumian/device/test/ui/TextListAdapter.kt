@@ -1,7 +1,6 @@
-package com.sumian.devicedemo.develop.ui
+package com.sumian.device.test.ui
 
-import android.annotation.SuppressLint
-import com.sumian.devicedemo.R
+import com.sumian.device.R
 import com.sumian.devicedemo.base.AdapterHost
 import com.sumian.devicedemo.base.BaseAdapter
 import com.sumian.devicedemo.base.BaseViewHolder
@@ -14,22 +13,12 @@ import kotlinx.android.synthetic.main.list_item_text.view.*
  * desc   :
  * version: 1.0
  */
-class CommonCmdAdapter(host: AdapterHost<CommonCmd>) : BaseAdapter<CommonCmd>(host, R.layout.list_item_common_cmd) {
-
-    init {
-        mData.add(CommonCmd("query monitor battery", "aa44"))
-        mData.add(CommonCmd("query sleeper battery", "aa45"))
-    }
-
-    @SuppressLint("SetTextI18n")
+class TextListAdapter(host: AdapterHost<String>? = null) : BaseAdapter<String>(host, R.layout.list_item_text) {
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         val itemView = holder.itemView
         val data = mData[position]
         itemView.setOnClickListener { mHost?.onItemClick(data) }
-        itemView.tv_text.text = "${data.desc}: ${data.cmd}"
+        itemView.tv_text.text = data
     }
 }
-
-data class CommonCmd(var desc: String, var cmd: String)
-
 

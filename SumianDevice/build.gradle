@@ -54,7 +54,7 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:3.11.0'
     // dfu
     implementation 'no.nordicsemi.android:dfu:1.9.0'
-
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
 }
 repositories {
     mavenCentral()

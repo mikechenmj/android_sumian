@@ -12,7 +12,7 @@
         android:required="true" />
 
     <application>
-        <activity android:name=".manager.helper.UpgradeActivity" />
+        <activity android:name=".test.ui.DeviceTestActivity" />
 
         <service android:name=".manager.helper.DfuServiceImpl" />
     </application>

@@ -1,7 +1,7 @@
-package com.sumian.devicedemo.develop.ui
+package com.sumian.device.test.ui
 
 import android.bluetooth.BluetoothDevice
-import com.sumian.devicedemo.R
+import com.sumian.device.R
 import com.sumian.devicedemo.base.AdapterHost
 import com.sumian.devicedemo.base.BaseAdapter
 import com.sumian.devicedemo.base.BaseViewHolder

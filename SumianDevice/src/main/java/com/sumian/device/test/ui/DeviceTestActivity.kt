@@ -1,4 +1,4 @@
-package com.sumian.devicedemo.develop
+package com.sumian.device.test.ui
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -22,6 +22,7 @@ import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.clj.fastble.data.BleDevice
 import com.clj.fastble.utils.HexUtil
+import com.sumian.device.R
 import com.sumian.device.authentication.AuthenticationManager
 import com.sumian.device.callback.BleCommunicationWatcher
 import com.sumian.device.callback.ConnectDeviceCallback
@@ -34,11 +35,7 @@ import com.sumian.device.manager.helper.DfuCallback
 import com.sumian.device.manager.upload.SleepDataManager
 import com.sumian.device.util.CmdConstans
 import com.sumian.device.util.LogManager
-import com.sumian.devicedemo.R
 import com.sumian.devicedemo.base.AdapterHost
-import com.sumian.devicedemo.develop.ui.CommonCmd
-import com.sumian.devicedemo.develop.ui.DeviceAdapter
-import com.sumian.devicedemo.develop.ui.TextListAdapter
 import kotlinx.android.synthetic.main.layout_main_cmd.*
 import kotlinx.android.synthetic.main.layout_main_device.*
 import kotlinx.android.synthetic.main.layout_main_scan.*
@@ -49,7 +46,7 @@ import java.util.Collections.sort
 
 
 @SuppressLint("SetTextI18n")
-class DevelopActivity : AppCompatActivity() {
+class DeviceTestActivity : AppCompatActivity() {
     companion object {
         private const val REQ_CODE_GET_PERMISSION = 1000
         private const val SP_KEY_CONNECTED_DEVICE_ADDRESS = "SP_KEY_CONNECTED_DEVICE_ADDRESS"
@@ -208,7 +205,7 @@ class DevelopActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_develop)
+        setContentView(R.layout.activity_device_test)
         bt_scan.setOnClickListener { checkPermissionForScan() }
         bt_connect.setOnClickListener { connectOldDevice() }
         bt_disconnect.setOnClickListener { disconnectDevice() }
@@ -222,10 +219,18 @@ class DevelopActivity : AppCompatActivity() {
         vg_device_info_label.setOnClickListener { switchVg(sw_show_device_info, vg_device_info) }
         vg_scan_result_label.setOnClickListener { switchVg(sw_scan_result, vg_scan_result) }
         bt_sync_data.setOnClickListener { DeviceManager.startSyncSleepData() }
-        bt_write_mock_date.setOnClickListener { DeviceManager.writeData(HexUtil.hexStringToBytes("aa1203030601")) }
+        bt_write_mock_date.setOnClickListener {
+            val cmd = "aa120303060b"
+            writeAndSendCmd(cmd)
+        }
         bt_login.setOnClickListener { AuthenticationManager.login() }
         bt_upload_data.setOnClickListener { SleepDataManager.uploadNextTask() }
         bt_upgrade.setOnClickListener { upgradeMonitor() }
+    }
+
+    private fun writeAndSendCmd(cmd: String) {
+        et_send.setText(cmd)
+        writeData(et_send.text.toString())
     }
 
     private fun upgradeMonitor() {
@@ -454,7 +459,7 @@ class DevelopActivity : AppCompatActivity() {
                         adapter,
                         object : DialogInterface.OnClickListener {
                             override fun onClick(dialog: DialogInterface?, which: Int) {
-                                writeData(mCommonCmdMap[mCommonCmdKeys[which]] ?: return)
+                                writeAndSendCmd(mCommonCmdMap[mCommonCmdKeys[which]] ?: return)
                             }
                         })
                 .show()

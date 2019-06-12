@@ -113,6 +113,14 @@
                 android:layout_height="@dimen/space_10" />
 
             <com.sumian.sd.widget.divider.SettingDividerView
+                android:id="@+id/dv_test"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:divider_line_visible="visible"
+                app:type_desc="测试"
+                app:type_icon="@drawable/ic_info_icon_set" />
+
+            <com.sumian.sd.widget.divider.SettingDividerView
                 android:id="@+id/dv_my_metal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

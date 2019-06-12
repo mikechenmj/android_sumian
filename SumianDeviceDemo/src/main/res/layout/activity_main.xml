@@ -56,10 +56,12 @@
         android:layout_marginEnd="16dp"
         android:text="睡眠数据" />
 
-    <View
+    <TextView
         android:id="@+id/v_develop_entrance"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_gravity="end|bottom" />
+        style="@style/SumianButton"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="测试页面" />
 
 </LinearLayout>

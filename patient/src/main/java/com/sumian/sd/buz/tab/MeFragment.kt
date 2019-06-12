@@ -3,6 +3,7 @@ package com.sumian.sd.buz.tab
 import android.graphics.drawable.Drawable
 import android.text.TextUtils
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import cn.leancloud.chatkit.LCIMManager
@@ -20,6 +21,8 @@ import com.sumian.common.buz.kefu.KefuManager
 import com.sumian.common.image.loadImage
 import com.sumian.common.statistic.StatUtil
 import com.sumian.device.manager.DeviceManager
+import com.sumian.device.test.ui.DeviceTestActivity
+import com.sumian.sd.BuildConfig
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.account.achievement.MyAchievementActivity
@@ -86,6 +89,8 @@ class MeFragment : BaseViewModelFragment<GetAchievementListPresenter>(), View.On
         tips_service.setOnServiceTipsCallback(this)
         tips_record.setOnRecordTipsCallback(this)
         dv_device_market.setOnClickListener { MiniProgramHelper.launchYouZanOrWeb(activity!!) }
+        dv_test.isVisible = BuildConfig.DEBUG
+        dv_test.setOnClickListener { ActivityUtils.startActivity(DeviceTestActivity::class.java) }
     }
 
 
