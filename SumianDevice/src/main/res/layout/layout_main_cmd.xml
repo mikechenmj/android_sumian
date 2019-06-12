@@ -64,11 +64,12 @@
             android:gravity="center_vertical">
 
             <EditText
-                android:text="aa120303060b"
                 android:id="@+id/et_send"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:text="aa120303060b"
+                android:textColor="#000"
                 tools:ignore="Autofill,LabelFor,TextFields" />
 
             <CheckBox

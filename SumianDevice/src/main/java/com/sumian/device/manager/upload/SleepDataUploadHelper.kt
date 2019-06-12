@@ -4,13 +4,13 @@ import android.content.Context
 import android.text.TextUtils
 import com.alibaba.sdk.android.oss.internal.OSSAsyncTask
 import com.alibaba.sdk.android.oss.model.PutObjectResult
-import com.blankj.utilcode.util.LogUtils
 import com.sumian.device.manager.upload.UploadFileCallback.Companion.ERROR_CODE_DUPLICATE_UPLOAD
 import com.sumian.device.manager.upload.UploadFileCallback.Companion.ERROR_CODE_NETWORK_ERROR
 import com.sumian.device.manager.upload.UploadFileCallback.Companion.ERROR_CODE_OSS_ERROR
 import com.sumian.device.manager.upload.UploadFileCallback.Companion.ERROR_CODE_UNKNOWN
 import com.sumian.device.manager.upload.bean.UploadSleepDataTask
 import com.sumian.device.net.NetworkManager
+import com.sumian.device.util.LogManager
 import com.sumian.sd.common.oss.OssResponse
 import com.sumian.sd.common.oss.OssUtil
 import retrofit2.Call
@@ -46,10 +46,11 @@ class SleepFileUploadUtil {
             map["app_receive_started_at"] = params.app_receive_ended_at
             map["app_receive_ended_at"] = params.app_receive_ended_at
 
+            LogManager.uploadSleepDatatLog("upload $task")
             NetworkManager.getApi().uploadTransData(map)
                     .enqueue(object : Callback<OssResponse> {
                         override fun onFailure(call: Call<OssResponse>, t: Throwable) {
-                            LogUtils.d(t.message)
+                            LogManager.uploadSleepDatatLog("uploadTransData onFailure: ${t.message}")
                             callback.onFail(ERROR_CODE_NETWORK_ERROR, t.message)
                         }
 
@@ -57,7 +58,7 @@ class SleepFileUploadUtil {
                                 call: Call<OssResponse>,
                                 response: Response<OssResponse>
                         ) {
-                            LogUtils.d("uploadTransData: $response")
+                            LogManager.uploadSleepDatatLog("uploadTransData onResponse: $response")
                             if (response.isSuccessful) {
                                 val ossResponse = response.body()
                                 if (ossResponse == null) {
@@ -85,16 +86,16 @@ class SleepFileUploadUtil {
         ) {
             OssUtil.uploadFile(context, filePath, ossResponse, object : OssUtil.UploadCallback {
                 override fun onStart(task: OSSAsyncTask<PutObjectResult>) {
-                    LogUtils.d()
+                    LogManager.uploadSleepDatatLog("OssUtil.uploadFile onStart: $task")
                 }
 
                 override fun onSuccess(response: String?) {
-                    LogUtils.d()
+                    LogManager.uploadSleepDatatLog("OssUtil.uploadFile onSuccess: $response")
                     callback.onSuccess(response)
                 }
 
                 override fun onFailure(errorCode: String?, message: String?) {
-                    LogUtils.d(message)
+                    LogManager.uploadSleepDatatLog("OssUtil.uploadFile onFailure: $message")
                     callback.onFail(ERROR_CODE_OSS_ERROR, message)
                 }
             })

@@ -1,6 +1,5 @@
 package com.sumian.sd.buz.account.model
 
-import android.app.Application
 import android.text.TextUtils
 import androidx.annotation.MainThread
 import androidx.lifecycle.LiveData
@@ -8,7 +7,6 @@ import androidx.lifecycle.MutableLiveData
 import com.blankj.utilcode.util.SPUtils
 import com.sumian.common.buz.kefu.KefuManager
 import com.sumian.common.utils.JsonUtil
-import com.sumian.device.manager.DeviceManager
 import com.sumian.sd.buz.account.bean.Token
 import com.sumian.sd.buz.account.bean.UserInfo
 import com.sumian.sd.buz.doctor.bean.Doctor
@@ -53,12 +51,8 @@ object AccountManager {
         }
 
     init {
-        mTokenLiveData.value = loadPersistedToken()
-        mUserInfoLiveData.value = loadPersistedUserInfo()
-    }
-
-    fun init(application: Application) {
-
+        updateToken(loadPersistedToken())
+        updateUserInfo(loadPersistedUserInfo())
     }
 
     private fun loadPersistedToken(): Token? {
@@ -96,7 +90,7 @@ object AccountManager {
     fun updateToken(token: Token?) {
         mTokenLiveData.value = token
         persistentToken(token)
-        DeviceManager.setToken(token?.token)
+        onTokenChange(token)
     }
 
     @MainThread
@@ -121,6 +115,12 @@ object AccountManager {
 
     fun unregisterTokenChangeListener(listener: TokenChangeListener) {
         mTokenChangeListeners.remove(listener)
+    }
+
+    private fun onTokenChange(token: Token?) {
+        for (listener in mTokenChangeListeners) {
+            listener.onTokenChange(token)
+        }
     }
 
     interface TokenChangeListener {

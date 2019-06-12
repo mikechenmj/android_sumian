@@ -170,6 +170,7 @@ object AppManager {
                 Log.d(tag, log)
             }
         })
+        DeviceManager.setToken(AccountManager.tokenString)
         AccountManager.registerTokenChangeListener(object : AccountManager.TokenChangeListener {
             override fun onTokenChange(token: Token?) {
                 DeviceManager.setToken(token?.token)
