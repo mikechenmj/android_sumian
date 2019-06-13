@@ -185,10 +185,11 @@ class HomepageFragment : BaseFragment(), DoctorServicesView.OnDoctorServicesCall
     }
 
     private fun share(shareMedia: SHARE_MEDIA) {
-        val url = (BuildConfig.BASE_H5_URL.replace("sdd", "sd") + H5Uri.DOCTOR_SHARE).replace("{id}", AppManager.getAccountViewModel().getDoctorInfo().value?.id.toString())
-        val title = getString(R.string.share_doctor_qr_title, AppManager.getAccountViewModel().getDoctorInfo().value?.name)
-        val description = getString(R.string.share_doctor_qr_desc)
-        AppManager.getOpenEngine().shareUrl(activity!!, url, title, description, AppManager.getAccountViewModel().getDoctorInfo().value?.avatar, shareMedia)
+        val doctorInfo = AppManager.getAccountViewModel().getDoctorInfo().value
+        val url = (BuildConfig.BASE_H5_URL.replace("sdd", "sd") + H5Uri.DOCTOR_SHARE).replace("{id}", doctorInfo?.id.toString())
+        val title = getString(R.string.share_doctor_qr_title, doctorInfo?.name, doctorInfo?.getIdentityString(activity!!))
+        val description = getString(R.string.share_doctor_qr_desc, doctorInfo?.getIdentityString(activity!!))
+        AppManager.getOpenEngine().shareUrl(activity!!, url, title, description, doctorInfo?.avatar, shareMedia)
     }
 
     private fun isWeixinAvailable(context: Context): Boolean {

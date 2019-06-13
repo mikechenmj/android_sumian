@@ -17,7 +17,7 @@
 
         <TextView
             style="@style/text_t1_16"
-            android:text="@string/money_yuan" />
+            android:text="@string/jifen" />
 
         <Space style="@style/space_horizontal_weight_1" />
 

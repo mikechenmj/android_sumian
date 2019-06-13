@@ -99,8 +99,8 @@
     <string name="weixin_scan_bind_doctor_desc">微信扫一扫，绑定医生，及时获取医生反馈提醒</string>
     <string name="add_xx_doctor">添加%s医生</string>
     <string name="one_key_share_to_patient">一键分享给患者</string>
-    <string name="share_doctor_qr_title">%s医生 | 欢迎诊后向我报到</string>
-    <string name="share_doctor_qr_desc">绑定主治医生，及时获取医生反馈提醒</string>
+    <string name="share_doctor_qr_title">%s%s邀您一起了解好眠方案CBTI</string>
+    <string name="share_doctor_qr_desc">让我们跟随%s一起改善自己的睡眠情况吧</string>
 
     <!-- share -->
     <string name="wechat_friend">微信好友</string>
@@ -286,42 +286,39 @@
     <string name="last_week_new_patient">上周新增患者</string>
     <string name="last_week_new_cbti">上周开通CBTI</string>
     <string name="cbti_progress_start_time">开通时间</string>
-    <string name="my_wallet">我的钱包</string>
-    <string name="withdraw_amount">可提现余额</string>
+    <string name="my_wallet">我的积分</string>
     <string name="zero">0</string>
-    <string name="wallet_detail">钱包明细</string>
-    <string name="amount_yuan">金额（元）</string>
+    <string name="wallet_detail">积分明细</string>
     <string name="type">类型</string>
     <string name="trade_time">交易时间</string>
     <string name="serial_number">流水单号</string>
     <string name="content">内容</string>
     <string name="no_wallet_record_yet">- 暂无明细记录 -</string>
-    <string name="withdraw">提现</string>
-    <string name="input_withdraw_amount">输入提现金额</string>
+    <string name="withdraw">兑换</string>
+    <string name="input_withdraw_amount">输入兑换积分</string>
     <string name="yuan_mark">￥</string>
-    <string name="available_withdraw_amount_xx">可提现余额：¥%s</string>
-    <string name="withdraw_all">全部提现</string>
+    <string name="available_withdraw_amount_xx">可兑换积分：%s</string>
+    <string name="withdraw_all">全部兑换</string>
     <string name="tax_amount">扣除税费</string>
-    <string name="confirm_withdraw">确认提现</string>
-    <string name="withdraw_rules">提现规则</string>
-    <string name="withdraw_amount_need_upon_100"><![CDATA[提现金额需≥100]]></string>
-    <string name="withdraw_amount_is_over_balance">输入金额已超过可提现余额</string>
+    <string name="confirm_withdraw">确认兑换</string>
+    <string name="withdraw_rules">兑换规则</string>
+    <string name="withdraw_amount_need_upon_100"><![CDATA[兑换额度需≥100]]></string>
+    <string name="withdraw_amount_is_over_balance">输入已超过可兑换积分</string>
     <string name="_0_00">0.00</string>
-    <string name="withdraw_record">提现记录</string>
-    <string name="withdraw_record_u"><u>提现记录</u></string>
-    <string name="withdraw_explain">提现说明</string>
-    <string name="withdraw_explain_desc">每个月只能提现一次，是否确认提现？</string>
+    <string name="withdraw_record">兑换记录</string>
+    <string name="withdraw_record_u"><u>兑换记录</u></string>
+    <string name="withdraw_explain">兑换说明</string>
+    <string name="withdraw_explain_desc">每个月只能兑换一次，是否确认兑换？</string>
     <string name="approve_ing">审核中</string>
     <string name="approve_passed">审核通过</string>
     <string name="approve_not_passed">审核不通过</string>
     <string name="record_detail">记录详情</string>
-    <string name="money_yuan">金额（元）</string>
     <string name="approve_time">审核时间</string>
     <string name="progress">进度</string>
     <string name="apply_time">申请时间</string>
     <string name="please_wait_one_to_three_day_blala" tools:ignore="TypographyDashes">3~5个工作日内处理，请耐心等候，如有疑问请咨询：\n400-668-8795</string>
-    <string name="withdraw_send_back" tools:ignore="TypographyDashes">提现金额已返还至钱包，如有疑问请咨询：400-668-8795</string>
-    <string name="withdraw_is_processing">提现处理中</string>
+    <string name="withdraw_send_back" tools:ignore="TypographyDashes">兑换积分已返还至您的账户，如有疑问请咨询：400-668-8795</string>
+    <string name="withdraw_is_processing">兑换处理中</string>
     <string name="it_will_cost_about_3_day_please_wait">预计3~5个工作日内完成审核，请耐心等候</string>
 
     <!--daily sleep report-->
@@ -338,7 +335,7 @@
     <string name="light_sleep_duration_hint">浅睡时长</string>
     <string name="go_to_today">回到今天</string>
     <string name="monitor_sleep_data">监测数据</string>
-    <string name="no_withdraw_record_yet">暂无提现记录</string>
+    <string name="no_withdraw_record_yet">暂无兑换记录</string>
     <string name="remark">备注</string>
     <string name="no_have_patient">暂无患者列表</string>
     <string name="percent_mart">%</string>
@@ -397,7 +394,7 @@
     <string name="after_authentication_you_can_open_service">通过医生认证后，才能开通收费服务</string>
     <string name="after_authentication_you_can_send_scale">通过医生认证后，才能发送量表</string>
     <string name="after_authentication_you_can_send_suifang_plan">通过医生认证后，才能发送随访计划</string>
-    <string name="after_authentication_you_can_withdraw">通过医生认证后，才能申请提现</string>
+    <string name="after_authentication_you_can_withdraw">通过医生认证后，才能申请兑换</string>
     <string name="after_authentication_you_can_do_this">通过医生认证后，才能%s。</string>
     <string name="authenticate_is_going_try_it_later">认证资料审核中，请您在审核通过后再操作。</string>
     <string name="next_time_talk_about">下次再说</string>
@@ -480,19 +477,19 @@
     <string name="learn_cbti">体验CBTI</string>
     <string name="cbti_doctor_visit_info">医生版本体验内容目前只有视频，患者版还有练习及测评相关内容</string>
     <string name="on_i_see">知道了</string>
-    <string name="settling_amount">结算中金额</string>
-    <string name="available_withdraw_amount">可提现金额</string>
+    <string name="settling_amount">周转中的积分</string>
+    <string name="available_withdraw_amount">可兑换积分</string>
     <string name="inspect">查看</string>
     <string name="u_see_detail_u"><u>查看明细</u></string>
-    <string name="pending_income">在周转中的收入</string>
-    <string name="settling_amount_explanation">在周转中的收入，入账后可提现</string>
+    <string name="pending_income">在周转中的积分</string>
+    <string name="settling_amount_explanation">在周转中的积分，入账后可兑换</string>
     <string name="any_question_please_call_xxx" tools:ignore="TypographyDashes">如有疑问请咨询：400–668-8795</string>
     <string name="detail_detail">明细详情</string>
     <string name="predict_in_account_time">预计入账时间</string>
     <string name="explain">说明</string>
     <string name="others">其它</string>
     <string name="income">收入</string>
-    <string name="no_settling_data">暂无结算中记录</string>
+    <string name="no_settling_data">暂无周转中记录</string>
     <string name="money_is_re_checking_click_see_detail">该笔收入重新核实中，点击查看 ></string>
     <string name="predict_in_account">预计入账：%s</string>
     <string name="modify_name">修改姓名</string>
@@ -526,14 +523,14 @@
         <item>添加患者</item>
         <item>查看患者资料</item>
         <item>开通服务</item>
-        <item>账户提现</item>
+        <item>账户兑换</item>
         <item>体验CBTI</item>
     </string-array>
     <string-array name="use_guide_contents">
         <item>您也可以向我们申请线下物料，如桌面立牌、睡眠健康指导等放于工作区，供患者直接扫码或取用。</item>
         <item>了解患者睡眠日记及量表结果，获取患者的详细档案如病历病史，查看患者CBTI学习情况。</item>
         <item>您可以根据需要选择开通的服务类型，并根据服务类型自由设置价格。</item>
-        <item>您的收入可以在“我的钱包”里查看并随时提现到个人账户中。</item>
+        <item>您的收入可以在“我的积分”里查看并随时兑换到个人账户中。</item>
         <item>认证通过后，点击首页CBTI，可立即免费体验全部课程。</item>
     </string-array>
 
@@ -601,4 +598,5 @@
     </string-array>
 
     <string name="counselor_experience_years_list_page_title">选择从业经验</string>
+    <string name="jifen">积分</string>
 </resources>

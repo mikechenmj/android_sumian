@@ -30,7 +30,7 @@
     <string name="light_sleep_duration">浅睡时长</string>
     <string name="go_to_today">回到今天</string>
     <string name="monitor_sleep_data">监测数据</string>
-    <string name="no_withdraw_record_yet">暂无提现记录</string>
+    <string name="no_withdraw_record_yet">暂无兑换记录</string>
     <string name="remark">备注</string>
     <string name="no_have_patient">暂无患者列表</string>
     <string name="percent_mart">%</string>

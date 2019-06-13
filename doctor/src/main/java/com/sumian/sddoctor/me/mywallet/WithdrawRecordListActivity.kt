@@ -82,7 +82,7 @@ class WithdrawRecordListActivity : SddBaseActivity() {
 
     class WithdrawRecordAdapter : BaseQuickAdapter<WithdrawRecord, BaseViewHolder>(R.layout.list_item_withdraw_record) {
         override fun convert(helper: BaseViewHolder, item: WithdrawRecord) {
-            helper.setText(R.id.tv_amount, "-${MoneyUtil.fenToYuanString(item.amount)}元")
+            helper.setText(R.id.tv_amount, "-${MoneyUtil.fenToYuanString(item.amount)}")
             helper.setText(R.id.tv_time, TimeUtilV2.formatYYYYMMDDHHMM(item.getUpdateAtInMillis()))
             helper.setText(R.id.tv_status, item.getStatusTextRes())
             helper.setTextColor(R.id.tv_status, ColorCompatUtil.getColor(mContext, item.getStatusTextColorRes()))

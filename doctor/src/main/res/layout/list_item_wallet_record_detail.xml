@@ -39,5 +39,5 @@
         android:layout_weight="1"
         android:gravity="end"
         android:textStyle="bold"
-        tools:text="-500.00元" />
+        tools:text="-500.00" />
 </LinearLayout>

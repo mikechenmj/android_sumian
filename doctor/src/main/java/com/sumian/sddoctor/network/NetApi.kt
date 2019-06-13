@@ -394,7 +394,7 @@ interface NetApi {
     fun getWithdrawAbility(): Call<WithdrawAbility>
 
     /**
-     * 提现
+     *
      */
     @GET("doctor/withdrawals/tax-rule-code")
     fun getWithdrawRule(): Call<WithdrawRule>

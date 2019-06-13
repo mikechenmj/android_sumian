@@ -86,7 +86,7 @@ class PendingIncomeListActivity : SddBaseActivity() {
 
     class SettlingRecordAdapter : BaseQuickAdapter<SettlingRecord, BaseViewHolder>(R.layout.list_item_withdraw_record) {
         override fun convert(helper: BaseViewHolder, item: SettlingRecord) {
-            helper.setText(R.id.tv_amount, "${MoneyUtil.fenToYuanString(item.amount)}元")
+            helper.setText(R.id.tv_amount, "${MoneyUtil.fenToYuanString(item.amount)}")
             val text =
                     if (item.status == SettlingRecord.STATUS_SETTLING)
                         mContext.getString(R.string.predict_in_account, TimeUtilV2.formatYYYYMMDDHHMM(item.creditedAt))

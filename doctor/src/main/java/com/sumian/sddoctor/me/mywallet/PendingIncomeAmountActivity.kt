@@ -51,7 +51,7 @@ class PendingIncomeAmountActivity : SddBaseActivity() {
 
             @SuppressLint("SetTextI18n")
             override fun onSuccess(response: WalletBalance?) {
-                tv_settling_amount.text = "￥" + MoneyUtil.fenToYuanString(response?.pending_income
+                tv_settling_amount.text = MoneyUtil.fenToYuanString(response?.pending_income
                         ?: 0L)
             }
         })

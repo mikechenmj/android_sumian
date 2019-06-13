@@ -20,7 +20,7 @@
         <TextView
             style="@style/text_t1_16"
             android:layout_gravity="center_vertical"
-            android:text="@string/amount_yuan" />
+            android:text="@string/jifen" />
 
         <TextView
             android:id="@+id/tv_amount"

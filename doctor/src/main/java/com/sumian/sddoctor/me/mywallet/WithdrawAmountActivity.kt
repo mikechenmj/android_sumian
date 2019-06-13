@@ -59,7 +59,7 @@ class WithdrawAmountActivity : SddBaseActivity() {
             @SuppressLint("SetTextI18n")
             override fun onSuccess(response: WalletBalance?) {
                 mBalance = response?.balance ?: 0L
-                tv_wallet_balance.text = "￥" + MoneyUtil.fenToYuanString(mBalance)
+                tv_wallet_balance.text = MoneyUtil.fenToYuanString(mBalance)
             }
         })
     }

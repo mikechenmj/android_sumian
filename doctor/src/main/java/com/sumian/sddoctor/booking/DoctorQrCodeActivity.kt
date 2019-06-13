@@ -66,8 +66,8 @@ class DoctorQrCodeActivity : BaseActivity() {
 
     private fun share(shareMedia: SHARE_MEDIA) {
         val url = (BuildConfig.BASE_H5_URL.replace("sdd", "sd") + H5Uri.DOCTOR_SHARE).replace("{id}", mDoctorInfo?.id.toString())
-        val title = getString(R.string.share_doctor_qr_title, mDoctorInfo?.name)
-        val description = getString(R.string.share_doctor_qr_desc)
+        val title = getString(R.string.share_doctor_qr_title, mDoctorInfo?.name, mDoctorInfo?.getIdentityString(this))
+        val description = getString(R.string.share_doctor_qr_desc, mDoctorInfo?.getIdentityString(this))
         AppManager.getOpenEngine().shareUrl(this, url, title, description, mDoctorInfo?.avatar, shareMedia)
     }
 

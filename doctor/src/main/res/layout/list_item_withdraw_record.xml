@@ -11,7 +11,7 @@
         android:id="@+id/tv_amount"
         style="@style/text_t3_18"
         android:textStyle="bold"
-        tools:text="+500.00元" />
+        tools:text="+500.00" />
 
     <TextView
         android:id="@+id/tv_time"

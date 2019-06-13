@@ -94,7 +94,7 @@ class MyWalletActivity : SddBaseActivity() {
 
             @SuppressLint("SetTextI18n")
             override fun onSuccess(response: WalletBalance?) {
-                tv_withdraw_amount.text = "￥" + MoneyUtil.fenToYuanString(response?.balance ?: 0L)
+                tv_withdraw_amount.text = MoneyUtil.fenToYuanString(response?.balance ?: 0L)
                 tv_settling_amount.text = MoneyUtil.fenToYuanString(response?.pending_income ?: 0)
             }
         })
@@ -135,7 +135,7 @@ class MyWalletActivity : SddBaseActivity() {
         override fun convert(helper: BaseViewHolder, item: WalletDetail) {
             helper.setText(R.id.tv_content, item.content)
             helper.setText(R.id.tv_time, TimeUtilV2.formatYYYYMMDDHHMM(item.getCreateInMillis()))
-            helper.setText(R.id.tv_account, MoneyUtil.fenToYuanStringWithSign(item.getSignedAmount()) + "元")
+            helper.setText(R.id.tv_account, MoneyUtil.fenToYuanStringWithSign(item.getSignedAmount()))
         }
     }
 }
