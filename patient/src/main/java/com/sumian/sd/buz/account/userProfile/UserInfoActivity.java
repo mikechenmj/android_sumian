@@ -23,7 +23,6 @@ import com.sumian.sd.R;
 import com.sumian.sd.app.App;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.buz.account.bean.Social;
-import com.sumian.sd.buz.account.bean.Token;
 import com.sumian.sd.buz.account.bean.UserInfo;
 import com.sumian.sd.buz.account.sheet.ModifySelectBottomSheet;
 import com.sumian.sd.buz.stat.StatConstants;
@@ -42,7 +41,6 @@ import java.util.List;
 import java.util.Map;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import de.hdodenhof.circleimageview.CircleImageView;
 import pub.devrel.easypermissions.AfterPermissionGranted;
@@ -57,12 +55,12 @@ import pub.devrel.easypermissions.EasyPermissions;
 @SuppressWarnings("ALL")
 public class UserInfoActivity extends BaseViewModelActivity<SdUserInfoPresenter> implements View.OnClickListener, TitleBar.OnBackClickListener,
         SettingDividerView.OnShowMoreListener, PictureBottomSheet.OnTakePhotoCallback, EasyPermissions.PermissionCallbacks,
-        CompoundButton.OnCheckedChangeListener, UMAuthListener, Observer<Token> {
+        CompoundButton.OnCheckedChangeListener, UMAuthListener {
 
     @SuppressWarnings("unused")
-    private static final String TAG                     = UserInfoActivity.class.getSimpleName();
-    private final static String imagePathName           = "/image/";
-    private static final int    PIC_REQUEST_CODE_CAMERA = 0x02;
+    private static final String TAG = UserInfoActivity.class.getSimpleName();
+    private final static String imagePathName = "/image/";
+    private static final int PIC_REQUEST_CODE_CAMERA = 0x02;
 
     private TitleBar mTitleBar;
     private CircleImageView mIvAvatar;
@@ -124,7 +122,12 @@ public class UserInfoActivity extends BaseViewModelActivity<SdUserInfoPresenter>
         mDvCareer.setOnShowMoreListener(this);
         mDvWechat.setOnCheckedChangeListener(this);
         mDvMedicineHistory.setOnShowMoreListener(this);
-        AppManager.getAccountViewModel().getLiveDataToken().observe(this, this);
+        AppManager.getAccountViewModel().getUserInfoLiveData().observe(this, new Observer<UserInfo>() {
+            @Override
+            public void onChanged(UserInfo userInfo) {
+                updateUserProfileUI(userInfo);
+            }
+        });
     }
 
     @NotNull
@@ -146,7 +149,6 @@ public class UserInfoActivity extends BaseViewModelActivity<SdUserInfoPresenter>
     @Override
     protected void onRelease() {
         super.onRelease();
-        AppManager.getAccountViewModel().getLiveDataToken().removeObserver(this);
     }
 
     @Override
@@ -439,13 +441,13 @@ public class UserInfoActivity extends BaseViewModelActivity<SdUserInfoPresenter>
         return storageDir;
     }
 
-    @Override
-    public void onChanged(@Nullable Token token) {
-        if (token == null) {
-            return;
-        }
-        updateUserProfileUI(token.user);
-    }
+//    @Override
+//    public void onChanged(@Nullable Token token) {
+//        if (token == null) {
+//            return;
+//        }
+//        updateUserProfileUI(token.user);
+//    }
 
     public void onBegin() {
         showLoading();

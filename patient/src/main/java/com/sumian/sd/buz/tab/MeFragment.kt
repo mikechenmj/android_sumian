@@ -29,7 +29,6 @@ import com.sumian.sd.buz.account.achievement.MyAchievementActivity
 import com.sumian.sd.buz.account.achievement.bean.AchievementRecord
 import com.sumian.sd.buz.account.achievement.contract.GetAchievementListContract
 import com.sumian.sd.buz.account.achievement.presenter.GetAchievementListPresenter
-import com.sumian.sd.buz.account.bean.Token
 import com.sumian.sd.buz.account.bean.UserInfo
 import com.sumian.sd.buz.account.userProfile.UserInfoActivity
 import com.sumian.sd.buz.advisory.activity.AdvisoryListActivity
@@ -98,10 +97,10 @@ class MeFragment : BaseViewModelFragment<GetAchievementListPresenter>(), View.On
         super.initData()
         val userProfile = AppManager.getAccountViewModel().userInfo!!
         updateUserProfile(userProfile)
-        AppManager.getAccountViewModel().liveDataToken.observe(this, Observer<Token> { token ->
+        AppManager.getAccountViewModel().getUserInfoLiveData().observe(this, Observer<UserInfo> { userInfo ->
             run {
-                token?.let {
-                    updateUserProfile(it.user)
+                userInfo?.let {
+                    updateUserProfile(it)
                 }
             }
         })

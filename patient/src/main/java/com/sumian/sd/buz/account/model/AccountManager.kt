@@ -123,6 +123,10 @@ object AccountManager {
         }
     }
 
+    fun getUserInfoLiveData(): MutableLiveData<UserInfo> {
+        return mUserInfoLiveData
+    }
+
     interface TokenChangeListener {
         fun onTokenChange(token: Token?)
     }
