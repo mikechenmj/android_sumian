@@ -20,6 +20,9 @@ import cn.leancloud.chatkit.R;
  */
 public class LCIMMessageUtil {
     public static CharSequence getMessageShorthand(Context context, AVIMMessage message) {
+        if (message == null) {
+            return "";
+        }
         if (message instanceof AVIMTypedMessage) {
             AVIMReservedMessageType type = AVIMReservedMessageType.getAVIMReservedMessageType(
                     ((AVIMTypedMessage) message).getMessageType());
