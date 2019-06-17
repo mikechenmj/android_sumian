@@ -253,13 +253,15 @@ class DeviceManageFragment : BaseFragment() {
         val sleepMasterCompatibility = DeviceManager.checkSleepMasterVersionCompatibility()
         val appNeedUpgrade = monitorCompatibility == DeviceManager.PROTOCOL_VERSION_TO_HIGH
                 || sleepMasterCompatibility == DeviceManager.PROTOCOL_VERSION_TO_HIGH
-        val deviceNeedUpgrade = monitorCompatibility == DeviceManager.PROTOCOL_VERSION_TO_LOW
-                || sleepMasterCompatibility == DeviceManager.PROTOCOL_VERSION_TO_LOW
+        val monitorNeedUpgrade = monitorCompatibility == DeviceManager.PROTOCOL_VERSION_TO_LOW
+        val sleepMasterNeedUpgrade = sleepMasterCompatibility == DeviceManager.PROTOCOL_VERSION_TO_LOW
+        val deviceNeedUpgrade = monitorNeedUpgrade || sleepMasterNeedUpgrade
+
         tv_bottom_hint.isVisible = !monitor.isSyncing || appNeedUpgrade || deviceNeedUpgrade
         tv_bottom_hint.text =
                 getString(when {
-                    appNeedUpgrade -> R.string.app_need_upgrade
-                    deviceNeedUpgrade -> R.string.device_need_upgrade
+                    appNeedUpgrade -> if (monitorNeedUpgrade) R.string.device_is_not_ok_app_need_upgrade else R.string.sleep_master_is_not_ok_app_need_upgrade
+                    deviceNeedUpgrade -> if (monitorNeedUpgrade) R.string.device_is_not_ok_device_need_upgrade else R.string.sleep_master_is_not_ok_device_need_upgrade
                     else -> if (monitor.monitorConnectStatus == DeviceConnectStatus.DISCONNECTED) {
                         R.string.monitor_not_connect_click_upper_to_connect
                     } else if (monitor.monitorConnectStatus == DeviceConnectStatus.CONNECTING) {

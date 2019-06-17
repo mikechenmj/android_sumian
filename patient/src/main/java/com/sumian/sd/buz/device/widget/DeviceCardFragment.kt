@@ -229,8 +229,9 @@ class DeviceCardFragment : BaseFragment() {
                 val sleepMasterCompatibility = DeviceManager.checkSleepMasterVersionCompatibility()
                 val appNeedUpgrade = monitorCompatibility == DeviceManager.PROTOCOL_VERSION_TO_HIGH
                         || sleepMasterCompatibility == DeviceManager.PROTOCOL_VERSION_TO_HIGH
-                val deviceNeedUpgrade = monitorCompatibility == DeviceManager.PROTOCOL_VERSION_TO_LOW
-                        || sleepMasterCompatibility == DeviceManager.PROTOCOL_VERSION_TO_LOW
+                val monitorNeedUpgrade = monitorCompatibility == DeviceManager.PROTOCOL_VERSION_TO_LOW
+                val sleepMasterNeedUpgrade = sleepMasterCompatibility == DeviceManager.PROTOCOL_VERSION_TO_LOW
+                val deviceNeedUpgrade = monitorNeedUpgrade || sleepMasterNeedUpgrade
 
                 // sync ui
                 vg_sync.isVisible = !appNeedUpgrade && !deviceNeedUpgrade
@@ -269,8 +270,8 @@ class DeviceCardFragment : BaseFragment() {
                         if (!device.isSleepMasterConnected() || isWorkModeOn || appNeedUpgrade || deviceNeedUpgrade) View.VISIBLE else View.GONE
                 tv_bottom_hint.text =
                         getString(when {
-                            appNeedUpgrade -> R.string.app_need_upgrade
-                            deviceNeedUpgrade -> R.string.device_need_upgrade
+                            appNeedUpgrade -> if (monitorNeedUpgrade) R.string.device_is_not_ok_app_need_upgrade else R.string.sleep_master_is_not_ok_app_need_upgrade
+                            deviceNeedUpgrade -> if (monitorNeedUpgrade) R.string.device_is_not_ok_device_need_upgrade else R.string.sleep_master_is_not_ok_device_need_upgrade
                             else -> if (isWorkModeOn) R.string.sleeper_is_working_please_sleep else R.string.monitor_is_connect_please_check_sleepers_connectivity
                         })
 

@@ -869,6 +869,10 @@
     <string name="cover">覆盖</string>
     <string name="app_need_upgrade">APP版本过低，请及时更新！</string>
     <string name="device_need_upgrade">设备版本过低，请前往[我的-设置]升级固件版本</string>
+    <string name="device_is_not_ok_app_need_upgrade">设备不可用，需要更新APP</string>
+    <string name="sleep_master_is_not_ok_app_need_upgrade">速眠仪不可用，需要更新APP</string>
+    <string name="device_is_not_ok_device_need_upgrade">设备不可用，需更新固件</string>
+    <string name="sleep_master_is_not_ok_device_need_upgrade">速眠仪不可用，需更新固件</string>
 
     <string-array name="counselor_experience_years">
         <item>1年</item>

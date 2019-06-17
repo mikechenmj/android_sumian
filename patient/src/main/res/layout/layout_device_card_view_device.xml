@@ -160,7 +160,7 @@
         android:layout_height="60dp"
         android:gravity="center"
         android:visibility="gone"
-        tools:text="@string/app_need_upgrade"
+        tools:text="@string/device_is_not_ok_app_need_upgrade"
         tools:visibility="visible" />
 
     <FrameLayout
