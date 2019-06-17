@@ -103,7 +103,7 @@ class MainActivity : BaseActivity() {
 
     override fun onStart() {
         super.onStart()
-        VersionManager.checkAppVersion()
+        VersionManager.queryAppVersion(true)
         updateNotificationUnreadCount()
         EventBusUtil.register(this)
     }

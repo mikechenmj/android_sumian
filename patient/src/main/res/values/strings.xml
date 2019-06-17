@@ -660,8 +660,6 @@
     <string name="set_diary_reminder_hint_2"><u>设置填写提醒</u></string>
     <string name="dialog_finish_practice_msg">完成本节课程学习后自动解锁下节内容</string>
     <string name="error_unknown">未知错误</string>
-    <string name="monitor_is_syncing_please_try_it_later">监测仪同步中，请稍后重试</string>
-    <string name="monitor_energy_is_low_please_try_it_later">监测仪电量过低，请充点后重试</string>
     <string name="sleep_remark">睡眠备注</string>
     <string name="wake_up_emotion">睡醒情绪</string>
     <string name="night_wakeup">夜醒</string>

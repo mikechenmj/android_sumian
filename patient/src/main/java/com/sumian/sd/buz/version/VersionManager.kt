@@ -1,5 +1,7 @@
 package com.sumian.sd.buz.version
 
+import android.os.Handler
+import android.os.Looper
 import androidx.lifecycle.MutableLiveData
 import com.blankj.utilcode.util.LogUtils
 import com.sumian.common.network.response.ErrorResponse
@@ -39,6 +41,7 @@ object VersionManager {
     }
 
     val mAppVersionInfo = MutableLiveData<Version>()
+    private val mHandler = Handler(Looper.getMainLooper())
 
     init {
         queryAppVersion()
@@ -77,19 +80,14 @@ object VersionManager {
         })
     }
 
-    fun checkAppVersion() {
-        queryAppVersion(true)
+    fun delayQueryDeviceVersion() {
+        mHandler.removeCallbacks(mDelayQueryDeviceVersionRunnable)
+        mHandler.postDelayed(mDelayQueryDeviceVersionRunnable, 1000)
     }
 
-    fun updateDeviceVersion() {
-        queryDeviceVersion()
-    }
+    private val mDelayQueryDeviceVersionRunnable = Runnable { queryDeviceVersion(true) }
 
-    fun checkDeviceVersion() {
-        queryDeviceVersion(true)
-    }
-
-    private fun queryDeviceVersion(showDialogIfNeed: Boolean = false) {
+    fun queryDeviceVersion(showDialogIfNeed: Boolean = false) {
         val device = DeviceManager.getDevice()
         val call = AppManager.getSdHttpService().getFirmwareLatestVersion(
                 device?.monitorVersionInfo?.hardwareVersion,
@@ -102,7 +100,13 @@ object VersionManager {
                 mFirmwareVersionInfoLD.value = response
                 if (showDialogIfNeed) {
                     if (hasNewMonitorVersion() || hasNewSleeperVersion()) {
-                        DeviceUpgradeDialogActivity.start(if (hasNewMonitorVersion()) VERSION_TYPE_MONITOR else VERSION_TYPE_SLEEPER, false)
+                        val force = response.monitor?.isForceUpdate() == true || response.sleeper?.isForceUpdate() == true
+                        val msg = if (hasNewMonitorVersion()) {
+                            response.monitor?.description
+                        } else {
+                            response.sleeper?.description
+                        }
+                        DeviceUpgradeDialogActivity.start(if (hasNewMonitorVersion()) VERSION_TYPE_MONITOR else VERSION_TYPE_SLEEPER, force, msg)
                     }
                 }
             }

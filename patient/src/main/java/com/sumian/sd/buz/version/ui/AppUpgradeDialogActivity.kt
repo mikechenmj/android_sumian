@@ -13,6 +13,7 @@ import com.sumian.common.base.BaseActivity
 import com.sumian.common.widget.dialog.SumianDialog
 import com.sumian.sd.R
 import com.sumian.sd.app.App
+import com.sumian.sd.app.AppManager
 import com.sumian.sd.common.utils.UiUtils
 
 /**
@@ -88,8 +89,7 @@ class AppUpgradeDialogActivity : BaseActivity() {
                 .setOnKeyListenerWrap(object : DialogInterface.OnKeyListener {
                     override fun onKey(dialog: DialogInterface, keyCode: Int, event: KeyEvent): Boolean {
                         if (force && keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_DOWN && event.repeatCount == 0) {
-                            dialog.cancel()
-                            finishAffinity()
+                            AppManager.exitApp()
                             return true
                         }
                         return false

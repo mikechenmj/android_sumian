@@ -24,6 +24,7 @@ import com.sumian.sd.buz.device.scan.ScanDeviceActivity
 import com.sumian.sd.buz.diary.DataFragment
 import com.sumian.sd.buz.diary.event.ChangeDataFragmentTabEvent
 import com.sumian.sd.buz.stat.StatConstants
+import com.sumian.sd.buz.version.VersionManager
 import com.sumian.sd.common.utils.EventBusUtil
 import com.sumian.sd.main.MainActivity
 import com.sumian.sd.main.event.ChangeMainTabEvent

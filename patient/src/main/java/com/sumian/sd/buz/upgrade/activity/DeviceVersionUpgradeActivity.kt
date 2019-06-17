@@ -288,7 +288,7 @@ class DeviceVersionUpgradeActivity : BaseViewModelActivity<BaseViewModel>(), Tit
             TYPE_MONITOR -> R.string.firmware_upgrade_success_hint
             else -> R.string.sleeper_firmware_upgrade_success_hint
         })
-        VersionManager.updateDeviceVersion()
+        VersionManager.queryDeviceVersion()
         LogManager.appendMonitorLog("设备dfu固件升级完成")
         SumianExecutor.runOnUiThread({ DeviceManager.connectBoundDevice() }, UPGRADE_RECONNECT_WAIT_DURATION);
         finish()

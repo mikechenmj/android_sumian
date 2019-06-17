@@ -81,7 +81,7 @@ class LoginActivity : BaseViewModelActivity<LoginPresenter>(), LoginContract.Vie
     override fun onStart() {
         super.onStart()
         AppManager.getAccountViewModel().clearToken()
-        VersionManager.checkAppVersion()
+        VersionManager.queryAppVersion(true)
     }
 
     private fun onLoginClick() {

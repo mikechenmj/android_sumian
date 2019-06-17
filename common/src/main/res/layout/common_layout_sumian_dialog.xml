@@ -57,13 +57,14 @@
     <TextView
         android:id="@+id/tv_message"
         style="@style/text_t1_14"
+        android:layout_gravity="start"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
-        android:gravity="center"
+        android:gravity="start"
         android:textSize="@dimen/font_14"
         android:visibility="gone"
-        tools:text="MessageMessageMessageMessageMessageMessageMessageMessageMessage"
+        tools:text="message"
         tools:visibility="visible" />
 
     <Space

@@ -1,8 +1,11 @@
 package com.sumian.sd.buz.version.ui
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
 import android.text.format.DateUtils
+import android.view.KeyEvent
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.SPUtils
@@ -10,6 +13,7 @@ import com.sumian.common.base.BaseActivity
 import com.sumian.common.widget.dialog.SumianDialog
 import com.sumian.sd.R
 import com.sumian.sd.app.App
+import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.upgrade.activity.DeviceVersionNoticeActivity
 import com.sumian.sd.common.utils.UiUtils
 
@@ -24,6 +28,8 @@ class DeviceUpgradeDialogActivity : BaseActivity() {
 
     companion object {
         private const val KEY_TYPE = "KEY_TYPE"
+        private const val KEY_FORCE = "KEY_FORCE"
+        private const val KEY_MSG = "KEY_MSG"
         const val TYPE_MONITOR = 0
         const val TYPE_SLEEP_MASTER = 1
         const val TYPE_APP = 2
@@ -38,18 +44,20 @@ class DeviceUpgradeDialogActivity : BaseActivity() {
          *
          * @param force 固件强制升级，每次连接都弹，普通升级 每天弹一次
          */
-        fun start(type: Int, force: Boolean = true) {
+        fun start(type: Int, force: Boolean = false, msg: String? = null) {
             if (DialogManager.isAppUpgradeDialogShowing) {
                 return
             }
             val spKey = if (force) SHOW_UPGRADE_DIALOG_TIME_FORCE else SHOW_UPGRADE_DIALOG_TIME
-            val showDialogInterval = if (force) DateUtils.SECOND_IN_MILLIS * 3 else DateUtils.DAY_IN_MILLIS
+            val showDialogInterval = if (force) DateUtils.SECOND_IN_MILLIS * 2 else DateUtils.DAY_IN_MILLIS
             if (System.currentTimeMillis() - SPUtils.getInstance().getLong(spKey) < showDialogInterval) {
                 return
             }
             SPUtils.getInstance().put(spKey, System.currentTimeMillis())
             val intent = Intent(ActivityUtils.getTopActivity(), DeviceUpgradeDialogActivity::class.java)
             intent.putExtra(KEY_TYPE, type)
+            intent.putExtra(KEY_FORCE, force)
+            intent.putExtra(KEY_MSG, msg)
             ActivityUtils.startActivity(intent)
             DialogManager.isDeviceForceUpgrade = force
         }
@@ -65,7 +73,10 @@ class DeviceUpgradeDialogActivity : BaseActivity() {
 
     override fun initWidget() {
         super.initWidget()
-        showUpgradeFirmwareDialog(intent.getIntExtra(KEY_TYPE, 0))
+        val type = intent.getIntExtra(KEY_TYPE, TYPE_MONITOR)
+        val force = intent.getBooleanExtra(KEY_FORCE, false)
+        val msg = intent.getStringExtra(KEY_MSG)
+        showDialog(type, force, msg)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -81,12 +92,17 @@ class DeviceUpgradeDialogActivity : BaseActivity() {
     /**
      * @param type 0 monitor 1 sleeper
      */
-    private fun showUpgradeFirmwareDialog(type: Int) {
-        val dialog = SumianDialog(this)
+    private fun showDialog(type: Int, force: Boolean, msg: String?) {
+        val message = if (TextUtils.isEmpty(msg)) {
+            getString(if (type == TYPE_APP) R.string.app_upgrade_dialog_hint else R.string.device_upgrade_dialog_hint)
+        } else {
+            msg
+        }
+        SumianDialog(this)
                 .setTitleText(if (type == TYPE_APP) R.string.app_upgrade_dialog_title else R.string.device_upgrade_dialog_title)
-                .setMessageText(if (type == TYPE_APP) R.string.app_upgrade_dialog_hint else R.string.device_upgrade_dialog_hint)
+                .setMessageText(message ?: "")
                 .setTopIcon(R.drawable.popups_icon_update)
-                .showCloseIcon(true)
+                .showCloseIcon(!force)
                 .setRightBtn(R.string.upgrade_now, View.OnClickListener {
                     if (type == TYPE_APP) {
                         UiUtils.openAppInMarket(App.getAppContext())
@@ -94,8 +110,18 @@ class DeviceUpgradeDialogActivity : BaseActivity() {
                         ActivityUtils.startActivity(DeviceVersionNoticeActivity::class.java)
                     }
                 })
+                .setOnDismissListenerWrap(DialogInterface.OnDismissListener { finish() })
+                .setCanceledOnTouchOutsideWrap(false)
+                .setOnKeyListenerWrap(object : DialogInterface.OnKeyListener {
+                    override fun onKey(dialog: DialogInterface, keyCode: Int, event: KeyEvent): Boolean {
+                        if (force && keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_DOWN && event.repeatCount == 0) {
+                            AppManager.exitApp()
+                            return true
+                        }
+                        return false
+                    }
+                })
                 .whitenLeft()
-        dialog.setOnDismissListener { finish() }
-        dialog.show()
+                .show()
     }
 }

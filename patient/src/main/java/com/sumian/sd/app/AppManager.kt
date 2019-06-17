@@ -185,6 +185,7 @@ object AppManager {
                             DeviceManager.PROTOCOL_VERSION_TO_HIGH -> DeviceUpgradeDialogActivity.start(DeviceUpgradeDialogActivity.TYPE_APP)
                             DeviceManager.PROTOCOL_VERSION_TO_LOW -> DeviceUpgradeDialogActivity.start(DeviceUpgradeDialogActivity.TYPE_MONITOR)
                         }
+                        VersionManager.delayQueryDeviceVersion()
                     }
                     DeviceManager.EVENT_RECEIVE_SLEEP_MASTER_VERSION_INFO -> {
                         val compatibility = DeviceManager.checkSleepMasterVersionCompatibility()
@@ -192,7 +193,9 @@ object AppManager {
                             DeviceManager.PROTOCOL_VERSION_TO_HIGH -> DeviceUpgradeDialogActivity.start(DeviceUpgradeDialogActivity.TYPE_APP)
                             DeviceManager.PROTOCOL_VERSION_TO_LOW -> DeviceUpgradeDialogActivity.start(DeviceUpgradeDialogActivity.TYPE_SLEEP_MASTER)
                         }
+                        VersionManager.delayQueryDeviceVersion()
                     }
+
                 }
             }
         })
@@ -298,7 +301,7 @@ object AppManager {
             DeviceManager.connectBoundDevice(null)
         }
         sendHeartbeat()
-        VersionManager.checkDeviceVersion()
+        VersionManager.queryDeviceVersion(true)
         AutoSyncDeviceDataUtil.autoSyncSleepData()
     }
 
@@ -386,5 +389,10 @@ object AppManager {
                 AppManager.getAccountViewModel().updateUserInfo(response)
             }
         })
+    }
+
+    fun exitApp() {
+        DeviceManager.disconnect()
+        ActivityUtils.finishAllActivities()
     }
 }
