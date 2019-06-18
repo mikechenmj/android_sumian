@@ -24,7 +24,6 @@ import com.sumian.sd.buz.device.scan.ScanDeviceActivity
 import com.sumian.sd.buz.diary.DataFragment
 import com.sumian.sd.buz.diary.event.ChangeDataFragmentTabEvent
 import com.sumian.sd.buz.stat.StatConstants
-import com.sumian.sd.buz.version.VersionManager
 import com.sumian.sd.common.utils.EventBusUtil
 import com.sumian.sd.main.MainActivity
 import com.sumian.sd.main.event.ChangeMainTabEvent
@@ -271,7 +270,7 @@ class DeviceCardFragment : BaseFragment() {
                         if (!device.isSleepMasterConnected() || isWorkModeOn || appNeedUpgrade || deviceNeedUpgrade) View.VISIBLE else View.GONE
                 tv_bottom_hint.text =
                         getString(when {
-                            appNeedUpgrade -> if (monitorNeedUpgrade) R.string.device_is_not_ok_app_need_upgrade else R.string.sleep_master_is_not_ok_app_need_upgrade
+                            appNeedUpgrade -> if (monitorCompatibility == DeviceManager.PROTOCOL_VERSION_TO_HIGH) R.string.device_is_not_ok_app_need_upgrade else R.string.sleep_master_is_not_ok_app_need_upgrade
                             deviceNeedUpgrade -> if (monitorNeedUpgrade) R.string.device_is_not_ok_device_need_upgrade else R.string.sleep_master_is_not_ok_device_need_upgrade
                             else -> if (isWorkModeOn) R.string.sleeper_is_working_please_sleep else R.string.monitor_is_connect_please_check_sleepers_connectivity
                         })
