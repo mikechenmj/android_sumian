@@ -45,7 +45,7 @@ class DeviceUpgradeDialogActivity : BaseActivity() {
          * @param force 固件强制升级，每次连接都弹，普通升级 每天弹一次
          */
         fun start(type: Int, force: Boolean = false, msg: String? = null) {
-            if (DialogManager.isAppUpgradeDialogShowing) {
+            if (!DialogManager.canShow(DialogManager.DIALOG_TYPE_DEVICE, force)) {
                 return
             }
             val spKey = if (force) SHOW_UPGRADE_DIALOG_TIME_FORCE else SHOW_UPGRADE_DIALOG_TIME

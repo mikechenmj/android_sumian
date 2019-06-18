@@ -31,7 +31,7 @@ class AppUpgradeDialogActivity : BaseActivity() {
         private const val SHOW_UPGRADE_DIALOG_TIME = "SHOW_UPGRADE_DIALOG_TIME"
 
         fun start(force: Boolean = true, msg: String?) {
-            if (DialogManager.isDeviceUpgradeDialogShowing) {
+            if (!DialogManager.canShow(DialogManager.DIALOG_TYPE_APP, force)) {
                 return
             }
             val spKey = SHOW_UPGRADE_DIALOG_TIME
@@ -83,7 +83,7 @@ class AppUpgradeDialogActivity : BaseActivity() {
                 .showCloseIcon(!force)
                 .setTitleText(R.string.version_upgrade_title)
                 .setMessageText(if (TextUtils.isEmpty(msg)) App.getAppContext().getString(R.string.have_a_new_version) else msg)
-                .setRightBtn(R.string.go_to_experience, View.OnClickListener { UiUtils.openAppInMarket(App.getAppContext()) })
+                .setRightBtn(R.string.go_to_experience, View.OnClickListener { UiUtils.openAppInMarket(App.getAppContext()) }, !force)
                 .setCanceledOnTouchOutsideWrap(false)
                 .setOnDismissListenerWrap(DialogInterface.OnDismissListener { finish() })
                 .setOnKeyListenerWrap(object : DialogInterface.OnKeyListener {

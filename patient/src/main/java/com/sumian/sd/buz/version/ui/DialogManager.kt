@@ -10,7 +10,6 @@ package com.sumian.sd.buz.version.ui
 object DialogManager {
     const val DIALOG_TYPE_APP = 1
     const val DIALOG_TYPE_DEVICE = 2
-    const val DIALOG_TYPE_OTHER = 3
 
     var isAppUpgradeDialogShowing = false
     var isAppForceUpgrade = false
@@ -23,7 +22,23 @@ object DialogManager {
      * 某优先级显示的时候，同优先级发生了，无须继续弹窗，待下次符合条件时再弹；
      * 低优先级显示的时候，高优先级发生了，需要弹出高优先级那个弹窗，结束后，继续展示低优先级弹窗；
      */
-    fun canShow(type: Int, force: Boolean) {
-
+    fun canShow(type: Int, force: Boolean): Boolean {
+        return when (type) {
+            DIALOG_TYPE_APP -> {
+                if (force) {
+                    true
+                } else {
+                    !isDeviceUpgradeDialogShowing
+                }
+            }
+            DIALOG_TYPE_DEVICE -> {
+                if (force) {
+                    !(isAppUpgradeDialogShowing && isAppForceUpgrade)
+                } else {
+                    !isAppUpgradeDialogShowing
+                }
+            }
+            else -> true
+        }
     }
 }
