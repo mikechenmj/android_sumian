@@ -28,7 +28,7 @@ class AppUpgradeDialogActivity : BaseActivity() {
     companion object {
         private const val KEY_FORCE = "KEY_FORCE"
         private const val KEY_MSG = "KEY_MSG"
-        private const val SHOW_UPGRADE_DIALOG_TIME = "SHOW_UPGRADE_DIALOG_TIME"
+        private const val SHOW_UPGRADE_DIALOG_TIME = "AppUpgradeDialogActivity.SHOW_UPGRADE_DIALOG_TIME"
 
         fun start(force: Boolean = true, msg: String?) {
             if (!DialogManager.canShow(DialogManager.DIALOG_TYPE_APP, force)) {

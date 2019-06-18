@@ -33,8 +33,8 @@ class DeviceUpgradeDialogActivity : BaseActivity() {
         const val TYPE_MONITOR = 0
         const val TYPE_SLEEP_MASTER = 1
         const val TYPE_APP = 2
-        private const val SHOW_UPGRADE_DIALOG_TIME = "SHOW_UPGRADE_DIALOG_TIME"
-        private const val SHOW_UPGRADE_DIALOG_TIME_FORCE = "SHOW_UPGRADE_DIALOG_TIME_FORCE"
+        private const val SHOW_UPGRADE_DIALOG_TIME = "DeviceUpgradeDialogActivity.SHOW_UPGRADE_DIALOG_TIME"
+        private const val SHOW_UPGRADE_DIALOG_TIME_FORCE = "DeviceUpgradeDialogActivity.SHOW_UPGRADE_DIALOG_TIME_FORCE"
 
         /**
          * @param type
