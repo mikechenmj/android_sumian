@@ -204,8 +204,8 @@ object UpgradeDeviceHelper {
     private fun getErrorMsg(errorCode: String?): String {
         return mApplicationContext!!.resources.getString(
                 when (errorCode) {
-                    "e1" -> R.string.monitor_is_syncing_please_try_it_later
-                    "e2", "e3" -> R.string.monitor_energy_is_low_please_try_it_later
+                    "e1" -> R.string.monitor_energy_is_low_please_try_it_later
+                    "e2", "e3" -> R.string.monitor_is_syncing_please_try_it_later
                     else -> R.string.error_unknown
                 }
         )
