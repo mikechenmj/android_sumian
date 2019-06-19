@@ -46,7 +46,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.sumian.sd"
+        applicationId = "com.sumian.sd_clinic"
         applicationIdSuffix = null
         versionCode = new Date().format('yyyyMMddHH').toInteger()
         versionName = "1.25.1"
