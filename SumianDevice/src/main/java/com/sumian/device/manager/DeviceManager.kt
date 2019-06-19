@@ -354,15 +354,14 @@ object DeviceManager {
         changeMonitorConnectStatus(DeviceConnectStatus.DISCONNECTING)
     }
 
-    private val isMonitorVersionCompat = checkMonitorVersionCompatibility() == PROTOCOL_VERSION_COMPATIBLE
-    private val isSleepMasterVersionCompat = checkSleepMasterVersionCompatibility() == PROTOCOL_VERSION_COMPATIBLE
-    val isDeviceVersionCompatForSyncingData = isMonitorVersionCompat && (!isSleepMasterConnected() || isSleepMasterVersionCompat)
+    private fun isMonitorVersionCompat() = checkMonitorVersionCompatibility() == PROTOCOL_VERSION_COMPATIBLE
+    private fun isSleepMasterVersionCompat() = checkSleepMasterVersionCompatibility() == PROTOCOL_VERSION_COMPATIBLE
+    fun isDeviceVersionCompatForSyncingData() = isMonitorVersionCompat() && (!isSleepMasterConnected() || isSleepMasterVersionCompat())
 
     fun startSyncSleepData() {
         if (isMonitorConnected()
-                && !isSyncingSleepData()
-                && isMonitorVersionCompat
-                && (!isSleepMasterConnected() || isSleepMasterVersionCompat)
+                && isMonitorVersionCompat()
+                && (!isSleepMasterConnected() || isSleepMasterVersionCompat())
         ) {
             SyncSleepDataHelper.startSyncSleepData()
         }

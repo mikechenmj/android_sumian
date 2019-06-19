@@ -75,6 +75,12 @@ object SyncSleepDataHelper {
 
 
     fun startSyncSleepData() {
+        if (isSyncing()) {
+            if (mTranType == SYNC_TYPE_SLEEP_MASTER_LOG) {
+                onSyncSuccess()
+            }
+            return
+        }
         DeviceManager.writeData(BleCmdUtil.createDataFromString(BleCmd.SYNC_DATA, "01"))
     }
 
@@ -140,7 +146,7 @@ object SyncSleepDataHelper {
 
     private fun onReceiveSleepDataStart(cmd: String, data: ByteArray) {
         log("on sync start: $cmd")
-        if (!DeviceManager.isDeviceVersionCompatForSyncingData) {
+        if (!DeviceManager.isDeviceVersionCompatForSyncingData()) {
             writeResponse(data, 0xff)
             return
         }
