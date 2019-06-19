@@ -72,7 +72,7 @@ object DeviceStateHelper {
     fun syncState() {
         exeOneByOne(
                 { setMonitorTime() },
-                { queryMonitorSn() },
+                { setMonitorTime() }, // 特意多发一次，因为第一次会 gatt 发送失败
                 { queryMonitorSn() },
                 { queryMonitorVersion() },
                 { queryMonitorBattery() },
@@ -100,17 +100,17 @@ object DeviceStateHelper {
         BleCommunicationController.requestByCmd(BleCmd.QUERY_MONITOR_BATTERY)
     }
 
-    private fun setMonitorTime() {
+    private fun setMonitorTime(isRetry: Boolean = false) {
         BleCommunicationController.request(
                 BleCmdUtil.createDataFromBytes(
                         BleCmd.SET_MONITOR_TIME,
                         createSetTimeData()
                 ), object : BleRequestCallback {
             override fun onResponse(data: ByteArray, hexString: String) {
-                BleCommunicationController.makeSuccessResponse(hexString)
             }
 
             override fun onFail(code: Int, msg: String) {
+                LogManager.log("setMonitorTime onFail: $msg")
             }
         })
     }

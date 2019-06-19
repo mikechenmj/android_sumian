@@ -79,8 +79,8 @@ object DeviceManager {
     const val SUMIAN_DEVICE_NAME_PREFIX = "M-SUMIAN"
 
     private const val SP_KEY_BOUND_DEVICE_ADDRESS = "sp_key_bound_device_address"
-    const val WRITE_DATA_INTERVAL = 100L
-    const val CONNECT_WRITE_INTERVAL = 100L
+    const val WRITE_DATA_INTERVAL = 200L
+    const val CONNECT_WRITE_INTERVAL = 300L
 
     var mMainHandler = Handler(Looper.getMainLooper())
     private var mSumianDevice: SumianDevice? = null
