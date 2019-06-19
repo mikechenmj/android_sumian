@@ -83,11 +83,11 @@ class CBTIIntroductionActivity : BaseActivity(), BaseRecyclerAdapter.OnItemClick
         super.initWidget()
         mTitleBar.setTitle(R.string.cbti_title_bar)
         mTitleBar.openTopPadding(true)
-        mTitleBar.showMoreIcon(R.drawable.ic_nav_share)
-        mTitleBar.setOnMenuClickListener {
-            CBTIShareBottomSheet.show(fragmentManager = supportFragmentManager)
-            StatUtil.event(StatConstants.click_cbti_main_page_share_btn)
-        }
+//        mTitleBar.showMoreIcon(R.drawable.ic_nav_share)
+//        mTitleBar.setOnMenuClickListener {
+//            CBTIShareBottomSheet.show(fragmentManager = supportFragmentManager)
+//            StatUtil.event(StatConstants.click_cbti_main_page_share_btn)
+//        }
         recycler.adapter = mAdapter
         recycler.itemAnimator = null
         recycler.layoutManager = LinearLayoutManager(this)
@@ -276,7 +276,7 @@ class CBTIIntroductionActivity : BaseActivity(), BaseRecyclerAdapter.OnItemClick
         onCBTIServiceIsExpired(it.meta.isLock)
         val formatExpiredDate = TimeUtil.formatDate("yyyy.MM.dd 到期", it.meta.expiredAt * 1000L)
         cbti_introduction_list_home_banner.invalidateBanner(formatExpiredDate, it.meta.totalProgressText)
-        cbti_introduction_list_home_banner.cbti_lesson_plan_view.tv_renew.isVisible = true
+//        cbti_introduction_list_home_banner.cbti_lesson_plan_view.tv_renew.isVisible = true
     }
 
     private fun showRenewDialog() {

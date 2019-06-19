@@ -883,4 +883,5 @@
     <string name="counselor_desc">%s、%s从业经验、累积个案时长%d小时</string>
     <string name="upgrade_now">立即更新</string>
     <string name="no_sleep_all_night">整晚没睡</string>
+    <string name="if_no_account_please_contact_doctor">如果没有账号密码或账号密码已忘记，请联系所属医师。</string>
 </resources>

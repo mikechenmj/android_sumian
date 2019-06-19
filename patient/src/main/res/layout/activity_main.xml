@@ -40,10 +40,11 @@
             app:tab_icon="@drawable/sd_sel_tab_diary_icon"
             app:tab_text="@string/tab_data" />
 
-        <include layout="@layout/lay_nav_tab_divider" />
+        <!--<include layout="@layout/lay_nav_tab_divider" />-->
 
         <com.sumian.sd.widget.nav.NavigationItem
             android:id="@+id/tb_doctor"
+            android:visibility="gone"
             style="@style/HorizontalWeight"
             app:tab_icon="@drawable/sd_sel_tab_doctor_icon"
             app:tab_text="@string/tab_doctor" />

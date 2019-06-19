@@ -127,6 +127,10 @@ object AccountManager {
         return mUserInfoLiveData
     }
 
+    fun isControlGroup(): Boolean {
+        return userInfo?.isControlGroup == true
+    }
+
     interface TokenChangeListener {
         fun onTokenChange(token: Token?)
     }

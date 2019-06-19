@@ -44,7 +44,7 @@
         android:layout_height="@dimen/space_48"
         android:background="@drawable/et_bg_sel"
         android:orientation="horizontal"
-        android:visibility="gone"
+        android:visibility="visible"
         tools:visibility="visible">
 
         <com.sumian.sd.buz.account.login.SumianEditText
@@ -60,7 +60,8 @@
         <View
             style="@style/HwVerticalDividerLine"
             android:layout_height="@dimen/space_12"
-            android:layout_gravity="center_vertical" />
+            android:layout_gravity="center_vertical"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_forget_password"
@@ -68,7 +69,8 @@
             android:layout_height="@dimen/space_48"
             android:layout_marginStart="@dimen/space_10"
             android:gravity="center_vertical"
-            android:text="@string/forget_password_question" />
+            android:text="@string/forget_password_question"
+            android:visibility="gone" />
 
     </LinearLayout>
 
@@ -78,8 +80,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:visibility="visible"
-        tools:visibility="visible">
+        android:visibility="gone">
 
         <com.sumian.sd.buz.account.login.SumianEditText
             android:id="@+id/et_captcha"
@@ -112,11 +113,22 @@
         android:layout_marginTop="@dimen/space_40"
         android:text="@string/login_with_space_inside" />
 
+    <TextView
+        style="@style/text_t2_13"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:drawableStart="@drawable/toast_icon_caveat"
+        android:drawablePadding="4dp"
+        android:gravity="center_vertical"
+        android:text="@string/if_no_account_please_contact_doctor" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/space_48"
         android:layout_marginTop="@dimen/space_10"
         android:gravity="center_vertical|start"
+        android:visibility="gone"
         tools:ignore="UseCompoundDrawables">
 
         <ImageView
@@ -175,7 +187,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center">
+        android:gravity="center"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/tv_wechat_login"

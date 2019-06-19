@@ -37,11 +37,11 @@ class CBTIIntroduction2WebActivity : SdBaseWebViewActivity() {
         StatUtil.event(StatConstants.page_cbti_introduction)
         StatUtil.trackBeginPage(this, StatConstants.page_cbti_introduction_from_learn_more)
         getTitleBar().openTopPadding(true)
-        getTitleBar().showMoreIcon(R.drawable.ic_nav_share)
-        getTitleBar().setOnMenuClickListener {
-            StatUtil.event(StatConstants.click_cbti_introduction_share)
-            CBTIShareBottomSheet.show(fragmentManager = supportFragmentManager)
-        }
+//        getTitleBar().showMoreIcon(R.drawable.ic_nav_share)
+//        getTitleBar().setOnMenuClickListener {
+//            StatUtil.event(StatConstants.click_cbti_introduction_share)
+//            CBTIShareBottomSheet.show(fragmentManager = supportFragmentManager)
+//        }
     }
 
     override fun getCompleteUrl(): String {

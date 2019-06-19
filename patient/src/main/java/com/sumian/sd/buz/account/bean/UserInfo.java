@@ -54,6 +54,7 @@ public class UserInfo implements Parcelable, Serializable, Cloneable {
     @SerializedName("set_password")
     public boolean hasPassword;
     public String[] internal_tag;
+    public boolean isControlGroup = false;
 
     protected UserInfo(Parcel in) {
         id = in.readInt();

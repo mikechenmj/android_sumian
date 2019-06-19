@@ -15,6 +15,7 @@ import com.blankj.utilcode.util.ToastUtils
 import com.google.android.material.tabs.TabLayout
 import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.sd.R
+import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.cbti.bean.CBTIMeta
 import com.sumian.sd.buz.cbti.fragment.CourseFragment
 import com.sumian.sd.buz.cbti.fragment.ExerciseFragment
@@ -185,7 +186,7 @@ class CBTIWeekCoursePartActivity : BaseViewModelActivity<CBTIMessageBoardActionP
         }
 
         override fun getCount(): Int {
-            return 3
+            return if (AppManager.getAccountViewModel().isControlGroup()) 1 else 2
         }
 
         override fun getPageTitle(position: Int): CharSequence? {

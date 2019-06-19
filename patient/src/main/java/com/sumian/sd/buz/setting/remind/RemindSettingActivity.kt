@@ -1,5 +1,7 @@
 package com.sumian.sd.buz.setting.remind
 
+import android.accounts.AccountManager
+import androidx.core.view.isVisible
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.sumian.common.base.BaseActivity
@@ -36,6 +38,10 @@ class RemindSettingActivity : BaseActivity() {
         sdv_sleep_diary_remind.setOnClickListener { SleepDiaryRemindSettingActivity.launch(Reminder.TYPE_SLEEP_DIARY) }
         sdv_relaxation_training.setOnClickListener { SleepDiaryRemindSettingActivity.launch(Reminder.TYPE_RELAXATION_TRAINING) }
         sdv_anxiety.setOnClickListener { SleepDiaryRemindSettingActivity.launch(Reminder.TYPE_ANXIETY) }
+
+        val isControlGroup = AppManager.getAccountViewModel().isControlGroup()
+        sdv_relaxation_training.isVisible = !isControlGroup
+        sdv_anxiety.isVisible = !isControlGroup
     }
 
     override fun onStart() {
