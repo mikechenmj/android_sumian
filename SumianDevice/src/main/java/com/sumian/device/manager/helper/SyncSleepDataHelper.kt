@@ -140,6 +140,10 @@ object SyncSleepDataHelper {
 
     private fun onReceiveSleepDataStart(cmd: String, data: ByteArray) {
         log("on sync start: $cmd")
+        if (!DeviceManager.isDeviceVersionCompatForSyncingData) {
+            writeResponse(data, 0xff)
+            return
+        }
         val dataCount: Int = subHexStringToInt(cmd, 5, 8)
         mTransData = arrayOfNulls(dataCount)
         mTranType = cmd.substring(4, 5).toInt()

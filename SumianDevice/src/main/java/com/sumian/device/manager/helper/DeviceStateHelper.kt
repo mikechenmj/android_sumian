@@ -268,7 +268,7 @@ object DeviceStateHelper {
     private fun querySleepMasterVersion() {
         // ```
         // A: aa 54
-        // M: 55 54 06 [aaaaaa bbbbbb cccccccc pp]
+        // M: 55 54 xx [aaaaaa bbbbbb cccccccc pp]
         // ```
         // 字段|解释
         // ---|---
