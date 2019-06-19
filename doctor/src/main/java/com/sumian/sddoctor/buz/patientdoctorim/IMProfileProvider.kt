@@ -33,8 +33,9 @@ class IMProfileProvider : LCChatProfileProvider {
     }
 
     private fun initAppUserInfo() {
-        val doctor = AppManager.getAccountViewModel().getDoctorInfo().value!!
-        mImUserInfoCache.put(doctor.imId!!, LCChatKitUser(doctor.imId, doctor.name, doctor.avatar))
+        val doctor = AppManager.getAccountViewModel().getDoctorInfo().value ?: return
+        val imId = doctor.imId ?: return
+        mImUserInfoCache[imId] = LCChatKitUser(imId, doctor.name, doctor.avatar)
     }
 
     override fun fetchProfiles(userIdList: MutableList<String>, profilesCallBack: LCChatProfilesCallBack?) {
@@ -66,15 +67,6 @@ class IMProfileProvider : LCChatProfileProvider {
         }
     }
 
-    //    override fun fetchProfileByConversationType(conversationType: Int, callback: AsyncCallback<LCChatKitUser>?) {
-//        when (conversationType) {
-//            1 -> callback?.onSuccess(LCChatKitUser("",
-//                    App.getAppContext().resources.getString(R.string.cbti_therapist),
-//                    ResUtil.resIdToUrl(R.drawable.img_consultant))
-//            )
-//            else -> callback?.onFail(1, "wrong type")
-//        }
-//    }
     override fun fetchProfileByConversationType(conversationType: Int, callback: AVCallback<LCChatKitUser>?) {
         when (conversationType) {
             1 -> {

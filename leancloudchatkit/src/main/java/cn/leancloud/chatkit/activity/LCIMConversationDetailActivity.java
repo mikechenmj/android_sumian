@@ -100,7 +100,7 @@ public class LCIMConversationDetailActivity extends AppCompatActivity {
           @Override
           public void done(List<LCChatKitUser> users, Exception exception) {
             if (null != exception) {
-              ;
+
             } else {
               System.out.println("members: " + JSON.toJSONString(users));
               final Intent intent = new Intent(LCIMConversationDetailActivity.this, LCIMUserSelectActivity.class);
