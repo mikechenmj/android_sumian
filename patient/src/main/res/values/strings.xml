@@ -871,6 +871,11 @@
     <string name="sleep_master_is_not_ok_app_need_upgrade">速眠仪不可用，需要更新APP</string>
     <string name="device_is_not_ok_device_need_upgrade">设备不可用，需更新固件</string>
     <string name="sleep_master_is_not_ok_device_need_upgrade">速眠仪不可用，需更新固件</string>
+    <string name="device_version_too_low">设备版本过低，</string>
+    <string name="sleep_master_version_too_low">速眠仪版本过低，</string>
+    <string name="app_version_too_low">APP版本过低，</string>
+    <string name="go_to_upgrade_device"><u>去升级 ></u></string>
+    <string name="go_to_upgrade_app"><u>请更新 ></u></string>
 
     <string-array name="counselor_experience_years">
         <item>1年</item>

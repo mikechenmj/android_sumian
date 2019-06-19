@@ -19,9 +19,9 @@
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:enabled="false"
+            android:gravity="center_vertical"
             android:visibility="gone"
-            tools:visibility="visible"
-            android:gravity="center_vertical">
+            tools:visibility="visible">
 
             <TextView
                 android:id="@+id/tv_sync"
@@ -153,15 +153,32 @@
         android:gravity="center"
         android:text="@string/monitor_is_connect_please_check_sleepers_connectivity" />
 
-    <TextView
-        android:id="@+id/tv_bottom_upgrade_hint"
-        style="@style/text_t2_14"
+    <LinearLayout
+        android:id="@+id/vg_bottom_upgrade_hint"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:gravity="center"
-        android:visibility="gone"
-        tools:text="@string/device_is_not_ok_app_need_upgrade"
-        tools:visibility="visible" />
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_bottom_upgrade_hint"
+            style="@style/text_t2_14"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:drawableStart="@drawable/toast_icon_caveat"
+            android:drawablePadding="5dp"
+            android:gravity="center"
+            tools:text="@string/device_version_too_low" />
+
+        <TextView
+            android:id="@+id/tv_bottom_upgrade_hint2"
+            style="@style/text_b3_14"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_marginStart="4dp"
+            android:gravity="center"
+            tools:text="@string/go_to_upgrade_device" />
+    </LinearLayout>
 
     <FrameLayout
         android:id="@+id/fl_turn_pa_bt_container"

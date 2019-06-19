@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.base.BaseFragment
 import com.sumian.common.statistic.StatUtil
@@ -24,7 +25,9 @@ import com.sumian.sd.buz.device.scan.ScanDeviceActivity
 import com.sumian.sd.buz.diary.DataFragment
 import com.sumian.sd.buz.diary.event.ChangeDataFragmentTabEvent
 import com.sumian.sd.buz.stat.StatConstants
+import com.sumian.sd.buz.upgrade.activity.DeviceVersionNoticeActivity
 import com.sumian.sd.common.utils.EventBusUtil
+import com.sumian.sd.common.utils.UiUtils
 import com.sumian.sd.main.MainActivity
 import com.sumian.sd.main.event.ChangeMainTabEvent
 import com.sumian.sd.widget.dialog.SumianImageTextToast
@@ -227,11 +230,11 @@ class DeviceCardFragment : BaseFragment() {
             DeviceConnectStatus.CONNECTED -> {
                 val monitorCompatibility = DeviceManager.checkMonitorVersionCompatibility()
                 val sleepMasterCompatibility = DeviceManager.checkSleepMasterVersionCompatibility()
-                val appNeedUpgrade = monitorCompatibility == DeviceManager.PROTOCOL_VERSION_TO_HIGH
+                var appNeedUpgrade = monitorCompatibility == DeviceManager.PROTOCOL_VERSION_TO_HIGH
                         || sleepMasterCompatibility == DeviceManager.PROTOCOL_VERSION_TO_HIGH
                 val monitorNeedUpgrade = monitorCompatibility == DeviceManager.PROTOCOL_VERSION_TO_LOW
-                val sleepMasterNeedUpgrade = sleepMasterCompatibility == DeviceManager.PROTOCOL_VERSION_TO_LOW
-                val deviceNeedUpgrade = monitorNeedUpgrade || sleepMasterNeedUpgrade
+                var sleepMasterNeedUpgrade = sleepMasterCompatibility == DeviceManager.PROTOCOL_VERSION_TO_LOW
+                var deviceNeedUpgrade = monitorNeedUpgrade || sleepMasterNeedUpgrade
 
                 // sync ui
                 vg_sync.isVisible = !appNeedUpgrade && !deviceNeedUpgrade
@@ -266,14 +269,25 @@ class DeviceCardFragment : BaseFragment() {
                         if (isWorkModeOn) resources.getDrawable(R.drawable.bg_sleeper_pa_tv) else null
 
                 // bottom tv
-                tv_bottom_hint.visibility =
-                        if (!device.isSleepMasterConnected() || isWorkModeOn || appNeedUpgrade || deviceNeedUpgrade) View.VISIBLE else View.GONE
-                tv_bottom_hint.text =
-                        getString(when {
-                            appNeedUpgrade -> if (monitorCompatibility == DeviceManager.PROTOCOL_VERSION_TO_HIGH) R.string.device_is_not_ok_app_need_upgrade else R.string.sleep_master_is_not_ok_app_need_upgrade
-                            deviceNeedUpgrade -> if (monitorNeedUpgrade) R.string.device_is_not_ok_device_need_upgrade else R.string.sleep_master_is_not_ok_device_need_upgrade
-                            else -> if (isWorkModeOn) R.string.sleeper_is_working_please_sleep else R.string.monitor_is_connect_please_check_sleepers_connectivity
+                val appOrDeviceNeedUpgrade = appNeedUpgrade || monitorNeedUpgrade || sleepMasterNeedUpgrade
+                tv_bottom_hint.isVisible = (!device.isSleepMasterConnected() || isWorkModeOn) && !appOrDeviceNeedUpgrade
+                tv_bottom_hint.text = getString(if (isWorkModeOn) R.string.sleeper_is_working_please_sleep else R.string.monitor_is_connect_please_check_sleepers_connectivity)
+                vg_bottom_upgrade_hint.isVisible = appOrDeviceNeedUpgrade
+                tv_bottom_upgrade_hint.setText(
+                        when {
+                            appNeedUpgrade -> R.string.app_version_too_low
+                            monitorNeedUpgrade -> R.string.device_version_too_low
+                            sleepMasterNeedUpgrade -> R.string.sleep_master_version_too_low
+                            else -> R.string.device_version_too_low
                         })
+                tv_bottom_upgrade_hint2.setText(if (appNeedUpgrade) R.string.go_to_upgrade_app else R.string.go_to_upgrade_device)
+                tv_bottom_upgrade_hint2.setOnClickListener {
+                    if (appNeedUpgrade) {
+                        UiUtils.openAppInMarket(activity!!)
+                    } else {
+                        ActivityUtils.startActivity(DeviceVersionNoticeActivity::class.java)
+                    }
+                }
 
                 fl_turn_pa_bt_container.isVisible = device.isSleepMasterConnected() && !isWorkModeOn && !appNeedUpgrade && !deviceNeedUpgrade
                 val isTurningOnPa =
