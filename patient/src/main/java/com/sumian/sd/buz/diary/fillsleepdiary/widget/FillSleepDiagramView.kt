@@ -82,7 +82,9 @@ class FillSleepDiagramView(context: Context, attributeSet: AttributeSet) : Frame
         bg_1.setBackgroundColor(
                 ColorCompatUtil.getColor(
                         context,
-                        if (index >= 2) R.color.sleep_status_sleep else R.color.l1_color
+                        if (index >= 2)
+                            if (mNoSleep) R.color.sleep_status_wake else R.color.sleep_status_sleep
+                        else R.color.l1_color
                 )
         )
         bg_2.setBackgroundColor(
