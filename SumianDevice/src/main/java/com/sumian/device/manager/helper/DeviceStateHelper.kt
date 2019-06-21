@@ -61,7 +61,9 @@ object DeviceStateHelper {
                 BleCmd.QUERY_MONITOR_BATTERY, // "44" 监测仪电量
                 BleCmd.QUERY_SLEEP_MASTER_BATTERY, // "45" 速眠仪电量
                 BleCmd.QUERY_SLEEP_MASTER_CONNECT_STATUS, // "4e" 速眠仪的连接状态
-                BleCmd.QUERY_MONITOR_SLEEP_MASTER_WORK_MODE // "61" 同步到的监测仪的所有状态,以及与之绑定的速眠仪的所有状态
+                BleCmd.QUERY_MONITOR_SLEEP_MASTER_WORK_MODE, // "61" 同步到的监测仪的所有状态,以及与之绑定的速眠仪的所有状态
+                BleCmd.QUERY_MONITOR_VERSION, // 50
+                BleCmd.QUERY_SLEEP_MASTER_VERSION // 54
                 -> BleCommunicationController.makeSuccessResponse(hexString)
                 else -> {
                 }
