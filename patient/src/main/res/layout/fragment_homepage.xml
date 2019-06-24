@@ -6,9 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/b1_color_day">
@@ -38,7 +36,7 @@
                         style="@style/text_t3_18"
                         android:textSize="@dimen/font_20"
                         android:textStyle="bold"
-                        tools:text="张三" />
+                        tools:text="首页" />
 
                     <TextView
                         android:id="@+id/tv_home_random_text"
@@ -47,6 +45,7 @@
                         android:ellipsize="end"
                         android:maxLines="2"
                         android:text="@string/homepage_sleep_slogan"
+                        android:visibility="gone"
                         tools:text="LinearLayoutLinearLayoutLinearLayoutLinearLayoutLinearLayoutLinearLayoutLinearLayout" />
                 </LinearLayout>
 
@@ -57,6 +56,7 @@
                     android:background="@color/white"
                     android:scaleType="fitXY"
                     android:src="@drawable/sel_sleep_guide_enter_btn"
+                    android:visibility="gone"
                     tools:ignore="ContentDescription" />
             </LinearLayout>
 
@@ -92,13 +92,57 @@
                 android:id="@+id/cbti_progress_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone" />
+                android:visibility="gone"
+                tools:visibility="visible" />
 
             <com.sumian.sd.buz.sleepertalk.SleeperTalkHomepageView
                 android:id="@+id/sleeper_talk_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp" />
+                android:layout_marginTop="10dp"
+                android:visibility="gone" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/vg_scale_evaluation"
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white">
+
+                <ImageView
+                    android:id="@+id/iv_home_fragment_scale_evaluate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:src="@drawable/img_scale_icon"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    style="@style/text_t1_18"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="36dp"
+                    android:text="@string/scale_evaluation"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@id/iv_home_fragment_scale_evaluate"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    style="@style/text_t3_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginBottom="36dp"
+                    android:text="@string/scale_evaluation"
+                    android:textColor="#475266"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/iv_home_fragment_scale_evaluate" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <include layout="@layout/layout_homepage_fragment_grid_items" />
 
@@ -106,13 +150,6 @@
                 android:id="@+id/sleep_prescription_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp" />
-
-            <fragment
-                android:id="@+id/device_card_view"
-                android:name="com.sumian.sd.buz.device.widget.DeviceCardFragment"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/device_card_view_height"
                 android:layout_marginTop="10dp" />
 
             <Space

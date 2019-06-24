@@ -82,12 +82,14 @@ public class UserInfo implements Parcelable, Serializable, Cloneable {
         sleeper_sn = in.readString();
         career = in.readString();
         education = in.readString();
+        sleep_pills = in.readInt();
         im_id = in.readString();
         im_password = in.readString();
         socialites = in.createTypedArrayList(Social.CREATOR);
         doctor = in.readParcelable(Doctor.class.getClassLoader());
         role = in.readInt();
         hasPassword = in.readByte() != 0;
+        internal_tag = in.createStringArray();
     }
 
     public static final Creator<UserInfo> CREATOR = new Creator<UserInfo>() {
@@ -223,46 +225,6 @@ public class UserInfo implements Parcelable, Serializable, Cloneable {
 
     public boolean isHaveFullUserInfo() {
         return !TextUtils.isEmpty(bmi) && (!TextUtils.isEmpty(gender) && !"secrecy".equals(gender)) && (!TextUtils.isEmpty(birthday) && !"未设置".equals(birthday));
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
-        dest.writeString(mobile);
-        dest.writeString(nickname);
-        dest.writeString(name);
-        dest.writeString(avatar);
-        dest.writeString(area);
-        dest.writeString(gender);
-        dest.writeString(birthday);
-        if (age == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeInt(age);
-        }
-        dest.writeString(height);
-        dest.writeString(weight);
-        dest.writeString(bmi);
-        dest.writeString(leancloud_id);
-        dest.writeInt(doctor_id);
-        dest.writeInt(bound_at);
-        dest.writeString(last_login_at);
-        dest.writeString(device_info);
-        dest.writeString(monitor_sn);
-        dest.writeString(sleeper_sn);
-        dest.writeString(career);
-        dest.writeString(education);
-        dest.writeString(im_id);
-        dest.writeString(im_password);
-        dest.writeTypedList(socialites);
-        dest.writeParcelable(doctor, flags);
-        dest.writeInt(role);
     }
 
     public int getId() {
@@ -549,5 +511,48 @@ public class UserInfo implements Parcelable, Serializable, Cloneable {
 
     public boolean isControlGroup() {
         return researches != null && researches.size() > 0 && researches.get(0).getType() == 1;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(mobile);
+        dest.writeString(nickname);
+        dest.writeString(name);
+        dest.writeString(avatar);
+        dest.writeString(area);
+        dest.writeString(gender);
+        dest.writeString(birthday);
+        if (age == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(age);
+        }
+        dest.writeString(height);
+        dest.writeString(weight);
+        dest.writeString(bmi);
+        dest.writeString(leancloud_id);
+        dest.writeInt(doctor_id);
+        dest.writeInt(bound_at);
+        dest.writeString(last_login_at);
+        dest.writeString(device_info);
+        dest.writeString(monitor_sn);
+        dest.writeString(sleeper_sn);
+        dest.writeString(career);
+        dest.writeString(education);
+        dest.writeInt(sleep_pills);
+        dest.writeString(im_id);
+        dest.writeString(im_password);
+        dest.writeTypedList(socialites);
+        dest.writeParcelable(doctor, flags);
+        dest.writeInt(role);
+        dest.writeByte((byte) (hasPassword ? 1 : 0));
+        dest.writeStringArray(internal_tag);
     }
 }

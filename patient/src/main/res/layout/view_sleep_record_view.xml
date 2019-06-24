@@ -22,6 +22,7 @@
             android:gravity="center_vertical"
             android:paddingStart="50dp"
             android:text="@string/sleep_restriction_hint"
+            android:visibility="gone"
             tools:ignore="RtlSymmetry" />
 
         <LinearLayout

@@ -1,54 +1,34 @@
 package com.sumian.sd.buz.tab
 
-import android.graphics.drawable.Drawable
+import android.annotation.SuppressLint
 import android.text.TextUtils
+import android.view.LayoutInflater
 import android.view.View
-import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import cn.leancloud.chatkit.LCIMManager
+import com.avos.avoscloud.AVInstallation
 import com.blankj.utilcode.util.ActivityUtils
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.RequestOptions
-import com.bumptech.glide.request.target.Target
-import com.qmuiteam.qmui.util.QMUISpanHelper
-import com.sumian.common.base.BaseViewModelFragment
-import com.sumian.common.buz.kefu.KefuManager
+import com.blankj.utilcode.util.FileUtils
+import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.ToastUtils
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.sumian.common.base.BaseFragment
 import com.sumian.common.image.loadImage
-import com.sumian.common.statistic.StatUtil
-import com.sumian.device.manager.DeviceManager
-import com.sumian.device.test.ui.DeviceTestActivity
-import com.sumian.sd.BuildConfig
+import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.buz.account.achievement.MyAchievementActivity
-import com.sumian.sd.buz.account.achievement.bean.AchievementRecord
-import com.sumian.sd.buz.account.achievement.contract.GetAchievementListContract
-import com.sumian.sd.buz.account.achievement.presenter.GetAchievementListPresenter
 import com.sumian.sd.buz.account.bean.UserInfo
+import com.sumian.sd.buz.account.login.SettingPasswordActivity
 import com.sumian.sd.buz.account.userProfile.UserInfoActivity
-import com.sumian.sd.buz.advisory.activity.AdvisoryListActivity
-import com.sumian.sd.buz.coupon.activity.CouponCenterActivity
-import com.sumian.sd.buz.device.devicemanage.DeviceManageActivity
-import com.sumian.sd.buz.diaryevaluation.DiaryEvaluationListActivity
-import com.sumian.sd.buz.notification.NotificationListActivity
 import com.sumian.sd.buz.notification.NotificationViewModel
 import com.sumian.sd.buz.onlinereport.OnlineReportListActivity
-import com.sumian.sd.buz.scale.ScaleListActivity
-import com.sumian.sd.buz.setting.SettingActivity
-import com.sumian.sd.buz.stat.StatConstants
-import com.sumian.sd.buz.tel.activity.TelBookingListActivity
+import com.sumian.sd.buz.setting.remind.RemindSettingActivity
+import com.sumian.sd.buz.version.VersionActivity
 import com.sumian.sd.buz.version.VersionManager
-import com.sumian.sd.common.h5.SleepFileWebActivity
-import com.sumian.sd.common.log.LogManager
-import com.sumian.sd.main.OnEnterListener
-import com.sumian.sd.widget.tips.PatientRecordTips
-import com.sumian.sd.widget.tips.PatientServiceTips
-import com.sumian.sd.wxapi.MiniProgramHelper
+import com.sumian.sd.common.network.callback.BaseSdResponseCallback
+import com.sumian.sd.common.utils.UiUtils
+import com.sumian.sd.widget.dialog.SumianAlertDialog
 import kotlinx.android.synthetic.main.fragment_tab_me.*
 
 /**
@@ -57,9 +37,8 @@ import kotlinx.android.synthetic.main.fragment_tab_me.*
  * desc:
  */
 
-class MeFragment : BaseViewModelFragment<GetAchievementListPresenter>(), View.OnClickListener, PatientServiceTips.OnServiceTipsCallback, PatientRecordTips.OnRecordTipsCallback, OnEnterListener, GetAchievementListContract.View {
-
-    private var mPreRequestTimeMills = 0L
+class MeFragment : BaseFragment() {
+    private var dialog: BottomSheetDialog? = null
 
     private val mNotificationViewModel by lazy {
         ViewModelProviders.of(activity!!)
@@ -70,28 +49,39 @@ class MeFragment : BaseViewModelFragment<GetAchievementListPresenter>(), View.On
         return R.layout.fragment_tab_me
     }
 
-    override fun onInitWidgetBefore() {
-        super.onInitWidgetBefore()
-        mViewModel = GetAchievementListPresenter(this)
-    }
-
     override fun initWidget() {
         super.initWidget()
-        iv_avatar.setOnClickListener(this)
-        tv_nickname.setOnClickListener(this)
-        dv_setting.setOnClickListener(this)
-        iv_notification.setOnClickListener(this)
-        siv_customer_service.setOnClickListener(this)
-        dv_my_metal.setOnClickListener(this)
-        dv_device_manage.setOnClickListener(this)
-        dv_coupon_center.setOnClickListener(this)
-        tips_service.setOnServiceTipsCallback(this)
-        tips_record.setOnRecordTipsCallback(this)
-        dv_device_market.setOnClickListener { MiniProgramHelper.launchYouZanOrWeb(activity!!) }
-        dv_test.isVisible = BuildConfig.DEBUG
-        dv_test.setOnClickListener { ActivityUtils.startActivity(DeviceTestActivity::class.java) }
+        iv_avatar.setOnClickListener { ActivityUtils.startActivity(UserInfoActivity::class.java) }
+        tv_nickname.setOnClickListener { ActivityUtils.startActivity(UserInfoActivity::class.java) }
+        sdv_online_report.setOnClickListener { OnlineReportListActivity.launchForShowAll(this) }
+        sdv_remind.setOnClickListener { RemindSettingActivity.show() }
+        sdv_app_version.setOnClickListener { ActivityUtils.startActivity(VersionActivity::class.java) }
+        sdv_modify_password.setOnClickListener { SettingPasswordActivity.start(AppManager.getAccountViewModel().userInfo!!.hasPassword, null) }
+        sdv_clear_cache.setOnClickListener { showClearCacheDialog() }
+        tv_logout.setOnClickListener { showLogoutDialog() }
+
+        val packageInfo = UiUtils.getPackageInfo(activity)
+        val versionName = packageInfo!!.versionName
+        sdv_app_version.setContent(versionName)
+        VersionManager.queryAppVersion()
+        VersionManager.mAppUpgradeMode.observe(this, Observer {
+            sdv_app_version.showRedDot(it >= VersionManager.UPGRADE_MODE_NORMAL)
+        })
     }
 
+    private fun showClearCacheDialog() {
+        SumianAlertDialog(activity)
+                .hideTopIcon(true)
+                .setTitle(R.string.clear_cache)
+                .setMessage(R.string.clear_cache_hint)
+                .setLeftBtn(R.string.cancel, null)
+                .setRightBtn(R.string.confirm) { v12 ->
+                    val b = FileUtils.deleteAllInDir(activity!!.cacheDir)
+                    LogUtils.d(b)
+                    ToastUtils.showShort(R.string.clear_success)
+                }
+                .show()
+    }
 
     override fun initData() {
         super.initData()
@@ -104,66 +94,21 @@ class MeFragment : BaseViewModelFragment<GetAchievementListPresenter>(), View.On
                 }
             }
         })
-        mNotificationViewModel
-                .unreadCount
-                .observe(this, Observer<Int> { updateNotificationIcon() })
-        LCIMManager.getInstance().unreadCountLiveData.observe(this, Observer<Int> { updateNotificationIcon() })
-
-        mViewModel?.getAchievementList()
-        VersionManager.queryAppVersion()
-        VersionManager.mAppUpgradeMode.observe(this, Observer {
-            dv_setting.showRedDot(it == VersionManager.UPGRADE_MODE_FORCE)
-        })
-    }
-
-    override fun onResume() {
-        super.onResume()
-        val device = DeviceManager.getDevice()
-        var monitorSn: String? = device?.monitorSn
-        if (TextUtils.isEmpty(monitorSn)) {
-            monitorSn = getString(R.string.add_new_device)
-        }
-        dv_device_manage.setContent(monitorSn!!)
-//        LCIMManager.getInstance().updateUnreadConversation()
-    }
-
-    override fun showLoading() {
-        //super.showLoading()
-    }
-
-    override fun dismissLoading() {
-        //super.dismissLoading()
+//        mNotificationViewModel
+//                .unreadCount
+//                .observe(this, Observer<Int> { updateNotificationIcon() })
+//        LCIMManager.getInstance().unreadCountLiveData.observe(this, Observer<Int> { updateNotificationIcon() })
+//        VersionManager.queryAppVersion()
+//        VersionManager.mAppUpgradeMode.observe(this, Observer {
+//            sdv_app_version.showRedDot(it == VersionManager.UPGRADE_MODE_FORCE)
+//        })
     }
 
     private fun updateNotificationIcon() {
         val notificationCount = mNotificationViewModel.unreadCount.value
         val hasNotification = notificationCount != null && notificationCount > 0
         val hasIm = LCIMManager.getInstance().unreadMessageCount > 0
-        iv_notification.isActivated = hasNotification || hasIm
-    }
-
-    override fun onClick(v: View) {
-        when (v.id) {
-            R.id.iv_modify, R.id.iv_avatar, R.id.tv_nickname -> ActivityUtils.startActivity(UserInfoActivity::class.java)
-            R.id.dv_setting -> ActivityUtils.startActivity(SettingActivity::class.java)
-            R.id.iv_notification -> NotificationListActivity.launch(activity!!)
-            R.id.siv_customer_service -> {
-//                UIProvider.getInstance().clearCacheMsg()
-                KefuManager.launchKefuActivity(activity!!)
-            }
-            R.id.dv_my_metal -> {
-                StatUtil.event(StatConstants.click_me_page_my_medal_item)
-                MyAchievementActivity.show()
-            }
-            R.id.dv_device_manage -> {
-
-                LogManager.appendUserOperationLog("点击【设备管理】")
-                ActivityUtils.startActivity(DeviceManageActivity::class.java)
-            }
-            R.id.dv_coupon_center -> CouponCenterActivity.show()
-            else -> {
-            }
-        }
+//        iv_notification.isActivated = hasNotification || hasIm
     }
 
     private fun updateUserProfile(userProfile: UserInfo) {
@@ -172,76 +117,34 @@ class MeFragment : BaseViewModelFragment<GetAchievementListPresenter>(), View.On
         tv_nickname.text = if (TextUtils.isEmpty(nickname)) userProfile.mobile else nickname
     }
 
-    override fun showGraphicService() {
-        AdvisoryListActivity.show()
-    }
-
-    override fun showTelService() {
-        TelBookingListActivity.show()
-    }
-
-    override fun onDiaryEvaluationClick() {
-        ActivityUtils.startActivity(DiaryEvaluationListActivity::class.java)
-    }
-
-    override fun showSleepRecord() {
-        SleepFileWebActivity.show(context!!)
-    }
-
-    override fun showEvaluation() {
-        StatUtil.event(StatConstants.click_me_page_my_scale_icon)
-        ScaleListActivity.launch(1)
-    }
-
-    override fun showOnlineReport() {
-        OnlineReportListActivity.launchForShowAll(this)
-    }
-
-    override fun onEnter(data: String?) {
-        if (isCanRequest()) {
-            mViewModel?.getAchievementList()
+    private fun showLogoutDialog() {
+        if (dialog == null) {
+            dialog = BottomSheetDialog(activity!!)
+            @SuppressLint("InflateParams") val inflate = LayoutInflater.from(activity!!).inflate(R.layout.lay_bottom_sheet_logout, null, false)
+            inflate.findViewById<View>(R.id.tv_logout).setOnClickListener { v ->
+                logout()
+                dialog!!.dismiss()
+            }
+            inflate.findViewById<View>(R.id.tv_cancel).setOnClickListener { v -> dialog!!.dismiss() }
+            dialog!!.setContentView(inflate)
+            dialog!!.setCanceledOnTouchOutside(true)
+        }
+        if (dialog != null && !dialog!!.isShowing) {
+            dialog!!.show()
         }
     }
 
-    override fun onGetAchievementListSuccess(achievementRecordList: List<AchievementRecord>) {
-        invalidImageSpanAndTiming(achievementRecordList)
-    }
+    private fun logout() {
+        val call = AppManager.getSdHttpService().logout(AVInstallation.getCurrentInstallation().installationId)
+        addCall(call)
+        call.enqueue(object : BaseSdResponseCallback<Unit>() {
+            override fun onFailure(errorResponse: ErrorResponse) {
+                ToastUtils.showShort(R.string.logout_failed_please_check_network)
+            }
 
-    override fun onGetAchievementListFailed(error: String) {
-    }
-
-    /**
-     * 超过5分钟再去请求刷新勋章列表
-     * @return Boolean
-     */
-    private fun isCanRequest(): Boolean {
-        return isVisible && (mPreRequestTimeMills == 0L || System.currentTimeMillis() - mPreRequestTimeMills >= 5 * 60 * 60 * 1000L)
-    }
-
-    private fun invalidImageSpanAndTiming(achievementRecordList: List<AchievementRecord>) {
-        mPreRequestTimeMills = System.currentTimeMillis()
-        var imageSpan: CharSequence = ""
-        val tmpAchievementRecordList: List<AchievementRecord>? = if (achievementRecordList.size > 3) {
-            achievementRecordList.subList(0, 3)
-        } else {
-            achievementRecordList
-        }
-        tmpAchievementRecordList?.forEach { achievementRecord ->
-            val options = RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.AUTOMATIC)
-            Glide.with(this).asDrawable().load(achievementRecord.achievement.gainMedalPicture).apply(options).listener(object : RequestListener<Drawable> {
-                override fun onLoadFailed(e: GlideException?, model: Any?, target: com.bumptech.glide.request.target.Target<Drawable>?, isFirstResource: Boolean): Boolean {
-                    return true
-                }
-
-                override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-                    //  bannerView.setImageBitmap(resource)
-                    val text = QMUISpanHelper.generateSideIconText(false, resources.getDimensionPixelOffset(R.dimen.space_5), " ", resource)
-                    imageSpan = TextUtils.concat(imageSpan, text)
-                    dv_my_metal?.setContent(imageSpan)
-                    return true
-                }
-
-            }).preload(resources.getDimensionPixelOffset(R.dimen.space_34), resources.getDimensionPixelOffset(R.dimen.space_34))
-        }
+            override fun onSuccess(response: Unit?) {
+                AppManager.logoutAndLaunchLoginActivity()
+            }
+        })
     }
 }

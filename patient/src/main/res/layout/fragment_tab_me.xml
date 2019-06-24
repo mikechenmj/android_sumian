@@ -6,25 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="66dp"
-        android:background="@color/b3_color"
-        android:paddingTop="22dp">
-
-        <ImageView
-            android:id="@+id/iv_notification"
-            style="@style/NotificationIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/space_44"
-            android:layout_gravity="end|center_vertical"
-            android:layout_marginEnd="@dimen/space_15"
-            android:contentDescription="@null" />
-    </FrameLayout>
-
-    <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/b1_color_day">
@@ -38,15 +20,16 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="145dp"
-                android:layout_gravity="center_horizontal"
+                android:layout_height="210dp"
                 android:background="@color/b3_color"
+                android:gravity="center"
                 android:orientation="vertical">
 
                 <FrameLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center">
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp">
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/iv_avatar"
@@ -80,85 +63,60 @@
 
             </LinearLayout>
 
-            <ImageView
-                android:id="@+id/siv_customer_service"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:contentDescription="@null"
-                android:foreground="@drawable/bg_material_ripple"
-                android:scaleType="fitXY"
-                android:src="@drawable/ic_info_customerservice"
-                android:visibility="gone" />
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/space_10" />
-
-            <com.sumian.sd.widget.tips.PatientServiceTips
-                android:id="@+id/tips_service"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/space_10" />
-
-            <com.sumian.sd.widget.tips.PatientRecordTips
-                android:id="@+id/tips_record"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/space_10" />
 
             <com.sumian.sd.widget.divider.SettingDividerView
-                android:id="@+id/dv_test"
+                android:id="@+id/sdv_online_report"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:divider_line_visible="visible"
-                app:type_desc="测试"
-                app:type_icon="@drawable/ic_info_icon_set" />
+                app:type_desc="@string/electric_report" />
 
             <com.sumian.sd.widget.divider.SettingDividerView
-                android:id="@+id/dv_my_metal"
+                android:id="@+id/sdv_remind"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:divider_line_visible="visible"
-                app:type_desc="@string/my_metal"
-                app:type_icon="@drawable/ic_info_medal" />
+                app:type_desc="@string/remind_setting" />
 
             <com.sumian.sd.widget.divider.SettingDividerView
-                android:id="@+id/dv_device_manage"
+                android:id="@+id/sdv_app_version"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:divider_line_visible="visible"
-                app:type_desc="@string/device_manage"
-                app:type_icon="@drawable/ic_info_equipment" />
+                app:type_desc="@string/current_app_version" />
 
             <com.sumian.sd.widget.divider.SettingDividerView
-                android:id="@+id/dv_device_market"
+                android:id="@+id/sdv_modify_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:divider_line_visible="visible"
-                app:type_desc="@string/device_market"
-                app:type_icon="@drawable/info_icon_mall" />
+                app:type_desc="@string/set_password" />
 
             <com.sumian.sd.widget.divider.SettingDividerView
-                android:id="@+id/dv_coupon_center"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:divider_line_visible="visible"
-                app:type_desc="@string/coupon_center"
-                app:type_icon="@drawable/ic_info_card" />
-
-            <com.sumian.sd.widget.divider.SettingDividerView
-                android:id="@+id/dv_setting"
+                android:id="@+id/sdv_clear_cache"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:divider_line_visible="gone"
-                app:type_desc="@string/setting"
-                app:type_icon="@mipmap/ic_info_icon_set" />
+                app:type_desc="@string/clear_cache" />
+
+            <TextView
+                android:id="@+id/tv_logout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_64"
+                android:layout_marginTop="@dimen/space_10"
+                android:background="@color/b2_color"
+                android:clickable="true"
+                android:elevation="0dp"
+                android:focusable="true"
+                android:gravity="center"
+                android:outlineProvider="none"
+                android:text="@string/logout"
+                android:textColor="@color/t4_color"
+                android:textSize="@dimen/font_16"
+                android:translationZ="0dp" />
 
             <Space
                 android:layout_width="0dp"

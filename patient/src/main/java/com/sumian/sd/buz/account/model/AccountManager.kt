@@ -20,7 +20,7 @@ import com.sumian.sd.buz.doctor.bean.Doctor
 object AccountManager {
     private val SP_KEY_TOKEN = "token"
     private val SP_KEY_USER_INFO = "user_info"
-    private val mTokenLiveData = MutableLiveData<Token>()
+    val mTokenLiveData = MutableLiveData<Token>()
     private val mUserInfoLiveData = MutableLiveData<UserInfo>()
     private val mTokenChangeListeners = ArrayList<TokenChangeListener>()
 

@@ -103,7 +103,7 @@ interface SdApi {
     @POST("captcha")
     fun getCaptcha(@Field("mobile") mobile: String): Call<Unit>
 
-    @GET("user/profile")
+    @GET("user/profile?include=researches")
     fun getUserProfile(): Call<UserInfo>
 
     @FormUrlEncoded

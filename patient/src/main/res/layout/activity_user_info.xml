@@ -30,10 +30,10 @@
                 android:foreground="@drawable/bg_material_ripple"
                 android:gravity="center"
                 android:orientation="horizontal"
-                android:paddingBottom="@dimen/space_20"
                 android:paddingLeft="@dimen/space_20"
-                android:paddingRight="@dimen/space_12"
                 android:paddingTop="@dimen/space_20"
+                android:paddingRight="@dimen/space_12"
+                android:paddingBottom="@dimen/space_20"
                 tools:ignore="RtlHardcoded">
 
                 <TextView
@@ -62,9 +62,9 @@
                     android:layout_width="@dimen/space_32"
                     android:layout_height="@dimen/space_32"
                     android:contentDescription="@null"
-                    android:paddingBottom="@dimen/space_8"
                     android:paddingLeft="@dimen/space_8"
                     android:paddingTop="@dimen/space_8"
+                    android:paddingBottom="@dimen/space_8"
                     app:srcCompat="@mipmap/ic_info_icon_enter"
                     tools:ignore="RtlHardcoded,RtlSymmetry" />
             </LinearLayout>
@@ -171,14 +171,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/space_50"
                 android:paddingLeft="@dimen/space_20"
-                android:paddingRight="@dimen/space_20"
                 android:paddingTop="@dimen/space_10"
+                android:paddingRight="@dimen/space_20"
                 android:text="@string/extra_user_info" />
 
             <com.sumian.sd.widget.divider.SettingDividerView
                 android:id="@+id/dv_mobile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 app:divider_line_visible="visible"
                 app:divider_more_visible="gone"
                 app:type_desc="@string/register_mobile"
@@ -188,6 +189,7 @@
                 android:id="@+id/dv_wechat_bind"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 app:divider_line_visible="visible"
                 app:divider_more_visible="invisible"
                 app:show_switch="true"

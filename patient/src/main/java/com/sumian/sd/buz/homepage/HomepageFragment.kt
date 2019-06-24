@@ -3,7 +3,7 @@ package com.sumian.sd.buz.homepage
 import android.app.Activity
 import android.content.Intent
 import android.view.View
-import androidx.lifecycle.Observer
+import androidx.core.view.isVisible
 import com.blankj.utilcode.util.*
 import com.sumian.common.base.BaseViewModel
 import com.sumian.common.base.BaseViewModelFragment
@@ -18,7 +18,6 @@ import com.sumian.sd.buz.account.achievement.MyAchievementShareActivity
 import com.sumian.sd.buz.account.achievement.bean.LastAchievementData
 import com.sumian.sd.buz.account.achievement.contract.LastAchievementContract
 import com.sumian.sd.buz.account.achievement.presenter.LastAchievementPresenter
-import com.sumian.sd.buz.account.bean.Token
 import com.sumian.sd.buz.account.userProfile.UserInfoActivity
 import com.sumian.sd.buz.anxiousandfaith.AnxiousAndFaithActivity
 import com.sumian.sd.buz.cbti.activity.CBTIIntroductionActivity
@@ -99,6 +98,10 @@ HomepageFragment : BaseViewModelFragment<BaseViewModel>(), OnEnterListener, Last
             ScaleListActivity.launch()
             StatUtil.event(StatConstants.click_home_page_scale_icon)
         }
+        vg_scale_evaluation.setOnClickListener {
+            ScaleListActivity.launch()
+            StatUtil.event(StatConstants.click_home_page_scale_icon)
+        }
         sleep_prescription_view.setOnClickListener { SleepPrescriptionActivity.launch() }
         tv_anxious_and_faith.setOnClickListener {
             StatUtil.event(StatConstants.click_home_page_anxiety_and_faith)
@@ -108,6 +111,8 @@ HomepageFragment : BaseViewModelFragment<BaseViewModel>(), OnEnterListener, Last
             SleepGuideActivity.start()
             StatUtil.event(StatConstants.click_home_page_sleep_guide)
         }
+        vg_home_grid.isVisible = !AppManager.getAccountViewModel().isControlGroup()
+        vg_scale_evaluation.isVisible = AppManager.getAccountViewModel().isControlGroup()
     }
 
     private fun showSleepGuideDialogIfNeed() {
@@ -125,10 +130,10 @@ HomepageFragment : BaseViewModelFragment<BaseViewModel>(), OnEnterListener, Last
     }
 
     private fun initUserInfo() {
-        AppManager.getAccountViewModel().mTokenLiveData.observe(this, Observer<Token> { t ->
-            val userProfile = t?.user ?: return@Observer
-            tv_name.text = userProfile.nameOrNickname
-        })
+//        AppManager.getAccountViewModel().mTokenLiveData.observe(this, Observer<Token> { t ->
+//            val userProfile = t?.user ?: return@Observer
+//            tv_name.text = userProfile.nameOrNickname
+//        })
     }
 
     override fun onStart() {
