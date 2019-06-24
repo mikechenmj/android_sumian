@@ -34,7 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/space_20"
-        app:set_hint="@string/input_phone_hint"
+        app:set_hint="@string/input_account_hint"
         app:set_input_type="number"
         app:set_validation_regex="@string/phone_number_validation_regex" />
 

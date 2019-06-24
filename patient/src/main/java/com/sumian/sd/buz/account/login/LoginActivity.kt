@@ -100,7 +100,8 @@ class LoginActivity : BaseViewModelActivity<LoginPresenter>(), LoginContract.Vie
                 ll_password_et_container.isActivated = true
                 return
             }
-            mViewModel!!.loginByPassword(phone, password)
+            mViewModel!!.loginByPassword("1234567891", "123456") // todo remove
+//            mViewModel!!.loginByPassword(phone, password)
         }
     }
 

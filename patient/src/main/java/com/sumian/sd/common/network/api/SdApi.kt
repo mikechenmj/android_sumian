@@ -93,8 +93,8 @@ interface SdApi {
     fun notifyRegisterImServer(@Path("userId") userId: Int): Call<KeFuMessage>
 
     @FormUrlEncoded
-    @POST("authorizations/password")
-    fun loginByPassword(@Field("mobile") mobile: String, @Field("password") password: String): Call<Token>
+    @POST("authorizations/account")
+    fun loginByPassword(@Field("account") account: String, @Field("password") password: String): Call<Token>
 
     @DELETE("authorizations/current")
     fun logout(@Query("device_token") deviceToken: String): Call<Unit>
@@ -294,7 +294,7 @@ interface SdApi {
      * courses 课程
      * courses.exercise 课后练习
      */
-    @GET("cbti-chapters")
+    @GET("research/cbti-chapters")
     fun getCbtiChapters(@Query("include") include: String? = null): Call<GetCbtiChaptersResponse>
 
     //cbti
@@ -302,26 +302,26 @@ interface SdApi {
     /**
      * 获取该章节下的所有课程
      */
-    @GET("cbti-chapter/{chapter-id}/courses")
+    @GET("research/cbti-chapter/{chapter-id}/courses")
     fun getCBTICourseWeekPart(@Path("chapter-id") id: Int): Call<CBTIDataResponse<Course>>
 
     /**
      * 获取该章节下的所有练习
      */
-    @GET("cbti-chapter/{chapter-id}/exercises")
+    @GET("research/cbti-chapter/{chapter-id}/exercises")
     fun getCBTIExerciseWeekPart(@Path("chapter-id") id: Int): Call<CBTIDataResponse<Exercise>>
 
     /**
      * 获取该章节下的单独课时详情信息,包括视频播放权限,及相关信息
      */
-    @GET("cbti-courses/{id}")
+    @GET("research/cbti-courses/{id}")
     fun getCBTIPLayAuth(@Path("id") id: Int): Call<CoursePlayAuth>
 
     /**
      * 上传当前课时的视频播放 log 日志
      */
     @FormUrlEncoded
-    @POST("cbti-course/{id}/logs")
+    @POST("research/cbti-course/{id}/logs")
     fun uploadCBTICourseLogs(@Path("id") id: Int, @Field("video_id") videoId: String, @Field("video_progress") video_progress: String, @Field("end_point") end_point: Int): Call<CoursePlayLog>
 
     /**
@@ -329,14 +329,14 @@ interface SdApi {
      * ps：观看时长，需要更新观看时长的时候才传这个参数，有这个参数的时候，后台会增加一次观看次数，并累加观看时长
      */
     @FormUrlEncoded
-    @POST("cbti-course/{id}/logs")
+    @POST("research/cbti-course/{id}/logs")
     fun uploadCBTICourseWatchLengthLogs(@Path("id") id: Int, @Field("video_id") videoId: String, @Field("video_progress") video_progress: String, @Field("end_point") end_point: Int, @Field("watch_length") watchLength: Int): Call<CoursePlayLog>
 
     /**
      * 上传视频问卷
      */
     @FormUrlEncoded
-    @POST("cbti-course/{id}/questionnaires")
+    @POST("research/cbti-course/{id}/questionnaires")
     fun uploadCBTIVideoQuestionnaires(@Path("id") id: Int, @Field("data") json: String): Call<CoursePlayAuth>
 
     /**

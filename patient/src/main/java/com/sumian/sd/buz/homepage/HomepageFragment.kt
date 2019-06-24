@@ -125,7 +125,7 @@ HomepageFragment : BaseViewModelFragment<BaseViewModel>(), OnEnterListener, Last
     }
 
     private fun initUserInfo() {
-        AppManager.getAccountViewModel().liveDataToken.observe(this, Observer<Token> { t ->
+        AppManager.getAccountViewModel().mTokenLiveData.observe(this, Observer<Token> { t ->
             val userProfile = t?.user ?: return@Observer
             tv_name.text = userProfile.nameOrNickname
         })

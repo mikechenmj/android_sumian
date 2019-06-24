@@ -466,6 +466,7 @@
     <string name="hello_comment">您好，</string>
     <string name="welcome_use_this_app_please_login">欢迎使用速眠医生，请登录</string>
     <string name="input_phone_hint">请输入手机号码</string>
+    <string name="input_account_hint">请输入账号</string>
     <string name="input_password_hint">请输入密码</string>
     <string name="login_with_space_inside">登 录</string>
     <string name="app_user_agreement">速眠医生用户协议</string>
@@ -485,7 +486,7 @@
     <string name="captcha_invalid_toast">验证码错误，请重新输入</string>
     <string name="password_invalid_toast">请输入%d～%d位密码</string>
     <string name="password_not_the_same">两次密码不一致</string>
-    <string name="phone_number_validation_regex" tools:ignore="TypographyDashes">1([0-9]{10})</string>
+    <string name="phone_number_validation_regex" tools:ignore="TypographyDashes">.*</string>
     <string name="captcha_validation_regex">\\d{6}</string>
     <string name="password_validation_regex">.{6,16}</string>
     <string name="feedback_hint">请详细描述您的意见或建议，我们将及时处理并给予反馈，速眠医生致力于为您提供专业贴心的服务。</string>

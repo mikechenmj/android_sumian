@@ -19,7 +19,7 @@ object SdLogManager : CommonLogManager() {
     private var userId = "0"
 
     override fun observeUserInfo() {
-        AppManager.getAccountViewModel().liveDataToken.observeForever { t ->
+        AppManager.getAccountViewModel().mTokenLiveData.observeForever { t ->
             run {
                 mobile = t?.user?.mobile ?: ""
                 userId = t?.user?.id.toString()

@@ -4,6 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.SerializedName;
 import com.sumian.sd.R;
 import com.sumian.sd.app.App;
@@ -11,8 +13,6 @@ import com.sumian.sd.buz.doctor.bean.Doctor;
 
 import java.io.Serializable;
 import java.util.List;
-
-import androidx.annotation.NonNull;
 
 /**
  * Created by jzz
@@ -54,7 +54,7 @@ public class UserInfo implements Parcelable, Serializable, Cloneable {
     @SerializedName("set_password")
     public boolean hasPassword;
     public String[] internal_tag;
-    public boolean isControlGroup = false;
+    public List<Research> researches = null;
 
     protected UserInfo(Parcel in) {
         id = in.readInt();
@@ -545,5 +545,9 @@ public class UserInfo implements Parcelable, Serializable, Cloneable {
             }
         }
         return false;
+    }
+
+    public boolean isControlGroup() {
+        return researches != null && researches.size() > 0 && researches.get(0).getType() == 1;
     }
 }
