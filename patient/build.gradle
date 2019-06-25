@@ -88,7 +88,6 @@ android {
             //设置支持的SO库架构
             abiFilters 'armeabi-v7a'
         }
-        resConfigs "zh"//,"en"
         // tencent statics
         manifestPlaceholders = [
                 MTA_APPKEY : appProperties['TENCENT_STATIC_APP_ID_OFFICIAL'],

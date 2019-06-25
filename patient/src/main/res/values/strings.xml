@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!--<string name="app_name">Sleep_Doctor</string>-->
 
     <!--main tab-->
@@ -44,7 +44,7 @@
     <string name="pay">支付</string>
     <string name="pay_money">支付金额</string>
     <string name="yuan">元</string>
-    <string name="one">1</string>
+    <string name="one" translatable="false">1</string>
     <string name="wechat_pay">微信支付</string>
     <string name="alipay">支付宝支付</string>
     <string name="avatar">头像</string>

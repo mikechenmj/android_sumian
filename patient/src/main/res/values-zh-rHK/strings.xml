@@ -1,0 +1,890 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!--<string name="app_name">Sleep_Doctor</string>-->
+
+    <!--main tab-->
+    <string name="tab_record">記錄</string>
+    <string name="tab_homepage">首頁</string>
+    <string name="tab_doctor">醫生</string>
+    <string name="tab_me">我的</string>
+    <string name="tab_group">群組</string>
+
+    <!--user info-->
+    <string name="none_nickname">匿名</string>
+    <string name="user_info_center">個人信息</string>
+
+    <!--user account-->
+    <string name="send_captcha">發送驗證碼</string>
+
+    <!--network error-->
+    <string name="improve_user_profile_one_part_one">你好，很高興認識你。</string>
+    <string name="improve_user_profile_one_part_two">請問怎麽稱呼?</string>
+    <string name="jump">跳過</string>
+    <string name="improve_user_profile_one">完善信息1/2</string>
+    <string name="next_step">下一步</string>
+    <string name="nickname">昵稱</string>
+    <string name="input_nickname">請輸入昵稱</string>
+    <string name="improve_user_profile_two">完善信息2/2</string>
+    <string name="improve_user_profile_two_part_one">你的真實姓名是?</string>
+    <string name="improve_user_profile_two_part_two">醫生可以通過真實姓名匹配你的線下就診記錄，能更好的解答你的問題哦。</string>
+    <string name="real_name">真實姓名</string>
+    <string name="input_real_name">請輸入真實姓名</string>
+    <string name="warn_real_name">真實姓名只有醫生才能看到</string>
+    <string name="complete">完成</string>
+
+    <string name="scan_qr_code">掃描二維碼</string>
+    <string name="scan_qr_code_warn">掃描二維碼，需要授予相機權限，是否授予?</string>
+    <string name="scan_qr_code_denied">掃描二維碼，授予相機權限失敗，請檢查該權限是否正確授予，並授予</string>
+    <string name="setting">設置</string>
+    <string name="martian">火星人</string>
+    <string name="current_app_version">應用版本</string>
+    <string name="about_us">關於我們</string>
+    <string name="logout">退出登錄</string>
+    <string name="zero_money">0.00</string>
+    <string name="re_scan">重新搜索</string>
+    <string name="pay">支付</string>
+    <string name="pay_money">支付金額</string>
+    <string name="yuan">元</string>
+    <string name="one">1</string>
+    <string name="wechat_pay">微信支付</string>
+    <string name="alipay">支付寶支付</string>
+    <string name="avatar">頭像</string>
+    <string name="register_mobile">註冊手機</string>
+    <string name="take_photo">拍照</string>
+    <string name="sd_select_photo_from_gallery">從手機相冊選擇</string>
+    <string name="cancel">取消</string>
+
+    <string name="pay_success">支付成功</string>
+    <string name="pay_failed">支付失敗</string>
+    <string name="pay_cancel">支付取消</string>
+    <string name="pay_unknown">未知錯誤，支付失敗</string>
+    <string name="pay_invalid">支付異常，未找到支付app</string>
+    <string name="create_order_success">支付中，請稍後</string>
+    <string name="join_group">進入群組</string>
+    <string name="re_pay">重新支付</string>
+    <string name="back">返回</string>
+    <string name="repay">重新支付</string>
+
+    <string name="str_request_camera_message">請求獲取相機權限</string>
+    <string name="modify_nickname">修改昵稱</string>
+    <string name="error_nickname">昵稱太簡單了，不容易讓人記住哦</string>
+    <string name="name_error">真實姓名太長或太短，不容易讓人記住哦</string>
+    <string name="wechat_login">微信登錄</string>
+
+    <!--error  view-->
+    <string name="scan_2_bind_doctor">掃碼綁定醫生</string>
+    <string name="scan_2_doctor_desc">將醫生二維碼放入框內，可自動掃描</string>
+    <string name="opening_wechat">正在打開微信中…</string>
+    <string name="no_have_wechat">手機上未安裝微信客戶端</string>
+    <string name="confirm">確定</string>
+    <!--doctor module-->
+
+    <!-- common -->
+    <string name="bind">綁定</string>
+    <string name="unbind">解綁</string>
+    <string name="not_bind_yet">未綁定</string>
+
+    <!-- weekday-->
+    <string name="sun">日</string>
+    <string name="mon">一</string>
+    <string name="tue">二</string>
+    <string name="wed">三</string>
+    <string name="thu">四</string>
+    <string name="fri">五</string>
+    <string name="sat">六</string>
+    <string name="return_to_today">回到今天</string>
+    <string name="return_to_this_week">回到本周</string>
+    <string name="sleep_record">睡眠記錄</string>
+    <string name="sleep_diary">睡眠日記</string>
+    <string name="refill">重填</string>
+    <string name="record_sleep_duration">睡眠時長</string>
+    <string name="fall_asleep_duration">入睡時長</string>
+    <string name="doctor_advise">醫生建議</string>
+    <string name="error">Error</string>
+    <string name="empty_response">Empty_response</string>
+    <string name="taken_pills">服用藥物</string>
+    <string name="no_sleep_record_hint">保持良好的記錄睡眠日記的習慣，有助於睡眠醫生分析您的睡眠情況！</string>
+    <string name="go_record">去記錄</string>
+    <string name="no_record_yet">暫無記錄</string>
+    <string name="percent_mart">%</string>
+    <string name="sleep_efficient">睡眠效率</string>
+    <string name="do_not_eat_pills">未服藥</string>
+    <string name="scale_fill_date">填寫日期：yyyy.MM.dd</string>
+    <string name="no_doctor_evaluation_hint">醫生建議尚未更新，請耐心等待，更新後，我們會在消息中心通知您查看</string>
+    <string name="extra_user_info">以上個人信息僅供醫生參考，不予公開。</string>
+    <string name="logout_failed_please_check_network">退出登錄失敗，請檢查網絡</string>
+    <string name="operation_warning">操作警告</string>
+    <string name="operation_success">操作成功</string>
+    <string name="operation_fail">操作失敗</string>
+    <string name="system_maintain">系統維護</string>
+    <string name="system_maintain_desc">系統正在維護中，請稍後重試</string>
+    <string name="today_no_record">今日暫無記錄</string>
+    <string name="today_no_record_hint">您今天還沒有填寫睡眠日記</string>
+    <string name="finished">已完成</string>
+    <string name="cbti_ing">CBTI認知行為治療進行中</string>
+    <string name="cbti_ing_describe">建議在開課當天完成本周課程學習，自完成之日起7天後開放下階段課程。</string>
+    <string name="cbti_ing_all_finished_desc">恭喜你完成CBTI課程！希望你能繼續保持良好的睡眠衛生習慣，早日告別失眠。</string>
+    <string name="current_progress_colon">當前進度：</string>
+    <string name="enter_and_learn">進入學習</string>
+    <string name="my_sleep_prescription">我的睡眠處方</string>
+    <string name="my_sleep_prescription_desc">解讀睡眠日記，定制睡眠處方</string>
+    <string name="scale_evaluation">量表評估</string>
+    <string name="sleep_health">睡眠衛生</string>
+    <string name="homepage_sleep_slogan">好的睡眠離不開您一點一滴的努力</string>
+    <string name="my_target">我的目標</string>
+    <string name="sleep_time">就寢時間</string>
+    <string name="getUpTime">起床時間</string>
+    <string name="on_bed_duration">臥床時長</string>
+    <string name="sleep_duration">睡眠時長</string>
+    <string name="night_wake_up_duration">夜醒時長</string>
+
+    <string name="empty_msg_center_msg">沒有消息提醒</string>
+    <string name="empty_msg_center_desc"><b>您收到醫生回復、建議或報告更新，</b>都會在這裏收到消息提醒</string>
+
+    <string name="empty_report_msg">暫無電子報告</string>
+
+    <string name="empty_evaluation_msg">暫無測評記錄</string>
+    <string name="empty_evaluation_desc">了解您的睡眠健康及心理狀況</string>
+
+    <string name="empty_404_msg">很抱歉！</string>
+    <string name="empty_404_desc">您要訪問的頁面不存在</string>
+
+    <string name="empty_network_error_msg">網絡連接異常</string>
+    <string name="empty_network_error_desc">請查看網絡設置或稍後重試</string>
+
+    <string name="emtpy_advisory_msg">暫無相關記錄</string>
+    <string name="emtpy_advisory_desc">綁定醫生後，可向主治醫生咨詢</string>
+
+    <string name="empty_coupon_msg">暫無兌換記錄</string>
+    <string name="empty_coupon_desc">使用兌換碼後，可在此查看兌換記錄</string>
+
+    <!--doctor  service-->
+    <string name="bind_doctor">綁定醫生</string>
+    <string name="bind_other_doctor_state">"您已綁定了其他醫生，如需換綁請聯系客服"</string>
+    <string name="doctor_service">醫生服務</string>
+    <string name="doctor_details_label">詳細信息</string>
+
+    <string name="ask_questions">去提問</string>
+    <string name="buy_count">購買數量</string>
+
+    <!-- advisory -->
+    <string name="unused">未使用</string>
+    <string name="used">已使用</string>
+    <string name="my_advisory">我的咨詢</string>
+
+    <string name="waiting_for_reply">待回復</string>
+    <string name="closed">已關閉</string>
+    <string name="first_question">第一次提問</string>
+    <string name="second_question">第二次提問</string>
+    <string name="third_question">第三次提問</string>
+    <string name="view_the_record">查看電子報告</string>
+    <string name="sleep_doctor">睡眠醫生</string>
+    <string name="submit">提交</string>
+    <string name="input_question_hint">請描述您的年齡、性別、且詳細描述您的癥狀及就診經歷，便於醫生準確分析，我們會保證您的隱私安全。</string>
+    <string name="select_report">選擇報告</string>
+    <string name="take_picture">您上傳的附件僅對您的醫生可見，最多可上傳9張</string>
+    <string name="more_than_ten_size">最少要10個字</string>
+    <string name="continue_ask_question">繼續咨詢</string>
+    <string name="gender">性別</string>
+    <string name="none_edit">未填寫</string>
+    <string name="birthday">出生日期</string>
+    <string name="height">身高</string>
+    <string name="weight">體重</string>
+    <string name="edu_level">教育程度</string>
+    <string name="career">職業</string>
+    <string name="is_using_sleep_pills">當前是否服用促進睡眠類藥物？</string>
+    <string name="input_career_hint">請填寫您所從事的職業</string>
+    <string name="male">男</string>
+    <string name="female">女</string>
+    <string name="sure">確定</string>
+    <string name="lesson_progress_title">課程進度</string>
+    <string name="course">課程</string>
+    <string name="practice">練習</string>
+    <string name="review">復習</string>
+    <string name="message_board">留言</string>
+    <string name="learn">學習</string>
+    <string name="lesson_practice">課程練習</string>
+    <string name="lesson_list">課程表</string>
+    <string name="the_week_lesson_summary">本周總結</string>
+    <string name="lesson_summary">課程總結</string>
+    <string name="lesson_review_last_week">上周回顧</string>
+    <string name="see_lesson_2_unlock">觀看課程後解鎖</string>
+    <string name="finished_pre_lesson_2_unlock">完成上節課程後解鎖</string>
+
+    <!--version-->
+    <string name="none_market">"您的手機沒有安裝應用市場!"</string>
+    <string name="soft_upgrade">應用版本</string>
+    <string name="version_upgrade">版本更新</string>
+    <string name="current_version">當前版本號:</string>
+    <string name="new_version">最新版本號:</string>
+    <string name="go_to_experience">立即體驗</string>
+    <string name="version_upgrade_title">新版本更新啦～</string>
+    <string name="this_is_last_version">當前已是最新版本</string>
+    <string name="have_a_new_version">有新版本，請立即體驗吧</string>
+    <string name="force_upgrade_version">當前版本太低，請到應用市場升級後再使用</string>
+    <string name="practice_dialog_title">下節課程待開放</string>
+    <string name="good">好的</string>
+
+    <!-- record -->
+    <string name="open_notification">開啟通知</string>
+    <string name="open_notification_and_receive_doctor_response">開啟通知，及時獲取醫生回復</string>
+    <string name="record_weekly_report">周報告</string>
+
+    <!-- me -->
+    <string name="my_evaluation">量表評估</string>
+    <string name="electric_report">電子報告</string>
+    <string name="wechat_bind">微信綁定</string>
+    <string name="unbind_success">解綁成功</string>
+    <string name="bind_wechat_title">是否綁定微信？</string>
+    <string name="unbind_wechat_title">確定解綁微信？</string>
+    <string name="bind_wechat_message">綁定後，可使用微信賬號登錄睡眠醫生</string>
+    <string name="unbind_wechat_message">解綁後，你將無法使用微信賬號登錄</string>
+    <string name="me_my_sleep_file">睡眠檔案</string>
+
+    <!-- online report -->
+    <string name="online_report_list_empty_title">暫無測評記錄</string>
+    <string name="online_report_list_empty_desc">了解您的睡眠健康及心理狀況</string>
+    <string name="you_can_select_9_reports_at_most_hint">最多只能選擇9份報告</string>
+
+    <!-- notification -->
+    <string name="notification_center">消息中心</string>
+    <string name="all_read">全部已讀</string>
+    <string name="go_open">去開啟</string>
+    <string name="open_notification_push">開啟消息推送通知</string>
+    <string name="open_notification_push_hint">第一時間接收消息更新通知</string>
+    <string name="notification_list_empty_title">沒有消息提醒</string>
+    <string name="notification_list_empty_desc">您收到醫生回復、建議或報告更新，\n都會在這裏收到消息提醒</string>
+
+    <!-- scale -->
+    <string name="scale_scale_not_finish_yet_hint">您還未進行該評測，點擊開始測評</string>
+    <string name="no_data_hint">這裏空空如也~</string>
+    <string name="refund_success_notification">退款成功通知</string>
+    <string name="loading_dot">Loading&#8230;</string>
+
+    <!-- order -->
+    <string name="refund_hint">請以原賬戶接受退款成功消息為準，如有疑問，請致電：<u>400-618-1318</u>向客服咨詢</string>
+    <string name="refund_amount">退款金額</string>
+    <string name="refund_way">退款方式：%s</string>
+    <string name="refund_time">退款原因：%s</string>
+    <string name="refund_reason">退款時間：%s</string>
+    <string name="refund_detail">退款詳情</string>
+    <string name="yuan_">￥%s</string>
+    <string name="score">分</string>
+    <string name="already_finish">已完成</string>
+    <string name="bind_canceled">綁定取消</string>
+
+
+    <!-- HW -->
+    <!--device-->
+
+    <string name="monitor">監測儀</string>
+    <string name="speed_sleeper">速眠儀</string>
+    <string name="none_connected_state_hint">未連接</string>
+    <string name="connected_state_hint">已連接</string>
+
+    <string name="request_permission_hint">當前 App 未獲取藍牙權限，是否獲取?</string>
+    <string name="cancel_hint">取消</string>
+
+    <!--account-->
+    <string name="input_captcha_hint">請輸入驗證碼</string>
+    <!--<string name="bind">綁定</string>-->
+
+    <string name="user_none_default_hint">未設置</string>
+
+    <string name="gender_male_hint">男</string>
+    <string name="gender_female_hint">女</string>
+    <string name="gender_secrecy_hint">保密</string>
+
+    <!--error-->
+    <!--<string name="error_network_hint">網絡不給力,請檢查網絡設置&#8230;</string>-->
+    <!--<string name="error_request_failed_hint">網絡請求失敗,請重試&#8230;</string>-->
+    <!--<string name="error_token_past_hint">token已失效,請重新登錄</string>-->
+    <!--<string name="ok_captcha_hint">驗證碼已發送成功,請註意查收</string>-->
+    <!--<string name="error_captcha_failed_hint">驗證碼獲取失敗,請60s後重新獲取</string>-->
+
+    <!--me-->
+    <string name="avatar_hint">頭像</string>
+    <!--<string name="user_info_center">個人信息</string>-->
+    <string name="firmware_update_notice_hint">版本更新</string>
+
+    <!--sleep-->
+
+    <string name="week_sleep_average_duration">日均睡眠時長</string>
+    <string name="week_sleep_deep_average_duration">日均深睡時長</string>
+    <string name="week_sleep_light_average_duration">日均淺睡時長</string>
+    <string name="week_sleep_sober_average_duration">日均清醒時長</string>
+
+    <string name="sleep_deep_hint">深睡</string>
+    <string name="sleep_light_hint">淺睡</string>
+    <string name="sleep_sober_hint">清醒</string>
+
+    <string name="deep_sleep_duration_hint">深睡時長</string>
+    <string name="light_sleep_duration_hint">淺睡時長</string>
+    <string name="compare_week_hint">同比上周</string>
+    <string name="sleep_advice_hint">影響因素及建議</string>
+    <string name="sleep_data_less_hint">睡眠數據不全</string>
+    <string name="sleep_note_advice_hint">【建議】</string>
+    <string name="sleep_advice_explain">【解釋】</string>
+    <string name="sleep_advice_element">【因素】</string>
+
+    <!--reminder-->
+
+    <string name="doctor_info">醫生簡介</string>
+
+    <!--setting-->
+    <string name="set_pwd">設置密碼</string>
+    <string name="setting_set_old_pwd_hint">請輸入舊密碼</string>
+
+    <string name="change_bind">更換綁定</string>
+    <string name="logout_hint">退出後不會刪除任何歷史數據，下次登錄依然可以使用此賬號</string>
+
+    <string name="setting_send_msg_hint">在線客服</string>
+    <string name="nickname_hint">昵稱</string>
+    <string name="new_nickname_hint">請輸入您的新昵稱</string>
+    <string name="new_nickname_error_hint">您的新昵稱不合法,請重新輸入</string>
+    <string name="new_nickname_less_error">您新昵稱少於1個字符</string>
+    <string name="new_nickname_too_much_more_error">昵稱不能超過16個字符</string>
+    <string name="modify_user_info_success">您的用戶信息已修改成功</string>
+
+    <!--firmware-->
+    <string name="firmware_note_hint">版本已是最新版本</string>
+    <string name="firmware_downloading_hint">固件正在拼命下載中</string>
+    <string name="firmware_upgrade_ing_hint">當前設備固件正在升級中,請勿操作手機和設備</string>
+    <string name="firmware_upgrade_success_hint">監測儀固件升級成功,設備正在重啟中,請切換到設備中心重新連接即可</string>
+    <string name="sleeper_firmware_upgrade_success_hint">速眠儀固件升級成功,請重新啟動速眠儀</string>
+    <string name="firmware_upgrade_failed_hint">固件升級失敗,請重試</string>
+    <string name="current_version_hint">當前版本: %s</string>
+    <string name="latest_version">最新版本: %s</string>
+    <string name="firmware_download_hint">下載</string>
+    <string name="firmware_upgrade_hint">升級</string>
+    <string name="firmware_download_success_hint">最新固件已下載完成</string>
+    <string name="app_download_success_hint">APP安裝包已經下載完成</string>
+    <string name="firmware_download_failed_hint">固件更新包下載失敗,請重新下載</string>
+    <string name="firmware_download_title_hint">固件下載中</string>
+    <string name="app_download_title_hint">APP下載中</string>
+    <string name="firmware_upgrade_title_hint">固件升級中</string>
+    <string name="firmware_md5_invalid_hint">固件更新包已損壞,請重新下載</string>
+
+    <!--media preview-->
+    <string name="gallery_save_file_not_have_external_storage_permission">沒有外部存儲權限!</string>
+    <string name="gallery_save_file_not_have_external_storage">沒有外部存儲!</string>
+    <string name="gallery_save_file_success">保存成功!</string>
+    <string name="gallery_save_file_failed">存儲失敗!</string>
+    <string name="image_select_opt_done">完成</string>
+    <string name="image_select_opt_preview">預覽</string>
+    <string name="tick_photo_hint">拍照</string>
+    <string name="pic_photo_hint">從相冊選擇</string>
+    <!--<string name="str_request_camera_message">請求獲取相機權限</string>-->
+    <!--<string name="str_request_record_message">請求獲取錄音權限</string>-->
+    <!--<string name="permissions_camera_error">相機無法完成初始化,請正確授權.</string>-->
+    <!--<string name="permissions_record_error">麥克風無法完成初始化,請正確授權.</string>-->
+    <string name="change_binding">更換綁定</string>
+
+
+    <!--sleep note and doctor advice-->
+    <string name="version_name_hint">%s版本: %s</string>
+    <string name="app_upgrade">APP升級</string>
+    <string name="monitor_upgrade">監測儀升級</string>
+    <string name="sleepy_upgrade">速眠儀升級</string>
+    <!--<string name="good">還可以</string>-->
+    <!--<string name="submit">提交</string>-->
+
+    <string name="sleepy_not_connected_monitor">監測儀未連接速眠儀,請讓監測儀連接上速眠儀</string>
+    <string name="not_wear_monitor">監測儀未佩戴,請佩戴監測儀</string>
+    <string name="head_not_at_pillow">頭部未在枕頭上</string>
+    <string name="monitor_is_charging">速眠儀不能開啟工作模式，原因是設備正在充電</string>
+    <string name="not_turn_on_pa_mode">設備獨立模式已開啟,不能開啟,請先關閉獨立模式</string>
+    <string name="not_turn_on_pa_mode_in_sleep_time">正在睡眠中,請勿再次開啟</string>
+    <string name="turn_on_sleepy_pa_mode_error">未知錯誤,請重啟設備或聯系客服</string>
+
+    <!--<string name="wechat_login">微信登錄</string>-->
+
+
+    <!--<string name="none_market">"您的手機沒有安裝應用市場!"</string>-->
+    <!--<string name="register_rule_one">註冊即代表同意</string>-->
+    <!--<string name="register_rule_two"><u>速眠用戶協議</u></string>-->
+    <!--<string name="register_rule_three">及</string>-->
+    <!--<string name="register_rule_four"><u>速眠隱私政策</u></string>-->
+    <!--<string name="register_rule_user_agreement_title">用戶協議</string>-->
+    <!--<string name="register_rule_privacy_policy_title">隱私政策</string>-->
+    <string name="none_week_have_sleep_data">本周無睡眠記錄</string>
+    <!--<string name="unbind">解綁</string>-->
+    <!--<string name="opening_wechat">正在打開微信中…</string>-->
+    <!--<string name="no_have_wechat">手機上未安裝微信客戶端</string>-->
+
+    <!--<string name="take_photo">拍照</string>-->
+    <!--<string name="network_error">網絡異常,請檢查你的網絡設置</string>-->
+
+    <string name="sync">同步</string>
+    <!--<string name="syncing">同步中</string>-->
+    <string name="all_today_duration">全天睡眠時長</string>
+    <string name="light_sleep_duration">淺睡時長</string>
+    <string name="no_have_sleep_data">暫無睡眠報告</string>
+    <string name="no_have_sleep_data_low_label">使用設備後，打開手機藍牙，自動上傳睡眠數據</string>
+    <string name="career_hint">職業</string>
+    <string name="nickname_warn_label">昵稱需保證在1–16個字符內，且不能與他人重復.</string>
+    <string name="career_warn_label">請填寫你所從事的職業類型</string>
+    <!--<string name="input_career_hint">請輸入您的職業</string>-->
+    <string name="new_areer_too_much_more_error">職業信息太長了,超過了12個字符</string>
+    <string name="tab_data">數據</string>
+    <!--<string name="complete">已完成評估</string>-->
+    <string name="go_today">回到今天</string>
+    <string name="is_read">全部已讀</string>
+    <string name="feedback">意見反饋</string>
+    <string name="please_turn_on_bluetooth_adapter">請打開手機藍牙，與監測儀進行連接。</string>
+    <string name="bind_device">綁定設備</string>
+    <string name="please_keep_nearly">請將手機與設備的範圍保持在5m內。</string>
+    <string name="scanning_device">設備搜索中…</string>
+    <string name="scan_label_h2">點擊需要連接的監測儀屏幕按鍵，搜索設備。</string>
+    <!--<string name="re_scan">重新搜索</string>-->
+    <string name="re_scan_u"><u>重新搜索</u></string>
+    <string name="scan_error_one">①  按下監測儀按鍵查看是否已開機，如未開機，請連接電源，充電開啟監測儀；</string>
+    <string name="scan_error_two">②  檢查監測儀是否已與其它手機連接。如有，請解綁後重新嘗試連接；</string>
+    <string name="scan_error_three">③  確保監測儀與手機距離保持在5米內，去除墻壁、厚物遮擋等信號幹擾因素；</string>
+    <string name="scan_error_four">④  關閉手機藍牙重試。</string>
+    <string name="select_bind_device_label">請選擇要綁定的設備</string>
+    <string name="is_sure_device_2_bind">已為您選擇此監測儀，是否綁定？</string>
+    <string name="open_location_service_dialog_title">提示</string>
+    <string name="open_location_service_for_blue_scan_hint">掃描藍牙需要開啟位置服務，是否現在開啟？</string>
+    <!--<string name="confirm">確認</string>-->
+    <!--<string name="cancel">取消</string>-->
+    <string name="syncing_error_result">獲取異常，請聯系在線客服咨詢反饋</string>
+    <!--<string name="version_upgrade">版本更新</string>-->
+    <string name="hw_version">固件版本</string>
+    <string name="my_service">我的服務</string>
+    <string name="media_service">圖文咨詢</string>
+    <string name="tel_service">電話預約</string>
+    <string name="my_record">我的檔案</string>
+    <string name="ask_question">咨詢問題</string>
+    <string name="ask_question_hint">一句話描述你想要咨詢的問題（20字以內）</string>
+    <string name="ask_more">補充說明</string>
+    <string name="ask_more_hint">請詳細描述您希望解決的問題：1.描述您的睡前行為；2.描述癥狀；3.藥物相關問題等（400字以內）</string>
+    <string name="tel_submit">確認</string>
+    <string name="tel_ask_detail">預約詳情</string>
+    <string name="ask_time">預約時間</string>
+    <string name="un_finished">未完成</string>
+    <string name="is_finished">已完成</string>
+    <string name="hello_comment">您好，</string>
+    <string name="welcome_use_this_app_please_login">歡迎使用速眠醫生，請登錄</string>
+    <string name="input_phone_hint">請輸入手機號碼</string>
+    <string name="input_password_hint">請輸入密碼</string>
+    <string name="login_with_space_inside">登 錄</string>
+    <string name="app_user_agreement">速眠醫生用戶協議</string>
+    <string name="captcha_login">驗證碼登錄</string>
+    <string name="password_login">密碼登錄</string>
+    <string name="captcha_already_sent">%ds</string>
+    <string name="please_set_password">請設置密碼</string>
+    <string name="repeat_password">再次輸入密碼</string>
+    <string name="please_set_new_password">請設置新密碼</string>
+    <string name="repeat_new_password">再次輸入新密碼</string>
+    <string name="complete_with_space_inside">完 成</string>
+    <string name="forget_password_question">忘記密碼？</string>
+    <string name="validate_phone_number">驗證手機</string>
+    <string name="captcha_send_success">驗證碼發送成功</string>
+    <string name="login_cancel">登錄取消</string>
+    <string name="phone_number_invalid_toast">手機格式有誤，請重新輸入</string>
+    <string name="captcha_invalid_toast">驗證碼錯誤，請重新輸入</string>
+    <string name="password_invalid_toast">請輸入%d～%d位密碼</string>
+    <string name="password_not_the_same">兩次密碼不一致</string>
+    <string name="phone_number_validation_regex" tools:ignore="TypographyDashes">1([0-9]{10})</string>
+    <string name="captcha_validation_regex">\\d{6}</string>
+    <string name="password_validation_regex">.{6,16}</string>
+    <string name="feedback_hint">請詳細描述您的意見或建議，我們將及時處理並給予反饋，速眠醫生致力於為您提供專業貼心的服務。</string>
+    <string name="feedback_text_count">0/500</string>
+    <string name="remind_setting">提醒設置</string>
+    <string name="none_feedback_hint">您未填寫反饋意見及建議</string>
+    <string name="feedback_success">反饋成功</string>
+    <string name="sd_sleep_diary_remind">睡眠日記填寫提醒</string>
+    <string name="sd_relaxation_training">放松訓練提醒</string>
+    <string name="not_set_yet">未設置</string>
+    <string name="sleep_diary_remind">睡眠日記填寫提醒</string>
+    <string name="open_sleep_diary_remind_hint">開啟睡眠日記填寫提醒，速眠醫生將會每日定時通知您填寫日記。請確保APP通知權限開啟。</string>
+    <string name="open_relaxation_training_hint">開啟放松訓練時間提醒，速眠醫生將會每日定時提醒您進行放松訓練。請確保APP通知權限開啟。</string>
+    <string name="remind_time">提醒時間</string>
+    <string name="set_remind_time">設置提醒時間</string>
+    <string name="pattern_hh_mm">%02d:%02d</string>
+    <string name="service_is_canceled">服務已取消</string>
+    <string name="any_question_ask_kefu">如有疑問，請咨詢客服</string>
+    <string name="relate_service_is_canceled">相關服務已取消</string>
+    <string name="diary_evaluation">日記評估</string>
+    <string name="no_data_yet">暫無相關記錄</string>
+    <string name="after_bind_doctor_you_can_consult_the_doctor">綁定醫生後，可向主治醫生咨詢</string>
+    <string name="sleep_prescription_introduction_title">睡眠處方介紹</string>
+    <string name="sleep_prescription_introduction_content">睡眠效率差的人，躺在床上太久，反而會胡思亂想，限制其臥床時間，可能會提高睡眠效率。執行睡眠處方的步驟是：\n（1）填寫7天的睡眠日記，計算出每晚平均睡眠時長和睡眠效率；\n（2）以平均每晚睡眠時長作為本周每晚可躺在床上的時間，但要固定起床時間，且臥床時長不能低於5小時；\n（3）上周的睡眠效率決定本周的睡眠時長以及上床時間是否需要調整；\n（4）請認真遵守睡眠處方，你的睡眠效率會慢慢提高，當你的睡眠效率提高後，我們會逐步延長你的睡眠時長，陪你一起改善睡眠！\n\n速眠醫生建議在過去7天內填寫至少3篇以上的睡眠日記，有助於提供更精準的上床時間。\n更多睡眠處方的內容可通過學習CBTI課程進行了解。
+</string>
+    <string name="none_sleep_status_data">無數據狀態</string>
+    <string name="user_privacy_policy">用戶隱私政策</string>
+    <string name="you_have_not_set_sleep_prescription">您還未設置睡眠處方</string>
+    <string name="new_prescription">新處方</string>
+    <string name="already_paused">已暫停</string>
+    <string name="cbti_treatment">CBTI認知行為治療</string>
+    <string name="cbti_treatment_hint">非藥物治療失眠的最佳療法</string>
+    <string name="join_learn">加入學習</string>
+    <string name="relax_exercise">放松訓練</string>
+    <string name="monitor_data">監測數據</string>
+    <string name="weekly_data">周數據</string>
+    <string name="bluetooth_not_open">手機藍牙未開啟</string>
+    <string name="please_open_bluetooth_and_connect_monitor">請打開手機藍牙，與監測儀進行連接</string>
+    <string name="syncing" tools:ignore="TypographyEllipsis">同步中...</string>
+    <string name="monitor_is_connect_please_check_sleepers_connectivity">監測儀已連接，請檢查速眠儀是否開啟</string>
+    <string name="already_connected">已連接</string>
+    <string name="not_connected">未連接</string>
+    <string name="speed_sleeper_already">速眠儀已就緒</string>
+    <string name="start_work">開啟工作</string>
+    <string name="starting_work" tools:ignore="TypographyEllipsis">開啟中...</string>
+    <string name="sync_progress_0">第 %d 段</string>
+    <string name="sync_progress_1">(%d%%)</string>
+    <string name="sync_progress_1_v2">%d%%</string>
+    <string name="sleeper_is_working_please_sleep">速眠儀正常工作中，請安心入睡</string>
+    <string name="turn_on_pa_mode_failed_title">開啟工作模式失敗</string>
+    <string name="turn_on_pa_mode_failed_desc">速眠儀開啟工作模式失敗，原因是：%s</string>
+    <string name="haode">好的</string>
+    <string name="hao_de">好 的</string>
+    <string name="sleeper_is_working">速眠儀工作中</string>
+    <string name="sync_fail">同步失敗</string>
+    <string name="already_latest_data">已是最新數據</string>
+    <string name="bluetooth_not_enable">手機藍牙未開啟</string>
+    <string name="is_not_this_device">不是這臺設備？</string>
+    <string name="search_more_u"><u>搜索更多</u></string>
+    <string name="confirm_bind">確認綁定</string>
+    <string name="add_device">添加設備</string>
+    <string name="do_not_see_your_device">沒看到您的設備？</string>
+    <string name="monitor_not_connect">監測儀未連接</string>
+    <string name="click_card_try_to_connect_monitor">點擊卡片，嘗試連接監測儀</string>
+    <string name="you_do_not_bind_device_click_add">您尚未綁定速眠儀設備，點擊添加設備</string>
+    <string name="working">工作中</string>
+    <string name="device_manage">設備管理</string>
+    <string name="coupon_center">兌換中心</string>
+    <string name="add_new_device">添加新設備</string>
+    <string name="click_btn_add_device">點擊按鈕，添加設備</string>
+    <string name="connecting">連接中</string>
+    <string name="connected">已連接</string>
+    <string name="monitor_not_connect_click_upper_to_connect">監測儀未連接，點擊上方嘗試連接</string>
+    <string name="monitor_is_connecting">監測儀連接中…</string>
+    <string name="please_keep_monito_in_5m">請保持監測儀與手機距離在5米內</string>
+    <string name="monitor_is_connected_please_check_sleeper">監測儀已連接\n請檢查速眠儀是否開啟</string>
+    <string name="sleeper_is_idle">速眠儀已連接，待機中</string>
+    <string name="sync_progress_package_progress">正在同步睡眠數據\n第 %d 段 (%d%%)</string>
+    <string name="sync_progress_package_progress_v2">正在同步睡眠數據 %d%%</string>
+    <string name="sure_to_unbind">確定解除綁定嗎？</string>
+    <string name="after_unbind_monitor_will_disconnect_from_phone">解綁後將斷開監測儀與手機的連接</string>
+    <string name="ji">及</string>
+    <string name="device_is_syncing_data_report_will_be_refresh_later">設備同步中，稍侯自動獲取睡眠報告</string>
+    <string name="area">地區</string>
+    <string name="clear_cache">清除緩存</string>
+    <string name="phone_bettery_low_title">手機電量不足</string>
+    <string name="monitor_bettery_low_title">監測儀電量不足</string>
+    <string name="sleeper_bettery_low_title">速眠儀量不足</string>
+    <string name="phone_bettery_low_message">手機電量不足50%，無法進行 dfu 升級</string>
+    <string name="monitor_bettery_low_message">監測儀電量不足50%，無法進行 dfu 升級</string>
+    <string name="sleeper_bettery_low_message">速眠儀量不足50%，無法進行 dfu 升級</string>
+    <string name="clear_cache_hint">確定清除本地緩存？</string>
+    <string name="clear_success">清除成功</string>
+    <string name="rescan">重新掃描</string>
+    <string name="open_bluetooth">開啟藍牙</string>
+    <string name="connect_time_out">連接超時</string>
+    <string name="connect_time_out_message">可關閉藍牙5s後再次嘗試連接</string>
+    <string name="please_connect_monitor_before_change_bind">請先連接監測儀，再使用換綁功能</string>
+    <string name="sleep_version_title">速眠儀固件升級</string>
+    <string name="monitor_version_title">監測儀固件升級</string>
+    <string name="set_password">設置密碼</string>
+    <string name="set_success">設置成功</string>
+    <string name="are_sure_2_bind">確定更換綁定？</string>
+    <string name="sleep_version_message">速眠儀固件新版本發布，為了保證給您的最佳體驗，請及時升級</string>
+    <string name="monitor_version_message">監測儀固件新版本發布，為了保證給您的最佳體驗，請及時升級</string>
+    <string name="coupon_code">兌換碼</string>
+    <string name="coupon_history">兌換記錄</string>
+    <string name="input_coupon">請輸入您的兌換碼</string>
+    <string name="coupon">兌換</string>
+    <string name="know_your_sleep_health_situation">了解您的睡眠健康及心理狀況</string>
+    <string name="not_evaluated">待測評</string>
+    <string name="evaluated">已測評</string>
+    <string name="only_last_3_days_can_fill_sleep_diary">只能填寫3天內的睡眠日記</string>
+    <string name="only_last_3_days_can_refill_sleep_diary">只能修改3天內的睡眠日記</string>
+    <string name="coupon_success">兌換成功</string>
+    <string name="fine">好的</string>
+    <string name="doctor_service_introduction">服務介紹</string>
+    <string name="anxious_and_belief">憂慮與信念</string>
+    <string name="add_anxious">添加憂慮</string>
+    <string name="what_s_the_meaning_of_recording_your_anxious_and_belief">記錄自己的憂慮、信念有什麽用</string>
+    <string name="anxious_record">憂慮記錄</string>
+    <string name="device_connect_timeout">設備連接超時</string>
+    <string name="add_belief">添加信念</string>
+    <string name="anxiety_and_belief">憂慮與信念</string>
+    <string name="anxiety_and_belief_explain">憂慮:\n記錄憂慮事件是為了把我們憂慮的事情在睡前較早的一個時段內處理和安排好，這有助於減少我們在睡前因此而引起煩惱。設定一個憂慮時間，每天在同一個時間段把所需要處理的事情想好辦法，如果目前不能解決，可以安排另一個時間段來思考，堅持這麽做，你會發現，我們在睡前會受到更少憂慮的困擾。\n\n信念:\n信念平時並不太容易被發現，因為他經常是自動化的。記錄它一是可以讓我們識別出我們有哪些信念，二來是有助於我們判斷哪些是不合理信念並用認知重構的方法來重建他們，經過反復練習讓理性的信念變成自動化。</string>
+    <string name="anxiety">憂慮</string>
+    <string name="anxiety_input_hint">今天，有什麽事情讓你感到憂慮、煩惱？（點擊這裏開始輸入）</string>
+    <string name="anxiety_solution_input_hint">你是怎麽解決你的憂慮的？（點擊這裏開始輸入）</string>
+    <string name="solution">解決辦法</string>
+    <string name="add_anxiety_bottom_hint">速眠醫生建議：把憂慮的事情都集中在日間一個時間處理哦。</string>
+    <string name="save">保存</string>
+    <string name="edit">編輯</string>
+    <string name="delete">刪除</string>
+    <string name="anxiety_record">憂慮記錄</string>
+    <string name="delete_record">刪除記錄</string>
+    <string name="delete_record_confirm_hint">確定要刪除此條記錄嗎？</string>
+    <string name="cbti_introduction_more"><![CDATA[查看介紹 >]]></string>
+    <string name="cbti_title_bar">失眠認知行為治療(CBTI)</string>
+    <string name="go_to_evaluation">去評估</string>
+    <string name="cbti_chapter_no_lock">本周課程還未解鎖</string>
+    <string name="go_to_evaluation_title">CBTI評估</string>
+    <string name="go_to_evaluation_message">為更好地追蹤治療效果，我們需要您定期配合進行評估，請您耐心完成評估</string>
+    <string name="click_top_button_add_record">- 點擊上方按鈕，添加記錄 -</string>
+    <string name="event">事件</string>
+    <string name="thought">想法</string>
+    <string name="emotion">情緒</string>
+    <string name="belief_title_0" tools:ignore="TypographyFractions">1/3. 事件</string>
+    <string name="belief_title_1" tools:ignore="TypographyFractions">2/3. 想法</string>
+    <string name="belief_title_2" tools:ignore="TypographyFractions">3/3. 情緒</string>
+    <string name="input_event_hint">是發生了什麽事情？引起了你的想法與情緒？如：在旅途中，你有一瓶水，喝了一半。（點擊這裏開始輸入）</string>
+    <string name="when_you_thought_what_is_the_emotion">當你對這件事產生了想法時，你的情緒如何？</string>
+    <string name="emotion_0">難過</string>
+    <string name="emotion_1">焦慮</string>
+    <string name="emotion_2">憤怒</string>
+    <string name="emotion_3">平靜</string>
+    <string name="emotion_4">輕松</string>
+    <string name="emotion_5">愉快</string>
+    <string name="please_finish_question_first">請先完成題目內容</string>
+    <string name="faith_record">信念記錄</string>
+    <string name="anxiety_time_reminder">憂慮時間提醒</string>
+    <string name="anxiety_time_reminder_hint">開啟憂慮時間提醒，速眠醫生將會每日定時提醒您添加憂慮。請確保APP通知權限開啟。</string>
+    <!-- Hw end-->
+
+    <!-- share -->
+    <string name="wechat_friend">微信好友</string>
+    <string name="wechat_circle">朋友圈</string>
+    <string name="share_to_wechat">分享到</string>
+    <string name="sleep_prescription_desc">遵守睡眠處方規定的作息時間，逐步穩固睡眠，進而提升睡眠效率。</string>
+    <string name="data">數據</string>
+    <string name="know_device">了解設備</string>
+    <string name="set_diary_reminder_hint">養成堅持填寫好習慣？去</string>
+    <string name="set_diary_reminder_hint_2"><u>設置填寫提醒</u></string>
+    <string name="dialog_finish_practice_msg">完成本節課程學習後自動解鎖下節內容</string>
+    <string name="error_unknown">未知錯誤</string>
+    <string name="sleep_remark">睡眠備註</string>
+    <string name="wake_up_emotion">睡醒情緒</string>
+    <string name="night_wakeup">夜醒</string>
+    <string name="little_sleep">小睡</string>
+    <string name="pills_history">服藥記錄</string>
+    <string name="please_check_items_below">請檢查以下情況：</string>
+    <string name="write_message">寫留言</string>
+    <string name="anonymous_nickname">匿名用戶</string>
+    <string name="ssd_replay">速眠醫生回復：</string>
+    <string name="message_board_empty_hint">- 期待您寫下這裏的第一條留言 -</string>
+    <string name="msg_board_empty_hint">- 暫無留言記錄 -</string>
+    <string name="msg_board_hint">寫下你想說的話</string>
+    <string name="send">發送</string>
+    <string name="anonymous_submit">匿名提交</string>
+    <string name="medicine_history">服用促進睡眠類藥物</string>
+    <string name="is_using_medicine">有服用</string>
+    <string name="not_using_medicine">沒有</string>
+    <string name="pay_coupon_code">優惠碼</string>
+    <string name="pay_coupon_code_hint">請填寫優惠碼</string>
+    <string name="none_pay_coupon_code">暫未使用優惠</string>
+    <string name="none_join_count">--人參與</string>
+    <string name="join">人參與</string>
+    <string name="submit_success">提交成功</string>
+    <string name="service_submit_success_msg">您的情況已提交給醫生，如有新消息，我們將會通過消息中心通知您，請耐心等待</string>
+    <string name="show_detail">查看詳情</string>
+    <string name="go_back_home"><u>返回主頁</u></string>
+    <string name="moment_peace">片刻小憩</string>
+    <string name="let_tense_life_relax">美好的午後，盡享放松</string>
+    <string name="relaxation_list_bottom_hint">- 速眠醫生建議放松訓練結合CBTI課程使用 -</string>
+    <string name="topping_text">置頂</string>
+    <string name="lesson_finished">本節課程結束</string>
+    <string name="lesson_practice_hint">完成隨堂練習，鞏固所學知識</string>
+    <string name="go_to_watch">繼續觀看</string>
+    <string name="finished_practice">完成練習</string>
+    <string name="list">列表</string>
+    <string name="n_days_later_update_prescription">%d天後更新處方</string>
+    <string name="write_message_keyboard">寫留言</string>
+    <string name="msg_keyboard_hint">歡迎留下您對課程的疑問和想法，留言將在篩選後展示。</string>
+    <string name="my_msg">我的留言</string>
+    <string name="del">刪除</string>
+    <string name="del_msg_keyboard_title">確定刪除該留言？</string>
+    <string name="del_msg_keyboard_msg">刪除後將不再保留該留言記錄</string>
+    <string name="my_message_board">我的留言</string>
+    <string name="sumian_doctor_msg_replay">速眠醫生回復</string>
+    <string name="msg_board_is_deleted">留言已刪除</string>
+    <string name="msg_board_is_deleted_message">如有疑問，請咨詢客服</string>
+    <string name="msg_board_replay_notice">留言回復通知</string>
+    <string name="system_notification">系統通知</string>
+    <string name="msg_board_del_success">留言刪除成功</string>
+    <string name="msg_board_send_success">留言發送成功</string>
+    <string name="notice">提示</string>
+    <string name="sumian_doctor_want_to_open_wechat">“速眠醫生”想打開“微信”</string>
+    <string name="open">打開</string>
+    <string name="input_is_too_long">字數超過限定值</string>
+    <string name="question_mark_x3">\???</string>
+    <string name="please_complete_the_question">請完成以上填寫</string>
+    <string name="sleep">睡覺</string>
+    <string name="fall_asleep">睡著</string>
+    <string name="wake_up">醒來</string>
+    <string name="get_up">起床</string>
+    <string-array name="fill_diary_title">
+        <item>昨晚幾點準備睡覺?</item>
+        <item>昨晚大概幾點睡著?</item>
+        <item>今早幾點醒來?</item>
+        <item>今早幾點起床?</item>
+        <item>昨晚有醒來過嗎?</item>
+        <item>昨天白天有小睡一會嗎?</item>
+        <item>昨天有服用過安眠類藥物嗎?</item>
+        <item>你早上起來感覺如何?</item>
+        <item>還有什麽想記錄的?</item>
+    </string-array>
+    <string name="no_night_wake">沒醒過</string>
+    <string name="have_night_wake">有醒過</string>
+    <string name="no_day_sleep">沒小睡</string>
+    <string name="have_day_sleep">有小睡</string>
+    <string name="night_wake_times_and_duration">夜醒次數及總時長</string>
+    <string name="day_sleep_times_and_duration">白天小睡次數及總時長</string>
+    <string name="night_wake_time_cant_bigger_than_sleep_time">夜醒時長不能比睡眠時長大哦</string>
+    <string name="morning_feelings_0">十分差</string>
+    <string name="morning_feelings_1">較差</string>
+    <string name="morning_feelings_2">正常</string>
+    <string name="morning_feelings_3">較好</string>
+    <string name="morning_feelings_4">超級棒</string>
+    <string name="add_pill_record">添加服藥記錄</string>
+    <string name="continue_add">繼續添加</string>
+    <string name="add_pills_hint">若未服用藥物，可直接跳過此題</string>
+    <string name="take_pills_record">服藥記錄</string>
+    <string name="add_pills_too_many_hint">最多可添加10次記錄</string>
+    <string name="fill_diary_remark_et_hint">可在此描述您的詳細情況， 不限於：1.描述您希望能解決的問題；2.描述您的睡前行為、起床後行為；3.描述癥狀；4.藥物相關問題等（200字以內）</string>
+    <string name="max_input_error">字數超過限定值</string>
+    <string-array name="pill_name_options">
+        <item>唑吡坦(思諾思)</item>
+        <item>紮來普隆</item>
+        <item>佐匹克隆</item>
+        <item>三唑侖</item>
+        <item>咪達唑侖</item>
+        <item>氟西泮</item>
+        <item>硝西泮</item>
+        <item>艾司唑侖</item>
+        <item>阿普唑侖（佳樂定）</item>
+        <item>勞拉西泮</item>
+        <item>度洛西汀（欣百達）</item>
+        <item>帕羅西汀（塞樂特）</item>
+        <item>奧氮平</item>
+        <item>美利曲辛（黛利新）</item>
+        <item>右佐匹克隆</item>
+        <item>米氮平</item>
+        <item>其他</item>
+    </string-array>
+    <string-array name="pill_amount_options">
+        <item>1/4片</item>
+        <item>1/3片</item>
+        <item>1/2片</item>
+        <item>2/3片</item>
+        <item>3/4片</item>
+        <item>1片</item>
+        <item>1.25片</item>
+        <item>1.5片</item>
+        <item>1.75片</item>
+        <item>2片</item>
+        <item>2.25片</item>
+        <item>2.5片</item>
+        <item>2.75片</item>
+        <item>3片</item>
+        <item>3.5片</item>
+        <item>4片</item>
+        <item>4.5片</item>
+        <item>5片</item>
+        <item>5.5片</item>
+        <item>6片</item>
+    </string-array>
+    <string-array name="pill_time_options">
+        <item>早飯前/後</item>
+        <item>午飯前/後</item>
+        <item>晚飯前/後</item>
+        <item>睡前</item>
+    </string-array>
+    <string-array name="fill_diary_remark_options">
+        <item>飲酒</item>
+        <item>喝茶/咖啡</item>
+        <item>身體不適</item>
+        <item>吃太飽</item>
+        <item>有心事</item>
+        <item>睡前運動過量</item>
+        <item>陌生床</item>
+        <item>今天太累</item>
+        <item>天氣太冷</item>
+        <item>天氣太熱</item>
+    </string-array>
+
+    <string name="app_upgrade_dialog_title">APP版本更新啦～</string>
+    <string name="app_upgrade_dialog_hint">您當前的APP版本過低，會影響設備的使用，為了不影響您的體驗，非常建議您更新APP哦～</string>
+    <string name="device_upgrade_dialog_title">設備固件版本更新啦～</string>
+    <string name="device_upgrade_dialog_hint">當前設備的版本過低，為了不影響您的體驗，非常建議您更新固件版本哦～</string>
+    <string name="monitor_firmware_upgrade">監測儀固件升級</string>
+    <string name="monitor_firmware_upgrade_hint">監測儀固件發布了新版本，為了保證給您最佳的體驗，請及時升級</string>
+    <string name="sleeper_firmware_upgrade">速眠儀固件升級</string>
+    <string name="sleeper_firmware_upgrade_hint">速眠儀固件發布了新版本，為了保證給您最佳的體驗，請及時升級</string>
+    <string name="device_market">設備商城</string>
+    <string name="yesterday_night">昨夜</string>
+    <string name="today">今天</string>
+    <string name="cbti_final_report">CBTI 終期報告</string>
+    <string name="cbti_final_report_dialog_message">為了能夠更好地了解您當前的情況，為您提供後續建議，需要您配合完成終期評估。</string>
+    <string name="cbti_medal_title">CBTI小成就</string>
+    <string name="more_medal_bottom_tips">- 更多勛章，敬請期待 -</string>
+    <string name="my_metal">我的勛章</string>
+    <string name="start_evaluate">開始測評</string>
+    <string name="get_sleep_guide_in_30_sec">- 30秒獲取最適合你的睡眠指南 -</string>
+    <string name="yes">是</string>
+    <string name="no">否</string>
+    <string name="get_good_sleep_solution">獲取好眠方案</string>
+    <string name="just_so_so_share">- 隨手傳遞健康睡眠 -</string>
+    <string name="acquisition">獲得</string>
+    <string name="share_healthy_sleep">- 隨手傳遞健康睡眠 -</string>
+    <string name="today_is_xx_day_fill_sleep_diary">今天是我第 %d 天關註自己的睡眠健康。愛自己，就要從察覺身體的需要開始。堅持就是勝利！</string>
+    <string name="cancel_share">分享已取消</string>
+    <string name="share_success">分享成功</string>
+    <string name="share_failed">分享失敗</string>
+    <string name="save_images_success">勛章保存成功啦,請在相冊中查看</string>
+    <string name="none_get_achievement_toast">堅持學習CBTI可點亮勛章</string>
+    <string name="share_bottom_tips">- 呵護自己的睡眠健康 -</string>
+    <string name="finished_lesson_to_be_unlock">完成上節課程後解鎖</string>
+    <string name="save_permission_tips">保存圖片需要授予存儲權限，該權限已被禁止，請在設置中授予app相關權限</string>
+    <string name="request_save_permissions_tips">存儲圖片，需要授予手機存儲權限權限</string>
+    <string name="device_not_connected">設備未連接</string>
+    <string name="there_have_history_pills">檢測到您上次有填寫過服藥記錄。</string>
+    <string name="doctor_say_hello">您好，我是您的睡眠管家，很高興為您服務！</string>
+    <string name="sleep_restriction_hint">睡眠限制：了解它與睡眠日記的關系</string>
+    <string name="sleep_restriction_treatment">睡眠限制法</string>
+    <string name="doctor_message">醫生消息</string>
+    <string name="system_message">系統消息</string>
+    <string name="no_system_notification_yet">- 暫無系統消息 -</string>
+    <string name="sleeper_talk">眠友說</string>
+    <string name="more_article">更多文章</string>
+    <string name="like">點贊</string>
+    <string name="renew">續費</string>
+    <string name="service_package_type">服務包類型</string>
+    <string name="introduction_arrow">介紹 ></string>
+    <string name="discount_is_too_much">優惠金額超出上限</string>
+    <string name="pill_repeat_warn">不能添加重復的服藥記錄</string>
+    <string name="you_have_not_bound_doctor_yet_scan_to_bind">您還未綁定醫生或咨詢師，點擊下方掃碼鈕，掃描二維碼進行綁定。</string>
+    <string name="service">服務</string>
+    <string name="personal_intro">個人簡介</string>
+    <string name="you_have_add_this_pill">您已添加了以下服藥記錄</string>
+    <string name="cover">覆蓋</string>
+    <string name="app_need_upgrade">APP版本過低，請及時更新！</string>
+    <string name="device_need_upgrade">設備版本過低，請前往[我的-設置]升級固件版本</string>
+    <string name="device_is_not_ok_app_need_upgrade">設備不可用，需要更新APP</string>
+    <string name="sleep_master_is_not_ok_app_need_upgrade">速眠儀不可用，需要更新APP</string>
+    <string name="device_is_not_ok_device_need_upgrade">設備不可用，需更新固件</string>
+    <string name="sleep_master_is_not_ok_device_need_upgrade">速眠儀不可用，需更新固件</string>
+    <string name="input_account_hint">請輸入賬號</string>
+    <string name="if_no_account_please_contact_doctor">如果沒有賬號密碼或賬號密碼已忘記，請聯系所屬醫師。</string>
+    <string name="sleep_steward">睡眠管家</string>
+    <string name="any_question_contact_your_doctor">- 如有疑問，請聯系所屬醫師 -</string>
+
+    <string-array name="counselor_experience_years">
+        <item>1年</item>
+        <item>2年</item>
+        <item>3年</item>
+        <item>4年</item>
+        <item>5年及以上</item>
+    </string-array>
+
+    <string name="counselor_desc">%s、%s從業經驗、累積個案時長%d小時</string>
+    <string name="upgrade_now">立即更新</string>
+    <string name="no_sleep_all_night">整晚沒睡</string>
+</resources>
