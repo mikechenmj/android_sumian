@@ -625,6 +625,7 @@
     <string name="delete_record_confirm_hint">确定要删除此条记录吗？</string>
     <string name="cbti_introduction_more"><![CDATA[查看介绍 >]]></string>
     <string name="cbti_title_bar">失眠认知行为治疗(CBTI)</string>
+    <string name="sleep_health_education">睡眠健康教育</string>
     <string name="go_to_evaluation">去评估</string>
     <string name="cbti_chapter_no_lock">本周课程还未解锁</string>
     <string name="go_to_evaluation_title">CBTI评估</string>

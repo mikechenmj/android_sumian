@@ -7,7 +7,6 @@ import android.text.TextUtils
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
@@ -23,7 +22,6 @@ import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.cbti.adapter.CBTIIntroductionAdapter
 import com.sumian.sd.buz.cbti.event.CBTIServiceBoughtEvent
-import com.sumian.sd.buz.cbti.sheet.CBTIShareBottomSheet
 import com.sumian.sd.buz.doctor.bean.DoctorService
 import com.sumian.sd.buz.homepage.bean.CbtiChapterData
 import com.sumian.sd.buz.homepage.bean.GetCbtiChaptersResponse
@@ -81,7 +79,7 @@ class CBTIIntroductionActivity : BaseActivity(), BaseRecyclerAdapter.OnItemClick
 
     override fun initWidget() {
         super.initWidget()
-        mTitleBar.setTitle(R.string.cbti_title_bar)
+        mTitleBar.setTitle(if (AppManager.getAccountViewModel().isControlGroup()) R.string.sleep_health_education else R.string.cbti_title_bar)
         mTitleBar.openTopPadding(true)
 //        mTitleBar.showMoreIcon(R.drawable.ic_nav_share)
 //        mTitleBar.setOnMenuClickListener {

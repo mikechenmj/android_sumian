@@ -42,7 +42,8 @@ class NotFilledScaleListFragment : BaseFragment() {
         mAdapter.setOnItemClickListener { adapter, view, position ->
             run {
                 val notFilledScale = mAdapter.getItem(position) as NotFilledScale
-                ScaleDetailActivity.launch(activity!!, notFilledScale.scale.title, notFilledScale.id, 0)
+                ScaleDetailActivity.launch(activity!!, notFilledScale.scale?.title
+                        ?: "", notFilledScale.id, 0)
             }
         }
         mAdapter.emptyView = EmptyErrorView.create(activity!!, R.mipmap.ic_empty_state_report, R.string.empty_evaluation_msg, R.string.know_your_sleep_health_situation)
@@ -102,7 +103,7 @@ class NotFilledScaleListFragment : BaseFragment() {
 
 class NotFilledScaleListAdapter : BaseQuickAdapter<NotFilledScale, BaseViewHolder>(R.layout.item_scale_not_filled) {
     override fun convert(helper: BaseViewHolder, item: NotFilledScale) {
-        helper.setText(R.id.tv_scale_name, item.scale.title)
+        helper.setText(R.id.tv_scale_name, item.scale?.title)
         helper.setText(R.id.tv_doctor_name, item.doctor?.name)
         helper.getView<View>(R.id.tv_doctor_name).visibility = if (item.doctor == null) View.GONE else View.VISIBLE
     }

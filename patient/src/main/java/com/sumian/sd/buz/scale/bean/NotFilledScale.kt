@@ -5,7 +5,7 @@ data class NotFilledScale(
         val doctor_id: Int,
         val scale_result_id: Int,
         val created_at: Int,
-        val scale: Scale2,
+        val scale: Scale2?,
         val result: Any,
         val doctor: Doctor?
 )
