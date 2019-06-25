@@ -111,8 +111,11 @@ HomepageFragment : BaseViewModelFragment<BaseViewModel>(), OnEnterListener, Last
             SleepGuideActivity.start()
             StatUtil.event(StatConstants.click_home_page_sleep_guide)
         }
-        vg_home_grid.isVisible = !AppManager.getAccountViewModel().isControlGroup()
-        vg_scale_evaluation.isVisible = AppManager.getAccountViewModel().isControlGroup()
+        val isControlGroup = AppManager.getAccountViewModel().isControlGroup()
+        vg_home_grid.isVisible = !isControlGroup
+        vg_scale_evaluation.isVisible = isControlGroup
+        sleep_prescription_view.isVisible = !isControlGroup
+        tv_contact_doctor.isVisible = isControlGroup
     }
 
     private fun showSleepGuideDialogIfNeed() {

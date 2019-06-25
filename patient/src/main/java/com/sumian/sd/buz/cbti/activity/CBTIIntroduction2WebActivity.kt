@@ -6,10 +6,8 @@ import com.sumian.common.buz.kefu.KefuManager
 import com.sumian.common.h5.bean.H5PayloadData
 import com.sumian.common.statistic.StatUtil
 import com.sumian.sd.BuildConfig
-import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.SdBaseWebViewActivity
-import com.sumian.sd.buz.cbti.sheet.CBTIShareBottomSheet
 import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.h5.H5Uri
 
@@ -45,7 +43,7 @@ class CBTIIntroduction2WebActivity : SdBaseWebViewActivity() {
     }
 
     override fun getCompleteUrl(): String {
-        val urlContent = H5Uri.NATIVE_ROUTE.replace("{pageData}", H5PayloadData(H5Uri.CBTI_INTRODUCTION, mapOf()).toJson())
+        val urlContent = H5Uri.NATIVE_ROUTE.replace("{pageData}", H5PayloadData(H5Uri.CBTI_INTRODUCTION, mapOf("research" to 1)).toJson())
                 .replace("{token}", AppManager.getAccountViewModel().token?.token
                         ?: "") + "&analysisSource=mainPage_cbtiBanner"
         return BuildConfig.BASE_H5_URL + urlContent

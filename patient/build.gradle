@@ -148,7 +148,7 @@ android {
     flavorDimensions "market", "environment"
     productFlavors {
 
-        def app_name = "速眠医生"
+        def app_name = "eSleep"
 
         yyb {//应用宝
             dimension "market"

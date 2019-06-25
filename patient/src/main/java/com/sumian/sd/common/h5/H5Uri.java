@@ -27,7 +27,7 @@ public interface H5Uri {
     String MY_TARGET_FROM_MINE = MY_TARGET + "mine";
     String MY_TARGET_FROM_NEW_USER = MY_TARGET + "newUser";
     String CBTI = "cbti";//CBTI 详情页（如果未购买过）
-    String CBTI_INTRODUCTION = "cbtiIntroduce";//CBTI 了解更多
+    String CBTI_INTRODUCTION = "cbtiResearchIntroduce";//CBTI 了解更多
     String CBTI_OPEN_SCALES = "openCbtiScales";
     String SLEEP_PRESCRIPTION = "prescription";
     String CBTI_EXERCISES = "cbti/exercises?id={course-id}";

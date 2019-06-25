@@ -464,7 +464,7 @@
     <string name="un_finished">未完成</string>
     <string name="is_finished">已完成</string>
     <string name="hello_comment">您好，</string>
-    <string name="welcome_use_this_app_please_login">欢迎使用速眠医生，请登录</string>
+    <string name="welcome_use_this_app_please_login">欢迎使用eSleep，请登录</string>
     <string name="input_phone_hint">请输入手机号码</string>
     <string name="input_account_hint">请输入账号</string>
     <string name="input_password_hint">请输入密码</string>
@@ -886,5 +886,6 @@
     <string name="no_sleep_all_night">整晚没睡</string>
     <string name="if_no_account_please_contact_doctor">如果没有账号密码或账号密码已忘记，请联系所属医师。</string>
     <string name="sleep_steward">睡眠管家</string>
+    <string name="any_question_contact_your_doctor">- 如有疑问，请联系所属医师 -</string>
 
 </resources>

@@ -36,7 +36,7 @@
                         style="@style/text_t3_18"
                         android:textSize="@dimen/font_20"
                         android:textStyle="bold"
-                        tools:text="首页" />
+                        android:text="@string/tab_homepage" />
 
                     <TextView
                         android:id="@+id/tv_home_random_text"
@@ -151,6 +151,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp" />
+
+            <TextView
+                android:id="@+id/tv_contact_doctor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="@string/any_question_contact_your_doctor"
+                android:visibility="gone" />
 
             <Space
                 android:layout_width="0dp"
