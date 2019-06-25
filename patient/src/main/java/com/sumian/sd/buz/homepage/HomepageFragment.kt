@@ -33,7 +33,6 @@ import com.sumian.sd.buz.homepage.bean.SentencePoolText
 import com.sumian.sd.buz.homepage.bean.SleepPrescriptionStatus
 import com.sumian.sd.buz.relaxation.RelaxationListActivity
 import com.sumian.sd.buz.scale.ScaleListActivity
-import com.sumian.sd.buz.sleepguide.SleepGuideActivity
 import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.h5.H5Uri
 import com.sumian.sd.common.h5.SimpleWebActivity
@@ -107,10 +106,6 @@ HomepageFragment : BaseViewModelFragment<BaseViewModel>(), OnEnterListener, Last
             StatUtil.event(StatConstants.click_home_page_anxiety_and_faith)
             ActivityUtils.startActivity(AnxiousAndFaithActivity::class.java)
         }
-        home_page_sleep_guide_enter_btn.setOnClickListener {
-            SleepGuideActivity.start()
-            StatUtil.event(StatConstants.click_home_page_sleep_guide)
-        }
         val isControlGroup = AppManager.getAccountViewModel().isControlGroup()
         vg_home_grid.isVisible = !isControlGroup
         vg_scale_evaluation.isVisible = isControlGroup
@@ -127,7 +122,6 @@ HomepageFragment : BaseViewModelFragment<BaseViewModel>(), OnEnterListener, Last
         }
         if ((activity as MainActivity?)?.mCurrentPosition != MainActivity.TAB_0) return
         val arr = intArrayOf(0, 0)
-        home_page_sleep_guide_enter_btn?.getLocationInWindow(arr) ?: return
         sp.put(SP_KEY_SHOW_SLEEP_GUIDE_DIALOG_APP_VERSION, appVersionCode)
         SleepGuideDialogActivity.start(arr[1])
     }
@@ -193,8 +187,6 @@ HomepageFragment : BaseViewModelFragment<BaseViewModel>(), OnEnterListener, Last
         addCall(call)
         call.enqueue(object : BaseSdResponseCallback<SentencePoolText>() {
             override fun onSuccess(response: SentencePoolText?) {
-                tv_home_random_text.text = response?.homeSentence
-                        ?: getString(R.string.homepage_sleep_slogan)
             }
 
             override fun onFailure(errorResponse: ErrorResponse) {
@@ -301,7 +293,6 @@ HomepageFragment : BaseViewModelFragment<BaseViewModel>(), OnEnterListener, Last
         call.enqueue(object : BaseSdResponseCallback<Any?>() {
             override fun onSuccess(response: Any?) {
                 LogUtils.d("getSleepGuide", response)
-                home_page_sleep_guide_enter_btn.isActivated = response != null
             }
 
             override fun onFailure(errorResponse: ErrorResponse) {
