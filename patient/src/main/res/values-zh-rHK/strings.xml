@@ -16,16 +16,16 @@
     <string name="send_captcha">發送驗證碼</string>
 
     <!--network error-->
-    <string name="improve_user_profile_one_part_one">你好，很高興認識你。</string>
+    <string name="improve_user_profile_one_part_one">妳好，很高興認識妳。</string>
     <string name="improve_user_profile_one_part_two">請問怎麽稱呼?</string>
     <string name="jump">跳過</string>
     <string name="improve_user_profile_one">完善信息1/2</string>
-    <string name="next_step">下一步</string>
+    <string name="next_step">下壹步</string>
     <string name="nickname">昵稱</string>
     <string name="input_nickname">請輸入昵稱</string>
     <string name="improve_user_profile_two">完善信息2/2</string>
-    <string name="improve_user_profile_two_part_one">你的真實姓名是?</string>
-    <string name="improve_user_profile_two_part_two">醫生可以通過真實姓名匹配你的線下就診記錄，能更好的解答你的問題哦。</string>
+    <string name="improve_user_profile_two_part_one">妳的真實姓名是?</string>
+    <string name="improve_user_profile_two_part_two">醫生可以通過真實姓名匹配妳的線下就診記錄，能更好的解答妳的問題哦。</string>
     <string name="real_name">真實姓名</string>
     <string name="input_real_name">請輸入真實姓名</string>
     <string name="warn_real_name">真實姓名只有醫生才能看到</string>
@@ -44,7 +44,7 @@
     <string name="pay">支付</string>
     <string name="pay_money">支付金額</string>
     <string name="yuan">元</string>
-    <string name="one">1</string>
+    <string name="one" translatable="false">1</string>
     <string name="wechat_pay">微信支付</string>
     <string name="alipay">支付寶支付</string>
     <string name="avatar">頭像</string>
@@ -85,7 +85,7 @@
 
     <!-- weekday-->
     <string name="sun">日</string>
-    <string name="mon">一</string>
+    <string name="mon">壹</string>
     <string name="tue">二</string>
     <string name="wed">三</string>
     <string name="thu">四</string>
@@ -122,14 +122,14 @@
     <string name="finished">已完成</string>
     <string name="cbti_ing">CBTI認知行為治療進行中</string>
     <string name="cbti_ing_describe">建議在開課當天完成本周課程學習，自完成之日起7天後開放下階段課程。</string>
-    <string name="cbti_ing_all_finished_desc">恭喜你完成CBTI課程！希望你能繼續保持良好的睡眠衛生習慣，早日告別失眠。</string>
+    <string name="cbti_ing_all_finished_desc">恭喜妳完成CBTI課程！希望妳能繼續保持良好的睡眠衛生習慣，早日告別失眠。</string>
     <string name="current_progress_colon">當前進度：</string>
     <string name="enter_and_learn">進入學習</string>
     <string name="my_sleep_prescription">我的睡眠處方</string>
     <string name="my_sleep_prescription_desc">解讀睡眠日記，定制睡眠處方</string>
     <string name="scale_evaluation">量表評估</string>
     <string name="sleep_health">睡眠衛生</string>
-    <string name="homepage_sleep_slogan">好的睡眠離不開您一點一滴的努力</string>
+    <string name="homepage_sleep_slogan">好的睡眠離不開您壹點壹滴的努力</string>
     <string name="my_target">我的目標</string>
     <string name="sleep_time">就寢時間</string>
     <string name="getUpTime">起床時間</string>
@@ -173,7 +173,7 @@
 
     <string name="waiting_for_reply">待回復</string>
     <string name="closed">已關閉</string>
-    <string name="first_question">第一次提問</string>
+    <string name="first_question">第壹次提問</string>
     <string name="second_question">第二次提問</string>
     <string name="third_question">第三次提問</string>
     <string name="view_the_record">查看電子報告</string>
@@ -237,7 +237,7 @@
     <string name="bind_wechat_title">是否綁定微信？</string>
     <string name="unbind_wechat_title">確定解綁微信？</string>
     <string name="bind_wechat_message">綁定後，可使用微信賬號登錄睡眠醫生</string>
-    <string name="unbind_wechat_message">解綁後，你將無法使用微信賬號登錄</string>
+    <string name="unbind_wechat_message">解綁後，妳將無法使用微信賬號登錄</string>
     <string name="me_my_sleep_file">睡眠檔案</string>
 
     <!-- online report -->
@@ -250,7 +250,7 @@
     <string name="all_read">全部已讀</string>
     <string name="go_open">去開啟</string>
     <string name="open_notification_push">開啟消息推送通知</string>
-    <string name="open_notification_push_hint">第一時間接收消息更新通知</string>
+    <string name="open_notification_push_hint">第壹時間接收消息更新通知</string>
     <string name="notification_list_empty_title">沒有消息提醒</string>
     <string name="notification_list_empty_desc">您收到醫生回復、建議或報告更新，\n都會在這裏收到消息提醒</string>
 
@@ -412,7 +412,7 @@
     <!--<string name="no_have_wechat">手機上未安裝微信客戶端</string>-->
 
     <!--<string name="take_photo">拍照</string>-->
-    <!--<string name="network_error">網絡異常,請檢查你的網絡設置</string>-->
+    <!--<string name="network_error">網絡異常,請檢查妳的網絡設置</string>-->
 
     <string name="sync">同步</string>
     <!--<string name="syncing">同步中</string>-->
@@ -422,7 +422,7 @@
     <string name="no_have_sleep_data_low_label">使用設備後，打開手機藍牙，自動上傳睡眠數據</string>
     <string name="career_hint">職業</string>
     <string name="nickname_warn_label">昵稱需保證在1–16個字符內，且不能與他人重復.</string>
-    <string name="career_warn_label">請填寫你所從事的職業類型</string>
+    <string name="career_warn_label">請填寫妳所從事的職業類型</string>
     <!--<string name="input_career_hint">請輸入您的職業</string>-->
     <string name="new_areer_too_much_more_error">職業信息太長了,超過了12個字符</string>
     <string name="tab_data">數據</string>
@@ -455,7 +455,7 @@
     <string name="tel_service">電話預約</string>
     <string name="my_record">我的檔案</string>
     <string name="ask_question">咨詢問題</string>
-    <string name="ask_question_hint">一句話描述你想要咨詢的問題（20字以內）</string>
+    <string name="ask_question_hint">壹句話描述妳想要咨詢的問題（20字以內）</string>
     <string name="ask_more">補充說明</string>
     <string name="ask_more_hint">請詳細描述您希望解決的問題：1.描述您的睡前行為；2.描述癥狀；3.藥物相關問題等（400字以內）</string>
     <string name="tel_submit">確認</string>
@@ -464,8 +464,9 @@
     <string name="un_finished">未完成</string>
     <string name="is_finished">已完成</string>
     <string name="hello_comment">您好，</string>
-    <string name="welcome_use_this_app_please_login">歡迎使用速眠醫生，請登錄</string>
+    <string name="welcome_use_this_app_please_login">歡迎使用eSleep，請登錄</string>
     <string name="input_phone_hint">請輸入手機號碼</string>
+    <string name="input_account_hint">請輸入賬號</string>
     <string name="input_password_hint">請輸入密碼</string>
     <string name="login_with_space_inside">登 錄</string>
     <string name="app_user_agreement">速眠醫生用戶協議</string>
@@ -484,8 +485,8 @@
     <string name="phone_number_invalid_toast">手機格式有誤，請重新輸入</string>
     <string name="captcha_invalid_toast">驗證碼錯誤，請重新輸入</string>
     <string name="password_invalid_toast">請輸入%d～%d位密碼</string>
-    <string name="password_not_the_same">兩次密碼不一致</string>
-    <string name="phone_number_validation_regex" tools:ignore="TypographyDashes">1([0-9]{10})</string>
+    <string name="password_not_the_same">兩次密碼不壹致</string>
+    <string name="phone_number_validation_regex" tools:ignore="TypographyDashes">.*</string>
     <string name="captcha_validation_regex">\\d{6}</string>
     <string name="password_validation_regex">.{6,16}</string>
     <string name="feedback_hint">請詳細描述您的意見或建議，我們將及時處理並給予反饋，速眠醫生致力於為您提供專業貼心的服務。</string>
@@ -509,7 +510,7 @@
     <string name="no_data_yet">暫無相關記錄</string>
     <string name="after_bind_doctor_you_can_consult_the_doctor">綁定醫生後，可向主治醫生咨詢</string>
     <string name="sleep_prescription_introduction_title">睡眠處方介紹</string>
-    <string name="sleep_prescription_introduction_content">睡眠效率差的人，躺在床上太久，反而會胡思亂想，限制其臥床時間，可能會提高睡眠效率。執行睡眠處方的步驟是：\n（1）填寫7天的睡眠日記，計算出每晚平均睡眠時長和睡眠效率；\n（2）以平均每晚睡眠時長作為本周每晚可躺在床上的時間，但要固定起床時間，且臥床時長不能低於5小時；\n（3）上周的睡眠效率決定本周的睡眠時長以及上床時間是否需要調整；\n（4）請認真遵守睡眠處方，你的睡眠效率會慢慢提高，當你的睡眠效率提高後，我們會逐步延長你的睡眠時長，陪你一起改善睡眠！\n\n速眠醫生建議在過去7天內填寫至少3篇以上的睡眠日記，有助於提供更精準的上床時間。\n更多睡眠處方的內容可通過學習CBTI課程進行了解。
+    <string name="sleep_prescription_introduction_content">睡眠效率差的人，躺在床上太久，反而會胡思亂想，限制其臥床時間，可能會提高睡眠效率。執行睡眠處方的步驟是：\n（1）填寫7天的睡眠日記，計算出每晚平均睡眠時長和睡眠效率；\n（2）以平均每晚睡眠時長作為本周每晚可躺在床上的時間，但要固定起床時間，且臥床時長不能低於5小時；\n（3）上周的睡眠效率決定本周的睡眠時長以及上床時間是否需要調整；\n（4）請認真遵守睡眠處方，妳的睡眠效率會慢慢提高，當妳的睡眠效率提高後，我們會逐步延長妳的睡眠時長，陪妳壹起改善睡眠！\n\n速眠醫生建議在過去7天內填寫至少3篇以上的睡眠日記，有助於提供更精準的上床時間。\n更多睡眠處方的內容可通過學習CBTI課程進行了解。
 </string>
     <string name="none_sleep_status_data">無數據狀態</string>
     <string name="user_privacy_policy">用戶隱私政策</string>
@@ -610,12 +611,12 @@
     <string name="device_connect_timeout">設備連接超時</string>
     <string name="add_belief">添加信念</string>
     <string name="anxiety_and_belief">憂慮與信念</string>
-    <string name="anxiety_and_belief_explain">憂慮:\n記錄憂慮事件是為了把我們憂慮的事情在睡前較早的一個時段內處理和安排好，這有助於減少我們在睡前因此而引起煩惱。設定一個憂慮時間，每天在同一個時間段把所需要處理的事情想好辦法，如果目前不能解決，可以安排另一個時間段來思考，堅持這麽做，你會發現，我們在睡前會受到更少憂慮的困擾。\n\n信念:\n信念平時並不太容易被發現，因為他經常是自動化的。記錄它一是可以讓我們識別出我們有哪些信念，二來是有助於我們判斷哪些是不合理信念並用認知重構的方法來重建他們，經過反復練習讓理性的信念變成自動化。</string>
+    <string name="anxiety_and_belief_explain">憂慮:\n記錄憂慮事件是為了把我們憂慮的事情在睡前較早的壹個時段內處理和安排好，這有助於減少我們在睡前因此而引起煩惱。設定壹個憂慮時間，每天在同壹個時間段把所需要處理的事情想好辦法，如果目前不能解決，可以安排另壹個時間段來思考，堅持這麽做，妳會發現，我們在睡前會受到更少憂慮的困擾。\n\n信念:\n信念平時並不太容易被發現，因為他經常是自動化的。記錄它壹是可以讓我們識別出我們有哪些信念，二來是有助於我們判斷哪些是不合理信念並用認知重構的方法來重建他們，經過反復練習讓理性的信念變成自動化。</string>
     <string name="anxiety">憂慮</string>
-    <string name="anxiety_input_hint">今天，有什麽事情讓你感到憂慮、煩惱？（點擊這裏開始輸入）</string>
-    <string name="anxiety_solution_input_hint">你是怎麽解決你的憂慮的？（點擊這裏開始輸入）</string>
+    <string name="anxiety_input_hint">今天，有什麽事情讓妳感到憂慮、煩惱？（點擊這裏開始輸入）</string>
+    <string name="anxiety_solution_input_hint">妳是怎麽解決妳的憂慮的？（點擊這裏開始輸入）</string>
     <string name="solution">解決辦法</string>
-    <string name="add_anxiety_bottom_hint">速眠醫生建議：把憂慮的事情都集中在日間一個時間處理哦。</string>
+    <string name="add_anxiety_bottom_hint">速眠醫生建議：把憂慮的事情都集中在日間壹個時間處理哦。</string>
     <string name="save">保存</string>
     <string name="edit">編輯</string>
     <string name="delete">刪除</string>
@@ -624,6 +625,7 @@
     <string name="delete_record_confirm_hint">確定要刪除此條記錄嗎？</string>
     <string name="cbti_introduction_more"><![CDATA[查看介紹 >]]></string>
     <string name="cbti_title_bar">失眠認知行為治療(CBTI)</string>
+    <string name="sleep_health_education">睡眠健康教育</string>
     <string name="go_to_evaluation">去評估</string>
     <string name="cbti_chapter_no_lock">本周課程還未解鎖</string>
     <string name="go_to_evaluation_title">CBTI評估</string>
@@ -635,8 +637,8 @@
     <string name="belief_title_0" tools:ignore="TypographyFractions">1/3. 事件</string>
     <string name="belief_title_1" tools:ignore="TypographyFractions">2/3. 想法</string>
     <string name="belief_title_2" tools:ignore="TypographyFractions">3/3. 情緒</string>
-    <string name="input_event_hint">是發生了什麽事情？引起了你的想法與情緒？如：在旅途中，你有一瓶水，喝了一半。（點擊這裏開始輸入）</string>
-    <string name="when_you_thought_what_is_the_emotion">當你對這件事產生了想法時，你的情緒如何？</string>
+    <string name="input_event_hint">是發生了什麽事情？引起了妳的想法與情緒？如：在旅途中，妳有壹瓶水，喝了壹半。（點擊這裏開始輸入）</string>
+    <string name="when_you_thought_what_is_the_emotion">當妳對這件事產生了想法時，妳的情緒如何？</string>
     <string name="emotion_0">難過</string>
     <string name="emotion_1">焦慮</string>
     <string name="emotion_2">憤怒</string>
@@ -669,9 +671,9 @@
     <string name="write_message">寫留言</string>
     <string name="anonymous_nickname">匿名用戶</string>
     <string name="ssd_replay">速眠醫生回復：</string>
-    <string name="message_board_empty_hint">- 期待您寫下這裏的第一條留言 -</string>
+    <string name="message_board_empty_hint">- 期待您寫下這裏的第壹條留言 -</string>
     <string name="msg_board_empty_hint">- 暫無留言記錄 -</string>
-    <string name="msg_board_hint">寫下你想說的話</string>
+    <string name="msg_board_hint">寫下妳想說的話</string>
     <string name="send">發送</string>
     <string name="anonymous_submit">匿名提交</string>
     <string name="medicine_history">服用促進睡眠類藥物</string>
@@ -726,9 +728,9 @@
         <item>今早幾點醒來?</item>
         <item>今早幾點起床?</item>
         <item>昨晚有醒來過嗎?</item>
-        <item>昨天白天有小睡一會嗎?</item>
+        <item>昨天白天有小睡壹會嗎?</item>
         <item>昨天有服用過安眠類藥物嗎?</item>
-        <item>你早上起來感覺如何?</item>
+        <item>妳早上起來感覺如何?</item>
         <item>還有什麽想記錄的?</item>
     </string-array>
     <string name="no_night_wake">沒醒過</string>
@@ -827,7 +829,7 @@
     <string name="more_medal_bottom_tips">- 更多勛章，敬請期待 -</string>
     <string name="my_metal">我的勛章</string>
     <string name="start_evaluate">開始測評</string>
-    <string name="get_sleep_guide_in_30_sec">- 30秒獲取最適合你的睡眠指南 -</string>
+    <string name="get_sleep_guide_in_30_sec">- 30秒獲取最適合妳的睡眠指南 -</string>
     <string name="yes">是</string>
     <string name="no">否</string>
     <string name="get_good_sleep_solution">獲取好眠方案</string>
@@ -871,10 +873,6 @@
     <string name="sleep_master_is_not_ok_app_need_upgrade">速眠儀不可用，需要更新APP</string>
     <string name="device_is_not_ok_device_need_upgrade">設備不可用，需更新固件</string>
     <string name="sleep_master_is_not_ok_device_need_upgrade">速眠儀不可用，需更新固件</string>
-    <string name="input_account_hint">請輸入賬號</string>
-    <string name="if_no_account_please_contact_doctor">如果沒有賬號密碼或賬號密碼已忘記，請聯系所屬醫師。</string>
-    <string name="sleep_steward">睡眠管家</string>
-    <string name="any_question_contact_your_doctor">- 如有疑問，請聯系所屬醫師 -</string>
 
     <string-array name="counselor_experience_years">
         <item>1年</item>
@@ -887,4 +885,8 @@
     <string name="counselor_desc">%s、%s從業經驗、累積個案時長%d小時</string>
     <string name="upgrade_now">立即更新</string>
     <string name="no_sleep_all_night">整晚沒睡</string>
+    <string name="if_no_account_please_contact_doctor">如果沒有賬號密碼或賬號密碼已忘記，請聯系所屬醫師。</string>
+    <string name="sleep_steward">睡眠管家</string>
+    <string name="any_question_contact_your_doctor">- 如有疑問，請聯系所屬醫師 -</string>
+
 </resources>
