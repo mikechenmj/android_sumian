@@ -3,9 +3,9 @@ package com.sumian.sd.common.network.interceptor
 import android.webkit.WebSettings
 import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.common.utils.SystemUtil
 import okhttp3.Interceptor
 import okhttp3.Response
+import java.util.*
 
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 /**
@@ -31,7 +31,7 @@ class NormalInterceptor private constructor() : Interceptor {
         val builder = chain
                 .request()
                 .newBuilder()
-                .addHeader("Accept-Language", SystemUtil.getSystemLanguage())
+                .addHeader("Accept-Language", "${Locale.getDefault().language}-${Locale.getDefault().country}")
                 .addHeader("Content-Type", "application/json")
                 .addHeader("User-Agent", "$userAgent Sumian-Doctor-Android uid:${AppManager.getAccountViewModel().userInfo?.id
                         ?: 0}")
