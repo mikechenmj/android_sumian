@@ -48,7 +48,7 @@ data class DoctorInfo(
         @SerializedName("invitation_code")
         var invitationCode: String, // 0QY84X
         @SerializedName("last_login_at")
-        var lastLoginAt: String, // 2019-04-19 16:20:08
+        var lastLoginAt: String?, // 2019-04-19 16:20:08, null 表示是新创建的用户
         @SerializedName("mobile")
         var mobile: String, // 13570461901
         @SerializedName("mobile_notice")

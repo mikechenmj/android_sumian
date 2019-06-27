@@ -54,7 +54,6 @@ class TokenAuthInterceptor private constructor() : Interceptor {
             setExpired_at(0)
             setRefresh_expired_at((System.currentTimeMillis() / 1000L).toInt())
             setUser(AppManager.getAccountViewModel().userInfo)
-            is_new = false
         }
     }
 }

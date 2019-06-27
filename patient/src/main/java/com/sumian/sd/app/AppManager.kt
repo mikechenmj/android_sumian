@@ -281,7 +281,7 @@ object AppManager {
 
     fun launchMainOrNewUserGuide() {
         val token = AppManager.getAccountViewModel().token
-        if (token != null && token.is_new) {
+        if (token != null && token.isNew()) {
             ActivityUtils.startActivity(NewUserGuideActivity::class.java)
             ActivityUtils.finishAllActivities()
         } else {

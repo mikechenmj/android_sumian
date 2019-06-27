@@ -11,10 +11,14 @@ import com.google.gson.annotations.SerializedName;
 public class Token {
 
     public String token;
-    public @SerializedName("expired_at") int expired_at;
-    public @SerializedName("refresh_expired_at") int refresh_expired_at;
-    public @SerializedName("user") UserInfo user;
-    public @SerializedName("is_new") boolean is_new;//true:新用户，false:旧用户
+    public @SerializedName("expired_at")
+    int expired_at;
+    public @SerializedName("refresh_expired_at")
+    int refresh_expired_at;
+    public @SerializedName("user")
+    UserInfo user;
+//    public @SerializedName("is_new")
+//    boolean is_new;//true:新用户，false:旧用户
 
     @Override
     public String toString() {
@@ -23,7 +27,6 @@ public class Token {
                 ", expired_at=" + expired_at +
                 ", refresh_expired_at=" + refresh_expired_at +
                 ", user=" + user +
-                ", is_new=" + is_new +
                 '}';
     }
 
@@ -59,11 +62,7 @@ public class Token {
         this.user = user;
     }
 
-    public boolean isIs_new() {
-        return is_new;
-    }
-
-    public void setIs_new(boolean is_new) {
-        this.is_new = is_new;
+    public boolean isNew() {
+        return user != null && user.last_login_at == null;
     }
 }
