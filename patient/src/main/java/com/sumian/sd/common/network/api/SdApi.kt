@@ -189,6 +189,9 @@ interface SdApi {
     @GET("service")
     fun getServiceByType(@Query("type") type: Int, @Query("service_package_type") servicePackageType: Int = 0): Call<DoctorService>
 
+    @GET("research/cbti-detail")
+    fun getCbtiDetail(): Call<CbtiDetail>
+
     @GET("services/{id}")
     fun getServiceDetailById(@Path("id") id: Int): Call<DoctorService>
 

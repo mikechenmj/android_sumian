@@ -104,6 +104,7 @@ class CbtiFinalReportDialogActivity : BaseDialogViewModelActivity<BaseViewModel>
         payloadMap["scale_id"] = finalReport.scheme.scaleDistributionIds
         payloadMap["cbti_id"] = finalReport.scheme.cbtiId
         payloadMap["chapter_id"] = finalReport.scheme.chapterId
+        payloadMap["type"] = 1
         ActivityUtils.startActivity(SimpleWebActivity.getLaunchIntentWithRouteData(this, "openCbtiScales", payloadMap))
     }
 }

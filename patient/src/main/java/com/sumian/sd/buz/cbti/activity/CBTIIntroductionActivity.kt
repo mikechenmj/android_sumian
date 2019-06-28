@@ -21,6 +21,7 @@ import com.sumian.common.widget.dialog.SumianDialog
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.cbti.adapter.CBTIIntroductionAdapter
+import com.sumian.sd.buz.cbti.bean.CbtiDetail
 import com.sumian.sd.buz.cbti.event.CBTIServiceBoughtEvent
 import com.sumian.sd.buz.doctor.bean.DoctorService
 import com.sumian.sd.buz.homepage.bean.CbtiChapterData
@@ -203,10 +204,10 @@ class CBTIIntroductionActivity : BaseActivity(), BaseRecyclerAdapter.OnItemClick
 
     fun getCBTIServiceDetail() {
         showLoading()
-        val call = AppManager.getSdHttpService().getServiceByType(DoctorService.SERVICE_TYPE_CBTI)
+        val call = AppManager.getSdHttpService().getCbtiDetail()
         addCall(call)
-        call.enqueue(object : BaseSdResponseCallback<DoctorService>() {
-            override fun onSuccess(response: DoctorService?) {
+        call.enqueue(object : BaseSdResponseCallback<CbtiDetail>() {
+            override fun onSuccess(response: CbtiDetail?) {
                 response?.let {
                     getCBTIServiceDetailSuccess(it.name, it.introduction, it.picture)
                 }

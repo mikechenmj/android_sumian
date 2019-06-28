@@ -33,6 +33,7 @@
                 android:paddingEnd="20dp">
 
                 <TextView
+                    android:id="@+id/tv_cbti_title"
                     style="@style/text_white_18"
                     android:text="@string/cbti_ing"
                     android:textStyle="bold" />

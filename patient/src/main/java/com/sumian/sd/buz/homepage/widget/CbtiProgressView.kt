@@ -35,6 +35,7 @@ class CbtiProgressView(context: Context, attributeSet: AttributeSet) : LinearLay
         ll_progress.visibility = if (chaptersData != null && !chaptersData.meta.isLock) View.VISIBLE else View.GONE
         ll_not_buy.visibility = if (chaptersData == null || chaptersData.meta.isLock) View.VISIBLE else View.GONE
         if (chaptersData != null) {
+            tv_cbti_title.text = resources.getString(R.string.sleep_health_education)
             tv_cbti_subtitle.text = resources.getString(if (chaptersData.meta.allFinished) R.string.cbti_ing_all_finished_desc else R.string.cbti_ing_describe)
             val dataList = chaptersData.data
             updateProgressViewList(dataList)

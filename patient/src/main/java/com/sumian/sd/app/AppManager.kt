@@ -10,10 +10,7 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ProcessLifecycleOwner
 import cn.leancloud.chatkit.LCIMManager
-import com.blankj.utilcode.util.ActivityUtils
-import com.blankj.utilcode.util.AppUtils
-import com.blankj.utilcode.util.ToastUtils
-import com.blankj.utilcode.util.Utils
+import com.blankj.utilcode.util.*
 import com.sumian.common.base.BaseActivityManager
 import com.sumian.common.buz.kefu.KefuManager
 import com.sumian.common.dns.HttpDnsEngine
@@ -359,6 +356,7 @@ object AppManager {
         LoginActivity.show()
         StatUtil.removeAccount()
         LCIMManager.getInstance().close()
+        SPUtils.getInstance().clear()
     }
 
     // ------------ App's important lifecycle events end------------
