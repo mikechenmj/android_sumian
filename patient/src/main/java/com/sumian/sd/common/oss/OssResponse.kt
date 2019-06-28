@@ -1,4 +1,4 @@
-package com.sumian.sd.common.oss
+package com.sumian.sd.patient.oss
 
 import com.google.gson.annotations.SerializedName
 
