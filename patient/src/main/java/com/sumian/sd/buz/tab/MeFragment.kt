@@ -64,7 +64,7 @@ class MeFragment : BaseFragment() {
         sdv_app_version.setContent(versionName)
         VersionManager.queryAppVersion()
         VersionManager.mAppUpgradeMode.observe(this, Observer {
-            sdv_app_version.showRedDot(it >= VersionManager.UPGRADE_MODE_NORMAL)
+            sdv_app_version.showRedDot(it == VersionManager.UPGRADE_MODE_NORMAL || it == VersionManager.UPGRADE_MODE_FORCE)
         })
     }
 

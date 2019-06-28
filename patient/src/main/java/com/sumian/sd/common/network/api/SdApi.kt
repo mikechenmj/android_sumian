@@ -343,7 +343,7 @@ interface SdApi {
      * 获取 app 的版本信息
      */
     @GET("app-version/latest")
-    fun getAppVersion(@Query("type") type: Int = 1, @Query("current_version") currentVersion: String): Call<Version>
+    fun getAppVersion(@Query("type") type: Int = 1, @Query("app") app: Int = 3, @Query("current_version") currentVersion: String): Call<Version>
 
     /**
      * 使用该电话预约清单
