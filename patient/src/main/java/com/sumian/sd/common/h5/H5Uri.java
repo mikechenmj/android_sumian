@@ -17,7 +17,7 @@ public interface H5Uri {
     String MY_MEDICAL_RECORD = "mine/medical";
     String DOCTOR_SERVICE = "doctor-service/{id}";
     String ONLINE_REPORT = "online-reports?title={title}&report_url={pdfUrl}";
-    String FILL_SCALE = "scale-details/{scale_distribution_id}";
+    String FILL_SCALE = "scale-details/{scale_distribution_id}?research=1";
     String BIND_DOCTOR = "doctor/null?url={url}";//  doctor/{id}
     String ABOUT_US = "about-us";
     String ADVISORY_GUIDE = "advisory-guide";
@@ -30,7 +30,7 @@ public interface H5Uri {
     String CBTI_INTRODUCTION = "cbtiResearchIntroduce";//CBTI 了解更多
     String CBTI_OPEN_SCALES = "openCbtiScales";
     String SLEEP_PRESCRIPTION = "prescription";
-    String CBTI_EXERCISES = "cbti/exercises?id={course-id}";
+    String CBTI_EXERCISES = "cbti/exercises?id={course-id}&data={pageData}&research=1";
     String CBTI_WEEK_REVIEW = "cbti/week-review?review={last_chapter_summary}";
     String NEW_USER_GUIDE = "guide?from=newUser";
     String CBTI_RELAXATIONS = "cbti/relaxations";

@@ -9,11 +9,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.sumian.common.R;
-
 import androidx.annotation.DrawableRes;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
+
+import com.sumian.common.R;
 
 
 /**
@@ -26,7 +26,7 @@ public class EmptyErrorView extends LinearLayout implements View.OnClickListener
     private ImageView mIvEmptyIcon;
     private TextView mTvEmptyMsgTitle;
     private TextView mTvEmptyMsgDesc;
-    private boolean mAutoHide;
+    public boolean mAutoHide;
 
     private OnEmptyCallback mOnEmptyCallback;
 
@@ -114,9 +114,9 @@ public class EmptyErrorView extends LinearLayout implements View.OnClickListener
     public void onClick(View v) {
         if (mOnEmptyCallback != null) {
             this.mOnEmptyCallback.reload();
-        }
-        if (mAutoHide) {
-            hide();
+            if (mAutoHide) {
+                hide();
+            }
         }
     }
 

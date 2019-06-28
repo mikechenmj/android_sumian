@@ -82,18 +82,18 @@
                 app:type_desc="@string/remind_setting" />
 
             <com.sumian.sd.widget.divider.SettingDividerView
-                android:id="@+id/sdv_app_version"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:divider_line_visible="visible"
-                app:type_desc="@string/current_app_version" />
-
-            <com.sumian.sd.widget.divider.SettingDividerView
                 android:id="@+id/sdv_modify_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:divider_line_visible="visible"
                 app:type_desc="@string/set_password" />
+
+            <com.sumian.sd.widget.divider.SettingDividerView
+                android:id="@+id/sdv_app_version"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:divider_line_visible="visible"
+                app:type_desc="@string/current_app_version" />
 
             <com.sumian.sd.widget.divider.SettingDividerView
                 android:id="@+id/sdv_clear_cache"

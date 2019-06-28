@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.sumian.common.h5.handler.SBridgeHandler;
@@ -16,8 +18,6 @@ import com.sumian.sd.common.h5.H5Uri;
 import com.sumian.sd.common.utils.EventBusUtil;
 
 import org.jetbrains.annotations.NotNull;
-
-import androidx.annotation.NonNull;
 
 public class ScaleDetailActivity extends SdBaseWebViewActivity {
 
@@ -65,7 +65,7 @@ public class ScaleDetailActivity extends SdBaseWebViewActivity {
         String uri = H5Uri.FILL_SCALE;
         uri = uri.replace("{scale_distribution_id}", String.valueOf(mScaleDistributionId));
         if (mScaleId != 0) {
-            uri = uri + "?scale_id_v2=" + mScaleId;
+            uri = uri + "&scale_id_v2=" + mScaleId;
         }
         return uri;
     }

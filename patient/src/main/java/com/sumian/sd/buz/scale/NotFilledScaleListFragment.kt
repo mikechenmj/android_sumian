@@ -46,7 +46,10 @@ class NotFilledScaleListFragment : BaseFragment() {
                         ?: "", notFilledScale.id, 0)
             }
         }
-        mAdapter.emptyView = EmptyErrorView.create(activity!!, R.mipmap.ic_empty_state_report, R.string.empty_evaluation_msg, R.string.know_your_sleep_health_situation)
+        val emptyErrorView = EmptyErrorView.create(activity!!, R.mipmap.ic_empty_state_report, R.string.empty_evaluation_msg, R.string.know_your_sleep_health_situation)
+        emptyErrorView.mAutoHide = false
+        emptyErrorView.setOnClickListener { loadMoreData() }
+        mAdapter.emptyView = emptyErrorView
         recycler_view.layoutManager = LinearLayoutManager(activity!!)
         recycler_view.adapter = mAdapter
         loadMoreData()

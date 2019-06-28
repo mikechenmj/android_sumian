@@ -17,8 +17,12 @@ import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import androidx.annotation.DrawableRes;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.blankj.utilcode.util.ToastUtils;
 import com.sumian.sd.R;
+import com.sumian.sd.app.AppManager;
 import com.sumian.sd.buz.cbti.activity.CBTICoursePlayActivity;
 import com.sumian.sd.buz.cbti.bean.CoursePlayAuth;
 
@@ -27,9 +31,6 @@ import org.jetbrains.annotations.NotNull;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-
-import androidx.annotation.DrawableRes;
-import androidx.appcompat.app.AppCompatActivity;
 
 
 /**
@@ -151,7 +152,7 @@ public class TxVideoPlayerController extends NiceVideoPlayerController implement
 
     private void init() {
         LayoutInflater.from(mContext).inflate(R.layout.tx_video_palyer_controller, this, true);
-
+        findViewById(R.id.tv_lesson_practice_hint).setVisibility(AppManager.getAccountViewModel().isControlGroup() ? View.GONE : View.VISIBLE);
         mCenterStart = findViewById(R.id.center_start);
         mImage = findViewById(R.id.image);
 

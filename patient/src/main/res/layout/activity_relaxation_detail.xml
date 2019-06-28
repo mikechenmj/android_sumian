@@ -164,5 +164,6 @@
         android:layout_marginTop="@dimen/status_bar_height"
         android:padding="15dp"
         android:src="@drawable/nav_icon_share_black"
+        android:visibility="gone"
         tools:ignore="ContentDescription" />
 </FrameLayout>

@@ -148,7 +148,11 @@ class MainActivity : BaseActivity() {
     private fun updateTabDot() {
         val hasNotification = (mNotificationViewModel.unreadCount.value ?: 0) > 0
         val hasImMsg = LCIMManager.getInstance().unreadMessageCount > 0
-        tb_me?.showDot(hasNotification || hasImMsg)
+        VersionManager.mAppUpgradeMode.observe(this, Observer<Int> { t ->
+            tb_me?.showDot(t == VersionManager.UPGRADE_MODE_NORMAL
+                    || t == VersionManager.UPGRADE_MODE_FORCE)
+        })
+
 
         val hasKefuMsg = (KefuManager.mUnreadCountLiveData.value ?: 0) > 0
         tb_doctor.showDot(hasKefuMsg)

@@ -137,6 +137,7 @@ class CBTIIntroductionActivity : BaseActivity(), BaseRecyclerAdapter.OnItemClick
                     .setTitleText(R.string.go_to_evaluation_title)
                     .setMessageText(R.string.go_to_evaluation_message)
                     .setRightBtn(R.string.go_to_evaluation, View.OnClickListener { CBTIEvaluationWebActivity.show(cbtiChapterData.scale_distribution_ids, cbtiChapterData.id) })
+                    .setCanceledOnTouchOutsideWrap(false)
                     .show()
         }
     }

@@ -1,7 +1,6 @@
 package com.sumian.sd.buz.tab
 
 import android.annotation.SuppressLint
-import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import androidx.lifecycle.Observer
@@ -114,7 +113,7 @@ class MeFragment : BaseFragment() {
     private fun updateUserProfile(userProfile: UserInfo) {
         iv_avatar.loadImage(userProfile.avatar, R.mipmap.ic_info_avatar_patient, R.mipmap.ic_info_avatar_patient)
         val nickname = userProfile.nickname
-        tv_nickname.text = if (TextUtils.isEmpty(nickname)) userProfile.mobile else nickname
+        tv_nickname.text = nickname
     }
 
     private fun showLogoutDialog() {
