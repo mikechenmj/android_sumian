@@ -81,6 +81,7 @@ android {
         buildConfigField("String", "WECHAT_APP_SECRET", appProperties['WECHAT_APP_SECRET'])
         buildConfigField("String", "WECHAT_MINI_PROGRAM_ID_YOUZAN", appProperties['WECHAT_MINI_PROGRAM_ID_YOUZAN'])
         buildConfigField("String", "YOUZAN_URL", appProperties['YOUZAN_URL'])
+        buildConfigField("String", "MARKET_URL", appProperties['MARKET_URL_RELEASE'])
 
         // Enabling multidex support.
         multiDexEnabled true
@@ -167,6 +168,7 @@ android {
             buildConfigField("String", "LEANCLOUD_BROADCAST_CONVERSATION_ID", appProperties['DEV_LEANCLOUD_BROADCAST_CONVERSATION_ID'])
             buildConfigField("String", "ALIYUN_LOG_PROJECT", appProperties['ALIYUN_LOG_PROJECT_DEV'])
             buildConfigField("String", "TENCENT_STATIC_APP_ID", appProperties['TENCENT_STATIC_APP_ID_TEST'])
+            buildConfigField("String", "MARKET_URL", appProperties['MARKET_URL_TEST'])
 
             resValue "string", "app_name", real_app_name
             println("${real_app_name}")
@@ -186,6 +188,7 @@ android {
             buildConfigField("String", "LEANCLOUD_BROADCAST_CONVERSATION_ID", appProperties['TEST_LEANCLOUD_BROADCAST_CONVERSATION_ID'])
             buildConfigField("String", "ALIYUN_LOG_PROJECT", appProperties['ALIYUN_LOG_PROJECT_TEST'])
             buildConfigField("String", "TENCENT_STATIC_APP_ID", appProperties['TENCENT_STATIC_APP_ID_TEST'])
+            buildConfigField("String", "MARKET_URL", appProperties['MARKET_URL_TEST'])
 
             resValue "string", "app_name", real_app_name
             println("${real_app_name}")
@@ -193,6 +196,7 @@ android {
 
         official {
             dimension "environment"
+            applicationIdSuffix = ".release"
             versionNameSuffix = "-release"
             buildConfigField("String", "BASE_URL", appProperties['BASE_OFFICIAL_URL'])
             buildConfigField("String", "BASE_H5_URL", appProperties['BASE_OFFICIAL_H5_URL'])

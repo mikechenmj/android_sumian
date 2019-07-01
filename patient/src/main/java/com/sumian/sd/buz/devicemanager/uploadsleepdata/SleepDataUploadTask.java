@@ -3,16 +3,19 @@ package com.sumian.sd.buz.devicemanager.uploadsleepdata;
 import android.text.TextUtils;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.alibaba.fastjson.JSON;
 import com.sumian.common.network.error.ErrorCode;
 import com.sumian.common.network.response.ErrorResponse;
 import com.sumian.common.utils.SumianExecutor;
+import com.sumian.device.oss.OssResponse;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.buz.report.bean.DailyReport;
 import com.sumian.sd.common.log.LogManager;
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback;
 import com.sumian.sd.common.oss.OssEngine;
-import com.sumian.sd.common.oss.OssResponse;
 import com.sumian.sd.common.oss.hwbean.OssTransData;
 import com.sumian.sd.common.oss.hwbean.OssTransDataError;
 import com.sumian.sd.common.utils.NetUtil;
@@ -26,8 +29,6 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import retrofit2.Call;
 
 /**

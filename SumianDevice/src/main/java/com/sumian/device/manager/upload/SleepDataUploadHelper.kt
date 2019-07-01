@@ -10,8 +10,8 @@ import com.sumian.device.manager.upload.UploadFileCallback.Companion.ERROR_CODE_
 import com.sumian.device.manager.upload.UploadFileCallback.Companion.ERROR_CODE_UNKNOWN
 import com.sumian.device.manager.upload.bean.UploadSleepDataTask
 import com.sumian.device.net.NetworkManager
+import com.sumian.device.oss.OssResponse
 import com.sumian.device.util.LogManager
-import com.sumian.sd.common.oss.OssResponse
 import com.sumian.sd.common.oss.OssUtil
 import retrofit2.Call
 import retrofit2.Callback

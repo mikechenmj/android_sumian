@@ -5,6 +5,7 @@ import cn.leancloud.chatkit.bean.ImUser
 import com.google.gson.JsonObject
 import com.sumian.common.buz.notification.NotificationListResponse
 import com.sumian.common.network.response.PaginationResponseV2
+import com.sumian.device.oss.OssResponse
 import com.sumian.sd.buz.account.achievement.bean.AchievementData
 import com.sumian.sd.buz.account.achievement.bean.AchievementRecord
 import com.sumian.sd.buz.account.achievement.bean.AchievementResponse
@@ -53,7 +54,6 @@ import com.sumian.sd.buz.version.bean.Version
 import com.sumian.sd.common.log.LogOssResponse
 import com.sumian.sd.common.network.response.AppUpgradeInfo
 import com.sumian.sd.common.network.response.FirmwareVersionInfo
-import com.sumian.sd.common.oss.OssResponse
 import com.sumian.sd.common.pay.bean.OrderDetail
 import com.sumian.sd.common.pay.bean.PayCouponCode
 import com.sumian.sd.common.pay.bean.PayOrder

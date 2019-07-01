@@ -5,7 +5,7 @@ import com.sumian.device.authentication.Token
 import com.sumian.device.data.DeviceVersionInfo
 import com.sumian.device.data.PatternData
 import com.sumian.device.manager.upload.bean.UploadSleepDataParams
-import com.sumian.sd.common.oss.OssResponse
+import com.sumian.device.oss.OssResponse
 import retrofit2.Call
 import retrofit2.http.*
 

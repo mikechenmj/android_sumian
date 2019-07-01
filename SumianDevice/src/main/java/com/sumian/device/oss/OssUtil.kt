@@ -11,6 +11,7 @@ import com.alibaba.sdk.android.oss.internal.OSSAsyncTask
 import com.alibaba.sdk.android.oss.model.PutObjectRequest
 import com.alibaba.sdk.android.oss.model.PutObjectResult
 import com.sumian.device.BuildConfig
+import com.sumian.device.oss.OssResponse
 import com.sumian.device.util.LogManager
 import com.sumian.device.util.ThreadManager
 import java.util.*

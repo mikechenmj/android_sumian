@@ -9,6 +9,7 @@ import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.view.Gravity;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.sumian.common.helper.ToastHelper;
 import com.sumian.sd.BuildConfig;
 import com.sumian.sd.R;
@@ -46,34 +47,10 @@ public final class UiUtils {
     }
 
     private static void gotoMarket(Context context, String pck) {
-        if (!isHaveMarket(context)) {
-            ToastHelper.show(context, context.getString(R.string.none_market), Gravity.CENTER);
-            // 打开应用商店失败 可能是没有手机没有安装应用市场
-            // 调用系统浏览器进入商城
-            openLinkBySystem(context, BuildConfig.DEFAULT_APK_DOWNLOAD_URL);
-            return;
-        }
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse("market://details?id=" + pck));
-        try {
-            intent.setClassName("com.tencent.android.qqdownloader", "com.tencent.pangu.link.LinkProxyActivity");
-            if (intent.resolveActivity(context.getPackageManager()) != null) {
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
-            }
-        } catch (ActivityNotFoundException e) {
-            e.printStackTrace();
-            openLinkBySystem(context, BuildConfig.DEFAULT_APK_DOWNLOAD_URL);
-        }
-
-    }
-
-    private static boolean isHaveMarket(Context context) {
-        Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.addCategory(Intent.CATEGORY_APP_MARKET);
-        PackageManager pm = context.getPackageManager();
-        List<ResolveInfo> intentActivities = pm.queryIntentActivities(intent, 0);
-        return intentActivities.size() > 0;
+        String uri = BuildConfig.MARKET_URL;
+        intent.setData(Uri.parse(uri));
+        ActivityUtils.startActivity(intent);
     }
 
     public static void openAppInMarket(Context context) {

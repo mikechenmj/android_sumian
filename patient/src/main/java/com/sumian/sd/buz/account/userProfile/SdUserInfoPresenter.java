@@ -6,12 +6,12 @@ import android.text.TextUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.sumian.common.base.BaseViewModel;
 import com.sumian.common.network.response.ErrorResponse;
+import com.sumian.device.oss.OssResponse;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.buz.account.bean.Social;
 import com.sumian.sd.buz.account.bean.UserInfo;
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback;
 import com.sumian.sd.common.oss.OssEngine;
-import com.sumian.sd.common.oss.OssResponse;
 import com.umeng.socialize.UMAuthListener;
 
 import org.jetbrains.annotations.NotNull;

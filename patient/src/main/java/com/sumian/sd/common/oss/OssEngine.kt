@@ -11,6 +11,7 @@ import com.alibaba.sdk.android.oss.model.PutObjectRequest
 import com.alibaba.sdk.android.oss.model.PutObjectResult
 import com.blankj.utilcode.util.LogUtils
 import com.sumian.common.utils.SumianExecutor
+import com.sumian.device.oss.OssResponse
 import com.sumian.sd.BuildConfig
 import com.sumian.sd.app.App
 import java.util.*
