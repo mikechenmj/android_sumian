@@ -1,0 +1,85 @@
+<resources>
+    <string name="app_name">common</string>
+    <string name="sure">確定</string>
+    <string name="cancel">取消</string>
+    <string name="finish">完成</string>
+    <string name="scan_qr_code">掃描二維碼</string>
+    <string name="scan_qr_code_warn">掃描二維碼,需要授予相機權限,是否授予?</string>
+    <string name="scan_qr_code_denied">掃描二維碼,授予相機權限失敗,請檢查該權限是否正確授予,並授予</string>
+
+    <string name="state_network_error">網絡錯誤</string>
+    <string name="state_loading">正在加載…</string>
+    <string name="state_not_more">沒有更多數據</string>
+    <string name="state_load_error">加載失敗</string>
+    <string name="state_refreshing">正在刷新</string>
+
+
+    <string name="gallery_save_file_not_have_external_storage_permission">沒有外部存儲權限!</string>
+    <string name="gallery_save_file_not_have_external_storage">沒有外部存儲!</string>
+    <string name="gallery_save_file_success">保存成功!</string>
+    <string name="gallery_save_file_failed">存儲失敗!</string>
+    <string name="image_select_opt_done">完成</string>
+    <string name="image_select_opt_preview">預覽</string>
+
+
+    <!-- Error View -->
+    <string name="error_view_no_data">暫無內容</string>
+    <string name="error_view_loading">加載中…</string>
+    <string name="error_view_loading_local_friend">獲取附近的程序員中…</string>
+    <string name="error_view_load_error_click_to_refresh">內容加載失敗\r\n點擊重新加載</string>
+    <string name="error_view_network_error_click_to_refresh">沒有可用的網絡</string>
+
+
+    <!--version -->
+
+    <string name="none_market">"您的手機沒有安裝應用市場!"</string>
+
+    <!--dialog/toast-->
+    <string name="operation_warning">操作警告</string>
+    <string name="operation_success">操作成功</string>
+    <string name="operation_fail">操作失敗</string>
+
+    <!-- genera -->
+    <string name="confirm">確認</string>
+    <string name="loading_dot">加載中...</string>
+
+    <!-- error empty view-->
+    <string name="empty_404_msg">很抱歉！</string>
+    <string name="empty_404_desc">您要訪問的頁面不存在</string>
+
+    <string name="empty_network_error_msg">網絡連接異常</string>
+    <string name="empty_network_error_desc">請查看網絡設置或稍後重試</string>
+    <string name="no_data_hint">這裏空空如也~</string>
+
+    <!-- input check -->
+    <string name="content_can_not_be_empty">%s內容不可為空</string>
+    <string name="content_is_too_long">%s長度不能超出%d個字</string>
+    <string name="content_is_too_short">%s長度不能少於%d個字</string>
+    <string name="is_loading">正在加載中...</string>
+    <string name="cbti_therapist">CBTI治療師</string>
+
+    <string name="patient_message">患者消息</string>
+    <string name="doctor_message">醫生消息</string>
+    <string name="system_message">系統消息</string>
+    <string name="no_patient_message_yet">尚未向患者發起會話</string>
+    <string name="no_doctor_message_yet">尚未收到任何會話</string>
+    <string name="no_system_notification_yet">- 暫無系統消息 -</string>
+    <string name="sleeper_talk">眠友說</string>
+    <string name="more_article">更多文章</string>
+
+    <string name="open_notification_push">開啟消息推送通知</string>
+    <string name="open_notification_push_hint">第壹時間接收消息更新通知</string>
+    <string name="go_open">去開啟</string>
+    <string name="core_send">發送</string>
+    <string name="move_right_cancel_send">向右滑動，取消發送</string>
+    <string name="release_finger_cancel_send">松開手指，取消發送</string>
+    <string name="record_will_stop_in_x_sec">%d”後停止語音</string>
+    <string name="record_too_long">對講時間過長</string>
+    <string name="record_too_short">按鍵時間過短</string>
+    <string name="read_all">全部已讀</string>
+    <string name="patient_weekly_report">患者周報</string>
+    <string name="system_notification">系統通知</string>
+    <string name="message_list">消息列表</string>
+    <string name="network_error">網絡異常，請檢查您的網絡情況</string>
+
+</resources>

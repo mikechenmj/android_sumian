@@ -80,5 +80,6 @@
     <string name="patient_weekly_report">患者周报</string>
     <string name="system_notification">系统通知</string>
     <string name="message_list">消息列表</string>
+    <string name="network_error">网络异常，请检查您的网络情况</string>
 
 </resources>

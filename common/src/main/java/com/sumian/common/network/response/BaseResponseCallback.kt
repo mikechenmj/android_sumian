@@ -1,6 +1,8 @@
 package com.sumian.common.network.response
 
 import android.util.Log
+import com.blankj.utilcode.util.ActivityUtils
+import com.sumian.common.R
 import com.sumian.common.network.error.ErrorCode
 import com.sumian.common.network.error.ErrorCode.BUSINESS_ERROR
 import com.sumian.common.network.error.ErrorCode.FORBIDDEN
@@ -43,7 +45,7 @@ abstract class BaseResponseCallback<Data> : Callback<Data> {
             if ((it.message == "Socket closed" || it.message == "Canceled")) {
                 return
             }
-            onFailure(ErrorResponse(0, "网络异常，请检查您的网络情况"))
+            onFailure(ErrorResponse(0, ActivityUtils.getTopActivity().getString(R.string.network_error)))
         }
     }
 
