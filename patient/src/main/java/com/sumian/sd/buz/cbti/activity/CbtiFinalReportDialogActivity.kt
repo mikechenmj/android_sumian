@@ -15,6 +15,7 @@ import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.homepage.bean.FinalReport
 import com.sumian.sd.buz.homepage.bean.GetCbtiChaptersResponse
+import com.sumian.sd.common.h5.H5Uri
 import com.sumian.sd.common.h5.SimpleWebActivity
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import java.util.*
@@ -74,7 +75,7 @@ class CbtiFinalReportDialogActivity : BaseDialogViewModelActivity<BaseViewModel>
                 if (firstShowTime == 0L) {
                     sp.put(SP_KEY_FIRST_SHOW_TIME, currentTimeMillis)
                 }
-                CbtiFinalReportDialogActivity.start(finalReport)
+                start(finalReport)
             }
         }
 
@@ -104,7 +105,7 @@ class CbtiFinalReportDialogActivity : BaseDialogViewModelActivity<BaseViewModel>
         payloadMap["scale_id"] = finalReport.scheme.scaleDistributionIds
         payloadMap["cbti_id"] = finalReport.scheme.cbtiId
         payloadMap["chapter_id"] = finalReport.scheme.chapterId
-        payloadMap["type"] = 1
-        ActivityUtils.startActivity(SimpleWebActivity.getLaunchIntentWithRouteData(this, "openCbtiScales", payloadMap))
+        payloadMap["research"] = 1
+        ActivityUtils.startActivity(SimpleWebActivity.getLaunchIntentWithRouteData(this, H5Uri.CBTI_OPEN_SCALES, payloadMap))
     }
 }
