@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.LinearLayout
 import com.qmuiteam.qmui.util.QMUISpanHelper
 import com.sumian.sd.R
+import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.homepage.bean.CbtiChapterData
 import com.sumian.sd.buz.homepage.bean.GetCbtiChaptersResponse
 import kotlinx.android.synthetic.main.view_cbti_progress.view.*
@@ -35,7 +36,7 @@ class CbtiProgressView(context: Context, attributeSet: AttributeSet) : LinearLay
         ll_progress.visibility = if (chaptersData != null && !chaptersData.meta.isLock) View.VISIBLE else View.GONE
         ll_not_buy.visibility = if (chaptersData == null || chaptersData.meta.isLock) View.VISIBLE else View.GONE
         if (chaptersData != null) {
-            tv_cbti_title.text = resources.getString(R.string.sleep_health_education)
+            tv_cbti_title.text = resources.getString(if (AppManager.getAccountViewModel().isControlGroup()) R.string.sleep_health_education else R.string.cbti_ing)
             tv_cbti_subtitle.text = resources.getString(if (chaptersData.meta.allFinished) R.string.cbti_ing_all_finished_desc else R.string.cbti_ing_describe)
             val dataList = chaptersData.data
             updateProgressViewList(dataList)
