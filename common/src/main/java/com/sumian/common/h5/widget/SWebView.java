@@ -9,6 +9,8 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 
+import androidx.annotation.Nullable;
+
 import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.github.lzyzsd.jsbridge.BridgeWebView;
@@ -44,8 +46,6 @@ import java.util.Set;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLSession;
-
-import androidx.annotation.Nullable;
 
 
 /**
@@ -121,7 +121,7 @@ public class SWebView extends BridgeWebView {
     public void loadRequestUrl(String url) {
         this.mErrorCode = -1;
         postDelayed(mDismissRunnable, DEFAULT_DELAY_MILLIS);
-        getSettings().setUserAgentString(" Sumian-Doctor-Android " + getAgentVersionName());
+        getSettings().setUserAgentString(" Sumian-Doctor-Clinic-Android " + getAgentVersionName());
         postOnAnimation(() -> loadUrl(url));
     }
 
