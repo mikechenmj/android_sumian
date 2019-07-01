@@ -12,7 +12,6 @@
         android:layout_height="match_parent"
         android:background="#dadada"
         android:clickable="false"
-        android:contentDescription="@string/app_name"
         android:focusable="false"
         android:scaleType="centerCrop" />
 
@@ -32,7 +31,6 @@
         android:layout_gravity="top|right"
         android:layout_margin="4dp"
         android:clickable="false"
-        android:contentDescription="@string/app_name"
         android:focusable="false"
         android:scaleType="centerInside"
         android:src="@drawable/cb_select_image_check_selector"
@@ -43,7 +41,6 @@
         android:layout_width="30dp"
         android:layout_height="18dp"
         android:layout_gravity="right|bottom"
-        android:contentDescription="@string/app_name"
         android:padding="2dp"
         android:scaleType="centerInside"
         android:src="@mipmap/gif"
