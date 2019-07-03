@@ -46,15 +46,15 @@ object SyncSleepDataHelper {
                 return
             }
             when (BleCmdUtil.getCmdType(hexString)) {
-                "4f" -> {
+                BleCmd.SYNC_DATA -> {
                     // 主动获取睡眠特征数据response
                     receiveRequestSleepDataResponse(hexString)
                 }
-                "8e" -> {
+                BleCmd.SYNC_START_OR_END -> {
                     // 透传数据 开始/结束
                     receiveStartOrFinishTransportCmd(data, hexString)
                 }
-                "8f" -> {
+                BleCmd.SYNC_TRANSPARENT -> {
                     // 透传数据 帧
                     receiveSleepData(data, hexString)
                 }
@@ -81,12 +81,13 @@ object SyncSleepDataHelper {
             }
             return
         }
-        DeviceManager.writeData(BleCmdUtil.createDataFromString(BleCmd.SYNC_DATA, "01"))
+        DeviceManager.writeData(BleCmdUtil.createDataFromString(BleCmd.SYNC_DATA, BleCmd.SYNC_SLEEP_DATA_CONTENT))
+
     }
 
 
     private fun startSyncSleepMasterLog() {
-        DeviceManager.writeData(BleCmdUtil.createDataFromString(BleCmd.SYNC_DATA, "02"))
+        DeviceManager.writeData(BleCmdUtil.createDataFromString(BleCmd.SYNC_DATA, BleCmd.SYNC_SLEEP_MASTER_LOG_CONTENT))
     }
 
     /**
@@ -97,14 +98,14 @@ object SyncSleepDataHelper {
     fun receiveRequestSleepDataResponse(cmd: String) {
         mTranType = Integer.parseInt(cmd.substring(6, 8), 16)
         when (cmd.substring(cmd.length - 2)) {
-            "88" -> {
+            BleCmd.RESPONSE_CODE_SUCCESS -> {
                 log("收到0x4f回复 发现设备有睡眠特征数据,准备同步中  cmd=$cmd")
             }
-            "00" -> {
+            BleCmd.RESPONSE_CODE_NONE -> {
                 onSyncSuccess()
                 log("收到0x4f回复 设备没有睡眠特征数据  cmd=$cmd")
             }
-            "ff" -> {
+            BleCmd.RESPONSE_CODE_FAIL -> {
                 onSyncFailed()
                 log("收到0x4f回复 设备4f 指令识别异常  cmd=$cmd")
             }
@@ -147,7 +148,7 @@ object SyncSleepDataHelper {
     private fun onReceiveSleepDataStart(cmd: String, data: ByteArray) {
         log("on sync start: $cmd")
         if (!DeviceManager.isDeviceVersionCompatForSyncingData()) {
-            writeResponse(data, 0xff)
+            writeResponse(data, BleCmd.RESPONSE_CODE_FAIL)
             return
         }
         val dataCount: Int = subHexStringToInt(cmd, 5, 8)
@@ -168,7 +169,7 @@ object SyncSleepDataHelper {
         log("开始透传 mCurrentPackageIndex: ${mCurrentPackageIndex}， mTotalPackageCount: $mTotalPackageCount, mTotalDataCount: $mTotalDataCount")
         onSyncStart()
         postNextPayloadTimeoutCallback()
-        writeResponse(mBeginBytes!!, 0x88)
+        writeResponse(mBeginBytes!!, BleCmd.RESPONSE_CODE_SUCCESS)
         mIsGettingLostFrame = false
     }
 
@@ -177,7 +178,7 @@ object SyncSleepDataHelper {
         mEndCmd = cmd
         mEndBytes = data
         calLostFrames()
-        writeResponse(data, 0x01)
+        writeResponse(data, BleCmd.RESPONSE_CODE_POSITIVE)
         if (hasLostFrames()) {
             mIsGettingLostFrame = true
             requestNextLostFrame()
@@ -219,7 +220,7 @@ object SyncSleepDataHelper {
 
     private fun onCurrentPackageReceivedSuccess() {
         saveSleepDataToFile()
-        writeResponse(mEndBytes!!, 0x88)
+        writeResponse(mEndBytes!!, BleCmd.RESPONSE_CODE_SUCCESS)
         if (mCurrentPackageIndex == mTotalPackageCount) {
             removePayloadTimeoutCallback()
             onSyncSuccess()
@@ -295,10 +296,10 @@ object SyncSleepDataHelper {
      * FFFFFFFF 传输id 4 byte，[10-17]
      * GG 应答 ff：异常，88：准备接收下一段, 01 当前段收到
      */
-    private fun writeResponse(data: ByteArray, resp: Int) {
+    private fun writeResponse(data: ByteArray, resp: String) {
         val command = byteArrayOf(
                 0xaa.toByte(), 0x8e.toByte(),
-                data[2], data[3], data[4], data[5], data[6], data[7], data[8], resp.toByte()
+                data[2], data[3], data[4], data[5], data[6], data[7], data[8], Integer.parseInt(resp, 16).toByte()
         )
         peripheralWrite(command)
     }

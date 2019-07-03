@@ -10,11 +10,14 @@ package com.sumian.device.cmd
  */
 class BleCmd {
     companion object {
+        const val RESPONSE_CODE_POSITIVE = "01"
+
         // monitor
         const val MONITOR_CMD_HEADER = "55"
         const val APP_CMD_HEADER = "aa"
 
         const val RESPONSE_CODE_SUCCESS = "88"
+        const val RESPONSE_CODE_NONE = "00"
         const val RESPONSE_CODE_FAIL = "ff"
         const val RESPONSE_CODE_UNSUPPORT_CMD = "fe"
 
@@ -25,6 +28,10 @@ class BleCmd {
         const val QUERY_MONITOR_SN = "53"
         const val QUERY_MONITOR_VERSION = "50"
         const val SYNC_DATA = "4f"
+        const val SYNC_START_OR_END = "8e"
+        const val SYNC_TRANSPARENT = "8f"
+        const val SYNC_SLEEP_DATA_CONTENT = "01"
+        const val SYNC_SLEEP_MASTER_LOG_CONTENT = "02"
         const val MONITOR_ENTER_DFU = "51"
 
         // sleep master

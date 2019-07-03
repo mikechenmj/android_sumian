@@ -143,7 +143,7 @@ object SyncPatternHelper {
         DeviceManager.makeRequest(pattern, object : BleRequestCallback {
             override fun onResponse(data: ByteArray, hexString: String) {
                 LogUtils.d(hexString)
-                if (hexString.endsWith("88")) {
+                if (hexString.endsWith(BleCmd.RESPONSE_CODE_SUCCESS)) {
                     callback.onSuccess()
                 } else {
                     callback.onFail(1, "error unknown")

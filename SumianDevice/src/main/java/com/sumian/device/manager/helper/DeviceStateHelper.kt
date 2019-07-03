@@ -138,7 +138,7 @@ object DeviceStateHelper {
     }
 
     private fun receiveSleepMasterConnectionStatus(hexString: String) {
-        val isConnected = BleCmdUtil.getContentFromData(hexString) == "01"
+        val isConnected = BleCmdUtil.getContentFromData(hexString) == BleCmd.RESPONSE_CODE_POSITIVE
         if (isConnected) {
             exeOneByOne(
                     { querySleepMasterMac() },
@@ -212,7 +212,7 @@ object DeviceStateHelper {
         BleCommunicationController.request(
                 BleCmdUtil.createDataFromString(
                         BleCmd.TOGGLE_SLEEP_MASTER_WORK_MODE,
-                        "01"
+                        BleCmd.RESPONSE_CODE_POSITIVE
                 ), object : BleRequestCallback {
             override fun onResponse(data: ByteArray, hexString: String) {
                 //aa58 01  默认 app 只能开启 pa 模式,不可以关闭
@@ -228,7 +228,7 @@ object DeviceStateHelper {
                 // 0xE6 -- 设置数据长度错误
                 // 0xE7 -- 发送数据到速眠仪发生错误
                 // 0xFF -- 未知错误
-                val turnOnPaModeSuccess = BleCmdUtil.getContentFromData(hexString) == "88"
+                val turnOnPaModeSuccess = BleCmdUtil.getContentFromData(hexString) == BleCmd.RESPONSE_CODE_SUCCESS
                 if (turnOnPaModeSuccess) {
                     callback.onSuccess(null)
                     DeviceManager.postEvent(
@@ -433,7 +433,7 @@ object DeviceStateHelper {
                 ),
                 object : BleRequestCallback {
                     override fun onResponse(data: ByteArray, hexString: String) {
-                        if (BleCmdUtil.getContentFromData(hexString) == "88") {
+                        if (BleCmdUtil.getContentFromData(hexString) == BleCmd.RESPONSE_CODE_SUCCESS) {
                             callback.onSuccess()
                             BleCommunicationController.makeSuccessResponse(hexString)
                         } else {

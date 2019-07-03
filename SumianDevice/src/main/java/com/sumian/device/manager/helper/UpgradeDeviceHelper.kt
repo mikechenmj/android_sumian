@@ -76,7 +76,7 @@ object UpgradeDeviceHelper {
         BleCommunicationController.requestByCmd(dufCmd, object : BleRequestCallback {
             override fun onResponse(data: ByteArray, hexString: String) {
                 val result = BleCmdUtil.getContentFromData(HexUtil.formatHexString(data))
-                if ("88" == result) {
+                if (BleCmd.RESPONSE_CODE_SUCCESS == result) {
                     onEnterDfuModeSuccess(longDfuMac, filePath)
                 } else {
                     onEnterDfuModeFail(getErrorMsg(result))
