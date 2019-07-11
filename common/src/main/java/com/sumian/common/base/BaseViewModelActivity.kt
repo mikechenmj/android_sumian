@@ -8,7 +8,7 @@ package com.sumian.common.base
  * desc:
  *
  */
-abstract class BaseViewModelActivity<VM : BaseViewModel> : BaseActivity(), BaseShowLoadingView {
+abstract class BaseViewModelActivity<VM : BaseViewModel> : BaseActivity() {
 
     protected var mViewModel: VM? = null
 
