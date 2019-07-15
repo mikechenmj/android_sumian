@@ -13,6 +13,7 @@ import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import com.umeng.socialize.UMAuthListener
 import com.umeng.socialize.bean.SHARE_MEDIA
+import retrofit2.Call
 import retrofit2.Callback
 import java.util.*
 
@@ -25,9 +26,9 @@ import java.util.*
  *     version: 1.0
  * </pre>
  */
-class LoginPresenter(var view: LoginContract.View) : BaseViewModel(){
+class LoginPresenter(var view: LoginContract.View) : BaseViewModel() {
 
-     fun loginByPassword(mobile: String, password: String) {
+    fun loginByPassword(mobile: String, password: String) {
         view.showLoading()
         val call = AppManager.getSdHttpService().loginByPassword(mobile, password)
         call.enqueue(object : BaseSdResponseCallback<Token>() {
@@ -35,7 +36,6 @@ class LoginPresenter(var view: LoginContract.View) : BaseViewModel(){
             override fun onSuccess(response: Token?) {
                 AppManager.onLoginSuccess(response)
                 StatUtil.event(StatConstants.e_login_success, mapOf("mode" to "密码", "mobile" to mobile))
-
             }
 
             override fun onFailure(errorResponse: ErrorResponse) {
@@ -45,11 +45,13 @@ class LoginPresenter(var view: LoginContract.View) : BaseViewModel(){
             override fun onFinish() {
                 super.onFinish()
                 view.dismissLoading()
+                removeCall(call)
             }
         })
+        addCall(call)
     }
 
-     fun loginByCaptcha(mobile: String, captcha: String) {
+    fun loginByCaptcha(mobile: String, captcha: String) {
         view.showLoading()
         val call = AppManager.getSdHttpService().loginByCaptcha(mobile, captcha)
         call.enqueue(object : BaseSdResponseCallback<Token>(), Callback<Token> {
@@ -65,11 +67,13 @@ class LoginPresenter(var view: LoginContract.View) : BaseViewModel(){
             override fun onFinish() {
                 super.onFinish()
                 view.dismissLoading()
+                removeCall(call)
             }
         })
+        addCall(call)
     }
 
-     fun loginByWechat(activity: Activity) {
+    fun loginByWechat(activity: Activity) {
         view.showLoading()
         AppManager.getOpenLogin().weChatLogin(activity, object : UMAuthListener {
             override fun onComplete(shareMedia: SHARE_MEDIA?, p1: Int, map: MutableMap<String, String?>?) {
@@ -119,12 +123,15 @@ class LoginPresenter(var view: LoginContract.View) : BaseViewModel(){
             override fun onFinish() {
                 super.onFinish()
                 view.dismissLoading()
+                removeCall(call)
             }
         })
+        addCall(call)
     }
 
-     fun requestCaptcha(mobile: String) {
-        CaptchaHelper.requestCaptcha(mobile, object : CaptchaHelper.RequestCaptchaListener {
+    fun requestCaptcha(mobile: String) {
+        var call : Call<*>? = null
+        call = CaptchaHelper.requestCaptcha(mobile, object : CaptchaHelper.RequestCaptchaListener {
             override fun onStart() {
                 view.showLoading()
             }
@@ -135,8 +142,10 @@ class LoginPresenter(var view: LoginContract.View) : BaseViewModel(){
 
             override fun onFinish() {
                 view.dismissLoading()
+                removeCall(call)
             }
         })
+        addCall(call)
     }
 
 }

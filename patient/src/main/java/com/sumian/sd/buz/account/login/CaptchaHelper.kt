@@ -5,7 +5,8 @@ import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
-import java.lang.ref.WeakReference
+import retrofit2.Call
+import java.lang.ref.SoftReference
 
 /**
  * <pre>
@@ -17,18 +18,18 @@ import java.lang.ref.WeakReference
  */
 object CaptchaHelper {
 
-    fun requestCaptcha(mobile: String, listener: RequestCaptchaListener) {
-        val listenerWf = WeakReference<RequestCaptchaListener>(listener)
+    fun requestCaptcha(mobile: String, listener: RequestCaptchaListener) : Call<Unit> {
+        val listenerWf = SoftReference<RequestCaptchaListener>(listener)
         listener.onStart()
         val call = AppManager.getSdHttpService().getCaptcha(mobile)
         call.enqueue(object : BaseSdResponseCallback<Unit>() {
             override fun onFailure(errorResponse: ErrorResponse) {
                 ToastUtils.showShort(errorResponse.message)
-                listenerWf.get()?.onSuccess()
             }
 
             override fun onSuccess(response: Unit?) {
                 ToastUtils.showShort(R.string.captcha_send_success)
+                listenerWf.get()?.onSuccess()
             }
 
             override fun onFinish() {
@@ -36,6 +37,7 @@ object CaptchaHelper {
                 listenerWf.get()?.onFinish()
             }
         })
+        return call
     }
 
     interface RequestCaptchaListener {

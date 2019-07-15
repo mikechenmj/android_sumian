@@ -44,7 +44,6 @@ class LoginActivity : BaseViewModelActivity<LoginPresenter>(), LoginContract.Vie
         tv_send_captcha.setOnClickListener {
             val number = getPhoneNumberWithCheck()
             if (number != null) {
-                onRequestCaptchaSuccess()
                 mViewModel!!.requestCaptcha(number)
                 StatUtil.event(StatConstants.click_captcha, mapOf("usage" to "登录注册", "mobile" to number))
             }

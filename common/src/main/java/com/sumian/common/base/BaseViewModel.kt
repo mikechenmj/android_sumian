@@ -17,6 +17,10 @@ open class BaseViewModel : ViewModel() {
         mCalls.add(call)
     }
 
+    fun removeCall(call: Call<*>?) {
+        mCalls.remove(call)
+    }
+
     public override fun onCleared() {
         super.onCleared()
         for (call in mCalls) {

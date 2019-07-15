@@ -8,6 +8,7 @@ import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.account.bean.Token
 import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
+import retrofit2.Call
 
 /**
  * <pre>
@@ -19,7 +20,8 @@ import com.sumian.sd.common.network.callback.BaseSdResponseCallback
  */
 class ValidatePhoneNumberPresenter(var view: ValidatePhoneNumberContract.View) : BaseViewModel() {
     fun requestCaptcha(mobile: String) {
-        CaptchaHelper.requestCaptcha(mobile, object : CaptchaHelper.RequestCaptchaListener {
+        var call : Call<*>? = null
+        call = CaptchaHelper.requestCaptcha(mobile, object : CaptchaHelper.RequestCaptchaListener {
             override fun onStart() {
                 view.showLoading()
             }
@@ -30,8 +32,10 @@ class ValidatePhoneNumberPresenter(var view: ValidatePhoneNumberContract.View) :
 
             override fun onFinish() {
                 view.dismissLoading()
+                removeCall(call)
             }
         })
+        addCall(call)
     }
 
     fun validatePhoneNumberForResetPassword(mobile: String, captcha: String) {
@@ -49,8 +53,10 @@ class ValidatePhoneNumberPresenter(var view: ValidatePhoneNumberContract.View) :
             override fun onFinish() {
                 super.onFinish()
                 view.dismissLoading()
+                removeCall(call)
             }
         })
+        addCall(call)
     }
 
     fun bindMobile(mobile: String, captcha: String, socialInfo: String) {
@@ -74,7 +80,9 @@ class ValidatePhoneNumberPresenter(var view: ValidatePhoneNumberContract.View) :
             override fun onFinish() {
                 super.onFinish()
                 view.dismissLoading()
+                removeCall(call)
             }
         })
+        addCall(call)
     }
 }

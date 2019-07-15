@@ -62,7 +62,6 @@ class ValidatePhoneNumberActivity : BaseViewModelActivity<ValidatePhoneNumberPre
                 return@setOnClickListener
             }
             mViewModel!!.requestCaptcha(mobile)
-            onRequestCaptchaSuccess()
             val type = if (mLaunchType == LAUNCH_TYPE_BIND_SOCIAL) "绑定微信" else "忘记密码"
             StatUtil.event(StatConstants.click_captcha, mapOf("usage" to type, "mobile" to mobile))
         }
