@@ -133,7 +133,12 @@ object BleCommunicationController {
 
     fun request(data: ByteArray, callback: BleRequestCallback?) {
         val cmd = HexUtil.formatHexString(data).substring(2, 4)
-        addResponseCallback(cmd, callback)
+        putResponseCallbackToMap(cmd, callback)
+        postTimeoutCallbackDelay(cmd, Runnable {
+            makeResponse(
+                    cmd, false, null, BleRequestCallback.ERROR_CODE_TIMEOUT, "timeout"
+            )
+        })
         writeData(data, 0, object : WriteBleDataCallback {
             override fun onSuccess(data: ByteArray) {
             }
@@ -179,7 +184,7 @@ object BleCommunicationController {
         }, delay)
     }
 
-    private fun addTimeoutCallback(cmd: String, runnable: Runnable) {
+    private fun postTimeoutCallbackDelay(cmd: String, runnable: Runnable) {
         mTimeoutCallbacks[cmd] = runnable
         mMainHandler.postDelayed(runnable, TIMEOUT_DURATION)
     }
@@ -188,16 +193,11 @@ object BleCommunicationController {
         mMainHandler.removeCallbacks(mTimeoutCallbacks[cmd])
     }
 
-    private fun addResponseCallback(cmd: String, callback: BleRequestCallback?) {
+    private fun putResponseCallbackToMap(cmd: String, callback: BleRequestCallback?) {
         if (callback == null) {
             return
         }
         mResponseMap[cmd] = WeakReference(callback)
-        addTimeoutCallback(cmd, Runnable {
-            makeResponse(
-                    cmd, false, null, BleRequestCallback.ERROR_CODE_TIMEOUT, "timeout"
-            )
-        })
     }
 
     private fun removeResponseCallback(cmd: String) {
