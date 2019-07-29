@@ -43,13 +43,15 @@
         android:visibility="gone"
         tools:visibility="visible" />
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
+
     <TextView
         android:id="@+id/bt_upgrade"
         style="@style/SumianButton"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:text="升级"
-        android:visibility="gone"
-        tools:visibility="visible" />
+        android:text="本地升级" />
 
 </LinearLayout>

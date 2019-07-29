@@ -20,6 +20,7 @@ class App : Application() {
                 this,
                 DeviceManager.Params(baseUrl = "https://sdapi-test.sumian.com/")
         )
+
         AuthenticationManager.login()
     }
 

@@ -15,6 +15,7 @@ import com.sumian.device.data.DeviceType
 import com.sumian.device.data.DeviceVersionInfo
 import com.sumian.device.manager.DeviceManager
 import com.sumian.device.manager.helper.DfuCallback
+import com.sumian.device.util.MediaUtility
 import com.sumian.device.util.VersionUtil
 import com.sumian.devicedemo.R
 import com.sumian.devicedemo.base.BaseActivity
@@ -26,7 +27,7 @@ class UpgradeDeviceActivity : BaseActivity() {
     private var mUpgradeFile: File? = null
 
     companion object {
-
+        const val REQUEST_UPGRADE = 1993
         private const val KEY_TYPE = "KEY_TYPE"
         const val TYPE_MONITOR = 0
         const val TYPE_SLEEP_MASTER = 1
@@ -57,7 +58,27 @@ class UpgradeDeviceActivity : BaseActivity() {
         queryVersionInfo()
 
         bt_download.setOnClickListener { downloadUpgradeFile() }
-        bt_upgrade.setOnClickListener { upgrade(mUpgradeFile) }
+        bt_upgrade.setOnClickListener {
+            var intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+            intent.addCategory(Intent.CATEGORY_OPENABLE)
+            intent.type = "*/*"
+            startActivityForResult(intent, REQUEST_UPGRADE)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                REQUEST_UPGRADE -> {
+                    var uri = data?.data
+                    var file = File(MediaUtility.getPath(this, uri))
+                    if (file.exists() && file.isFile) {
+                        upgrade(file)
+                    }
+                }
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
     private fun downloadUpgradeFile() {
@@ -87,7 +108,6 @@ class UpgradeDeviceActivity : BaseActivity() {
                             return
                         }
                         bt_download.isVisible = false
-                        bt_upgrade.isVisible = true
                         upgrade(file)
                     }
 
@@ -136,7 +156,6 @@ class UpgradeDeviceActivity : BaseActivity() {
                     override fun onSuccess() {
                         ToastUtils.showShort("升级成功")
                         progressDialog.dismiss()
-                        bt_upgrade.isVisible = false
                         iv_top.setImageResource(R.drawable.ic_upgrade_device_success)
                         tv_latest_version.text = getString(R.string.already_latest_version)
                     }

@@ -1,67 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:orientation="vertical"
     tools:context=".device.MainActivity"
     tools:ignore="HardcodedText">
 
-    <fragment
-        android:id="@+id/device_card_view"
-        android:name="com.sumian.devicedemo.device.DeviceCardFragment"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="320dp"
-        android:layout_gravity="center" />
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical"
+        tools:context=".device.MainActivity"
+        tools:ignore="HardcodedText">
 
-    <TextView
-        android:id="@+id/bt_upgrade_device"
-        style="@style/SumianButton"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="固件升级" />
+        <fragment
+            android:id="@+id/device_card_view"
+            android:name="com.sumian.devicedemo.device.DeviceCardFragment"
+            android:layout_width="match_parent"
+            android:layout_height="320dp"
+            android:layout_gravity="center" />
 
-    <TextView
-        android:id="@+id/bt_change_sleep_master"
-        style="@style/SumianButton"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="更换绑定" />
+        <TextView
+            android:id="@+id/bt_upgrade_device"
+            style="@style/SumianButton"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="固件升级" />
 
-    <TextView
-        android:id="@+id/bt_unbind"
-        style="@style/SumianButton"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="解绑" />
+        <TextView
+            android:id="@+id/bt_change_sleep_master"
+            style="@style/SumianButton"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="更换绑定" />
 
-    <TextView
-        android:id="@+id/bt_sync_pattern"
-        style="@style/SumianButton"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="同步Pattern"
-        android:visibility="gone" />
+        <TextView
+            android:id="@+id/bt_unbind"
+            style="@style/SumianButton"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="解绑" />
 
-    <TextView
-        android:id="@+id/bt_sleep_data"
-        style="@style/SumianButton"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="睡眠数据" />
+        <TextView
+            android:id="@+id/bt_sync_pattern"
+            style="@style/SumianButton"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="同步Pattern"
+            android:visibility="gone" />
 
-    <TextView
-        android:id="@+id/v_develop_entrance"
-        style="@style/SumianButton"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="测试页面" />
+        <TextView
+            android:id="@+id/bt_sleep_data"
+            style="@style/SumianButton"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="睡眠数据" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/v_develop_entrance"
+            style="@style/SumianButton"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="测试页面" />
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
