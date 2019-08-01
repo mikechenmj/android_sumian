@@ -48,7 +48,7 @@ class DeviceCardFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        tv_sync.setOnClickListener { DeviceManager.startSyncSleepData() }
+        tv_sync.setOnClickListener { DeviceManager.startSyncSleepDataWithUi() }
         bt_turn_on_pa.setOnClickListener {
             DeviceManager.toggleSleeperWorkMode(true, callback = object : AsyncCallback<Any?> {
                 override fun onSuccess(data: Any?) {

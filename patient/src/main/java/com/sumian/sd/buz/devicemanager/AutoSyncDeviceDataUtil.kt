@@ -38,9 +38,11 @@ object AutoSyncDeviceDataUtil {
     fun autoSyncSleepData() {
         val powerManager = App.getAppContext().getSystemService(Context.POWER_SERVICE) as PowerManager
         if (powerManager.isInteractive && (((System.currentTimeMillis() - getAutoSyncTime()) / 1000L) > 5)) {
-            LogManager.appendPhoneLog("app  主动同步睡眠数据,原因是上一次同步的时间超过5s")
-            saveAutoSyncTime()
-            DeviceManager.startSyncSleepData()
+            if (DeviceManager.isMonitorConnected()) {
+                LogManager.appendPhoneLog("app  主动同步睡眠数据,原因是上一次同步的时间超过5s")
+                saveAutoSyncTime()
+                DeviceManager.startSyncSleepData()
+            }
         }
     }
 

@@ -12,6 +12,7 @@ import android.os.Handler
 import android.os.Looper
 import android.text.TextUtils
 import com.blankj.utilcode.util.SPUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.clj.fastble.BleManager
 import com.clj.fastble.callback.BleGattCallback
 import com.clj.fastble.callback.BleScanCallback
@@ -19,6 +20,7 @@ import com.clj.fastble.data.BleDevice
 import com.clj.fastble.exception.BleException
 import com.clj.fastble.scan.BleScanner
 import com.clj.fastble.utils.HexUtil
+import com.sumian.device.R
 import com.sumian.device.authentication.AuthenticationManager
 import com.sumian.device.callback.*
 import com.sumian.device.data.*
@@ -358,12 +360,30 @@ object DeviceManager {
     private fun isSleepMasterVersionCompat() = checkSleepMasterVersionCompatibility() == PROTOCOL_VERSION_COMPATIBLE
     fun isDeviceVersionCompatForSyncingData() = isMonitorVersionCompat() && (!isSleepMasterConnected() || isSleepMasterVersionCompat())
 
-    fun startSyncSleepData() {
-        if (isMonitorConnected()
+    fun startSyncSleepDataWithUi() {
+        var state = startSyncSleepData()
+        if (state == SyncSleepDataHelper.SyncState.FAIL_CONNECT_OR_VERSION_WRONG) {
+            LogManager.transparentLog(mApplication.getString(R.string.sync_fail_connect_or_version_wrong_tip))
+            ToastUtils.showShort(mApplication.getString(R.string.sync_fail_connect_or_version_wrong_tip))
+        } else if (state == SyncSleepDataHelper.SyncState.FAIL_IS_SYNCING){
+            LogManager.transparentLog(mApplication.getString(R.string.sync_fail_is_syncing_tip))
+            ToastUtils.showShort(mApplication.getString(R.string.sync_fail_is_syncing_tip))
+        }
+    }
+
+    fun startSyncSleepData(): SyncSleepDataHelper.SyncState {
+        return if (isMonitorConnected()
                 && isMonitorVersionCompat()
                 && (!isSleepMasterConnected() || isSleepMasterVersionCompat())
         ) {
-            SyncSleepDataHelper.startSyncSleepData()
+            if (!SyncSleepDataHelper.isSyncing()) {
+                SyncSleepDataHelper.startSyncSleepData()
+                SyncSleepDataHelper.SyncState.READY
+            } else {
+                SyncSleepDataHelper.SyncState.FAIL_IS_SYNCING
+            }
+        } else {
+            SyncSleepDataHelper.SyncState.FAIL_CONNECT_OR_VERSION_WRONG
         }
     }
 

@@ -73,16 +73,8 @@ object SyncSleepDataHelper {
         })
     }
 
-
     fun startSyncSleepData() {
-        if (isSyncing()) {
-            if (mTranType == SYNC_TYPE_SLEEP_MASTER_LOG) {
-                onSyncSuccess()
-            }
-            return
-        }
         DeviceManager.writeData(BleCmdUtil.createDataFromString(BleCmd.SYNC_DATA, BleCmd.SYNC_SLEEP_DATA_CONTENT))
-
     }
 
 
@@ -196,7 +188,7 @@ object SyncSleepDataHelper {
      * CCC 数据内容
      */
     fun receiveSleepData(data: ByteArray, cmd: String) {
-        if (!isSyncing()) return // 透传超时可能会走到这一行。不在透传状态不响应透传数据。
+        if (isSyncSleepData() && !isSyncing()) return // 透传超时可能会走到这一行。不在透传状态不响应透传数据。
         val index = BleCmdUtil.hexStringToLong(cmd.substring(5, 8)).toInt()
         log("收到透传数据：cmd: $cmd， index：$index, currentPackage: $mCurrentPackageProgress / $mPackageTotalDataCount,  total: $mProgress / $mTotalDataCount")
         if (mTransData[index] == null) {
@@ -331,6 +323,7 @@ object SyncSleepDataHelper {
     }
 
     private val mPayloadTimeoutCallback = Runnable {
+        log("透传数据超时 type: $mTranType mBeginCmd: $mBeginCmd")
         onSyncFailed()
     }
 
@@ -339,21 +332,24 @@ object SyncSleepDataHelper {
     }
 
     private fun onSyncStart() {
-        mIsSyncing = true
-        if (isSyncSleepData()) DeviceManager.postEvent(DeviceManager.EVENT_SYNC_SLEEP_DATA_START, null)
+        if (isSyncSleepData()) {
+            mIsSyncing = true
+            DeviceManager.postEvent(DeviceManager.EVENT_SYNC_SLEEP_DATA_START, null)
+        }
     }
 
     private fun onSyncSuccess() {
-        mIsSyncing = false
         if (isSyncSleepData()) {
+            mIsSyncing = false
             DeviceManager.postEvent(DeviceManager.EVENT_SYNC_SLEEP_DATA_SUCCESS, null)
-            startSyncSleepMasterLog()
         }
     }
 
     private fun onSyncFailed() {
-        mIsSyncing = false
-        if (isSyncSleepData()) DeviceManager.postEvent(DeviceManager.EVENT_SYNC_SLEEP_DATA_FAIL, null)
+        if (isSyncSleepData()) {
+            mIsSyncing = false
+            DeviceManager.postEvent(DeviceManager.EVENT_SYNC_SLEEP_DATA_FAIL, null)
+        }
     }
 
     fun onSyncProgressChange(progress: Int, totalCount: Int) {
@@ -396,4 +392,7 @@ object SyncSleepDataHelper {
         return mTotalDataCount
     }
 
+    enum class SyncState {
+        FAIL_IS_SYNCING, FAIL_CONNECT_OR_VERSION_WRONG, READY
+    }
 }

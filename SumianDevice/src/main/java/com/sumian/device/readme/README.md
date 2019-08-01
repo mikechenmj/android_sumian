@@ -3,6 +3,7 @@
 ![AppDeviceRelation.png](img/AppDeviceRelation.png)<br>
 App、速眠仪各自都与监测仪相连接，App控制速眠仪是通过监测仪透传数据实现的。
 
+
 # 蓝牙扫描过滤条件
 速眠蓝牙设备的名字都是以"M-SUMIAN"开头的，可以通过该条件过滤其它设备。
 

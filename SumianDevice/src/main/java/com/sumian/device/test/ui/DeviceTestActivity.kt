@@ -218,7 +218,7 @@ class DeviceTestActivity : AppCompatActivity() {
         vg_cmd_history_label.setOnClickListener { switchVg(sw_show_cmd, vg_cmd) }
         vg_device_info_label.setOnClickListener { switchVg(sw_show_device_info, vg_device_info) }
         vg_scan_result_label.setOnClickListener { switchVg(sw_scan_result, vg_scan_result) }
-        bt_sync_data.setOnClickListener { DeviceManager.startSyncSleepData() }
+        bt_sync_data.setOnClickListener { DeviceManager.startSyncSleepDataWithUi() }
         bt_write_mock_date.setOnClickListener {
             val cmd = "aa120303060b"
             writeAndSendCmd(cmd)
