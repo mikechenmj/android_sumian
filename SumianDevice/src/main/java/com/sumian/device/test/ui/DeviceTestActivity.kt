@@ -90,7 +90,7 @@ class DeviceTestActivity : AppCompatActivity() {
 
         override fun onStop() {
             progress_bar.isVisible = false
-            ToastUtils.showShort("scan finished")
+            ToastUtils.showShort("scanDelay finished")
         }
     }
 
@@ -420,7 +420,7 @@ class DeviceTestActivity : AppCompatActivity() {
     }
 
     private fun scan() {
-        DeviceManager.scan(mScanCallback)
+        DeviceManager.scanDelay(mScanCallback)
     }
 
     private fun addCmdToHistoryList(cmd: String, isWrite: Boolean) {

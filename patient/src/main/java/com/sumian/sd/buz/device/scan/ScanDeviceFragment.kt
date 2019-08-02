@@ -8,6 +8,7 @@ import android.bluetooth.BluetoothDevice
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.View
 import androidx.annotation.StringRes
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -54,7 +55,7 @@ class ScanDeviceFragment : BaseFragment() {
         private const val REQUEST_CODE_ENABLE_BT = 1
         private const val REQUEST_PERMISSION_BLUETOOTH = 2
         private const val REQUEST_PERMISSION_LOCATION = 3
-        private const val SCAN_CHECK_DURATION = 3000L
+        private const val SCAN_CHECK_DURATION = 3000L + DeviceManager.SCAN_DELAY
         private const val SCAN_DURATION = 17 * 1000L
     }
 
@@ -248,7 +249,7 @@ class ScanDeviceFragment : BaseFragment() {
         }
 
         mIsScanMore = isScanMore
-        DeviceManager.scan(mScanDeviceCallback)
+        DeviceManager.scanDelay(mScanDeviceCallback)
         mStartScanTime = System.currentTimeMillis()
         switchDeviceListUI(isScanMore)
     }

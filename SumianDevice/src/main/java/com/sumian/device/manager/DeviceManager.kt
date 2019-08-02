@@ -10,6 +10,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Handler
 import android.os.Looper
+import android.os.Message
 import android.text.TextUtils
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ToastUtils
@@ -18,6 +19,7 @@ import com.clj.fastble.callback.BleGattCallback
 import com.clj.fastble.callback.BleScanCallback
 import com.clj.fastble.data.BleDevice
 import com.clj.fastble.exception.BleException
+import com.clj.fastble.scan.BleScanRuleConfig
 import com.clj.fastble.scan.BleScanner
 import com.clj.fastble.utils.HexUtil
 import com.sumian.device.R
@@ -84,7 +86,20 @@ object DeviceManager {
     const val WRITE_DATA_INTERVAL = 200L
     const val CONNECT_WRITE_INTERVAL = 300L
 
-    var mMainHandler = Handler(Looper.getMainLooper())
+    const val SCAN_DELAY = 2000L
+    const val MESSAGE_SCAN_DEVICES = 10
+
+    var mMainHandler = object : Handler(Looper.getMainLooper()) {
+        override fun handleMessage(msg: Message?) {
+            when (msg?.what) {
+                MESSAGE_SCAN_DEVICES -> {
+                    cancelScanDelay()
+                    scan(msg.obj as ScanCallback)
+                }
+            }
+        }
+    }
+
     private var mSumianDevice: SumianDevice? = null
 
     lateinit var mApplication: Application
@@ -174,6 +189,11 @@ object DeviceManager {
                 .setSplitWriteNum(20)
                 .setConnectOverTime(10000)
                 .setOperateTimeout(5000)
+
+        var scanRuleConfig = BleScanRuleConfig.Builder()
+                .setScanTimeOut(40000)
+                .build()
+        BleManager.getInstance().initScanRule(scanRuleConfig)
     }
 
     fun isSupportBle(): Boolean {
@@ -192,9 +212,22 @@ object DeviceManager {
         BleManager.getInstance().disableBluetooth()
     }
 
+    fun scanDelay(callback: ScanCallback, delay: Long = SCAN_DELAY) {
+        var message = Message.obtain()
+        message.what = MESSAGE_SCAN_DEVICES
+        message.obj = callback
+        cancelScanDelay()
+        mMainHandler.sendMessageDelayed(message,delay)
+    }
+
+    fun cancelScanDelay() {
+        mMainHandler.removeMessages(MESSAGE_SCAN_DEVICES)
+    }
+
     fun scan(callback: ScanCallback) {
         BleManager.getInstance().scan(object : BleScanCallback() {
             override fun onScanFinished(scanResultList: MutableList<BleDevice>?) {
+                LogManager.bleSdkLog("蓝牙扫描失败，无任何设备")
                 callback.onStop()
             }
 
@@ -209,6 +242,7 @@ object DeviceManager {
     }
 
     fun stopScan() {
+        cancelScanDelay()
         BleScanner.getInstance().stopLeScan()
     }
 
@@ -229,7 +263,21 @@ object DeviceManager {
         return !TextUtils.isEmpty(getBoundDeviceAddress())
     }
 
-    fun connectBoundDevice(callback: ConnectDeviceCallback? = null) {
+    private var logConnectDeviceCallback = object : ConnectDeviceCallback {
+        override fun onStart() {
+            LogManager.bleSdkLog("自动连接蓝牙开始")
+        }
+
+        override fun onSuccess() {
+            LogManager.bleSdkLog("自动连接蓝牙成功")
+        }
+
+        override fun onFail(code: Int, msg: String) {
+            LogManager.bleSdkLog("自动连接蓝牙失败")
+        }
+    }
+
+    fun connectBoundDevice(callback: ConnectDeviceCallback? = logConnectDeviceCallback) {
         val boundDeviceAddress = getBoundDeviceAddress()
         if (TextUtils.isEmpty(boundDeviceAddress)) {
             return
@@ -263,7 +311,7 @@ object DeviceManager {
     private fun scanAndConnect(address: String, callback: ConnectDeviceCallback?) {
         callback?.onStart()
         changeMonitorConnectStatus(DeviceConnectStatus.CONNECTING)
-        scan(object : ScanCallback {
+        scanDelay(object : ScanCallback {
             private var mFound = false
 
             override fun onStart(success: Boolean) {
@@ -365,7 +413,7 @@ object DeviceManager {
         if (state == SyncSleepDataHelper.SyncState.FAIL_CONNECT_OR_VERSION_WRONG) {
             LogManager.transparentLog(mApplication.getString(R.string.sync_fail_connect_or_version_wrong_tip))
             ToastUtils.showShort(mApplication.getString(R.string.sync_fail_connect_or_version_wrong_tip))
-        } else if (state == SyncSleepDataHelper.SyncState.FAIL_IS_SYNCING){
+        } else if (state == SyncSleepDataHelper.SyncState.FAIL_IS_SYNCING) {
             LogManager.transparentLog(mApplication.getString(R.string.sync_fail_is_syncing_tip))
             ToastUtils.showShort(mApplication.getString(R.string.sync_fail_is_syncing_tip))
         }

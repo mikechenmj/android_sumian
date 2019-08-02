@@ -72,7 +72,7 @@ class ScanDeviceActivity : BaseActivity() {
     }
 
     fun scanDevice() {
-        DeviceManager.scan(mScanCallback)
+        DeviceManager.scanDelay(mScanCallback)
     }
 
     private val mScanCallback = object : ScanCallback {

@@ -96,7 +96,7 @@ object UpgradeDeviceHelper {
     private fun onEnterDfuModeSuccess(longDfuMac: Long, filePath: String) {
         val dfuMac = MacUtil.getStringMacFromLong(longDfuMac)
         DeviceManager.disconnect()
-        DeviceManager.scan(object : ScanCallback {
+        DeviceManager.scanDelay(object : ScanCallback {
             private var mDeviceFound = false
 
             override fun onStart(success: Boolean) {

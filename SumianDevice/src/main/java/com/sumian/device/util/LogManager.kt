@@ -3,6 +3,7 @@ package com.sumian.device.util
 object LogManager {
 
     private const val TAG_DEFAULT = "LogManager"
+    private const val TAG_BLE_SDK = "蓝牙SDK"
     private const val TAG_MONITOR = "监测仪"
     private const val TAG_SLEEP_MASTER = "速眠仪"
     private const val TAG_TRANSPARENT_DATA = "透传数据"
@@ -32,6 +33,10 @@ object LogManager {
 
     fun uploadSleepDatatLog(log: String?) {
         log(TAG_UPLOAD_SLEEP_DATA, log)
+    }
+
+    fun bleSdkLog(log: String?) {
+        log(TAG_BLE_SDK, log)
     }
 
     fun log(tag: String?, log: String?) {
