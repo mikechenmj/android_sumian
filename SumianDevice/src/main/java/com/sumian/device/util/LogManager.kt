@@ -1,9 +1,13 @@
 package com.sumian.device.util
 
+import android.util.Log
+
 object LogManager {
 
     private const val TAG_DEFAULT = "LogManager"
     private const val TAG_BLE_SDK = "蓝牙SDK"
+    private const val TAG_SCAN_DEVICE = "蓝牙扫描"
+    private const val TAG_SYNC_FLOW= "同步数据流程"
     private const val TAG_MONITOR = "监测仪"
     private const val TAG_SLEEP_MASTER = "速眠仪"
     private const val TAG_TRANSPARENT_DATA = "透传数据"
@@ -37,6 +41,15 @@ object LogManager {
 
     fun bleSdkLog(log: String?) {
         log(TAG_BLE_SDK, log)
+    }
+
+    fun bleScanLog(log: String?) {
+        log(TAG_SCAN_DEVICE, log)
+    }
+
+    fun bleFlowLog(s: String) {
+//        Log.i("MCJ", "同步数据流程: $s")
+        log(TAG_SYNC_FLOW, s)
     }
 
     fun log(tag: String?, log: String?) {

@@ -79,7 +79,7 @@ object DeviceStateHelper {
                 { queryMonitorBattery() },
                 { querySleepMasterConnectStatus() },
                 { SyncPatternHelper.syncPattern() },
-                { ThreadManager.postToUIThread({ DeviceManager.startSyncSleepData() }, 1000) } // sync pattern 比较耗时，延时1s再同步数据
+                { ThreadManager.postToUIThread({ DeviceManager.startSyncSleepDataInternal() }, 1000) } // sync pattern 比较耗时，延时1s再同步数据
         )
     }
 

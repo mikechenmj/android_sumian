@@ -217,7 +217,7 @@ object DeviceManager {
         message.what = MESSAGE_SCAN_DEVICES
         message.obj = callback
         cancelScanDelay()
-        mMainHandler.sendMessageDelayed(message,delay)
+        mMainHandler.sendMessageDelayed(message, delay)
     }
 
     fun cancelScanDelay() {
@@ -227,7 +227,7 @@ object DeviceManager {
     fun scan(callback: ScanCallback) {
         BleManager.getInstance().scan(object : BleScanCallback() {
             override fun onScanFinished(scanResultList: MutableList<BleDevice>?) {
-                LogManager.bleSdkLog("蓝牙扫描失败，无任何设备")
+                LogManager.bleScanLog("蓝牙扫描失败，无任何设备")
                 callback.onStop()
             }
 
@@ -408,25 +408,34 @@ object DeviceManager {
     private fun isSleepMasterVersionCompat() = checkSleepMasterVersionCompatibility() == PROTOCOL_VERSION_COMPATIBLE
     fun isDeviceVersionCompatForSyncingData() = isMonitorVersionCompat() && (!isSleepMasterConnected() || isSleepMasterVersionCompat())
 
-    fun startSyncSleepDataWithUi() {
-        var state = startSyncSleepData()
+    fun startSyncSleepData() {
+        var state = startSyncSleepDataInternal()
         if (state == SyncSleepDataHelper.SyncState.FAIL_CONNECT_OR_VERSION_WRONG) {
-            LogManager.transparentLog(mApplication.getString(R.string.sync_fail_connect_or_version_wrong_tip))
-            ToastUtils.showShort(mApplication.getString(R.string.sync_fail_connect_or_version_wrong_tip))
+            LogManager.bleFlowLog(mApplication.getString(R.string.sync_fail_connect_or_version_wrong_tip))
         } else if (state == SyncSleepDataHelper.SyncState.FAIL_IS_SYNCING) {
-            LogManager.transparentLog(mApplication.getString(R.string.sync_fail_is_syncing_tip))
-            ToastUtils.showShort(mApplication.getString(R.string.sync_fail_is_syncing_tip))
+            LogManager.bleFlowLog(mApplication.getString(R.string.sync_fail_is_syncing_tip))
         }
     }
 
-    fun startSyncSleepData(): SyncSleepDataHelper.SyncState {
-        return if (isMonitorConnected()
+    fun isDeviceConnectAndCompat(): Boolean {
+        var isDeviceConnectAndCompat = (isMonitorConnected()
                 && isMonitorVersionCompat()
-                && (!isSleepMasterConnected() || isSleepMasterVersionCompat())
-        ) {
-            if (!SyncSleepDataHelper.isSyncing()) {
-                SyncSleepDataHelper.startSyncSleepData()
-                SyncSleepDataHelper.SyncState.READY
+                && (!isSleepMasterConnected() || isSleepMasterVersionCompat()))
+        if (!isDeviceConnectAndCompat) {
+            LogManager.bleFlowLog("isDeviceConnectAndCompat() false")
+            LogManager.bleFlowLog("isMonitorConnected(): ${isMonitorConnected()}")
+            LogManager.bleFlowLog("isMonitorVersionCompat(): ${isMonitorVersionCompat()}")
+            LogManager.bleFlowLog("isSleepMasterConnected(): ${isSleepMasterConnected()}")
+            LogManager.bleFlowLog("isSleepMasterVersionCompat(): ${isSleepMasterVersionCompat()}")
+        }
+        return isDeviceConnectAndCompat
+    }
+
+    fun startSyncSleepDataInternal(): SyncSleepDataHelper.SyncState {
+        return if (true) {
+            var start = SyncSleepDataHelper.startSyncSleepData()
+            if (start) {
+                SyncSleepDataHelper.SyncState.START
             } else {
                 SyncSleepDataHelper.SyncState.FAIL_IS_SYNCING
             }
