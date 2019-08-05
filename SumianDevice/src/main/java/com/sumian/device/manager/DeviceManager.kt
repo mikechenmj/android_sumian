@@ -187,7 +187,7 @@ object DeviceManager {
                 .enableLog(true)
                 .setReConnectCount(3, 5000)
                 .setSplitWriteNum(20)
-                .setConnectOverTime(10000)
+                .setConnectOverTime(20000)
                 .setOperateTimeout(5000)
 
         var scanRuleConfig = BleScanRuleConfig.Builder()
