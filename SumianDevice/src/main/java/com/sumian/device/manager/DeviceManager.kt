@@ -253,7 +253,7 @@ object DeviceManager {
         }
     }
 
-    fun isScanning() : Boolean {
+    fun isScanning(): Boolean {
         return BleManager.getInstance().scanSate == BleScanState.STATE_SCANNING
     }
 
@@ -333,7 +333,7 @@ object DeviceManager {
                     mFound = true
                     connectWithoutScan(address, callback)
                     stopScan()
-                }else{
+                } else {
                     if (device.name != null && device.name.startsWith("M-SUMIAN")) {
                         LogManager.bleScanLog("扫到速眠蓝牙设备: ${device.name}")
                     }
@@ -438,11 +438,10 @@ object DeviceManager {
                 && isMonitorVersionCompat()
                 && (!isSleepMasterConnected() || isSleepMasterVersionCompat()))
         if (!isDeviceConnectAndCompat) {
-            LogManager.bleFlowLog("isDeviceConnectAndCompat() false")
-            LogManager.bleFlowLog("isMonitorConnected(): ${isMonitorConnected()}")
-            LogManager.bleFlowLog("isMonitorVersionCompat(): ${isMonitorVersionCompat()}")
-            LogManager.bleFlowLog("isSleepMasterConnected(): ${isSleepMasterConnected()}")
-            LogManager.bleFlowLog("isSleepMasterVersionCompat(): ${isSleepMasterVersionCompat()}")
+            LogManager.bleFlowLog("isDeviceConnectAndCompat isMonitorConnected(): ${isMonitorConnected()}")
+            LogManager.bleFlowLog("isDeviceConnectAndCompat isMonitorVersionCompat(): ${isMonitorVersionCompat()}")
+            LogManager.bleFlowLog("isDeviceConnectAndCompat isSleepMasterConnected(): ${isSleepMasterConnected()}")
+            LogManager.bleFlowLog("isDeviceConnectAndCompat isSleepMasterVersionCompat(): ${isSleepMasterVersionCompat()}")
         }
         return isDeviceConnectAndCompat
     }
