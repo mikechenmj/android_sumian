@@ -48,7 +48,6 @@ object LogManager {
     }
 
     fun bleFlowLog(s: String) {
-//        Log.i("MCJ", "同步数据流程: $s")
         log(TAG_SYNC_FLOW, s)
     }
 

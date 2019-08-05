@@ -13,14 +13,13 @@ import android.os.Looper
 import android.os.Message
 import android.text.TextUtils
 import com.blankj.utilcode.util.SPUtils
-import com.blankj.utilcode.util.ToastUtils
 import com.clj.fastble.BleManager
 import com.clj.fastble.callback.BleGattCallback
 import com.clj.fastble.callback.BleScanCallback
 import com.clj.fastble.data.BleDevice
+import com.clj.fastble.data.BleScanState
 import com.clj.fastble.exception.BleException
 import com.clj.fastble.scan.BleScanRuleConfig
-import com.clj.fastble.scan.BleScanner
 import com.clj.fastble.utils.HexUtil
 import com.sumian.device.R
 import com.sumian.device.authentication.AuthenticationManager
@@ -93,7 +92,7 @@ object DeviceManager {
         override fun handleMessage(msg: Message?) {
             when (msg?.what) {
                 MESSAGE_SCAN_DEVICES -> {
-                    cancelScanDelay()
+                    removeScanMessage()
                     scan(msg.obj as ScanCallback)
                 }
             }
@@ -159,6 +158,7 @@ object DeviceManager {
         }
         if (!on) {
             BleManager.getInstance().disconnectAllDevice()
+            BleManager.getInstance().destroy()
             mSumianDevice = getBoundDevice()
             mGatt = null
             mBleDevice = null
@@ -216,18 +216,23 @@ object DeviceManager {
         var message = Message.obtain()
         message.what = MESSAGE_SCAN_DEVICES
         message.obj = callback
-        cancelScanDelay()
+        removeScanMessage()
+        if (isScanning()) {
+            stopScan()
+        }
+        BleManager.getInstance().disconnectAllDevice()
+        BleManager.getInstance().destroy()
         mMainHandler.sendMessageDelayed(message, delay)
     }
 
-    fun cancelScanDelay() {
+    fun removeScanMessage() {
         mMainHandler.removeMessages(MESSAGE_SCAN_DEVICES)
     }
 
     fun scan(callback: ScanCallback) {
         BleManager.getInstance().scan(object : BleScanCallback() {
             override fun onScanFinished(scanResultList: MutableList<BleDevice>?) {
-                LogManager.bleScanLog("蓝牙扫描失败，无任何设备")
+                LogManager.bleScanLog("onScanFinished: ${scanResultList?.size}")
                 callback.onStop()
             }
 
@@ -242,8 +247,14 @@ object DeviceManager {
     }
 
     fun stopScan() {
-        cancelScanDelay()
-        BleScanner.getInstance().stopLeScan()
+        removeScanMessage()
+        if (isScanning()) {
+            BleManager.getInstance().cancelScan()
+        }
+    }
+
+    fun isScanning() : Boolean {
+        return BleManager.getInstance().scanSate == BleScanState.STATE_SCANNING
     }
 
     fun bind(address: String, callback: ConnectDeviceCallback?) {
@@ -265,15 +276,15 @@ object DeviceManager {
 
     private var logConnectDeviceCallback = object : ConnectDeviceCallback {
         override fun onStart() {
-            LogManager.bleSdkLog("自动连接蓝牙开始")
+            LogManager.bleScanLog("自动连接蓝牙开始")
         }
 
         override fun onSuccess() {
-            LogManager.bleSdkLog("自动连接蓝牙成功")
+            LogManager.bleScanLog("自动连接蓝牙成功")
         }
 
         override fun onFail(code: Int, msg: String) {
-            LogManager.bleSdkLog("自动连接蓝牙失败")
+            LogManager.bleScanLog("自动连接蓝牙失败: $code")
         }
     }
 
@@ -322,11 +333,16 @@ object DeviceManager {
                     mFound = true
                     connectWithoutScan(address, callback)
                     stopScan()
+                }else{
+                    if (device.name != null && device.name.startsWith("M-SUMIAN")) {
+                        LogManager.bleScanLog("扫到速眠蓝牙设备: ${device.name}")
+                    }
                 }
             }
 
             override fun onStop() {
                 if (!mFound) {
+                    LogManager.bleScanLog("未扫到对应蓝牙设备")
                     changeMonitorConnectStatus(DeviceConnectStatus.DISCONNECTED)
                     callback?.onFail(1, "设备连接失败")
                 }
