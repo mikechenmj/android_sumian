@@ -35,6 +35,7 @@ class ScanDeviceActivity : BaseActivity() {
     override fun getPageName(): String {
         return StatConstants.page_add_device
     }
+
     override fun initWidget() {
         super.initWidget()
         setTitle(R.string.add_device)

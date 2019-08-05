@@ -433,20 +433,29 @@ object DeviceManager {
         }
     }
 
-    fun isDeviceConnectAndCompat(): Boolean {
+    fun isDeviceConnectAndCompat(log : Boolean = false): Boolean {
         var isDeviceConnectAndCompat = (isMonitorConnected()
                 && isMonitorVersionCompat()
                 && (!isSleepMasterConnected() || isSleepMasterVersionCompat()))
-        if (!isDeviceConnectAndCompat) {
-            LogManager.bleFlowLog("isDeviceConnectAndCompat isMonitorConnected(): ${isMonitorConnected()}")
-            LogManager.bleFlowLog("isDeviceConnectAndCompat isMonitorVersionCompat(): ${isMonitorVersionCompat()}")
-            LogManager.bleFlowLog("isDeviceConnectAndCompat isSleepMasterConnected(): ${isSleepMasterConnected()}")
-            LogManager.bleFlowLog("isDeviceConnectAndCompat isSleepMasterVersionCompat(): ${isSleepMasterVersionCompat()}")
+        if (log) {
+            if (!isDeviceConnectAndCompat) {
+                LogManager.bleFlowLog("isDeviceConnectAndCompat isMonitorConnected(): ${isMonitorConnected()} " +
+                        ": ${mSumianDevice?.monitorConnectStatus}")
+                LogManager.bleFlowLog("isDeviceConnectAndCompat isMonitorVersionCompat(): ${isMonitorVersionCompat()}" +
+                        ": ${mSumianDevice?.monitorVersionInfo?.protocolVersion}")
+                LogManager.bleFlowLog("isDeviceConnectAndCompat isSleepMasterConnected(): ${isSleepMasterConnected()}" +
+                        ": ${mSumianDevice?.sleepMasterConnectStatus}")
+                LogManager.bleFlowLog("isDeviceConnectAndCompat isSleepMasterVersionCompat(): ${isSleepMasterVersionCompat()}" +
+                        ": ${mSumianDevice?.sleepMasterVersionInfo?.protocolVersion}")
+            }else{
+                LogManager.bleFlowLog("isDeviceConnectAndCompat success")
+            }
         }
         return isDeviceConnectAndCompat
     }
 
     fun startSyncSleepDataInternal(): SyncSleepDataHelper.SyncState {
+        isDeviceConnectAndCompat(true)
         return if (true) {
             var start = SyncSleepDataHelper.startSyncSleepData()
             if (start) {
