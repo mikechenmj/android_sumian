@@ -17,6 +17,7 @@ import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.base.BaseFragment
 import com.sumian.common.statistic.StatUtil
 import com.sumian.common.widget.dialog.SumianDialog
+import com.sumian.device.callback.ConnectDeviceCallback
 import com.sumian.device.callback.ScanCallback
 import com.sumian.device.manager.DeviceManager
 import com.sumian.sd.R
@@ -274,7 +275,17 @@ class ScanDeviceFragment : BaseFragment() {
     private fun onDeviceSelected(device: BlueDevice) {
         StatUtil.event(StatConstants.on_bind_device_success)
         stopScan()
-        DeviceManager.bind(device.mac, null)
+        DeviceManager.bind(device.mac, object : ConnectDeviceCallback {
+            override fun onStart() {
+            }
+
+            override fun onSuccess() {
+            }
+
+            override fun onFail(code: Int, msg: String) {
+                ToastUtils.showShort(msg)
+            }
+        })
         mOnDeviceSelectedListener?.onDeviceSelected(device)
     }
 

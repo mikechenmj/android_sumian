@@ -1,5 +1,6 @@
 package com.sumian.sd.buz.device.devicemanage
 
+import android.util.Log
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.base.BaseActivity
 import com.sumian.device.callback.ConnectDeviceCallback
@@ -65,9 +66,6 @@ class DeviceManageActivity : BaseActivity() {
             }
         }, object : FragmentUtil.RunOnCommitCallback {
             override fun runOnCommit(selectFragment: androidx.fragment.app.Fragment) {
-                if (selectFragment is ScanDeviceFragment) {
-                    selectFragment.rollback()
-                }
             }
         })
     }
@@ -85,17 +83,6 @@ class DeviceManageActivity : BaseActivity() {
 
     private val mOnDeviceSelectedListener = object : ScanDeviceFragment.OnDeviceSelectedListener {
         override fun onDeviceSelected(device: BlueDevice) {
-            DeviceManager.bind(device.mac, object : ConnectDeviceCallback {
-                override fun onStart() {
-                }
-
-                override fun onSuccess() {
-                }
-
-                override fun onFail(code: Int, msg: String) {
-                    ToastUtils.showShort(msg)
-                }
-            })
             switchFragment(0)
         }
     }
