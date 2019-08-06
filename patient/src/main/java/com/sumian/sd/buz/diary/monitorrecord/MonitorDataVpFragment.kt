@@ -67,8 +67,11 @@ class MonitorDataVpFragment : BaseFragment() {
                 DeviceManager.EVENT_ALL_SLEEP_DATA_UPLOADED -> {
                     EventBusUtil.postStickyEvent(UploadSleepDataFinishedEvent())
                 }
+                DeviceManager.EVENT_SYNC_SLEEP_DATA_FAIL,
+                DeviceManager.EVENT_SYNC_SLEEP_DATA_SUCCESS -> {
+                    tv_is_syncing_hint?.isVisible = false
+                }
             }
-            tv_is_syncing_hint?.isVisible = DeviceManager.isSyncingSleepData()
         }
     }
 
