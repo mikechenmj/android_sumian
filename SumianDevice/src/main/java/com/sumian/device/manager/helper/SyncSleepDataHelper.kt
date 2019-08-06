@@ -194,6 +194,7 @@ object SyncSleepDataHelper {
         bleFlowLog("SYNC_START: $cmd")
         if (!DeviceManager.isDeviceVersionCompatForSyncingData()) {
             writeResponse(data, BleCmd.RESPONSE_CODE_FAIL)
+            bleFlowLog("writeResponse RESPONSE_CODE_FAIL for $cmd")
             sendSetSyncFlagFalseMessageDelay("!isDeviceVersionCompatForSyncingData")
             return
         }
@@ -216,6 +217,7 @@ object SyncSleepDataHelper {
         onSyncStart()
         postNextPayloadTimeoutCallback()
         writeResponse(mBeginBytes!!, BleCmd.RESPONSE_CODE_SUCCESS)
+        bleFlowLog("writeResponse RESPONSE_CODE_SUCCESS for $cmd")
         mIsGettingLostFrame = false
     }
 

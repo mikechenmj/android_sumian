@@ -7,6 +7,7 @@ object LogManager {
     private const val TAG_DEFAULT = "LogManager"
     private const val TAG_BLE_SDK = "蓝牙SDK"
     private const val TAG_SCAN_DEVICE = "蓝牙扫描"
+    private const val TAG_CONNECT_DEVICE = "蓝牙连接"
     private const val TAG_SYNC_FLOW= "同步数据流程"
     private const val TAG_MONITOR = "监测仪"
     private const val TAG_SLEEP_MASTER = "速眠仪"
@@ -45,6 +46,10 @@ object LogManager {
 
     fun bleScanLog(log: String?) {
         log(TAG_SCAN_DEVICE, log)
+    }
+
+    fun bleConnectLog(log: String?) {
+        log(TAG_CONNECT_DEVICE, log)
     }
 
     fun bleFlowLog(s: String) {

@@ -396,6 +396,7 @@ object DeviceManager {
             ) {
                 changeMonitorConnectStatus(DeviceConnectStatus.DISCONNECTED)
                 callback?.onFail(1, exception?.description ?: "设备连接失败")
+                LogManager.bleConnectLog(exception?.description ?: "设备连接失败")
             }
         })
     }
