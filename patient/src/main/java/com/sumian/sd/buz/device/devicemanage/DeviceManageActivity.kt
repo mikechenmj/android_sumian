@@ -48,6 +48,12 @@ class DeviceManageActivity : BaseActivity() {
     }
 
     private fun switchFragment(position: Int) {
+        var transaction = supportFragmentManager.beginTransaction()
+        var fragment = supportFragmentManager.findFragmentByTag(FRAGMENT_TAGS[1])
+        if (fragment != null) {
+            transaction.remove(fragment)
+            transaction.commit()
+        }
         mCurrentFragmentIndex = position
         switchFragment(R.id.vg, supportFragmentManager, FRAGMENT_TAGS, position, object : FragmentUtil.FragmentCreator {
             override fun createFragmentByPosition(position: Int): androidx.fragment.app.Fragment {
