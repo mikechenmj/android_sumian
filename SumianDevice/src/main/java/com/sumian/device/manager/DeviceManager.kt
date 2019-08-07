@@ -93,6 +93,9 @@ object DeviceManager {
             when (msg?.what) {
                 MESSAGE_SCAN_DEVICES -> {
                     removeScanMessage()
+                    if (isScanning()) {
+                        stopScan()
+                    }
                     scan(msg.obj as ScanCallback)
                 }
             }
@@ -217,9 +220,6 @@ object DeviceManager {
         message.what = MESSAGE_SCAN_DEVICES
         message.obj = callback
         removeScanMessage()
-        if (isScanning()) {
-            stopScan()
-        }
         BleManager.getInstance().disconnectAllDevice()
         BleManager.getInstance().destroy()
         mMainHandler.sendMessageDelayed(message, delay)
@@ -231,9 +231,15 @@ object DeviceManager {
 
     fun scan(callback: ScanCallback) {
         BleManager.getInstance().scan(object : BleScanCallback() {
+
+            private var mFound = false
+
             override fun onScanFinished(scanResultList: MutableList<BleDevice>?) {
                 LogManager.bleScanLog("onScanFinished: ${scanResultList?.size}")
                 callback.onStop()
+                if (!mFound) {
+                    LogManager.bleScanLog("未扫到对应蓝牙设备")
+                }
             }
 
             override fun onScanStarted(success: Boolean) {
@@ -241,6 +247,13 @@ object DeviceManager {
             }
 
             override fun onScanning(bleDevice: BleDevice?) {
+                if (getBoundDeviceAddress() == bleDevice?.device?.address) {
+                    mFound = true
+                }
+                if (bleDevice?.device?.name != null && bleDevice?.device?.name != null
+                        && bleDevice.device.name.startsWith("M-SUMIAN")) {
+                    LogManager.bleScanLog("扫到速眠蓝牙设备: ${bleDevice?.device?.name}")
+                }
                 callback.onLeScan(bleDevice?.device ?: return, bleDevice.rssi, bleDevice.scanRecord)
             }
         })
@@ -333,16 +346,11 @@ object DeviceManager {
                     mFound = true
                     connectWithoutScan(address, callback)
                     stopScan()
-                } else {
-                    if (device.name != null && device.name.startsWith("M-SUMIAN")) {
-                        LogManager.bleScanLog("扫到速眠蓝牙设备: ${device.name}")
-                    }
                 }
             }
 
             override fun onStop() {
                 if (!mFound) {
-                    LogManager.bleScanLog("未扫到对应蓝牙设备")
                     changeMonitorConnectStatus(DeviceConnectStatus.DISCONNECTED)
                     callback?.onFail(1, "设备连接失败")
                 }
@@ -358,6 +366,7 @@ object DeviceManager {
             override fun onStartConnect() {
                 changeMonitorConnectStatus(DeviceConnectStatus.CONNECTING)
                 callback?.onStart()
+                LogManager.bleConnectLog("连接开始")
             }
 
             override fun onDisConnected(
@@ -370,6 +379,7 @@ object DeviceManager {
                 mBleDevice = null
                 mGatt = null
                 changeMonitorConnectStatus(DeviceConnectStatus.DISCONNECTED)
+                LogManager.bleConnectLog("${device?.name}设备断开连接 and status: $status ")
             }
 
             override fun onConnectSuccess(
@@ -388,6 +398,7 @@ object DeviceManager {
                             syncState()
                         }, CONNECT_WRITE_INTERVAL
                 )
+                LogManager.bleConnectLog("${bleDevice?.name}设备连接成功 and status: $status")
             }
 
             override fun onConnectFail(
@@ -395,7 +406,7 @@ object DeviceManager {
                     exception: BleException?
             ) {
                 changeMonitorConnectStatus(DeviceConnectStatus.DISCONNECTED)
-                callback?.onFail(1, exception?.description ?: "设备连接失败")
+                callback?.onFail(1, "连接失败,请确保设备在手机附近并重试")
                 LogManager.bleConnectLog(exception?.description ?: "设备连接失败")
             }
         })
@@ -434,7 +445,7 @@ object DeviceManager {
         }
     }
 
-    fun isDeviceConnectAndCompat(log : Boolean = false): Boolean {
+    fun isDeviceConnectAndCompat(log: Boolean = false): Boolean {
         var isDeviceConnectAndCompat = (isMonitorConnected()
                 && isMonitorVersionCompat()
                 && (!isSleepMasterConnected() || isSleepMasterVersionCompat()))
@@ -448,7 +459,7 @@ object DeviceManager {
                         ": ${mSumianDevice?.sleepMasterConnectStatus}")
                 LogManager.bleFlowLog("isDeviceConnectAndCompat isSleepMasterVersionCompat(): ${isSleepMasterVersionCompat()}" +
                         ": ${mSumianDevice?.sleepMasterVersionInfo?.protocolVersion}")
-            }else{
+            } else {
                 LogManager.bleFlowLog("isDeviceConnectAndCompat success")
             }
         }

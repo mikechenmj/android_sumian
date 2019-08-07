@@ -45,8 +45,6 @@ class ScanDeviceFragment : BaseFragment() {
     private val mScanResults = ArrayList<BlueDevice>()
     private val mHandler = Handler()
     private var mIsScanMore = false
-    private var mStartScanTime = 0L
-    private var mIsScanning = false
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_scan_device
@@ -90,19 +88,27 @@ class ScanDeviceFragment : BaseFragment() {
 
     override fun onDestroyView() {
         DeviceManager.unregisterBluetoothAdapterStateChangeListener(mBluetoothStateChangeListener)
-        mHandler.removeCallbacks(mCheckScanResultRunnable)
+        removeCheckScanResultRunnable()
         stopScan()
         super.onDestroyView()
     }
 
+    private fun sendCheckScanResultRunnable(delay : Long = SCAN_CHECK_DURATION) {
+        mHandler.removeCallbacks(mCheckScanResultRunnable)
+        mHandler.postDelayed(mCheckScanResultRunnable,delay)
+    }
+
+    private fun removeCheckScanResultRunnable() {
+        mHandler.removeCallbacks(mCheckScanResultRunnable)
+    }
+
     private val mScanDeviceCallback = object : ScanCallback {
         override fun onStart(success: Boolean) {
-            mIsScanning = true
         }
 
         override fun onLeScan(device: BluetoothDevice, rssi: Int, scanRecord: ByteArray) {
             val deviceName = device.name
-            if (deviceName == null || !deviceName.startsWith("M-SUMIAN") || rssi <= -80) {
+            if (deviceName == null || !deviceName.startsWith("M-SUMIAN")) {
                 return
             }
             val blueDevice = BlueDevice()
@@ -121,13 +127,10 @@ class ScanDeviceFragment : BaseFragment() {
                 mScanResults.add(blueDevice)
                 mDeviceAdapter.setData(mScanResults)
             }
-            if (System.currentTimeMillis() - mStartScanTime > SCAN_CHECK_DURATION && !mIsScanMore) {
-                stopScan()
-            }
         }
 
         override fun onStop() {
-            mIsScanning = false
+            removeCheckScanResultRunnable()
             if (vg_bt_not_enable != null) {
                 hideVgs()
                 when (mScanResults.size) {
@@ -141,7 +144,6 @@ class ScanDeviceFragment : BaseFragment() {
 
     private fun stopScan() {
         DeviceManager.stopScan()
-        mIsScanning = false
     }
 
     private fun showNoDeviceUI() {
@@ -243,7 +245,7 @@ class ScanDeviceFragment : BaseFragment() {
 //        registerBlueCallback()
         if (!isScanMore) {
             resetScanResults()
-            mHandler.postDelayed(mCheckScanResultRunnable, SCAN_CHECK_DURATION)
+            sendCheckScanResultRunnable()
             iv_device.visibility = View.GONE
             vg_scan_more_tvs.visibility = View.GONE
             ripple_view.startAnimation()
@@ -251,7 +253,6 @@ class ScanDeviceFragment : BaseFragment() {
 
         mIsScanMore = isScanMore
         DeviceManager.scanDelay(mScanDeviceCallback)
-        mStartScanTime = System.currentTimeMillis()
         switchDeviceListUI(isScanMore)
     }
 
