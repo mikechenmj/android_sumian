@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
-import android.util.Log
 import com.sumian.device.callback.BleCommunicationWatcher
 import com.sumian.device.cmd.BleCmd
 import com.sumian.device.manager.DeviceManager
@@ -35,10 +34,8 @@ object SyncSleepDataHelper {
     private var mTransData = arrayOfNulls<String?>(0)
     private var mTransDataId: String? = null
     private var mTranType: Int = SYNC_TYPE_SLEEP_DATA
-    private var mTimeOutTranType: Int = SYNC_TYPE_SLEEP_DATA
     private var mIsSleepDataTypeSyncing = false
     private var mBeginCmd: String? = null
-    private var mTimeOutBeginCmd: String? = null
     private var mEndCmd: String? = null
     private var mBeginBytes: ByteArray? = null
     private var mEndBytes: ByteArray? = null
@@ -71,12 +68,19 @@ object SyncSleepDataHelper {
 
     private const val MESSAGE_TAG_SET_SYNC_FALSE = "set_sync_flag_false_tag"
     private const val MESSAGE_CODE_SET_SYNC_FALSE = 9
-    private var mMainHandler: Handler = object : Handler() {
+    private const val MESSAGE_CODE_NEXT_PAYLOAD = 10
+
+    private var mMainHandler: Handler = object : Handler(Looper.getMainLooper()) {
         override fun handleMessage(msg: Message?) {
             when (msg?.what) {
                 MESSAGE_CODE_SET_SYNC_FALSE -> {
                     var tag = msg?.data?.getString(MESSAGE_TAG_SET_SYNC_FALSE) ?: null
                     setIsSyncing(false, "MESSAGE_CODE_SET_SYNC_FALSE $tag")
+                }
+                MESSAGE_CODE_NEXT_PAYLOAD -> {
+                    var type = msg.arg1
+                    var beginCmd = msg.obj as String
+                    onSyncTimeOut(type, beginCmd)
                 }
             }
         }
@@ -215,7 +219,7 @@ object SyncSleepDataHelper {
         mTotalDataCount = subHexStringToInt(cmd, 30, 34)
         log("开始透传 mCurrentPackageIndex: ${mCurrentPackageIndex}， mTotalPackageCount: $mTotalPackageCount, mTotalDataCount: $mTotalDataCount")
         onSyncStart()
-        postNextPayloadTimeoutCallback()
+        sendNextPayloadTimeoutDelay()
         writeResponse(mBeginBytes!!, BleCmd.RESPONSE_CODE_SUCCESS)
         bleFlowLog("writeResponse RESPONSE_CODE_SUCCESS for $cmd")
         mIsGettingLostFrame = false
@@ -230,7 +234,7 @@ object SyncSleepDataHelper {
         if (hasLostFrames()) {
             mIsGettingLostFrame = true
             requestNextLostFrame()
-            postNextPayloadTimeoutCallback()
+            sendNextPayloadTimeoutDelay()
         } else {
             onCurrentPackageReceivedSuccess()
         }
@@ -263,7 +267,7 @@ object SyncSleepDataHelper {
         }
         mTransData[index] = cmd
         onSyncProgressChange(mProgress, mTotalDataCount)
-        postNextPayloadTimeoutCallback()
+        sendNextPayloadTimeoutDelay()
         if (mLostFrameIndexList.contains(index)) {
             mLostFrameIndexList.remove(index)
         }
@@ -280,10 +284,10 @@ object SyncSleepDataHelper {
         saveSleepDataToFile()
         writeResponse(mEndBytes!!, BleCmd.RESPONSE_CODE_SUCCESS)
         if (mCurrentPackageIndex == mTotalPackageCount) {
-            removePayloadTimeoutCallback()
+            removePayloadTimeoutMessage()
             onSyncSuccess()
         } else {
-            postNextPayloadTimeoutCallback()
+            sendNextPayloadTimeoutDelay()
         }
     }
 
@@ -379,19 +383,17 @@ object SyncSleepDataHelper {
         return (System.currentTimeMillis() / 1000L).toInt()
     }
 
-    private fun postNextPayloadTimeoutCallback() {
-        removePayloadTimeoutCallback()
-        mTimeOutTranType = mTranType
-        mTimeOutBeginCmd = mBeginCmd
-        mMainHandler.postDelayed(mPayloadTimeoutCallback, PAYLOAD_TIMEOUT_TIME)
+    private fun sendNextPayloadTimeoutDelay() {
+        removePayloadTimeoutMessage()
+        var message = Message.obtain()
+        message.what = MESSAGE_CODE_NEXT_PAYLOAD
+        message.arg1 = mTranType
+        message.obj = mBeginCmd
+        mMainHandler.sendMessageDelayed(message, PAYLOAD_TIMEOUT_TIME)
     }
 
-    private fun removePayloadTimeoutCallback() {
-        mMainHandler.removeCallbacks(mPayloadTimeoutCallback)
-    }
-
-    private val mPayloadTimeoutCallback = Runnable {
-        onSyncTimeOut()
+    private fun removePayloadTimeoutMessage() {
+        mMainHandler.removeMessages(MESSAGE_CODE_NEXT_PAYLOAD)
     }
 
     fun isSyncing(): Boolean {
@@ -432,10 +434,10 @@ object SyncSleepDataHelper {
         }
     }
 
-    private fun onSyncTimeOut() {
-        bleFlowLog("透传数据超时 type: $mTimeOutTranType mBeginCmd: $mTimeOutBeginCmd")
+    private fun onSyncTimeOut(type: Int, beginCmd: String) {
+        bleFlowLog("透传数据超时 type: $type beginCmd: $beginCmd")
         setIsSyncing(false, "onSyncTimeOut")
-        if (mTimeOutTranType == SYNC_TYPE_SLEEP_DATA) {
+        if (type == SYNC_TYPE_SLEEP_DATA) {
             setIsSleepDataTypeSyncing(false)
             DeviceManager.postEvent(DeviceManager.EVENT_SYNC_SLEEP_DATA_FAIL, null)
         }
