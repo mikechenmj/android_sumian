@@ -17,7 +17,7 @@ import com.sumian.device.manager.DeviceManager
 import com.sumian.device.util.BleCmdUtil
 import com.sumian.device.util.LogManager
 import com.sumian.device.util.ThreadManager
-import java.lang.ref.WeakReference
+import java.lang.ref.SoftReference
 
 /**
  * @author : Zhan Xuzhao
@@ -37,7 +37,7 @@ object BleCommunicationController {
     private val mRetryTimesMap: ArrayMap<String, Int> = ArrayMap()
     private var mDevice: BleDevice? = null
     private val mMainHandler = Handler(Looper.getMainLooper())
-    private val mResponseMap = HashMap<String, WeakReference<BleRequestCallback>>()
+    private val mResponseMap = HashMap<String, SoftReference<BleRequestCallback>>()
     private val mTimeoutCallbacks = LinkedHashMap<String, Runnable>()
     val mBleCommunicationWatcherList = ArrayList<BleCommunicationWatcher>()
     val mOriginBleCommunicationWatcher = object : BleCommunicationWatcher {
@@ -221,7 +221,7 @@ object BleCommunicationController {
         if (callback == null) {
             return
         }
-        mResponseMap[cmd] = WeakReference(callback)
+        mResponseMap[cmd] = SoftReference(callback)
     }
 
     private fun removeResponseCallback(cmd: String) {
