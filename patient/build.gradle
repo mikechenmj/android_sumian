@@ -49,7 +49,7 @@ android {
         applicationId = "com.sumian.sd"
         applicationIdSuffix = null
         versionCode = new Date().format('yyyyMMddHH').toInteger()
-        versionName = "1.25.1-build2"
+        versionName = "1.25.1-build3"
         versionNameSuffix = null
 
         minSdkVersion rootProject.ext.minSdkVersion
