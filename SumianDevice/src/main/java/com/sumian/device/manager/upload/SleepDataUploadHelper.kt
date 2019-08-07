@@ -46,11 +46,11 @@ class SleepFileUploadUtil {
             map["app_receive_started_at"] = params.app_receive_ended_at
             map["app_receive_ended_at"] = params.app_receive_ended_at
 
-            LogManager.uploadSleepDatatLog("upload $task")
+            LogManager.uploadSleepDataLog("upload $task")
             NetworkManager.getApi().uploadTransData(map)
                     .enqueue(object : Callback<OssResponse> {
                         override fun onFailure(call: Call<OssResponse>, t: Throwable) {
-                            LogManager.uploadSleepDatatLog("uploadTransData onFailure: ${t.message}")
+                            LogManager.uploadSleepDataLog("uploadTransData onFailure: ${t.message}")
                             callback.onFail(ERROR_CODE_NETWORK_ERROR, t.message)
                         }
 
@@ -58,7 +58,7 @@ class SleepFileUploadUtil {
                                 call: Call<OssResponse>,
                                 response: Response<OssResponse>
                         ) {
-                            LogManager.uploadSleepDatatLog("uploadTransData onResponse: $response")
+                            LogManager.uploadSleepDataLog("uploadTransData onResponse: $response")
                             if (response.isSuccessful) {
                                 val ossResponse = response.body()
                                 if (ossResponse == null) {
@@ -86,16 +86,16 @@ class SleepFileUploadUtil {
         ) {
             OssUtil.uploadFile(context, filePath, ossResponse, object : OssUtil.UploadCallback {
                 override fun onStart(task: OSSAsyncTask<PutObjectResult>) {
-                    LogManager.uploadSleepDatatLog("OssUtil.uploadFile onStart: $task")
+                    LogManager.uploadSleepDataLog("OssUtil.uploadFile onStart: $task")
                 }
 
                 override fun onSuccess(response: String?) {
-                    LogManager.uploadSleepDatatLog("OssUtil.uploadFile onSuccess: $response")
+                    LogManager.uploadSleepDataLog("OssUtil.uploadFile onSuccess: $response")
                     callback.onSuccess(response)
                 }
 
                 override fun onFailure(errorCode: String?, message: String?) {
-                    LogManager.uploadSleepDatatLog("OssUtil.uploadFile onFailure: $message")
+                    LogManager.uploadSleepDataLog("OssUtil.uploadFile onFailure: $message")
                     callback.onFail(ERROR_CODE_OSS_ERROR, message)
                 }
             })

@@ -2,6 +2,7 @@ package com.sumian.device.manager.blecommunicationcontroller
 
 import android.os.Handler
 import android.os.Looper
+import androidx.collection.ArrayMap
 import com.clj.fastble.BleManager
 import com.clj.fastble.callback.BleNotifyCallback
 import com.clj.fastble.callback.BleWriteCallback
@@ -12,8 +13,10 @@ import com.sumian.device.callback.BleCommunicationWatcher
 import com.sumian.device.callback.BleRequestCallback
 import com.sumian.device.callback.WriteBleDataCallback
 import com.sumian.device.cmd.BleCmd
+import com.sumian.device.manager.DeviceManager
 import com.sumian.device.util.BleCmdUtil
 import com.sumian.device.util.LogManager
+import com.sumian.device.util.ThreadManager
 import java.lang.ref.WeakReference
 
 /**
@@ -29,7 +32,9 @@ object BleCommunicationController {
     private const val NOTIFY_UUID = "6e400003-b5a3-f393-e0a9-e50e24dcca9e"
     private const val DESCRIPTORS_UUID = "00002902-0000-1000-8000-00805f9b34fb"
     private const val TIMEOUT_DURATION = 3_000L
+    private const val RETRY_REQUEST_CMD_TIMES = 3
 
+    private val mRetryTimesMap: ArrayMap<String, Int> = ArrayMap()
     private var mDevice: BleDevice? = null
     private val mMainHandler = Handler(Looper.getMainLooper())
     private val mResponseMap = HashMap<String, WeakReference<BleRequestCallback>>()
@@ -123,16 +128,35 @@ object BleCommunicationController {
     /**
      * 发起请求，会受到设备的响应或超时回调
      */
-    fun requestByCmd(cmd: String, callback: BleRequestCallback? = null) {
-        request(BleCmd.APP_CMD_HEADER + cmd, callback)
+    fun requestByCmd(cmd: String, callback: BleRequestCallback? = null, retry: Boolean = false) {
+        requestWithRetry(HexUtil.hexStringToBytes(BleCmd.APP_CMD_HEADER + cmd), callback, retry)
     }
 
-    fun request(data: String, callback: BleRequestCallback?) {
-        request(HexUtil.hexStringToBytes(data), callback)
-    }
-
-    fun request(data: ByteArray, callback: BleRequestCallback?) {
+    fun requestWithRetry(data: ByteArray, callback: BleRequestCallback?, retry: Boolean = false) {
         val cmd = HexUtil.formatHexString(data).substring(2, 4)
+        mRetryTimesMap[cmd] = 0
+        var retryCallback = object : BleRequestCallback {
+            override fun onResponse(data: ByteArray, hexString: String) {
+                LogManager.bleRequestStatusLog("请求蓝牙状态成功,cmd: $cmd retry: $retry")
+                callback?.onResponse(data, hexString)
+            }
+
+            override fun onFail(code: Int, msg: String) {
+                LogManager.bleRequestStatusLog("请求蓝牙状态失败，cmd:$cmd code: $code msg: $msg retry: $retry")
+                if (retry) {
+                    if (mRetryTimesMap[cmd]!! < RETRY_REQUEST_CMD_TIMES) {
+                        ThreadManager.postToUIThread({ request(data, cmd, this) }, DeviceManager.WRITE_DATA_INTERVAL)
+                        mRetryTimesMap[cmd] = mRetryTimesMap[cmd]!! + 1
+                        LogManager.bleRequestStatusLog("同步状态失败且重试第${mRetryTimesMap[cmd]}次")
+                    }
+                }
+                callback?.onFail(code, msg)
+            }
+        }
+        request(data, cmd, retryCallback)
+    }
+
+    fun request(data: ByteArray, cmd: String, callback: BleRequestCallback?) {
         putResponseCallbackToMap(cmd, callback)
         postTimeoutCallbackDelay(cmd, Runnable {
             makeResponse(

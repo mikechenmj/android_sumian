@@ -575,16 +575,8 @@ object DeviceManager {
         mDeviceStatusListener.onStatusChange(event)
     }
 
-    fun makeRequestByCmd(cmd: String, callback: BleRequestCallback) {
-        BleCommunicationController.requestByCmd(cmd, callback)
-    }
-
-    fun makeRequest(data: String, callback: BleRequestCallback) {
-        BleCommunicationController.request(data, callback)
-    }
-
     fun makeRequest(data: ByteArray, callback: BleRequestCallback) {
-        BleCommunicationController.request(data, callback)
+        BleCommunicationController.requestWithRetry(data, callback)
     }
 
     fun upgrade(target: DeviceType, filePath: String, callback: DfuCallback) {

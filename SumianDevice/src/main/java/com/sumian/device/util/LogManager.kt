@@ -8,6 +8,7 @@ object LogManager {
     private const val TAG_BLE_SDK = "蓝牙SDK"
     private const val TAG_SCAN_DEVICE = "蓝牙扫描"
     private const val TAG_CONNECT_DEVICE = "蓝牙连接"
+    private const val TAG_REQUEST_STATUS_DEVICE = "请求蓝牙状态"
     private const val TAG_SYNC_FLOW= "同步数据流程"
     private const val TAG_MONITOR = "监测仪"
     private const val TAG_SLEEP_MASTER = "速眠仪"
@@ -15,10 +16,6 @@ object LogManager {
     private const val TAG_UPLOAD_SLEEP_DATA = "上传数据"
 
     private var sLogger: ILogger? = null
-
-    fun log() {
-
-    }
 
     fun log(log: String?) {
         log(TAG_DEFAULT, log)
@@ -36,7 +33,7 @@ object LogManager {
         log(TAG_TRANSPARENT_DATA, log)
     }
 
-    fun uploadSleepDatatLog(log: String?) {
+    fun uploadSleepDataLog(log: String?) {
         log(TAG_UPLOAD_SLEEP_DATA, log)
     }
 
@@ -52,6 +49,10 @@ object LogManager {
         log(TAG_CONNECT_DEVICE, log)
     }
 
+    fun bleRequestStatusLog(log: String?) {
+        log(TAG_REQUEST_STATUS_DEVICE, log)
+    }
+
     fun bleFlowLog(s: String) {
         log(TAG_SYNC_FLOW, s)
     }
@@ -63,7 +64,6 @@ object LogManager {
     fun setLogger(logger: ILogger) {
         sLogger = logger
     }
-
 }
 
 interface ILogger {

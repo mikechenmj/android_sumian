@@ -94,7 +94,7 @@ object DeviceStateHelper {
     }
 
     private fun querySleepMasterConnectStatus() {
-        BleCommunicationController.requestByCmd(BleCmd.QUERY_SLEEP_MASTER_CONNECT_STATUS)
+        BleCommunicationController.requestByCmd(BleCmd.QUERY_SLEEP_MASTER_CONNECT_STATUS, null, true)
     }
 
     private fun queryMonitorBattery() {
@@ -102,7 +102,7 @@ object DeviceStateHelper {
     }
 
     private fun setMonitorTime(isRetry: Boolean = true) {
-        BleCommunicationController.request(
+        BleCommunicationController.requestWithRetry(
                 BleCmdUtil.createDataFromBytes(
                         BleCmd.SET_MONITOR_TIME,
                         createSetTimeData()
@@ -111,12 +111,8 @@ object DeviceStateHelper {
             }
 
             override fun onFail(code: Int, msg: String) {
-                LogManager.log("setMonitorTime onFail: $msg")
-                if (isRetry) {
-                    ThreadManager.postToUIThread({ setMonitorTime() }, DeviceManager.WRITE_DATA_INTERVAL)
-                }
             }
-        })
+        }, isRetry)
     }
 
     private fun receiveMonitorBatteryInfo(cmd: String) {
@@ -211,7 +207,7 @@ object DeviceStateHelper {
     }
 
     fun toggleSleepMasterWorkMode(on: Boolean = true, callback: AsyncCallback<Any?>) {
-        BleCommunicationController.request(
+        BleCommunicationController.requestWithRetry(
                 BleCmdUtil.createDataFromString(
                         BleCmd.TOGGLE_SLEEP_MASTER_WORK_MODE,
                         BleCmd.RESPONSE_CODE_POSITIVE
@@ -307,7 +303,7 @@ object DeviceStateHelper {
 
                     override fun onFail(code: Int, msg: String) {
                     }
-                })
+                }, true)
     }
 
     private fun querySleepMasterSn() {
@@ -390,8 +386,9 @@ object DeviceStateHelper {
                     }
 
                     override fun onFail(code: Int, msg: String) {
+                        LogManager.bleRequestStatusLog("同步检测仪状态失败 code: $code msg: $msg")
                     }
-                })
+                }, true)
     }
 
     private fun queryMonitorSn() {
@@ -410,7 +407,7 @@ object DeviceStateHelper {
     }
 
     private fun setUserInfo() {
-        BleCommunicationController.request(
+        BleCommunicationController.requestWithRetry(
                 BleCmdUtil.createDataFromString(BleCmd.SET_USER_INFO, "ffffffff"),
                 object : BleRequestCallback {
                     override fun onResponse(data: ByteArray, hexString: String) {
@@ -428,7 +425,7 @@ object DeviceStateHelper {
             return
         }
         LogManager.monitorLog("绑定速眠仪： $sleepMasterSn")
-        BleCommunicationController.request(
+        BleCommunicationController.requestWithRetry(
                 BleCmdUtil.createDataFromBytes(
                         BleCmd.CHANGE_SLEEP_MASTER,
                         BleCmdUtil.stringToCharBytes(sleepMasterSn!!)
