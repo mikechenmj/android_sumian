@@ -45,6 +45,7 @@ class ScanDeviceFragment : BaseFragment() {
     private val mScanResults = ArrayList<BlueDevice>()
     private val mHandler = Handler()
     private var mIsScanMore = false
+    private var mHasCheckResult = false
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_scan_device
@@ -94,7 +95,7 @@ class ScanDeviceFragment : BaseFragment() {
     }
 
     private fun sendCheckScanResultRunnable(delay : Long = SCAN_CHECK_DURATION) {
-        mHandler.removeCallbacks(mCheckScanResultRunnable)
+        removeCheckScanResultRunnable()
         mHandler.postDelayed(mCheckScanResultRunnable,delay)
     }
 
@@ -126,6 +127,9 @@ class ScanDeviceFragment : BaseFragment() {
                 LogUtils.d(mScanResults, blueDevice.name)
                 mScanResults.add(blueDevice)
                 mDeviceAdapter.setData(mScanResults)
+            }
+            if (mHasCheckResult && !mIsScanMore) {
+                stopScan()
             }
         }
 
@@ -261,6 +265,7 @@ class ScanDeviceFragment : BaseFragment() {
     }
 
     private fun checkScanResult() {
+        mHasCheckResult = true
         if (mScanResults.size == 1) {
             stopScan()
         } else if (mScanResults.size > 1) {
@@ -269,6 +274,7 @@ class ScanDeviceFragment : BaseFragment() {
     }
 
     private fun resetScanResults() {
+        mHasCheckResult = false
         mScanResults.clear()
         mDeviceAdapter.clear()
     }

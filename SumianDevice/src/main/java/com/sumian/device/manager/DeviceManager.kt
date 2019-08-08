@@ -86,7 +86,7 @@ object DeviceManager {
     const val WRITE_DATA_INTERVAL = 200L
     const val CONNECT_WRITE_INTERVAL = 300L
 
-    const val SCAN_DELAY = 2000L
+    const val SCAN_DELAY = 1000L
     const val MESSAGE_SCAN_DEVICES = 10
 
     var mMainHandler = object : Handler(Looper.getMainLooper()) {
@@ -248,7 +248,7 @@ object DeviceManager {
             }
 
             override fun onScanning(bleDevice: BleDevice?) {
-                if (getBoundDeviceAddress() == bleDevice?.device?.address) {
+                if (getBoundDeviceAddress() != null && getBoundDeviceAddress() == bleDevice?.device?.address) {
                     mFound = true
                 }
                 if (bleDevice?.device?.name != null && bleDevice?.device?.name != null
