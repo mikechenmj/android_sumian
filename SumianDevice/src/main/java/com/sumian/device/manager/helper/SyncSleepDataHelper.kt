@@ -502,6 +502,6 @@ object SyncSleepDataHelper {
     }
 
     enum class SyncState {
-        FAIL_IS_SYNCING, FAIL_CONNECT_OR_VERSION_WRONG, START
+        FAIL_IS_SYNCING, FAIL_CONNECT_OR_VERSION_WRONG, START, RETRY
     }
 }

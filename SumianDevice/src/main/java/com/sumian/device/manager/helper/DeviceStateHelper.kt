@@ -85,7 +85,7 @@ object DeviceStateHelper {
                 { queryMonitorBattery() },
                 { querySleepMasterConnectStatus() },
                 { SyncPatternHelper.syncPattern() },
-                { ThreadManager.postToUIThread({ DeviceManager.startSyncSleepDataInternal() }, 1000) } // sync pattern 比较耗时，延时1s再同步数据
+                { ThreadManager.postToUIThread({ DeviceManager.startSyncSleepData(false) }, 1000) } // sync pattern 比较耗时，延时1s再同步数据
         )
     }
 
@@ -270,7 +270,7 @@ object DeviceStateHelper {
         BleCommunicationController.requestByCmd(BleCmd.QUERY_MONITOR_SLEEP_MASTER_WORK_MODE)
     }
 
-    private fun querySleepMasterVersion() {
+    internal fun querySleepMasterVersion() {
         // ```
         // A: aa 54
         // M: 55 54 xx [aaaaaa bbbbbb cccccccc pp]
@@ -340,7 +340,7 @@ object DeviceStateHelper {
                 })
     }
 
-    private fun queryMonitorVersion() {
+    internal fun queryMonitorVersion() {
         // ```
         // A: aa 50
         // M: 55 50 xx [aaaaaa bb cccccc dddddd eeeeeeee pp]

@@ -32,6 +32,7 @@ import com.sumian.device.manager.upload.SleepDataUploadManager
 import com.sumian.device.net.NetworkManager
 import com.sumian.device.util.ILogger
 import com.sumian.device.util.LogManager
+import com.sumian.device.util.ThreadManager
 import retrofit2.Call
 import retrofit2.Response
 
@@ -436,13 +437,52 @@ object DeviceManager {
     private fun isSleepMasterVersionCompat() = checkSleepMasterVersionCompatibility() == PROTOCOL_VERSION_COMPATIBLE
     fun isDeviceVersionCompatForSyncingData() = isMonitorVersionCompat() && (!isSleepMasterConnected() || isSleepMasterVersionCompat())
 
-    fun startSyncSleepData() {
-        var state = startSyncSleepDataInternal()
+    fun startSyncSleepData(retry: Boolean = true): SyncSleepDataHelper.SyncState {
+        return if (retry) startSyncSleepDataWithRetry() else startSyncSleepDataWithState()
+    }
+
+    private fun startSyncSleepDataWithRetry(): SyncSleepDataHelper.SyncState {
+        var state = startSyncSleepDataWithState()
         if (state == SyncSleepDataHelper.SyncState.FAIL_CONNECT_OR_VERSION_WRONG) {
-            LogManager.bleFlowLog(mApplication.getString(R.string.sync_fail_connect_or_version_wrong_tip))
-        } else if (state == SyncSleepDataHelper.SyncState.FAIL_IS_SYNCING) {
-            LogManager.bleFlowLog(mApplication.getString(R.string.sync_fail_is_syncing_tip))
+            var functions = arrayOfNulls<() -> Unit>(3)
+            var index = -1
+            if (!isMonitorVersionCompat()) {
+                LogManager.bleFlowLog("因手环版本不兼容需要重试")
+                functions[++index] = DeviceStateHelper::queryMonitorVersion
+            }
+            if (isSleepMasterConnected() && !isSleepMasterVersionCompat()) {
+                LogManager.bleFlowLog("因速眠仪版本不兼容需要重试")
+                functions[++index] = DeviceStateHelper::querySleepMasterVersion
+            }
+            functions[++index] = { startSyncSleepDataWithState() }
+            for ((index, task) in functions.withIndex()) {
+                if (task != null) {
+                    LogManager.bleFlowLog("同步数据重试请求: $index")
+                    ThreadManager.postToUIThread(task, index * WRITE_DATA_INTERVAL)
+                }
+            }
+            return SyncSleepDataHelper.SyncState.RETRY
         }
+        return state
+    }
+
+    private fun startSyncSleepDataWithState(): SyncSleepDataHelper.SyncState {
+        return if (isDeviceConnectAndCompat(true)) {
+            var start = startSyncSleepDataInternal()
+            if (start) {
+                SyncSleepDataHelper.SyncState.START
+            } else {
+                LogManager.bleFlowLog(mApplication.getString(R.string.sync_fail_is_syncing_tip))
+                SyncSleepDataHelper.SyncState.FAIL_IS_SYNCING
+            }
+        } else {
+            LogManager.bleFlowLog(mApplication.getString(R.string.sync_fail_connect_or_version_wrong_tip))
+            SyncSleepDataHelper.SyncState.FAIL_CONNECT_OR_VERSION_WRONG
+        }
+    }
+
+    private fun startSyncSleepDataInternal(): Boolean {
+        return SyncSleepDataHelper.startSyncSleepData()
     }
 
     fun isDeviceConnectAndCompat(log: Boolean = false): Boolean {
@@ -464,20 +504,6 @@ object DeviceManager {
             }
         }
         return isDeviceConnectAndCompat
-    }
-
-    fun startSyncSleepDataInternal(): SyncSleepDataHelper.SyncState {
-        isDeviceConnectAndCompat(true)
-        return if (true) {
-            var start = SyncSleepDataHelper.startSyncSleepData()
-            if (start) {
-                SyncSleepDataHelper.SyncState.START
-            } else {
-                SyncSleepDataHelper.SyncState.FAIL_IS_SYNCING
-            }
-        } else {
-            SyncSleepDataHelper.SyncState.FAIL_CONNECT_OR_VERSION_WRONG
-        }
     }
 
     fun toggleSleeperWorkMode(on: Boolean, callback: AsyncCallback<Any?>) {
