@@ -118,9 +118,6 @@ object SyncSleepDataHelper {
 
     fun startSyncSleepData(): Boolean {
         if (isSyncing()) {
-            if (!isSleepDataTypeSyncing()) {
-                DeviceManager.postEvent(DeviceManager.EVENT_SYNC_SLEEP_DATA_SUCCESS, null)
-            }
             return false
         }
         setIsSyncing(true, "startSyncSleepData")
@@ -199,8 +196,8 @@ object SyncSleepDataHelper {
         bleFlowLog("SYNC_START: $cmd")
         if (!DeviceManager.isDeviceVersionCompatForSyncingData()) {
             writeResponse(data, BleCmd.RESPONSE_CODE_FAIL)
-            bleFlowLog("writeResponse RESPONSE_CODE_FAIL for $cmd")
-            sendSetSyncFlagFalseMessageDelay("!isDeviceVersionCompatForSyncingData")
+            bleFlowLog("!isDeviceVersionCompatForSyncingData and writeResponse RESPONSE_CODE_FAIL for $cmd")
+            onSyncFailed()
             return
         }
         val dataCount: Int = subHexStringToInt(cmd, 5, 8)
@@ -228,6 +225,10 @@ object SyncSleepDataHelper {
 
     private fun onReceiveSleepDataEnd(cmd: String, data: ByteArray) {
         bleFlowLog("SYNC_END: $cmd")
+        if (!isSyncing()) {
+            bleFlowLog("!isSyncing() and writeResponse RESPONSE_CODE_FAIL for $cmd")
+            return
+        }
         mEndCmd = cmd
         mEndBytes = data
         calLostFrames()
@@ -252,7 +253,7 @@ object SyncSleepDataHelper {
     fun receiveSleepData(data: ByteArray, cmd: String) {
         // 透传超时可能会走到这一行。不在透传状态不响应透传数据。
         if (!isSyncing()) {
-            bleFlowLog("receiveSleepData 超时 $cmd")
+            bleFlowLog("已不在同步状态，不接受数据 $cmd")
             return
         }
         val index = BleCmdUtil.hexStringToLong(cmd.substring(5, 8)).toInt()
@@ -285,7 +286,7 @@ object SyncSleepDataHelper {
     private fun onCurrentPackageReceivedSuccess() {
         saveSleepDataToFile()
         writeResponse(mEndBytes!!, BleCmd.RESPONSE_CODE_SUCCESS)
-        bleFlowLog("writeResponse RESPONSE_CODE_POSITIVE for ${HexUtil.formatHexString(mEndBytes)}")
+        bleFlowLog("writeResponse RESPONSE_CODE_SUCCESS for ${HexUtil.formatHexString(mEndBytes)}")
         if (mCurrentPackageIndex == mTotalPackageCount) {
             removePayloadTimeoutMessage()
             onSyncSuccess()

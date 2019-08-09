@@ -438,7 +438,21 @@ object DeviceManager {
     fun isDeviceVersionCompatForSyncingData() = isMonitorVersionCompat() && (!isSleepMasterConnected() || isSleepMasterVersionCompat())
 
     fun startSyncSleepData(retry: Boolean = true): SyncSleepDataHelper.SyncState {
-        return if (retry) startSyncSleepDataWithRetry() else startSyncSleepDataWithState()
+        var state: SyncSleepDataHelper.SyncState?
+        if (retry) {
+            state = startSyncSleepDataWithRetry()
+        } else {
+            state = startSyncSleepDataWithState()
+            if (state == SyncSleepDataHelper.SyncState.FAIL_CONNECT_OR_VERSION_WRONG) {
+                postEvent(EVENT_SYNC_SLEEP_DATA_FAIL, null)
+            }
+        }
+        if (state == SyncSleepDataHelper.SyncState.FAIL_IS_SYNCING) {
+            if (!SyncSleepDataHelper.isSleepDataTypeSyncing()) {
+                postEvent(EVENT_SYNC_SLEEP_DATA_SUCCESS, null)
+            }
+        }
+        return state
     }
 
     private fun startSyncSleepDataWithRetry(): SyncSleepDataHelper.SyncState {
@@ -454,7 +468,12 @@ object DeviceManager {
                 LogManager.bleFlowLog("因速眠仪版本不兼容需要重试")
                 functions[++index] = DeviceStateHelper::querySleepMasterVersion
             }
-            functions[++index] = { startSyncSleepDataWithState() }
+            functions[++index] = {
+                var retryState = startSyncSleepDataWithState()
+                if (retryState == SyncSleepDataHelper.SyncState.FAIL_CONNECT_OR_VERSION_WRONG) {
+                    postEvent(EVENT_SYNC_SLEEP_DATA_FAIL, null)
+                }
+            }
             for ((index, task) in functions.withIndex()) {
                 if (task != null) {
                     LogManager.bleFlowLog("同步数据重试请求: $index")
