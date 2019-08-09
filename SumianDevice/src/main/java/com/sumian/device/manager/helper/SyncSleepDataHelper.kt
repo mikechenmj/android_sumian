@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
+import android.util.Log
+import com.clj.fastble.utils.HexUtil
 import com.sumian.device.callback.BleCommunicationWatcher
 import com.sumian.device.cmd.BleCmd
 import com.sumian.device.manager.DeviceManager
@@ -75,7 +77,7 @@ object SyncSleepDataHelper {
             when (msg?.what) {
                 MESSAGE_CODE_SET_SYNC_FALSE -> {
                     var tag = msg?.data?.getString(MESSAGE_TAG_SET_SYNC_FALSE) ?: null
-                    setIsSyncing(false, "MESSAGE_CODE_SET_SYNC_FALSE $tag")
+                    setIsSyncing(false, "$tag send MESSAGE_CODE_SET_SYNC_FALSE and")
                 }
                 MESSAGE_CODE_NEXT_PAYLOAD -> {
                     var type = msg.arg1
@@ -126,7 +128,6 @@ object SyncSleepDataHelper {
         DeviceManager.writeData(BleCmdUtil.createDataFromString(BleCmd.SYNC_DATA, BleCmd.SYNC_SLEEP_DATA_CONTENT))
         return true
     }
-
 
     private fun startSyncSleepMasterLog() {
         DeviceManager.writeData(BleCmdUtil.createDataFromString(BleCmd.SYNC_DATA, BleCmd.SYNC_SLEEP_MASTER_LOG_CONTENT))
@@ -231,6 +232,7 @@ object SyncSleepDataHelper {
         mEndBytes = data
         calLostFrames()
         writeResponse(data, BleCmd.RESPONSE_CODE_POSITIVE)
+        bleFlowLog("writeResponse RESPONSE_CODE_POSITIVE for $cmd")
         if (hasLostFrames()) {
             mIsGettingLostFrame = true
             requestNextLostFrame()
@@ -283,6 +285,7 @@ object SyncSleepDataHelper {
     private fun onCurrentPackageReceivedSuccess() {
         saveSleepDataToFile()
         writeResponse(mEndBytes!!, BleCmd.RESPONSE_CODE_SUCCESS)
+        bleFlowLog("writeResponse RESPONSE_CODE_POSITIVE for ${HexUtil.formatHexString(mEndBytes)}")
         if (mCurrentPackageIndex == mTotalPackageCount) {
             removePayloadTimeoutMessage()
             onSyncSuccess()
