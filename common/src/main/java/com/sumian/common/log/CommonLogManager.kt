@@ -77,7 +77,7 @@ abstract class CommonLogManager : ILog {
         const val PAGE_OPERATION = ""
     }
 
-    private var timeFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US)
+    private var timeFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.US)
     private var date = Date()
     private var clientType = CLIENT_TYPE_ANDROID
     private var network = NETWORK_TYPE_UNKNOWN
