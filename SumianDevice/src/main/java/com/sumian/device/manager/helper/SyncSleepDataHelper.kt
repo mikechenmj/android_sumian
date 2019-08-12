@@ -69,7 +69,7 @@ object SyncSleepDataHelper {
     }
 
     private const val MESSAGE_TAG_SET_SYNC_FALSE = "set_sync_flag_false_tag"
-    private const val MESSAGE_DELAY_SET_SYNC_FALSE = 5000L
+    private const val MESSAGE_DELAY_SET_SYNC_FALSE = 8000L
     private const val MESSAGE_CODE_SET_SYNC_FALSE = 9
     private const val MESSAGE_CODE_NEXT_PAYLOAD = 10
 
