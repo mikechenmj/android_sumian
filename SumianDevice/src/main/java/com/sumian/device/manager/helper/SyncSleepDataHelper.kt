@@ -22,7 +22,7 @@ import com.sumian.device.util.LogManager
  */
 object SyncSleepDataHelper {
     private var mIsSyncing = false
-    private const val PAYLOAD_TIMEOUT_TIME = 1000L * 5
+    private const val PAYLOAD_TIMEOUT_TIME = 1000L * 8
     private const val TAG = "[SyncSleepData]"
     private const val SYNC_TYPE_SLEEP_DATA = 1
     private const val SYNC_TYPE_SLEEP_MASTER_LOG = 2
@@ -69,6 +69,7 @@ object SyncSleepDataHelper {
     }
 
     private const val MESSAGE_TAG_SET_SYNC_FALSE = "set_sync_flag_false_tag"
+    private const val MESSAGE_DELAY_SET_SYNC_FALSE = 5000L
     private const val MESSAGE_CODE_SET_SYNC_FALSE = 9
     private const val MESSAGE_CODE_NEXT_PAYLOAD = 10
 
@@ -98,7 +99,7 @@ object SyncSleepDataHelper {
             data.putString(MESSAGE_TAG_SET_SYNC_FALSE, tag)
             message.data = data
         }
-        mMainHandler.sendMessageDelayed(message, PAYLOAD_TIMEOUT_TIME)
+        mMainHandler.sendMessageDelayed(message, MESSAGE_DELAY_SET_SYNC_FALSE)
     }
 
     private fun removeSetSyncFlagFalseMessage(tag: String? = null) {
