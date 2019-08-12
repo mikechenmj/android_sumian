@@ -25,6 +25,8 @@ object NetworkManager {
         }
         val client = OkHttpClient.Builder()
                 .addInterceptor(TokenInterceptor())
+                .addInterceptor(HwDeviceInfoInterceptor())
+                .addInterceptor(HttpFailLogInterceptor())
                 .addInterceptor(HttpLoggingInterceptor().setLevel(if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE))
                 .build()
         val retrofit = Retrofit.Builder()
