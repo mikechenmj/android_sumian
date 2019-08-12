@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
-import android.util.Log
 import com.clj.fastble.utils.HexUtil
 import com.sumian.device.callback.BleCommunicationWatcher
+import com.sumian.device.callback.WriteBleDataCallback
 import com.sumian.device.cmd.BleCmd
 import com.sumian.device.manager.DeviceManager
 import com.sumian.device.manager.upload.SleepDataUploadManager
@@ -233,15 +233,23 @@ object SyncSleepDataHelper {
         mEndCmd = cmd
         mEndBytes = data
         calLostFrames()
-        writeResponse(data, BleCmd.RESPONSE_CODE_POSITIVE)
         bleFlowLog("writeResponse RESPONSE_CODE_POSITIVE for $cmd")
-        if (hasLostFrames()) {
-            mIsGettingLostFrame = true
-            requestNextLostFrame()
-            sendNextPayloadTimeoutDelay()
-        } else {
-            onCurrentPackageReceivedSuccess()
-        }
+        writeResponse(data, BleCmd.RESPONSE_CODE_POSITIVE, object : WriteBleDataCallback {
+            override fun onSuccess(data: ByteArray) {
+                bleFlowLog("writeResponse RESPONSE_CODE_POSITIVE success for $cmd")
+                if (hasLostFrames()) {
+                    mIsGettingLostFrame = true
+                    requestNextLostFrame()
+                    sendNextPayloadTimeoutDelay()
+                } else {
+                    onCurrentPackageReceivedSuccess()
+                }
+            }
+
+            override fun onFail(code: Int, msg: String) {
+            }
+
+        })
     }
 
 
@@ -345,8 +353,8 @@ object SyncSleepDataHelper {
         )
     }
 
-    fun peripheralWrite(data: ByteArray) {
-        DeviceManager.writeData(data)
+    fun peripheralWrite(data: ByteArray, callback: WriteBleDataCallback? = null) {
+        DeviceManager.writeData(data, 0, callback)
     }
 
     /**
@@ -363,12 +371,12 @@ object SyncSleepDataHelper {
      * FFFFFFFF 传输id 4 byte，[10-17]
      * GG 应答 ff：异常，88：准备接收下一段, 01 当前段收到
      */
-    private fun writeResponse(data: ByteArray, resp: String) {
+    private fun writeResponse(data: ByteArray, resp: String, callback: WriteBleDataCallback? = null) {
         val command = byteArrayOf(
                 0xaa.toByte(), 0x8e.toByte(),
                 data[2], data[3], data[4], data[5], data[6], data[7], data[8], Integer.parseInt(resp, 16).toByte()
         )
-        peripheralWrite(command)
+        peripheralWrite(command, callback)
     }
 
     /**
