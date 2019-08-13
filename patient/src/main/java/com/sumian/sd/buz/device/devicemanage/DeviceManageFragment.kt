@@ -83,7 +83,7 @@ class DeviceManageFragment : BaseFragment() {
 
     private fun showRipple(show: Boolean) {
         if (show) {
-            ripple_view.startAnimation()
+            ripple_view?.startAnimation()
         }
         ripple_view.visibility = if (show) View.VISIBLE else View.GONE
     }
