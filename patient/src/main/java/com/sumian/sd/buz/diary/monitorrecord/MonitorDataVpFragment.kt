@@ -17,6 +17,7 @@ import com.sumian.common.statistic.StatUtil
 import com.sumian.common.utils.TimeUtilV2
 import com.sumian.device.callback.DeviceStatusListener
 import com.sumian.device.manager.DeviceManager
+import com.sumian.device.manager.helper.SyncSleepDataHelper
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.devicemanager.uploadsleepdata.UploadSleepDataFinishedEvent
@@ -58,7 +59,7 @@ class MonitorDataVpFragment : BaseFragment() {
     override fun onResume() {
         super.onResume()
         DeviceManager.registerDeviceStatusListener(mDeviceStatusListener)
-        tv_is_syncing_hint.visibility = if (DeviceManager.isSyncingSleepData()) View.VISIBLE else View.GONE
+        tv_is_syncing_hint.visibility = if (SyncSleepDataHelper.isSleepDataTypeSyncing()) View.VISIBLE else View.GONE
     }
 
     private val mDeviceStatusListener = object : DeviceStatusListener {
