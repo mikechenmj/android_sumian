@@ -443,7 +443,7 @@ object DeviceManager {
             state = startSyncSleepDataWithRetry()
         } else {
             state = startSyncSleepDataWithState()
-            if (state == SyncSleepDataHelper.SyncState.FAIL_CONNECT_OR_VERSION_WRONG) {
+            if (state == SyncSleepDataHelper.SyncState.FAIL_VERSION_WRONG) {
                 postEvent(EVENT_SYNC_SLEEP_DATA_FAIL, null)
             }
         }
@@ -457,7 +457,7 @@ object DeviceManager {
 
     private fun startSyncSleepDataWithRetry(): SyncSleepDataHelper.SyncState {
         var state = startSyncSleepDataWithState()
-        if (state == SyncSleepDataHelper.SyncState.FAIL_CONNECT_OR_VERSION_WRONG) {
+        if (state == SyncSleepDataHelper.SyncState.FAIL_VERSION_WRONG) {
             var functions = arrayOfNulls<() -> Unit>(3)
             var index = -1
             if (!isMonitorVersionCompat()) {
@@ -469,8 +469,12 @@ object DeviceManager {
                 functions[++index] = DeviceStateHelper::querySleepMasterVersion
             }
             functions[++index] = {
-                var retryState = startSyncSleepDataWithState()
-                if (retryState == SyncSleepDataHelper.SyncState.FAIL_CONNECT_OR_VERSION_WRONG) {
+                if (isMonitorConnected()) {
+                    var retryState = startSyncSleepDataWithState()
+                    if (retryState == SyncSleepDataHelper.SyncState.FAIL_VERSION_WRONG) {
+                        postEvent(EVENT_SYNC_SLEEP_DATA_FAIL, null)
+                    }
+                }else{
                     postEvent(EVENT_SYNC_SLEEP_DATA_FAIL, null)
                 }
             }
@@ -486,7 +490,7 @@ object DeviceManager {
     }
 
     private fun startSyncSleepDataWithState(): SyncSleepDataHelper.SyncState {
-        return if (isDeviceConnectAndCompat(true)) {
+        return if (isDeviceVersionCompatForSyncingData()) {
             var start = startSyncSleepDataInternal()
             if (start) {
                 SyncSleepDataHelper.SyncState.START
@@ -496,33 +500,18 @@ object DeviceManager {
             }
         } else {
             LogManager.bleFlowLog(mApplication.getString(R.string.sync_fail_connect_or_version_wrong_tip))
-            SyncSleepDataHelper.SyncState.FAIL_CONNECT_OR_VERSION_WRONG
+            LogManager.bleFlowLog("isMonitorVersionCompat(): ${isMonitorVersionCompat()}" +
+                    ": ${mSumianDevice?.monitorVersionInfo?.protocolVersion}")
+            LogManager.bleFlowLog("isSleepMasterConnected(): ${isSleepMasterConnected()}" +
+                    ": ${mSumianDevice?.sleepMasterConnectStatus}")
+            LogManager.bleFlowLog("isSleepMasterVersionCompat(): ${isSleepMasterVersionCompat()}" +
+                    ": ${mSumianDevice?.sleepMasterVersionInfo?.protocolVersion}")
+            SyncSleepDataHelper.SyncState.FAIL_VERSION_WRONG
         }
     }
 
     private fun startSyncSleepDataInternal(): Boolean {
         return SyncSleepDataHelper.startSyncSleepData()
-    }
-
-    fun isDeviceConnectAndCompat(log: Boolean = false): Boolean {
-        var isDeviceConnectAndCompat = (isMonitorConnected()
-                && isMonitorVersionCompat()
-                && (!isSleepMasterConnected() || isSleepMasterVersionCompat()))
-        if (log) {
-            if (!isDeviceConnectAndCompat) {
-                LogManager.bleFlowLog("isDeviceConnectAndCompat isMonitorConnected(): ${isMonitorConnected()} " +
-                        ": ${mSumianDevice?.monitorConnectStatus}")
-                LogManager.bleFlowLog("isDeviceConnectAndCompat isMonitorVersionCompat(): ${isMonitorVersionCompat()}" +
-                        ": ${mSumianDevice?.monitorVersionInfo?.protocolVersion}")
-                LogManager.bleFlowLog("isDeviceConnectAndCompat isSleepMasterConnected(): ${isSleepMasterConnected()}" +
-                        ": ${mSumianDevice?.sleepMasterConnectStatus}")
-                LogManager.bleFlowLog("isDeviceConnectAndCompat isSleepMasterVersionCompat(): ${isSleepMasterVersionCompat()}" +
-                        ": ${mSumianDevice?.sleepMasterVersionInfo?.protocolVersion}")
-            } else {
-                LogManager.bleFlowLog("isDeviceConnectAndCompat success")
-            }
-        }
-        return isDeviceConnectAndCompat
     }
 
     fun toggleSleeperWorkMode(on: Boolean, callback: AsyncCallback<Any?>) {
