@@ -455,35 +455,56 @@ object DeviceManager {
         return state
     }
 
+    private fun queryMonitorVersionInNeed(onNext: () -> Unit) {
+        if (!isMonitorVersionCompat()) {
+            DeviceStateHelper.queryMonitorVersion()
+            LogManager.bleFlowLog("因手环版本不兼容需要重试")
+            registerDeviceStatusListener(object : DeviceStatusListener {
+                override fun onStatusChange(type: String) {
+                    if (type == EVENT_RECEIVE_MONITOR_VERSION_INFO) {
+                        LogManager.bleFlowLog("请求手环版本成功")
+                        onNext()
+                        unregisterDeviceStatusListener(this)
+                    }
+                }
+            })
+        } else {
+            onNext()
+        }
+    }
+
+    private fun querySleepMasterVersionInNeed(onNext: () -> Unit) {
+        if (isSleepMasterConnected() && !isSleepMasterVersionCompat()) {
+            DeviceStateHelper.querySleepMasterVersion()
+            LogManager.bleFlowLog("因速眠仪版本不兼容需要重试")
+            registerDeviceStatusListener(object : DeviceStatusListener {
+                override fun onStatusChange(type: String) {
+                    if (type == EVENT_RECEIVE_SLEEP_MASTER_VERSION_INFO) {
+                        LogManager.bleFlowLog("请求速眠仪版本成功")
+                        onNext()
+                        unregisterDeviceStatusListener(this)
+                    }
+                }
+            })
+        } else {
+            onNext()
+        }
+    }
+
     private fun startSyncSleepDataWithRetry(): SyncSleepDataHelper.SyncState {
         var state = startSyncSleepDataWithState()
         if (state == SyncSleepDataHelper.SyncState.FAIL_VERSION_WRONG) {
-            var functions = arrayOfNulls<() -> Unit>(3)
-            var index = -1
-            if (!isMonitorVersionCompat()) {
-                LogManager.bleFlowLog("因手环版本不兼容需要重试")
-                functions[++index] = DeviceStateHelper::queryMonitorVersion
-            }
-            if (isSleepMasterConnected() && !isSleepMasterVersionCompat()) {
-                LogManager.bleFlowLog("因速眠仪版本不兼容需要重试")
-                functions[++index] = DeviceStateHelper::querySleepMasterVersion
-            }
-            functions[++index] = {
+            var startSyncSleepDataWithState = {
                 if (isMonitorConnected()) {
                     var retryState = startSyncSleepDataWithState()
                     if (retryState == SyncSleepDataHelper.SyncState.FAIL_VERSION_WRONG) {
                         postEvent(EVENT_SYNC_SLEEP_DATA_FAIL, null)
                     }
-                }else{
+                } else {
                     postEvent(EVENT_SYNC_SLEEP_DATA_FAIL, null)
                 }
             }
-            for ((index, task) in functions.withIndex()) {
-                if (task != null) {
-                    LogManager.bleFlowLog("同步数据重试请求: $index")
-                    ThreadManager.postToUIThread(task, index * WRITE_DATA_INTERVAL)
-                }
-            }
+            queryMonitorVersionInNeed { querySleepMasterVersionInNeed { startSyncSleepDataWithState() } }
             return SyncSleepDataHelper.SyncState.RETRY
         }
         return state
@@ -713,4 +734,7 @@ object DeviceManager {
         SleepDataUploadManager.clearAllTask()
     }
 
+    interface DeviceResultCallback {
+        fun onResult()
+    }
 }
