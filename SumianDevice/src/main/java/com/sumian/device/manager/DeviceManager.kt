@@ -113,8 +113,8 @@ object DeviceManager {
     private val mDeviceStatusListenerList = ArrayList<DeviceStatusListener>()
     private val mDeviceStatusListener = object : DeviceStatusListener {
         override fun onStatusChange(event: String) {
-            val iterator = mDeviceStatusListenerList.iterator()
-            for (listener in mDeviceStatusListenerList) {
+            var copyList = ArrayList(mDeviceStatusListenerList)
+            for (listener in copyList) {
                 listener.onStatusChange(event)
             }
         }
