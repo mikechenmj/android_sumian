@@ -54,9 +54,6 @@ object BleCommunicationController {
                 success: Boolean,
                 errorMsg: String?
         ) {
-            if (!success) {
-                LogManager.bleFlowLog("$hexString 写入失败, errorMsg: $errorMsg")
-            }
             notifyWatchers(false, data, hexString, success, errorMsg)
         }
 
@@ -69,6 +66,8 @@ object BleCommunicationController {
         ) {
             if (success) {
                 LogManager.log("Ble Data", "${if (isRead) "D" else "A"}: $hexString")
+            } else if (!success) {
+                LogManager.bleFlowLog("$hexString 写入失败, errorMsg: $errorMsg")
             }
             val iterator = mBleCommunicationWatcherList.iterator()
             while (iterator.hasNext()) {
