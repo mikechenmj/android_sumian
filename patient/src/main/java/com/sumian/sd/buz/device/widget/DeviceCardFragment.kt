@@ -20,6 +20,7 @@ import com.sumian.device.data.DeviceConnectStatus
 import com.sumian.device.data.SleepMasterWorkModeStatus
 import com.sumian.device.data.SumianDevice
 import com.sumian.device.manager.DeviceManager
+import com.sumian.device.manager.helper.SyncSleepDataHelper
 import com.sumian.sd.R
 import com.sumian.sd.buz.device.scan.ScanDeviceActivity
 import com.sumian.sd.buz.diary.DataFragment
@@ -57,9 +58,30 @@ class DeviceCardFragment : BaseFragment() {
         return R.layout.view_device_card
     }
 
+    private val mSyncResultListener = object : DeviceStatusListener {
+        override fun onStatusChange(type: String) {
+            if (type == DeviceManager.EVENT_SYNC_SLEEP_DATA_SUCCESS) {
+                showMessageDialog(true, resources.getString(R.string.already_latest_data))
+                DeviceManager.unregisterDeviceStatusListener(this)
+            } else if (type == DeviceManager.EVENT_SYNC_SLEEP_DATA_FAIL) {
+                showMessageDialog(false, resources.getString(R.string.sync_fail))
+                DeviceManager.unregisterDeviceStatusListener(this)
+            }
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        tv_sync.setOnClickListener { DeviceManager.startSyncSleepData() }
+        tv_sync.setOnClickListener {
+            var state = DeviceManager.startSyncSleepData()
+            if (state == SyncSleepDataHelper.SyncState.START || state == SyncSleepDataHelper.SyncState.RETRY) {
+                DeviceManager.registerDeviceStatusListener(mSyncResultListener)
+            } else if (state == SyncSleepDataHelper.SyncState.FAIL_IS_SYNCING) {
+                showMessageDialog(true, resources.getString(R.string.already_latest_data))
+            } else if (state == SyncSleepDataHelper.SyncState.FAIL_VERSION_WRONG) {
+                showMessageDialog(false, resources.getString(R.string.sync_fail))
+            }
+        }
         bt_turn_on_pa.setOnClickListener {
             DeviceManager.toggleSleeperWorkMode(true, callback = object : AsyncCallback<Any?> {
                 override fun onSuccess(data: Any?) {
@@ -124,12 +146,10 @@ class DeviceCardFragment : BaseFragment() {
                 }
                 DeviceManager.EVENT_SYNC_SLEEP_DATA_SUCCESS -> {
                     stopSyncAnimation()
-                    showMessageDialog(true, resources.getString(R.string.already_latest_data))
                 }
                 DeviceManager.EVENT_SYNC_SLEEP_DATA_FAIL
                 -> {
                     stopSyncAnimation()
-                    showMessageDialog(false, resources.getString(R.string.sync_fail))
                 }
                 DeviceManager.EVENT_SYNC_SLEEP_DATA_SYNC_PROGRESS_CHANGE -> {
                 }

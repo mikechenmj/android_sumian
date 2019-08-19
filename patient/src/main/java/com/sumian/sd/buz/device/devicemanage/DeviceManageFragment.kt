@@ -58,11 +58,9 @@ class DeviceManageFragment : BaseFragment() {
                 DeviceManager.EVENT_SYNC_SLEEP_DATA_START -> startSyncAnimation()
                 DeviceManager.EVENT_SYNC_SLEEP_DATA_FAIL -> {
                     mRotateAnimator?.cancel()
-                    dismissOldCreateNewSumianImageTextDialog().show(SumianImageTextDialog.TYPE_FAIL, resources.getString(R.string.sync_fail), 0, SumianImageTextDialog.SHOW_DURATION_SHORT)
                 }
                 DeviceManager.EVENT_SYNC_SLEEP_DATA_SUCCESS -> {
                     mRotateAnimator?.cancel()
-                    dismissOldCreateNewSumianImageTextDialog().show(SumianImageTextDialog.TYPE_SUCCESS, resources.getString(R.string.already_latest_data), 0, SumianImageTextDialog.SHOW_DURATION_SHORT)
                 }
                 DeviceManager.EVENT_SYNC_SLEEP_DATA_SYNC_PROGRESS_CHANGE -> {
 
