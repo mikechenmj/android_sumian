@@ -32,7 +32,6 @@ import com.sumian.device.manager.upload.SleepDataUploadManager
 import com.sumian.device.net.NetworkManager
 import com.sumian.device.util.ILogger
 import com.sumian.device.util.LogManager
-import com.sumian.device.util.ThreadManager
 import retrofit2.Call
 import retrofit2.Response
 
@@ -88,6 +87,8 @@ object DeviceManager {
 
     const val SCAN_DELAY = 1000L
     const val MESSAGE_SCAN_DEVICES = 10
+
+    const val SCAN_TIMEOUT = 40000L
 
     var mMainHandler = object : Handler(Looper.getMainLooper()) {
         override fun handleMessage(msg: Message?) {
@@ -195,7 +196,7 @@ object DeviceManager {
                 .setOperateTimeout(5000)
 
         var scanRuleConfig = BleScanRuleConfig.Builder()
-                .setScanTimeOut(40000)
+                .setScanTimeOut(SCAN_TIMEOUT)
                 .build()
         BleManager.getInstance().initScanRule(scanRuleConfig)
     }
@@ -336,6 +337,14 @@ object DeviceManager {
     private fun scanAndConnect(address: String, callback: ConnectDeviceCallback?) {
         callback?.onStart()
         changeMonitorConnectStatus(DeviceConnectStatus.CONNECTING)
+
+        var device = BleManager.getInstance().bluetoothAdapter?.getRemoteDevice(address)
+
+        if (device != null && device.name != null && !device.name.isEmpty()) {
+            connectWithoutScan(address, callback)
+            return
+        }
+
         scanDelay(object : ScanCallback {
             private var mFound = false
 
@@ -359,11 +368,15 @@ object DeviceManager {
         })
     }
 
+    private var mConnectMark = 0L
     private fun connectWithoutScan(
             address: String,
             callback: ConnectDeviceCallback?
     ) {
-        BleManager.getInstance().connect(address, object : BleGattCallback() {
+        mGatt?.close()
+        var tempConnectMark = System.currentTimeMillis()
+        mConnectMark = tempConnectMark
+        var tempGatt = BleManager.getInstance().connect(address, object : BleGattCallback() {
             override fun onStartConnect() {
                 changeMonitorConnectStatus(DeviceConnectStatus.CONNECTING)
                 callback?.onStart()
@@ -411,6 +424,17 @@ object DeviceManager {
                 LogManager.bleConnectLog(exception?.description ?: "设备连接失败")
             }
         })
+
+        mGatt = tempGatt
+        mMainHandler.postDelayed({
+            if (tempConnectMark == mConnectMark && tempGatt == mGatt) {
+                if (mBleDevice == null && tempGatt != null && tempGatt?.services != null
+                        && tempGatt?.services.size > 0) {
+                    tempGatt?.discoverServices()
+                }
+            }
+        }, SCAN_TIMEOUT + 200)
+
     }
 
     private fun changeMonitorConnectStatus(status: DeviceConnectStatus) {
