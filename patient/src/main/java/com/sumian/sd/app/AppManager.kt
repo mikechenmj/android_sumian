@@ -1,8 +1,15 @@
 package com.sumian.sd.app
 
 import android.app.Application
+import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
+import android.os.Message
 import android.util.Log
 import android.view.Gravity
 import androidx.lifecycle.Lifecycle
@@ -10,10 +17,7 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ProcessLifecycleOwner
 import cn.leancloud.chatkit.LCIMManager
-import com.blankj.utilcode.util.ActivityUtils
-import com.blankj.utilcode.util.AppUtils
-import com.blankj.utilcode.util.ToastUtils
-import com.blankj.utilcode.util.Utils
+import com.blankj.utilcode.util.*
 import com.sumian.common.base.BaseActivityManager
 import com.sumian.common.buz.kefu.KefuManager
 import com.sumian.common.dns.HttpDnsEngine
@@ -30,6 +34,7 @@ import com.sumian.common.social.login.OpenLogin
 import com.sumian.common.statistic.StatUtil
 import com.sumian.device.callback.DeviceStatusListener
 import com.sumian.device.manager.DeviceManager
+import com.sumian.device.manager.upload.SleepDataUploadManager
 import com.sumian.device.util.ILogger
 import com.sumian.sd.BuildConfig
 import com.sumian.sd.R
@@ -95,6 +100,16 @@ object AppManager {
         }
     }
 
+    const val MESSAGE_CODE_UPLOAD_SLEEP_DATA = 1
+    const val MESSAGE_DELAY_UPLOAD_SLEEP_DATA = 1000L
+
+    var mHandler = object : Handler(Looper.getMainLooper()) {
+        override fun handleMessage(msg: Message?) {
+            removeMessages(MESSAGE_CODE_UPLOAD_SLEEP_DATA)
+            uploadSleepFile()
+        }
+    }
+
     @JvmStatic
     @Synchronized
     fun getOpenEngine(): OpenEngine {
@@ -147,6 +162,7 @@ object AppManager {
         initLogManager(app)
         initStatic(app)
         observeAppLifecycle()
+        observeNetworkState()
         initWebView(app)
         VideoDownloadManager.init(app)
         initDeviceManager()
@@ -237,6 +253,20 @@ object AppManager {
         })
     }
 
+    private fun observeNetworkState() {
+        mApplication.registerReceiver(object : BroadcastReceiver() {
+            override fun onReceive(context: Context, intent: Intent) {
+                if (NetworkUtils.getNetworkType() != NetworkUtils.NetworkType.NETWORK_NO) {
+                    mHandler.sendEmptyMessageDelayed(MESSAGE_CODE_UPLOAD_SLEEP_DATA, MESSAGE_DELAY_UPLOAD_SLEEP_DATA)
+                }
+            }
+        }, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+    }
+
+    private fun uploadSleepFile() {
+        SleepDataUploadManager.uploadAllFile()
+    }
+
     private fun initUtils(context: Context) {
         ToastHelper.init(context)
         Utils.init(context)
@@ -300,6 +330,7 @@ object AppManager {
         if (!DeviceManager.isMonitorConnected()) {
             DeviceManager.connectBoundDevice(null)
         }
+        mHandler.sendEmptyMessageDelayed(MESSAGE_CODE_UPLOAD_SLEEP_DATA, MESSAGE_DELAY_UPLOAD_SLEEP_DATA)
         sendHeartbeat()
         VersionManager.queryDeviceVersion(true)
         AutoSyncDeviceDataUtil.autoSyncSleepData()

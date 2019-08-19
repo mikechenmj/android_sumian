@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import com.blankj.utilcode.util.SPUtils
 import com.google.gson.reflect.TypeToken
+import com.sumian.device.manager.DeviceManager
 import com.sumian.device.manager.upload.UploadFileCallback.Companion.ERROR_CODE_DUPLICATE_UPLOAD
 import com.sumian.device.manager.upload.bean.UploadSleepDataParams
 import com.sumian.device.manager.upload.bean.UploadSleepDataTask
@@ -23,7 +24,10 @@ object SleepDataUploadManager {
     private const val SP_KEY_TASKS = "UploadSleepFileTasks"
     private const val MAX_RETRY_COUNT = 3
     private lateinit var mContext: Context
+
+    @Volatile
     private var mIsUploading = false
+
     private var mRetryCount = 0
     private var mUploadListener: UploadListener? = null
 
@@ -68,6 +72,15 @@ object SleepDataUploadManager {
         }
     }
 
+    fun uploadAllFile() {
+        if (!DeviceManager.isSyncingSleepData()) {
+            var tasks = getAllTasks()
+            if (tasks.size > 0) {
+                uploadFile(tasks[0])
+            }
+        }
+    }
+
     private fun uploadFile(task: UploadSleepDataTask) {
         mIsUploading = true
         val filePath = task.filePath
@@ -87,7 +100,7 @@ object SleepDataUploadManager {
 
             override fun onFail(code: Int, msg: String?) {
                 mIsUploading = false
-                LogManager.log("upload sleep data $filePath fail: $msg $mRetryCount")
+                LogManager.log("upload sleep data $filePath fail: $code $msg $mRetryCount")
                 if (code == ERROR_CODE_DUPLICATE_UPLOAD) {
                     mRetryCount = 0
                     removeTask(task)
