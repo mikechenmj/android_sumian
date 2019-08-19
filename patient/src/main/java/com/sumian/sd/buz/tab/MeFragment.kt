@@ -20,6 +20,7 @@ import com.sumian.common.base.BaseViewModelFragment
 import com.sumian.common.buz.kefu.KefuManager
 import com.sumian.common.image.loadImage
 import com.sumian.common.statistic.StatUtil
+import com.sumian.device.callback.DeviceStatusListener
 import com.sumian.device.manager.DeviceManager
 import com.sumian.device.test.ui.DeviceTestActivity
 import com.sumian.sd.BuildConfig
@@ -64,6 +65,21 @@ class MeFragment : BaseViewModelFragment<GetAchievementListPresenter>(), View.On
     private val mNotificationViewModel by lazy {
         ViewModelProviders.of(activity!!)
                 .get(NotificationViewModel::class.java)
+    }
+
+    private var mPause = false
+    private val mDeviceStatusListener = object : DeviceStatusListener {
+        override fun onStatusChange(type: String) {
+            if (type == DeviceManager.EVENT_RECEIVE_MONITOR_SN) {
+                activity?.runOnUiThread {
+                    if (!mPause) {
+                        dv_device_manage.setContent(DeviceManager.getDevice()?.monitorSn
+                                ?: getString(R.string.add_new_device))
+                    }
+                }
+
+            }
+        }
     }
 
     override fun getLayoutId(): Int {
@@ -118,13 +134,21 @@ class MeFragment : BaseViewModelFragment<GetAchievementListPresenter>(), View.On
 
     override fun onResume() {
         super.onResume()
+        mPause = false
         val device = DeviceManager.getDevice()
         var monitorSn: String? = device?.monitorSn
         if (TextUtils.isEmpty(monitorSn)) {
             monitorSn = getString(R.string.add_new_device)
         }
         dv_device_manage.setContent(monitorSn!!)
+        DeviceManager.registerDeviceStatusListener(mDeviceStatusListener)
 //        LCIMManager.getInstance().updateUnreadConversation()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mPause = true
+        DeviceManager.unregisterDeviceStatusListener(mDeviceStatusListener)
     }
 
     override fun showLoading() {
