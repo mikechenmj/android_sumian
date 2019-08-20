@@ -53,7 +53,7 @@ class DeviceVersionUpgradeActivity : BaseViewModelActivity<BaseViewModel>(), Tit
         const val TYPE_SLEEP_MASTER = 1
         private const val EXTRA_TYPE = "extra_type"
         private const val EXTRA_VERSION_IS_LATEST = "extra_version_latest"
-        private const val UPGRADE_RECONNECT_WAIT_DURATION = (1000 * 45).toLong()
+        private const val UPGRADE_RECONNECT_WAIT_DURATION = 1000 * 3L
         private const val REQUEST_WRITE_PERMISSION = 1000
 
         fun show(context: Context, versionType: Int, haveLatestVersion: Boolean) {
@@ -279,6 +279,7 @@ class DeviceVersionUpgradeActivity : BaseViewModelActivity<BaseViewModel>(), Tit
                     override fun onFail(code: Int, msg: String?) {
                         ToastUtils.showShort("升级失败：$msg")
                         progressDialog.dismiss()
+                        reconnectDevice()
                     }
                 })
     }
@@ -290,8 +291,14 @@ class DeviceVersionUpgradeActivity : BaseViewModelActivity<BaseViewModel>(), Tit
         })
         VersionManager.queryDeviceVersion()
         LogManager.appendMonitorLog("设备dfu固件升级完成")
-        SumianExecutor.runOnUiThread({ DeviceManager.connectBoundDevice() }, UPGRADE_RECONNECT_WAIT_DURATION);
+        reconnectDevice()
         finish()
+    }
+
+    private fun reconnectDevice() {
+        if (!DeviceManager.isMonitorConnected()) {
+            SumianExecutor.runOnUiThread({ DeviceManager.connectBoundDevice() }, UPGRADE_RECONNECT_WAIT_DURATION)
+        }
     }
 
 }
