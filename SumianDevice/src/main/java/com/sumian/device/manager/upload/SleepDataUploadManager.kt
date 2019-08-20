@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import com.blankj.utilcode.util.SPUtils
 import com.google.gson.reflect.TypeToken
-import com.sumian.device.manager.DeviceManager
 import com.sumian.device.manager.upload.UploadFileCallback.Companion.ERROR_CODE_DUPLICATE_UPLOAD
 import com.sumian.device.manager.upload.bean.UploadSleepDataParams
 import com.sumian.device.manager.upload.bean.UploadSleepDataTask
@@ -73,7 +72,7 @@ object SleepDataUploadManager {
     }
 
     fun uploadAllFile() {
-        if (!DeviceManager.isSyncingSleepData()) {
+        if (!mIsUploading) {
             var tasks = getAllTasks()
             if (tasks.size > 0) {
                 uploadFile(tasks[0])

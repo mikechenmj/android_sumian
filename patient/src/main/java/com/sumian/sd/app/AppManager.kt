@@ -100,16 +100,6 @@ object AppManager {
         }
     }
 
-    const val MESSAGE_CODE_UPLOAD_SLEEP_DATA = 1
-    const val MESSAGE_DELAY_UPLOAD_SLEEP_DATA = 1000L
-
-    var mHandler = object : Handler(Looper.getMainLooper()) {
-        override fun handleMessage(msg: Message?) {
-            removeMessages(MESSAGE_CODE_UPLOAD_SLEEP_DATA)
-            uploadSleepFile()
-        }
-    }
-
     @JvmStatic
     @Synchronized
     fun getOpenEngine(): OpenEngine {
@@ -257,7 +247,7 @@ object AppManager {
         mApplication.registerReceiver(object : BroadcastReceiver() {
             override fun onReceive(context: Context, intent: Intent) {
                 if (NetworkUtils.getNetworkType() != NetworkUtils.NetworkType.NETWORK_NO) {
-                    mHandler.sendEmptyMessageDelayed(MESSAGE_CODE_UPLOAD_SLEEP_DATA, MESSAGE_DELAY_UPLOAD_SLEEP_DATA)
+                    uploadSleepFile()
                 }
             }
         }, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
@@ -330,7 +320,7 @@ object AppManager {
         if (!DeviceManager.isMonitorConnected()) {
             DeviceManager.connectBoundDevice(null)
         }
-        mHandler.sendEmptyMessageDelayed(MESSAGE_CODE_UPLOAD_SLEEP_DATA, MESSAGE_DELAY_UPLOAD_SLEEP_DATA)
+        uploadSleepFile()
         sendHeartbeat()
         VersionManager.queryDeviceVersion(true)
         AutoSyncDeviceDataUtil.autoSyncSleepData()
