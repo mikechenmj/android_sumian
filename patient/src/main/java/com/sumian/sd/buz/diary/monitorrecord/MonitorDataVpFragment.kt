@@ -59,7 +59,7 @@ class MonitorDataVpFragment : BaseFragment() {
     override fun onResume() {
         super.onResume()
         DeviceManager.registerDeviceStatusListener(mDeviceStatusListener)
-        tv_is_syncing_hint.visibility = if (SyncSleepDataHelper.isSleepDataTypeSyncing()) View.VISIBLE else View.GONE
+        tv_is_syncing_hint.isVisible = SyncSleepDataHelper.isSleepDataTypeSyncing()
     }
 
     private val mDeviceStatusListener = object : DeviceStatusListener {
@@ -68,9 +68,10 @@ class MonitorDataVpFragment : BaseFragment() {
                 DeviceManager.EVENT_ALL_SLEEP_DATA_UPLOADED -> {
                     EventBusUtil.postStickyEvent(UploadSleepDataFinishedEvent())
                 }
+                DeviceManager.EVENT_SYNC_SLEEP_DATA_START,
                 DeviceManager.EVENT_SYNC_SLEEP_DATA_FAIL,
                 DeviceManager.EVENT_SYNC_SLEEP_DATA_SUCCESS -> {
-                    tv_is_syncing_hint?.isVisible = false
+                    tv_is_syncing_hint?.isVisible = SyncSleepDataHelper.isSleepDataTypeSyncing()
                 }
             }
         }
