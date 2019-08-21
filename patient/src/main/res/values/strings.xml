@@ -365,7 +365,7 @@
     <string name="firmware_md5_invalid_hint">固件更新包已损坏,请重新下载</string>
 
     <!--media preview-->
-    <string name="gallery_save_file_not_have_external_storage_permission">没有外部存储权限!</string>
+    <string name="device_version_upgrade_permission_fail">没有升级固件所需权限!</string>
     <string name="gallery_save_file_not_have_external_storage">没有外部存储!</string>
     <string name="gallery_save_file_success">保存成功!</string>
     <string name="gallery_save_file_failed">存储失败!</string>

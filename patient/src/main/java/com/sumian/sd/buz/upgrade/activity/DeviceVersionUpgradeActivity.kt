@@ -54,7 +54,7 @@ class DeviceVersionUpgradeActivity : BaseViewModelActivity<BaseViewModel>(), Tit
         private const val EXTRA_TYPE = "extra_type"
         private const val EXTRA_VERSION_IS_LATEST = "extra_version_latest"
         private const val UPGRADE_RECONNECT_WAIT_DURATION = 1000 * 3L
-        private const val REQUEST_WRITE_PERMISSION = 1000
+        private const val REQUEST_UPGRADE_PERMISSION = 1000
 
         fun show(context: Context, versionType: Int, haveLatestVersion: Boolean) {
             val intent = Intent(context, DeviceVersionUpgradeActivity::class.java)
@@ -105,9 +105,9 @@ class DeviceVersionUpgradeActivity : BaseViewModelActivity<BaseViewModel>(), Tit
 
     private fun getLatestVersionInfo(): VersionInfo? {
         return if (mType == TYPE_MONITOR) {
-            VersionManager.mFirmwareVersionInfoLD.value!!.monitor
+            VersionManager.mFirmwareVersionInfoLD.value?.monitor
         } else {
-            VersionManager.mFirmwareVersionInfoLD.value!!.sleeper
+            VersionManager.mFirmwareVersionInfoLD.value?.sleeper
         }
     }
 
@@ -116,7 +116,7 @@ class DeviceVersionUpgradeActivity : BaseViewModelActivity<BaseViewModel>(), Tit
     }
 
     override fun onPermissionsDenied(requestCode: Int, perms: List<String>) {
-        Toast.makeText(this, R.string.gallery_save_file_not_have_external_storage_permission, Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, R.string.device_version_upgrade_permission_fail, Toast.LENGTH_SHORT).show()
         if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
             AppSettingsDialog.Builder(this).build().show()
         }
@@ -127,13 +127,15 @@ class DeviceVersionUpgradeActivity : BaseViewModelActivity<BaseViewModel>(), Tit
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
     }
 
-    @AfterPermissionGranted(REQUEST_WRITE_PERMISSION)
+    @AfterPermissionGranted(REQUEST_UPGRADE_PERMISSION)
     private fun downloadUpgradeFileWithPermissionCheck() {
-        val perms = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        val perms = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION)
         if (EasyPermissions.hasPermissions(this, *perms)) {
             downloadUpgradeFile()
         } else {
-            EasyPermissions.requestPermissions(this, "没有权限,你需要去设置中开启文件读写权限.", REQUEST_WRITE_PERMISSION, *perms)
+            EasyPermissions.requestPermissions(this, "没有权限,你需要去设置中开启位置以及文件读写权限.", REQUEST_UPGRADE_PERMISSION, *perms)
         }
     }
 
@@ -205,7 +207,7 @@ class DeviceVersionUpgradeActivity : BaseViewModelActivity<BaseViewModel>(), Tit
     }
 
     private fun downloadUpgradeFile() {
-        val latestVersionInfo = getLatestVersionInfo()!!
+        val latestVersionInfo = getLatestVersionInfo() ?: return
         val dir = getDir("upgrade", 0)
         val file = File(dir, latestVersionInfo.version + "zip")
         val progressDialog = VersionDialog.newInstance(getString(R.string.firmware_download_title_hint))
