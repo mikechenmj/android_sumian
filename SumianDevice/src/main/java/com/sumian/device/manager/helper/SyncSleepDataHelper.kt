@@ -131,6 +131,10 @@ object SyncSleepDataHelper {
         DeviceManager.writeData(BleCmdUtil.createDataFromString(BleCmd.SYNC_DATA, BleCmd.SYNC_SLEEP_MASTER_LOG_CONTENT))
     }
 
+    internal fun startSendFakeSleepData() {
+        DeviceManager.writeData(BleCmdUtil.createDataFromString("12", "03080F"))
+    }
+
     /**
      * 55 4f 02 01 88
      * 55 4f 02 01 00

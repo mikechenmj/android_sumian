@@ -7,6 +7,11 @@
     tools:context="com.sumian.device.test.ui.DeviceTestActivity"
     tools:ignore="HardcodedText">
 
+    <Button
+        android:id="@+id/send_fake_data"
+        android:text="send fake data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <include layout="@layout/layout_main_device" />
 
