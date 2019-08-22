@@ -18,6 +18,7 @@ import com.sumian.common.utils.TimeUtilV2
 import com.sumian.device.callback.DeviceStatusListener
 import com.sumian.device.manager.DeviceManager
 import com.sumian.device.manager.helper.SyncSleepDataHelper
+import com.sumian.device.util.LogManager
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.devicemanager.uploadsleepdata.UploadSleepDataFinishedEvent
@@ -63,15 +64,25 @@ class MonitorDataVpFragment : BaseFragment() {
     }
 
     private val mDeviceStatusListener = object : DeviceStatusListener {
-        override fun onStatusChange(type: String) {
+        override fun onStatusChange(type: String, data: Any?) {
             when (type) {
                 DeviceManager.EVENT_ALL_SLEEP_DATA_UPLOADED -> {
                     EventBusUtil.postStickyEvent(UploadSleepDataFinishedEvent())
                 }
-                DeviceManager.EVENT_SYNC_SLEEP_DATA_START,
-                DeviceManager.EVENT_SYNC_SLEEP_DATA_FAIL,
-                DeviceManager.EVENT_SYNC_SLEEP_DATA_SUCCESS -> {
-                    tv_is_syncing_hint?.isVisible = SyncSleepDataHelper.isSleepDataTypeSyncing()
+                DeviceManager.EVENT_SYNC_SLEEP_DATA_PREPARE -> {
+                    tv_is_syncing_hint?.isVisible = true
+                }
+                DeviceManager.EVENT_SYNC_SLEEP_DATA_FAIL -> {
+                    tv_is_syncing_hint?.isVisible = false
+                    tv_sync_fail_hint.isVisible = false
+                }
+                DeviceManager.EVENT_SYNC_SLEEP_DATA_AND_UPLOAD_FINISH -> {
+                    tv_is_syncing_hint?.isVisible = false
+                    if (!(data as Boolean)) {
+                        LogManager.uploadSleepDataLog("上传数据异常")
+                        tv_sync_fail_hint.isVisible = true
+                        tv_sync_fail_hint.postDelayed({ tv_sync_fail_hint.isVisible = false }, 3000)
+                    }
                 }
             }
         }

@@ -65,6 +65,8 @@ object DeviceManager {
     const val EVENT_SYNC_SLEEP_DATA_START = "SleepDataSyncStart"
     const val EVENT_SYNC_SLEEP_DATA_FAIL = "SleepDataSyncFail"
     const val EVENT_SYNC_SLEEP_DATA_SUCCESS = "SleepDataSyncSuccess"
+    const val EVENT_SYNC_SLEEP_DATA_PREPARE = "SleepDataSyncPrepare"
+    const val EVENT_SYNC_SLEEP_DATA_AND_UPLOAD_FINISH = "SleepDataSyncAndUploadFinish"
     const val EVENT_ALL_SLEEP_DATA_UPLOADED = "AllSleepDataUploaded"
 
     // version compatibility
@@ -113,10 +115,10 @@ object DeviceManager {
     private val mDataHandlerList = ArrayList<BleDataHandler>()
     private val mDeviceStatusListenerList = ArrayList<DeviceStatusListener>()
     private val mDeviceStatusListener = object : DeviceStatusListener {
-        override fun onStatusChange(event: String) {
-            var copyList = ArrayList(mDeviceStatusListenerList)
+        override fun onStatusChange(event: String, data: Any?) {
+            var copyList : ArrayList<DeviceStatusListener> = ArrayList(mDeviceStatusListenerList)
             for (listener in copyList) {
-                listener.onStatusChange(event)
+                listener.onStatusChange(event, data)
             }
         }
     }
@@ -651,7 +653,7 @@ object DeviceManager {
                 mSumianDevice?.syncTotalCount = progress[1]
             }
         }
-        mDeviceStatusListener.onStatusChange(event)
+        mDeviceStatusListener.onStatusChange(event, data)
     }
 
     fun makeRequest(data: ByteArray, callback: BleRequestCallback) {
