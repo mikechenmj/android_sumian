@@ -3,7 +3,9 @@ package com.sumian.device.manager.upload
 import android.annotation.SuppressLint
 import android.content.Context
 import com.blankj.utilcode.util.SPUtils
+import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
+import com.sumian.device.manager.helper.SyncSleepDataHelper
 import com.sumian.device.manager.upload.UploadFileCallback.Companion.ERROR_CODE_DUPLICATE_UPLOAD
 import com.sumian.device.manager.upload.bean.UploadSleepDataParams
 import com.sumian.device.manager.upload.bean.UploadSleepDataTask
@@ -43,7 +45,7 @@ object SleepDataUploadManager {
             sleepMasterSn: String?,
             receiveStartTime: Int,
             receiveEndTime: Int
-    ) {
+    ): String {
         val file = saveDataToFile(context, transType, transId, monitorSn, sleepData)
         val uploadSleepDataParams = UploadSleepDataParams(
                 file.name,
@@ -59,12 +61,10 @@ object SleepDataUploadManager {
         )
         addTask(task)
         uploadFile(task)
+        return file.name
     }
 
     fun uploadNextTask() {
-        if (mIsUploading) {
-            return
-        }
         val nextTask = getNextTask()
         if (nextTask != null) {
             uploadFile(nextTask)
@@ -72,15 +72,16 @@ object SleepDataUploadManager {
     }
 
     fun uploadAllFile() {
-        if (!mIsUploading) {
-            var tasks = getAllTasks()
-            if (tasks.size > 0) {
-                uploadFile(tasks[0])
-            }
+        var tasks = getAllTasks()
+        if (tasks.size > 0) {
+            uploadFile(tasks[0])
         }
     }
 
     private fun uploadFile(task: UploadSleepDataTask) {
+        if (mIsUploading) {
+            return
+        }
         mIsUploading = true
         val filePath = task.filePath
         LogManager.log("upload sleep data $filePath")
@@ -90,6 +91,24 @@ object SleepDataUploadManager {
                 mIsUploading = false
                 mRetryCount = 0
                 removeTask(task)
+                var success = true
+                var isSleepData = task.uploadSleepDataParams.type == SyncSleepDataHelper.SYNC_TYPE_SLEEP_DATA
+                var jsonObj = JsonUtil.getJsonObject(result)
+                if (jsonObj != null) {
+                    var error = jsonObj["error"]
+                    if (error != null && error.isJsonObject) {
+                        var errorObject: JsonObject = error.asJsonObject
+                        if (errorObject.get("internal_message")?.asString == "coverage") {
+                            if (isSleepData) {
+                                success = false
+                                LogManager.uploadSleepDataLog("上传失败：${task.uploadSleepDataParams.fileName} is coverage")
+                            }
+                        }
+                    }
+                }
+                if (isSleepData) {
+                    mUploadListener?.onFileUploaded(task.uploadSleepDataParams.fileName, success)
+                }
                 if (getAllTasks().size == 0) {
                     mUploadListener?.onAllFileUploaded()
                 } else {
@@ -99,6 +118,7 @@ object SleepDataUploadManager {
 
             override fun onFail(code: Int, msg: String?) {
                 mIsUploading = false
+                var retry = false
                 LogManager.log("upload sleep data $filePath fail: $code $msg $mRetryCount")
                 if (code == ERROR_CODE_DUPLICATE_UPLOAD) {
                     mRetryCount = 0
@@ -106,7 +126,14 @@ object SleepDataUploadManager {
                     uploadNextTask()
                 } else if (mRetryCount < MAX_RETRY_COUNT) {
                     mRetryCount++
+                    retry = true
                     uploadNextTask()
+                }
+                if (!retry) {
+                    if (task.uploadSleepDataParams.type == SyncSleepDataHelper.SYNC_TYPE_SLEEP_DATA) {
+                        LogManager.monitorLog("上传失败: code: $code msg: $msg")
+                        mUploadListener?.onFileUploaded(task.uploadSleepDataParams.fileName, false)
+                    }
                 }
             }
         })
@@ -192,5 +219,6 @@ object SleepDataUploadManager {
 
     interface UploadListener {
         fun onAllFileUploaded()
+        fun onFileUploaded(id: String, success: Boolean = true)
     }
 }

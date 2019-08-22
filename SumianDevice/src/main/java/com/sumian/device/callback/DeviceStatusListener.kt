@@ -11,7 +11,8 @@ import com.sumian.device.data.SleepMasterVersionInfo
  * version: 1.0
  */
 interface DeviceStatusListener {
-    fun onStatusChange(type: String)
+    fun onStatusChange(type: String){}
+    fun onStatusChange(type: String, data: Any? = null) { onStatusChange(type) }
 }
 
 interface DeviceConnectStatusListener {
