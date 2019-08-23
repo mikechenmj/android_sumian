@@ -108,6 +108,8 @@ object DeviceManager {
 
     lateinit var mApplication: Application
 
+    private var mBluetoothEnabled = false
+
     private var mGatt: BluetoothGatt? = null
     private var mBleDevice: BleDevice? = null // 负责connect，disconnect
     private val mDataHandlerList = ArrayList<BleDataHandler>()
@@ -131,6 +133,7 @@ object DeviceManager {
         SyncSleepDataHelper.init()
         DeviceStateHelper.init(application.applicationContext)
         initBoundDevice()
+        mBluetoothEnabled = BleManager.getInstance().isBlueEnable
     }
 
     private fun registerBluetoothReceiver(context: Context) {
@@ -138,7 +141,6 @@ object DeviceManager {
             override fun onReceive(context: Context, intent: Intent) {
                 val action = intent.action
                 if (action == BluetoothAdapter.ACTION_STATE_CHANGED) {
-
                     when (intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, BluetoothAdapter.STATE_OFF)) {
                         BluetoothAdapter.STATE_ON -> {
                             onBluetoothStateChange(true)
@@ -161,6 +163,7 @@ object DeviceManager {
         for (listener in mBluetoothAdapterStateChangeListeners) {
             listener.onStateChange(on)
         }
+        mBluetoothEnabled = on
         if (!on) {
             BleManager.getInstance().disconnectAllDevice()
             BleManager.getInstance().destroy()
@@ -206,7 +209,7 @@ object DeviceManager {
     }
 
     fun isBluetoothEnable(): Boolean {
-        return BleManager.getInstance().isBlueEnable
+        return mBluetoothEnabled
     }
 
     fun enableBluetooth() {
