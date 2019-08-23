@@ -139,7 +139,6 @@ class DeviceCardFragment : BaseFragment() {
     private val mDeviceStatusListener = object : DeviceStatusListener {
         @SuppressLint("SetTextI18n")
         override fun onStatusChange(type: String) {
-            val device = DeviceManager.getDevice()
             when (type) {
                 DeviceManager.EVENT_SYNC_SLEEP_DATA_START -> {
                     startSyncAnimation()
