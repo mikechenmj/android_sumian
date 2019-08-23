@@ -8,10 +8,12 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
 import android.text.TextUtils
+import android.util.Log
 import com.blankj.utilcode.util.SPUtils
 import com.clj.fastble.BleManager
 import com.clj.fastble.callback.BleGattCallback
@@ -34,6 +36,7 @@ import com.sumian.device.util.ILogger
 import com.sumian.device.util.LogManager
 import retrofit2.Call
 import retrofit2.Response
+import java.lang.NullPointerException
 
 /**
  * @author : Zhan Xuzhao
@@ -96,11 +99,16 @@ object DeviceManager {
         override fun handleMessage(msg: Message?) {
             when (msg?.what) {
                 MESSAGE_SCAN_DEVICES -> {
-                    removeScanMessage()
                     if (isScanning()) {
-                        stopScan()
+                        if (!mHighPriorityScaning) {
+                            stopScan()
+                            mHighPriorityScaning = msg?.data.getBoolean("high_priority")
+                            scan(msg.obj as ScanCallback)
+                        }
+                    }else {
+                        mHighPriorityScaning = msg?.data.getBoolean("high_priority")
+                        scan(msg.obj as ScanCallback)
                     }
-                    scan(msg.obj as ScanCallback)
                 }
             }
         }
@@ -111,14 +119,14 @@ object DeviceManager {
     lateinit var mApplication: Application
 
     private var mBluetoothEnabled = false
-
+    private var mHighPriorityScaning = false
     private var mGatt: BluetoothGatt? = null
     private var mBleDevice: BleDevice? = null // 负责connect，disconnect
     private val mDataHandlerList = ArrayList<BleDataHandler>()
     private val mDeviceStatusListenerList = ArrayList<DeviceStatusListener>()
     private val mDeviceStatusListener = object : DeviceStatusListener {
         override fun onStatusChange(event: String, data: Any?) {
-            var copyList : ArrayList<DeviceStatusListener> = ArrayList(mDeviceStatusListenerList)
+            var copyList: ArrayList<DeviceStatusListener> = ArrayList(mDeviceStatusListenerList)
             for (listener in copyList) {
                 listener.onStatusChange(event, data)
             }
@@ -162,11 +170,12 @@ object DeviceManager {
     }
 
     private fun onBluetoothStateChange(on: Boolean) {
+        mBluetoothEnabled = on
         for (listener in mBluetoothAdapterStateChangeListeners) {
             listener.onStateChange(on)
         }
-        mBluetoothEnabled = on
         if (!on) {
+            stopScan()
             BleManager.getInstance().disconnectAllDevice()
             BleManager.getInstance().destroy()
             mSumianDevice = getBoundDevice()
@@ -222,13 +231,15 @@ object DeviceManager {
         BleManager.getInstance().disableBluetooth()
     }
 
-    fun scanDelay(callback: ScanCallback, delay: Long = SCAN_DELAY) {
+    fun scanDelay(callback: ScanCallback, delay: Long = SCAN_DELAY, highPriority: Boolean = false) {
+        Log.i("MCJ","scanDelay")
         var message = Message.obtain()
         message.what = MESSAGE_SCAN_DEVICES
         message.obj = callback
-        removeScanMessage()
-        BleManager.getInstance().disconnectAllDevice()
-        BleManager.getInstance().destroy()
+        message.data = Bundle().let {
+            it.putBoolean("high_priority", highPriority)
+            it
+        }
         mMainHandler.sendMessageDelayed(message, delay)
     }
 
@@ -247,6 +258,7 @@ object DeviceManager {
                 if (!mFound) {
                     LogManager.bleScanLog("未扫到对应蓝牙设备")
                 }
+                mHighPriorityScaning = false
             }
 
             override fun onScanStarted(success: Boolean) {
@@ -267,6 +279,7 @@ object DeviceManager {
     }
 
     fun stopScan() {
+        Log.i("MCJ","stopScan")
         removeScanMessage()
         if (isScanning()) {
             BleManager.getInstance().cancelScan()
@@ -663,8 +676,8 @@ object DeviceManager {
         BleCommunicationController.requestWithRetry(data, callback)
     }
 
-    fun upgrade(target: DeviceType, filePath: String, callback: DfuCallback) {
-        UpgradeDeviceHelper.upgrade(mApplication, target, filePath, callback)
+    fun upgradeBoundDevice(target: DeviceType, filePath: String, callback: DfuCallback) {
+        UpgradeDeviceHelper.upgradeBoundDevice(mApplication, target, filePath, callback)
     }
 
     fun getDevice(): SumianDevice? {

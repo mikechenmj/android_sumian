@@ -17,11 +17,11 @@ import com.liulishuo.filedownloader.FileDownloader
 import com.sumian.common.base.BaseViewModel
 import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.helper.ToastHelper
-import com.sumian.common.utils.SumianExecutor
 import com.sumian.common.widget.TitleBar
 import com.sumian.device.data.DeviceType
 import com.sumian.device.manager.DeviceManager
 import com.sumian.device.manager.helper.DfuCallback
+import com.sumian.device.manager.helper.UpgradeDeviceHelper
 import com.sumian.sd.R
 import com.sumian.sd.buz.upgrade.bean.VersionInfo
 import com.sumian.sd.buz.upgrade.dialog.VersionDialog
@@ -262,7 +262,7 @@ class DeviceVersionUpgradeActivity : BaseViewModelActivity<BaseViewModel>(), Tit
         }
         val progressDialog = VersionDialog.newInstance(getString(R.string.firmware_upgrade_title_hint))
         progressDialog.show(supportFragmentManager, progressDialog.javaClass.simpleName)
-        DeviceManager.upgrade(
+        DeviceManager.upgradeBoundDevice(
                 if (mType == TYPE_MONITOR) DeviceType.MONITOR else DeviceType.SLEEP_MASTER,
                 file.absolutePath,
                 object : DfuCallback {
@@ -275,32 +275,25 @@ class DeviceVersionUpgradeActivity : BaseViewModelActivity<BaseViewModel>(), Tit
 
                     override fun onSuccess() {
                         progressDialog.dismiss()
-                        onUpgradeSuccess()
+                        upgradeSuccess()
                     }
 
                     override fun onFail(code: Int, msg: String?) {
                         ToastUtils.showShort("升级失败：$msg")
                         progressDialog.dismiss()
-                        reconnectDevice()
+                        UpgradeDeviceHelper.reconnectDevice()
                     }
                 })
     }
 
-    private fun onUpgradeSuccess() {
+    private fun upgradeSuccess() {
         ToastUtils.showLong(when (mType) {
             TYPE_MONITOR -> R.string.firmware_upgrade_success_hint
             else -> R.string.sleeper_firmware_upgrade_success_hint
         })
         VersionManager.queryDeviceVersion()
         LogManager.appendMonitorLog("设备dfu固件升级完成")
-        reconnectDevice()
+        UpgradeDeviceHelper.reconnectDevice()
         finish()
     }
-
-    private fun reconnectDevice() {
-        if (!DeviceManager.isMonitorConnected()) {
-            SumianExecutor.runOnUiThread({ DeviceManager.connectBoundDevice() }, UPGRADE_RECONNECT_WAIT_DURATION)
-        }
-    }
-
 }

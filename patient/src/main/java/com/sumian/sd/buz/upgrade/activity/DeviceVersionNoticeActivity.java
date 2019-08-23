@@ -11,6 +11,7 @@ import com.sumian.common.widget.refresh.SumianSwipeRefreshLayout;
 import com.sumian.device.data.SumianDevice;
 import com.sumian.device.manager.DeviceManager;
 import com.sumian.sd.R;
+import com.sumian.sd.buz.device.scan.ScanDeviceActivity;
 import com.sumian.sd.buz.version.VersionManager;
 import com.sumian.sd.widget.VersionInfoView;
 
@@ -58,6 +59,7 @@ public class DeviceVersionNoticeActivity extends BaseViewModelActivity implement
 
         findViewById(R.id.monitor_version_info).setOnClickListener(this);
         findViewById(R.id.sleepy_version_info).setOnClickListener(this);
+        findViewById(R.id.upgrade_wrong).setOnClickListener(this);
         VersionManager.INSTANCE.getMFirmwareVersionInfoLD().observe(this, firmwareInfo -> {
             mRefresh.setRefreshing(false);
             DeviceManager deviceManager = DeviceManager.INSTANCE;
@@ -95,6 +97,9 @@ public class DeviceVersionNoticeActivity extends BaseViewModelActivity implement
                 break;
             case R.id.sleepy_version_info:
                 DeviceVersionUpgradeActivity.Companion.show(this, DeviceVersionUpgradeActivity.TYPE_SLEEP_MASTER, VersionManager.INSTANCE.hasNewSleeperVersion());
+                break;
+            case R.id.upgrade_wrong:
+                ScanDeviceActivity.Companion.startForUpgrade(this);
                 break;
         }
     }

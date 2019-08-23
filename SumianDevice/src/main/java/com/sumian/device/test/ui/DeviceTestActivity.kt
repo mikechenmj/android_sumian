@@ -240,7 +240,7 @@ class DeviceTestActivity : AppCompatActivity() {
         val dir =
                 Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
         val file = File(dir, "dfu.zip")
-        DeviceManager.upgrade(DeviceType.MONITOR, file.absolutePath, object : DfuCallback {
+        DeviceManager.upgradeBoundDevice(DeviceType.MONITOR, file.absolutePath, object : DfuCallback {
             override fun onStart() {
                 LogManager.log("upgrade onStart")
             }

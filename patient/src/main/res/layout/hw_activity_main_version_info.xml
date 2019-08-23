@@ -74,9 +74,16 @@
                 android:layout_height="wrap_content"
                 app:upgrade_label="@string/sleepy_upgrade" />
 
+            <TextView
+                android:id="@+id/upgrade_wrong"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:layout_weight="1"
+                android:gravity="center|bottom"
+                android:text="@string/upgrade_wrong"
+                android:textColor="@color/colorPrimary" />
         </LinearLayout>
 
     </com.sumian.common.widget.refresh.SumianSwipeRefreshLayout>
-
-
 </LinearLayout>

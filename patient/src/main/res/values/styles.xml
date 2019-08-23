@@ -71,6 +71,10 @@
         <item name="android:textSize">@dimen/font_18</item>
     </style>
 
+    <style name="text_t3_20" parent="text_t3_style">
+        <item name="android:textSize">@dimen/font_20</item>
+    </style>
+
     <style name="text_t5" parent="BaseText">
         <item name="android:textSize">@dimen/font_14</item>
         <item name="android:textColor">@color/t5_color_day</item>
