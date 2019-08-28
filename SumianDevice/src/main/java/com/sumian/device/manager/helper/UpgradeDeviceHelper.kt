@@ -10,6 +10,8 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
 import androidx.annotation.RequiresApi
 import com.clj.fastble.utils.HexUtil
 import com.sumian.device.R
@@ -37,63 +39,65 @@ import java.lang.ref.WeakReference
 @SuppressLint("StaticFieldLeak")
 object UpgradeDeviceHelper {
     private var mDfuServiceController: DfuServiceController? = null
-    private var mApplicationContext: Context? = null
+    private var mApplicationContext: Context? = DeviceManager.mApplication
     private var mDfuCallbackWR: WeakReference<DfuCallback>? = null
-    private var mDfuCallback: DfuCallback? = null
+    private var mUpgradeBoundDfuCallback: DfuCallback? = null
+    private var mUpgradeDfuModeCallback: DfuCallback? = null
 
-    fun upgrade(context: Context, target: DeviceType, filePath: String, callback: DfuCallback) {
-        mApplicationContext = context.applicationContext
+    private const val UPGRADE_RECONNECT_WAIT_DURATION = 3000L
+
+    fun upgradeBoundDevice(context: Context, target: DeviceType, filePath: String, callback: DfuCallback, onDfuCmdSuccess: () -> Unit = {}) {
         mDfuCallbackWR = WeakReference(callback)
-        mDfuCallback = callback
-        mDfuCallback?.onStart()
+        mUpgradeBoundDfuCallback = callback
+        mUpgradeBoundDfuCallback?.onStart()
         if (target == DeviceType.MONITOR) {
             val monitorMac = DeviceManager.getDevice()?.monitorMac
             if (monitorMac == null) {
-                mDfuCallback?.onFail(DfuCallback.ERROR_CODE_UNKNOWN, "monitor mac is null")
+                mUpgradeBoundDfuCallback?.onFail(DfuCallback.ERROR_CODE_UNKNOWN, "monitor mac is null")
                 return
             }
             val longMac = MacUtil.getLongMacFromStringMac(monitorMac)
-            enterDfuModeAndDfu(target, filePath, longMac + 1)
+            enterDfuModeAndDfu(target, filePath, longMac + 1, onDfuCmdSuccess)
         } else {
             BleCommunicationController.requestByCmd(
                     BleCmd.QUERY_SLEEP_MASTER_MAC,
                     object : BleRequestCallback {
                         override fun onResponse(bytes: ByteArray, hexString: String) {
                             val longMac = MacUtil.getLongMacFromCmdBytes(bytes)
-                            enterDfuModeAndDfu(target, filePath, longMac + 1)
+                            enterDfuModeAndDfu(target, filePath, longMac + 1, onDfuCmdSuccess)
                         }
 
                         override fun onFail(code: Int, msg: String) {
-                            mDfuCallback?.onFail(DfuCallback.ERROR_CODE_GET_SLEEP_MASTER_MAC_FAIL, msg)
+                            mUpgradeBoundDfuCallback?.onFail(DfuCallback.ERROR_CODE_GET_SLEEP_MASTER_MAC_FAIL, msg)
                         }
                     })
         }
     }
 
-    private fun enterDfuModeAndDfu(target: DeviceType, filePath: String, longDfuMac: Long) {
+    private fun enterDfuModeAndDfu(target: DeviceType, filePath: String, longDfuMac: Long, onDfuCmdSuccess: () -> Unit = {}) {
         val dufCmd =
                 if (target == DeviceType.MONITOR) BleCmd.MONITOR_ENTER_DFU else BleCmd.SLEEP_MASTER_ENTER_DFU
         BleCommunicationController.requestByCmd(dufCmd, object : BleRequestCallback {
             override fun onResponse(data: ByteArray, hexString: String) {
                 val result = BleCmdUtil.getContentFromData(HexUtil.formatHexString(data))
                 if (BleCmd.RESPONSE_CODE_SUCCESS == result) {
-                    onEnterDfuModeSuccess(longDfuMac, filePath)
+                    if (onDfuCmdSuccess != {}) {
+                        onDfuCmdSuccess()
+                    }else{
+                        scanAndDfuUpgrade(longDfuMac, filePath)
+                    }
                 } else {
-                    onEnterDfuModeFail(getErrorMsg(result))
+                    mUpgradeBoundDfuCallback?.onFail(ERROR_CODE_ENTER_DFU_MODE_FAIL, getErrorMsg(result))
                 }
             }
 
             override fun onFail(code: Int, msg: String) {
-                onEnterDfuModeFail(msg)
+                mUpgradeBoundDfuCallback?.onFail(code, msg)
             }
         })
     }
 
-    private fun onEnterDfuModeFail(msg: String?) {
-        mDfuCallback?.onFail(ERROR_CODE_ENTER_DFU_MODE_FAIL, msg)
-    }
-
-    private fun onEnterDfuModeSuccess(longDfuMac: Long, filePath: String) {
+    private fun scanAndDfuUpgrade(longDfuMac: Long, filePath: String) {
         val dfuMac = MacUtil.getStringMacFromLong(longDfuMac)
         DeviceManager.disconnect()
         DeviceManager.scanDelay(object : ScanCallback {
@@ -106,24 +110,25 @@ object UpgradeDeviceHelper {
                 if (device.address.toUpperCase() == dfuMac.toUpperCase()) {
                     mDeviceFound = true
                     DeviceManager.stopScan()
-                    startDfu(dfuMac, filePath)
+                    upgradeDfuModelDevice(dfuMac, filePath)
                 }
             }
 
             override fun onStop() {
                 if (!mDeviceFound) {
-                    mDfuCallback
+                    mUpgradeBoundDfuCallback
                             ?.onFail(ERROR_CODE_UNKNOWN, "connect device failed")
                 }
             }
         })
     }
 
-    private fun startDfu(dfuMac: String, filePath: String) {
+    fun upgradeDfuModelDevice(dfuMac: String, filePath: String, dfuCallback: DfuCallback? = null) {
         DfuServiceListenerHelper.registerProgressListener(
                 mApplicationContext!!,
                 mDfuProgressListener
         )
+        mUpgradeDfuModeCallback = dfuCallback
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createNotificationChannel("dfu", "Dfu Service")
         }
@@ -135,6 +140,7 @@ object UpgradeDeviceHelper {
                 .setForeground(true)
                 .setDisableNotification(true)
                 .start(mApplicationContext!!, DfuServiceImpl::class.java)
+        mUpgradeDfuModeCallback?.onStart()
     }
 
     fun pauseDfu() {
@@ -150,7 +156,8 @@ object UpgradeDeviceHelper {
                 currentPart: Int,
                 partsTotal: Int
         ) {
-            mDfuCallback?.onProgressChange(percent)
+            mUpgradeBoundDfuCallback?.onProgressChange(percent)
+            mUpgradeDfuModeCallback?.onProgressChange(percent)
         }
 
         override fun onDeviceDisconnecting(deviceAddress: String?) {
@@ -179,7 +186,10 @@ object UpgradeDeviceHelper {
 
         override fun onDfuCompleted(deviceAddress: String) {
             LogManager.log("dfu onDfuCompleted")
-            mDfuCallback?.onSuccess()
+            mUpgradeBoundDfuCallback?.onSuccess()
+            mUpgradeDfuModeCallback?.onSuccess()
+            mUpgradeBoundDfuCallback = null
+            mUpgradeDfuModeCallback = null
         }
 
         override fun onFirmwareValidating(deviceAddress: String) {
@@ -192,7 +202,10 @@ object UpgradeDeviceHelper {
 
         override fun onError(deviceAddress: String, error: Int, errorType: Int, message: String?) {
             LogManager.log("dfu onError: $message")
-            mDfuCallback?.onFail(error, message)
+            mUpgradeBoundDfuCallback?.onFail(error, message)
+            mUpgradeDfuModeCallback?.onFail(error, message)
+            mUpgradeBoundDfuCallback = null
+            mUpgradeDfuModeCallback = null
         }
 
         override fun onDeviceConnecting(deviceAddress: String) {
@@ -224,8 +237,14 @@ object UpgradeDeviceHelper {
         service.createNotificationChannel(chan)
         return channelId
     }
-}
 
+    fun reconnectDevice() {
+        if (!DeviceManager.isMonitorConnected()) {
+            Handler(Looper.getMainLooper()).postDelayed({ DeviceManager.connectBoundDevice() }, UPGRADE_RECONNECT_WAIT_DURATION)
+        }
+    }
+
+}
 
 interface DfuCallback {
     companion object {

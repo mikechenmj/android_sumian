@@ -17,12 +17,13 @@ import com.liulishuo.filedownloader.FileDownloader
 import com.sumian.common.base.BaseViewModel
 import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.helper.ToastHelper
-import com.sumian.common.utils.SumianExecutor
 import com.sumian.common.widget.TitleBar
 import com.sumian.device.data.DeviceType
 import com.sumian.device.manager.DeviceManager
 import com.sumian.device.manager.helper.DfuCallback
+import com.sumian.device.manager.helper.UpgradeDeviceHelper
 import com.sumian.sd.R
+import com.sumian.sd.buz.device.scan.ScanDeviceActivity
 import com.sumian.sd.buz.upgrade.bean.VersionInfo
 import com.sumian.sd.buz.upgrade.dialog.VersionDialog
 import com.sumian.sd.buz.version.VersionManager
@@ -79,7 +80,7 @@ class DeviceVersionUpgradeActivity : BaseViewModelActivity<BaseViewModel>(), Tit
         titleBar.setOnBackClickListener(this)
         titleBar.setTitle(if (mType == TYPE_MONITOR) "监测仪升级" else "速眠仪升级")
         bt_download.setOnClickListener { downloadUpgradeFileWithPermissionCheck() }
-        bt_upgrade.setOnClickListener { upgrade(mUpgradeFile) }
+        bt_upgrade.setOnClickListener { enterDfu(mUpgradeFile) }
     }
 
     override fun initData() {
@@ -231,7 +232,7 @@ class DeviceVersionUpgradeActivity : BaseViewModelActivity<BaseViewModel>(), Tit
                         ToastHelper.show(R.string.firmware_download_success_hint)
                         bt_download.isVisible = false
                         bt_upgrade.isVisible = true
-                        upgrade(mUpgradeFile)
+//                        upgrade(mUpgradeFile)
                     }
 
                     override fun pending(task: BaseDownloadTask?, soFarBytes: Int, totalBytes: Int) {
@@ -253,6 +254,37 @@ class DeviceVersionUpgradeActivity : BaseViewModelActivity<BaseViewModel>(), Tit
 
     }
 
+    private fun enterDfu(file: File?) {
+        if (!checkBattery()) {
+            return
+        }
+        if (file == null) {
+            return
+        }
+        var type = if (mType == TYPE_MONITOR) DeviceType.MONITOR else DeviceType.SLEEP_MASTER
+        DeviceManager.upgradeBoundDevice(
+                type,
+                file.absolutePath,
+                object : DfuCallback {
+                    override fun onStart() {
+                    }
+
+                    override fun onProgressChange(progress: Int) {
+                    }
+
+                    override fun onSuccess() {
+                        upgradeSuccess()
+                    }
+
+                    override fun onFail(code: Int, msg: String?) {
+                        UpgradeDeviceHelper.reconnectDevice()
+                    }
+                }) {
+            ScanDeviceActivity.startForUpgrade(this, type)
+            finish()
+        }
+    }
+
     private fun upgrade(file: File?) {
         if (!checkBattery()) {
             return
@@ -262,7 +294,7 @@ class DeviceVersionUpgradeActivity : BaseViewModelActivity<BaseViewModel>(), Tit
         }
         val progressDialog = VersionDialog.newInstance(getString(R.string.firmware_upgrade_title_hint))
         progressDialog.show(supportFragmentManager, progressDialog.javaClass.simpleName)
-        DeviceManager.upgrade(
+        DeviceManager.upgradeBoundDevice(
                 if (mType == TYPE_MONITOR) DeviceType.MONITOR else DeviceType.SLEEP_MASTER,
                 file.absolutePath,
                 object : DfuCallback {
@@ -275,32 +307,25 @@ class DeviceVersionUpgradeActivity : BaseViewModelActivity<BaseViewModel>(), Tit
 
                     override fun onSuccess() {
                         progressDialog.dismiss()
-                        onUpgradeSuccess()
+                        upgradeSuccess()
                     }
 
                     override fun onFail(code: Int, msg: String?) {
                         ToastUtils.showShort("升级失败：$msg")
                         progressDialog.dismiss()
-                        reconnectDevice()
+                        UpgradeDeviceHelper.reconnectDevice()
                     }
                 })
     }
 
-    private fun onUpgradeSuccess() {
-        ToastUtils.showLong(when (mType) {
+    private fun upgradeSuccess() {
+        ToastHelper.show(when (mType) {
             TYPE_MONITOR -> R.string.firmware_upgrade_success_hint
             else -> R.string.sleeper_firmware_upgrade_success_hint
         })
         VersionManager.queryDeviceVersion()
         LogManager.appendMonitorLog("设备dfu固件升级完成")
-        reconnectDevice()
+        UpgradeDeviceHelper.reconnectDevice()
         finish()
     }
-
-    private fun reconnectDevice() {
-        if (!DeviceManager.isMonitorConnected()) {
-            SumianExecutor.runOnUiThread({ DeviceManager.connectBoundDevice() }, UPGRADE_RECONNECT_WAIT_DURATION)
-        }
-    }
-
 }

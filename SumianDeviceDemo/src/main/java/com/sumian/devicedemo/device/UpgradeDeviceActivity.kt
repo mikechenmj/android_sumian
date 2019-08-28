@@ -142,7 +142,7 @@ class UpgradeDeviceActivity : BaseActivity() {
         progressDialog.max = 100
         progressDialog.progress = 0
         progressDialog.show()
-        DeviceManager.upgrade(
+        DeviceManager.upgradeBoundDevice(
                 if (getType() == TYPE_MONITOR) DeviceType.MONITOR else DeviceType.SLEEP_MASTER,
                 file.absolutePath,
                 object : DfuCallback {

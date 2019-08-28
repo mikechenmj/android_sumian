@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="345dp"
-    android:layout_height="156dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="20dp"
     android:background="@color/white"
     android:orientation="vertical">
 
@@ -36,11 +37,20 @@
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="match_parent"
         android:layout_height="@dimen/space_6"
-        android:layout_marginBottom="@dimen/space_56"
         android:layout_marginEnd="@dimen/space_32"
         android:layout_marginStart="@dimen/space_32"
         android:progress="0"
         tools:progress="50"
         android:progressDrawable="@drawable/progress_horizontal" />
+
+    <TextView
+        android:id="@+id/tv_upgrade_notice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        style="@style/text_t3_18"
+        android:gravity="center"
+        android:text="@string/upgrade_notice_text"
+        android:layout_margin="@dimen/space_20"/>
 
 </LinearLayout>

@@ -888,4 +888,14 @@
     <string name="counselor_desc">%s、%s从业经验、累积个案时长%d小时</string>
     <string name="upgrade_now">立即更新</string>
     <string name="no_sleep_all_night">整晚没睡</string>
+    <string name="scan_upgrade_title">设备搜索中</string>
+    <string name="scan_upgrade_content">请选择需要升级的设备</string>
+    <string name="upgrade_wrong">升级异常，无法复原</string>
+    <string name="upgrade_device_rescan_text">没看到您的设备？重新搜索</string>
+    <string name="upgrade_notice_text">请不要做其他操作，保持该页面的状态直到升级完成</string>
+    <string name="upgrade_confirm_text">确认</string>
+    <string name="upgrade_success_content_text">请等待设备重启，重启之后再尝试连接</string>
+    <string name="upgrade_success_title_text">升级完成</string>
+    <string name="upgrade_fail_content_text">升级异常，请重试</string>
+    <string name="upgrade_fail_title_text">升级异常</string>
 </resources>
