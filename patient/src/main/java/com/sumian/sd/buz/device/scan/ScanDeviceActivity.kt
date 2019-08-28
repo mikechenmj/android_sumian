@@ -31,14 +31,16 @@ class ScanDeviceActivity : BaseActivity() {
     companion object {
         const val DATA = "data"
         const val EXTRA_SCAN_FOR_UPGRADE = "extra_scan_for_upgrade"
+        const val EXTRA_SCAN_TYPE = "extra_scan_type"
 
         fun startForResult(fragment: Fragment, requestCode: Int) {
             fragment.startActivityForResult(Intent(fragment.context, ScanDeviceActivity::class.java), requestCode)
         }
 
-        fun startForUpgrade(context: Context) {
+        fun startForUpgrade(context: Context, type: DeviceType) {
             var intent = Intent(context, ScanDeviceActivity::class.java)
             intent.putExtra(EXTRA_SCAN_FOR_UPGRADE, true)
+            intent.putExtra(EXTRA_SCAN_TYPE, type)
             context.startActivity(intent)
         }
     }
@@ -52,7 +54,8 @@ class ScanDeviceActivity : BaseActivity() {
         setTitle(R.string.add_device)
         var fragment: Fragment? = null
         if (intent.getBooleanExtra(EXTRA_SCAN_FOR_UPGRADE, false)) {
-            fragment = ScanUpgradeFragment(DeviceType.All)
+            var type = intent.getSerializableExtra(EXTRA_SCAN_TYPE) as DeviceType
+            fragment = ScanUpgradeFragment(type)
         } else {
             fragment = ScanDeviceFragment()
             fragment.mOnDeviceSelectedListener = object : ScanDeviceFragment.OnDeviceSelectedListener {

@@ -46,7 +46,7 @@ object UpgradeDeviceHelper {
 
     private const val UPGRADE_RECONNECT_WAIT_DURATION = 3000L
 
-    fun upgradeBoundDevice(context: Context, target: DeviceType, filePath: String, callback: DfuCallback) {
+    fun upgradeBoundDevice(context: Context, target: DeviceType, filePath: String, callback: DfuCallback, onDfuCmdSuccess: () -> Unit = {}) {
         mDfuCallbackWR = WeakReference(callback)
         mUpgradeBoundDfuCallback = callback
         mUpgradeBoundDfuCallback?.onStart()
@@ -57,14 +57,14 @@ object UpgradeDeviceHelper {
                 return
             }
             val longMac = MacUtil.getLongMacFromStringMac(monitorMac)
-            enterDfuModeAndDfu(target, filePath, longMac + 1)
+            enterDfuModeAndDfu(target, filePath, longMac + 1, onDfuCmdSuccess)
         } else {
             BleCommunicationController.requestByCmd(
                     BleCmd.QUERY_SLEEP_MASTER_MAC,
                     object : BleRequestCallback {
                         override fun onResponse(bytes: ByteArray, hexString: String) {
                             val longMac = MacUtil.getLongMacFromCmdBytes(bytes)
-                            enterDfuModeAndDfu(target, filePath, longMac + 1)
+                            enterDfuModeAndDfu(target, filePath, longMac + 1, onDfuCmdSuccess)
                         }
 
                         override fun onFail(code: Int, msg: String) {
@@ -74,14 +74,18 @@ object UpgradeDeviceHelper {
         }
     }
 
-    private fun enterDfuModeAndDfu(target: DeviceType, filePath: String, longDfuMac: Long) {
+    private fun enterDfuModeAndDfu(target: DeviceType, filePath: String, longDfuMac: Long, onDfuCmdSuccess: () -> Unit = {}) {
         val dufCmd =
                 if (target == DeviceType.MONITOR) BleCmd.MONITOR_ENTER_DFU else BleCmd.SLEEP_MASTER_ENTER_DFU
         BleCommunicationController.requestByCmd(dufCmd, object : BleRequestCallback {
             override fun onResponse(data: ByteArray, hexString: String) {
                 val result = BleCmdUtil.getContentFromData(HexUtil.formatHexString(data))
                 if (BleCmd.RESPONSE_CODE_SUCCESS == result) {
-                    scanAndDfuUpgrade(longDfuMac, filePath)
+                    if (onDfuCmdSuccess != {}) {
+                        onDfuCmdSuccess()
+                    }else{
+                        scanAndDfuUpgrade(longDfuMac, filePath)
+                    }
                 } else {
                     mUpgradeBoundDfuCallback?.onFail(ERROR_CODE_ENTER_DFU_MODE_FAIL, getErrorMsg(result))
                 }
@@ -236,7 +240,7 @@ object UpgradeDeviceHelper {
 
     fun reconnectDevice() {
         if (!DeviceManager.isMonitorConnected()) {
-            Handler(Looper.getMainLooper()).postDelayed({DeviceManager.connectBoundDevice()}, UPGRADE_RECONNECT_WAIT_DURATION)
+            Handler(Looper.getMainLooper()).postDelayed({ DeviceManager.connectBoundDevice() }, UPGRADE_RECONNECT_WAIT_DURATION)
         }
     }
 

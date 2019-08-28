@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.sumian.common.base.BaseViewModelActivity;
 import com.sumian.common.widget.TitleBar;
 import com.sumian.common.widget.refresh.SumianSwipeRefreshLayout;
+import com.sumian.device.data.DeviceType;
 import com.sumian.device.data.SumianDevice;
 import com.sumian.device.manager.DeviceManager;
 import com.sumian.sd.R;
@@ -99,7 +100,7 @@ public class DeviceVersionNoticeActivity extends BaseViewModelActivity implement
                 DeviceVersionUpgradeActivity.Companion.show(this, DeviceVersionUpgradeActivity.TYPE_SLEEP_MASTER, VersionManager.INSTANCE.hasNewSleeperVersion());
                 break;
             case R.id.upgrade_wrong:
-                ScanDeviceActivity.Companion.startForUpgrade(this);
+                ScanDeviceActivity.Companion.startForUpgrade(this, DeviceType.ALL);
                 break;
         }
     }

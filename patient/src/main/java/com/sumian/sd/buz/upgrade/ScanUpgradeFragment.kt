@@ -18,6 +18,7 @@ import com.sumian.sd.buz.device.scan.DeviceAdapter
 import com.sumian.sd.buz.devicemanager.BlueDevice
 import com.sumian.sd.buz.upgrade.dialog.UpgradeConfirmDialog
 import com.sumian.sd.buz.upgrade.dialog.VersionDialog
+import com.sumian.sd.buz.version.VersionManager
 import kotlinx.android.synthetic.main.fragment_scan_upgrade.*
 import java.lang.IllegalArgumentException
 import java.util.ArrayList
@@ -81,16 +82,16 @@ class ScanUpgradeFragment(private var mDeviceType: DeviceType) : BaseScanDeviceF
                     getString(R.string.upgrade_success_title_text),
                     getString(R.string.upgrade_success_content_text)) {
                 upgradeConfirmDialog?.dismiss()
-                UpgradeDeviceHelper.reconnectDevice()
                 activity?.finish()
             }
             if (activity != null) {
                 upgradeConfirmDialog.show(activity!!.supportFragmentManager, upgradeConfirmDialog.javaClass.simpleName)
             }
+            UpgradeDeviceHelper.reconnectDevice()
+            VersionManager.queryDeviceVersion()
         }
 
         override fun onFail(code: Int, msg: String?) {
-            ToastUtils.showShort("升级失败：$msg")
             mProgressDialog.dismiss()
             var upgradeConfirmDialog: UpgradeConfirmDialog? = null
             upgradeConfirmDialog = UpgradeConfirmDialog(
@@ -112,7 +113,7 @@ class ScanUpgradeFragment(private var mDeviceType: DeviceType) : BaseScanDeviceF
     override fun onScanStart(success: Boolean) {
         mFindDeviceSuccess = false
         mDeviceNamePrefix = when (mDeviceType) {
-            DeviceType.All -> "$MONITOR_NAME/$SLEEP_MASTER_NAME"
+            DeviceType.ALL -> "$MONITOR_NAME/$SLEEP_MASTER_NAME"
             DeviceType.MONITOR -> MONITOR_NAME
             DeviceType.SLEEP_MASTER -> SLEEP_MASTER_NAME
         }
@@ -124,7 +125,7 @@ class ScanUpgradeFragment(private var mDeviceType: DeviceType) : BaseScanDeviceF
             var sumianDevice = DeviceManager.getDevice()
             var mac: String? = null
             var isMacValid = when (type) {
-                DeviceType.All -> {
+                DeviceType.ALL -> {
                     if (!mScanResults.contains(blueDevice)) {
                         mScanResults.add(blueDevice)
                         mDeviceAdapter.setData(mScanResults)

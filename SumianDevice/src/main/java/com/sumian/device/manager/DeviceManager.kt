@@ -676,8 +676,8 @@ object DeviceManager {
         BleCommunicationController.requestWithRetry(data, callback)
     }
 
-    fun upgradeBoundDevice(target: DeviceType, filePath: String, callback: DfuCallback) {
-        UpgradeDeviceHelper.upgradeBoundDevice(mApplication, target, filePath, callback)
+    fun upgradeBoundDevice(target: DeviceType, filePath: String, callback: DfuCallback,onDfuCmdSuccess:() -> Unit = {}) {
+        UpgradeDeviceHelper.upgradeBoundDevice(mApplication, target, filePath, callback, onDfuCmdSuccess)
     }
 
     fun getDevice(): SumianDevice? {

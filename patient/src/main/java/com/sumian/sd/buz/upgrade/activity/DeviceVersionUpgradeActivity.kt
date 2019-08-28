@@ -23,6 +23,7 @@ import com.sumian.device.manager.DeviceManager
 import com.sumian.device.manager.helper.DfuCallback
 import com.sumian.device.manager.helper.UpgradeDeviceHelper
 import com.sumian.sd.R
+import com.sumian.sd.buz.device.scan.ScanDeviceActivity
 import com.sumian.sd.buz.upgrade.bean.VersionInfo
 import com.sumian.sd.buz.upgrade.dialog.VersionDialog
 import com.sumian.sd.buz.version.VersionManager
@@ -79,7 +80,7 @@ class DeviceVersionUpgradeActivity : BaseViewModelActivity<BaseViewModel>(), Tit
         titleBar.setOnBackClickListener(this)
         titleBar.setTitle(if (mType == TYPE_MONITOR) "监测仪升级" else "速眠仪升级")
         bt_download.setOnClickListener { downloadUpgradeFileWithPermissionCheck() }
-        bt_upgrade.setOnClickListener { upgrade(mUpgradeFile) }
+        bt_upgrade.setOnClickListener { enterDfu(mUpgradeFile) }
     }
 
     override fun initData() {
@@ -231,7 +232,7 @@ class DeviceVersionUpgradeActivity : BaseViewModelActivity<BaseViewModel>(), Tit
                         ToastHelper.show(R.string.firmware_download_success_hint)
                         bt_download.isVisible = false
                         bt_upgrade.isVisible = true
-                        upgrade(mUpgradeFile)
+//                        upgrade(mUpgradeFile)
                     }
 
                     override fun pending(task: BaseDownloadTask?, soFarBytes: Int, totalBytes: Int) {
@@ -251,6 +252,37 @@ class DeviceVersionUpgradeActivity : BaseViewModelActivity<BaseViewModel>(), Tit
                 })
                 .start()
 
+    }
+
+    private fun enterDfu(file: File?) {
+        if (!checkBattery()) {
+            return
+        }
+        if (file == null) {
+            return
+        }
+        var type = if (mType == TYPE_MONITOR) DeviceType.MONITOR else DeviceType.SLEEP_MASTER
+        DeviceManager.upgradeBoundDevice(
+                type,
+                file.absolutePath,
+                object : DfuCallback {
+                    override fun onStart() {
+                    }
+
+                    override fun onProgressChange(progress: Int) {
+                    }
+
+                    override fun onSuccess() {
+                        upgradeSuccess()
+                    }
+
+                    override fun onFail(code: Int, msg: String?) {
+                        UpgradeDeviceHelper.reconnectDevice()
+                    }
+                }) {
+            ScanDeviceActivity.startForUpgrade(this, type)
+            finish()
+        }
     }
 
     private fun upgrade(file: File?) {
@@ -287,7 +319,7 @@ class DeviceVersionUpgradeActivity : BaseViewModelActivity<BaseViewModel>(), Tit
     }
 
     private fun upgradeSuccess() {
-        ToastUtils.showLong(when (mType) {
+        ToastHelper.show(when (mType) {
             TYPE_MONITOR -> R.string.firmware_upgrade_success_hint
             else -> R.string.sleeper_firmware_upgrade_success_hint
         })
