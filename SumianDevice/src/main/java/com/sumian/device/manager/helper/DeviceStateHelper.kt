@@ -85,9 +85,11 @@ object DeviceStateHelper {
                 { queryMonitorBattery() },
                 { querySleepMasterConnectStatus() },
                 { SyncPatternHelper.syncPattern() },
-                { ThreadManager.postToUIThread({
-                    if (DeviceManager.isMonitorConnected()) DeviceManager.startSyncSleepData()
-                }, 1000) } // sync pattern 比较耗时，延时1s再同步数据
+                {
+                    ThreadManager.postToUIThread({
+                        if (DeviceManager.isMonitorConnected()) DeviceManager.startSyncSleepData()
+                    }, 1000)
+                } // sync pattern 比较耗时，延时1s再同步数据
         )
     }
 
@@ -98,7 +100,7 @@ object DeviceStateHelper {
     }
 
     private fun querySleepMasterBattery() {
-        BleCommunicationController.requestByCmd(BleCmd.QUERY_SLEEP_MASTER_BATTERY)
+        BleCommunicationController.requestByCmd(BleCmd.QUERY_SLEEP_MASTER_BATTERY, retry = true)
     }
 
     private fun querySleepMasterConnectStatus() {
@@ -106,7 +108,7 @@ object DeviceStateHelper {
     }
 
     private fun queryMonitorBattery() {
-        BleCommunicationController.requestByCmd(BleCmd.QUERY_MONITOR_BATTERY)
+        BleCommunicationController.requestByCmd(BleCmd.QUERY_MONITOR_BATTERY, retry = true)
     }
 
     private fun setMonitorTime(isRetry: Boolean = true) {
