@@ -105,7 +105,7 @@ object DeviceManager {
                             mHighPriorityScaning = msg?.data.getBoolean("high_priority")
                             scan(msg.obj as ScanCallback)
                         }
-                    }else {
+                    } else {
                         mHighPriorityScaning = msg?.data.getBoolean("high_priority")
                         scan(msg.obj as ScanCallback)
                     }
@@ -232,7 +232,6 @@ object DeviceManager {
     }
 
     fun scanDelay(callback: ScanCallback, delay: Long = SCAN_DELAY, highPriority: Boolean = false) {
-        Log.i("MCJ","scanDelay")
         var message = Message.obtain()
         message.what = MESSAGE_SCAN_DEVICES
         message.obj = callback
@@ -279,7 +278,6 @@ object DeviceManager {
     }
 
     fun stopScan() {
-        Log.i("MCJ","stopScan")
         removeScanMessage()
         if (isScanning()) {
             BleManager.getInstance().cancelScan()
@@ -676,7 +674,7 @@ object DeviceManager {
         BleCommunicationController.requestWithRetry(data, callback)
     }
 
-    fun upgradeBoundDevice(target: DeviceType, filePath: String, callback: DfuCallback,onDfuCmdSuccess:() -> Unit = {}) {
+    fun upgradeBoundDevice(target: DeviceType, filePath: String, callback: DfuCallback, onDfuCmdSuccess: (() -> Unit)? = null) {
         UpgradeDeviceHelper.upgradeBoundDevice(mApplication, target, filePath, callback, onDfuCmdSuccess)
     }
 

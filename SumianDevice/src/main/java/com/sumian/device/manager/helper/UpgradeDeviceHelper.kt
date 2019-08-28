@@ -46,7 +46,7 @@ object UpgradeDeviceHelper {
 
     private const val UPGRADE_RECONNECT_WAIT_DURATION = 3000L
 
-    fun upgradeBoundDevice(context: Context, target: DeviceType, filePath: String, callback: DfuCallback, onDfuCmdSuccess: () -> Unit = {}) {
+    fun upgradeBoundDevice(context: Context, target: DeviceType, filePath: String, callback: DfuCallback, onDfuCmdSuccess: (() -> Unit)? = null) {
         mDfuCallbackWR = WeakReference(callback)
         mUpgradeBoundDfuCallback = callback
         mUpgradeBoundDfuCallback?.onStart()
@@ -74,16 +74,16 @@ object UpgradeDeviceHelper {
         }
     }
 
-    private fun enterDfuModeAndDfu(target: DeviceType, filePath: String, longDfuMac: Long, onDfuCmdSuccess: () -> Unit = {}) {
+    private fun enterDfuModeAndDfu(target: DeviceType, filePath: String, longDfuMac: Long, onDfuCmdSuccess: (() -> Unit)? = null) {
         val dufCmd =
                 if (target == DeviceType.MONITOR) BleCmd.MONITOR_ENTER_DFU else BleCmd.SLEEP_MASTER_ENTER_DFU
         BleCommunicationController.requestByCmd(dufCmd, object : BleRequestCallback {
             override fun onResponse(data: ByteArray, hexString: String) {
                 val result = BleCmdUtil.getContentFromData(HexUtil.formatHexString(data))
                 if (BleCmd.RESPONSE_CODE_SUCCESS == result) {
-                    if (onDfuCmdSuccess != {}) {
+                    if (onDfuCmdSuccess != null) {
                         onDfuCmdSuccess()
-                    }else{
+                    } else {
                         scanAndDfuUpgrade(longDfuMac, filePath)
                     }
                 } else {
