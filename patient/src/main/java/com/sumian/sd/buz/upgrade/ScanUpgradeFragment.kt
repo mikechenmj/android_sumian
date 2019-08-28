@@ -5,11 +5,11 @@ import android.util.Log
 import android.view.View
 import androidx.annotation.StringRes
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.blankj.utilcode.util.ToastUtils
+import com.sumian.common.helper.ToastHelper
 import com.sumian.device.data.DeviceType
+import com.sumian.device.dfu.UpgradeCallback
 import com.sumian.device.manager.DeviceManager
-import com.sumian.device.manager.helper.DfuCallback
-import com.sumian.device.manager.helper.UpgradeDeviceHelper
+import com.sumian.device.util.LogManager
 import com.sumian.device.util.MacUtil
 import com.sumian.device.util.ScanRecord
 import com.sumian.sd.R
@@ -29,9 +29,7 @@ class ScanUpgradeFragment(private var mDeviceType: DeviceType) : BaseScanDeviceF
     private val mScanResults = ArrayList<BlueDevice>()
     private var mFindDeviceSuccess = false
 
-    val mProgressDialog by lazy {
-        VersionDialog.newInstance(getString(R.string.firmware_upgrade_title_hint)) as VersionDialog
-    }
+    private var mProgressDialog: VersionDialog? = null
 
     private val mDeviceAdapter = DeviceAdapter().apply {
         setOnItemClickListener { v, position, blueDevice ->
@@ -41,42 +39,20 @@ class ScanUpgradeFragment(private var mDeviceType: DeviceType) : BaseScanDeviceF
         }
     }
 
-    private val mDownloadCallback = object : UpgradeManager.DownloadCallback {
-        override fun onCompleted() {
-        }
-
-        override fun onError(e: Throwable?) {
-            var upgradeConfirmDialog: UpgradeConfirmDialog? = null
-            upgradeConfirmDialog = UpgradeConfirmDialog(
-                    getString(R.string.upgrade_fail_title_text),
-                    getString(R.string.upgrade_fail_content_text)) {
-                upgradeConfirmDialog?.dismiss()
-                rescan()
-            }
-            if (activity != null) {
-                upgradeConfirmDialog.show(activity!!.supportFragmentManager, upgradeConfirmDialog.javaClass.simpleName)
-            }
-        }
-
-        override fun onProgress(soFarBytes: Int, totalBytes: Int) {
-        }
-
-        override fun onPaused(soFarBytes: Int, totalBytes: Int) {
-        }
-    }
-
-    private val mDfuCallback = object : DfuCallback {
+    private val mUpgradeCallback = object : UpgradeCallback {
 
         override fun onStart() {
-            mProgressDialog.show(activity!!.supportFragmentManager, mProgressDialog.javaClass.simpleName)
+            LogManager.deviceUpgradeLog("升级固件开始：$mDeviceType")
+            mProgressDialog?.show(activity!!.supportFragmentManager, mProgressDialog?.javaClass?.simpleName)
         }
 
         override fun onProgressChange(progress: Int) {
-            mProgressDialog.updateProgress(progress)
+            mProgressDialog?.updateProgress(progress)
         }
 
         override fun onSuccess() {
-            mProgressDialog.dismiss()
+            LogManager.deviceUpgradeLog("升级固件成功：$mDeviceType")
+            mProgressDialog?.dismiss()
             var upgradeConfirmDialog: UpgradeConfirmDialog? = null
             upgradeConfirmDialog = UpgradeConfirmDialog(
                     getString(R.string.upgrade_success_title_text),
@@ -85,14 +61,14 @@ class ScanUpgradeFragment(private var mDeviceType: DeviceType) : BaseScanDeviceF
                 activity?.finish()
             }
             if (activity != null) {
-                upgradeConfirmDialog.show(activity!!.supportFragmentManager, upgradeConfirmDialog.javaClass.simpleName)
+                upgradeConfirmDialog?.show(activity!!.supportFragmentManager, upgradeConfirmDialog.javaClass.simpleName)
             }
-            UpgradeDeviceHelper.reconnectDevice()
-            VersionManager.queryDeviceVersion()
+            upgradeSuccess()
         }
 
         override fun onFail(code: Int, msg: String?) {
-            mProgressDialog.dismiss()
+            LogManager.deviceUpgradeLog("升级固件失败：code: $code msg: $msg mDeviceType: $mDeviceType")
+            mProgressDialog?.dismiss()
             var upgradeConfirmDialog: UpgradeConfirmDialog? = null
             upgradeConfirmDialog = UpgradeConfirmDialog(
                     getString(R.string.upgrade_fail_title_text),
@@ -206,6 +182,7 @@ class ScanUpgradeFragment(private var mDeviceType: DeviceType) : BaseScanDeviceF
         if (!isBluetoothEnableAndHasPermissions()) {
             showEnableBluetoothUI()
         }
+        mProgressDialog = VersionDialog.newInstance(getString(R.string.firmware_upgrade_title_hint)) as VersionDialog
     }
 
     private fun rescan() {
@@ -213,7 +190,7 @@ class ScanUpgradeFragment(private var mDeviceType: DeviceType) : BaseScanDeviceF
         mScanResults.clear()
         if (DeviceManager.isScanning()) {
             stopScan()
-        }else{
+        } else {
             startScanWithUi()
         }
         switchDeviceListUI(false)
@@ -253,7 +230,7 @@ class ScanUpgradeFragment(private var mDeviceType: DeviceType) : BaseScanDeviceF
     }
 
     private fun upgradeDfuModelDevice(dfuMac: String, type: DeviceType) {
-        UpgradeManager(activity!!, type).upgradeDfuModelDevice(mDownloadCallback, mDfuCallback, dfuMac)
+        UpgradeManager.upgradeDfuDevice(mUpgradeCallback, dfuMac, type)
     }
 
     private fun getTypeFromDeviceName(name: String): DeviceType {
@@ -262,5 +239,15 @@ class ScanUpgradeFragment(private var mDeviceType: DeviceType) : BaseScanDeviceF
             name.startsWith(SLEEP_MASTER_NAME) -> DeviceType.SLEEP_MASTER
             else -> throw IllegalArgumentException()
         }
+    }
+
+    private fun upgradeSuccess() {
+        ToastHelper.show(when (mDeviceType) {
+            DeviceType.MONITOR, DeviceType.ALL -> R.string.firmware_upgrade_success_hint
+            DeviceType.SLEEP_MASTER -> R.string.sleeper_firmware_upgrade_success_hint
+        })
+        VersionManager.queryDeviceVersion()
+        LogManager.deviceUpgradeLog("设备dfu固件升级完成")
+        UpgradeManager.reconnectDevice()
     }
 }

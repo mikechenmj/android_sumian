@@ -19,7 +19,6 @@ import androidx.core.content.ContextCompat.getSystemService
 
 class App : Application() {
     companion object {
-        @Volatile
         private lateinit var mAppContext: Application
 
         @JvmStatic
