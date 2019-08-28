@@ -273,7 +273,7 @@ class DeviceManageFragment : BaseFragment() {
                     }
                 })
 
-        tv_bottom_progress.text = getString(R.string.sync_progress_package_progress, 0, monitor.syncProgress * 100 / monitor.syncTotalCount)
+        tv_bottom_progress.text = getString(R.string.sync_progress_package_progress_v2,  monitor.syncProgress * 100 / monitor.syncTotalCount)
         tv_bottom_progress.visibility = if (monitor.isSyncing && !appNeedUpgrade && !deviceNeedUpgrade) View.VISIBLE else View.GONE
 
         bt_turn_on_pa.isVisible = monitor.isMonitorConnected() && !monitor.isSyncing
