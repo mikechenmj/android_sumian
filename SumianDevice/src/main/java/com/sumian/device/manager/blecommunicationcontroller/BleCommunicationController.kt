@@ -152,9 +152,12 @@ object BleCommunicationController {
                         ThreadManager.postToUIThread({ request(data, cmd, this) }, DeviceManager.WRITE_DATA_INTERVAL)
                         mRetryTimesMap[cmd] = mRetryTimesMap[cmd]!! + 1
                         LogManager.bleRequestStatusLog("同步状态失败且重试第${mRetryTimesMap[cmd]}次")
+                    }else {
+                        callback?.onFail(code, msg)
                     }
+                } else {
+                    callback?.onFail(code, msg)
                 }
-                callback?.onFail(code, msg)
             }
         }
         request(data, cmd, retryCallback)
