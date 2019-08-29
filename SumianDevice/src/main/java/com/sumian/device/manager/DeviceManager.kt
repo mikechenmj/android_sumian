@@ -296,7 +296,7 @@ object DeviceManager {
     }
 
     fun unbind() {
-        SPUtils.getInstance().put(SP_KEY_BOUND_DEVICE_ADDRESS, "")
+        SPUtils.getInstance().put(SP_KEY_BOUND_DEVICE_ADDRESS, "", true)
         disconnect()
         mSumianDevice = null
         postEvent(EVENT_MONITOR_UNBIND, null)
@@ -418,18 +418,24 @@ object DeviceManager {
                     gatt: BluetoothGatt?,
                     status: Int
             ) {
-                mBleDevice = bleDevice
-                mGatt = gatt
-                mSumianDevice = SumianDevice.createByAddress(bleDevice?.mac!!)
-                changeMonitorConnectStatus(DeviceConnectStatus.CONNECTED)
-                callback?.onSuccess()
-                mMainHandler.postDelayed(
-                        {
-                            BleCommunicationController.startListenDeviceNotification(mBleDevice)
-                            syncState()
-                        }, CONNECT_WRITE_INTERVAL
-                )
-                LogManager.bleConnectLog("${bleDevice?.name}设备连接成功 and status: $status")
+                if (!SPUtils.getInstance().getString(SP_KEY_BOUND_DEVICE_ADDRESS).isNullOrEmpty()) {
+                    mBleDevice = bleDevice
+                    mGatt = gatt
+                    mSumianDevice = SumianDevice.createByAddress(bleDevice?.mac!!)
+                    changeMonitorConnectStatus(DeviceConnectStatus.CONNECTED)
+                    callback?.onSuccess()
+                    mMainHandler.postDelayed(
+                            {
+                                BleCommunicationController.startListenDeviceNotification(mBleDevice)
+                                syncState()
+                            }, CONNECT_WRITE_INTERVAL
+                    )
+                    LogManager.bleConnectLog("${bleDevice?.name}设备连接成功 and status: $status")
+                } else {
+                    BleManager.getInstance().disconnect(bleDevice)
+                    changeMonitorConnectStatus(DeviceConnectStatus.DISCONNECTING)
+                    LogManager.bleConnectLog("${bleDevice?.name}设备连接成功 and status: $status，但是用户手动解绑，因此断开连接")
+                }
             }
 
             override fun onConnectFail(
