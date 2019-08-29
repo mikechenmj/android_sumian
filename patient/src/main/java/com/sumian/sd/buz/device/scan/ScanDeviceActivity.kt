@@ -10,7 +10,7 @@ import com.sumian.device.data.DeviceType
 import com.sumian.sd.R
 import com.sumian.sd.buz.devicemanager.BlueDevice
 import com.sumian.sd.buz.stat.StatConstants
-import com.sumian.sd.buz.upgrade.ScanUpgradeFragment
+import com.sumian.sd.buz.upgrade.fragment.ScanUpgradeFragment
 
 /**
  * @author : Zhan Xuzhao
@@ -37,7 +37,7 @@ class ScanDeviceActivity : BaseActivity() {
             fragment.startActivityForResult(Intent(fragment.context, ScanDeviceActivity::class.java), requestCode)
         }
 
-        fun startForUpgrade(context: Context, type: DeviceType) {
+        fun startForUpgrade(context: Context, type: Int) {
             var intent = Intent(context, ScanDeviceActivity::class.java)
             intent.putExtra(EXTRA_SCAN_FOR_UPGRADE, true)
             intent.putExtra(EXTRA_SCAN_TYPE, type)
@@ -54,7 +54,7 @@ class ScanDeviceActivity : BaseActivity() {
         setTitle(R.string.add_device)
         var fragment: Fragment? = null
         if (intent.getBooleanExtra(EXTRA_SCAN_FOR_UPGRADE, false)) {
-            var type = intent.getSerializableExtra(EXTRA_SCAN_TYPE) as DeviceType
+            var type = intent.getIntExtra(EXTRA_SCAN_TYPE, -1)
             fragment = ScanUpgradeFragment(type)
         } else {
             fragment = ScanDeviceFragment()
