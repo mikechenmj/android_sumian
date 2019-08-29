@@ -30,8 +30,8 @@ import com.sumian.device.callback.DeviceStatusListener
 import com.sumian.device.callback.ScanCallback
 import com.sumian.device.data.DeviceConnectStatus
 import com.sumian.device.data.DeviceType
+import com.sumian.device.dfu.UpgradeCallback
 import com.sumian.device.manager.DeviceManager
-import com.sumian.device.manager.helper.DfuCallback
 import com.sumian.device.manager.helper.SyncSleepDataHelper
 import com.sumian.device.manager.upload.SleepDataUploadManager
 import com.sumian.device.util.CmdConstans
@@ -240,7 +240,7 @@ class DeviceTestActivity : AppCompatActivity() {
         val dir =
                 Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
         val file = File(dir, "dfu.zip")
-        DeviceManager.upgradeBoundDevice(DeviceType.MONITOR, file.absolutePath, object : DfuCallback {
+        DeviceManager.upgradeBoundDevice(DeviceType.MONITOR, file.absolutePath, object : UpgradeCallback {
             override fun onStart() {
                 LogManager.log("upgrade onStart")
             }

@@ -27,6 +27,7 @@ import com.sumian.device.R
 import com.sumian.device.authentication.AuthenticationManager
 import com.sumian.device.callback.*
 import com.sumian.device.data.*
+import com.sumian.device.dfu.UpgradeCallback
 import com.sumian.device.manager.blecommunicationcontroller.BleCommunicationController
 import com.sumian.device.manager.helper.*
 import com.sumian.device.manager.helper.DeviceStateHelper.syncState
@@ -674,8 +675,8 @@ object DeviceManager {
         BleCommunicationController.requestWithRetry(data, callback)
     }
 
-    fun upgradeBoundDevice(target: DeviceType, filePath: String, callback: DfuCallback, onDfuCmdSuccess: (() -> Unit)? = null) {
-        UpgradeDeviceHelper.upgradeBoundDevice(mApplication, target, filePath, callback, onDfuCmdSuccess)
+    fun upgradeBoundDevice(target: DeviceType, filePath: String, callback: UpgradeCallback, onDfuCmdSuccess: (() -> Unit)? = null) {
+//        DfuUpgradeHelper.upgradeBoundDevice(mApplication, target, filePath, callback, onDfuCmdSuccess)
     }
 
     fun getDevice(): SumianDevice? {

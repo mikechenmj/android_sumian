@@ -15,6 +15,7 @@ object LogManager {
     private const val TAG_SLEEP_MASTER = "速眠仪"
     private const val TAG_TRANSPARENT_DATA = "透传数据"
     private const val TAG_UPLOAD_SLEEP_DATA = "上传数据"
+    private const val TAG_DEVICE_UPGRADE = "固件升级"
 
     private var sLogger: ILogger? = null
 
@@ -36,6 +37,10 @@ object LogManager {
 
     fun uploadSleepDataLog(log: String?) {
         log(TAG_UPLOAD_SLEEP_DATA, log)
+    }
+
+    fun deviceUpgradeLog(log: String?) {
+        log(TAG_DEVICE_UPGRADE, log)
     }
 
     fun bleSdkLog(log: String?) {

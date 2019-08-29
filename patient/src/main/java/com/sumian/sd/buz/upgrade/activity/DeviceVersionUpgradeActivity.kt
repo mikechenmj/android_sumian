@@ -3,8 +3,6 @@ package com.sumian.sd.buz.upgrade.activity
 import android.Manifest
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
-import android.os.BatteryManager
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -20,10 +18,11 @@ import com.sumian.common.helper.ToastHelper
 import com.sumian.common.widget.TitleBar
 import com.sumian.device.data.DeviceType
 import com.sumian.device.manager.DeviceManager
-import com.sumian.device.manager.helper.DfuCallback
-import com.sumian.device.manager.helper.UpgradeDeviceHelper
+import com.sumian.device.manager.helper.EnterDfuCallback
+import com.sumian.device.manager.helper.DfuUpgradeHelper
 import com.sumian.sd.R
 import com.sumian.sd.buz.device.scan.ScanDeviceActivity
+import com.sumian.sd.buz.upgrade.UpgradeManager
 import com.sumian.sd.buz.upgrade.bean.VersionInfo
 import com.sumian.sd.buz.upgrade.dialog.VersionDialog
 import com.sumian.sd.buz.version.VersionManager
@@ -54,7 +53,6 @@ class DeviceVersionUpgradeActivity : BaseViewModelActivity<BaseViewModel>(), Tit
         const val TYPE_SLEEP_MASTER = 1
         private const val EXTRA_TYPE = "extra_type"
         private const val EXTRA_VERSION_IS_LATEST = "extra_version_latest"
-        private const val UPGRADE_RECONNECT_WAIT_DURATION = 1000 * 3L
         private const val REQUEST_UPGRADE_PERMISSION = 1000
 
         fun show(context: Context, versionType: Int, haveLatestVersion: Boolean) {
@@ -134,14 +132,36 @@ class DeviceVersionUpgradeActivity : BaseViewModelActivity<BaseViewModel>(), Tit
                 Manifest.permission.ACCESS_COARSE_LOCATION,
                 Manifest.permission.ACCESS_FINE_LOCATION)
         if (EasyPermissions.hasPermissions(this, *perms)) {
-            downloadUpgradeFile()
+            val progressDialog = VersionDialog.newInstance(getString(R.string.firmware_download_title_hint))
+            progressDialog.show(supportFragmentManager, progressDialog.javaClass.simpleName)
+            mUpgradeFile = UpgradeManager.downloadUpgradeFile(object : UpgradeManager.DownloadCallback {
+                override fun onCompleted(path: String) {
+                    progressDialog.dismiss()
+                    iv_upgrade!!.setImageResource(R.mipmap.set_icon_upgrade)
+                    ToastHelper.show(R.string.firmware_download_success_hint)
+                    bt_download.isVisible = false
+                    bt_upgrade.isVisible = true
+                }
+
+                override fun onError(e: Throwable?) {
+                    progressDialog.dismiss()
+                    ToastUtils.showShort(e?.message)
+                }
+
+                override fun onProgress(soFarBytes: Int, totalBytes: Int) {
+                    progressDialog.updateProgress(soFarBytes * 100 / totalBytes)
+                }
+
+                override fun onPaused(soFarBytes: Int, totalBytes: Int) {
+                }
+            }, if (mType == TYPE_MONITOR) DeviceType.MONITOR else DeviceType.SLEEP_MASTER)
         } else {
             EasyPermissions.requestPermissions(this, "没有权限,你需要去设置中开启位置以及文件读写权限.", REQUEST_UPGRADE_PERMISSION, *perms)
         }
     }
 
     private fun checkBattery(): Boolean {
-        if (this.mobileBatteryLow()) {
+        if (UpgradeManager.mobileBatteryLow()) {
             LogManager.appendPhoneLog("手机电量不足50%,无法进行 dfu 升级")
             showErrorDialog(R.string.phone_bettery_low_title, R.string.phone_bettery_low_message)
             return false
@@ -151,7 +171,7 @@ class DeviceVersionUpgradeActivity : BaseViewModelActivity<BaseViewModel>(), Tit
             return false
         }
         when (mType) {
-            TYPE_MONITOR -> if (monitorBatteryLow()) {
+            TYPE_MONITOR -> if (UpgradeManager.monitorBatteryLow()) {
                 LogManager.appendMonitorLog("监测仪电量不足50%,无法进行 dfu 升级")
                 showErrorDialog(R.string.monitor_bettery_low_title, R.string.monitor_bettery_low_message)
                 return false
@@ -161,7 +181,7 @@ class DeviceVersionUpgradeActivity : BaseViewModelActivity<BaseViewModel>(), Tit
                     ToastUtils.showShort(R.string.device_not_connected)
                     return false
                 }
-                if (sleepyBatterLow()) {
+                if (UpgradeManager.sleepyBatterLow()) {
                     LogManager.appendSpeedSleeperLog("速眠仪电量不足50%,无法进行 dfu 升级")
                     showErrorDialog(R.string.sleeper_bettery_low_title, R.string.sleeper_bettery_low_message)
                     return false
@@ -182,29 +202,6 @@ class DeviceVersionUpgradeActivity : BaseViewModelActivity<BaseViewModel>(), Tit
 
     override fun onBack(v: View) {
         finish()
-    }
-
-    private fun mobileBatteryLow(): Boolean {
-        val iFilter = IntentFilter(Intent.ACTION_BATTERY_CHANGED)
-        val batteryStatus = this.registerReceiver(null, iFilter)
-        val level = batteryStatus?.getIntExtra(BatteryManager.EXTRA_LEVEL, -1) ?: -1
-        val scale = batteryStatus?.getIntExtra(BatteryManager.EXTRA_SCALE, -1) ?: -1
-        val batteryPct = level / scale.toFloat()
-        val batteryQuantity = (batteryPct * 100).toInt()
-        val status = batteryStatus!!.getIntExtra(BatteryManager.EXTRA_STATUS, -1)
-        val isCharging = status == BatteryManager.BATTERY_STATUS_CHARGING || status == BatteryManager.BATTERY_STATUS_FULL
-        // 电量小于50，而且不在充电状态
-        return batteryQuantity < 50 && !isCharging
-    }
-
-    private fun monitorBatteryLow(): Boolean {
-        val device = DeviceManager.getDevice()
-        return device != null && device.monitorBattery < 50
-    }
-
-    private fun sleepyBatterLow(): Boolean {
-        val device = DeviceManager.getDevice()
-        return device != null && device.sleepMasterBattery < 50
     }
 
     private fun downloadUpgradeFile() {
@@ -232,7 +229,6 @@ class DeviceVersionUpgradeActivity : BaseViewModelActivity<BaseViewModel>(), Tit
                         ToastHelper.show(R.string.firmware_download_success_hint)
                         bt_download.isVisible = false
                         bt_upgrade.isVisible = true
-//                        upgrade(mUpgradeFile)
                     }
 
                     override fun pending(task: BaseDownloadTask?, soFarBytes: Int, totalBytes: Int) {
@@ -262,70 +258,55 @@ class DeviceVersionUpgradeActivity : BaseViewModelActivity<BaseViewModel>(), Tit
             return
         }
         var type = if (mType == TYPE_MONITOR) DeviceType.MONITOR else DeviceType.SLEEP_MASTER
-        DeviceManager.upgradeBoundDevice(
-                type,
-                file.absolutePath,
-                object : DfuCallback {
-                    override fun onStart() {
-                    }
-
-                    override fun onProgressChange(progress: Int) {
-                    }
-
+        UpgradeManager.queryTargetDeviceMac(type, object : UpgradeManager.QueryTargetMacCallback {
+            override fun onSuccess(mac: Long) {
+                DfuUpgradeHelper.enterDfuMode(type, object : EnterDfuCallback {
                     override fun onSuccess() {
-                        upgradeSuccess()
+                        ScanDeviceActivity.startForUpgrade(this@DeviceVersionUpgradeActivity, type)
+                        finish()
                     }
 
                     override fun onFail(code: Int, msg: String?) {
-                        UpgradeDeviceHelper.reconnectDevice()
-                    }
-                }) {
-            ScanDeviceActivity.startForUpgrade(this, type)
-            finish()
-        }
-    }
-
-    private fun upgrade(file: File?) {
-        if (!checkBattery()) {
-            return
-        }
-        if (file == null) {
-            return
-        }
-        val progressDialog = VersionDialog.newInstance(getString(R.string.firmware_upgrade_title_hint))
-        progressDialog.show(supportFragmentManager, progressDialog.javaClass.simpleName)
-        DeviceManager.upgradeBoundDevice(
-                if (mType == TYPE_MONITOR) DeviceType.MONITOR else DeviceType.SLEEP_MASTER,
-                file.absolutePath,
-                object : DfuCallback {
-                    override fun onStart() {
-                    }
-
-                    override fun onProgressChange(progress: Int) {
-                        progressDialog.updateProgress(progress)
-                    }
-
-                    override fun onSuccess() {
-                        progressDialog.dismiss()
-                        upgradeSuccess()
-                    }
-
-                    override fun onFail(code: Int, msg: String?) {
-                        ToastUtils.showShort("升级失败：$msg")
-                        progressDialog.dismiss()
-                        UpgradeDeviceHelper.reconnectDevice()
+                        ToastUtils.showLong(msg)
                     }
                 })
+            }
+
+            override fun onFail(code: Int, msg: String?) {
+                ToastUtils.showLong(msg)
+            }
+        })
     }
 
-    private fun upgradeSuccess() {
-        ToastHelper.show(when (mType) {
-            TYPE_MONITOR -> R.string.firmware_upgrade_success_hint
-            else -> R.string.sleeper_firmware_upgrade_success_hint
-        })
-        VersionManager.queryDeviceVersion()
-        LogManager.appendMonitorLog("设备dfu固件升级完成")
-        UpgradeDeviceHelper.reconnectDevice()
-        finish()
-    }
+//    private fun upgrade(file: File?) {
+//        if (!checkBattery()) {
+//            return
+//        }
+//        if (file == null) {
+//            return
+//        }
+//        val progressDialog = VersionDialog.newInstance(getString(R.string.firmware_upgrade_title_hint))
+//        progressDialog.show(supportFragmentManager, progressDialog.javaClass.simpleName)
+//        DeviceManager.upgradeBoundDevice(
+//                if (mType == TYPE_MONITOR) DeviceType.MONITOR else DeviceType.SLEEP_MASTER,
+//                file.absolutePath,
+//                object : UpgradeCallback {
+//                    override fun onStart() {
+//                    }
+//
+//                    override fun onProgressChange(progress: Int) {
+//                        progressDialog.updateProgress(progress)
+//                    }
+//
+//                    override fun onSuccess() {
+//                        progressDialog.dismiss()
+//                    }
+//
+//                    override fun onFail(code: Int, msg: String?) {
+//                        ToastUtils.showShort("升级失败：$msg")
+//                        progressDialog.dismiss()
+//                        UpgradeManager.reconnectDevice()
+//                    }
+//                })
+//    }
 }
