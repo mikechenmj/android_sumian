@@ -79,48 +79,20 @@ object DfuUpgradeManager {
         return file
     }
 
-    fun queryTargetDeviceMac(type: Int, callback: QueryTargetMacCallback) {
-        DfuUpgradeHelper.queryTargetDeviceMac(getTypeFromInt(type), object : DfuUpgradeHelper.QueryTargetMacCallback {
-            override fun onSuccess(mac: Long) {
-                callback.onSuccess(mac)
-            }
-
-            override fun onFail(code: Int, msg: String?) {
-                callback.onFail(code, msg)
-            }
-        })
+    fun queryTargetDeviceMac(type: Int, onSuccess: (mac: Long) -> Unit, onFail: (code: Int, msg: String?) -> Unit) {
+        DfuUpgradeHelper.queryTargetDeviceMac(getTypeFromInt(type), onSuccess, onFail)
     }
 
-    fun enterDfuMode(type: Int, enterDfuCallback: EnterDfuCallback) {
-        DfuUpgradeHelper.enterDfuMode(getTypeFromInt(type), object : DfuUpgradeHelper.EnterDfuCallback {
-            override fun onSuccess() {
-                enterDfuCallback.onSuccess()
-            }
-
-            override fun onFail(code: Int, msg: String?) {
-                enterDfuCallback.onFail(code, msg)
-            }
-        })
+    fun enterDfuMode(type: Int, onSuccess: () -> Unit, onFail: (code: Int, msg: String?) -> Unit) {
+        DfuUpgradeHelper.enterDfuMode(getTypeFromInt(type), onSuccess, onFail)
     }
 
-    fun upgradeDfuDevice(dfuMac: String, path: String, upgradeCallback: UpgradeCallback) {
-        DfuUpgradeHelper.upgradeDfuDevice(dfuMac, path, object : DfuUpgradeHelper.UpgradeCallback {
-            override fun onStart() {
-                upgradeCallback.onStart()
-            }
-
-            override fun onProgressChange(progress: Int) {
-                upgradeCallback.onProgressChange(progress)
-            }
-
-            override fun onSuccess() {
-                upgradeCallback.onSuccess()
-            }
-
-            override fun onFail(code: Int, msg: String?) {
-                upgradeCallback.onFail(code, msg)
-            }
-        })
+    fun upgradeDfuDevice(dfuMac: String, path: String,
+                         onStart: () -> Unit,
+                         onProgressChange: (progress: Int) -> Unit,
+                         onSuccess: () -> Unit,
+                         onFail: (code: Int, msg: String?) -> Unit) {
+        DfuUpgradeHelper.upgradeDfuDevice(dfuMac, path, onStart, onProgressChange, onSuccess, onFail)
     }
 
     fun mobileBatteryLow(): Boolean {
@@ -155,23 +127,9 @@ object DfuUpgradeManager {
         fun onPaused(soFarBytes: Int, totalBytes: Int)
     }
 
-    interface QueryTargetMacCallback {
-        fun onSuccess(mac: Long)
-        fun onFail(code: Int, msg: String?)
-    }
-
-    interface EnterDfuCallback {
-        fun onSuccess()
-        fun onFail(code: Int, msg: String?)
-    }
-
     interface UpgradeCallback {
 
         companion object {
-            const val ERROR_CODE_ENTER_DFU_MODE_FAIL = 0
-            const val ERROR_CODE_DFU_ABORTED = 1
-            const val ERROR_CODE_GET_MONITOR_MAC_FAIL = 2
-            const val ERROR_CODE_GET_SLEEP_MASTER_MAC_FAIL = 3
             const val ERROR_CODE_DOWNLOAD_FILE_FAIL = 4
         }
 

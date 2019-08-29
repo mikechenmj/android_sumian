@@ -36,36 +36,40 @@ object DfuUpgradeHelper {
     private var mApplicationContext: Context? = DeviceManager.mApplication
 
     private const val DELAY_RECONNECT_DEVICE = 3000L
+    const val ERROR_CODE_ENTER_DFU_MODE_FAIL = 0
+    const val ERROR_CODE_DFU_ABORTED = 1
+    const val ERROR_CODE_GET_MONITOR_MAC_FAIL = 2
+    const val ERROR_CODE_GET_SLEEP_MASTER_MAC_FAIL = 3
 
-    fun queryTargetDeviceMac(target: DeviceType, callback: QueryTargetMacCallback) {
+    fun queryTargetDeviceMac(target: DeviceType, onSuccess: (mac: Long) -> Unit, onFail: (code: Int, msg: String?) -> Unit) {
         var errorMsg = "未找到设备的物理地址，升级失败，请尝试重连设备"
         when (target) {
             DeviceType.MONITOR -> {
                 val monitorMac = DeviceManager.getDevice()?.monitorMac
                 if (monitorMac != null) {
-                    callback.onSuccess(MacUtil.getLongMacFromStringMac(monitorMac))
+                    onSuccess(MacUtil.getLongMacFromStringMac(monitorMac))
                 } else {
                     LogManager.deviceUpgradeLog("$errorMsg: target: $target")
-                    callback.onFail(DfuUpgradeHelper.UpgradeCallback.ERROR_CODE_GET_MONITOR_MAC_FAIL, errorMsg)
+                    onFail(ERROR_CODE_GET_MONITOR_MAC_FAIL, errorMsg)
                 }
             }
             DeviceType.SLEEP_MASTER -> BleCommunicationController.requestByCmd(
                     BleCmd.QUERY_SLEEP_MASTER_MAC,
                     object : BleRequestCallback {
                         override fun onResponse(bytes: ByteArray, hexString: String) {
-                            callback.onSuccess(MacUtil.getLongMacFromCmdBytes(bytes))
+                            onSuccess(MacUtil.getLongMacFromCmdBytes(bytes))
                         }
 
                         override fun onFail(code: Int, msg: String) {
                             LogManager.deviceUpgradeLog("$errorMsg; target: $target code: $code msg: $msg")
-                            callback.onFail(DfuUpgradeHelper.UpgradeCallback.ERROR_CODE_GET_SLEEP_MASTER_MAC_FAIL, errorMsg)
+                            onFail(ERROR_CODE_GET_SLEEP_MASTER_MAC_FAIL, errorMsg)
                         }
                     })
             else -> throw IllegalArgumentException("target must be DeviceType.MONITOR or DeviceType.SLEEP_MASTER")
         }
     }
 
-    fun enterDfuMode(target: DeviceType, enterDfuCallback: EnterDfuCallback) {
+    fun enterDfuMode(target: DeviceType, onSuccess: () -> Unit, onFail: (code: Int, msg: String?) -> Unit) {
         var errMsg = "进入升级模式失败，请确保设备连接正常并重试"
         val dufCmd =
                 if (target == DeviceType.MONITOR) BleCmd.MONITOR_ENTER_DFU else BleCmd.SLEEP_MASTER_ENTER_DFU
@@ -73,51 +77,59 @@ object DfuUpgradeHelper {
             override fun onResponse(data: ByteArray, hexString: String) {
                 val result = BleCmdUtil.getContentFromData(HexUtil.formatHexString(data))
                 if (BleCmd.RESPONSE_CODE_SUCCESS == result) {
-                    enterDfuCallback.onSuccess()
+                    onSuccess()
                 } else {
                     errMsg = getErrorMsg(result)
                     LogManager.deviceUpgradeLog("$errMsg; $target")
-                    enterDfuCallback.onFail(DfuUpgradeHelper.UpgradeCallback.ERROR_CODE_ENTER_DFU_MODE_FAIL, errMsg)
+                    onFail(ERROR_CODE_ENTER_DFU_MODE_FAIL, errMsg)
                 }
             }
 
             override fun onFail(code: Int, msg: String) {
                 LogManager.deviceUpgradeLog("$errMsg; code: $code msg: $msg")
-                enterDfuCallback.onFail(code, errMsg)
+                onFail(code, errMsg)
             }
         }, true)
     }
 
-    fun upgradeDfuDevice(dfuMac: String, path: String, upgradeCallback: UpgradeCallback) {
+    fun upgradeDfuDevice(dfuMac: String, path: String,
+                         onStart: () -> Unit,
+                         onProgressChange: (progress: Int) -> Unit,
+                         onSuccess: () -> Unit,
+                         onFail: (code: Int, msg: String?) -> Unit) {
         DeviceManager.disconnect()
-        startDfuUpgrade(dfuMac, path, upgradeCallback)
+        startDfuUpgrade(dfuMac, path, onStart, onProgressChange, onSuccess, onFail)
     }
 
-    private fun startDfuUpgrade(dfuMac: String, filePath: String, dfuCallback: UpgradeCallback? = null) {
+    private fun startDfuUpgrade(dfuMac: String, filePath: String,
+                                onStart: () -> Unit,
+                                onProgressChange: (progress: Int) -> Unit,
+                                onSuccess: () -> Unit,
+                                onFail: (code: Int, msg: String?) -> Unit) {
         var context = mApplicationContext!!
-        dfuCallback?.onStart()
+        onStart()
         DfuServiceListenerHelper.registerProgressListener(
                 context, object : SimpleLogDfuProgressListener {
             override fun onProgressChanged(deviceAddress: String, percent: Int, speed: Float, avgSpeed: Float, currentPart: Int, partsTotal: Int) {
                 super.onProgressChanged(deviceAddress, percent, speed, avgSpeed, currentPart, partsTotal)
-                dfuCallback?.onProgressChange(percent)
+                onProgressChange(percent)
             }
 
             override fun onDfuAborted(deviceAddress: String) {
                 super.onDfuAborted(deviceAddress)
-                dfuCallback?.onFail(DfuUpgradeHelper.UpgradeCallback.ERROR_CODE_DFU_ABORTED, "dfu was aborted")
+                onFail(ERROR_CODE_DFU_ABORTED, "dfu was aborted")
                 DfuServiceListenerHelper.unregisterProgressListener(context, this)
             }
 
             override fun onDfuCompleted(deviceAddress: String) {
                 super.onDfuCompleted(deviceAddress)
-                dfuCallback?.onSuccess()
+                onSuccess()
                 DfuServiceListenerHelper.unregisterProgressListener(context, this)
             }
 
             override fun onError(deviceAddress: String, error: Int, errorType: Int, message: String?) {
                 super.onError(deviceAddress, error, errorType, message)
-                dfuCallback?.onFail(error, message)
+                onFail(error, message)
                 DfuServiceListenerHelper.unregisterProgressListener(context, this)
             }
         }
@@ -233,22 +245,6 @@ object DfuUpgradeHelper {
         override fun onDeviceConnecting(deviceAddress: String) {
             LogManager.deviceUpgradeLog("dfu onDeviceConnecting: $deviceAddress")
         }
-    }
-
-    interface UpgradeCallback {
-
-        companion object {
-            const val ERROR_CODE_ENTER_DFU_MODE_FAIL = 0
-            const val ERROR_CODE_DFU_ABORTED = 1
-            const val ERROR_CODE_GET_MONITOR_MAC_FAIL = 2
-            const val ERROR_CODE_GET_SLEEP_MASTER_MAC_FAIL = 3
-            const val ERROR_CODE_DOWNLOAD_FILE_FAIL = 4
-        }
-
-        fun onStart()
-        fun onProgressChange(progress: Int)
-        fun onSuccess()
-        fun onFail(code: Int, msg: String?)
     }
 }
 

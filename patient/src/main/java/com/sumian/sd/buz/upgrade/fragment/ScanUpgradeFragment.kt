@@ -232,7 +232,11 @@ class ScanUpgradeFragment(private var mDeviceType: Int) : BaseScanDeviceFragment
     private fun upgradeDfuModelDevice(dfuMac: String, type: Int) {
         DfuUpgradeManager.downloadUpgradeFile(object : DfuUpgradeManager.DownloadCallback {
             override fun onCompleted(path: String) {
-                DfuUpgradeManager.upgradeDfuDevice(dfuMac, path, mUpgradeCallback)
+                DfuUpgradeManager.upgradeDfuDevice(dfuMac, path,
+                        onStart = { mUpgradeCallback.onStart() },
+                        onProgressChange = { progress -> mUpgradeCallback.onProgressChange(progress) },
+                        onSuccess = { mUpgradeCallback.onSuccess() },
+                        onFail = { code, msg -> mUpgradeCallback.onFail(code, msg) })
             }
 
             override fun onError(e: Throwable?) {

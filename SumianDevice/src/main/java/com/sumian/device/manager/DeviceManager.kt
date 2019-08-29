@@ -13,7 +13,6 @@ import android.os.Handler
 import android.os.Looper
 import android.os.Message
 import android.text.TextUtils
-import android.util.Log
 import com.blankj.utilcode.util.SPUtils
 import com.clj.fastble.BleManager
 import com.clj.fastble.callback.BleGattCallback
@@ -27,7 +26,6 @@ import com.sumian.device.R
 import com.sumian.device.authentication.AuthenticationManager
 import com.sumian.device.callback.*
 import com.sumian.device.data.*
-import com.sumian.device.dfu.UpgradeCallback
 import com.sumian.device.manager.blecommunicationcontroller.BleCommunicationController
 import com.sumian.device.manager.helper.*
 import com.sumian.device.manager.helper.DeviceStateHelper.syncState
@@ -37,7 +35,6 @@ import com.sumian.device.util.ILogger
 import com.sumian.device.util.LogManager
 import retrofit2.Call
 import retrofit2.Response
-import java.lang.NullPointerException
 
 /**
  * @author : Zhan Xuzhao
@@ -675,9 +672,9 @@ object DeviceManager {
         BleCommunicationController.requestWithRetry(data, callback)
     }
 
-    fun upgradeBoundDevice(target: DeviceType, filePath: String, callback: UpgradeCallback, onDfuCmdSuccess: (() -> Unit)? = null) {
-//        DfuUpgradeHelper.upgradeBoundDevice(mApplication, target, filePath, callback, onDfuCmdSuccess)
-    }
+//    fun upgradeBoundDevice(target: DeviceType, filePath: String, callback: DfuUpgradeHelper.UpgradeCallback, onDfuCmdSuccess: (() -> Unit)? = null) {
+////        DfuUpgradeHelper.upgradeBoundDevice(mApplication, target, filePath, callback, onDfuCmdSuccess)
+//    }
 
     fun getDevice(): SumianDevice? {
         return mSumianDevice

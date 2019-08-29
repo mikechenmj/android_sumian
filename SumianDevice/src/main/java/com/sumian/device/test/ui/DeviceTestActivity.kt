@@ -30,7 +30,6 @@ import com.sumian.device.callback.DeviceStatusListener
 import com.sumian.device.callback.ScanCallback
 import com.sumian.device.data.DeviceConnectStatus
 import com.sumian.device.data.DeviceType
-import com.sumian.device.dfu.UpgradeCallback
 import com.sumian.device.manager.DeviceManager
 import com.sumian.device.manager.helper.SyncSleepDataHelper
 import com.sumian.device.manager.upload.SleepDataUploadManager
@@ -240,29 +239,24 @@ class DeviceTestActivity : AppCompatActivity() {
         val dir =
                 Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
         val file = File(dir, "dfu.zip")
-        DeviceManager.upgradeBoundDevice(DeviceType.MONITOR, file.absolutePath, object : UpgradeCallback {
-            override fun onStart() {
-                LogManager.log("upgrade onStart")
-            }
-
-            override fun onProgressChange(progress: Int) {
-                LogManager.log("upgrade progress: $progress / 100")
-            }
-
-            override fun onSuccess() {
-                LogManager.log("upgrade onSuccess")
-            }
-
-            override fun onFail(code: Int, msg: String?) {
-                LogManager.log("upgrade onFail: $msg")
-            }
-        })
+//        DeviceManager.upgradeBoundDevice(DeviceType.MONITOR, file.absolutePath, object : UpgradeCallback {
+//            override fun onStart() {
+//                LogManager.log("upgrade onStart")
+//            }
+//
+//            override fun onProgressChange(progress: Int) {
+//                LogManager.log("upgrade progress: $progress / 100")
+//            }
+//
+//            override fun onSuccess() {
+//                LogManager.log("upgrade onSuccess")
+//            }
+//
+//            override fun onFail(code: Int, msg: String?) {
+//                LogManager.log("upgrade onFail: $msg")
+//            }
+//        })
     }
-
-//    override fun onStart() {
-//        super.onStart()
-//        connectOldDevice()
-//    }
 
     private fun switchVg(icon: View, vg: View) {
         vg.isVisible = !vg.isVisible

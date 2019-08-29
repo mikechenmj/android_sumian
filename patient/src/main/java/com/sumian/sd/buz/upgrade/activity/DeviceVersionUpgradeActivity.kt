@@ -205,23 +205,21 @@ class DeviceVersionUpgradeActivity : BaseViewModelActivity<BaseViewModel>(), Tit
             return
         }
         var type = mType
-        DfuUpgradeManager.queryTargetDeviceMac(type, object : DfuUpgradeManager.QueryTargetMacCallback {
-            override fun onSuccess(mac: Long) {
-                DfuUpgradeManager.enterDfuMode(type, object : DfuUpgradeManager.EnterDfuCallback {
-                    override fun onSuccess() {
-                        ScanDeviceActivity.startForUpgrade(this@DeviceVersionUpgradeActivity, type)
-                        finish()
-                    }
-
-                    override fun onFail(code: Int, msg: String?) {
-                        ToastUtils.showLong(msg)
-                    }
+        DfuUpgradeManager.queryTargetDeviceMac(
+                type,
+                onSuccess = {
+                    DfuUpgradeManager.enterDfuMode(
+                            type,
+                            onSuccess = {
+                                ScanDeviceActivity.startForUpgrade(this@DeviceVersionUpgradeActivity, type)
+                                finish()
+                            },
+                            onFail = { _, msg ->
+                                ToastUtils.showLong(msg)
+                            })
+                },
+                onFail = { _, msg ->
+                    ToastUtils.showLong(msg)
                 })
-            }
-
-            override fun onFail(code: Int, msg: String?) {
-                ToastUtils.showLong(msg)
-            }
-        })
     }
 }
