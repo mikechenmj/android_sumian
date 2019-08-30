@@ -34,6 +34,7 @@ object DialogManager {
             DIALOG_TYPE_DEVICE -> {
                 if (force) {
                     !(isAppUpgradeDialogShowing && isAppForceUpgrade)
+                            || !(isDeviceUpgradeDialogShowing && isDeviceForceUpgrade)
                 } else {
                     !isAppUpgradeDialogShowing
                 }

@@ -15,7 +15,10 @@ import com.sumian.sd.R
 import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.upgrade.activity.DeviceVersionNoticeActivity
+import com.sumian.sd.common.utils.EventBusUtil
 import com.sumian.sd.common.utils.UiUtils
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 /**
  * @author : Zhan Xuzhao
@@ -82,11 +85,13 @@ class DeviceUpgradeDialogActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         DialogManager.isDeviceUpgradeDialogShowing = true
+        EventBusUtil.register(this)
     }
 
     override fun onDestroy() {
         super.onDestroy()
         DialogManager.isDeviceUpgradeDialogShowing = false
+        EventBusUtil.unregister(this)
     }
 
     /**
@@ -107,9 +112,11 @@ class DeviceUpgradeDialogActivity : BaseActivity() {
                     if (type == TYPE_APP) {
                         UiUtils.openAppInMarket(App.getAppContext())
                     } else {
-                        ActivityUtils.startActivity(DeviceVersionNoticeActivity::class.java)
+                        var intent = Intent(this, DeviceVersionNoticeActivity::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+                        ActivityUtils.startActivity(intent)
                     }
-                })
+                }, !force)
                 .setOnDismissListenerWrap(DialogInterface.OnDismissListener { finish() })
                 .setCanceledOnTouchOutsideWrap(false)
                 .setOnKeyListenerWrap(object : DialogInterface.OnKeyListener {
@@ -124,4 +131,11 @@ class DeviceUpgradeDialogActivity : BaseActivity() {
                 .whitenLeft()
                 .show()
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onDfuUpgradeSuccess(event: DfuUpgradeSuccessEvent) {
+        finish()
+    }
+
+    class DfuUpgradeSuccessEvent
 }

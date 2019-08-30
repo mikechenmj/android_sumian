@@ -114,7 +114,6 @@ class MainActivity : BaseActivity() {
         if (mCurrentPosition == 0) {
             AutoSyncDeviceDataUtil.autoSyncSleepData()
         }
-        VersionManager.queryDeviceVersion(true)
     }
 
     override fun onPause() {
