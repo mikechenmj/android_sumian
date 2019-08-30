@@ -13,6 +13,7 @@ import com.sumian.device.data.SumianDevice;
 import com.sumian.device.manager.DeviceManager;
 import com.sumian.sd.R;
 import com.sumian.sd.buz.device.scan.ScanDeviceActivity;
+import com.sumian.sd.buz.upgrade.manager.DfuUpgradeManager;
 import com.sumian.sd.buz.version.VersionManager;
 import com.sumian.sd.widget.VersionInfoView;
 
@@ -94,13 +95,13 @@ public class DeviceVersionNoticeActivity extends BaseViewModelActivity implement
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.monitor_version_info:
-                DeviceVersionUpgradeActivity.Companion.show(this, DeviceVersionUpgradeActivity.TYPE_MONITOR, VersionManager.INSTANCE.hasNewMonitorVersion());
+                DeviceVersionUpgradeActivity.Companion.show(this, DfuUpgradeManager.TYPE_MONITOR, VersionManager.INSTANCE.hasNewMonitorVersion());
                 break;
             case R.id.sleepy_version_info:
-                DeviceVersionUpgradeActivity.Companion.show(this, DeviceVersionUpgradeActivity.TYPE_SLEEP_MASTER, VersionManager.INSTANCE.hasNewSleeperVersion());
+                DeviceVersionUpgradeActivity.Companion.show(this, DfuUpgradeManager.TYPE_SLEEP_MASTER, VersionManager.INSTANCE.hasNewSleeperVersion());
                 break;
             case R.id.upgrade_wrong:
-                ScanDeviceActivity.Companion.startForUpgrade(this, DeviceType.ALL);
+                ScanDeviceActivity.Companion.startForUpgrade(this, DfuUpgradeManager.TYPE_ALL);
                 break;
         }
     }

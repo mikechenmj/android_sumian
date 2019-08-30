@@ -1,13 +1,11 @@
-package com.sumian.sd.buz.upgrade
+package com.sumian.sd.buz.upgrade.fragment
 
 import android.bluetooth.BluetoothDevice
-import android.util.Log
 import android.view.View
 import androidx.annotation.StringRes
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sumian.common.helper.ToastHelper
 import com.sumian.device.data.DeviceType
-import com.sumian.device.dfu.UpgradeCallback
 import com.sumian.device.manager.DeviceManager
 import com.sumian.device.util.LogManager
 import com.sumian.device.util.MacUtil
@@ -18,12 +16,13 @@ import com.sumian.sd.buz.device.scan.DeviceAdapter
 import com.sumian.sd.buz.devicemanager.BlueDevice
 import com.sumian.sd.buz.upgrade.dialog.UpgradeConfirmDialog
 import com.sumian.sd.buz.upgrade.dialog.VersionDialog
+import com.sumian.sd.buz.upgrade.manager.DfuUpgradeManager
 import com.sumian.sd.buz.version.VersionManager
 import kotlinx.android.synthetic.main.fragment_scan_upgrade.*
 import java.lang.IllegalArgumentException
 import java.util.ArrayList
 
-class ScanUpgradeFragment(private var mDeviceType: DeviceType) : BaseScanDeviceFragment() {
+class ScanUpgradeFragment(private var mDeviceType: Int) : BaseScanDeviceFragment() {
 
     private lateinit var mDeviceNamePrefix: String
     private val mScanResults = ArrayList<BlueDevice>()
@@ -39,7 +38,7 @@ class ScanUpgradeFragment(private var mDeviceType: DeviceType) : BaseScanDeviceF
         }
     }
 
-    private val mUpgradeCallback = object : UpgradeCallback {
+    private val mUpgradeCallback = object : DfuUpgradeManager.UpgradeCallback {
 
         override fun onStart() {
             LogManager.deviceUpgradeLog("升级固件开始：$mDeviceType")
@@ -89,9 +88,10 @@ class ScanUpgradeFragment(private var mDeviceType: DeviceType) : BaseScanDeviceF
     override fun onScanStart(success: Boolean) {
         mFindDeviceSuccess = false
         mDeviceNamePrefix = when (mDeviceType) {
-            DeviceType.ALL -> "$MONITOR_NAME/$SLEEP_MASTER_NAME"
-            DeviceType.MONITOR -> MONITOR_NAME
-            DeviceType.SLEEP_MASTER -> SLEEP_MASTER_NAME
+            DfuUpgradeManager.TYPE_ALL -> "$MONITOR_NAME/$SLEEP_MASTER_NAME"
+            DfuUpgradeManager.TYPE_MONITOR -> MONITOR_NAME
+            DfuUpgradeManager.TYPE_SLEEP_MASTER -> SLEEP_MASTER_NAME
+            else -> "$MONITOR_NAME/$SLEEP_MASTER_NAME"
         }
     }
 
@@ -101,7 +101,7 @@ class ScanUpgradeFragment(private var mDeviceType: DeviceType) : BaseScanDeviceF
             var sumianDevice = DeviceManager.getDevice()
             var mac: String? = null
             var isMacValid = when (type) {
-                DeviceType.ALL -> {
+                DfuUpgradeManager.TYPE_ALL -> {
                     if (!mScanResults.contains(blueDevice)) {
                         mScanResults.add(blueDevice)
                         mDeviceAdapter.setData(mScanResults)
@@ -109,11 +109,11 @@ class ScanUpgradeFragment(private var mDeviceType: DeviceType) : BaseScanDeviceF
                     switchDeviceListUI(true)
                     false
                 }
-                DeviceType.MONITOR -> {
+                DfuUpgradeManager.TYPE_MONITOR -> {
                     mac = sumianDevice?.monitorMac
                     mac?.isNotEmpty() ?: false
                 }
-                DeviceType.SLEEP_MASTER -> {
+                DfuUpgradeManager.TYPE_SLEEP_MASTER -> {
                     mac = sumianDevice?.sleepMasterMac
                     mac?.isNotEmpty() ?: false
                 }
@@ -229,25 +229,43 @@ class ScanUpgradeFragment(private var mDeviceType: DeviceType) : BaseScanDeviceF
         vg_device_list.visibility = View.GONE
     }
 
-    private fun upgradeDfuModelDevice(dfuMac: String, type: DeviceType) {
-        UpgradeManager.upgradeDfuDevice(mUpgradeCallback, dfuMac, type)
+    private fun upgradeDfuModelDevice(dfuMac: String, type: Int) {
+        DfuUpgradeManager.downloadUpgradeFile(object : DfuUpgradeManager.DownloadCallback {
+            override fun onCompleted(path: String) {
+                DfuUpgradeManager.upgradeDfuDevice(dfuMac, path,
+                        onStart = { mUpgradeCallback.onStart() },
+                        onProgressChange = { progress -> mUpgradeCallback.onProgressChange(progress) },
+                        onSuccess = { mUpgradeCallback.onSuccess() },
+                        onFail = { code, msg -> mUpgradeCallback.onFail(code, msg) })
+            }
+
+            override fun onError(e: Throwable?) {
+                mUpgradeCallback.onFail(DfuUpgradeManager.UpgradeCallback.ERROR_CODE_DOWNLOAD_FILE_FAIL, e?.message)
+            }
+
+            override fun onProgress(soFarBytes: Int, totalBytes: Int) {
+            }
+
+            override fun onPaused(soFarBytes: Int, totalBytes: Int) {
+            }
+        }, type)
     }
 
-    private fun getTypeFromDeviceName(name: String): DeviceType {
+    private fun getTypeFromDeviceName(name: String): Int {
         return when {
-            name.startsWith(MONITOR_NAME) -> DeviceType.MONITOR
-            name.startsWith(SLEEP_MASTER_NAME) -> DeviceType.SLEEP_MASTER
+            name.startsWith(MONITOR_NAME) -> DfuUpgradeManager.TYPE_MONITOR
+            name.startsWith(SLEEP_MASTER_NAME) -> DfuUpgradeManager.TYPE_SLEEP_MASTER
             else -> throw IllegalArgumentException()
         }
     }
 
     private fun upgradeSuccess() {
         ToastHelper.show(when (mDeviceType) {
-            DeviceType.MONITOR, DeviceType.ALL -> R.string.firmware_upgrade_success_hint
-            DeviceType.SLEEP_MASTER -> R.string.sleeper_firmware_upgrade_success_hint
+            DfuUpgradeManager.TYPE_SLEEP_MASTER -> R.string.sleeper_firmware_upgrade_success_hint
+            else -> R.string.firmware_upgrade_success_hint
         })
         VersionManager.queryDeviceVersion()
         LogManager.deviceUpgradeLog("设备dfu固件升级完成")
-        UpgradeManager.reconnectDevice()
+        DfuUpgradeManager.reconnectDevice()
     }
 }

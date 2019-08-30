@@ -14,7 +14,7 @@
     <application>
         <activity android:name=".test.ui.DeviceTestActivity" />
 
-        <service android:name=".manager.helper.DfuServiceImpl" />
+        <service android:name=".dfu.DfuServiceImpl" />
     </application>
 
 </manifest>
