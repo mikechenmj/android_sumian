@@ -4,6 +4,7 @@ import android.bluetooth.BluetoothDevice
 import android.view.View
 import androidx.annotation.StringRes
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.liulishuo.filedownloader.BaseDownloadTask
 import com.sumian.common.helper.ToastHelper
 import com.sumian.device.data.DeviceType
 import com.sumian.device.manager.DeviceManager
@@ -231,6 +232,9 @@ class ScanUpgradeFragment(private var mDeviceType: Int) : BaseScanDeviceFragment
 
     private fun upgradeDfuModelDevice(dfuMac: String, type: Int) {
         DfuUpgradeManager.downloadUpgradeFile(object : DfuUpgradeManager.DownloadCallback {
+            override fun started(task: BaseDownloadTask?) {
+            }
+
             override fun onCompleted(path: String) {
                 DfuUpgradeManager.upgradeDfuDevice(dfuMac, path,
                         onStart = { mUpgradeCallback.onStart() },

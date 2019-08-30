@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.view.isVisible
 import com.blankj.utilcode.util.ToastUtils
+import com.liulishuo.filedownloader.BaseDownloadTask
 import com.sumian.common.base.BaseViewModel
 import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.helper.ToastHelper
@@ -126,10 +127,16 @@ class DeviceVersionUpgradeActivity : BaseViewModelActivity<BaseViewModel>(), Tit
                 Manifest.permission.ACCESS_FINE_LOCATION)
         if (EasyPermissions.hasPermissions(this, *perms)) {
             val progressDialog = VersionDialog.newInstance(getString(R.string.firmware_download_title_hint))
-            progressDialog.show(supportFragmentManager, progressDialog.javaClass.simpleName)
+
             mUpgradeFile = DfuUpgradeManager.downloadUpgradeFile(object : DfuUpgradeManager.DownloadCallback {
+                override fun started(task: BaseDownloadTask?) {
+                    progressDialog.show(supportFragmentManager, progressDialog.javaClass.simpleName)
+                }
+
                 override fun onCompleted(path: String) {
-                    progressDialog.dismiss()
+                    if (progressDialog.isResumed) {
+                        progressDialog.dismiss()
+                    }
                     iv_upgrade!!.setImageResource(R.mipmap.set_icon_upgrade)
                     ToastHelper.show(R.string.firmware_download_success_hint)
                     bt_download.isVisible = false
@@ -137,7 +144,9 @@ class DeviceVersionUpgradeActivity : BaseViewModelActivity<BaseViewModel>(), Tit
                 }
 
                 override fun onError(e: Throwable?) {
-                    progressDialog.dismiss()
+                    if (progressDialog.isResumed) {
+                        progressDialog.dismiss()
+                    }
                     ToastUtils.showShort(e?.message)
                 }
 

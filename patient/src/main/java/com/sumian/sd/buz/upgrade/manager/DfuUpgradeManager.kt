@@ -63,6 +63,10 @@ object DfuUpgradeManager {
                     override fun pending(task: BaseDownloadTask?, soFarBytes: Int, totalBytes: Int) {
                     }
 
+                    override fun started(task: BaseDownloadTask?) {
+                        downloadCallback.started(task)
+                    }
+
                     override fun error(task: BaseDownloadTask?, e: Throwable?) {
                         downloadCallback.onError(e)
                     }
@@ -125,6 +129,7 @@ object DfuUpgradeManager {
         fun onError(e: Throwable?)
         fun onProgress(soFarBytes: Int, totalBytes: Int)
         fun onPaused(soFarBytes: Int, totalBytes: Int)
+        fun started(task: BaseDownloadTask?)
     }
 
     interface UpgradeCallback {
