@@ -107,7 +107,7 @@ object VersionManager {
                         } else {
                             response.sleeper?.description
                         }
-                        DeviceUpgradeDialogActivity.start(if (hasNewMonitorVersion()) VERSION_TYPE_MONITOR else VERSION_TYPE_SLEEPER, true, msg)
+                        DeviceUpgradeDialogActivity.start(if (hasNewMonitorVersion()) VERSION_TYPE_MONITOR else VERSION_TYPE_SLEEPER, force, msg)
                     }
                     else {
                         EventBusUtil.postEvent(DeviceUpgradeDialogActivity.DfuUpgradeSuccessEvent())
