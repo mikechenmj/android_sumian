@@ -66,7 +66,15 @@ class DeviceManageFragment : BaseFragment() {
 
                 }
                 DeviceManager.EVENT_MONITOR_CONNECT_STATUS_CHANGE -> {
-
+                    showRipple(false)
+                    if (DeviceManager.getDevice()?.monitorConnectStatus == DeviceConnectStatus.DISCONNECTED) {
+                        SumianAlertDialog(context)
+                                .hideTopIcon(true)
+                                .setTitle(R.string.connect_time_out)
+                                .setMessage(R.string.connect_time_out_message)
+                                .setRightBtn(R.string.confirm, null)
+                                .show()
+                    }
                 }
             }
             updateUI()
@@ -83,7 +91,7 @@ class DeviceManageFragment : BaseFragment() {
         if (show) {
             ripple_view?.startAnimation()
         }
-        ripple_view.visibility = if (show) View.VISIBLE else View.GONE
+        ripple_view?.visibility = if (show) View.VISIBLE else View.GONE
     }
 
     override fun initWidget() {
@@ -108,27 +116,7 @@ class DeviceManageFragment : BaseFragment() {
             })
         }
         iv_device.setOnClickListener {
-            if (!DeviceManager.isMonitorConnected()) {
-                DeviceManager.connectBoundDevice(object : ConnectDeviceCallback {
-                    override fun onStart() {
-                        showRipple(true)
-                    }
-
-                    override fun onSuccess() {
-                        showRipple(false)
-                    }
-
-                    override fun onFail(code: Int, msg: String) {
-                        showRipple(false)
-                        SumianAlertDialog(context)
-                                .hideTopIcon(true)
-                                .setTitle(R.string.connect_time_out)
-                                .setMessage(msg)
-                                .setRightBtn(R.string.confirm, null)
-                                .show()
-                    }
-                })
-            }
+            connectBoundDevice()
         }
         iv_float_menu.setOnClickListener { showUnbindPopup() }
         iv_open_bluetooth.setOnClickListener {
@@ -173,6 +161,24 @@ class DeviceManageFragment : BaseFragment() {
     override fun onResume() {
         super.onResume()
         updateUI()
+    }
+
+    private fun connectBoundDevice() {
+        if (!DeviceManager.isMonitorConnected()) {
+            DeviceManager.connectBoundDevice(object : ConnectDeviceCallback {
+                override fun onStart() {
+                    showRipple(true)
+                }
+
+                override fun onSuccess() {
+                    showRipple(false)
+                }
+
+                override fun onFail(code: Int, msg: String) {
+                    showRipple(false)
+                }
+            })
+        }
     }
 
     private fun updateUI() {
@@ -273,7 +279,7 @@ class DeviceManageFragment : BaseFragment() {
                     }
                 })
 
-        tv_bottom_progress.text = getString(R.string.sync_progress_package_progress_v2,  monitor.syncProgress * 100 / monitor.syncTotalCount)
+        tv_bottom_progress.text = getString(R.string.sync_progress_package_progress_v2, monitor.syncProgress * 100 / monitor.syncTotalCount)
         tv_bottom_progress.visibility = if (monitor.isSyncing && !appNeedUpgrade && !deviceNeedUpgrade) View.VISIBLE else View.GONE
 
         bt_turn_on_pa.isVisible = monitor.isMonitorConnected() && !monitor.isSyncing

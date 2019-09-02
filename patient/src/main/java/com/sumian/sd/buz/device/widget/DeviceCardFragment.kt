@@ -131,7 +131,6 @@ class DeviceCardFragment : BaseFragment() {
         }
 
         override fun onFail(code: Int, msg: String) {
-            ToastUtils.showShort(msg)
             updateDevice()
         }
     }
