@@ -4,10 +4,11 @@ import com.sumian.sd.app.AppManager
 
 /**
  * @author : Zhan Xuzhao
- * e-mail : 649912323@qq.com
- * time   : 2019/6/12 10:55
- * desc   :
- * version: 1.0
+ * @changer : chenmj
+ * e-mail : 448900450@qq.com
+ * time   : 2019/9/02 11:12
+ * desc   :修正不同弹窗之间是否允许弹出的逻辑
+ * version: 2.0
  */
 object DialogManager {
     const val DIALOG_TYPE_APP = 1
@@ -19,6 +20,7 @@ object DialogManager {
     var isDeviceForceUpgrade = false
 
     /**
+     * 应用不在前台时不弹框
      * 更新弹窗（强制更新APP  >  强制更新固件 > 推荐更新APP = 推荐更新固件）> 使用设备相关业务的弹窗 > 其他业务弹窗（低优先级）
      * 高优先级显示的时候，低优先级发生了，无须继续弹窗，待下次符合条件时再弹；
      * 某优先级显示的时候，同优先级发生了，无须继续弹窗，待下次符合条件时再弹；
@@ -30,7 +32,8 @@ object DialogManager {
                 if (force) {
                     true
                 } else {
-                    !isDeviceUpgradeDialogShowing
+                    var isDialogShowing = isAppUpgradeDialogShowing || isDeviceUpgradeDialogShowing
+                    !isDialogShowing
                 }
             }
             DIALOG_TYPE_DEVICE -> {
@@ -38,10 +41,13 @@ object DialogManager {
                     return false
                 }
                 if (force) {
-                    !(isAppUpgradeDialogShowing && isAppForceUpgrade)
-                            || !(isDeviceUpgradeDialogShowing && isDeviceForceUpgrade)
+                    var isForceDialogShowing = (isAppUpgradeDialogShowing && isAppForceUpgrade)
+                            || (isDeviceUpgradeDialogShowing && isDeviceForceUpgrade)
+                    !isForceDialogShowing
                 } else {
-                    !isAppUpgradeDialogShowing
+                    var isDialogShowing = isAppUpgradeDialogShowing || isDeviceUpgradeDialogShowing
+                    !isDialogShowing
+
                 }
             }
             else -> true
