@@ -270,7 +270,6 @@ class ScanUpgradeFragment(private var mDeviceType: Int) : BaseScanDeviceFragment
             DfuUpgradeManager.TYPE_SLEEP_MASTER -> R.string.sleeper_firmware_upgrade_success_hint
             else -> R.string.firmware_upgrade_success_hint
         })
-        VersionManager.queryDeviceVersion()
         LogManager.deviceUpgradeLog("设备dfu固件升级完成")
         DfuUpgradeManager.reconnectDevice()
         EventBusUtil.postEvent(DeviceUpgradeDialogActivity.DfuUpgradeSuccessEvent())
