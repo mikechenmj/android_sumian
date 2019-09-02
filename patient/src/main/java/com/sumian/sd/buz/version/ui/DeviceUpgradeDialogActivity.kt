@@ -151,9 +151,10 @@ class DeviceUpgradeDialogActivity : BaseActivity() {
                 .show()
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     fun onDfuUpgradeSuccess(event: DfuUpgradeSuccessEvent) {
         finish()
+        EventBusUtil.removeStickyEvent(event)
     }
 
     class DfuUpgradeSuccessEvent
