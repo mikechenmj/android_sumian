@@ -11,12 +11,14 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.SPUtils
 import com.sumian.common.base.BaseActivity
 import com.sumian.common.widget.dialog.SumianDialog
+import com.sumian.device.callback.DeviceStatusListener
+import com.sumian.device.data.DeviceConnectStatus
 import com.sumian.device.manager.DeviceManager
 import com.sumian.sd.R
 import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.upgrade.activity.DeviceVersionNoticeActivity
-import com.sumian.sd.common.utils.EventBusUtil
+import com.sumian.sd.buz.version.VersionManager
 import com.sumian.sd.common.utils.UiUtils
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -67,6 +69,18 @@ class DeviceUpgradeDialogActivity : BaseActivity() {
         }
     }
 
+    private val mDeviceStatusListener = object : DeviceStatusListener {
+        override fun onStatusChange(type: String) {
+            when (type) {
+                DeviceManager.EVENT_MONITOR_CONNECT_STATUS_CHANGE -> {
+                    if (DeviceManager.getDevice()?.monitorConnectStatus == DeviceConnectStatus.DISCONNECTED) {
+                        finish()
+                    }
+                }
+            }
+        }
+    }
+
     override fun getLayoutId(): Int {
         return R.layout.activity_update
     }
@@ -86,7 +100,7 @@ class DeviceUpgradeDialogActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         DialogManager.isDeviceUpgradeDialogShowing = true
-        EventBusUtil.register(this)
+        DeviceManager.registerDeviceStatusListener(mDeviceStatusListener)
     }
 
     override fun onResume() {
@@ -94,12 +108,15 @@ class DeviceUpgradeDialogActivity : BaseActivity() {
         if (!DeviceManager.isMonitorConnected()) {
             finish()
         }
+        if (!VersionManager.hasNewMonitorVersion() && !VersionManager.hasNewSleeperVersion()) {
+            finish()
+        }
     }
 
     override fun onDestroy() {
         super.onDestroy()
         DialogManager.isDeviceUpgradeDialogShowing = false
-        EventBusUtil.unregister(this)
+        DeviceManager.unregisterDeviceStatusListener(mDeviceStatusListener)
     }
 
     override fun onNewIntent(intent: Intent?) {
@@ -151,10 +168,9 @@ class DeviceUpgradeDialogActivity : BaseActivity() {
                 .show()
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    @Subscribe(threadMode = ThreadMode.MAIN)
     fun onDfuUpgradeSuccess(event: DfuUpgradeSuccessEvent) {
         finish()
-        EventBusUtil.removeStickyEvent(event)
     }
 
     class DfuUpgradeSuccessEvent

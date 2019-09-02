@@ -14,6 +14,7 @@ import com.sumian.sd.buz.version.ui.AppUpgradeDialogActivity
 import com.sumian.sd.buz.version.ui.DeviceUpgradeDialogActivity
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import com.sumian.sd.common.network.response.FirmwareVersionInfo
+import com.sumian.sd.common.utils.EventBusUtil
 import com.sumian.sd.common.utils.UiUtils
 
 /**
@@ -106,7 +107,10 @@ object VersionManager {
                         } else {
                             response.sleeper?.description
                         }
-                        DeviceUpgradeDialogActivity.start(if (hasNewMonitorVersion()) VERSION_TYPE_MONITOR else VERSION_TYPE_SLEEPER, force, msg)
+                        DeviceUpgradeDialogActivity.start(if (hasNewMonitorVersion()) VERSION_TYPE_MONITOR else VERSION_TYPE_SLEEPER, true, msg)
+                    }
+                    else {
+                        EventBusUtil.postEvent(DeviceUpgradeDialogActivity.DfuUpgradeSuccessEvent())
                     }
                 }
             }

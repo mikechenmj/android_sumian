@@ -273,6 +273,6 @@ class ScanUpgradeFragment(private var mDeviceType: Int) : BaseScanDeviceFragment
         VersionManager.queryDeviceVersion()
         LogManager.deviceUpgradeLog("设备dfu固件升级完成")
         DfuUpgradeManager.reconnectDevice()
-        EventBusUtil.postStickyEvent(DeviceUpgradeDialogActivity.DfuUpgradeSuccessEvent())
+        EventBusUtil.postEvent(DeviceUpgradeDialogActivity.DfuUpgradeSuccessEvent())
     }
 }
