@@ -102,6 +102,17 @@ class DeviceUpgradeDialogActivity : BaseActivity() {
         EventBusUtil.unregister(this)
     }
 
+    override fun onNewIntent(intent: Intent?) {
+        DialogManager.isDeviceUpgradeDialogShowing = true
+        val type = intent?.getIntExtra(KEY_TYPE, TYPE_MONITOR)
+        val force = intent?.getBooleanExtra(KEY_FORCE, false)
+        val msg = intent?.getStringExtra(KEY_MSG)
+        if (type != null && force != null && msg != null) {
+            showDialog(type, force, msg)
+        }
+        super.onNewIntent(intent)
+    }
+
     /**
      * @param type 0 monitor 1 sleeper
      */
