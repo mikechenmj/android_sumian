@@ -11,6 +11,7 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.SPUtils
 import com.sumian.common.base.BaseActivity
 import com.sumian.common.widget.dialog.SumianDialog
+import com.sumian.device.manager.DeviceManager
 import com.sumian.sd.R
 import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
@@ -86,6 +87,13 @@ class DeviceUpgradeDialogActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         DialogManager.isDeviceUpgradeDialogShowing = true
         EventBusUtil.register(this)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (!DeviceManager.isMonitorConnected()) {
+            finish()
+        }
     }
 
     override fun onDestroy() {
