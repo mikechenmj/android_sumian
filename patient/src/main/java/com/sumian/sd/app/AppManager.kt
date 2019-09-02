@@ -71,6 +71,7 @@ import com.sumian.sd.main.MainActivity
 object AppManager {
 
     lateinit var mApplication: Application
+    private var mAppForeground = false
 
     private val mDoctorViewModel: DoctorViewModel by lazy {
         DoctorViewModel()
@@ -234,11 +235,13 @@ object AppManager {
             @OnLifecycleEvent(Lifecycle.Event.ON_START)
             fun onAppForeground() {
                 AppManager.onAppForeground()
+                mAppForeground = true
             }
 
             @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
             fun onAppBackground() {
                 AppManager.onAppBackground()
+                mAppForeground = false
             }
         })
     }
@@ -310,7 +313,8 @@ object AppManager {
     }
 
     fun isAppForeground(): Boolean {
-        return AppUtils.isAppForeground()
+//        return AppUtils.isAppForeground()
+        return mAppForeground
     }
 
     // ------------ App's important lifecycle events start------------

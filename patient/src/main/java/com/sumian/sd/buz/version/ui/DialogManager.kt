@@ -1,5 +1,7 @@
 package com.sumian.sd.buz.version.ui
 
+import com.sumian.sd.app.AppManager
+
 /**
  * @author : Zhan Xuzhao
  * e-mail : 649912323@qq.com
@@ -32,6 +34,9 @@ object DialogManager {
                 }
             }
             DIALOG_TYPE_DEVICE -> {
+                if (!AppManager.isAppForeground()) {
+                    return false
+                }
                 if (force) {
                     !(isAppUpgradeDialogShowing && isAppForceUpgrade)
                             || !(isDeviceUpgradeDialogShowing && isDeviceForceUpgrade)
