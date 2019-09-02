@@ -19,6 +19,8 @@ import com.sumian.sd.buz.upgrade.dialog.UpgradeConfirmDialog
 import com.sumian.sd.buz.upgrade.dialog.VersionDialog
 import com.sumian.sd.buz.upgrade.manager.DfuUpgradeManager
 import com.sumian.sd.buz.version.VersionManager
+import com.sumian.sd.buz.version.ui.DeviceUpgradeDialogActivity
+import com.sumian.sd.common.utils.EventBusUtil
 import kotlinx.android.synthetic.main.fragment_scan_upgrade.*
 import java.lang.IllegalArgumentException
 import java.util.ArrayList
@@ -271,5 +273,6 @@ class ScanUpgradeFragment(private var mDeviceType: Int) : BaseScanDeviceFragment
         VersionManager.queryDeviceVersion()
         LogManager.deviceUpgradeLog("设备dfu固件升级完成")
         DfuUpgradeManager.reconnectDevice()
+        EventBusUtil.postEvent(DeviceUpgradeDialogActivity.DfuUpgradeSuccessEvent())
     }
 }

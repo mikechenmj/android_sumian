@@ -75,6 +75,16 @@ class AppUpgradeDialogActivity : BaseActivity() {
         DialogManager.isAppUpgradeDialogShowing = false
     }
 
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        DialogManager.isAppUpgradeDialogShowing = true
+        val force = isForceUpgrade()
+        val msg = intent?.getStringExtra(KEY_MSG)
+        if (force != null && msg != null) {
+            showDialog( force, msg)
+        }
+    }
+
     private fun isForceUpgrade() = intent.getBooleanExtra(KEY_FORCE, false)
 
     private fun showDialog(force: Boolean, msg: String) {

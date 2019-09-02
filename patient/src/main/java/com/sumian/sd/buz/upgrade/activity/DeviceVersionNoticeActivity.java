@@ -88,7 +88,7 @@ public class DeviceVersionNoticeActivity extends BaseViewModelActivity implement
     @Override
     protected void initData() {
         super.initData();
-        VersionManager.INSTANCE.queryDeviceVersion(false);
+        VersionManager.INSTANCE.queryDeviceVersion(true);
     }
 
     @Override
@@ -109,7 +109,7 @@ public class DeviceVersionNoticeActivity extends BaseViewModelActivity implement
     @Override
     public void onRefresh() {
         mRefresh.setRefreshing(true);
-        VersionManager.INSTANCE.queryDeviceVersion(false);
+        VersionManager.INSTANCE.queryDeviceVersion(true);
     }
 
     @Override

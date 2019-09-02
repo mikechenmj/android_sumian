@@ -11,11 +11,15 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.SPUtils
 import com.sumian.common.base.BaseActivity
 import com.sumian.common.widget.dialog.SumianDialog
+import com.sumian.device.manager.DeviceManager
 import com.sumian.sd.R
 import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.upgrade.activity.DeviceVersionNoticeActivity
+import com.sumian.sd.common.utils.EventBusUtil
 import com.sumian.sd.common.utils.UiUtils
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 /**
  * @author : Zhan Xuzhao
@@ -82,11 +86,31 @@ class DeviceUpgradeDialogActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         DialogManager.isDeviceUpgradeDialogShowing = true
+        EventBusUtil.register(this)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (!DeviceManager.isMonitorConnected()) {
+            finish()
+        }
     }
 
     override fun onDestroy() {
         super.onDestroy()
         DialogManager.isDeviceUpgradeDialogShowing = false
+        EventBusUtil.unregister(this)
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        DialogManager.isDeviceUpgradeDialogShowing = true
+        val type = intent?.getIntExtra(KEY_TYPE, TYPE_MONITOR)
+        val force = intent?.getBooleanExtra(KEY_FORCE, false)
+        val msg = intent?.getStringExtra(KEY_MSG)
+        if (type != null && force != null && msg != null) {
+            showDialog(type, force, msg)
+        }
+        super.onNewIntent(intent)
     }
 
     /**
@@ -107,9 +131,11 @@ class DeviceUpgradeDialogActivity : BaseActivity() {
                     if (type == TYPE_APP) {
                         UiUtils.openAppInMarket(App.getAppContext())
                     } else {
-                        ActivityUtils.startActivity(DeviceVersionNoticeActivity::class.java)
+                        var intent = Intent(this, DeviceVersionNoticeActivity::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+                        ActivityUtils.startActivity(intent)
                     }
-                })
+                }, !force)
                 .setOnDismissListenerWrap(DialogInterface.OnDismissListener { finish() })
                 .setCanceledOnTouchOutsideWrap(false)
                 .setOnKeyListenerWrap(object : DialogInterface.OnKeyListener {
@@ -124,4 +150,11 @@ class DeviceUpgradeDialogActivity : BaseActivity() {
                 .whitenLeft()
                 .show()
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onDfuUpgradeSuccess(event: DfuUpgradeSuccessEvent) {
+        finish()
+    }
+
+    class DfuUpgradeSuccessEvent
 }

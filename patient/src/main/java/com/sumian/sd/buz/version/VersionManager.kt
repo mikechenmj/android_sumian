@@ -87,7 +87,7 @@ object VersionManager {
 
     private val mDelayQueryDeviceVersionRunnable = Runnable { queryDeviceVersion(true) }
 
-    fun queryDeviceVersion(showDialogIfNeed: Boolean = false) {
+    fun queryDeviceVersion(showDialogIfNeed: Boolean = true) {
         val device = DeviceManager.getDevice()
         val call = AppManager.getSdHttpService().getFirmwareLatestVersion(
                 device?.monitorVersionInfo?.hardwareVersion,
