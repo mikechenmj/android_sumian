@@ -48,14 +48,14 @@ class DeviceUpgradeDialogActivity : BaseActivity() {
          * @see TYPE_SLEEP_MASTER
          * @see TYPE_APP
          *
-         * @param force 固件强制升级和普通升级 每天弹一次
+         * @param force 固件强制升级，每次连接都弹，普通升级 每天弹一次
          */
         fun start(type: Int, force: Boolean = false, msg: String? = null) {
             if (!DialogManager.canShow(DialogManager.DIALOG_TYPE_DEVICE, force)) {
                 return
             }
             val spKey = if (force) SHOW_UPGRADE_DIALOG_TIME_FORCE else SHOW_UPGRADE_DIALOG_TIME
-            val showDialogInterval = DateUtils.DAY_IN_MILLIS
+            val showDialogInterval = if (force) DateUtils.SECOND_IN_MILLIS * 2 else DateUtils.DAY_IN_MILLIS
             if (System.currentTimeMillis() - SPUtils.getInstance().getLong(spKey) < showDialogInterval) {
                 return
             }
