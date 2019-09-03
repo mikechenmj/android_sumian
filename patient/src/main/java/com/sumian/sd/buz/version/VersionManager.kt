@@ -100,17 +100,18 @@ object VersionManager {
                 if (response == null) return
                 mFirmwareVersionInfoLD.value = response
                 if (showDialogIfNeed) {
-                    if (hasNewMonitorVersion() || hasNewSleeperVersion()) {
-                        val force = response.monitor?.isForceUpdate() == true || response.sleeper?.isForceUpdate() == true
-                        val msg = if (hasNewMonitorVersion()) {
-                            response.monitor?.description
-                        } else {
-                            response.sleeper?.description
+                    when {
+                        hasNewSleeperVersion() -> {
+                            DeviceUpgradeDialogActivity.start(VERSION_TYPE_SLEEPER,
+                                    response.sleeper?.isForceUpdate() ?: false,
+                                    response.sleeper?.description ?: "")
                         }
-                        DeviceUpgradeDialogActivity.start(if (hasNewSleeperVersion()) VERSION_TYPE_SLEEPER else VERSION_TYPE_MONITOR, force, msg)
-                    }
-                    else {
-                        EventBusUtil.postEvent(DeviceUpgradeDialogActivity.DfuUpgradeSuccessEvent())
+                        hasNewMonitorVersion() -> {
+                            DeviceUpgradeDialogActivity.start(VERSION_TYPE_MONITOR,
+                                    response.monitor?.isForceUpdate() ?: false,
+                                    response.monitor?.description ?: "")
+                        }
+                        else -> EventBusUtil.postEvent(DeviceUpgradeDialogActivity.DfuUpgradeSuccessEvent())
                     }
                 }
             }

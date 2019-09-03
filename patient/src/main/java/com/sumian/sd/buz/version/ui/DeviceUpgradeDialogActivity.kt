@@ -69,6 +69,7 @@ class DeviceUpgradeDialogActivity : BaseActivity() {
         }
     }
 
+    private var mType: Int? = TYPE_MONITOR
     private val mDeviceStatusListener = object : DeviceStatusListener {
         override fun onStatusChange(type: String) {
             when (type) {
@@ -92,6 +93,7 @@ class DeviceUpgradeDialogActivity : BaseActivity() {
     override fun initWidget() {
         super.initWidget()
         val type = intent.getIntExtra(KEY_TYPE, TYPE_MONITOR)
+        mType = type
         val force = intent.getBooleanExtra(KEY_FORCE, false)
         val msg = intent.getStringExtra(KEY_MSG)
         showDialog(type, force, msg)
@@ -105,11 +107,13 @@ class DeviceUpgradeDialogActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
-        if (!DeviceManager.isMonitorConnected()) {
-            finish()
-        }
-        if (!VersionManager.hasNewMonitorVersion() && !VersionManager.hasNewSleeperVersion()) {
-            finish()
+        when (mType) {
+            TYPE_MONITOR -> {
+                if (!VersionManager.hasNewMonitorVersion()) finish()
+            }
+            TYPE_SLEEP_MASTER -> {
+                if (!VersionManager.hasNewSleeperVersion()) finish()
+            }
         }
     }
 
@@ -122,6 +126,7 @@ class DeviceUpgradeDialogActivity : BaseActivity() {
     override fun onNewIntent(intent: Intent?) {
         DialogManager.isDeviceUpgradeDialogShowing = true
         val type = intent?.getIntExtra(KEY_TYPE, TYPE_MONITOR)
+        mType = type
         val force = intent?.getBooleanExtra(KEY_FORCE, false)
         val msg = intent?.getStringExtra(KEY_MSG)
         if (type != null && force != null && msg != null) {
