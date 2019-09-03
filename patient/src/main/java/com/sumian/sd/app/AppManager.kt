@@ -321,7 +321,7 @@ object AppManager {
 
     fun onAppForeground() {
         LogManager.appendUserOperationLog("App 进入 前台")
-        if (!DeviceManager.isMonitorConnected()) {
+        if (!DeviceManager.isMonitorConnected() && DeviceManager.isBluetoothEnable()) {
             DeviceManager.connectBoundDevice(null)
         }
         uploadSleepFile()
