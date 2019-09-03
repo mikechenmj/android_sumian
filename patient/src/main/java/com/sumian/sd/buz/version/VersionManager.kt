@@ -100,18 +100,30 @@ object VersionManager {
                 if (response == null) return
                 mFirmwareVersionInfoLD.value = response
                 if (showDialogIfNeed) {
+                    var hasNewSleeperVersion = hasNewSleeperVersion()
+                    var hasNewMonitorVersion = hasNewMonitorVersion()
+                    var sleeperUpgradeForce = response.sleeper?.isForceUpdate() ?: false
+                    var monitorUpgradeForce = response.monitor?.isForceUpdate() ?: false
                     when {
-                        hasNewSleeperVersion() -> {
+                        hasNewSleeperVersion and sleeperUpgradeForce -> {
                             DeviceUpgradeDialogActivity.start(VERSION_TYPE_SLEEPER,
-                                    response.sleeper?.isForceUpdate() ?: false,
-                                    response.sleeper?.description ?: "")
+                                    sleeperUpgradeForce, response.sleeper?.description ?: "")
                         }
-                        hasNewMonitorVersion() -> {
+                        hasNewMonitorVersion and monitorUpgradeForce -> {
                             DeviceUpgradeDialogActivity.start(VERSION_TYPE_MONITOR,
-                                    response.monitor?.isForceUpdate() ?: false,
-                                    response.monitor?.description ?: "")
+                                    monitorUpgradeForce, response.monitor?.description ?: "")
                         }
-                        else -> EventBusUtil.postEvent(DeviceUpgradeDialogActivity.DfuUpgradeSuccessEvent())
+                        hasNewSleeperVersion -> {
+                            DeviceUpgradeDialogActivity.start(VERSION_TYPE_SLEEPER,
+                                    sleeperUpgradeForce, response.sleeper?.description ?: "")
+                        }
+                        hasNewMonitorVersion -> {
+                            DeviceUpgradeDialogActivity.start(VERSION_TYPE_MONITOR,
+                                    monitorUpgradeForce, response.monitor?.description ?: "")
+                        }
+                        else -> {
+                            EventBusUtil.postEvent(DeviceUpgradeDialogActivity.DfuUpgradeSuccessEvent())
+                        }
                     }
                 }
             }
