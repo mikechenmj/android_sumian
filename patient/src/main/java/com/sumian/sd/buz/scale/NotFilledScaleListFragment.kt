@@ -52,7 +52,7 @@ class NotFilledScaleListFragment : BaseFragment() {
     }
 
     private fun loadMoreData() {
-        val call = AppManager.getSdHttpService().getNotFilledScaleList(mPage)
+        val call = AppManager.getSdHttpService().getAllScaleList(mPage)
         addCall(call)
         call.enqueue(object : BaseSdResponseCallback<PaginationResponseV2<NotFilledScale>>() {
 

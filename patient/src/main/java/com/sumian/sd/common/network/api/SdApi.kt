@@ -220,6 +220,11 @@ interface SdApi {
 
     // ---------- scale ----------
     @GET("scale-distributions")
+    fun getAllScaleList(@Query("page") page: Int,
+                     @Query("per_page") perPage: Int = 15,
+                     @Query("type") type: String = "all"): Call<PaginationResponseV2<NotFilledScale>>
+
+    @GET("scale-distributions")
     fun getScaleList(@Query("page") page: Int,
                      @Query("per_page") perPage: Int = 15,
                      @Query("type") type: String): Call<PaginationResponseV2<Scale>>
