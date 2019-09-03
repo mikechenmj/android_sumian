@@ -51,6 +51,8 @@ class DeviceManageFragment : BaseFragment() {
     private var mRotateAnimator: ObjectAnimator? = null
     private var mMonitor: BlueDevice? = null
     private var mPopupWindow: PopupWindow? = null
+    private var mConnectStatus = DeviceManager.getDevice()?.monitorConnectStatus
+            ?: DeviceConnectStatus.DISCONNECTED
 
     private val mDeviceStatusListener = object : DeviceStatusListener {
         override fun onStatusChange(type: String) {
@@ -67,7 +69,8 @@ class DeviceManageFragment : BaseFragment() {
                 }
                 DeviceManager.EVENT_MONITOR_CONNECT_STATUS_CHANGE -> {
                     showRipple(false)
-                    if (DeviceManager.getDevice()?.monitorConnectStatus == DeviceConnectStatus.DISCONNECTED) {
+                    if (mConnectStatus == DeviceConnectStatus.CONNECTING &&
+                            DeviceManager.getDevice()?.monitorConnectStatus == DeviceConnectStatus.DISCONNECTED) {
                         SumianAlertDialog(context)
                                 .hideTopIcon(true)
                                 .setTitle(R.string.connect_time_out)
@@ -75,6 +78,8 @@ class DeviceManageFragment : BaseFragment() {
                                 .setRightBtn(R.string.confirm, null)
                                 .show()
                     }
+                    mConnectStatus = DeviceManager.getDevice()?.monitorConnectStatus
+                            ?: mConnectStatus
                 }
             }
             updateUI()
