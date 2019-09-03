@@ -1,13 +1,22 @@
 package com.sumian.sd.buz.scale.bean
 
-data class NotFilledScale(
+data class Scale(
         val id: Long,   // scale distribution id
         val doctor_id: Int,
         val scale_result_id: Int,
         val created_at: Int,
         val scale: Scale2,
-        val result: Any,
+        val result: ScaleResult,
         val doctor: Doctor?
+)
+
+data class ScaleResult(
+        val id: Int,
+        val score: Int,
+        val result: String?,
+        val comment: String?,
+        val created_at: Int,
+        val updated_at: Int
 )
 
 data class Scale2(

@@ -43,7 +43,6 @@ import com.sumian.sd.buz.report.weeklyreport.WeekMeta
 import com.sumian.sd.buz.report.weeklyreport.bean.SleepDurationReport
 import com.sumian.sd.buz.report.weeklyreport.bean.WeeklyReportResponse
 import com.sumian.sd.buz.scale.bean.FilledScale
-import com.sumian.sd.buz.scale.bean.NotFilledScale
 import com.sumian.sd.buz.scale.bean.Scale
 import com.sumian.sd.buz.setting.bean.Feedback
 import com.sumian.sd.buz.setting.remind.bean.Reminder
@@ -222,7 +221,7 @@ interface SdApi {
     @GET("scale-distributions")
     fun getAllScaleList(@Query("page") page: Int,
                      @Query("per_page") perPage: Int = 15,
-                     @Query("type") type: String = "all"): Call<PaginationResponseV2<NotFilledScale>>
+                     @Query("type") type: String = "all"): Call<PaginationResponseV2<Scale>>
 
     @GET("scale-distributions")
     fun getScaleList(@Query("page") page: Int,
@@ -232,7 +231,7 @@ interface SdApi {
     @GET("scale-distributions")
     fun getNotFilledScaleList(@Query("page") page: Int,
                               @Query("per_page") perPage: Int = 15,
-                              @Query("type") type: String = "not_filled"): Call<PaginationResponseV2<NotFilledScale>>
+                              @Query("type") type: String = "not_filled"): Call<PaginationResponseV2<Scale>>
 
     @GET("filled-scales")
     fun getFilledScaleList(@Query("page") page: Int,

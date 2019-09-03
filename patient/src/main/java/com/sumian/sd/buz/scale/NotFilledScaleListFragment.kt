@@ -13,7 +13,7 @@ import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.network.response.PaginationResponseV2
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.buz.scale.bean.NotFilledScale
+import com.sumian.sd.buz.scale.bean.Scale
 import com.sumian.sd.buz.scale.event.ScaleFinishFillingEvent
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import com.sumian.sd.common.utils.EventBusUtil
@@ -41,7 +41,7 @@ class NotFilledScaleListFragment : BaseFragment() {
         mAdapter.setOnLoadMoreListener({ loadMoreData() }, recycler_view)
         mAdapter.setOnItemClickListener { adapter, view, position ->
             run {
-                val notFilledScale = mAdapter.getItem(position) as NotFilledScale
+                val notFilledScale = mAdapter.getItem(position) as Scale
                 ScaleDetailActivity.launch(activity!!, notFilledScale.scale?.title, notFilledScale.id, 0)
             }
         }
@@ -54,13 +54,13 @@ class NotFilledScaleListFragment : BaseFragment() {
     private fun loadMoreData() {
         val call = AppManager.getSdHttpService().getAllScaleList(mPage)
         addCall(call)
-        call.enqueue(object : BaseSdResponseCallback<PaginationResponseV2<NotFilledScale>>() {
+        call.enqueue(object : BaseSdResponseCallback<PaginationResponseV2<Scale>>() {
 
             override fun onFailure(errorResponse: ErrorResponse) {
                 ToastUtils.showShort(errorResponse.message)
             }
 
-            override fun onSuccess(response: PaginationResponseV2<NotFilledScale>?) {
+            override fun onSuccess(response: PaginationResponseV2<Scale>?) {
                 val data = response!!.data
                 if (mPage == 1) {
                     mAdapter.setNewData(data)
@@ -100,8 +100,8 @@ class NotFilledScaleListFragment : BaseFragment() {
     }
 }
 
-class NotFilledScaleListAdapter : BaseQuickAdapter<NotFilledScale, BaseViewHolder>(R.layout.item_scale_not_filled) {
-    override fun convert(helper: BaseViewHolder, item: NotFilledScale) {
+class NotFilledScaleListAdapter : BaseQuickAdapter<Scale, BaseViewHolder>(R.layout.item_scale_not_filled) {
+    override fun convert(helper: BaseViewHolder, item: Scale) {
         helper.setText(R.id.tv_scale_name, item.scale?.title)
         helper.setText(R.id.tv_doctor_name, item.doctor?.name)
         helper.getView<View>(R.id.tv_doctor_name).visibility = if (item.doctor == null) View.GONE else View.VISIBLE
