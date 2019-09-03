@@ -1,12 +1,12 @@
 package com.sumian.sd.buz.upgrade.fragment
 
 import android.bluetooth.BluetoothDevice
+import android.os.Bundle
 import android.view.View
 import androidx.annotation.StringRes
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.liulishuo.filedownloader.BaseDownloadTask
 import com.sumian.common.helper.ToastHelper
-import com.sumian.device.data.DeviceType
 import com.sumian.device.manager.DeviceManager
 import com.sumian.device.util.LogManager
 import com.sumian.device.util.MacUtil
@@ -18,7 +18,6 @@ import com.sumian.sd.buz.devicemanager.BlueDevice
 import com.sumian.sd.buz.upgrade.dialog.UpgradeConfirmDialog
 import com.sumian.sd.buz.upgrade.dialog.VersionDialog
 import com.sumian.sd.buz.upgrade.manager.DfuUpgradeManager
-import com.sumian.sd.buz.version.VersionManager
 import com.sumian.sd.buz.version.ui.DeviceUpgradeDialogActivity
 import com.sumian.sd.common.utils.EventBusUtil
 import kotlinx.android.synthetic.main.fragment_scan_upgrade.*
@@ -26,6 +25,8 @@ import java.lang.IllegalArgumentException
 import java.util.ArrayList
 
 class ScanUpgradeFragment(private var mDeviceType: Int) : BaseScanDeviceFragment() {
+
+    constructor() : this(-1)
 
     private lateinit var mDeviceNamePrefix: String
     private val mScanResults = ArrayList<BlueDevice>()
@@ -39,6 +40,11 @@ class ScanUpgradeFragment(private var mDeviceType: Int) : BaseScanDeviceFragment
             stopScan()
             upgradeDfuModelDevice(blueDevice.mac, getTypeFromDeviceName(blueDevice.name))
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt("device_type", mDeviceType)
     }
 
     private val mUpgradeCallback = object : DfuUpgradeManager.UpgradeCallback {
@@ -186,6 +192,11 @@ class ScanUpgradeFragment(private var mDeviceType: Int) : BaseScanDeviceFragment
             showEnableBluetoothUI()
         }
         mProgressDialog = VersionDialog.newInstance(getString(R.string.firmware_upgrade_title_hint)) as VersionDialog
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        mDeviceType = savedInstanceState?.getInt("device_type", mDeviceType) ?: mDeviceType
     }
 
     private fun rescan() {
