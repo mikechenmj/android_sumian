@@ -14,7 +14,6 @@ import com.sumian.device.callback.AsyncCallback
 import com.sumian.device.data.DeviceType
 import com.sumian.device.data.DeviceVersionInfo
 import com.sumian.device.manager.DeviceManager
-import com.sumian.device.manager.helper.DfuCallback
 import com.sumian.device.util.MediaUtility
 import com.sumian.device.util.VersionUtil
 import com.sumian.devicedemo.R
@@ -145,25 +144,19 @@ class UpgradeDeviceActivity : BaseActivity() {
         DeviceManager.upgradeBoundDevice(
                 if (getType() == TYPE_MONITOR) DeviceType.MONITOR else DeviceType.SLEEP_MASTER,
                 file.absolutePath,
-                object : DfuCallback {
-                    override fun onStart() {
-                    }
-
-                    override fun onProgressChange(progress: Int) {
-                        progressDialog.progress = progress
-                    }
-
-                    override fun onSuccess() {
-                        ToastUtils.showShort("升级成功")
-                        progressDialog.dismiss()
-                        iv_top.setImageResource(R.drawable.ic_upgrade_device_success)
-                        tv_latest_version.text = getString(R.string.already_latest_version)
-                    }
-
-                    override fun onFail(code: Int, msg: String?) {
-                        ToastUtils.showShort("升级成功失败：$msg")
-                        progressDialog.dismiss()
-                    }
+                onStart = {},
+                onProgressChange = {
+                    progressDialog.progress = it
+                },
+                onSuccess = {
+                    ToastUtils.showShort("升级成功")
+                    progressDialog.dismiss()
+                    iv_top.setImageResource(R.drawable.ic_upgrade_device_success)
+                    tv_latest_version.text = getString(R.string.already_latest_version)
+                },
+                onFail = {code,msg ->
+                    ToastUtils.showShort("升级成功失败：$code $msg")
+                    progressDialog.dismiss()
                 })
     }
 

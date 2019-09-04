@@ -115,7 +115,8 @@ class DeviceCardFragment : BaseFragment() {
                     showMessageDialog(false, resources.getString(R.string.sync_fail))
                 }
                 DeviceManager.EVENT_SYNC_SLEEP_DATA_SYNC_PROGRESS_CHANGE -> {
-                    tv_progress.text = "${device!!.syncProgress * 100 / device.syncTotalCount}%"
+                    tv_progress.text = "${device?.syncProgress ?: 0 * 100 /
+                    (device?.syncTotalCount ?: 1)}%"
                 }
             }
             updateDevice()
