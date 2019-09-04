@@ -5,6 +5,7 @@ import android.app.Activity
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.bluetooth.BluetoothDevice
 import android.content.Context
 import android.graphics.Color
 import android.os.Build
@@ -12,16 +13,15 @@ import androidx.annotation.RequiresApi
 import com.clj.fastble.utils.HexUtil
 import com.sumian.device.R
 import com.sumian.device.callback.BleRequestCallback
+import com.sumian.device.callback.ScanCallback
 import com.sumian.device.cmd.BleCmd
 import com.sumian.device.data.DeviceType
 import com.sumian.device.manager.DeviceManager
 import com.sumian.device.manager.blecommunicationcontroller.BleCommunicationController
-import com.sumian.device.util.BleCmdUtil
-import com.sumian.device.util.LogManager
-import com.sumian.device.util.MacUtil
-import com.sumian.device.util.ThreadManager
+import com.sumian.device.util.*
 import no.nordicsemi.android.dfu.*
 import java.lang.IllegalArgumentException
+import java.util.*
 
 /**
  * @author : Zhan Xuzhao
@@ -40,6 +40,66 @@ object DfuUpgradeHelper {
     const val ERROR_CODE_DFU_ABORTED = 1
     const val ERROR_CODE_GET_MONITOR_MAC_FAIL = 2
     const val ERROR_CODE_GET_SLEEP_MASTER_MAC_FAIL = 3
+
+    fun upgradeBoundDevice(target: DeviceType, filePath: String,
+                           onStart: () -> Unit,
+                           onProgressChange: (progress: Int) -> Unit,
+                           onSuccess: () -> Unit,
+                           onFail: (code: Int, msg: String?) -> Unit) {
+        queryTargetDeviceMac(target,
+                onSuccess = {
+                    enterDfuMode(target,
+                            onSuccess = {
+                                DeviceManager.scanDelay(object : ScanCallback {
+                                    override fun onStart(success: Boolean) {
+                                    }
+
+                                    override fun onLeScan(device: BluetoothDevice, rssi: Int, scanRecord: ByteArray) {
+                                        val isDeviceVersionValid = isLeScanDeviceVersionValid(target,
+                                                device.name ?: "", scanRecord)
+                                        if (isDeviceVersionValid) {
+                                            if (MacUtil.getLongMacFromStringMac(device.address) - 1 == it) {
+                                                startDfuUpgrade(device.address, filePath,
+                                                        onStart, onProgressChange, onSuccess, onFail)
+                                                DeviceManager.stopScan()
+                                            }
+                                        }
+                                    }
+
+                                    override fun onStop() {
+                                    }
+
+                                })
+                            },
+                            onFail = { code, msg ->
+                                onFail(code, msg)
+                            }
+                    )
+                },
+                onFail = { code, msg ->
+                    onFail(code, msg)
+                })
+    }
+
+    fun isLeScanDeviceVersionValid(target: DeviceType, name: String, scanRecord: ByteArray): Boolean {
+        var isTargetDeviceType = false
+        var prefix = when (target) {
+            DeviceType.MONITOR -> "M-SUMIAN"
+            DeviceType.SLEEP_MASTER -> "PDNWK"
+            else -> throw IllegalArgumentException("type $target is illegal")
+        }
+        isTargetDeviceType = isTargetDeviceType or name!!.startsWith(prefix)
+        return if (isTargetDeviceType) {
+            var scanRecordBean = ScanRecord.parseFromBytes(scanRecord)
+            return if (scanRecordBean?.serviceUuids != null) {
+                scanRecordBean.serviceUuids.toString().contains("fe59")
+            } else {
+                false
+            }
+        } else {
+            false
+        }
+    }
 
     fun queryTargetDeviceMac(target: DeviceType, onSuccess: (mac: Long) -> Unit, onFail: (code: Int, msg: String?) -> Unit) {
         var errorMsg = "未找到设备的物理地址，升级失败，请尝试重连设备"
