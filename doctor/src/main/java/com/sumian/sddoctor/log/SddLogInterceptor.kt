@@ -17,7 +17,8 @@ class SddLogInterceptor : Interceptor {
         if (response.code() >= 500) {
             val requestInfo = "${request.url()} ${request.body()}"
             val responseInfo = "${response.code()} ${response.message()} ${response.body()}"
-            SddLogManager.logHttp(requestInfo, responseInfo)
+            val responseCode = response.code().toString()
+            SddLogManager.logHttp(requestInfo, responseInfo, responseCode)
         }
         return response
     }

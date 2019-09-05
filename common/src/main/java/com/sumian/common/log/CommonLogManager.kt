@@ -50,6 +50,7 @@ abstract class CommonLogManager : ILog {
         const val KEY_PAGE_DATA = "page_data"
         const val KEY_HTTP_REQUEST = "http_request"
         const val KEY_HTTP_RESPONSE = "http_response"
+        const val KEY_HTTP_CODE = "http_code"
         const val KEY_APP_VERSION = "app_version"
         const val KEY_APP_TYPE = "app_type"
         const val KEY_DEVICE_INFO = "device_info"
@@ -144,11 +145,12 @@ abstract class CommonLogManager : ILog {
         ))
     }
 
-    fun logHttp(request: String?, response: String?) {
+    fun logHttp(request: String?, response: String?, code: String? = null) {
         log(mapOf(
                 KEY_ACTION_TYPE to ACTION_TYPE_HTTP,
                 KEY_HTTP_REQUEST to (request ?: ""),
-                KEY_HTTP_RESPONSE to (response ?: "")
+                KEY_HTTP_RESPONSE to (response ?: ""),
+                KEY_HTTP_CODE to (code ?: "")
         ))
     }
 

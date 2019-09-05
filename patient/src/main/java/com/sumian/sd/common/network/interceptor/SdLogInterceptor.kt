@@ -18,7 +18,8 @@ class SdLogInterceptor : Interceptor {
         if (response.code() >= 500) {
             val requestInfo = "${request.url()} ${request.body()}"
             val responseInfo = "${response.code()} ${response.message()} ${response.body()}"
-            SdLogManager.logHttp(requestInfo, responseInfo)
+            val responseCode = response.code().toString()
+            SdLogManager.logHttp(requestInfo, responseInfo, responseCode)
         }
         return response
     }
