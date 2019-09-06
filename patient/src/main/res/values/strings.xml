@@ -898,4 +898,6 @@
     <string name="upgrade_success_title_text">升级完成</string>
     <string name="upgrade_fail_content_text">升级异常，请重试</string>
     <string name="upgrade_fail_title_text">升级异常</string>
+    <string name="anxious_un_handle_tip_text">待处理</string>
+    <string name="faith_un_handle_tip_text">未添加信念</string>
 </resources>

@@ -24,19 +24,16 @@ class AnxiousFaithItemView(context: Context, attributeSet: AttributeSet? = null)
 
     fun setData(data: AnxietyFaithItemViewData, listener: EditAnxietyBottomSheetDialog.OnItemClickListener) {
         tv_title.text = data.title
-        tv_message.text = data.message
         tv_time.text = TimeUtilV2.formatYYYYMMDDHHMMss(data.time)
         iv_more.setOnClickListener { EditAnxietyBottomSheetDialog(context, listener).show() }
         if (data.type == AnxietyFaithItemViewData.TYPE_BELIEF) {
-            vg_emotion.visibility = View.VISIBLE
+            iv_emotion.visibility = View.VISIBLE
             iv_emotion.setImageResource(data.getEmotionImageRes())
-            tv_emotion.setText(data.getEmotionTextRes())
         }
     }
 
     fun setTextMaxLines(noLimit: Boolean) {
         tv_title.maxLines = if (noLimit) Integer.MAX_VALUE else 1
-        tv_message.maxLines = if (noLimit) Integer.MAX_VALUE else 1
     }
 
 }
