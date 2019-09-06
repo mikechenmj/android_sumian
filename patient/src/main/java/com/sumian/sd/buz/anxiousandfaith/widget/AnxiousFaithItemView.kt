@@ -25,7 +25,7 @@ class AnxiousFaithItemView(context: Context, attributeSet: AttributeSet? = null)
     fun setData(data: AnxietyFaithItemViewData, listener: EditAnxietyBottomSheetDialog.OnItemClickListener) {
         tv_title.text = data.title
         tv_message.text = data.message
-        tv_time.text = TimeUtilV2.formatYYYYMMDDHHMM(data.time)
+        tv_time.text = TimeUtilV2.formatYYYYMMDDHHMMss(data.time)
         iv_more.setOnClickListener { EditAnxietyBottomSheetDialog(context, listener).show() }
         if (data.type == AnxietyFaithItemViewData.TYPE_BELIEF) {
             vg_emotion.visibility = View.VISIBLE
