@@ -12,4 +12,8 @@ data class FaithData(
         val updated_at: Int,
         val created_at: Int,
         val id: Int
-) : Parcelable
+) : Parcelable {
+    fun getUpdateAtInMillis(): Long {
+        return updated_at * 1000L
+    }
+}

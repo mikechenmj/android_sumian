@@ -1,9 +1,10 @@
 package com.sumian.sd.buz.anxiousandfaith
 
+import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ToastUtils
-import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.BaseSectionMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.sumian.common.base.BaseActivity
 import com.sumian.common.network.response.ErrorResponse
@@ -13,6 +14,7 @@ import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.anxiousandfaith.bean.AnxietyData
 import com.sumian.sd.buz.anxiousandfaith.bean.AnxietyFaithItemViewData
+import com.sumian.sd.buz.anxiousandfaith.bean.AnxietySectionMultiEntity
 import com.sumian.sd.buz.anxiousandfaith.event.AnxietyChangeEvent
 import com.sumian.sd.buz.anxiousandfaith.widget.AnxiousFaithItemView
 import com.sumian.sd.buz.anxiousandfaith.widget.EditAnxietyBottomSheetDialog
@@ -33,6 +35,11 @@ class AnxietyListActivity : BaseActivity() {
 
     private val mAdapter = AnxietyAdapter()
     private var mPage = 1
+    private var mHasAWeekAgoHead = false
+
+    companion object {
+        private const val TIME_MILLI_A_WEEK = 7 * 24 * 60 * 60 * 1000L
+    }
 
     override fun showBackNav(): Boolean {
         return true
@@ -72,6 +79,7 @@ class AnxietyListActivity : BaseActivity() {
     private fun refreshData() {
         mPage = 1
         loadData()
+        mHasAWeekAgoHead = false
     }
 
     private fun loadData() {
@@ -82,10 +90,29 @@ class AnxietyListActivity : BaseActivity() {
                 if (response == null) {
                     return
                 }
-                if (mPage == 1) {
-                    mAdapter.setNewData(response.data)
+                var data = response.data
+                if (data.size < 1) {
+                    return
+                }
+                var currentTime = System.currentTimeMillis()
+                var dataWithSection = mutableListOf<AnxietySectionMultiEntity>()
+                var isFirstPage = mPage == 1
+                if (isFirstPage) {
+                    if (currentTime - data[0].getUpdateAtInMillis() < TIME_MILLI_A_WEEK)
+                        dataWithSection.add(AnxietySectionMultiEntity(true, "本周"))
+                }
+                data.forEach {
+                    var isAWeekAgo = currentTime - it.getUpdateAtInMillis() > TIME_MILLI_A_WEEK
+                    if (isAWeekAgo && !mHasAWeekAgoHead) {
+                        mHasAWeekAgoHead = true
+                        dataWithSection.add(AnxietySectionMultiEntity(true, "一周前"))
+                    }
+                    dataWithSection.add(AnxietySectionMultiEntity(it))
+                }
+                if (isFirstPage) {
+                    mAdapter.setNewData(dataWithSection)
                 } else {
-                    mAdapter.addData(response.data)
+                    mAdapter.addData(dataWithSection)
                 }
                 mPage++
                 mAdapter.setEnableLoadMore(!response.meta.pagination.isLastPage())
@@ -103,19 +130,27 @@ class AnxietyListActivity : BaseActivity() {
         })
     }
 
-    inner class AnxietyAdapter : BaseQuickAdapter<AnxietyData, BaseViewHolder>(R.layout.list_item_anxiety_faith) {
-        override fun convert(helper: BaseViewHolder, item: AnxietyData) {
+    inner class AnxietyAdapter : BaseSectionMultiItemQuickAdapter<AnxietySectionMultiEntity, BaseViewHolder> {
+        constructor() : super(R.layout.list_section_header_anxiety_faith, null) {
+            addItemType(0, R.layout.list_item_anxiety_faith)
+        }
+
+        override fun convert(helper: BaseViewHolder, item: AnxietySectionMultiEntity) {
             val itemView = helper.getView<AnxiousFaithItemView>(R.id.anxiety_faith_view)
             itemView.setTextMaxLines(true)
-            itemView.setData(AnxietyFaithItemViewData.create(item), object : EditAnxietyBottomSheetDialog.OnItemClickListener {
+            itemView.setData(AnxietyFaithItemViewData.create(item.t), object : EditAnxietyBottomSheetDialog.OnItemClickListener {
                 override fun onEditClick() {
-                    AnxietyActivity.launch(item)
+                    AnxietyActivity.launch(item.t)
                 }
 
                 override fun onDeleteClick() {
-                    deleteAnxiety(item.id)
+                    deleteAnxiety(item.t.id)
                 }
             })
+        }
+
+        override fun convertHead(helper: BaseViewHolder, item: AnxietySectionMultiEntity) {
+            helper.setText(R.id.section_header, item.header)
         }
     }
 
@@ -153,15 +188,15 @@ class AnxietyListActivity : BaseActivity() {
     fun onAnxietyChangeEvent(event: AnxietyChangeEvent) {
         EventBusUtil.removeStickyEvent(event)
         val anxiety = event.anxiety
-        val position = getItemPosition(anxietyId = anxiety.id)
-        mAdapter.data[position] = anxiety
+        val position = getItemPosition(id = anxiety.id)
+        mAdapter.data[position] = AnxietySectionMultiEntity(anxiety)
         mAdapter.notifyItemChanged(position)
     }
 
-    private fun getItemPosition(anxietyId: Int): Int {
+    private fun getItemPosition(id: Int): Int {
         val list = mAdapter.data
         for ((index, data) in list.withIndex()) {
-            if (data.id == anxietyId) {
+            if (data.t.id == id) {
                 return index
             }
         }
