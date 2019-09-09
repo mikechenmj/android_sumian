@@ -27,12 +27,8 @@ import kotlinx.android.synthetic.main.activity_anxiety.*
  * desc   :
  * version: 1.0
  */
-class AnxietyActivity : BaseActivity() {
+class AnxietyActivity : WhileTitleNavBgActivity() {
     private var mAnxietyData: AnxietyData? = null
-
-    override fun showBackNav(): Boolean {
-        return true
-    }
 
     override fun getLayoutId(): Int {
         return layout.activity_anxiety

@@ -604,6 +604,7 @@
     <string name="fine">好的</string>
     <string name="doctor_service_introduction">服务介绍</string>
     <string name="anxious_and_belief">忧虑与信念</string>
+    <string name="anxious_and_belief_title">记录</string>
     <string name="add_anxious">添加忧虑</string>
     <string name="what_s_the_meaning_of_recording_your_anxious_and_belief">记录自己的忧虑、信念有什么用</string>
     <string name="anxious_record">忧虑记录</string>

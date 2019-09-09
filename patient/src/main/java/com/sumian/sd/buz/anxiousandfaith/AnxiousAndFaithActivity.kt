@@ -29,19 +29,18 @@ import kotlinx.android.synthetic.main.activity_anxious_and_faith.*
  * desc   :
  * version: 1.0
  */
-class AnxiousAndFaithActivity : BaseActivity() {
+class AnxiousAndFaithActivity : WhileTitleNavBgActivity() {
     private var mHasAnxiety = false
     private var mHasBelief = false
-
-    override fun showBackNav(): Boolean {
-        return true
-    }
 
     override fun getLayoutId(): Int {
         return R.layout.activity_anxious_and_faith
     }
 
     companion object {
+
+        private const val PER_PAGE_PREVIEW_COUNT = 3
+
         fun getLaunchIntent(): Intent {
             return Intent(ActivityUtils.getTopActivity(), AnxiousAndFaithActivity::class.java)
         }
@@ -53,7 +52,7 @@ class AnxiousAndFaithActivity : BaseActivity() {
 
     override fun initWidget() {
         super.initWidget()
-        setTitle(R.string.anxious_and_belief)
+        setTitle(R.string.anxious_and_belief_title)
         tv_add_anxiety.setOnClickListener { AnxietyActivity.launch() }
         tv_add_belief.setOnClickListener { FaithActivity.launch() }
         vg_question.setOnClickListener {
@@ -78,7 +77,7 @@ class AnxiousAndFaithActivity : BaseActivity() {
     }
 
     private fun getAnxious() {
-        val call = AppManager.getSdHttpService().getAnxieties(1, 3)
+        val call = AppManager.getSdHttpService().getAnxieties(1, PER_PAGE_PREVIEW_COUNT)
         addCall(call)
         call.enqueue(object : BaseSdResponseCallback<PaginationResponseV2<AnxietyData>>() {
             override fun onSuccess(response: PaginationResponseV2<AnxietyData>?) {
@@ -118,7 +117,7 @@ class AnxiousAndFaithActivity : BaseActivity() {
     }
 
     private fun getFaith() {
-        val call = AppManager.getSdHttpService().getFaiths(1, 3)
+        val call = AppManager.getSdHttpService().getFaiths(1, PER_PAGE_PREVIEW_COUNT)
         addCall(call)
         call.enqueue(object : BaseSdResponseCallback<PaginationResponseV2<FaithData>>() {
             override fun onSuccess(response: PaginationResponseV2<FaithData>?) {

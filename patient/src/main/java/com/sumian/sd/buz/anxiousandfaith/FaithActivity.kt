@@ -28,15 +28,12 @@ import kotlinx.android.synthetic.main.activity_faith.*
  * version: 1.0
  */
 @SuppressLint("SetTextI18n")
-class FaithActivity : BaseActivity() {
+class FaithActivity : WhileTitleNavBgActivity() {
     private var mProgress = 0
     private var mEvent = ""
     private var mThought = ""
     private var mEmotion = -1
     private var mId = -1
-    override fun showBackNav(): Boolean {
-        return true
-    }
 
     override fun getLayoutId(): Int {
         return R.layout.activity_faith

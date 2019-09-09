@@ -31,7 +31,7 @@ import org.greenrobot.eventbus.Subscribe
  * desc   :
  * version: 1.0
  */
-class AnxietyListActivity : BaseActivity() {
+class AnxietyListActivity : WhileTitleNavBgActivity() {
 
     private val mAdapter = AnxietyAdapter()
     private var mPage = 1
@@ -39,10 +39,6 @@ class AnxietyListActivity : BaseActivity() {
 
     companion object {
         private const val TIME_MILLI_A_WEEK = 7 * 24 * 60 * 60 * 1000L
-    }
-
-    override fun showBackNav(): Boolean {
-        return true
     }
 
     override fun getLayoutId(): Int {

@@ -30,7 +30,7 @@ import org.greenrobot.eventbus.Subscribe
  * desc   :
  * version: 1.0
  */
-class FaithListActivity : BaseActivity() {
+class FaithListActivity : WhileTitleNavBgActivity() {
 
     private val mAdapter = FaithAdapter()
     private var mPage = 1
@@ -38,10 +38,6 @@ class FaithListActivity : BaseActivity() {
 
     companion object {
         private const val TIME_MILLI_A_WEEK = 7 * 24 * 60 * 60 * 1000L
-    }
-
-    override fun showBackNav(): Boolean {
-        return true
     }
 
     override fun getLayoutId(): Int {
