@@ -78,7 +78,7 @@ class AnxiousAndFaithActivity : BaseActivity() {
     }
 
     private fun getAnxious() {
-        val call = AppManager.getSdHttpService().getAnxieties(1, 2)
+        val call = AppManager.getSdHttpService().getAnxieties(1, 3)
         addCall(call)
         call.enqueue(object : BaseSdResponseCallback<PaginationResponseV2<AnxietyData>>() {
             override fun onSuccess(response: PaginationResponseV2<AnxietyData>?) {
@@ -118,7 +118,7 @@ class AnxiousAndFaithActivity : BaseActivity() {
     }
 
     private fun getFaith() {
-        val call = AppManager.getSdHttpService().getFaiths(1, 2)
+        val call = AppManager.getSdHttpService().getFaiths(1, 3)
         addCall(call)
         call.enqueue(object : BaseSdResponseCallback<PaginationResponseV2<FaithData>>() {
             override fun onSuccess(response: PaginationResponseV2<FaithData>?) {
