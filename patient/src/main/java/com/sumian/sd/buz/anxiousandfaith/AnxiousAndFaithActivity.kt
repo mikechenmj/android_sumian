@@ -111,6 +111,7 @@ class AnxiousAndFaithActivity : WhileTitleNavBgActivity() {
                     deleteAnxiety(data.id)
                 }
             })
+            itemView.setOnClickListener { AnxietyActivity.launch(data) }
             itemView.tag = data.id
             vg_anxious_record.addView(itemView)
         }
@@ -154,6 +155,7 @@ class AnxiousAndFaithActivity : WhileTitleNavBgActivity() {
                     deleteFaith(data.id)
                 }
             })
+            itemView.setOnClickListener { FaithActivity.launch(data) }
             itemView.tag = data.id
             vg_faith_record.addView(itemView)
         }
