@@ -69,6 +69,7 @@ class FilledScaleListFragment : BaseFragment() {
                         data.add(collectionDistributions)
                     }
                 }
+                data.sortByDescending { it.updated_at }
                 if (mPage == 1) {
                     mAdapter.setNewData(data)
                 } else {
