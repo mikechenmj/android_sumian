@@ -41,8 +41,8 @@ class FilledScaleListFragment : BaseFragment() {
         mAdapter.setOnLoadMoreListener({ loadMoreData() }, recycler_view)
         mAdapter.setOnItemClickListener { adapter, view, position ->
             run {
-                val filledScaleCollection = mAdapter.getItem(position) as FilledScaleCollection
-                ScaleDetailActivity.launch(activity!!, filledScaleCollection.title, filledScaleCollection.distributions.id, filledScaleCollection.id)
+                val distributions = mAdapter.getItem(position)
+                ScaleDetailActivity.launch(activity!!, distributions!!.title, distributions!!.collectionId, distributions!!.id)
             }
         }
         val emptyErrorView = EmptyErrorView.create(activity!!, R.mipmap.ic_empty_state_report, R.string.empty_evaluation_msg, R.string.know_your_sleep_health_situation)
@@ -64,7 +64,14 @@ class FilledScaleListFragment : BaseFragment() {
             }
 
             override fun onSuccess(response: PaginationResponseV2<FilledScaleCollection>?) {
-                val data = response!!.data
+                val data = mutableListOf<FilledScaleCollection.CollectionDistributions>()
+                for (filledScaleCollection in response!!.data) {
+                    for (collectionDistributions in filledScaleCollection.distributions) {
+                        collectionDistributions.title = filledScaleCollection.title
+                        collectionDistributions.collectionId = filledScaleCollection.id
+                        data.add(collectionDistributions)
+                    }
+                }
                 if (mPage == 1) {
                     mAdapter.setNewData(data)
                 } else {
@@ -101,12 +108,11 @@ class FilledScaleListFragment : BaseFragment() {
         mPage = 1
         loadMoreData()
     }
-
 }
 
-class FilledScaleListAdapter : BaseQuickAdapter<FilledScaleCollection, BaseViewHolder>(R.layout.item_scale_filled) {
-    override fun convert(helper: BaseViewHolder, item: FilledScaleCollection) {
+class FilledScaleListAdapter : BaseQuickAdapter<FilledScaleCollection.CollectionDistributions, BaseViewHolder>(R.layout.item_scale_filled) {
+    override fun convert(helper: BaseViewHolder, item: FilledScaleCollection.CollectionDistributions) {
         helper.setText(R.id.tv_scale_name, item.title)
-        helper.setText(R.id.tv_time, TimeUtilV2.formatYYYYMMDDHHMM(item.distributions.getUpdateAtInMillis()))
+        helper.setText(R.id.tv_time, TimeUtilV2.formatYYYYMMDDHHMM(item.getUpdateAtInMillis()))
     }
 }
