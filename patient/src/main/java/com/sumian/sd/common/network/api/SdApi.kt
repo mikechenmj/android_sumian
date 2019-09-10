@@ -42,10 +42,7 @@ import com.sumian.sd.buz.report.bean.DailyMeta
 import com.sumian.sd.buz.report.bean.DailyReport
 import com.sumian.sd.buz.report.weeklyreport.WeekMeta
 import com.sumian.sd.buz.report.weeklyreport.bean.SleepDurationReport
-import com.sumian.sd.buz.report.weeklyreport.bean.WeeklyReportResponse
-import com.sumian.sd.buz.scale.bean.FilledScale
-import com.sumian.sd.buz.scale.bean.NotFilledScale
-import com.sumian.sd.buz.scale.bean.Scale
+import com.sumian.sd.buz.scale.bean.*
 import com.sumian.sd.buz.setting.bean.Feedback
 import com.sumian.sd.buz.setting.remind.bean.Reminder
 import com.sumian.sd.buz.sleepertalk.bean.SleeperTalkData
@@ -223,6 +220,14 @@ interface SdApi {
 
     // ---------- scale ----------
     @GET("scale-distributions")
+<<<<<<< HEAD
+=======
+    fun getAllScaleList(@Query("page") page: Int,
+                        @Query("per_page") perPage: Int = 15,
+                        @Query("type") type: String = "all"): Call<PaginationResponseV2<Scale>>
+
+    @GET("scale-distributions")
+>>>>>>> 6f9c79d2... [patient][feature] ->初步修改量表 retorfit 的 bean 并合入界面
     fun getScaleList(@Query("page") page: Int,
                      @Query("per_page") perPage: Int = 15,
                      @Query("type") type: String): Call<PaginationResponseV2<Scale>>
@@ -236,6 +241,13 @@ interface SdApi {
     fun getFilledScaleList(@Query("page") page: Int,
                            @Query("per_page") perPage: Int = 15): Call<PaginationResponseV2<FilledScale>>
 
+    @GET("released-scale-collections")
+    fun getReleasedScaleCollections(@Query("page") page: Int,
+                                    @Query("per_page") perPage: Int = 15): Call<PaginationResponseV2<ReleasedScaleCollection>>
+
+    @GET("filled-scale-collections")
+    fun getFilledScaleCollections(@Query("page") page: Int,
+                                    @Query("per_page") perPage: Int = 15): Call<PaginationResponseV2<FilledScaleCollection>>
     // ---------- device info ----------
     /**
      *
