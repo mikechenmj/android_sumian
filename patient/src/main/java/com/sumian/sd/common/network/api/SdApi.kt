@@ -220,14 +220,11 @@ interface SdApi {
 
     // ---------- scale ----------
     @GET("scale-distributions")
-<<<<<<< HEAD
-=======
     fun getAllScaleList(@Query("page") page: Int,
                         @Query("per_page") perPage: Int = 15,
                         @Query("type") type: String = "all"): Call<PaginationResponseV2<Scale>>
 
     @GET("scale-distributions")
->>>>>>> 6f9c79d2... [patient][feature] ->初步修改量表 retorfit 的 bean 并合入界面
     fun getScaleList(@Query("page") page: Int,
                      @Query("per_page") perPage: Int = 15,
                      @Query("type") type: String): Call<PaginationResponseV2<Scale>>
