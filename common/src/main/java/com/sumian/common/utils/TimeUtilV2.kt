@@ -34,6 +34,10 @@ class TimeUtilV2 {
             return formatDate("yyyy.MM.dd HH:mm", time)
         }
 
+        fun formatYYYYMMDDHHMMss(time: Long): String {
+            return formatDate("yyyy.MM.dd HH:mm:ss", time)
+        }
+
         fun formatYYYYMMDDHHMM(unixTime: Int): String {
             return formatDate("yyyy.MM.dd HH:mm", unixTime * 1000L)
         }
