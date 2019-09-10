@@ -42,7 +42,7 @@ class NotFilledScaleListFragment : BaseFragment() {
         mAdapter.setOnItemClickListener { adapter, view, position ->
             run {
                 val releasedScaleCollection = mAdapter.getItem(position) as ReleasedScaleCollection
-                ScaleDetailActivity.launch(activity!!, releasedScaleCollection.title, releasedScaleCollection.id, 0)
+                ScaleDetailActivity.launch(activity!!, releasedScaleCollection.title, releasedScaleCollection.id, ScaleDetailActivity.INVALID_ID)
             }
         }
         mAdapter.emptyView = EmptyErrorView.create(activity!!, R.mipmap.ic_empty_state_report, R.string.empty_evaluation_msg, R.string.know_your_sleep_health_situation)

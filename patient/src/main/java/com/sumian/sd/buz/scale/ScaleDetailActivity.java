@@ -22,21 +22,22 @@ import androidx.annotation.NonNull;
 public class ScaleDetailActivity extends SdBaseWebViewActivity {
 
     public static final String KEY_TITLE = "title";
-    public static final String KEY_SCALE_ID = "scale_id";
-    public static final String KEY_SCALE_DISTRIBUTION_ID = "scale_distribution_id";
+    public static final String KEY_DISTRIBUTION_ID = "distribution_id";
+    public static final String KEY_COLLECTION_ID = "collection_ID";
+    public static final long INVALID_ID = -1L;
     private String mTitle;
-    private long mScaleId;
-    private long mScaleDistributionId;
+    private long mDistributionId;
+    private long mCollectionId;
 
-    public static void launch(Context context, String title, long scaleDistributionId, long scaleId) {
-        ActivityUtils.startActivity(getLaunchIntent(context, title, scaleDistributionId, scaleId));
+    public static void launch(Context context, String title, long collectionId, long distributionId) {
+        ActivityUtils.startActivity(getLaunchIntent(context, title, collectionId, distributionId));
     }
 
-    public static Intent getLaunchIntent(Context context, String title, long scaleDistributionId, long scaleId) {
+    public static Intent getLaunchIntent(Context context, String title, long collectionId, long distributionId) {
         Bundle bundle = new Bundle();
         bundle.putString(KEY_TITLE, title);
-        bundle.putLong(KEY_SCALE_DISTRIBUTION_ID, scaleDistributionId);
-        bundle.putLong(KEY_SCALE_ID, scaleId);
+        bundle.putLong(KEY_COLLECTION_ID, collectionId);
+        bundle.putLong(KEY_DISTRIBUTION_ID, distributionId);
         Intent intent = new Intent(context, ScaleDetailActivity.class);
         intent.putExtras(bundle);
         return intent;
@@ -45,8 +46,8 @@ public class ScaleDetailActivity extends SdBaseWebViewActivity {
     @Override
     protected void initBundle(@NonNull Bundle bundle) {
         mTitle = bundle.getString(KEY_TITLE);
-        mScaleId = bundle.getLong(KEY_SCALE_ID);
-        mScaleDistributionId = bundle.getLong(KEY_SCALE_DISTRIBUTION_ID);
+        mCollectionId = bundle.getLong(KEY_COLLECTION_ID);
+        mDistributionId = bundle.getLong(KEY_DISTRIBUTION_ID);
     }
 
     @Override
@@ -62,10 +63,13 @@ public class ScaleDetailActivity extends SdBaseWebViewActivity {
 
     @Override
     protected String getUrlContentPart() {
-        String uri = H5Uri.FILL_SCALE;
-        uri = uri.replace("{scale_distribution_id}", String.valueOf(mScaleDistributionId));
-        if (mScaleId != 0) {
-            uri = uri + "?scale_id_v2=" + mScaleId;
+        String uri;
+        if (mDistributionId == INVALID_ID) {
+            uri = H5Uri.RELEASED_SCALE_COLLECTIONS.replace("{collection_id}", String.valueOf(mCollectionId));
+        } else {
+            uri = H5Uri.FILLED_SCALE_COLLECTIONS
+                    .replace("{collection_id}", String.valueOf(mCollectionId))
+                    .replace("{distribution_id}", String.valueOf(mDistributionId));
         }
         return uri;
     }
