@@ -42,8 +42,7 @@ import com.sumian.sd.buz.report.bean.DailyReport
 import com.sumian.sd.buz.report.weeklyreport.WeekMeta
 import com.sumian.sd.buz.report.weeklyreport.bean.SleepDurationReport
 import com.sumian.sd.buz.report.weeklyreport.bean.WeeklyReportResponse
-import com.sumian.sd.buz.scale.bean.FilledScale
-import com.sumian.sd.buz.scale.bean.Scale
+import com.sumian.sd.buz.scale.bean.*
 import com.sumian.sd.buz.setting.bean.Feedback
 import com.sumian.sd.buz.setting.remind.bean.Reminder
 import com.sumian.sd.buz.sleepertalk.bean.SleeperTalkData
@@ -220,8 +219,8 @@ interface SdApi {
     // ---------- scale ----------
     @GET("scale-distributions")
     fun getAllScaleList(@Query("page") page: Int,
-                     @Query("per_page") perPage: Int = 15,
-                     @Query("type") type: String = "all"): Call<PaginationResponseV2<Scale>>
+                        @Query("per_page") perPage: Int = 15,
+                        @Query("type") type: String = "all"): Call<PaginationResponseV2<Scale>>
 
     @GET("scale-distributions")
     fun getScaleList(@Query("page") page: Int,
@@ -237,6 +236,13 @@ interface SdApi {
     fun getFilledScaleList(@Query("page") page: Int,
                            @Query("per_page") perPage: Int = 15): Call<PaginationResponseV2<FilledScale>>
 
+    @GET("released-scale-collections")
+    fun getReleasedScaleCollections(@Query("page") page: Int,
+                                    @Query("per_page") perPage: Int = 15): Call<PaginationResponseV2<ReleasedScaleCollection>>
+
+    @GET("filled-scale-collections")
+    fun getFilledScaleCollections(@Query("page") page: Int,
+                                    @Query("per_page") perPage: Int = 15): Call<PaginationResponseV2<FilledScaleCollection>>
     // ---------- device info ----------
     /**
      *
