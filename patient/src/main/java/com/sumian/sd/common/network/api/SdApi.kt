@@ -42,6 +42,7 @@ import com.sumian.sd.buz.report.bean.DailyMeta
 import com.sumian.sd.buz.report.bean.DailyReport
 import com.sumian.sd.buz.report.weeklyreport.WeekMeta
 import com.sumian.sd.buz.report.weeklyreport.bean.SleepDurationReport
+import com.sumian.sd.buz.report.weeklyreport.bean.WeeklyReportResponse
 import com.sumian.sd.buz.scale.bean.*
 import com.sumian.sd.buz.setting.bean.Feedback
 import com.sumian.sd.buz.setting.remind.bean.Reminder
