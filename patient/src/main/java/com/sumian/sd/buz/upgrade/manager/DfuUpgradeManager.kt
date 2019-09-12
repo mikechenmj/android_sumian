@@ -42,7 +42,7 @@ object DfuUpgradeManager {
 
     fun downloadUpgradeFile(downloadCallback: DownloadCallback, type: Int): File? {
         val latestVersionInfo = getLatestVersionInfo(type) ?: return null
-        val dir = mContext.getDir("upgrade", 0)
+        val dir = mContext.cacheDir
         val file = File(dir, latestVersionInfo.version + "zip")
         FileDownloader.setup(mContext)
         FileDownloader.getImpl().create(latestVersionInfo.url)
@@ -55,6 +55,7 @@ object DfuUpgradeManager {
                         val fileMD5 = FileUtils.getFileMD5ToString(file)
                         if (!fileMD5.equals(latestVersionInfo.md5, true)) {
                             downloadCallback.onError(Throwable("文件损坏，请重新下载"))
+                            FileUtils.deleteFile(task?.targetFilePath)
                             return
                         }
                         downloadCallback.onCompleted(file.absolutePath)
