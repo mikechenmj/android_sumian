@@ -105,21 +105,21 @@ object VersionManager {
                     var sleeperUpgradeForce = response.sleeper?.isForceUpdate() ?: false
                     var monitorUpgradeForce = response.monitor?.isForceUpdate() ?: false
                     when {
-                        hasNewSleeperVersion and sleeperUpgradeForce -> {
-                            DeviceUpgradeDialogActivity.start(VERSION_TYPE_SLEEPER,
-                                    sleeperUpgradeForce, response.sleeper?.description ?: "")
-                        }
                         hasNewMonitorVersion and monitorUpgradeForce -> {
                             DeviceUpgradeDialogActivity.start(VERSION_TYPE_MONITOR,
                                     monitorUpgradeForce, response.monitor?.description ?: "")
                         }
-                        hasNewSleeperVersion -> {
+                        hasNewSleeperVersion and sleeperUpgradeForce -> {
                             DeviceUpgradeDialogActivity.start(VERSION_TYPE_SLEEPER,
                                     sleeperUpgradeForce, response.sleeper?.description ?: "")
                         }
                         hasNewMonitorVersion -> {
                             DeviceUpgradeDialogActivity.start(VERSION_TYPE_MONITOR,
                                     monitorUpgradeForce, response.monitor?.description ?: "")
+                        }
+                        hasNewSleeperVersion -> {
+                            DeviceUpgradeDialogActivity.start(VERSION_TYPE_SLEEPER,
+                                    sleeperUpgradeForce, response.sleeper?.description ?: "")
                         }
                         else -> {
                             EventBusUtil.postEvent(DeviceUpgradeDialogActivity.DfuUpgradeSuccessEvent())
