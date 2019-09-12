@@ -19,6 +19,7 @@ import com.sumian.sd.buz.upgrade.dialog.UpgradeConfirmDialog
 import com.sumian.sd.buz.upgrade.dialog.VersionDialog
 import com.sumian.sd.buz.upgrade.manager.DfuUpgradeManager
 import com.sumian.sd.buz.version.ui.DeviceUpgradeDialogActivity
+import com.sumian.sd.buz.version.ui.DialogManager
 import com.sumian.sd.common.utils.EventBusUtil
 import kotlinx.android.synthetic.main.fragment_scan_upgrade.*
 import java.lang.IllegalArgumentException
@@ -170,6 +171,16 @@ class ScanUpgradeFragment(private var mDeviceType: Int) : BaseScanDeviceFragment
     override fun onPermissionGranted() {
         switchDeviceListUI(false)
         startScanWithUi()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        DialogManager.isInScanUpgradeUi = true
+    }
+
+    override fun onPause() {
+        super.onPause()
+        DialogManager.isInScanUpgradeUi = false
     }
 
     override fun onBluetoothStateChange(on: Boolean) {

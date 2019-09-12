@@ -19,6 +19,8 @@ object DialogManager {
     var isDeviceUpgradeDialogShowing = false
     var isDeviceForceUpgrade = false
 
+    var isInScanUpgradeUi = false
+
     /**
      * 应用不在前台时不弹框
      * 更新弹窗（强制更新APP  >  强制更新固件 > 推荐更新APP = 推荐更新固件）> 使用设备相关业务的弹窗 > 其他业务弹窗（低优先级）
@@ -37,6 +39,9 @@ object DialogManager {
                 }
             }
             DIALOG_TYPE_DEVICE -> {
+                if (isInScanUpgradeUi) {
+                    return false
+                }
                 if (!AppManager.isAppForeground()) {
                     return false
                 }
