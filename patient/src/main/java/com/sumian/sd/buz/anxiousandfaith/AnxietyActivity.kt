@@ -3,10 +3,13 @@ package com.sumian.sd.buz.anxiousandfaith
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.text.TextUtils
+import android.util.Log
+import android.view.View
+import androidx.databinding.DataBindingUtil
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
-import com.sumian.common.base.BaseActivity
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.widget.adapter.EmptyTextWatcher
 import com.sumian.sd.R
@@ -14,10 +17,13 @@ import com.sumian.sd.R.layout
 import com.sumian.sd.R.string
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.anxiousandfaith.bean.AnxietyData
+import com.sumian.sd.buz.anxiousandfaith.databinding.ActivityAnxiousEditData
 import com.sumian.sd.buz.anxiousandfaith.event.AnxietyChangeEvent
 import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import com.sumian.sd.common.utils.EventBusUtil
+import com.sumian.sd.databinding.ActivityAnxietyBinding
+import com.sumian.sd.widget.divider.SettingDividerView
 import kotlinx.android.synthetic.main.activity_anxiety.*
 
 /**
@@ -60,27 +66,12 @@ class AnxietyActivity : WhileTitleNavBgActivity() {
     override fun initWidget() {
         super.initWidget()
         setTitle(string.add_anxious)
-        et_anxiety.addTextChangedListener(object : EmptyTextWatcher() {
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                super.onTextChanged(s, start, before, count)
-                val length = et_anxiety.text.toString().length
-                tv_anxiety_text_count.text = "$length/200"
-                tv_anxiety_text_count.setTextColor(resources.getColor(if (length > 200) R.color.t4_color else R.color.t1_color))
-            }
-        })
-        et_anxiety_solution.addTextChangedListener(object : EmptyTextWatcher() {
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                super.onTextChanged(s, start, before, count)
-                val length = et_anxiety_solution.text.toString().length
-                tv_anxiety_solution_text_count.text = "$length/200"
-                tv_anxiety_solution_text_count.setTextColor(resources.getColor(if (length > 200) R.color.t4_color else R.color.t1_color))
-            }
-        })
-        bt_save.setOnClickListener { saveAnxiety() }
-        if (mAnxietyData != null) {
-            et_anxiety.setText(mAnxietyData!!.anxiety)
-            et_anxiety_solution.setText(mAnxietyData!!.solution)
+        var binding = DataBindingUtil.bind<ActivityAnxietyBinding>(findViewById(R.id.activity_anxiety))
+        binding?.data = ActivityAnxiousEditData(this, mAnxietyData).apply {
+            detailText = mAnxietyData?.anxiety ?: detailText
+            solutionText = mAnxietyData?.solution ?: solutionText
         }
+        bt_save.setOnClickListener { saveAnxiety() }
     }
 
     private fun saveAnxiety() {

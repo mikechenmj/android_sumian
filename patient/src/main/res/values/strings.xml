@@ -502,6 +502,7 @@
     <string name="remind_time">提醒时间</string>
     <string name="set_remind_time">设置提醒时间</string>
     <string name="pattern_hh_mm">%02d:%02d</string>
+    <string name="pattern_yyyy_MM_dd_hh_mm">%04d.%02d.%02d %02d:%02d</string>
     <string name="service_is_canceled">服务已取消</string>
     <string name="any_question_ask_kefu">如有疑问，请咨询客服</string>
     <string name="relate_service_is_canceled">相关服务已取消</string>
@@ -614,8 +615,6 @@
     <string name="anxiety_and_belief_explain">忧虑:\n记录忧虑事件是为了把我们忧虑的事情在睡前较早的一个时段内处理和安排好，这有助于减少我们在睡前因此而引起烦恼。设定一个忧虑时间，每天在同一个时间段把所需要处理的事情想好办法，如果目前不能解决，可以安排另一个时间段来思考，坚持这么做，你会发现，我们在睡前会受到更少忧虑的困扰。\n\n信念:\n信念平时并不太容易被发现，因为他经常是自动化的。记录它一是可以让我们识别出我们有哪些信念，二来是有助于我们判断哪些是不合理信念并用认知重构的方法来重建他们，经过反复练习让理性的信念变成自动化。</string>
     <string name="anxiety">忧虑</string>
     <string name="anxiety_input_hint">今天，有什么事情让你感到忧虑、烦恼？（点击这里开始输入）</string>
-    <string name="anxiety_solution_input_hint">你是怎么解决你的忧虑的？（点击这里开始输入）</string>
-    <string name="solution">解决办法</string>
     <string name="add_anxiety_bottom_hint">速眠医生建议：把忧虑的事情都集中在日间一个时间处理哦。</string>
     <string name="save">保存</string>
     <string name="edit">编辑</string>
@@ -901,4 +900,21 @@
     <string name="upgrade_fail_title_text">升级异常</string>
     <string name="anxious_un_handle_tip_text">待处理</string>
     <string name="faith_un_handle_tip_text">未添加信念</string>
+
+    <string name="anxiety_solution_input_hint">请写下你的详细计划（点击这里开始输入）</string>
+    <string name="anxiety_ask_is_has_solution_title">1、是否已有详细计划解决忧虑？</string>
+    <string name="anxiety_ask_is_hard_problem_title">2、你是否认为这件事情是难题？</string>
+    <string name="anxiety_ask_how_to_solution_title">3、那么我们来看看这道难题要怎么解决吧。</string>
+    <string name="anxiety_record_tip_text">如果你认为所面对的不是什么大难题，可以先放下它，不需要理会，请也将这种放下的想法记下</string>
+    <string name="anxiety_record_hint">这不是什么大问题，我们可以暂时将它放下（点击这里开始输入）</string>
+    <string name="anxiety_ask_how_to_resolve_one_checkbox_text">如果是你的朋友遇到这样的难题，你会如何去给他建议呢？这个建议可能对你也有用。</string>
+    <string name="anxiety_ask_how_to_resolve_two_checkbox_text">如果是你的朋友遇到这样的难题，你会如何去给他建议呢？这个建议可能对你也有用。</string>
+    <string name="anxiety_ask_how_to_resolve_three_checkbox_text">如果是你的朋友遇到这样的难题，你会如何去给他建议呢？这个建议可能对你也有用。</string>
+    <string name="anxiety_ask_how_to_resolve_one_edit_hint">请写下需要求助或者求助的对象，以便跟进，例：需要求助小张 (点击这里开始输入)。</string>
+    <string name="anxiety_ask_how_to_resolve_two_edit_hint">请写下需要求助或者求助的对象，以便跟进，例：需要求助小张 (点击这里开始输入)。</string>
+    <string name="anxiety_ask_how_to_resolve_three_edit_hint">请写下需要求助或者求助的对象，以便跟进，例：需要求助小张 (点击这里开始输入)。</string>
+    <string name="anxiety_remind_alarm_title">设置闹钟提醒自己执行计划</string>
+    <string name="anxiety_remind_alarm_setting_desc">提醒时间</string>
+    <string name="anxiety_remind_alarm_and_rest_tip">那么，到了设定的时间再去想吧，现在，我们可以清空内心，忘记这些事情~</string>
+
 </resources>
