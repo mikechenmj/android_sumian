@@ -19,6 +19,11 @@ data class AnxietyData(
         val created_at: Int,
         val id: Int
 ) : Parcelable {
+
+    companion object {
+        const val EXTRA_KEY_ANXIETY = "anxiety"
+    }
+
     fun getUpdateAtInMillis(): Long {
         return updated_at * 1000L
     }

@@ -916,5 +916,8 @@
     <string name="anxiety_remind_alarm_title">设置闹钟提醒自己执行计划</string>
     <string name="anxiety_remind_alarm_setting_desc">提醒时间</string>
     <string name="anxiety_remind_alarm_and_rest_tip">那么，到了设定的时间再去想吧，现在，我们可以清空内心，忘记这些事情~</string>
+    <string name="anxiety_faith_detail_edit_menu_text">修改</string>
+    <string name="anxiety_detail_title_text">忧虑详情</string>
+    <string name="anxiety_solution_problem_time_title">执行时间</string>
 
 </resources>

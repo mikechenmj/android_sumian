@@ -454,6 +454,11 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".buz.anxiousandfaith.AnxietyDetailActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".buz.anxiousandfaith.FaithActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"

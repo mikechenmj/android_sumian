@@ -111,7 +111,7 @@ class AnxiousAndFaithActivity : WhileTitleNavBgActivity() {
                     deleteAnxiety(data.id)
                 }
             })
-            itemView.setOnClickListener { AnxietyActivity.launch(data) }
+            itemView.setOnClickListener { AnxietyDetailActivity.launch(data) }
             itemView.tag = data.id
             vg_anxious_record.addView(itemView)
         }

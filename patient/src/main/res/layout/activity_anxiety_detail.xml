@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="data"
+            type="com.sumian.sd.buz.anxiousandfaith.databinding.ActivityAnxiousDetailData" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/activity_anxiety_detail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_anxiety_detail_content_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_line_l1_margin_start_20dp_white_bg"
+            android:gravity="center_vertical"
+            android:padding="20dp"
+            android:text="@string/anxiety"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="忧虑" />
+
+        <TextView
+            android:id="@+id/tv_anxiety_detail_content"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:padding="20dp"
+            android:text="@{data.detailContent}"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_anxiety_detail_content_title"
+            tools:text="购买今年年会的相关物品，无详细计划认为该事情是难题" />
+
+        <TextView
+            android:id="@+id/tv_anxiety_need_help_content_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_line_l1_margin_start_20dp_white_bg"
+            android:gravity="center_vertical"
+            android:padding="20dp"
+            android:text="@{data.needHelpContentTitle}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_anxiety_detail_content"
+            tools:text="需要求助" />
+
+        <TextView
+            android:id="@+id/tv_anxiety_need_help_content"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:padding="20dp"
+            android:text="@{data.needHelpContent}"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_anxiety_need_help_content_title"
+            tools:text="求助行政同事帮忙一起负责" />
+
+        <TextView
+            android:id="@+id/tv_anxiety_solution_problem_time_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_line_l1_margin_start_20dp_white_bg"
+            android:gravity="center_vertical"
+            android:padding="20dp"
+            android:text="@string/anxiety_solution_problem_time_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_anxiety_need_help_content"
+            tools:text="@string/anxiety_solution_problem_time_title" />
+
+        <TextView
+            android:id="@+id/tv_anxiety_solution_problem_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:padding="20dp"
+            android:text="@{data.solutionProblemTime}"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_anxiety_solution_problem_time_title"
+            tools:text="2019.07.01 09:00" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

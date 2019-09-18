@@ -3,27 +3,23 @@ package com.sumian.sd.buz.anxiousandfaith
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.text.TextUtils
-import android.util.Log
-import android.view.View
 import androidx.databinding.DataBindingUtil
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.network.response.ErrorResponse
-import com.sumian.common.widget.adapter.EmptyTextWatcher
 import com.sumian.sd.R
 import com.sumian.sd.R.layout
 import com.sumian.sd.R.string
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.anxiousandfaith.bean.AnxietyData
+import com.sumian.sd.buz.anxiousandfaith.bean.AnxietyData.Companion.EXTRA_KEY_ANXIETY
 import com.sumian.sd.buz.anxiousandfaith.databinding.ActivityAnxiousEditData
 import com.sumian.sd.buz.anxiousandfaith.event.AnxietyChangeEvent
 import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import com.sumian.sd.common.utils.EventBusUtil
 import com.sumian.sd.databinding.ActivityAnxietyBinding
-import com.sumian.sd.widget.divider.SettingDividerView
 import kotlinx.android.synthetic.main.activity_anxiety.*
 
 /**
@@ -41,10 +37,9 @@ class AnxietyActivity : WhileTitleNavBgActivity() {
     }
 
     companion object {
-        private const val KEY_ANXIETY = "anxiety"
         fun launch(anxiety: AnxietyData? = null) {
             val intent = Intent(ActivityUtils.getTopActivity(), AnxietyActivity::class.java)
-            intent.putExtra(KEY_ANXIETY, anxiety)
+            intent.putExtra(EXTRA_KEY_ANXIETY, anxiety)
             ActivityUtils.startActivity(intent)
         }
 
@@ -55,7 +50,7 @@ class AnxietyActivity : WhileTitleNavBgActivity() {
 
     override fun initBundle(bundle: Bundle) {
         super.initBundle(bundle)
-        mAnxietyData = bundle.getParcelable(KEY_ANXIETY)
+        mAnxietyData = bundle.getParcelable(EXTRA_KEY_ANXIETY)
     }
 
     override fun getPageName(): String {
