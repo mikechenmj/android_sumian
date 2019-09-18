@@ -13,7 +13,7 @@ import com.sumian.common.network.response.PaginationResponseV2
 import com.sumian.common.utils.TimeUtilV2
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.buz.scale.bean.FilledScale
+import com.sumian.sd.buz.scale.bean.FilledScaleCollection
 import com.sumian.sd.buz.scale.event.ScaleFinishFillingEvent2
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import com.sumian.sd.common.utils.EventBusUtil
@@ -41,8 +41,8 @@ class FilledScaleListFragment : BaseFragment() {
         mAdapter.setOnLoadMoreListener({ loadMoreData() }, recycler_view)
         mAdapter.setOnItemClickListener { adapter, view, position ->
             run {
-                val filledScale = mAdapter.getItem(position) as FilledScale
-                ScaleDetailActivity.launch(activity!!, filledScale.title, filledScale.latest_scale_distribution.id, filledScale.id)
+                val distributions = mAdapter.getItem(position)
+                ScaleDetailActivity.launch(activity!!, distributions!!.title, distributions!!.collectionId, distributions!!.id)
             }
         }
         mAdapter.emptyView = EmptyErrorView.create(activity!!, R.mipmap.ic_empty_state_report, R.string.empty_evaluation_msg, R.string.know_your_sleep_health_situation)
@@ -52,16 +52,24 @@ class FilledScaleListFragment : BaseFragment() {
     }
 
     private fun loadMoreData() {
-        val call = AppManager.getSdHttpService().getFilledScaleList(mPage)
+        val call = AppManager.getSdHttpService().getFilledScaleCollections(mPage)
         addCall(call)
-        call.enqueue(object : BaseSdResponseCallback<PaginationResponseV2<FilledScale>>() {
+        call.enqueue(object : BaseSdResponseCallback<PaginationResponseV2<FilledScaleCollection>>() {
 
             override fun onFailure(errorResponse: ErrorResponse) {
                 ToastUtils.showShort(errorResponse.message)
             }
 
-            override fun onSuccess(response: PaginationResponseV2<FilledScale>?) {
-                val data = response!!.data
+            override fun onSuccess(response: PaginationResponseV2<FilledScaleCollection>?) {
+                val data = mutableListOf<FilledScaleCollection.CollectionDistributions>()
+                for (filledScaleCollection in response!!.data) {
+                    for (collectionDistributions in filledScaleCollection.distributions) {
+                        collectionDistributions.title = filledScaleCollection.title
+                        collectionDistributions.collectionId = filledScaleCollection.id
+                        data.add(collectionDistributions)
+                    }
+                }
+                data.sortByDescending { it.updated_at }
                 if (mPage == 1) {
                     mAdapter.setNewData(data)
                 } else {
@@ -98,12 +106,11 @@ class FilledScaleListFragment : BaseFragment() {
         mPage = 1
         loadMoreData()
     }
-
 }
 
-class FilledScaleListAdapter : BaseQuickAdapter<FilledScale, BaseViewHolder>(R.layout.item_scale_filled) {
-    override fun convert(helper: BaseViewHolder, item: FilledScale) {
+class FilledScaleListAdapter : BaseQuickAdapter<FilledScaleCollection.CollectionDistributions, BaseViewHolder>(R.layout.item_scale_filled) {
+    override fun convert(helper: BaseViewHolder, item: FilledScaleCollection.CollectionDistributions) {
         helper.setText(R.id.tv_scale_name, item.title)
-        helper.setText(R.id.tv_time, TimeUtilV2.formatYYYYMMDDHHMM(item.latest_scale_distribution.getUpdateAtInMillis()))
+        helper.setText(R.id.tv_time, TimeUtilV2.formatYYYYMMDDHHMMss(item.getUpdateAtInMillis()))
     }
 }
