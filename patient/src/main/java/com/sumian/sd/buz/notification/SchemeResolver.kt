@@ -8,7 +8,7 @@ import com.sumian.common.notification.SchemeResolveUtil
 import com.sumian.sd.R
 import com.sumian.sd.buz.advisory.activity.AdvisoryDetailActivity
 import com.sumian.sd.buz.advisory.activity.AdvisoryListActivity
-import com.sumian.sd.buz.anxiousandfaith.AnxiousAndFaithActivity
+import com.sumian.sd.buz.anxiousandfaith.AnxiousAndMoodDiaryActivity
 import com.sumian.sd.buz.cbti.activity.CBTIIntroductionActivity
 import com.sumian.sd.buz.cbti.activity.CBTIMessageBoardDetailActivity
 import com.sumian.sd.buz.diary.sleeprecord.SleepRecordActivity
@@ -119,7 +119,7 @@ object SchemeResolver : ISchemeResolver {
      * sleepdoctor://anxietiesAndFaiths?user_id=2102
      */
     fun resolveAnxietyFaithReminderScheme(context: Context, uri: Uri): Intent {
-        return AnxiousAndFaithActivity.getLaunchIntent()
+        return AnxiousAndMoodDiaryActivity.getLaunchIntent()
     }
 
     /**

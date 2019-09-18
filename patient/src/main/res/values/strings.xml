@@ -644,7 +644,6 @@
     <string name="emotion_4">轻松</string>
     <string name="emotion_5">愉快</string>
     <string name="please_finish_question_first">请先完成题目内容</string>
-    <string name="faith_record">信念记录</string>
     <string name="anxiety_time_reminder">忧虑时间提醒</string>
     <string name="anxiety_time_reminder_hint">开启忧虑时间提醒，速眠医生将会每日定时提醒您添加忧虑。请确保APP通知权限开启。</string>
     <!-- Hw end-->
@@ -919,5 +918,8 @@
     <string name="anxiety_faith_detail_edit_menu_text">修改</string>
     <string name="anxiety_detail_title_text">忧虑详情</string>
     <string name="anxiety_solution_problem_time_title">执行时间</string>
+    
+    <string name="mood_diary">心情日记</string>
+    <string name="mood_diary_list_title">心情记录</string>
 
 </resources>

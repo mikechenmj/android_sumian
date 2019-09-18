@@ -9,7 +9,7 @@ import com.chad.library.adapter.base.entity.SectionMultiEntity
  * version: 1.0
  */
 
-class FaithSectionMultiEntity : SectionMultiEntity<FaithData> {
+class FaithSectionMultiEntity : SectionMultiEntity<MoodDiaryData> {
 
     private var type: Int = 0
 
@@ -17,9 +17,9 @@ class FaithSectionMultiEntity : SectionMultiEntity<FaithData> {
         return type
     }
 
-    constructor(faithData: FaithData) : this(0, faithData)
+    constructor(moodDiaryData: MoodDiaryData) : this(0, moodDiaryData)
 
-    constructor(type: Int, faithData: FaithData) : super(faithData) {
+    constructor(type: Int, moodDiaryData: MoodDiaryData) : super(moodDiaryData) {
         this.type = type
     }
 

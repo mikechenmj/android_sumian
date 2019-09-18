@@ -5,17 +5,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ToastUtils
 import com.chad.library.adapter.base.BaseSectionMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
-import com.sumian.common.base.BaseActivity
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.network.response.PaginationResponseV2
 import com.sumian.common.widget.dialog.SumianDialog
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.buz.anxiousandfaith.bean.AnxietyFaithItemViewData
-import com.sumian.sd.buz.anxiousandfaith.bean.FaithData
+import com.sumian.sd.buz.anxiousandfaith.bean.AnxietyMoodDiaryItemViewData
+import com.sumian.sd.buz.anxiousandfaith.bean.MoodDiaryData
 import com.sumian.sd.buz.anxiousandfaith.bean.FaithSectionMultiEntity
 import com.sumian.sd.buz.anxiousandfaith.event.FaithChangeEvent
-import com.sumian.sd.buz.anxiousandfaith.widget.AnxiousFaithItemView
+import com.sumian.sd.buz.anxiousandfaith.widget.AnxiousMoodDiaryItemView
 import com.sumian.sd.buz.anxiousandfaith.widget.EditAnxietyBottomSheetDialog
 import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
@@ -30,7 +29,7 @@ import org.greenrobot.eventbus.Subscribe
  * desc   :
  * version: 1.0
  */
-class FaithListActivity : WhileTitleNavBgActivity() {
+class MoodDiaryListActivity : WhileTitleNavBgActivity() {
 
     private val mAdapter = FaithAdapter()
     private var mPage = 1
@@ -61,7 +60,7 @@ class FaithListActivity : WhileTitleNavBgActivity() {
 
     override fun initWidget() {
         super.initWidget()
-        setTitle(R.string.faith_record)
+        setTitle(R.string.mood_diary)
         recycler_view.layoutManager = LinearLayoutManager(this)
         recycler_view.adapter = mAdapter
         mAdapter.setOnLoadMoreListener({ loadData() }, recycler_view)
@@ -69,7 +68,7 @@ class FaithListActivity : WhileTitleNavBgActivity() {
             refreshData()
         }
         bt_add_record.setText(R.string.add_belief)
-        bt_add_record.setOnClickListener { FaithActivity.launch() }
+        bt_add_record.setOnClickListener { MoodDiaryActivity.launch() }
     }
 
     private fun refreshData() {
@@ -81,8 +80,8 @@ class FaithListActivity : WhileTitleNavBgActivity() {
     private fun loadData() {
         val call = AppManager.getSdHttpService().getFaiths(mPage)
         addCall(call)
-        call.enqueue(object : BaseSdResponseCallback<PaginationResponseV2<FaithData>>() {
-            override fun onSuccess(response: PaginationResponseV2<FaithData>?) {
+        call.enqueue(object : BaseSdResponseCallback<PaginationResponseV2<MoodDiaryData>>() {
+            override fun onSuccess(response: PaginationResponseV2<MoodDiaryData>?) {
                 if (response == null) {
                     return
                 }
@@ -132,11 +131,11 @@ class FaithListActivity : WhileTitleNavBgActivity() {
         }
 
         override fun convert(helper: BaseViewHolder, item: FaithSectionMultiEntity) {
-            val itemView = helper.getView<AnxiousFaithItemView>(R.id.anxiety_faith_view)
+            val itemView = helper.getView<AnxiousMoodDiaryItemView>(R.id.anxiety_faith_view)
             itemView.setTextMaxLines(true)
-            itemView.setData(AnxietyFaithItemViewData.create(item.t), object : EditAnxietyBottomSheetDialog.OnItemClickListener {
+            itemView.setData(AnxietyMoodDiaryItemViewData.create(item.t), object : EditAnxietyBottomSheetDialog.OnItemClickListener {
                 override fun onEditClick() {
-                    FaithActivity.launch(item.t)
+                    MoodDiaryActivity.launch(item.t)
                 }
 
                 override fun onDeleteClick() {
@@ -183,7 +182,7 @@ class FaithListActivity : WhileTitleNavBgActivity() {
     @Subscribe(sticky = true)
     fun onFaithChangeEvent(event: FaithChangeEvent) {
         EventBusUtil.removeStickyEvent(event)
-        val faith = event.faith
+        val faith = event.moodDiary
         val position = getItemPosition(id = faith.id)
         mAdapter.data[position] = FaithSectionMultiEntity(faith)
         mAdapter.notifyItemChanged(position)

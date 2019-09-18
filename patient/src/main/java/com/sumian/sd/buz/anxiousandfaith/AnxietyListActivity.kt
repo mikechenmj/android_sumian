@@ -1,22 +1,20 @@
 package com.sumian.sd.buz.anxiousandfaith
 
-import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ToastUtils
 import com.chad.library.adapter.base.BaseSectionMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
-import com.sumian.common.base.BaseActivity
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.network.response.PaginationResponseV2
 import com.sumian.common.widget.dialog.SumianDialog
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.anxiousandfaith.bean.AnxietyData
-import com.sumian.sd.buz.anxiousandfaith.bean.AnxietyFaithItemViewData
+import com.sumian.sd.buz.anxiousandfaith.bean.AnxietyMoodDiaryItemViewData
 import com.sumian.sd.buz.anxiousandfaith.bean.AnxietySectionMultiEntity
 import com.sumian.sd.buz.anxiousandfaith.event.AnxietyChangeEvent
-import com.sumian.sd.buz.anxiousandfaith.widget.AnxiousFaithItemView
+import com.sumian.sd.buz.anxiousandfaith.widget.AnxiousMoodDiaryItemView
 import com.sumian.sd.buz.anxiousandfaith.widget.EditAnxietyBottomSheetDialog
 import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
@@ -132,9 +130,9 @@ class AnxietyListActivity : WhileTitleNavBgActivity() {
         }
 
         override fun convert(helper: BaseViewHolder, item: AnxietySectionMultiEntity) {
-            val itemView = helper.getView<AnxiousFaithItemView>(R.id.anxiety_faith_view)
+            val itemView = helper.getView<AnxiousMoodDiaryItemView>(R.id.anxiety_faith_view)
             itemView.setTextMaxLines(true)
-            itemView.setData(AnxietyFaithItemViewData.create(item.t), object : EditAnxietyBottomSheetDialog.OnItemClickListener {
+            itemView.setData(AnxietyMoodDiaryItemViewData.create(item.t), object : EditAnxietyBottomSheetDialog.OnItemClickListener {
                 override fun onEditClick() {
                     AnxietyActivity.launch(item.t)
                 }

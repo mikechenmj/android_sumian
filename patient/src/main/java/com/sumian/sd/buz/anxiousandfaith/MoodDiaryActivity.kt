@@ -8,12 +8,11 @@ import android.text.TextUtils
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
-import com.sumian.common.base.BaseActivity
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.widget.adapter.EmptyTextWatcher
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.buz.anxiousandfaith.bean.FaithData
+import com.sumian.sd.buz.anxiousandfaith.bean.MoodDiaryData
 import com.sumian.sd.buz.anxiousandfaith.event.FaithChangeEvent
 import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
@@ -28,7 +27,7 @@ import kotlinx.android.synthetic.main.activity_faith.*
  * version: 1.0
  */
 @SuppressLint("SetTextI18n")
-class FaithActivity : WhileTitleNavBgActivity() {
+class MoodDiaryActivity : WhileTitleNavBgActivity() {
     private var mProgress = 0
     private var mEvent = ""
     private var mThought = ""
@@ -42,9 +41,9 @@ class FaithActivity : WhileTitleNavBgActivity() {
     companion object {
         private const val KEY_FAITH_DATA = "faith_data"
 
-        fun launch(faithData: FaithData? = null) {
-            val intent = Intent(ActivityUtils.getTopActivity(), FaithActivity::class.java)
-            intent.putExtra(KEY_FAITH_DATA, faithData)
+        fun launch(moodDiaryData: MoodDiaryData? = null) {
+            val intent = Intent(ActivityUtils.getTopActivity(), MoodDiaryActivity::class.java)
+            intent.putExtra(KEY_FAITH_DATA, moodDiaryData)
             ActivityUtils.startActivity(intent)
         }
     }
@@ -55,7 +54,7 @@ class FaithActivity : WhileTitleNavBgActivity() {
 
     override fun initBundle(bundle: Bundle) {
         super.initBundle(bundle)
-        val faithData = bundle.getParcelable<FaithData>(KEY_FAITH_DATA)
+        val faithData = bundle.getParcelable<MoodDiaryData>(KEY_FAITH_DATA)
         if (faithData != null) {
             mId = faithData.id
             mEvent = faithData.scene
@@ -138,8 +137,8 @@ class FaithActivity : WhileTitleNavBgActivity() {
         }
         addCall(call)
         bt_next_step.isEnabled = false
-        call.enqueue(object : BaseSdResponseCallback<FaithData>() {
-            override fun onSuccess(response: FaithData?) {
+        call.enqueue(object : BaseSdResponseCallback<MoodDiaryData>() {
+            override fun onSuccess(response: MoodDiaryData?) {
                 EventBusUtil.postStickyEvent(FaithChangeEvent(response!!))
                 finish()
             }

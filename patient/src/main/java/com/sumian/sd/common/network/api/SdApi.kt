@@ -16,7 +16,7 @@ import com.sumian.sd.buz.advisory.bean.Advisory
 import com.sumian.sd.buz.advisory.bean.PictureOssSts
 import com.sumian.sd.buz.advisory.body.AdvisoryRecordBody
 import com.sumian.sd.buz.anxiousandfaith.bean.AnxietyData
-import com.sumian.sd.buz.anxiousandfaith.bean.FaithData
+import com.sumian.sd.buz.anxiousandfaith.bean.MoodDiaryData
 import com.sumian.sd.buz.cbti.bean.*
 import com.sumian.sd.buz.coupon.bean.Coupon
 import com.sumian.sd.buz.devicemanager.pattern.PatternData
@@ -452,18 +452,18 @@ interface SdApi {
      */
     @FormUrlEncoded
     @PATCH("user/faiths/{id}")
-    fun updateFaiths(@Path("id") id: Int, @Field("scene") scene: String, @Field("idea") idea: String, @Field("emotion_type") emotion_type: Int): Call<FaithData>
+    fun updateFaiths(@Path("id") id: Int, @Field("scene") scene: String, @Field("idea") idea: String, @Field("emotion_type") emotion_type: Int): Call<MoodDiaryData>
 
     @DELETE("user/faiths/{id}")
     fun deleteFaiths(@Path("id") id: Int): Call<Any>
 
     @FormUrlEncoded
     @POST("user/faiths")
-    fun addFaiths(@Field("scene") scene: String, @Field("idea") idea: String, @Field("emotion_type") emotion_type: Int): Call<FaithData>
+    fun addFaiths(@Field("scene") scene: String, @Field("idea") idea: String, @Field("emotion_type") emotion_type: Int): Call<MoodDiaryData>
 
     @GET("user/faiths")
     fun getFaiths(@Query("page") page: Int = 1,
-                  @Query("per_page") perPage: Int = 15): Call<PaginationResponseV2<FaithData>>
+                  @Query("per_page") perPage: Int = 15): Call<PaginationResponseV2<MoodDiaryData>>
 
     @GET("firmware/latest")
     fun getFirmwareLatestVersion(

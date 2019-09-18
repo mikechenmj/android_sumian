@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class FaithData(
+data class MoodDiaryData(
         val scene: String,
         val idea: String,
         val emotion_type: Int,

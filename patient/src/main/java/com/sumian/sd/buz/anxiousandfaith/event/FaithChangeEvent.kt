@@ -1,6 +1,6 @@
 package com.sumian.sd.buz.anxiousandfaith.event
 
-import com.sumian.sd.buz.anxiousandfaith.bean.FaithData
+import com.sumian.sd.buz.anxiousandfaith.bean.MoodDiaryData
 
 /**
  * @author : Zhan Xuzhao
@@ -9,5 +9,5 @@ import com.sumian.sd.buz.anxiousandfaith.bean.FaithData
  * desc   :
  * version: 1.0
  */
-data class FaithChangeEvent(val faith: FaithData) {
+data class FaithChangeEvent(val moodDiary: MoodDiaryData) {
 }

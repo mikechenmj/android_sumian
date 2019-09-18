@@ -444,7 +444,7 @@
             android:theme="@style/BaseAppTheme.TranslucentStatus"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name=".buz.anxiousandfaith.AnxiousAndFaithActivity"
+            android:name=".buz.anxiousandfaith.AnxiousAndMoodDiaryActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
@@ -459,7 +459,7 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".buz.anxiousandfaith.FaithActivity"
+            android:name=".buz.anxiousandfaith.MoodDiaryActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
@@ -469,7 +469,7 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".buz.anxiousandfaith.FaithListActivity"
+            android:name=".buz.anxiousandfaith.MoodDiaryListActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
