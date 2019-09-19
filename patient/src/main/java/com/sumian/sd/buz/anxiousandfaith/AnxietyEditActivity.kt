@@ -29,7 +29,7 @@ import kotlinx.android.synthetic.main.activity_anxiety.*
  * desc   :
  * version: 1.0
  */
-class AnxietyActivity : WhileTitleNavBgActivity() {
+class AnxietyEditActivity : WhileTitleNavBgActivity() {
     private var mAnxietyData: AnxietyData? = null
 
     override fun getLayoutId(): Int {
@@ -38,13 +38,13 @@ class AnxietyActivity : WhileTitleNavBgActivity() {
 
     companion object {
         fun launch(anxiety: AnxietyData? = null) {
-            val intent = Intent(ActivityUtils.getTopActivity(), AnxietyActivity::class.java)
+            val intent = Intent(ActivityUtils.getTopActivity(), AnxietyEditActivity::class.java)
             intent.putExtra(EXTRA_KEY_ANXIETY, anxiety)
             ActivityUtils.startActivity(intent)
         }
 
         fun getLaunchIntent(): Intent {
-            return Intent(ActivityUtils.getTopActivity(), AnxietyActivity::class.java)
+            return Intent(ActivityUtils.getTopActivity(), AnxietyEditActivity::class.java)
         }
     }
 
@@ -65,46 +65,6 @@ class AnxietyActivity : WhileTitleNavBgActivity() {
         binding?.data = ActivityAnxiousEditData(this, mAnxietyData).apply {
             detailText = mAnxietyData?.anxiety ?: detailText
             solutionText = mAnxietyData?.solution ?: solutionText
-        }
-        bt_save.setOnClickListener { saveAnxiety() }
-    }
-
-    private fun saveAnxiety() {
-        val anxiety = et_anxiety.text.toString()
-        val anxietySolution = et_anxiety_solution.text.toString()
-        if (!checkEt(anxiety) || !checkEt(anxietySolution)) {
-            return
-        }
-
-        val call = if (mAnxietyData == null) {
-            AppManager.getSdHttpService().addAnxiety(anxiety, anxietySolution)
-        } else {
-            AppManager.getSdHttpService().updateAnxiety(mAnxietyData!!.id, anxiety, anxietySolution)
-        }
-        addCall(call)
-        bt_save.isEnabled = false
-        call.enqueue(object : BaseSdResponseCallback<AnxietyData>() {
-            override fun onSuccess(response: AnxietyData?) {
-                EventBusUtil.postStickyEvent(AnxietyChangeEvent(response!!))
-                finish()
-            }
-
-            override fun onFailure(errorResponse: ErrorResponse) {
-                ToastUtils.showShort(errorResponse.message)
-                bt_save.isEnabled = true
-            }
-        })
-    }
-
-    private fun checkEt(text: String): Boolean {
-        return if (TextUtils.isEmpty(text)) {
-            ToastUtils.showShort(getString(string.please_finish_question_first))
-            false
-        } else if (text.length > 200) {
-            ToastUtils.showShort(getString(string.input_is_too_long))
-            false
-        } else {
-            true
         }
     }
 }
