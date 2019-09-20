@@ -99,9 +99,9 @@ class MyAchievementActivity : BaseViewModelActivity<MyAchievementPresenter>(), B
         mViewModel?.getMyAchievement()
     }
 
-    override fun onResume() {
-        super.onResume()
-        LastAchievementPresenter.init(this).getLastAchievement()
+    override fun onStart() {
+        super.onStart()
+        LastAchievementPresenter(this).getLastAchievement()
     }
 
     override fun showLoading() {

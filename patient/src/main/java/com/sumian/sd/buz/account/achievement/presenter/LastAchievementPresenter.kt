@@ -15,12 +15,7 @@ import com.sumian.sd.common.network.callback.BaseSdResponseCallback
  *
  * desc:
  */
-class LastAchievementPresenter private constructor(var view: LastAchievementContract.View?) : BaseViewModel() {
-
-    companion object {
-        @JvmStatic
-        fun init(view: LastAchievementContract.View?): LastAchievementPresenter = LastAchievementPresenter(view)
-    }
+class LastAchievementPresenter constructor(var view: LastAchievementContract.View?) : BaseViewModel() {
 
     fun getLastAchievement(achievementCategoryType: Int = Achievement.CBTI_TYPE, achievementItemType: Int = -1) {
         //view?.showLoading()

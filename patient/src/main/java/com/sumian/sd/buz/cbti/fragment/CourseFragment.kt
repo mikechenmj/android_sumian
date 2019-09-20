@@ -107,7 +107,7 @@ class CourseFragment : BaseViewModelFragment<CBTIWeekCoursePresenter>(), CBTIWee
     override fun onGetCBTIMetaSuccess(cbtiMeta: CBTIMeta) {
         ViewModelProviders.of(activity!!).get(CbtiChapterViewModel::class.java).notifyCBTICourseMeta(cbtiMeta)
         cbtiMeta.let {
-            LastAchievementPresenter.init(this).getLastAchievement(achievementCategoryType = Achievement.CBTI_TYPE, achievementItemType = it.chapter.index)
+            LastAchievementPresenter(this).getLastAchievement(achievementCategoryType = Achievement.CBTI_TYPE, achievementItemType = it.chapter.index)
         }
     }
 

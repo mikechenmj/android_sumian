@@ -134,12 +134,11 @@ HomepageFragment : BaseViewModelFragment<BaseViewModel>(), OnEnterListener, Last
     override fun onStart() {
         super.onStart()
         refreshData()
+        LastAchievementPresenter(this).getLastAchievement()
     }
 
     override fun onResume() {
         super.onResume()
-//        device_card_view.onResume()
-        LastAchievementPresenter.init(this).getLastAchievement()
     }
 
     override fun onPause() {
