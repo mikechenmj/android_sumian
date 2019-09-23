@@ -146,4 +146,5 @@ dependencies {
     //客服
     implementation project(':kefu-easeui')
     api 'com.qiyukf.unicorn:unicorn:4.12.0'
+    api 'com.google.android:flexbox:1.1.0'
 }
