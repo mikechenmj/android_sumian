@@ -366,7 +366,7 @@
                 android:id="@+id/remind_anxiety_alarm_setting"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:OnShowMoreListener="@{() -> data.showBottomSheet(context)}"
+                app:OnShowMoreListener="@{() -> data.anxietyEditActivity.showBottomSheet()}"
                 app:divider_line_visible="visible"
                 app:type_content="@{data.remindSettingTypeContent}"
                 app:type_content_text_color="@color/t2_color"

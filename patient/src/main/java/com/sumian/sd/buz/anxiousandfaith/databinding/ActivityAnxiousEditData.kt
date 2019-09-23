@@ -2,14 +2,13 @@ package com.sumian.sd.buz.anxiousandfaith.databinding
 
 import android.content.Context
 import android.text.TextUtils
-import android.util.Log
 import androidx.databinding.*
 import androidx.databinding.library.baseAdapters.BR
 import com.blankj.utilcode.util.ToastUtils
-import com.sumian.common.base.BaseActivity
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
+import com.sumian.sd.buz.anxiousandfaith.AnxietyEditActivity
 import com.sumian.sd.buz.anxiousandfaith.bean.AnxietyData
 import com.sumian.sd.buz.anxiousandfaith.event.AnxietyChangeEvent
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
@@ -24,7 +23,7 @@ import java.util.*
             attribute = "type_content",
             method = "setContent")])
 
-class ActivityAnxiousEditData(var baseActivity: BaseActivity, var anxietyData: AnxietyData?) : BaseObservable() {
+class ActivityAnxiousEditData(var anxietyEditActivity: AnxietyEditActivity, var anxietyData: AnxietyData?) : BaseObservable() {
 
     companion object {
         private const val DETAIL_TEXT_MAX_COUNT = 200
@@ -313,11 +312,11 @@ class ActivityAnxiousEditData(var baseActivity: BaseActivity, var anxietyData: A
 
     fun saveAnxiety() {
         if (detailTextCountOutOfMax || solutionTextCountOutOfMax || hardTextCountOutOfMax) {
-            ToastUtils.showShort(R.string.input_is_too_long)
+            anxietyEditActivity.onSaveAnxietyFail(anxietyEditActivity.getString(R.string.input_is_too_long))
             return
         }
         if (TextUtils.isEmpty(detailText) || (TextUtils.isEmpty(solutionText) && solutionChecked) || remindTimeInMillis < Calendar.getInstance().timeInMillis) {
-            ToastUtils.showShort(R.string.please_finish_question_first)
+            anxietyEditActivity.onSaveAnxietyFail(anxietyEditActivity.getString(R.string.please_finish_question_first))
             return
         }
 
@@ -326,12 +325,12 @@ class ActivityAnxiousEditData(var baseActivity: BaseActivity, var anxietyData: A
         } else {
             AppManager.getSdHttpService().updateAnxiety(anxietyData!!.id, detailText, solutionText)
         }
-        baseActivity.addCall(call)
+        anxietyEditActivity.addCall(call)
         saveButtonEnable = false
         call.enqueue(object : BaseSdResponseCallback<AnxietyData>() {
             override fun onSuccess(response: AnxietyData?) {
                 EventBusUtil.postStickyEvent(AnxietyChangeEvent(response!!))
-                baseActivity.finish()
+                anxietyEditActivity.finish()
             }
 
             override fun onFailure(errorResponse: ErrorResponse) {
