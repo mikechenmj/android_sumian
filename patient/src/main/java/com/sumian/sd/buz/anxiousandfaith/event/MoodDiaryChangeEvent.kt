@@ -9,5 +9,5 @@ import com.sumian.sd.buz.anxiousandfaith.bean.MoodDiaryData
  * desc   :
  * version: 1.0
  */
-data class FaithChangeEvent(val moodDiary: MoodDiaryData) {
+data class MoodDiaryChangeEvent(val moodDiary: MoodDiaryData) {
 }

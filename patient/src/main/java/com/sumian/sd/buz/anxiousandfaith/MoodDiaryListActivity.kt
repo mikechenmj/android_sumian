@@ -13,13 +13,13 @@ import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.anxiousandfaith.bean.AnxietyMoodDiaryItemViewData
 import com.sumian.sd.buz.anxiousandfaith.bean.MoodDiaryData
 import com.sumian.sd.buz.anxiousandfaith.bean.FaithSectionMultiEntity
-import com.sumian.sd.buz.anxiousandfaith.event.FaithChangeEvent
+import com.sumian.sd.buz.anxiousandfaith.event.MoodDiaryChangeEvent
 import com.sumian.sd.buz.anxiousandfaith.widget.AnxiousMoodDiaryItemView
 import com.sumian.sd.buz.anxiousandfaith.widget.EditAnxietyBottomSheetDialog
 import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import com.sumian.sd.common.utils.EventBusUtil
-import kotlinx.android.synthetic.main.activity_anxiety_faith_list.*
+import kotlinx.android.synthetic.main.activity_anxiety_mood_diary_list.*
 import org.greenrobot.eventbus.Subscribe
 
 /**
@@ -40,11 +40,11 @@ class MoodDiaryListActivity : WhileTitleNavBgActivity() {
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.activity_anxiety_faith_list
+        return R.layout.activity_anxiety_mood_diary_list
     }
 
     override fun getPageName(): String {
-        return StatConstants.page_faith_list
+        return StatConstants.page_mood_diary_list
     }
 
     override fun onStart() {
@@ -68,7 +68,7 @@ class MoodDiaryListActivity : WhileTitleNavBgActivity() {
             refreshData()
         }
         bt_add_record.setText(R.string.add_belief)
-        bt_add_record.setOnClickListener { MoodDiaryActivity.launch() }
+        bt_add_record.setOnClickListener { MoodDiaryEditActivity.launch() }
     }
 
     private fun refreshData() {
@@ -126,16 +126,16 @@ class MoodDiaryListActivity : WhileTitleNavBgActivity() {
     }
 
     inner class FaithAdapter : BaseSectionMultiItemQuickAdapter<FaithSectionMultiEntity, BaseViewHolder> {
-        constructor() : super(R.layout.list_section_header_anxiety_faith, null) {
-            addItemType(0, R.layout.list_item_anxiety_faith)
+        constructor() : super(R.layout.list_section_header_anxiety_mood_diary, null) {
+            addItemType(0, R.layout.list_item_anxiety_mood_diary)
         }
 
         override fun convert(helper: BaseViewHolder, item: FaithSectionMultiEntity) {
-            val itemView = helper.getView<AnxiousMoodDiaryItemView>(R.id.anxiety_faith_view)
+            val itemView = helper.getView<AnxiousMoodDiaryItemView>(R.id.anxiety_mood_diary_view)
             itemView.setTextMaxLines(true)
             itemView.setData(AnxietyMoodDiaryItemViewData.create(item.t), object : EditAnxietyBottomSheetDialog.OnItemClickListener {
                 override fun onEditClick() {
-                    MoodDiaryActivity.launch(item.t)
+                    MoodDiaryEditActivity.launch(item.t)
                 }
 
                 override fun onDeleteClick() {
@@ -180,7 +180,7 @@ class MoodDiaryListActivity : WhileTitleNavBgActivity() {
     }
 
     @Subscribe(sticky = true)
-    fun onFaithChangeEvent(event: FaithChangeEvent) {
+    fun onMoodDiaryChangeEvent(event: MoodDiaryChangeEvent) {
         EventBusUtil.removeStickyEvent(event)
         val faith = event.moodDiary
         val position = getItemPosition(id = faith.id)

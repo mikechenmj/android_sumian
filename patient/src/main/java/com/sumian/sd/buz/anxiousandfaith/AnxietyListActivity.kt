@@ -19,7 +19,7 @@ import com.sumian.sd.buz.anxiousandfaith.widget.EditAnxietyBottomSheetDialog
 import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import com.sumian.sd.common.utils.EventBusUtil
-import kotlinx.android.synthetic.main.activity_anxiety_faith_list.*
+import kotlinx.android.synthetic.main.activity_anxiety_mood_diary_list.*
 import org.greenrobot.eventbus.Subscribe
 
 /**
@@ -40,7 +40,7 @@ class AnxietyListActivity : WhileTitleNavBgActivity() {
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.activity_anxiety_faith_list
+        return R.layout.activity_anxiety_mood_diary_list
     }
 
     override fun getPageName(): String {
@@ -67,7 +67,7 @@ class AnxietyListActivity : WhileTitleNavBgActivity() {
         refresh_layout.setOnRefreshListener {
             refreshData()
         }
-        bt_add_record.setOnClickListener { AnxietyActivity.launch() }
+        bt_add_record.setOnClickListener { AnxietyEditActivity.launch() }
     }
 
     private fun refreshData() {
@@ -125,16 +125,16 @@ class AnxietyListActivity : WhileTitleNavBgActivity() {
     }
 
     inner class AnxietyAdapter : BaseSectionMultiItemQuickAdapter<AnxietySectionMultiEntity, BaseViewHolder> {
-        constructor() : super(R.layout.list_section_header_anxiety_faith, null) {
-            addItemType(0, R.layout.list_item_anxiety_faith)
+        constructor() : super(R.layout.list_section_header_anxiety_mood_diary, null) {
+            addItemType(0, R.layout.list_item_anxiety_mood_diary)
         }
 
         override fun convert(helper: BaseViewHolder, item: AnxietySectionMultiEntity) {
-            val itemView = helper.getView<AnxiousMoodDiaryItemView>(R.id.anxiety_faith_view)
+            val itemView = helper.getView<AnxiousMoodDiaryItemView>(R.id.anxiety_mood_diary_view)
             itemView.setTextMaxLines(true)
             itemView.setData(AnxietyMoodDiaryItemViewData.create(item.t), object : EditAnxietyBottomSheetDialog.OnItemClickListener {
                 override fun onEditClick() {
-                    AnxietyActivity.launch(item.t)
+                    AnxietyEditActivity.launch(item.t)
                 }
 
                 override fun onDeleteClick() {

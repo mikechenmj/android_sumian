@@ -449,7 +449,7 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".buz.anxiousandfaith.AnxietyActivity"
+            android:name=".buz.anxiousandfaith.AnxietyEditActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
@@ -459,7 +459,7 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".buz.anxiousandfaith.MoodDiaryActivity"
+            android:name=".buz.anxiousandfaith.MoodDiaryDetailActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />

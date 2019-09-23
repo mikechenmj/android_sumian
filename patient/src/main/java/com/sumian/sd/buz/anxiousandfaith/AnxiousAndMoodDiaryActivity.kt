@@ -52,8 +52,8 @@ class AnxiousAndMoodDiaryActivity : WhileTitleNavBgActivity() {
     override fun initWidget() {
         super.initWidget()
         setTitle(R.string.anxious_and_belief_title)
-        tv_add_anxiety.setOnClickListener { AnxietyActivity.launch() }
-        tv_mood_diary.setOnClickListener { MoodDiaryActivity.launch() }
+        tv_add_anxiety.setOnClickListener { AnxietyEditActivity.launch() }
+        tv_mood_diary.setOnClickListener { MoodDiaryEditActivity.launch() }
         vg_question.setOnClickListener {
             showExplainDialog()
             StatUtil.event(StatConstants.click_anxiety_and_faith_page_question_mark)
@@ -103,7 +103,7 @@ class AnxiousAndMoodDiaryActivity : WhileTitleNavBgActivity() {
             val itemView = AnxiousMoodDiaryItemView(this@AnxiousAndMoodDiaryActivity)
             itemView.setData(AnxietyMoodDiaryItemViewData.create(data), object : EditAnxietyBottomSheetDialog.OnItemClickListener {
                 override fun onEditClick() {
-                    AnxietyActivity.launch(data)
+                    AnxietyEditActivity.launch(data)
                 }
 
                 override fun onDeleteClick() {
@@ -147,14 +147,14 @@ class AnxiousAndMoodDiaryActivity : WhileTitleNavBgActivity() {
             val itemView = AnxiousMoodDiaryItemView(this@AnxiousAndMoodDiaryActivity)
             itemView.setData(AnxietyMoodDiaryItemViewData.create(data), object : EditAnxietyBottomSheetDialog.OnItemClickListener {
                 override fun onEditClick() {
-                    MoodDiaryActivity.launch(data)
+                    MoodDiaryEditActivity.launch(data)
                 }
 
                 override fun onDeleteClick() {
                     deleteMoodDiary(data.id)
                 }
             })
-            itemView.setOnClickListener { MoodDiaryActivity.launch(data) }
+            itemView.setOnClickListener { MoodDiaryDetailActivity.launch(data) }
             itemView.tag = data.id
             vg_mood_diary_record.addView(itemView)
         }

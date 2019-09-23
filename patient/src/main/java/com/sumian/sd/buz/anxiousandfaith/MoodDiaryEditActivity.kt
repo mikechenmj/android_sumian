@@ -13,7 +13,8 @@ import com.sumian.common.widget.adapter.EmptyTextWatcher
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.anxiousandfaith.bean.MoodDiaryData
-import com.sumian.sd.buz.anxiousandfaith.event.FaithChangeEvent
+import com.sumian.sd.buz.anxiousandfaith.bean.MoodDiaryData.Companion.EXTRA_KEY_MOOD_DIARY
+import com.sumian.sd.buz.anxiousandfaith.event.MoodDiaryChangeEvent
 import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import com.sumian.sd.common.utils.EventBusUtil
@@ -27,7 +28,7 @@ import kotlinx.android.synthetic.main.activity_faith.*
  * version: 1.0
  */
 @SuppressLint("SetTextI18n")
-class MoodDiaryActivity : WhileTitleNavBgActivity() {
+class MoodDiaryEditActivity : WhileTitleNavBgActivity() {
     private var mProgress = 0
     private var mEvent = ""
     private var mThought = ""
@@ -39,22 +40,21 @@ class MoodDiaryActivity : WhileTitleNavBgActivity() {
     }
 
     companion object {
-        private const val KEY_FAITH_DATA = "faith_data"
 
         fun launch(moodDiaryData: MoodDiaryData? = null) {
-            val intent = Intent(ActivityUtils.getTopActivity(), MoodDiaryActivity::class.java)
-            intent.putExtra(KEY_FAITH_DATA, moodDiaryData)
+            val intent = Intent(ActivityUtils.getTopActivity(), MoodDiaryEditActivity::class.java)
+            intent.putExtra(EXTRA_KEY_MOOD_DIARY, moodDiaryData)
             ActivityUtils.startActivity(intent)
         }
     }
 
     override fun getPageName(): String {
-        return StatConstants.page_add_faith
+        return StatConstants.page_add_mood_diary
     }
 
     override fun initBundle(bundle: Bundle) {
         super.initBundle(bundle)
-        val faithData = bundle.getParcelable<MoodDiaryData>(KEY_FAITH_DATA)
+        val faithData = bundle.getParcelable<MoodDiaryData>(EXTRA_KEY_MOOD_DIARY)
         if (faithData != null) {
             mId = faithData.id
             mEvent = faithData.scene
@@ -139,7 +139,7 @@ class MoodDiaryActivity : WhileTitleNavBgActivity() {
         bt_next_step.isEnabled = false
         call.enqueue(object : BaseSdResponseCallback<MoodDiaryData>() {
             override fun onSuccess(response: MoodDiaryData?) {
-                EventBusUtil.postStickyEvent(FaithChangeEvent(response!!))
+                EventBusUtil.postStickyEvent(MoodDiaryChangeEvent(response!!))
                 finish()
             }
 
