@@ -479,4 +479,11 @@
         <item name="android:textColor">@color/t1_color</item>
     </style>
 
+    <style name="SecondaryItemTextStyle">
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textSize">@dimen/secondary_text_size</item>
+        <item name="android:textColor">@color/t2_color</item>
+    </style>
+
+
 </resources>
