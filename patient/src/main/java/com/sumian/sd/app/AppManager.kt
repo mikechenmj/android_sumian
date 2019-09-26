@@ -61,6 +61,7 @@ import com.sumian.sd.common.network.api.SdApi
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import com.sumian.sd.common.utils.getString
 import com.sumian.sd.main.MainActivity
+import java.util.HashMap
 
 /**
  * Created by jzz
@@ -184,7 +185,7 @@ object AppManager {
             }
         })
         DeviceManager.registerDeviceStatusListener(object : DeviceStatusListener {
-            override fun onStatusChange(type: String) {
+            override fun onStatusChange(type: String, data: Any?) {
                 when (type) {
                     DeviceManager.EVENT_RECEIVE_MONITOR_VERSION_INFO -> {
                         val compatibility = DeviceManager.checkMonitorVersionCompatibility()
@@ -202,10 +203,37 @@ object AppManager {
                         }
                         VersionManager.delayQueryDeviceVersion()
                     }
+                    DeviceManager.EVENT_RECEIVE_MONITOR_SN -> {
+                        uploadDeviceSns(monitorSn = data as String)
+                    }
+                    DeviceManager.EVENT_RECEIVE_SLEEP_MASTER_SN -> {
+                        uploadDeviceSns(sleeperSn = data as String)
+                    }
 
                 }
             }
         })
+    }
+
+    private fun uploadDeviceSns(monitorSn: String? = null, sleeperSn: String? = null) {
+        if (monitorSn == null && sleeperSn == null) {
+            return
+        }
+        val map = HashMap<String, String>()
+        monitorSn?.let { map.put("monitor_sn", it) }
+        sleeperSn?.let { map.put("sleeper_sn", it) }
+        if (monitorSn != null || sleeperSn != null) {
+            AppManager.getSdHttpService().modifyUserProfile(map).enqueue(object : BaseSdResponseCallback<UserInfo>() {
+                override fun onSuccess(response: UserInfo?) {
+                    LogUtils.d(response)
+                    AppManager.getAccountViewModel().updateUserInfo(response)
+                }
+
+                override fun onFailure(errorResponse: ErrorResponse) {
+                    LogUtils.d(errorResponse.message)
+                }
+            })
+        }
     }
 
     private fun initStatic(app: Application) {
