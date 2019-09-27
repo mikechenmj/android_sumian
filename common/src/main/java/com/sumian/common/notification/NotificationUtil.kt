@@ -58,6 +58,7 @@ object NotificationUtil {
                 .setContentText(contentText)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setAutoCancel(true)
+                .setGroup(getNotificationId().toString())
         if (pendingIntent != null) builder.setContentIntent(pendingIntent)
         NotificationManagerCompat.from(context).notify(getNotificationId(), builder.build())
     }
