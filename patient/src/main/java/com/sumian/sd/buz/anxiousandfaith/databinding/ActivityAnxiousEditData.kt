@@ -23,12 +23,13 @@ import java.util.*
             attribute = "type_content",
             method = "setContent")])
 
-class ActivityAnxiousEditData(var anxietyEditActivity: AnxietyEditActivity, var anxietyData: AnxietyData?) : BaseObservable() {
+class ActivityAnxiousEditData(var anxietyEditActivity: AnxietyEditActivity, var anxietyId: Int) : BaseObservable() {
 
     companion object {
         private const val DETAIL_TEXT_MAX_COUNT = 200
         private const val SOLUTION_TEXT_MAX_COUNT = 50
         private const val HARD_TEXT_MAX_COUNT = 50
+        const val ANXIETY_INVALID_ID = -1
         @InverseMethod("getIsCheckedFromId")
         @JvmStatic
         fun getIdFromIsChecked(positiveId: Int, negativeId: Int, isChecked: Boolean): Int {
@@ -320,10 +321,10 @@ class ActivityAnxiousEditData(var anxietyEditActivity: AnxietyEditActivity, var 
             return
         }
 
-        val call = if (anxietyData == null) {
+        val call = if (anxietyId == -1) {
             AppManager.getSdHttpService().addAnxiety(detailText, solutionText)
         } else {
-            AppManager.getSdHttpService().updateAnxiety(anxietyData!!.id, detailText, solutionText)
+            AppManager.getSdHttpService().updateAnxiety(anxietyId, detailText, solutionText)
         }
         anxietyEditActivity.addCall(call)
         saveButtonEnable = false

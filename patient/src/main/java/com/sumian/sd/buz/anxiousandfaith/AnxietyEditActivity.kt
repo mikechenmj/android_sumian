@@ -1,28 +1,20 @@
 package com.sumian.sd.buz.anxiousandfaith
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.text.TextUtils
 import androidx.databinding.DataBindingUtil
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
-import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.R
 import com.sumian.sd.R.layout
 import com.sumian.sd.R.string
-import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.anxiousandfaith.bean.AnxietyData
 import com.sumian.sd.buz.anxiousandfaith.bean.AnxietyData.Companion.EXTRA_KEY_ANXIETY
 import com.sumian.sd.buz.anxiousandfaith.databinding.ActivityAnxiousEditData
-import com.sumian.sd.buz.anxiousandfaith.event.AnxietyChangeEvent
 import com.sumian.sd.buz.stat.StatConstants
-import com.sumian.sd.common.network.callback.BaseSdResponseCallback
-import com.sumian.sd.common.utils.EventBusUtil
 import com.sumian.sd.databinding.ActivityAnxietyBinding
 import com.sumian.sd.widget.sheet.SelectTimeHHmmBottomSheet
-import kotlinx.android.synthetic.main.activity_anxiety.*
 import java.util.*
 
 /**
@@ -65,10 +57,12 @@ class AnxietyEditActivity : WhileTitleNavBgActivity() {
         super.initWidget()
         setTitle(string.add_anxious)
         var binding = DataBindingUtil.bind<ActivityAnxietyBinding>(findViewById(R.id.activity_anxiety))
-        binding?.data = ActivityAnxiousEditData(this, mAnxietyData).apply {
-            detailText = mAnxietyData?.anxiety ?: detailText
-            solutionText = mAnxietyData?.solution ?: solutionText
-        }
+        binding?.data = ActivityAnxiousEditData(this,
+                mAnxietyData?.id ?: ActivityAnxiousEditData.ANXIETY_INVALID_ID)
+                .apply {
+                    detailText = mAnxietyData?.anxiety ?: detailText
+                    solutionText = mAnxietyData?.solution ?: solutionText
+                }
     }
 
     fun showBottomSheet() {
