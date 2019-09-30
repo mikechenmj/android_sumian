@@ -17,8 +17,9 @@ public interface H5Uri {
     String MY_MEDICAL_RECORD = "mine/medical";
     String DOCTOR_SERVICE = "doctor-service/{id}";
     String ONLINE_REPORT = "online-reports?title={title}&report_url={pdfUrl}";
-    String RELEASED_SCALE_COLLECTIONS = "scale-details/{collection_id}";
+    String RELEASED_SCALE_COLLECTIONS = "scale-exercise/{collection_id}";
     String FILLED_SCALE_COLLECTIONS = "scale-result/{collection_id}?id={distribution_id}";
+    String PUSH_SCALE_COLLECTIONS = "scale-details/collection?scale_collection_distribution_id={collection_id}";
     String BIND_DOCTOR = "doctor/null?url={url}";//  doctor/{id}
     String ABOUT_US = "about-us";
     String ADVISORY_GUIDE = "advisory-guide";

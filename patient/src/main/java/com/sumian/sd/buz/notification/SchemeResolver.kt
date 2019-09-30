@@ -19,6 +19,7 @@ import com.sumian.sd.buz.relaxation.RelaxationListActivity
 import com.sumian.sd.buz.scale.ScaleDetailActivity
 import com.sumian.sd.buz.tel.activity.TelBookingDetailActivity
 import com.sumian.sd.buz.tel.activity.TelBookingListActivity
+import com.sumian.sd.common.h5.H5Uri
 import com.sumian.sd.common.h5.SimpleWebActivity
 import java.util.*
 
@@ -39,7 +40,7 @@ object SchemeResolver : ISchemeResolver {
             "online-reports" -> resolveOnlineReportScheme(context, uri)
             "refund" -> resolveRefundScheme(context, uri)
             "advisories" -> resolveAdvisoriesScheme(context, uri)
-            "scale-distributions" -> resolveScaleScheme(context, uri)
+            "scale-collection-distribution" -> resolveScaleScheme(context, uri)
             "referral-notice", "life-notice" -> resolveNotificationScheme(context, uri)
             "cbti-chapters" -> resolveCbtiChapterScheme(context, uri)
             "cbti-final-reports" -> resolveCbtiFinalReportScheme(context, uri)
@@ -161,12 +162,13 @@ object SchemeResolver : ISchemeResolver {
 
     /**
     医生发送了新的量表
-    "scheme" => 'sleepdoctor://scale-distributions?id=1&notification_id=f7c63f71-1298-49a1-9320-6985eb4bcf7c&user_id=1',   //urlencode后
+    "scheme" => 'sleepdoctor://scale-collection-distribution?notification_id=55629358-4bb4-4f56-815a-784857e0a190&user_id=5218&id=45627',   //urlencode后
      */
     fun resolveScaleScheme(context: Context, uri: Uri): Intent {
-        val data = uri.getQueryParameter("id")
+        val id = uri.getQueryParameter("id")
         val title = context.getString(R.string.record_weekly_report) // td 让服务器在 scheme 加上 title 字段
-        return ScaleDetailActivity.getLaunchIntent(context, title, data!!.toLong(), ScaleDetailActivity.INVALID_ID)
+        return ScaleDetailActivity.getLaunchIntent(context, title,
+                H5Uri.PUSH_SCALE_COLLECTIONS.replace("{collection_id}", id))
     }
 
     /**
