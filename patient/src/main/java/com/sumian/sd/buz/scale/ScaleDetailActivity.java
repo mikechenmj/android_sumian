@@ -14,7 +14,6 @@ import com.sumian.sd.base.SdBaseWebViewActivity;
 import com.sumian.sd.buz.scale.event.ScaleFinishFillingEvent;
 import com.sumian.sd.buz.scale.event.ScaleFinishFillingEvent2;
 import com.sumian.sd.buz.stat.StatConstants;
-import com.sumian.sd.common.h5.H5Uri;
 import com.sumian.sd.common.utils.EventBusUtil;
 
 import org.jetbrains.annotations.NotNull;
@@ -22,22 +21,18 @@ import org.jetbrains.annotations.NotNull;
 public class ScaleDetailActivity extends SdBaseWebViewActivity {
 
     public static final String KEY_TITLE = "title";
-    public static final String KEY_DISTRIBUTION_ID = "distribution_id";
-    public static final String KEY_COLLECTION_ID = "collection_ID";
-    public static final long INVALID_ID = -1L;
+    public static final String KEY_URL_CONTENT_PART = "url_content_part";
     private String mTitle;
-    private long mDistributionId;
-    private long mCollectionId;
+    private String mUrlContentPart;
 
-    public static void launch(Context context, String title, long collectionId, long distributionId) {
-        ActivityUtils.startActivity(getLaunchIntent(context, title, collectionId, distributionId));
+    public static void launch(Context context, String title, String urlContentPart) {
+        ActivityUtils.startActivity(getLaunchIntent(context, title, urlContentPart));
     }
 
-    public static Intent getLaunchIntent(Context context, String title, long collectionId, long distributionId) {
+    public static Intent getLaunchIntent(Context context, String title, String urlContentPart) {
         Bundle bundle = new Bundle();
         bundle.putString(KEY_TITLE, title);
-        bundle.putLong(KEY_COLLECTION_ID, collectionId);
-        bundle.putLong(KEY_DISTRIBUTION_ID, distributionId);
+        bundle.putString(KEY_URL_CONTENT_PART, urlContentPart);
         Intent intent = new Intent(context, ScaleDetailActivity.class);
         intent.putExtras(bundle);
         return intent;
@@ -46,8 +41,7 @@ public class ScaleDetailActivity extends SdBaseWebViewActivity {
     @Override
     protected void initBundle(@NonNull Bundle bundle) {
         mTitle = bundle.getString(KEY_TITLE);
-        mCollectionId = bundle.getLong(KEY_COLLECTION_ID);
-        mDistributionId = bundle.getLong(KEY_DISTRIBUTION_ID);
+        mUrlContentPart = bundle.getString(KEY_URL_CONTENT_PART);
     }
 
     @Override
@@ -63,15 +57,7 @@ public class ScaleDetailActivity extends SdBaseWebViewActivity {
 
     @Override
     protected String getUrlContentPart() {
-        String uri;
-        if (mDistributionId == INVALID_ID) {
-            uri = H5Uri.RELEASED_SCALE_COLLECTIONS.replace("{collection_id}", String.valueOf(mCollectionId));
-        } else {
-            uri = H5Uri.FILLED_SCALE_COLLECTIONS
-                    .replace("{collection_id}", String.valueOf(mCollectionId))
-                    .replace("{distribution_id}", String.valueOf(mDistributionId));
-        }
-        return uri;
+        return mUrlContentPart;
     }
 
     @Override

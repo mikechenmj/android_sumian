@@ -15,6 +15,7 @@ import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.scale.bean.ReleasedScaleCollection
 import com.sumian.sd.buz.scale.event.ScaleFinishFillingEvent
+import com.sumian.sd.common.h5.H5Uri
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import com.sumian.sd.common.utils.EventBusUtil
 import kotlinx.android.synthetic.main.recycler_view_with_top_padding.*
@@ -42,7 +43,9 @@ class NotFilledScaleListFragment : BaseFragment() {
         mAdapter.setOnItemClickListener { adapter, view, position ->
             run {
                 val releasedScaleCollection = mAdapter.getItem(position) as ReleasedScaleCollection
-                ScaleDetailActivity.launch(activity!!, releasedScaleCollection.title, releasedScaleCollection.id, ScaleDetailActivity.INVALID_ID)
+                ScaleDetailActivity.launch(activity!!, releasedScaleCollection.title,
+                        H5Uri.RELEASED_SCALE_COLLECTIONS
+                                .replace("{collection_id}", releasedScaleCollection.id.toString()))
             }
         }
         val emptyErrorView = EmptyErrorView.create(activity!!, R.mipmap.ic_empty_state_report, R.string.empty_evaluation_msg, R.string.know_your_sleep_health_situation)
