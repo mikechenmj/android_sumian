@@ -2,13 +2,9 @@
 
 package com.sumian.sd.buz.scale
 
-import android.view.View
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ToastUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
-import com.sumian.common.base.BaseFragment
-import com.sumian.common.h5.widget.EmptyErrorView
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.network.response.PaginationResponseV2
 import com.sumian.sd.R
@@ -18,7 +14,6 @@ import com.sumian.sd.buz.scale.event.ScaleFinishFillingEvent
 import com.sumian.sd.common.h5.H5Uri
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import com.sumian.sd.common.utils.EventBusUtil
-import kotlinx.android.synthetic.main.recycler_view_with_top_padding.*
 import org.greenrobot.eventbus.Subscribe
 
 
@@ -29,32 +24,22 @@ import org.greenrobot.eventbus.Subscribe
  * desc   :
  * version: 1.0
  */
-class NotFilledScaleListFragment : BaseFragment() {
-    override fun getLayoutId(): Int {
-        return R.layout.recycler_view_with_top_padding
-    }
+class NotFilledScaleListFragment(
+        override var mAdapter
+        : BaseQuickAdapter<ReleasedScaleCollection, BaseViewHolder>
+        = NotFilledScaleListAdapter())
+    : ScaleListFragment<ReleasedScaleCollection>() {
 
-    private var mAdapter = NotFilledScaleListAdapter()
-    private var mPage = 1
-
-    override fun initWidget() {
-        super.initWidget()
-        mAdapter.setOnLoadMoreListener({ loadMoreData() }, recycler_view)
+    init {
         mAdapter.setOnItemClickListener { adapter, view, position ->
-            run {
-                val releasedScaleCollection = mAdapter.getItem(position) as ReleasedScaleCollection
-                ScaleDetailActivity.launch(activity!!, releasedScaleCollection.title,
-                        H5Uri.RELEASED_SCALE_COLLECTIONS
-                                .replace("{collection_id}", releasedScaleCollection.id.toString()))
-            }
+            val releasedScaleCollection = mAdapter.getItem(position) as ReleasedScaleCollection
+            ScaleDetailActivity.launch(activity!!, releasedScaleCollection.title,
+                    H5Uri.RELEASED_SCALE_COLLECTIONS
+                            .replace("{collection_id}", releasedScaleCollection.id.toString()))
         }
-        mAdapter.emptyView = EmptyErrorView.create(activity!!, R.mipmap.ic_empty_state_report, R.string.empty_evaluation_msg, R.string.know_your_sleep_health_situation)
-        recycler_view.layoutManager = LinearLayoutManager(activity!!)
-        recycler_view.adapter = mAdapter
-        loadMoreData()
     }
 
-    private fun loadMoreData() {
+    override fun loadMoreData() {
         val call = AppManager.getSdHttpService().getReleasedScaleCollections(mPage)
         addCall(call)
         call.enqueue(object : BaseSdResponseCallback<PaginationResponseV2<ReleasedScaleCollection>>() {
@@ -81,25 +66,10 @@ class NotFilledScaleListFragment : BaseFragment() {
         })
     }
 
-    override fun onStart() {
-        super.onStart()
-        EventBusUtil.register(this)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        EventBusUtil.unregister(this)
-    }
-
     @Subscribe(sticky = true)
     fun onScaleFinishFillingEvent(event: ScaleFinishFillingEvent) {
         EventBusUtil.removeStickyEvent(event)
         refreshData()
-    }
-
-    private fun refreshData() {
-        mPage = 1
-        loadMoreData()
     }
 }
 
