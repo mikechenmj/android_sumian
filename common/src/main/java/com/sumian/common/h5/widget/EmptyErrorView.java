@@ -110,6 +110,10 @@ public class EmptyErrorView extends LinearLayout implements View.OnClickListener
         setVisibility(GONE);
     }
 
+    public void setAutoHide(boolean autoHide) {
+        mAutoHide = autoHide;
+    }
+
     @Override
     public void onClick(View v) {
         if (mOnEmptyCallback != null) {
