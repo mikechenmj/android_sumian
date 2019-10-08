@@ -59,12 +59,11 @@ class FilledScaleListFragment(
                         data.add(collectionDistributions)
                     }
                 }
-                data.sortByDescending { it.updated_at }
-                if (mPage == 1) {
-                    mAdapter.setNewData(data)
-                } else {
-                    mAdapter.addData(data)
+                if (mPage > 1) {
+                    data.addAll(mAdapter.data)
                 }
+                data.sortByDescending { it.updated_at }
+                mAdapter.setNewData(data)
                 mAdapter.setEnableLoadMore(!response.meta.pagination.isLastPage())
                 mPage++
             }
