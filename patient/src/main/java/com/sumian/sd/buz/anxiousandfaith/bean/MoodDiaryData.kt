@@ -13,6 +13,10 @@ data class MoodDiaryData(
         val created_at: Int,
         val id: Int
 ) : Parcelable {
+
+    companion object {
+        const val EXTRA_KEY_MOOD_DIARY = "mood_diary"
+    }
     fun getUpdateAtInMillis(): Long {
         return updated_at * 1000L
     }

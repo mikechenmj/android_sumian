@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="data"
+            type="com.sumian.sd.buz.anxiousandfaith.databinding.ActivityMoodDiaryDetailData" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_challenge_unreasonable_belief_title"
+            style="@style/SecondaryItemTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="@dimen/normal_interval"
+            android:text="@string/mood_diary_challenge_unreasonable_belief_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_belief_title"
+            style="@style/NormalItemTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/normal_interval"
+            android:background="@drawable/bg_line_l1_margin_start_20dp_white_bg"
+            android:text="@string/mood_diary_belief_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_challenge_unreasonable_belief_title" />
+
+        <EditText
+            android:id="@+id/tv_belief_content"
+            style="@style/NormalItemTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:focusable="@{data.editMode}"
+            android:focusableInTouchMode="@{data.editMode}"
+            android:text="@={data.beliefContent}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_belief_title"
+            tools:text="如果我一直睡不着，明天会累到无法完成工作" />
+
+        <TextView
+            android:id="@+id/tv_cognitive_bias_title"
+            style="@style/NormalItemTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/normal_interval"
+            android:background="@drawable/bg_line_l1_margin_start_20dp_white_bg"
+            android:text="@string/mood_diary_cognitive_belief_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_belief_content" />
+
+        <com.sumian.common.widget.SumianFlexboxLayout
+            android:id="@+id/flex_box_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:paddingLeft="15dp"
+            android:paddingTop="15dp"
+            android:paddingRight="@dimen/normal_padding"
+            android:paddingBottom="@dimen/normal_padding"
+            app:adapter="@{data.adapter}"
+            app:flexWrap="wrap"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_cognitive_bias_title"
+            app:onItemClickListener='@{data::onItemClickWhenEditMode}' />
+
+        <TextView
+            android:id="@+id/tv_unreasonable_belief_result_title"
+            style="@style/NormalItemTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/normal_interval"
+            android:background="@drawable/bg_line_l1_margin_start_20dp_white_bg"
+            android:text="@string/mood_diary_result_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/flex_box_layout" />
+
+        <EditText
+            android:id="@+id/tv_unreasonable_belief_result_content"
+            style="@style/NormalItemTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:focusable="@{data.editMode}"
+            android:focusableInTouchMode="@{data.editMode}"
+            android:text="@={data.unreasonableResultContent}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_unreasonable_belief_result_title"
+            tools:text="一晚上没睡着" />
+
+        <TextView
+            android:id="@+id/tv_reasonable_belief_practice_title"
+            style="@style/SecondaryItemTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="@dimen/normal_interval"
+            android:text="@string/mood_diary_reasonable_belief_practice_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_unreasonable_belief_result_content" />
+
+        <TextView
+            android:id="@+id/tv_refute_unreasonable_title"
+            style="@style/NormalItemTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/normal_interval"
+            android:background="@drawable/bg_line_l1_margin_start_20dp_white_bg"
+            android:text="@string/mood_diary_refute_unreasonable_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_reasonable_belief_practice_title" />
+
+        <EditText
+            android:id="@+id/tv_refute_unreasonable_content"
+            style="@style/NormalItemTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:focusable="@{data.editMode}"
+            android:focusableInTouchMode="@{data.editMode}"
+            android:text="@={data.refuteUnreasonableContent}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_refute_unreasonable_title"
+            tools:text="以前也试过睡不好，但是并不影响工作。我只是目前没有睡着，并不代表我会一直都睡不着" />
+
+        <TextView
+            android:id="@+id/tv_reasonable_belief_title"
+            style="@style/NormalItemTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/normal_interval"
+            android:background="@drawable/bg_line_l1_margin_start_20dp_white_bg"
+            android:text="@string/mood_diary_reasonable_belief_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_refute_unreasonable_content" />
+
+        <EditText
+            android:id="@+id/tv_reasonable_belief_content"
+            style="@style/NormalItemTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:focusable="@{data.editMode}"
+            android:focusableInTouchMode="@{data.editMode}"
+            android:text="@={data.reasonableBeliefContent}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_reasonable_belief_title"
+            tools:text="虽然我现在睡不着，但可能待会儿就有睡意了" />
+
+        <TextView
+            android:id="@+id/tv_reasonable_belief_result_title"
+            style="@style/NormalItemTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/normal_interval"
+            android:background="@drawable/bg_line_l1_margin_start_20dp_white_bg"
+            android:text="@string/mood_diary_result_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_reasonable_belief_content" />
+
+        <EditText
+            android:id="@+id/tv_reasonable_belief_result_content"
+            style="@style/NormalItemTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:focusable="@{data.editMode}"
+            android:focusableInTouchMode="@{data.editMode}"
+            android:text="@={data.reasonableBeliefResultContent}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_reasonable_belief_result_title"
+            tools:text="我这么想之后，感觉轻松一点了" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

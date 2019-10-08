@@ -47,13 +47,13 @@ data class AnxietyMoodDiaryItemViewData(val type: Int = TYPE_ANXIETY, val id: In
             }
             return list
         }
-    }
 
-    fun getEmotionTextRes(): Int {
-        return EMOTION_LIST[emotion].textRes
-    }
+        fun getEmotionTextRes(emotion : Int): Int {
+            return EMOTION_LIST[emotion].textRes
+        }
 
-    fun getEmotionImageRes():Int {
-        return EMOTION_LIST[emotion].selectedImageRes
+        fun getEmotionImageRes(emotion : Int):Int {
+            return EMOTION_LIST[emotion].selectedImageRes
+        }
     }
 }

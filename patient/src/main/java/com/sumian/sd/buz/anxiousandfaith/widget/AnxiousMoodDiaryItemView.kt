@@ -28,7 +28,7 @@ class AnxiousMoodDiaryItemView(context: Context, attributeSet: AttributeSet? = n
         iv_more.setOnClickListener { EditAnxietyBottomSheetDialog(context, listener).show() }
         if (data.type == AnxietyMoodDiaryItemViewData.TYPE_MOOD_DIARY) {
             iv_emotion.visibility = View.VISIBLE
-            iv_emotion.setImageResource(data.getEmotionImageRes())
+            iv_emotion.setImageResource(AnxietyMoodDiaryItemViewData.getEmotionImageRes(data.emotion))
         }
     }
 
