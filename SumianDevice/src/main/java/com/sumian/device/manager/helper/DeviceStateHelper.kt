@@ -68,8 +68,7 @@ object DeviceStateHelper {
                 BleCmd.QUERY_SLEEP_MASTER_MAC,
                 BleCmd.QUERY_SLEEP_MASTER_SN,
                 BleCmd.SET_USER_INFO,
-                BleCmd.CHANGE_SLEEP_MASTER,
-                BleCmd.TOGGLE_SLEEP_MASTER_WORK_MODE
+                BleCmd.CHANGE_SLEEP_MASTER
                 -> BleCommunicationController.makeSuccessResponse(hexString)
                 else -> {
                 }
