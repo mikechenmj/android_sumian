@@ -270,8 +270,8 @@ dependencies {
     implementation 'com.aliyun.dpa:oss-android-sdk:2.9.1'
     //aliyun player sdk
     implementation(name: 'AlivcReporter-1.2', ext: 'aar')
-    implementation(name: 'AlivcPlayer-3.4.8', ext: 'aar')
-    implementation(name: 'AliyunVodPlayer-3.4.8', ext: 'aar')
+    implementation(name: 'AlivcPlayer-3.4.10', ext: 'aar')
+    implementation(name: 'AliyunVodPlayer-3.4.10', ext: 'aar')
     //ping++
     implementation 'com.pingxx:pingpp-core:2.1.18'
     // 使用支付宝时添加
