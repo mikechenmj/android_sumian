@@ -258,8 +258,8 @@ dependencies {
     implementation project(':common')
     //aliyun player sdk
     implementation(name: 'AlivcReporter-1.2', ext: 'aar')
-    implementation(name: 'AlivcPlayer-3.4.8', ext: 'aar')
-    implementation(name: 'AliyunVodPlayer-3.4.8', ext: 'aar')
+    implementation(name: 'AlivcPlayer-3.4.10', ext: 'aar')
+    implementation(name: 'AliyunVodPlayer-3.4.10', ext: 'aar')
 
     // LeanCloud 基础包
     implementation('cn.leancloud.android:avoscloud-sdk:v4.7.6')
