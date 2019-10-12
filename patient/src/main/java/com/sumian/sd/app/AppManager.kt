@@ -7,9 +7,6 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.net.ConnectivityManager
 import android.os.Build
-import android.os.Handler
-import android.os.Looper
-import android.os.Message
 import android.util.Log
 import android.view.Gravity
 import androidx.lifecycle.Lifecycle
@@ -24,6 +21,7 @@ import com.sumian.common.dns.HttpDnsEngine
 import com.sumian.common.dns.IHttpDns
 import com.sumian.common.h5.WebViewManger
 import com.sumian.common.helper.ToastHelper
+import com.sumian.common.log.CrashLogSender
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.notification.AppNotificationManager
 import com.sumian.common.notification.LeanCloudManager
@@ -82,7 +80,7 @@ object AppManager {
         OpenEngine().create(App.getAppContext(), BuildConfig.DEBUG, BuildConfig.WECHAT_APP_ID, BuildConfig.WECHAT_APP_SECRET)
     }
 
-    private val mNetworkManager: NetworkManager  by lazy {
+    private val mNetworkManager: NetworkManager by lazy {
         //注册网络引擎框架
         NetworkManager.create()
     }
@@ -146,12 +144,13 @@ object AppManager {
 
     fun initOnAppStart(app: Application) {
         mApplication = app
+        initLogManager(app)
+        startCrashListen(app)
         initUtils(app)
         initLeakCanary(app)
         BaseActivityManager.setActivityDelegateFactory(ActivityDelegateFactory())
         initLeanCloud()
         initAppNotificationManager(app)
-        initLogManager(app)
         initStatic(app)
         observeAppLifecycle()
         observeNetworkState()
@@ -159,6 +158,15 @@ object AppManager {
         VideoDownloadManager.init(app)
         initDeviceManager()
     }
+
+    private fun startCrashListen(app: Application) {
+        CrashLogSender.listen(app, object : CrashLogSender.CrashCallback {
+            override fun onCrash(logPath: String?, emergency: String?) {
+                SdLogManager.logCrash(CrashLogSender.getNormalCrashLog(logPath, emergency))
+            }
+        })
+    }
+
 
     private fun initKefu(app: Application) {
         KefuManager.init(app,
