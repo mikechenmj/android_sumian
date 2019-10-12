@@ -18,6 +18,7 @@ import com.sumian.common.dns.HttpDnsEngine
 import com.sumian.common.dns.IHttpDns
 import com.sumian.common.h5.WebViewManger
 import com.sumian.common.helper.ToastHelper
+import com.sumian.common.log.CrashLogSender
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.notification.AppNotificationManager
 import com.sumian.common.notification.LeanCloudManager
@@ -110,16 +111,7 @@ object AppManager {
 
     fun init(application: Application) {
         mApplication = application
-        Utils.init(application)
-        observeTokenInvalidation()
-        ToastHelper.init(application)
-        OpenEngine.init(application, BuildConfig.DEBUG, BuildConfig.UMENG_APP_KEY, BuildConfig.UMENG_CHANNEL, BuildConfig.UMENG_PUSH_SECRET)
         initLeanCloud()
-        initNotification(application)
-        initWebView(application)
-        initStatic(application)
-        BaseActivityManager.setActivityDelegateFactory(ActivityDelegateFactory())
-        observeAppLifecycle()
         SddLogManager.init(application,
                 BuildConfig.ALIYUN_LOG_ACCESS_KEY_ID,
                 BuildConfig.ALIYUN_LOG_ACCESS_SECRET,
@@ -127,6 +119,24 @@ object AppManager {
                 BuildConfig.ALIYUN_LOG_LOG_STORE,
                 BuildConfig.ALIYUN_LOG_END_POINT
         )
+        startCrashListen(application)
+        Utils.init(application)
+        observeTokenInvalidation()
+        ToastHelper.init(application)
+        OpenEngine.init(application, BuildConfig.DEBUG, BuildConfig.UMENG_APP_KEY, BuildConfig.UMENG_CHANNEL, BuildConfig.UMENG_PUSH_SECRET)
+        initNotification(application)
+        initWebView(application)
+        initStatic(application)
+        BaseActivityManager.setActivityDelegateFactory(ActivityDelegateFactory())
+        observeAppLifecycle()
+    }
+
+    private fun startCrashListen(app: Application) {
+        CrashLogSender.listen(app, object : CrashLogSender.CrashCallback {
+            override fun onCrash(logPath: String?, emergency: String?) {
+                SddLogManager.logCrash(CrashLogSender.getNormalCrashLog(logPath, emergency))
+            }
+        })
     }
 
     private fun initLeanCloud() {
