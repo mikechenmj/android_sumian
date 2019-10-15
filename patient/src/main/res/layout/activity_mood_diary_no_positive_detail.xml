@@ -71,7 +71,7 @@
             android:paddingLeft="15dp"
             android:paddingTop="15dp"
             android:paddingRight="@dimen/normal_padding"
-            android:paddingBottom="@dimen/normal_padding"
+            android:paddingBottom="15dp"
             app:adapter="@{data.adapter}"
             app:flexWrap="wrap"
             app:layout_constraintEnd_toEndOf="parent"

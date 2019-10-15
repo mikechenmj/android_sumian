@@ -3,16 +3,12 @@ package com.sumian.sd.buz.anxiousandfaith
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
-import android.util.TypedValue
-import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import com.blankj.utilcode.util.ActivityUtils
-import com.google.android.flexbox.FlexboxLayout
 import com.sumian.common.utils.TimeUtilV2
 import com.sumian.common.widget.SumianFlexboxLayout
 import com.sumian.sd.R
@@ -24,44 +20,23 @@ import com.sumian.sd.buz.anxiousandfaith.event.MoodDiaryChangeEvent
 import com.sumian.sd.common.utils.EventBusUtil
 import com.sumian.sd.databinding.ActivityMoodDiaryDetailBinding
 import kotlinx.android.synthetic.main.activity_mood_diary_detail.*
-import kotlinx.android.synthetic.main.activity_mood_diary_no_positive_detail.*
 import org.greenrobot.eventbus.Subscribe
 
 class MoodDiaryDetailActivity : WhileTitleNavBgActivity() {
 
     private val mLabelData = arrayOf(
-            LabelBean("非黑即白", false),
-            LabelBean("贴标签", false),
-            LabelBean("不公平的比较", true)
+            SumianFlexboxLayout.SimpleLabelBean("非黑即白", false),
+            SumianFlexboxLayout.SimpleLabelBean("贴标签", false),
+            SumianFlexboxLayout.SimpleLabelBean("不公平的比较", true)
     )
 
-    private var mInEditMode = false
     private var mMoodDiaryData: MoodDiaryData? = null
     private var mViewDataBinding: ActivityMoodDiaryDetailBinding? = null
     private var mFlexLabelAdapter = object : BaseAdapter() {
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-            var view = TextView(this@MoodDiaryDetailActivity)
-            var param = FlexboxLayout.LayoutParams(
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 35f, resources.displayMetrics).toInt()
-            )
-            param.setMargins(
-                    TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5f, resources.displayMetrics).toInt(),
-                    TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5f, resources.displayMetrics).toInt(),
-                    0, 0
-            )
-            view.layoutParams = param
-            view.setPadding(
-                    TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20f, resources.displayMetrics).toInt(),
-                    TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 7.5f, resources.displayMetrics).toInt(),
-                    TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20f, resources.displayMetrics).toInt(),
-                    TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 7.5f, resources.displayMetrics).toInt()
-            )
-            view.textSize = 14f
-            view.gravity = Gravity.CENTER
-            updateUiFromIsChecked(view, mLabelData[position].isChecked)
-
-            view.text = (getItem(position) as LabelBean).label
+            var view = SumianFlexboxLayout.getSimpleLabelTextView(this@MoodDiaryDetailActivity)
+            SumianFlexboxLayout.updateLabelUi(view as TextView, mLabelData[position].isChecked)
+            view.text = (getItem(position) as SumianFlexboxLayout.SimpleLabelBean).label
             return view
         }
 
@@ -82,7 +57,7 @@ class MoodDiaryDetailActivity : WhileTitleNavBgActivity() {
         override fun onItemClick(parent: SumianFlexboxLayout, view: View, position: Int, id: Long) {
             var isChecked = !mLabelData[position].isChecked
             mLabelData[position].isChecked = isChecked
-            updateUiFromIsChecked(view, isChecked)
+            SumianFlexboxLayout.updateLabelUi(view as TextView, isChecked)
         }
     }
 
@@ -118,19 +93,19 @@ class MoodDiaryDetailActivity : WhileTitleNavBgActivity() {
         setTitle(getString(R.string.mood_diary_detail_title_text))
         mTitleBar.setMenuTextDpSize(15)
         mTitleBar.setMenuText(getString(
-                if (mViewDataBinding?.data?.editMode ?: false)
+                if (mViewDataBinding?.data?.editMode == true)
                     R.string.anxiety_mood_diary_detail_save_menu_text
                 else
                     R.string.anxiety_mood_diary_detail_edit_menu_text))
         mTitleBar.setOnMenuClickListener {
             mViewDataBinding?.data?.editMode = !mViewDataBinding!!.data!!.editMode
             mTitleBar.setMenuText(getString(
-                    if (mViewDataBinding?.data?.editMode ?: false)
+                    if (mViewDataBinding?.data?.editMode == true)
                         R.string.anxiety_mood_diary_detail_save_menu_text
                     else
                         R.string.anxiety_mood_diary_detail_edit_menu_text))
-            if (mViewDataBinding?.data?.editMode ?: false) {
-                tv_mood_reason_content.post{
+            if (mViewDataBinding?.data?.editMode == true) {
+                tv_mood_reason_content.post {
                     tv_mood_reason_content.requestFocus()
                 }
             }
@@ -182,6 +157,4 @@ class MoodDiaryDetailActivity : WhileTitleNavBgActivity() {
         view.setBackgroundResource(backgroundRes)
         (view as TextView).setTextColor(textColor)
     }
-
-    data class LabelBean(var label: String, var isChecked: Boolean)
 }

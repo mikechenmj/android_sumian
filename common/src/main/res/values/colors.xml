@@ -75,5 +75,5 @@
     <color name="hw_colorPrimary">#ff2c2f37</color>
     <color name="hw_colorPrimaryDark">#ff212329</color>
     <color name="bt_hole_color">#ff7ea5f4</color>
-
+    <color name="light_t2_color">#55878d99</color>
 </resources>
