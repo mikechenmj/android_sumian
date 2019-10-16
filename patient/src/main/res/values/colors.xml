@@ -89,6 +89,6 @@
     <color name="hw_tv_normal">#7A8599</color>
     <color name="anxious_belief_un_handle_tip_color">#F5A623</color>
 
-
+    <color name="normal_item_background">@android:color/white</color>
 
 </resources>

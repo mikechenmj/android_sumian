@@ -4,6 +4,7 @@ import android.content.Context
 import android.database.DataSetObserver
 import android.graphics.Color
 import android.util.AttributeSet
+import android.util.Log
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.MotionEvent
@@ -100,10 +101,14 @@ class SumianFlexboxLayout : FlexboxLayout {
         return mAdapter
     }
 
-    fun setAdapter(adapter: BaseAdapter) {
+    fun setAdapter(adapter: BaseAdapter?) {
+        if (adapter == null) {
+            mAdapter?.unregisterDataSetObserver(mDataSetObserver)
+            removeAllViews()
+        }
         mAdapter = adapter
-        adapter.registerDataSetObserver(mDataSetObserver)
-        adapter.notifyDataSetChanged()
+        adapter?.registerDataSetObserver(mDataSetObserver)
+        adapter?.notifyDataSetChanged()
     }
 
     override fun onDetachedFromWindow() {
@@ -111,7 +116,7 @@ class SumianFlexboxLayout : FlexboxLayout {
         mAdapter?.unregisterDataSetObserver(mDataSetObserver)
     }
 
-    fun setOnItemClickListener(listener: OnItemClickListener) {
+    fun setOnItemClickListener(listener: OnItemClickListener?) {
         mOnItemClickListener = listener
     }
 

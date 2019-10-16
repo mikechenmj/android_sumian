@@ -3,22 +3,13 @@ package com.sumian.sd.buz.anxiousandfaith
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextUtils
-import android.view.View
+import androidx.fragment.app.Fragment
 import com.blankj.utilcode.util.ActivityUtils
-import com.blankj.utilcode.util.ToastUtils
-import com.sumian.common.network.response.ErrorResponse
-import com.sumian.common.widget.adapter.EmptyTextWatcher
+import com.sumian.common.base.FragmentContainer
 import com.sumian.sd.R
-import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.anxiousandfaith.bean.MoodDiaryData
 import com.sumian.sd.buz.anxiousandfaith.bean.MoodDiaryData.Companion.EXTRA_KEY_MOOD_DIARY
-import com.sumian.sd.buz.anxiousandfaith.event.MoodDiaryChangeEvent
 import com.sumian.sd.buz.stat.StatConstants
-import com.sumian.sd.common.network.callback.BaseSdResponseCallback
-import com.sumian.sd.common.utils.EventBusUtil
-import kotlinx.android.synthetic.main.activity_faith.*
 
 /**
  * @author : Zhan Xuzhao
@@ -28,18 +19,45 @@ import kotlinx.android.synthetic.main.activity_faith.*
  * version: 1.0
  */
 @SuppressLint("SetTextI18n")
-class MoodDiaryEditActivity : WhileTitleNavBgActivity() {
+class MoodDiaryEditActivity : WhileTitleNavBgActivity(), FragmentContainer {
     private var mProgress = 0
     private var mEvent = ""
     private var mThought = ""
     private var mEmotion = -1
     private var mId = -1
 
+    private var mPageIndex = MOOD_SELECT_DIARY_FRAGMENT_INDEX
+
     override fun getLayoutId(): Int {
-        return R.layout.activity_faith
+        return R.layout.activity_mood_diary
+    }
+
+    override fun switchNextFragment(data: Bundle?) {
+        switchToFragment(mPageIndex + 1, data)
+    }
+
+    override fun switchToFragment(index: Int, data: Bundle?) {
+        var fragment: Fragment? = null
+        when (index) {
+            MOOD_SELECT_DIARY_FRAGMENT_INDEX -> {
+                fragment = MoodSelectFragment()
+            }
+        }
+        if (fragment == null) {
+            return
+        }
+        var transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.mood_diary_layout_container, fragment)
+        if (mPageIndex != MOOD_SELECT_DIARY_FRAGMENT_INDEX) {
+            transaction.addToBackStack(fragment::class.java.simpleName)
+        }
+        transaction.commit()
+        mPageIndex = index
     }
 
     companion object {
+
+        const val MOOD_SELECT_DIARY_FRAGMENT_INDEX = 0
 
         fun launch(moodDiaryData: MoodDiaryData? = null) {
             val intent = Intent(ActivityUtils.getTopActivity(), MoodDiaryEditActivity::class.java)
@@ -52,116 +70,35 @@ class MoodDiaryEditActivity : WhileTitleNavBgActivity() {
         return StatConstants.page_add_mood_diary
     }
 
-    override fun initBundle(bundle: Bundle) {
-        super.initBundle(bundle)
-        val faithData = bundle.getParcelable<MoodDiaryData>(EXTRA_KEY_MOOD_DIARY)
-        if (faithData != null) {
-            mId = faithData.id
-            mEvent = faithData.scene
-            mThought = faithData.idea
-            mEmotion = faithData.emotion_type
-        }
-    }
+//    override fun initBundle(bundle: Bundle) {
+//        super.initBundle(bundle)
+//        val faithData = bundle.getParcelable<MoodDiaryData>(EXTRA_KEY_MOOD_DIARY)
+//        if (faithData != null) {
+//            mId = faithData.id
+//            mEvent = faithData.scene
+//            mThought = faithData.idea
+//            mEmotion = faithData.emotion_type
+//        }
+//    }
 
     override fun initWidget() {
         super.initWidget()
-        setTitle(R.string.add_belief)
-        progress_view.setTvs(R.string.event, R.string.thought, R.string.emotion)
-        bt_next_step.setOnClickListener { onNextClick() }
-        et_belief.addTextChangedListener(object : EmptyTextWatcher() {
-            override fun afterTextChanged(s: Editable?) {
-                super.afterTextChanged(s)
-                val length = et_belief.text.toString().length
-                tv_belief_text_count.text = "$length/200"
-                tv_belief_text_count.setTextColor(resources.getColor(if (length > 200) R.color.t4_color else R.color.t1_color))
-                when (mProgress) {
-                    0 -> mEvent = getEtInput()
-                    1 -> mThought = getEtInput()
-                }
-            }
-        })
-        et_belief.setText(mEvent)
-        emotion_view.setSelectedEmotion(mEmotion)
+        setTitle(R.string.mood_diary)
+        switchToFragment(mPageIndex, null)
     }
 
-    private fun updateUIByProgress(progress: Int) {
-        progress_view.setProgress(progress)
-        et_belief.visibility = if (progress < 2) View.VISIBLE else View.GONE
-        tv_belief_text_count.visibility = if (progress < 2) View.VISIBLE else View.GONE
-        vg_emotion.visibility = if (progress == 2) View.VISIBLE else View.GONE
-        et_belief.setText(if (progress == 0) mEvent else mThought)
-        bt_next_step.text = getText(if (progress == 2) R.string.save else R.string.next_step)
-        tv_progress_title.text = getString(when (progress) {
-            0 -> R.string.belief_title_0
-            1 -> R.string.belief_title_1
-            else -> R.string.belief_title_2
-        })
-    }
-
-    private fun onNextClick() {
-        when (mProgress) {
-            0 -> if (checkInput(mEvent)) updateUIByProgress(++mProgress)
-            1 -> if (checkInput(mThought)) updateUIByProgress(++mProgress)
-            2 -> {
-                mEmotion = emotion_view.getSelectedEmotion()
-                if (mEmotion == -1) {
-                    ToastUtils.showShort(R.string.please_finish_question_first)
-                    return
-                }
-                addOrUpdateBelief()
-            }
-        }
-    }
-
-    private fun checkInput(text: String): Boolean {
-        return if (TextUtils.isEmpty(text)) {
-            ToastUtils.showShort(R.string.please_finish_question_first)
-            false
-        } else if (text.length > 200) {
-            ToastUtils.showShort(R.string.input_is_too_long)
-            false
-        } else {
-            true
-        }
-    }
-
-    private fun getEtInput(): String {
-        return et_belief.text.toString()
-    }
-
-    private fun addOrUpdateBelief() {
-        val call = if (mId == -1) {
-            AppManager.getSdHttpService().addFaiths(mEvent, mThought, mEmotion)
-        } else {
-            AppManager.getSdHttpService().updateFaiths(mId, mEvent, mThought, mEmotion)
-        }
-        addCall(call)
-        bt_next_step.isEnabled = false
-        call.enqueue(object : BaseSdResponseCallback<MoodDiaryData>() {
-            override fun onSuccess(response: MoodDiaryData?) {
-                EventBusUtil.postStickyEvent(MoodDiaryChangeEvent(response!!))
-                finish()
-            }
-
-            override fun onFailure(errorResponse: ErrorResponse) {
-                ToastUtils.showShort(errorResponse.message)
-                bt_next_step.isEnabled = true
-            }
-        })
-    }
-
-    private fun preStep() {
-        if (mProgress > 0) {
-            mProgress--
-            updateUIByProgress(mProgress)
-        }
-    }
-
-    override fun onBackPressed() {
-        if (mProgress > 0) {
-            preStep()
-        } else {
-            super.onBackPressed()
-        }
-    }
+//    private fun preStep() {
+//        if (mProgress > 0) {
+//            mProgress--
+//            updateUIByProgress(mProgress)
+//        }
+//    }
+//
+//    override fun onBackPressed() {
+//        if (mProgress > 0) {
+//            preStep()
+//        } else {
+//            super.onBackPressed()
+//        }
+//    }
 }

@@ -933,5 +933,11 @@
     <string name="mood_diary_refute_unreasonable_title">反驳不合理信念</string>
     <string name="mood_diary_reasonable_belief_title">合理信念</string>
 
+    <string name="mood_diary_angry_text">生气</string>
+    <string name="mood_diary_sad_text">不开心</string>
+    <string name="mood_diary_dull_text">平淡</string>
+    <string name="mood_diary_happen_text">开心</string>
+    <string name="mood_diary_excited_text">兴奋</string>
+    <string name="mood_un_selected_tip">请选择心情。</string>
 
 </resources>

@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout>
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="com.sumian.sd.buz.anxiousandfaith.constant.MoodDiaryType" />
+
+        <variable
+            name="data"
+            type="com.sumian.sd.buz.anxiousandfaith.databinding.FragmentSelectMoodData" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/ll_mood_diary_angry"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/normal_interval"
+                android:background="@color/normal_item_background"
+                android:onClick="@{() -> data.setMoodDiaryType(data.moodDiaryType == MoodDiaryType.ANGRY ? null : MoodDiaryType.ANGRY)}"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/iv_mood_diary_emotion_angry"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="@dimen/normal_padding"
+                    android:layout_marginTop="11.5dp"
+                    android:layout_marginEnd="@dimen/normal_padding"
+                    android:layout_marginBottom="11.5dp"
+                    android:scaleType="fitStart"
+                    android:src="@drawable/mood_diary_icon_facial3_selected" />
+
+                <TextView
+                    android:id="@+id/tv_mood_diary_angry_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="@string/mood_diary_angry_text"
+                    android:textSize="@dimen/normal_text_size" />
+
+                <ImageView
+                    android:id="@+id/iv_mood_diary_angry_arrow"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="center|end"
+                    android:layout_marginEnd="@dimen/normal_interval"
+                    android:padding="@dimen/space_14"
+                    android:scaleType="centerInside"
+                    android:src="@{data.moodDiaryType == MoodDiaryType.ANGRY ? @drawable/ic_arrow_down_light_blue : @drawable/ic_arrow_right_light_blue}" />
+            </LinearLayout>
+
+            <com.sumian.common.widget.SumianFlexboxLayout
+                android:id="@+id/fb_mood_diary_angry_labels"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_line_top_l1_margin_start_20dp_white_bg"
+                android:paddingLeft="15dp"
+                android:paddingTop="15dp"
+                android:paddingRight="@dimen/normal_padding"
+                android:paddingBottom="15dp"
+                android:visibility="@{data.moodDiaryType == MoodDiaryType.ANGRY ? View.VISIBLE : View.GONE}"
+                app:adapter="@{data.moodDiaryType == MoodDiaryType.ANGRY ? data.moodLabelAdapter : null}"
+                app:flexWrap="wrap"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ll_mood_diary_angry"
+                app:onItemClickListener="@{data.moodDiaryType == MoodDiaryType.ANGRY ? data.labelListener : null}" />
+
+            <LinearLayout
+                android:id="@+id/ll_mood_diary_sad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/normal_interval"
+                android:background="@color/normal_item_background"
+                android:onClick="@{() -> data.setMoodDiaryType(data.moodDiaryType == MoodDiaryType.SAD ? null : MoodDiaryType.SAD)}"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fb_mood_diary_angry_labels">
+
+                <ImageView
+                    android:id="@+id/iv_mood_diary_emotion_sad"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="@dimen/normal_padding"
+                    android:layout_marginTop="11.5dp"
+                    android:layout_marginEnd="@dimen/normal_padding"
+                    android:layout_marginBottom="11.5dp"
+                    android:scaleType="fitStart"
+                    android:src="@drawable/mood_diary_icon_facial2_selected" />
+
+                <TextView
+                    android:id="@+id/tv_mood_diary_sad_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="@string/mood_diary_sad_text"
+                    android:textSize="@dimen/normal_text_size" />
+
+                <ImageView
+                    android:id="@+id/iv_mood_diary_sad_arrow"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="center|end"
+                    android:layout_marginEnd="@dimen/normal_interval"
+                    android:padding="@dimen/space_14"
+                    android:scaleType="centerInside"
+                    android:src="@{data.moodDiaryType == MoodDiaryType.SAD ? @drawable/ic_arrow_down_light_blue : @drawable/ic_arrow_right_light_blue}" />
+            </LinearLayout>
+
+            <com.sumian.common.widget.SumianFlexboxLayout
+                android:id="@+id/fb_mood_diary_sad_labels"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_line_top_l1_margin_start_20dp_white_bg"
+                android:paddingLeft="15dp"
+                android:paddingTop="15dp"
+                android:paddingRight="@dimen/normal_padding"
+                android:paddingBottom="15dp"
+                android:visibility="@{data.moodDiaryType == MoodDiaryType.SAD ? View.VISIBLE : View.GONE}"
+                app:adapter="@{data.moodDiaryType == MoodDiaryType.SAD ? data.moodLabelAdapter : null}"
+                app:flexWrap="wrap"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ll_mood_diary_sad"
+                app:onItemClickListener="@{data.moodDiaryType == MoodDiaryType.SAD ? data.labelListener : null}" />
+
+            <LinearLayout
+                android:id="@+id/ll_mood_diary_dull"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/normal_interval"
+                android:background="@color/normal_item_background"
+                android:onClick="@{() -> data.setMoodDiaryType(data.moodDiaryType == MoodDiaryType.DULL ? null : MoodDiaryType.DULL)}"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fb_mood_diary_sad_labels">
+
+                <ImageView
+                    android:id="@+id/iv_mood_diary_emotion_dull"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="@dimen/normal_padding"
+                    android:layout_marginTop="11.5dp"
+                    android:layout_marginEnd="@dimen/normal_padding"
+                    android:layout_marginBottom="11.5dp"
+                    android:scaleType="fitStart"
+                    android:src="@drawable/mood_diary_icon_facial4_selected" />
+
+                <TextView
+                    android:id="@+id/tv_mood_diary_dull_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="@string/mood_diary_dull_text"
+                    android:textSize="@dimen/normal_text_size" />
+
+                <ImageView
+                    android:id="@+id/iv_mood_diary_dull_arrow"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="center|end"
+                    android:layout_marginEnd="@dimen/normal_interval"
+                    android:padding="@dimen/space_14"
+                    android:scaleType="centerInside"
+                    android:src="@{data.moodDiaryType == MoodDiaryType.DULL ? @drawable/ic_arrow_down_light_blue : @drawable/ic_arrow_right_light_blue}" />
+            </LinearLayout>
+
+            <com.sumian.common.widget.SumianFlexboxLayout
+                android:id="@+id/fb_mood_diary_dull_labels"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_line_top_l1_margin_start_20dp_white_bg"
+                android:paddingLeft="15dp"
+                android:paddingTop="15dp"
+                android:paddingRight="@dimen/normal_padding"
+                android:paddingBottom="15dp"
+                android:visibility="@{data.moodDiaryType == MoodDiaryType.DULL ? View.VISIBLE : View.GONE}"
+                app:adapter="@{data.moodDiaryType == MoodDiaryType.DULL ? data.moodLabelAdapter : null}"
+                app:flexWrap="wrap"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ll_mood_diary_dull"
+                app:onItemClickListener="@{data.moodDiaryType == MoodDiaryType.DULL ? data.labelListener : null}" />
+
+            <LinearLayout
+                android:id="@+id/ll_mood_diary_happen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/normal_interval"
+                android:background="@color/normal_item_background"
+                android:onClick="@{() -> data.setMoodDiaryType(data.moodDiaryType == MoodDiaryType.HAPPEN ? null : MoodDiaryType.HAPPEN)}"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fb_mood_diary_dull_labels">
+
+                <ImageView
+                    android:id="@+id/iv_mood_diary_emotion_happen"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="@dimen/normal_padding"
+                    android:layout_marginTop="11.5dp"
+                    android:layout_marginEnd="@dimen/normal_padding"
+                    android:layout_marginBottom="11.5dp"
+                    android:scaleType="fitStart"
+                    android:src="@drawable/mood_diary_icon_facial5_selected" />
+
+                <TextView
+                    android:id="@+id/tv_mood_diary_happen_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="@string/mood_diary_happen_text"
+                    android:textSize="@dimen/normal_text_size" />
+
+                <ImageView
+                    android:id="@+id/iv_mood_diary_happen_arrow"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="center|end"
+                    android:layout_marginEnd="@dimen/normal_interval"
+                    android:padding="@dimen/space_14"
+                    android:scaleType="centerInside"
+                    android:src="@{data.moodDiaryType == MoodDiaryType.HAPPEN ? @drawable/ic_arrow_down_light_blue : @drawable/ic_arrow_right_light_blue}" />
+            </LinearLayout>
+
+            <com.sumian.common.widget.SumianFlexboxLayout
+                android:id="@+id/fb_mood_diary_happen_labels"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_line_top_l1_margin_start_20dp_white_bg"
+                android:paddingLeft="15dp"
+                android:paddingTop="15dp"
+                android:paddingRight="@dimen/normal_padding"
+                android:paddingBottom="15dp"
+                android:visibility="@{data.moodDiaryType == MoodDiaryType.HAPPEN ? View.VISIBLE : View.GONE}"
+                app:adapter="@{data.moodDiaryType == MoodDiaryType.HAPPEN ? data.moodLabelAdapter : null}"
+                app:flexWrap="wrap"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ll_mood_diary_happen"
+                app:onItemClickListener="@{data.moodDiaryType == MoodDiaryType.HAPPEN ? data.labelListener : null}" />
+
+
+            <LinearLayout
+                android:id="@+id/ll_mood_diary_excited"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/normal_interval"
+                android:background="@color/normal_item_background"
+                android:onClick="@{() -> data.setMoodDiaryType(data.moodDiaryType == MoodDiaryType.EXCITED ? null : MoodDiaryType.EXCITED)}"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fb_mood_diary_happen_labels">
+
+                <ImageView
+                    android:id="@+id/iv_mood_diary_emotion_excited"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="@dimen/normal_padding"
+                    android:layout_marginTop="11.5dp"
+                    android:layout_marginEnd="@dimen/normal_padding"
+                    android:layout_marginBottom="11.5dp"
+                    android:scaleType="fitStart"
+                    android:src="@drawable/mood_diary_icon_facial6_selected" />
+
+                <TextView
+                    android:id="@+id/tv_mood_diary_excited_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="@string/mood_diary_excited_text"
+                    android:textSize="@dimen/normal_text_size" />
+
+                <ImageView
+                    android:id="@+id/iv_mood_diary_excited_arrow"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="center|end"
+                    android:layout_marginEnd="@dimen/normal_interval"
+                    android:padding="@dimen/space_14"
+                    android:scaleType="centerInside"
+                    android:src="@{data.moodDiaryType == MoodDiaryType.EXCITED ? @drawable/ic_arrow_down_light_blue : @drawable/ic_arrow_right_light_blue}" />
+            </LinearLayout>
+
+            <com.sumian.common.widget.SumianFlexboxLayout
+                android:id="@+id/fb_mood_diary_excited_labels"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_line_top_l1_margin_start_20dp_white_bg"
+                android:paddingLeft="15dp"
+                android:paddingTop="15dp"
+                android:paddingRight="@dimen/normal_padding"
+                android:paddingBottom="15dp"
+                android:visibility="@{data.moodDiaryType == MoodDiaryType.EXCITED ? View.VISIBLE : View.GONE}"
+                app:adapter="@{data.moodDiaryType == MoodDiaryType.EXCITED ? data.moodLabelAdapter : null}"
+                app:flexWrap="wrap"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ll_mood_diary_excited"
+                app:onItemClickListener="@{data.moodDiaryType == MoodDiaryType.EXCITED ? data.labelListener : null}" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/bt_mood_diary_next"
+                    style="@style/SumianButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="35dp"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginEnd="35dp"
+                    android:layout_marginBottom="40dp"
+                    android:onClick="@{data.nextListener}"
+                    android:text="@string/next_step"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/fb_mood_diary_excited_labels" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</layout>
