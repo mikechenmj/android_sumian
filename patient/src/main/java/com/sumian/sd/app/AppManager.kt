@@ -137,12 +137,12 @@ object AppManager {
 
     fun initOnAppStart(app: Application) {
         mApplication = app
+        initLeanCloud()
         initLogManager(app)
         startCrashListen(app)
         initUtils(app)
         initLeakCanary(app)
         BaseActivityManager.setActivityDelegateFactory(ActivityDelegateFactory())
-        initLeanCloud()
         initAppNotificationManager(app)
         initStatic(app)
         observeAppLifecycle()
