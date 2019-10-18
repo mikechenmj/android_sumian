@@ -22,58 +22,39 @@ import com.sumian.sd.databinding.FragmentMoodSelectLayoutBinding
 class MoodSelectFragment : BaseFragment() {
 
     private val mAngryLabelData = arrayOf(
-            SumianFlexboxLayout.SimpleLabelBean("生气", false),
-            SumianFlexboxLayout.SimpleLabelBean("好生气", false),
-            SumianFlexboxLayout.SimpleLabelBean("好生气", false),
-            SumianFlexboxLayout.SimpleLabelBean("好生气", false),
-            SumianFlexboxLayout.SimpleLabelBean("生气", false),
-            SumianFlexboxLayout.SimpleLabelBean("生气", false),
-            SumianFlexboxLayout.SimpleLabelBean("好生气", false),
-            SumianFlexboxLayout.SimpleLabelBean("生气", false)
+            SumianFlexboxLayout.SimpleLabelBean("尴尬", false),
+            SumianFlexboxLayout.SimpleLabelBean("警觉", false),
+            SumianFlexboxLayout.SimpleLabelBean("愤怒", false),
+            SumianFlexboxLayout.SimpleLabelBean("怨恨", false)
     )
 
     private val mSadLabelData = arrayOf(
-            SumianFlexboxLayout.SimpleLabelBean("难过", false),
-            SumianFlexboxLayout.SimpleLabelBean("好难过", false),
-            SumianFlexboxLayout.SimpleLabelBean("好难过", false),
-            SumianFlexboxLayout.SimpleLabelBean("好难过", false),
-            SumianFlexboxLayout.SimpleLabelBean("难过", false),
-            SumianFlexboxLayout.SimpleLabelBean("难过", false),
-            SumianFlexboxLayout.SimpleLabelBean("好难过", false),
-            SumianFlexboxLayout.SimpleLabelBean("难过", false)
+            SumianFlexboxLayout.SimpleLabelBean("价值感低", false),
+            SumianFlexboxLayout.SimpleLabelBean("悲伤", false),
+            SumianFlexboxLayout.SimpleLabelBean("担忧", false),
+            SumianFlexboxLayout.SimpleLabelBean("害怕", false),
+            SumianFlexboxLayout.SimpleLabelBean("恐惧", false),
+            SumianFlexboxLayout.SimpleLabelBean("绝望", false)
     )
 
     private val mDullLabelData = arrayOf(
             SumianFlexboxLayout.SimpleLabelBean("平静", false),
-            SumianFlexboxLayout.SimpleLabelBean("好平静", false),
-            SumianFlexboxLayout.SimpleLabelBean("好平静", false),
-            SumianFlexboxLayout.SimpleLabelBean("好平静", false),
-            SumianFlexboxLayout.SimpleLabelBean("平静", false),
-            SumianFlexboxLayout.SimpleLabelBean("平静", false),
-            SumianFlexboxLayout.SimpleLabelBean("好平静", false),
-            SumianFlexboxLayout.SimpleLabelBean("平静", false)
+            SumianFlexboxLayout.SimpleLabelBean("轻松", false),
+            SumianFlexboxLayout.SimpleLabelBean("幸福", false)
     )
 
     private val mHappenLabelData = arrayOf(
-            SumianFlexboxLayout.SimpleLabelBean("开心", false),
-            SumianFlexboxLayout.SimpleLabelBean("好开心", false),
-            SumianFlexboxLayout.SimpleLabelBean("好开心", false),
-            SumianFlexboxLayout.SimpleLabelBean("好开心", false),
-            SumianFlexboxLayout.SimpleLabelBean("开心", false),
-            SumianFlexboxLayout.SimpleLabelBean("开心", false),
-            SumianFlexboxLayout.SimpleLabelBean("好开心", false),
-            SumianFlexboxLayout.SimpleLabelBean("开心", false)
+            SumianFlexboxLayout.SimpleLabelBean("自信", false),
+            SumianFlexboxLayout.SimpleLabelBean("充满希望", false),
+            SumianFlexboxLayout.SimpleLabelBean("喜悦", false),
+            SumianFlexboxLayout.SimpleLabelBean("高兴", false)
     )
 
     private val mExcitedLabelData = arrayOf(
-            SumianFlexboxLayout.SimpleLabelBean("兴奋", false),
-            SumianFlexboxLayout.SimpleLabelBean("好兴奋", false),
-            SumianFlexboxLayout.SimpleLabelBean("好兴奋", false),
-            SumianFlexboxLayout.SimpleLabelBean("好兴奋", false),
-            SumianFlexboxLayout.SimpleLabelBean("兴奋", false),
-            SumianFlexboxLayout.SimpleLabelBean("兴奋", false),
-            SumianFlexboxLayout.SimpleLabelBean("好兴奋", false),
-            SumianFlexboxLayout.SimpleLabelBean("兴奋", false)
+            SumianFlexboxLayout.SimpleLabelBean("积极", false),
+            SumianFlexboxLayout.SimpleLabelBean("惊喜", false),
+            SumianFlexboxLayout.SimpleLabelBean("狂喜", false),
+            SumianFlexboxLayout.SimpleLabelBean("激动", false)
     )
 
     private val mFlexLabelAdapter = object : BaseAdapter() {
