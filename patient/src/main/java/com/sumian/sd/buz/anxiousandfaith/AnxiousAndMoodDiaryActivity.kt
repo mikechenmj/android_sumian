@@ -13,7 +13,6 @@ import com.sumian.common.widget.dialog.SumianDialog
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.anxiousandfaith.bean.AnxietyData
-import com.sumian.sd.buz.anxiousandfaith.bean.AnxietyMoodDiaryItemViewData
 import com.sumian.sd.buz.anxiousandfaith.bean.MoodDiaryData
 import com.sumian.sd.buz.anxiousandfaith.widget.AnxiousMoodDiaryItemView
 import com.sumian.sd.buz.anxiousandfaith.widget.EditAnxietyBottomSheetDialog
@@ -101,7 +100,7 @@ class AnxiousAndMoodDiaryActivity : WhileTitleNavBgActivity() {
         vg_anxious_record.removeAllViews()
         for (data in list) {
             val itemView = AnxiousMoodDiaryItemView(this@AnxiousAndMoodDiaryActivity)
-            itemView.setData(AnxietyMoodDiaryItemViewData.create(data), object : EditAnxietyBottomSheetDialog.OnItemClickListener {
+            itemView.setData(data.anxiety, data.getUpdateAtInMillis(), null, object : EditAnxietyBottomSheetDialog.OnItemClickListener {
                 override fun onEditClick() {
                     AnxietyEditActivity.launch(data)
                 }
@@ -145,7 +144,7 @@ class AnxiousAndMoodDiaryActivity : WhileTitleNavBgActivity() {
         }
         for (data in list) {
             val itemView = AnxiousMoodDiaryItemView(this@AnxiousAndMoodDiaryActivity)
-            itemView.setData(AnxietyMoodDiaryItemViewData.create(data), object : EditAnxietyBottomSheetDialog.OnItemClickListener {
+            itemView.setData(data.idea, data.getUpdateAtInMillis(), data.getEmotionImageRes(), object : EditAnxietyBottomSheetDialog.OnItemClickListener {
                 override fun onEditClick() {
                     MoodDiaryEditActivity.launch(data)
                 }
@@ -197,10 +196,10 @@ class AnxiousAndMoodDiaryActivity : WhileTitleNavBgActivity() {
         for (data in list) {
             val itemView = AnxiousMoodDiaryItemView(this@AnxiousAndMoodDiaryActivity)
             if (data is AnxietyData) {
-                itemView.setData(AnxietyMoodDiaryItemViewData.create(data), listener)
+                itemView.setData(data.anxiety, data.getUpdateAtInMillis(), null, listener)
                 itemView.tag = data.id
             } else if (data is MoodDiaryData) {
-                itemView.setData(AnxietyMoodDiaryItemViewData.create(data), listener)
+                itemView.setData(data.idea, data.getUpdateAtInMillis(), data.getEmotionImageRes(), listener)
                 itemView.tag = data.id
             }
             vg.addView(itemView)

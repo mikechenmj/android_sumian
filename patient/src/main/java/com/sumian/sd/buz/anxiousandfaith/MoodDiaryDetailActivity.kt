@@ -12,7 +12,6 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.utils.TimeUtilV2
 import com.sumian.common.widget.SumianFlexboxLayout
 import com.sumian.sd.R
-import com.sumian.sd.buz.anxiousandfaith.bean.AnxietyMoodDiaryItemViewData
 import com.sumian.sd.buz.anxiousandfaith.bean.MoodDiaryData
 import com.sumian.sd.buz.anxiousandfaith.bean.MoodDiaryData.Companion.EXTRA_KEY_MOOD_DIARY
 import com.sumian.sd.buz.anxiousandfaith.databinding.ActivityMoodDiaryDetailData
@@ -125,8 +124,8 @@ class MoodDiaryDetailActivity : WhileTitleNavBgActivity() {
         }
         var binding = mViewDataBinding
         binding?.data = ActivityMoodDiaryDetailData(
-                AnxietyMoodDiaryItemViewData.getEmotionTextRes(mMoodDiaryData?.emotion_type ?: 0),
-                AnxietyMoodDiaryItemViewData.getEmotionImageRes(mMoodDiaryData?.emotion_type ?: 0),
+                mMoodDiaryData?.getEmotionTextRes() ?: 0,
+                mMoodDiaryData?.getEmotionImageRes() ?: 0,
                 TimeUtilV2.formatYYYYMMDDHHMMss(mMoodDiaryData?.getUpdateAtInMillis() ?: 0),
                 mFlexLabelAdapter, mFlexLabelItemClickListener)
                 .apply {

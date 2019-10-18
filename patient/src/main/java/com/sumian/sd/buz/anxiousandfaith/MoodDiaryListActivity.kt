@@ -10,7 +10,6 @@ import com.sumian.common.network.response.PaginationResponseV2
 import com.sumian.common.widget.dialog.SumianDialog
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.buz.anxiousandfaith.bean.AnxietyMoodDiaryItemViewData
 import com.sumian.sd.buz.anxiousandfaith.bean.MoodDiaryData
 import com.sumian.sd.buz.anxiousandfaith.bean.FaithSectionMultiEntity
 import com.sumian.sd.buz.anxiousandfaith.event.MoodDiaryChangeEvent
@@ -133,7 +132,8 @@ class MoodDiaryListActivity : WhileTitleNavBgActivity() {
         override fun convert(helper: BaseViewHolder, item: FaithSectionMultiEntity) {
             val itemView = helper.getView<AnxiousMoodDiaryItemView>(R.id.anxiety_mood_diary_view)
             itemView.setTextMaxLines(true)
-            itemView.setData(AnxietyMoodDiaryItemViewData.create(item.t), object : EditAnxietyBottomSheetDialog.OnItemClickListener {
+            var moodDiaryData = item.t
+            itemView.setData(moodDiaryData.idea, moodDiaryData.getUpdateAtInMillis(), moodDiaryData.getEmotionImageRes(), object : EditAnxietyBottomSheetDialog.OnItemClickListener {
                 override fun onEditClick() {
                     MoodDiaryEditActivity.launch(item.t)
                 }
