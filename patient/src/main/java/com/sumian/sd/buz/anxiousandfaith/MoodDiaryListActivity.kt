@@ -191,8 +191,10 @@ class MoodDiaryListActivity : WhileTitleNavBgActivity() {
     private fun getItemPosition(id: Int): Int {
         val list = mAdapter.data
         for ((index, data) in list.withIndex()) {
-            if (data.t.id == id) {
-                return index
+            if(data.t != null) {
+                if (data.t.id == id) {
+                    return index
+                }
             }
         }
         return -1
