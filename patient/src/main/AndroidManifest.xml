@@ -464,6 +464,11 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".buz.anxiousandfaith.MoodCognitionBiasActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".buz.anxiousandfaith.MoodDiaryDetailActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"

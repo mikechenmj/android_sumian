@@ -2,11 +2,13 @@ package com.sumian.sd.buz.anxiousandfaith
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.databinding.DataBindingUtil
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.sd.R
 import com.sumian.sd.buz.anxiousandfaith.bean.AnxietyData
 import com.sumian.sd.buz.anxiousandfaith.bean.AnxietyData.Companion.EXTRA_KEY_ANXIETY
+import com.sumian.sd.buz.anxiousandfaith.bean.MoodDiaryData
 import com.sumian.sd.buz.anxiousandfaith.databinding.ActivityAnxiousDetailData
 import com.sumian.sd.buz.anxiousandfaith.event.AnxietyChangeEvent
 import com.sumian.sd.common.utils.EventBusUtil
@@ -37,6 +39,7 @@ class AnxietyDetailActivity : WhileTitleNavBgActivity() {
     override fun initBundle(bundle: Bundle) {
         super.initBundle(bundle)
         mAnxietyData = bundle.getParcelable(EXTRA_KEY_ANXIETY)
+
     }
 
     override fun initWidget() {

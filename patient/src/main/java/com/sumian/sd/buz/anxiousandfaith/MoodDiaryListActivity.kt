@@ -133,9 +133,9 @@ class MoodDiaryListActivity : WhileTitleNavBgActivity() {
             val itemView = helper.getView<AnxiousMoodDiaryItemView>(R.id.anxiety_mood_diary_view)
             itemView.setTextMaxLines(true)
             var moodDiaryData = item.t
-            itemView.setData(moodDiaryData.idea, moodDiaryData.getUpdateAtInMillis(), moodDiaryData.getEmotionImageRes(), object : EditAnxietyBottomSheetDialog.OnItemClickListener {
+            itemView.setData(moodDiaryData.scene, moodDiaryData.getUpdateAtInMillis(), moodDiaryData.getEmotionImageRes(), object : EditAnxietyBottomSheetDialog.OnItemClickListener {
                 override fun onEditClick() {
-                    MoodDiaryEditActivity.launch(item.t)
+                    MoodDiaryDetailActivity.launch(item.t)
                 }
 
                 override fun onDeleteClick() {

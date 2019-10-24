@@ -220,8 +220,8 @@ interface SdApi {
     // ---------- scale ----------
     @GET("scale-distributions")
     fun getAllScaleList(@Query("page") page: Int,
-                     @Query("per_page") perPage: Int = 15,
-                     @Query("type") type: String = "all"): Call<PaginationResponseV2<Scale>>
+                        @Query("per_page") perPage: Int = 15,
+                        @Query("type") type: String = "all"): Call<PaginationResponseV2<Scale>>
 
     @GET("scale-distributions")
     fun getScaleList(@Query("page") page: Int,
@@ -452,14 +452,31 @@ interface SdApi {
      */
     @FormUrlEncoded
     @PATCH("user/faiths/{id}")
-    fun updateFaiths(@Path("id") id: Int, @Field("scene") scene: String, @Field("idea") idea: String, @Field("emotion_type") emotion_type: Int): Call<MoodDiaryData>
+    fun updateFaiths(@Path("id") id: Int,
+                     @Field("emotion_type") emotionType: Int,
+                     @Field("emotions[]") emotions: List<String>,
+                     @Field("scene") scene: String,
+                     @Field("irrational_belief") irrationalBelief: String = "",
+                     @Field("cognition_bias[]") cognitionBias: List<String>? = emptyList(),
+                     @Field("irrational_belief_result") irrationalBeliefResult: String = "",
+                     @Field("idea") idea: String = "",
+                     @Field("rational_belief") rationalBelief: String = "",
+                     @Field("rational_belief_result") rationalBeliefResult: String = ""): Call<MoodDiaryData>
 
     @DELETE("user/faiths/{id}")
     fun deleteFaiths(@Path("id") id: Int): Call<Any>
 
     @FormUrlEncoded
     @POST("user/faiths")
-    fun addFaiths(@Field("scene") scene: String, @Field("idea") idea: String, @Field("emotion_type") emotion_type: Int): Call<MoodDiaryData>
+    fun addFaiths(@Field("emotion_type") emotionType: Int,
+                  @Field("emotions[]") emotions: List<String>,
+                  @Field("scene") scene: String,
+                  @Field("irrational_belief") irrationalBelief: String = "",
+                  @Field("cognition_bias[]") cognitionBias: List<String> = emptyList(),
+                  @Field("irrational_belief_result") irrationalBeliefResult: String = "",
+                  @Field("idea") idea: String = "",
+                  @Field("rational_belief") rationalBelief: String = "",
+                  @Field("rational_belief_result") rationalBeliefResult: String = ""): Call<MoodDiaryData>
 
     @GET("user/faiths")
     fun getFaiths(@Query("page") page: Int = 1,

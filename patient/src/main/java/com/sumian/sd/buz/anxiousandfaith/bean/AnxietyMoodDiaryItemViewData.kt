@@ -29,7 +29,7 @@ data class AnxietyMoodDiaryItemViewData(val type: Int = TYPE_ANXIETY, val id: In
         }
 
         fun create(data: MoodDiaryData): AnxietyMoodDiaryItemViewData {
-            return AnxietyMoodDiaryItemViewData(TYPE_MOOD_DIARY, data.id, data.scene, data.idea, data.created_at * 1000L, data.emotion_type)
+            return AnxietyMoodDiaryItemViewData(TYPE_MOOD_DIARY, data.id, data.scene, data.idea, data.createdAt * 1000L, data.emotionType)
         }
 
         fun transformAnxietyList(inputList: List<AnxietyData>): ArrayList<AnxietyMoodDiaryItemViewData> {

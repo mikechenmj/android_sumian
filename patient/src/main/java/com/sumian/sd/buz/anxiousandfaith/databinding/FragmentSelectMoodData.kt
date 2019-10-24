@@ -6,9 +6,11 @@ import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import androidx.databinding.library.baseAdapters.BR
 import com.sumian.common.widget.SumianFlexboxLayout
+import com.sumian.sd.buz.anxiousandfaith.MoodSelectFragment
 import com.sumian.sd.buz.anxiousandfaith.constant.MoodDiaryType
 
 data class FragmentSelectMoodData(
+        val moodSelectFragment: MoodSelectFragment,
         val moodLabelAdapter: BaseAdapter,
         val labelListener: SumianFlexboxLayout.OnItemClickListener,
         val nextListener: View.OnClickListener) : BaseObservable() {
@@ -20,6 +22,7 @@ data class FragmentSelectMoodData(
                 return
             }
             field = value
+            moodSelectFragment.onMoodDiaryTypeChange(field)
             notifyPropertyChanged(BR.moodDiaryType)
         }
 }

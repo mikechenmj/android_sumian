@@ -24,6 +24,5 @@ abstract class WhileTitleNavBgActivity : BaseActivity() {
         super.initWidget()
         mTitleBar.setBgColor(Color.WHITE)
         mTitleBar.setTvAndIvColor(Color.BLACK)
-        mTitleBar.setMenuColor(resources.getColor(R.color.b3_color))
     }
 }

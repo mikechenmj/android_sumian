@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
+import androidx.core.view.isVisible
 import com.sumian.common.utils.TimeUtilV2
 import com.sumian.sd.R
 import kotlinx.android.synthetic.main.view_anxious_mood_diary_item.view.*
@@ -33,6 +34,11 @@ class AnxiousMoodDiaryItemView(context: Context, attributeSet: AttributeSet? = n
 
     fun setTextMaxLines(noLimit: Boolean) {
         tv_title.maxLines = if (noLimit) Integer.MAX_VALUE else 1
+    }
+
+    fun showUnHandlerTip(text: String) {
+        tv_un_handle_tip.text = text
+        tv_un_handle_tip.isVisible = true
     }
 
 }

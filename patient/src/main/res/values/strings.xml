@@ -643,7 +643,7 @@
     <string name="emotion_3">平静</string>
     <string name="emotion_4">轻松</string>
     <string name="emotion_5">愉快</string>
-    <string name="please_finish_question_first">请先完成题目内容</string>
+    <string name="please_finish_question_first">请输入内容!</string>
     <string name="anxiety_time_reminder">忧虑时间提醒</string>
     <string name="anxiety_time_reminder_hint">开启忧虑时间提醒，速眠医生将会每日定时提醒您添加忧虑。请确保APP通知权限开启。</string>
     <!-- Hw end-->
@@ -924,7 +924,6 @@
     <string name="mood_diary">心情日记</string>
     <string name="mood_diary_list_title">心情记录</string>
     <string name="mood_diary_detail_title_text">心情详情</string>
-    <string name="mood_diary_reason_title">是因为什么事件影响了你的情绪</string>
     <string name="mood_diary_challenge_unreasonable_belief_title">挑战不合理信念</string>
     <string name="mood_diary_reasonable_belief_practice_title">合理信念练习</string>
     <string name="mood_diary_belief_title">信念</string>
@@ -934,10 +933,27 @@
     <string name="mood_diary_reasonable_belief_title">合理信念</string>
 
     <string name="mood_diary_angry_text">生气</string>
-    <string name="mood_diary_sad_text">不开心</string>
+    <string name="mood_diary_unhappy_text">不开心</string>
     <string name="mood_diary_dull_text">平淡</string>
     <string name="mood_diary_happen_text">开心</string>
     <string name="mood_diary_excited_text">兴奋</string>
     <string name="mood_un_selected_tip">请选择心情。</string>
-
+    <string name="mood_detail_title_text">是因为什么事情影响了你的情绪：</string>
+    <string name="mood_detail_positive_content_hint">请写下影响你情绪的事情，例如：今天和久违的老朋友见面了，我们聊天，逛街，很开心。（点击这里开始输入）</string>
+    <string name="mood_detail_negative_content_hint">请记下影响你情绪的事情，例如：我躺在床上一直不能睡着！</string>
+    <string name="mood_challenge_tip_text">有时候我们的情绪和感受受到了不合理信念的影响，积极的分析我们的信念，有助于我们把合理的信念变成我们的自动化思维。您的每一次练习，都是在帮助您自己成为更好的自己！</string>
+    <string name="mood_challenge_analysis_secondary_title">分析思想</string>
+    <string name="mood_challenge_belief_title">信念</string>
+    <string name="mood_challenge_belief_content">发生了这样的事情，你当时是怎么想的呢，请写下你的心理活动，例如：如果我一直睡不着，明天会累到无法完成工作。（点击这里开始输入）</string>
+    <string name="mood_challenge_cognitive_bias_secondary_title">你认为你的思想包含了怎样的认知偏差</string>
+    <string name="mood_challenge_cognitive_bias_content">认知偏差</string>
+    <string name="mood_challenge_result_title">结果</string>
+    <string name="mood_reasonable_practice_text">合理信念练习</string>
+    <string name="mood_challenge_result_content_hint">在这样的想法下,产生了怎样的结果,例如:我变得很焦虑,一晚上都没睡(点击这里开始输入)</string>
+    <string name="mood_cognition_bias_title">选择认知偏差</string>
+    <string name="mood_cognition_bias_no_checked_tip">请至少选择一个标签。</string>
+    <string name="mood_rational_belief_tip">经过上面的练习之后我们明白了我们的想法有时候可能是片面的，可能是夸大的， 那么接下来请结合你的事件，来挑战刚刚你提出来的信念的不合理的地方。</string>
+    <string name="mood_refute_unreasonable_belief_content">找出你的信念中，不合理的地方，例如：以前也试过睡不好，但是并不影响工作。我只是目前还未睡着，并不代表我会一直都睡不着。（点击这里开始输入）</string>
+    <string name="reasonable_belief_content">请提出一个理性的信念，例如：虽然我现在睡不着，但可能待会儿就会有睡意了。（点击这里开始输入）</string>
+    <string name="mood_reasonable_belief_result_content">如果你这么想，情绪会怎样，例如：我感觉放松一点了（点击这里开始输入）</string>
 </resources>

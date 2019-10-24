@@ -4,7 +4,6 @@ import android.content.Context
 import android.database.DataSetObserver
 import android.graphics.Color
 import android.util.AttributeSet
-import android.util.Log
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.MotionEvent
@@ -23,12 +22,6 @@ class SumianFlexboxLayout : FlexboxLayout {
             var param = LayoutParams(
                     ViewGroup.LayoutParams.WRAP_CONTENT,
                     TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 35f, context.resources.displayMetrics).toInt()
-            )
-            param.setMargins(
-                    TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5f, context.resources.displayMetrics).toInt(),
-                    TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5f, context.resources.displayMetrics).toInt(),
-                    0,
-                    TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5f, context.resources.displayMetrics).toInt()
             )
             view.layoutParams = param
             view.setPadding(

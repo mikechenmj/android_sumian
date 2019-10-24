@@ -1,6 +1,7 @@
 package com.sumian.sd.buz.anxiousandfaith
 
 import android.content.Intent
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import com.blankj.utilcode.util.ActivityUtils
@@ -144,16 +145,27 @@ class AnxiousAndMoodDiaryActivity : WhileTitleNavBgActivity() {
         }
         for (data in list) {
             val itemView = AnxiousMoodDiaryItemView(this@AnxiousAndMoodDiaryActivity)
-            itemView.setData(data.idea, data.getUpdateAtInMillis(), data.getEmotionImageRes(), object : EditAnxietyBottomSheetDialog.OnItemClickListener {
+            itemView.setData(data.scene, data.getUpdateAtInMillis(), data.getEmotionImageRes(), object : EditAnxietyBottomSheetDialog.OnItemClickListener {
                 override fun onEditClick() {
-                    MoodDiaryEditActivity.launch(data)
+                    MoodDiaryDetailActivity.launch(data)
                 }
 
                 override fun onDeleteClick() {
                     deleteMoodDiary(data.id)
                 }
             })
-            itemView.setOnClickListener { MoodDiaryDetailActivity.launch(data) }
+
+            var isNegativeNoFillAll = !data.isFillAll() && !data.isPositiveMoodType()
+            if (isNegativeNoFillAll) {
+                itemView.showUnHandlerTip(getString(R.string.faith_un_handle_tip_text))
+            }
+            itemView.setOnClickListener {
+                if (isNegativeNoFillAll) {
+                    MoodDiaryEditActivity.launch(data, MoodDiaryEditActivity.MOOD_DETAIL_FRAGMENT_INDEX)
+                } else {
+                    MoodDiaryDetailActivity.launch(data)
+                }
+            }
             itemView.tag = data.id
             vg_mood_diary_record.addView(itemView)
         }
@@ -199,7 +211,7 @@ class AnxiousAndMoodDiaryActivity : WhileTitleNavBgActivity() {
                 itemView.setData(data.anxiety, data.getUpdateAtInMillis(), null, listener)
                 itemView.tag = data.id
             } else if (data is MoodDiaryData) {
-                itemView.setData(data.idea, data.getUpdateAtInMillis(), data.getEmotionImageRes(), listener)
+                itemView.setData(data.scene, data.getUpdateAtInMillis(), data.getEmotionImageRes(), listener)
                 itemView.tag = data.id
             }
             vg.addView(itemView)

@@ -2,19 +2,18 @@ package com.sumian.sd.buz.anxiousandfaith
 
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
+import com.sumian.common.base.BaseActivity
 import com.sumian.common.base.BaseFragment
 import com.sumian.common.base.FragmentContainer
 import com.sumian.common.helper.ToastHelper
 import com.sumian.common.widget.SumianFlexboxLayout
 import com.sumian.sd.R
+import com.sumian.sd.buz.anxiousandfaith.bean.MoodDiaryData
 import com.sumian.sd.buz.anxiousandfaith.constant.MoodDiaryType
 import com.sumian.sd.buz.anxiousandfaith.databinding.FragmentSelectMoodData
 import com.sumian.sd.databinding.FragmentMoodSelectLayoutBinding
@@ -86,39 +85,37 @@ class MoodSelectFragment : BaseFragment() {
         override fun onItemClick(parent: SumianFlexboxLayout, view: View, position: Int, id: Long) {
             var isChecked = !getLabelData()[position].isChecked
             var data = getLabelData()
-            for (i in data.indices) {
-                data[i].isChecked = false
-            }
             data[position].isChecked = isChecked
-            for (i in 0 until parent.childCount) {
-                SumianFlexboxLayout.updateLabelUi(parent.getChildAt(i) as TextView, false)
-            }
             SumianFlexboxLayout.updateLabelUi(view as TextView, isChecked)
         }
     }
 
     private val mNextClickListener = View.OnClickListener {
         var moodDiaryType = mBinding?.data?.moodDiaryType
-        var data = getLabelData()
         if (moodDiaryType == null) {
             ToastHelper.show(getString(R.string.mood_un_selected_tip))
             return@OnClickListener
         }
 
-        var checkedLabel :SumianFlexboxLayout.SimpleLabelBean? = null
+        var data = getLabelData()
+        var checkedLabels = ArrayList<String>()
         for (label in data) {
             if (label.isChecked) {
-                checkedLabel = label
+                checkedLabels.add(label.label)
             }
         }
-        if (checkedLabel == null) {
+        if (checkedLabels.size < 1) {
             ToastHelper.show(getString(R.string.mood_un_selected_tip))
             return@OnClickListener
         }
 
         if (activity is FragmentContainer) {
-           var fragmentContainer =  activity as FragmentContainer
-            fragmentContainer.switchNextFragment(null)
+            var fragmentContainer = activity as FragmentContainer
+
+            fragmentContainer.switchNextFragment(Bundle().apply {
+                putSerializable(MoodDiaryData.EXTRA_MOOD_DIARY_TYPE, moodDiaryType)
+                putStringArrayList(MoodDiaryData.EXTRA_MOOD_DIARY_LABEL, checkedLabels)
+            })
         }
     }
 
@@ -126,6 +123,13 @@ class MoodSelectFragment : BaseFragment() {
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_mood_select_layout
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (activity != null) {
+            (activity as BaseActivity).setTitle(R.string.mood_diary)
+        }
     }
 
     override fun initWidget() {
@@ -136,7 +140,7 @@ class MoodSelectFragment : BaseFragment() {
         if (binding == null) {
             return
         }
-        binding.data = FragmentSelectMoodData(mFlexLabelAdapter, mFlexLabelItemClickListener, mNextClickListener)
+        binding.data = FragmentSelectMoodData(this, mFlexLabelAdapter, mFlexLabelItemClickListener, mNextClickListener)
         mBinding = binding
     }
 
@@ -149,7 +153,7 @@ class MoodSelectFragment : BaseFragment() {
             MoodDiaryType.ANGRY -> {
                 mAngryLabelData
             }
-            MoodDiaryType.SAD -> {
+            MoodDiaryType.UNHAPPY -> {
                 mSadLabelData
             }
             MoodDiaryType.DULL -> {
@@ -162,6 +166,13 @@ class MoodSelectFragment : BaseFragment() {
                 mExcitedLabelData
             }
             else -> emptyArray()
+        }
+    }
+
+    fun onMoodDiaryTypeChange(oldType: MoodDiaryType?) {
+        var data = getLabelData()
+        for (label in data) {
+            label.isChecked = false
         }
     }
 }
