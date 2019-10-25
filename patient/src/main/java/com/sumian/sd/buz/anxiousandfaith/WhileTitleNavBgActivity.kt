@@ -2,6 +2,7 @@ package com.sumian.sd.buz.anxiousandfaith
 
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.util.TypedValue
 import android.widget.ImageView
 import android.widget.TextView
 import com.sumian.common.base.BaseActivity
@@ -24,5 +25,7 @@ abstract class WhileTitleNavBgActivity : BaseActivity() {
         super.initWidget()
         mTitleBar.setBgColor(Color.WHITE)
         mTitleBar.setTvAndIvColor(Color.BLACK)
+        mTitleBar.title.setTextSize(TypedValue.COMPLEX_UNIT_SP, 19f)
+        mTitleBar.title.paint.isFakeBoldText = true
     }
 }

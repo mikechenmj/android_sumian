@@ -31,7 +31,7 @@ import static android.util.TypedValue.COMPLEX_UNIT_SP;
 public class TitleBar extends FrameLayout implements View.OnClickListener {
 
     public ImageView mIvBack;
-    public TextView mTvTitle;
+    private TextView mTvTitle;
     public ImageView mIvMenu;
     public TextView mTvMenu;
 
