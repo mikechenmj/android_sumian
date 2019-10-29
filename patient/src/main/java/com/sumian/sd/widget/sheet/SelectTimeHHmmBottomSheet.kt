@@ -27,7 +27,7 @@ class SelectTimeHHmmBottomSheet(context: Context, @StringRes title: Int,
         private const val TIME_IN_MILLIS_ONE_DAY = 24 * 60 * 60 * 1000L
         private const val HOUR_SIZE = 24
         private const val MINUTE_SIZE = 60
-        private const val DAY_SIZE = 30
+        private const val DAY_SIZE = 365
         private const val MMdd_PATTERN = "MM-dd"
         val FIRST_DAY = getNextDay()
         const val DEFAULT_DAY = 0
@@ -77,7 +77,7 @@ class SelectTimeHHmmBottomSheet(context: Context, @StringRes title: Int,
         picker_minute.value = initMinute
         tv_confirm.setOnClickListener {
             var calendar = getPickedCalendar(picker_day.value)
-            listener?.onTimePicked(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH), picker_hour.value, picker_minute.value)
+            listener?.onTimePicked(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), picker_hour.value, picker_minute.value)
             dismiss()
         }
     }
