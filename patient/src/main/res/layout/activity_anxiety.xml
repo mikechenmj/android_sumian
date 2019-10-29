@@ -28,7 +28,8 @@
 
             <TextView
                 style="@style/tv_title_with_white_bg_and_bottom_line"
-                android:text="@string/anxiety" />
+                android:text="@string/anxiety"
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/et_anxiety"
@@ -36,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/anxiety_input_hint"
                 android:minHeight="90dp"
-                android:padding="20dp"
+                android:padding="@dimen/normal_padding"
                 android:text="@={data.detailText}"
                 tools:ignore="Autofill,TextFields" />
 
@@ -47,9 +48,9 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:gravity="center_vertical|end"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp"
-                android:paddingBottom="20dp"
+                android:paddingStart="@dimen/normal_padding"
+                android:paddingEnd="@dimen/normal_padding"
+                android:paddingBottom="@dimen/normal_padding"
                 android:text="@{data.detailTextCount}"
                 android:textColor="@{data.detailTextCountOutOfMax ? @color/t4_color : @color/t2_color}"
                 tools:ignore="HardcodedText"
@@ -59,7 +60,8 @@
 
             <TextView
                 style="@style/tv_title_with_white_bg_and_bottom_line"
-                android:text="@string/anxiety_ask_is_has_solution_title" />
+                android:text="@string/anxiety_ask_is_has_solution_title"
+                android:textStyle="bold" />
 
             <RadioGroup
                 android:id="@+id/rg_anxiety_ask_is_has_solution"
@@ -96,7 +98,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/anxiety_solution_input_hint"
                 android:minHeight="90dp"
-                android:padding="20dp"
+                android:padding="@dimen/normal_padding"
                 android:text="@={data.solutionText}"
                 android:visibility="@{data.solutionChecked ? View.VISIBLE : View.GONE}"
                 tools:hint="@string/anxiety_solution_input_hint" />
@@ -109,9 +111,9 @@
                 android:background="@color/white"
                 android:gravity="center_vertical|end"
                 android:maxLength="200"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp"
-                android:paddingBottom="20dp"
+                android:paddingStart="@dimen/normal_padding"
+                android:paddingEnd="@dimen/normal_padding"
+                android:paddingBottom="@dimen/normal_padding"
                 android:text="@{data.solutionTextCount}"
                 android:textColor="@{data.solutionTextCountOutOfMax ? @color/t4_color : @color/t2_color}"
                 android:visibility="@{data.solutionChecked ? View.VISIBLE : View.GONE}"
@@ -121,6 +123,7 @@
                 android:id="@+id/tv_anxiety_ask_is_hard_problem_title"
                 style="@style/tv_title_with_white_bg_and_bottom_line"
                 android:text="@string/anxiety_ask_is_hard_problem_title"
+                android:textStyle="bold"
                 android:visibility="@{data.solutionChecked ? View.GONE :View.VISIBLE}" />
 
             <RadioGroup
@@ -161,8 +164,8 @@
                 android:id="@+id/tv_record_anxiety_tip"
                 style="@style/tv_title_with_white_bg_and_bottom_line"
                 android:layout_height="wrap_content"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp"
+                android:paddingTop="@dimen/normal_padding"
+                android:paddingBottom="@dimen/normal_padding"
                 android:text="@string/anxiety_record_tip_text"
                 android:visibility="@{!data.solutionChecked &amp;&amp; !data.hardChecked ? View.VISIBLE :  View.GONE }" />
 
@@ -172,10 +175,10 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/anxiety_record_hint"
                 android:minHeight="90dp"
-                android:padding="20dp"
+                android:padding="@dimen/normal_padding"
                 android:text="@={data.hardText}"
                 android:visibility="@{!data.solutionChecked &amp;&amp; !data.hardChecked ? View.VISIBLE : View.GONE}"
-                tools:hint="@string/anxiety_record_hint" />
+                tools:hint="@string/anxiety_ask_how_to_resolve_three_edit_hint" />
 
             <TextView
                 android:id="@+id/tv_anxiety_hard_text_count"
@@ -185,9 +188,9 @@
                 android:background="@color/white"
                 android:gravity="center_vertical|end"
                 android:maxLength="200"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp"
-                android:paddingBottom="20dp"
+                android:paddingStart="@dimen/normal_padding"
+                android:paddingEnd="@dimen/normal_padding"
+                android:paddingBottom="@dimen/normal_padding"
                 android:text="@{data.hardTextCount}"
                 android:textColor="@{data.hardTextCountOutOfMax ? @color/t4_color : @color/t2_color}"
                 android:visibility="@{!data.solutionChecked &amp;&amp; !data.hardChecked ? View.VISIBLE : View.GONE}"
@@ -196,6 +199,7 @@
             <TextView
                 style="@style/tv_title_with_white_bg_and_bottom_line"
                 android:text="@string/anxiety_ask_how_to_solution_title"
+                android:textStyle="bold"
                 android:visibility="@{!data.solutionChecked &amp;&amp; data.hardChecked ? View.VISIBLE : View.GONE}" />
 
             <RadioGroup
@@ -214,9 +218,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:buttonTint="@color/b3_color"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="20dp"
-                    android:text="@string/anxiety_ask_how_to_resolve_one_checkbox_text" />
+                    android:paddingTop="@dimen/normal_interval"
+                    android:paddingBottom="@dimen/normal_padding"
+                    android:text="@string/anxiety_ask_how_to_resolve_one_checkbox_text"
+                    android:textColor="@{data.howToResolveCheckedId == @id/rb_anxiety_ask_how_to_resolve_one ? @color/t1_color : @color/t2_color}" />
 
                 <View
                     android:layout_width="match_parent"
@@ -230,7 +235,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/anxiety_ask_how_to_resolve_one_edit_hint"
                     android:minHeight="90dp"
-                    android:padding="20dp"
+                    android:padding="@dimen/normal_padding"
                     android:text="@={data.askHowToResolveOneText}"
                     android:visibility="@{data.howToResolveCheckedId == @id/rb_anxiety_ask_how_to_resolve_one ? View.VISIBLE : View.GONE}"
                     tools:hint="@string/anxiety_ask_how_to_resolve_one_edit_hint" />
@@ -243,9 +248,9 @@
                     android:background="@color/white"
                     android:gravity="center_vertical|end"
                     android:maxLength="200"
-                    android:paddingStart="20dp"
-                    android:paddingEnd="20dp"
-                    android:paddingBottom="20dp"
+                    android:paddingStart="@dimen/normal_padding"
+                    android:paddingEnd="@dimen/normal_padding"
+                    android:paddingBottom="@dimen/normal_padding"
                     android:text="@{data.askHowToResolveOneTextCount}"
                     android:textColor="@{data.askHowToResolveOneTextCountOutOfMax ? @color/t4_color : @color/t2_color}"
                     android:visibility="@{data.howToResolveCheckedId == @id/rb_anxiety_ask_how_to_resolve_one ? View.VISIBLE : View.GONE}"
@@ -263,9 +268,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:buttonTint="@color/b3_color"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="20dp"
-                    android:text="@string/anxiety_ask_how_to_resolve_one_checkbox_text" />
+                    android:paddingTop="@dimen/normal_interval"
+                    android:paddingBottom="@dimen/normal_padding"
+                    android:text="@string/anxiety_ask_how_to_resolve_two_checkbox_text"
+                    android:textColor="@{data.howToResolveCheckedId == @id/rb_anxiety_ask_how_to_resolve_two ? @color/t1_color : @color/t2_color}" />
 
                 <View
                     android:layout_width="match_parent"
@@ -279,7 +285,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/anxiety_ask_how_to_resolve_two_edit_hint"
                     android:minHeight="90dp"
-                    android:padding="20dp"
+                    android:padding="@dimen/normal_padding"
                     android:text="@={data.askHowToResolveTwoText}"
                     android:visibility="@{data.howToResolveCheckedId == @id/rb_anxiety_ask_how_to_resolve_two ? View.VISIBLE : View.GONE}"
                     tools:hint="@string/anxiety_ask_how_to_resolve_two_edit_hint" />
@@ -292,9 +298,9 @@
                     android:background="@color/white"
                     android:gravity="center_vertical|end"
                     android:maxLength="200"
-                    android:paddingStart="20dp"
-                    android:paddingEnd="20dp"
-                    android:paddingBottom="20dp"
+                    android:paddingStart="@dimen/normal_padding"
+                    android:paddingEnd="@dimen/normal_padding"
+                    android:paddingBottom="@dimen/normal_padding"
                     android:text="@{data.askHowToResolveTwoTextCount}"
                     android:textColor="@{data.askHowToResolveTwoTextCountOutOfMax ? @color/t4_color : @color/t2_color}"
                     android:visibility="@{data.howToResolveCheckedId == @id/rb_anxiety_ask_how_to_resolve_two ? View.VISIBLE : View.GONE}"
@@ -312,9 +318,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:buttonTint="@color/b3_color"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="20dp"
-                    android:text="@string/anxiety_ask_how_to_resolve_one_checkbox_text" />
+                    android:paddingTop="@dimen/normal_interval"
+                    android:paddingBottom="@dimen/normal_padding"
+                    android:text="@string/anxiety_ask_how_to_resolve_three_checkbox_text"
+                    android:textColor="@{data.howToResolveCheckedId == @id/rb_anxiety_ask_how_to_resolve_three ? @color/t1_color : @color/t2_color}" />
 
                 <View
                     android:layout_width="match_parent"
@@ -328,7 +335,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/anxiety_ask_how_to_resolve_three_edit_hint"
                     android:minHeight="90dp"
-                    android:padding="20dp"
+                    android:padding="@dimen/normal_padding"
                     android:text="@={data.askHowToResolveThreeText}"
                     android:visibility="@{data.howToResolveCheckedId == @id/rb_anxiety_ask_how_to_resolve_three ? View.VISIBLE : View.GONE}"
                     tools:hint="@string/anxiety_record_hint" />
@@ -341,9 +348,9 @@
                     android:background="@color/white"
                     android:gravity="center_vertical|end"
                     android:maxLength="200"
-                    android:paddingStart="20dp"
-                    android:paddingEnd="20dp"
-                    android:paddingBottom="20dp"
+                    android:paddingStart="@dimen/normal_padding"
+                    android:paddingEnd="@dimen/normal_padding"
+                    android:paddingBottom="@dimen/normal_padding"
                     android:text="@{data.askHowToResolveThreeTextCount}"
                     android:textColor="@{data.askHowToResolveThreeTextCountOutOfMax ? @color/t4_color : @color/t2_color}"
                     android:visibility="@{data.howToResolveCheckedId == @id/rb_anxiety_ask_how_to_resolve_three ? View.VISIBLE : View.GONE}"
@@ -366,17 +373,22 @@
                 android:id="@+id/remind_anxiety_alarm_setting"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:OnShowMoreListener="@{() -> data.anxietyEditActivity.showBottomSheet()}"
+                android:background="@color/normal_item_background"
+                android:enabled="@{data.anxietyData.remindAt == 0}"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
                 app:divider_line_visible="visible"
+                app:moreVisible="@{data.anxietyData.remindAt == 0}"
+                app:onShowMoreListener="@{() -> data.anxietyEditActivity.showBottomSheet()}"
                 app:type_content="@{data.remindSettingTypeContent}"
                 app:type_content_text_color="@color/t2_color"
                 app:type_desc="@string/anxiety_remind_alarm_setting_desc"
-                app:type_icon="@mipmap/ic_record_icon_clock" />
+                app:type_icon="@drawable/icon_remind" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
+                android:layout_margin="@dimen/normal_padding"
                 android:text="@string/anxiety_remind_alarm_and_rest_tip"
                 android:textColor="@color/t2_color"
                 android:textSize="13sp" />
@@ -387,9 +399,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="35dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/normal_padding"
                 android:layout_marginEnd="35dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="@dimen/normal_padding"
                 android:enabled="@{data.saveButtonEnable}"
                 android:onClick="@{() -> data.saveAnxiety()}"
                 android:text="@string/save" />
