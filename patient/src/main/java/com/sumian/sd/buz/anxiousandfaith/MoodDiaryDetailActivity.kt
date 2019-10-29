@@ -164,7 +164,8 @@ class MoodDiaryDetailActivity : WhileTitleNavBgActivity() {
 
     fun onChangeToEditMode() {
         et_mood_reason_content.post {
-            et_mood_reason_content.requestFocus()
+            MoodDiaryEditActivity.launch(mMoodDiaryData, MoodDiaryEditActivity.MOOD_DETAIL_FRAGMENT_INDEX)
+            finish()
         }
     }
 }

@@ -86,8 +86,6 @@ class MoodDiaryEditActivity : WhileTitleNavBgActivity(), FragmentContainer, Mood
     }
 
     override fun onBackPressed() {
-        Log.i("MCJ","mPageIndex: $mPageIndex")
-        Log.i("MCJ","mFirstPageIndex: $mFirstPageIndex")
         if (mPageIndex == mFirstPageIndex) {
             finish()
         } else {

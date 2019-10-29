@@ -47,7 +47,8 @@
 
                 <TextView
                     android:id="@+id/tv_mood_diary_text"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:text="@{data.moodDiaryTextId}"
@@ -60,7 +61,6 @@
                     style="@style/text_b3_16"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:gravity="center_vertical|end"
                     android:onClick="@{() -> data.changeToEditMode()}"
                     android:padding="@dimen/normal_padding"

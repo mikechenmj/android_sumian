@@ -30,7 +30,9 @@ data class MoodDiaryData(
         @SerializedName("rational_belief_result")
         var rationalBeliefResult: String,
         @SerializedName("created_at")
-        var createdAt: Int
+        var createdAt: Int,
+        @SerializedName("updated_at")
+        val updatedAt: Int
 ) : Parcelable {
 
     companion object {
@@ -74,7 +76,7 @@ data class MoodDiaryData(
     }
 
     fun getUpdateAtInMillis(): Long {
-        return createdAt * 1000L
+        return updatedAt * 1000L
     }
 
     fun isPositiveMoodType(): Boolean {

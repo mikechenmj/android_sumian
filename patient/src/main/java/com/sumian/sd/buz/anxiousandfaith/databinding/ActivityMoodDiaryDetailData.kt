@@ -314,7 +314,7 @@ data class ActivityMoodDiaryDetailData(
     }
 
     fun changeToEditMode() {
-        editMode = true
+//        editMode = true
         moodDiaryDetailActivity.onChangeToEditMode()
     }
 
