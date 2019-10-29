@@ -139,10 +139,9 @@
 
             <TextView
                 android:id="@+id/tv_mood_diary_record_time"
-                style="@style/text_t2_16"
+                style="@style/text_t2_14"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="@android:color/white"
                 android:gravity="end|center_horizontal"
                 android:padding="@dimen/normal_padding"
                 android:text="@{data.updateTimeFormatted}"
