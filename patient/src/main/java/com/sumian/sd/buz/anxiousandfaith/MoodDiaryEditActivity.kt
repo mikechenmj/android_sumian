@@ -16,7 +16,6 @@ import com.sumian.sd.buz.stat.StatConstants
 class MoodDiaryEditActivity : WhileTitleNavBgActivity(), FragmentContainer, MoodDiaryData.MoodDiaryDataOwner {
 
     private var mPageIndex = -1
-    private var mFirstPageIndex = -1
     private var mMoodDiaryData: MoodDiaryData? = null
 
     companion object {
@@ -86,7 +85,7 @@ class MoodDiaryEditActivity : WhileTitleNavBgActivity(), FragmentContainer, Mood
     }
 
     override fun onBackPressed() {
-        if (mPageIndex == mFirstPageIndex) {
+        if (mPageIndex <= MOOD_DETAIL_FRAGMENT_INDEX) {
             finish()
         } else {
             super.onBackPressed()
@@ -100,7 +99,6 @@ class MoodDiaryEditActivity : WhileTitleNavBgActivity(), FragmentContainer, Mood
         setTitle(R.string.mood_diary)
         mMoodDiaryData = intent.getParcelableExtra(MoodDiaryData.EXTRA_KEY_MOOD_DIARY)
         mPageIndex = intent.getIntExtra(EXTRA_KEY_PAGE_INDEX, MOOD_SELECT_FRAGMENT_INDEX)
-        mFirstPageIndex = mPageIndex
         switchToFragment(mPageIndex, null, false)
     }
 }

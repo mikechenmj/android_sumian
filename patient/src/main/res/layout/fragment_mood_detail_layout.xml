@@ -106,11 +106,11 @@
             android:layout_marginStart="35dp"
             android:layout_marginTop="40dp"
             android:layout_marginEnd="35dp"
-            android:background="@drawable/bg_btn_white"
+            android:background="@{data.moodDiaryPositive ? @drawable/bg_bt : @drawable/bg_btn_white}"
             android:clickable="@{data.saveButtonClickable}"
             android:onClick="@{() -> data.saveMoodDiary()}"
             android:text="@string/save"
-            android:textColor="@color/t1_color" />
+            android:textColor="@{data.moodDiaryPositive ? @color/sel_btn_text : @color/t1_color}" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/bt_mood_diary_next"
