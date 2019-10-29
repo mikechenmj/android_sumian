@@ -456,7 +456,7 @@
         <activity
             android:name=".buz.anxiousandfaith.AnxietyDetailActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:launchMode="singleTop"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".buz.anxiousandfaith.MoodDiaryEditActivity"
@@ -471,7 +471,7 @@
         <activity
             android:name=".buz.anxiousandfaith.MoodDiaryDetailActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:launchMode="singleTop"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".buz.anxiousandfaith.AnxietyListActivity"

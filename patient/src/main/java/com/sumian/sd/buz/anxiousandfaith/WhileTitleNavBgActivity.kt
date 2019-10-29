@@ -1,5 +1,6 @@
 package com.sumian.sd.buz.anxiousandfaith
 
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.util.TypedValue
@@ -27,5 +28,10 @@ abstract class WhileTitleNavBgActivity : BaseActivity() {
         mTitleBar.setTvAndIvColor(Color.BLACK)
         mTitleBar.title.setTextSize(TypedValue.COMPLEX_UNIT_SP, 19f)
         mTitleBar.title.paint.isFakeBoldText = true
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        initWidget()
     }
 }
