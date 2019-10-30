@@ -135,7 +135,7 @@ class MoodDiaryListActivity : WhileTitleNavBgActivity() {
             var moodDiaryData = item.t
             itemView.setData(moodDiaryData.scene, moodDiaryData.getUpdateAtInMillis(), moodDiaryData.getEmotionImageRes(), object : EditAnxietyBottomSheetDialog.OnItemClickListener {
                 override fun onEditClick() {
-                    MoodDiaryDetailActivity.launch(item.t)
+                    MoodDiaryEditActivity.launch(item.t, MoodDiaryEditActivity.MOOD_DETAIL_FRAGMENT_INDEX)
                 }
 
                 override fun onDeleteClick() {
@@ -191,7 +191,7 @@ class MoodDiaryListActivity : WhileTitleNavBgActivity() {
     private fun getItemPosition(id: Int): Int {
         val list = mAdapter.data
         for ((index, data) in list.withIndex()) {
-            if(data.t != null) {
+            if (data.t != null) {
                 if (data.t.id == id) {
                     return index
                 }

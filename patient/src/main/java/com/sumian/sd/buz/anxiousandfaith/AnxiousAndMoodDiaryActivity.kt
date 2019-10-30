@@ -147,7 +147,7 @@ class AnxiousAndMoodDiaryActivity : WhileTitleNavBgActivity() {
             val itemView = AnxiousMoodDiaryItemView(this@AnxiousAndMoodDiaryActivity)
             itemView.setData(data.scene, data.getUpdateAtInMillis(), data.getEmotionImageRes(), object : EditAnxietyBottomSheetDialog.OnItemClickListener {
                 override fun onEditClick() {
-                    MoodDiaryDetailActivity.launch(data)
+                    MoodDiaryEditActivity.launch(data, MoodDiaryEditActivity.MOOD_DETAIL_FRAGMENT_INDEX)
                 }
 
                 override fun onDeleteClick() {
