@@ -28,7 +28,7 @@ import org.greenrobot.eventbus.Subscribe
  * desc   :
  * version: 1.0
  */
-class MoodDiaryListActivity : WhileTitleNavBgActivity() {
+class MoodDiaryListActivity : TitleBaseActivity() {
 
     private val mAdapter = FaithAdapter()
     private var mPage = 1

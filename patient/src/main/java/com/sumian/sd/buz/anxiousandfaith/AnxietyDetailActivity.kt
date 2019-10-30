@@ -2,7 +2,6 @@ package com.sumian.sd.buz.anxiousandfaith
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.databinding.DataBindingUtil
 import com.blankj.utilcode.util.ActivityUtils
@@ -21,7 +20,7 @@ import com.sumian.sd.databinding.ActivityAnxietyDetailBinding
 import kotlinx.android.synthetic.main.activity_anxiety_detail.*
 import org.greenrobot.eventbus.Subscribe
 
-class AnxietyDetailActivity : WhileTitleNavBgActivity() {
+class AnxietyDetailActivity : TitleBaseActivity() {
 
     private var mAnxietyData: AnxietyData? = null
     private var mAnxietyDataId = INVALID_ANXIETY_DATA_ID

@@ -1,7 +1,6 @@
 package com.sumian.sd.buz.anxiousandfaith
 
 import android.content.Intent
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import com.blankj.utilcode.util.ActivityUtils
@@ -28,7 +27,7 @@ import kotlinx.android.synthetic.main.activity_anxious_and_mood_diary.*
  * desc   :
  * version: 1.0
  */
-class AnxiousAndMoodDiaryActivity : WhileTitleNavBgActivity() {
+class AnxiousAndMoodDiaryActivity : TitleBaseActivity() {
     private var mHasAnxiety = false
     private var mHasMoodDiary = false
 

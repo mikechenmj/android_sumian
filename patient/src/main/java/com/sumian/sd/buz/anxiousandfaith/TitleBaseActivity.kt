@@ -16,22 +16,9 @@ import com.sumian.sd.R
  * desc   :
  * version: 1.0
  */
-abstract class WhileTitleNavBgActivity : BaseActivity() {
+abstract class TitleBaseActivity : BaseActivity() {
 
     override fun showBackNav(): Boolean {
         return true
-    }
-
-    override fun initWidget() {
-        super.initWidget()
-        mTitleBar.setBgColor(Color.WHITE)
-        mTitleBar.setTvAndIvColor(Color.BLACK)
-        mTitleBar.title.setTextSize(TypedValue.COMPLEX_UNIT_SP, 19f)
-        mTitleBar.title.paint.isFakeBoldText = true
-    }
-
-    override fun onNewIntent(intent: Intent?) {
-        super.onNewIntent(intent)
-        initWidget()
     }
 }

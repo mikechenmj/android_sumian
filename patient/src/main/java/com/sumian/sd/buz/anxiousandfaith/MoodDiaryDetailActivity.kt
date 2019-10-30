@@ -2,34 +2,25 @@ package com.sumian.sd.buz.anxiousandfaith
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
-import android.text.TextUtils
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
-import com.sumian.common.network.response.ErrorResponse
-import com.sumian.common.utils.TimeUtilV2
 import com.sumian.common.widget.SumianFlexboxLayout
 import com.sumian.sd.R
-import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.anxiousandfaith.bean.MoodDiaryData
 import com.sumian.sd.buz.anxiousandfaith.bean.MoodDiaryData.Companion.EXTRA_KEY_MOOD_DIARY
-import com.sumian.sd.buz.anxiousandfaith.constant.MoodDiaryType
 import com.sumian.sd.buz.anxiousandfaith.databinding.ActivityMoodDiaryDetailData
 import com.sumian.sd.buz.anxiousandfaith.event.MoodDiaryChangeEvent
-import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import com.sumian.sd.common.utils.EventBusUtil
 import com.sumian.sd.databinding.ActivityMoodDiaryDetailBinding
 import kotlinx.android.synthetic.main.activity_mood_diary_detail.*
 import org.greenrobot.eventbus.Subscribe
 
-class MoodDiaryDetailActivity : WhileTitleNavBgActivity() {
+class MoodDiaryDetailActivity : TitleBaseActivity() {
 
     private var mMoodDiaryData: MoodDiaryData? = null
     private var mViewDataBinding: ActivityMoodDiaryDetailBinding? = null

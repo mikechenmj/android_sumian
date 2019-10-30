@@ -28,7 +28,7 @@ import org.greenrobot.eventbus.Subscribe
  * desc   :
  * version: 1.0
  */
-class AnxietyListActivity : WhileTitleNavBgActivity() {
+class AnxietyListActivity : TitleBaseActivity() {
 
     private val mAdapter = AnxietyAdapter()
     private var mPage = 1

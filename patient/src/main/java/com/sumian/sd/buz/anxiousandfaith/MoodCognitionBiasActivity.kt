@@ -3,14 +3,12 @@ package com.sumian.sd.buz.anxiousandfaith
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import com.sumian.common.base.FragmentContainer
 import com.sumian.common.helper.ToastHelper
 import com.sumian.common.widget.SumianFlexboxLayout
 import com.sumian.sd.R
@@ -19,7 +17,7 @@ import com.sumian.sd.databinding.ActivityMoodCognitionBiasLayoutBinding
 import kotlinx.android.synthetic.main.activity_mood_cognition_bias_layout.*
 
 @SuppressLint("SetTextI18n")
-class MoodCognitionBiasActivity : WhileTitleNavBgActivity() {
+class MoodCognitionBiasActivity : TitleBaseActivity() {
 
     var mCheckedLabels = mutableListOf<String>()
     val mMoodCognitionBias = arrayOf(

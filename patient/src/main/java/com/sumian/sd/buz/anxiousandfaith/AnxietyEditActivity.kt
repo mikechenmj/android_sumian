@@ -24,7 +24,7 @@ import java.util.*
  * desc   :
  * version: 1.0
  */
-class AnxietyEditActivity : WhileTitleNavBgActivity() {
+class AnxietyEditActivity : TitleBaseActivity() {
     private var mAnxietyData: AnxietyData? = null
 
     override fun getLayoutId(): Int {
