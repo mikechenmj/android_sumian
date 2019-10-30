@@ -142,6 +142,17 @@ class MoodDiaryListActivity : WhileTitleNavBgActivity() {
                     deleteFaith(item.t.id)
                 }
             })
+            var isNegativeNoFillAll = !item.t.isFillAll() && !item.t.isPositiveMoodType()
+            if (isNegativeNoFillAll) {
+                itemView.showUnHandlerTip(getString(R.string.faith_un_handle_tip_text))
+            }
+            itemView.setOnClickListener {
+                if (isNegativeNoFillAll) {
+                    MoodDiaryEditActivity.launch(item.t, MoodDiaryEditActivity.MOOD_DETAIL_FRAGMENT_INDEX)
+                } else {
+                    MoodDiaryDetailActivity.launch(item.t)
+                }
+            }
         }
 
         override fun convertHead(helper: BaseViewHolder, item: FaithSectionMultiEntity) {

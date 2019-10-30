@@ -141,6 +141,11 @@ class AnxietyListActivity : WhileTitleNavBgActivity() {
                     deleteAnxiety(item.t.id)
                 }
             })
+            var isAnxiousUnHandle = item.t.getRemindAtInMillis() > System.currentTimeMillis()
+            if (isAnxiousUnHandle) {
+                itemView.showUnHandlerTip(getString(R.string.anxious_un_handle_tip_text))
+            }
+            itemView.setOnClickListener { AnxietyDetailActivity.launch(item.t) }
         }
 
         override fun convertHead(helper: BaseViewHolder, item: AnxietySectionMultiEntity) {
