@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="data"
+            type="com.sumian.sd.buz.anxiousandfaith.databinding.ActivityMoodDiaryDetailData" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/activity_mood_diary_detail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ll_mood_type_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/normal_interval"
+                android:background="@android:color/white"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/iv_mood_diary_emotion"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="@dimen/normal_padding"
+                    android:layout_marginTop="11.5dp"
+                    android:layout_marginEnd="@dimen/normal_padding"
+                    android:layout_marginBottom="11.5dp"
+                    android:src="@{context.getDrawable(data.moodDiaryEmotionResId)}"
+                    tools:srcCompat="@drawable/belief_icon_facial4_s" />
+
+                <TextView
+                    android:id="@+id/tv_mood_diary_text"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="@{data.moodDiaryTextId}"
+                    android:textSize="@dimen/normal_text_size"
+                    android:textStyle="bold"
+                    tools:text="开心" />
+
+                <TextView
+                    android:id="@+id/tv_switch_edit_mode"
+                    style="@style/text_b3_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|end"
+                    android:onClick="@{() -> data.changeToEditMode()}"
+                    android:padding="@dimen/normal_padding"
+                    android:text="@string/anxiety_mood_diary_detail_edit_menu_text"
+                    android:visibility="@{data.editMode ? View.GONE : View.VISIBLE}" />
+            </LinearLayout>
+
+            <com.sumian.common.widget.SumianFlexboxLayout
+                android:id="@+id/fb_mood_diary_type_labels"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_line_top_l1_margin_start_20dp_white_bg"
+                android:padding="@dimen/normal_padding"
+                app:adapter="@{data.moodLabelAdapter}"
+                app:dividerDrawable="@drawable/flex_box_space_divider"
+                app:flexWrap="wrap"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ll_mood_type_container"
+                app:showDivider="middle" />
+
+            <TextView
+                android:id="@+id/tv_mood_reason_title"
+                style="@style/NormalItemTextStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/normal_interval"
+                android:background="@drawable/bg_line_l1_margin_start_20dp_white_bg"
+                android:text="@string/mood_detail_title_text"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fb_mood_diary_type_labels" />
+
+            <EditText
+                android:id="@+id/et_mood_reason_content"
+                style="@style/NormalItemTextStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:focusable="@{data.editMode}"
+                android:focusableInTouchMode="@{data.editMode}"
+                android:text="@={data.moodReasonContent}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_mood_reason_title"
+                tools:text="今天遇到了老朋友，我们一起玩耍，逛街，吃东西，很开心。" />
+
+            <TextView
+                android:id="@+id/tv_mood_reason_content_count"
+                style="@style/text_t2_13"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/normal_item_background"
+                android:gravity="center_vertical|end"
+                android:paddingStart="@dimen/normal_padding"
+                android:paddingTop="@dimen/normal_interval"
+                android:paddingEnd="@dimen/normal_padding"
+                android:paddingBottom="@dimen/normal_padding"
+                android:text="@{data.moodReasonContentCount}"
+                android:textColor="@{data.moodReasonContentCountOutOfMax ? @color/t4_color : @color/t2_color}"
+                android:visibility="@{data.editMode ? View.VISIBLE : View.GONE}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_mood_reason_content"
+                tools:ignore="HardcodedText"
+                tools:text="0/200" />
+
+            <ViewStub
+                android:id="@+id/vs_activity_mood_diary_no_positive_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inflatedId="@+id/vs_activity_mood_diary_no_positive_detail"
+                android:layout="@layout/activity_mood_diary_no_positive_detail"
+                app:data="@{data}"
+                app:layout_constraintTop_toBottomOf="@+id/tv_mood_reason_content_count" />
+
+            <TextView
+                android:id="@+id/tv_mood_diary_record_time"
+                style="@style/text_t2_14"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="end|center_horizontal"
+                android:padding="@dimen/normal_padding"
+                android:text="@{data.updateTimeFormatted}"
+                android:textColor="@color/t2_color"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/vs_activity_mood_diary_no_positive_detail"
+                tools:text="2019.07.01 09:00:32" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/bt_save"
+                style="@style/SumianButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="35dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginEnd="35dp"
+                android:layout_marginBottom="47dp"
+                android:enabled="@{data.saveButtonEnable}"
+                android:onClick="@{() -> data.saveMoodDiary()}"
+                android:text="@string/save"
+                android:visibility="@{data.editMode ? View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_mood_diary_record_time" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</layout>

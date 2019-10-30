@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout>
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="data"
+            type="com.sumian.sd.buz.anxiousandfaith.databinding.FragmentMoodChallengeData" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_mood_challenge_tip"
+                style="@style/text_t2_14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_line_top_l1_margin_start_20dp_white_bg"
+                android:gravity="center_vertical"
+                android:padding="@dimen/normal_padding"
+                android:text="@string/mood_challenge_tip_text" />
+
+            <TextView
+                android:id="@+id/tv_mood_challenge_analysis_secondary_title"
+                style="@style/text_t2_14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:paddingStart="@dimen/normal_padding"
+                android:paddingTop="@dimen/normal_interval"
+                android:paddingEnd="@dimen/normal_padding"
+                android:paddingBottom="@dimen/normal_interval"
+                android:text="@string/mood_challenge_analysis_secondary_title" />
+
+            <TextView
+                android:id="@+id/tv_mood_challenge_belief_title"
+                style="@style/text_t1_16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_line_l1_margin_start_20dp_white_bg"
+                android:gravity="center_vertical"
+                android:padding="@dimen/normal_padding"
+                android:text="@string/mood_challenge_belief_title"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/et_mood_challenge_belief_content"
+                style="@style/SumianEditTextWhiteBg"
+                android:layout_height="wrap_content"
+                android:hint="@string/mood_challenge_belief_content"
+                android:minHeight="90dp"
+                android:padding="@dimen/normal_padding"
+                android:text="@={data.challengeBeliefContent}"
+                tools:ignore="Autofill,TextFields" />
+
+            <TextView
+                android:id="@+id/tv_mood_challenge_belief_content_count"
+                style="@style/text_t2_13"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center_vertical|end"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="20dp"
+                android:text="@{data.challengeBeliefContentCount}"
+                android:textColor="@{data.challengeBeliefContentOutOfMax ? @color/t4_color : @color/t2_color}"
+                tools:ignore="HardcodedText"
+                tools:text="0/200" />
+
+            <TextView
+                android:id="@+id/tv_mood_challenge_cognitive_bias_secondary_title"
+                style="@style/text_t2_14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:paddingStart="@dimen/normal_padding"
+                android:paddingTop="@dimen/normal_interval"
+                android:paddingEnd="@dimen/normal_padding"
+                android:paddingBottom="@dimen/normal_interval"
+                android:text="@string/mood_challenge_cognitive_bias_secondary_title" />
+
+            <LinearLayout
+                android:id="@+id/ll_mood_challenge_cognitive_bias_entrance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/normal_item_background"
+                android:onClick="@{data.onCognitiveBiasClickListener}"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_mood_challenge_cognitive_bias_content"
+                    style="@style/text_t1_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/normal_padding"
+                    android:text="@string/mood_challenge_cognitive_bias_content"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/iv_mood_diary_dull_arrow"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="@dimen/normal_interval"
+                    android:layout_weight="1"
+                    android:padding="@dimen/normal_padding"
+                    android:scaleType="fitEnd"
+                    android:src="@drawable/ic_arrow_right_light_blue" />
+            </LinearLayout>
+
+            <com.sumian.common.widget.SumianFlexboxLayout
+                android:id="@+id/fb_mood_diary_dull_labels"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_line_top_l1_margin_start_20dp_white_bg"
+                android:padding="@dimen/normal_padding"
+                android:visibility="@{data.cognitionBias.size > 0 ? View.VISIBLE : View.GONE}"
+                app:adapter="@{data.moodLabelAdapter}"
+                app:dividerDrawable="@drawable/flex_box_space_divider"
+                app:flexWrap="wrap"
+                app:showDivider="middle" />
+
+            <TextView
+                android:id="@+id/tv_mood_challenge_result_title"
+                style="@style/text_t1_16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/normal_interval"
+                android:background="@drawable/bg_line_l1_margin_start_20dp_white_bg"
+                android:gravity="center_vertical"
+                android:padding="@dimen/normal_padding"
+                android:text="@string/mood_challenge_result_title"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/et_mood_challenge_result_content"
+                style="@style/SumianEditTextWhiteBg"
+                android:layout_height="wrap_content"
+                android:hint="@string/mood_challenge_result_content_hint"
+                android:minHeight="90dp"
+                android:padding="@dimen/normal_padding"
+                android:text="@={data.challengeResultContent}"
+                tools:ignore="Autofill,TextFields" />
+
+            <TextView
+                android:id="@+id/tv_mood_challenge_result_content_count"
+                style="@style/text_t2_13"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/normal_item_background"
+                android:gravity="center_vertical|end"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="20dp"
+                android:text="@{data.challengeResultContentCount}"
+                android:textColor="@{data.challengeResultContentOutOfMax ? @color/t4_color : @color/t2_color}"
+                tools:ignore="HardcodedText"
+                tools:text="0/200" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/bt_mood_reasonable_practice"
+                style="@style/SumianButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="35dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginEnd="35dp"
+                android:layout_marginBottom="40dp"
+                android:onClick="@{() -> data.saveMoodChallenge()}"
+                android:text="@string/mood_reasonable_practice_text" />
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</layout>

@@ -32,6 +32,10 @@ android {
         }
     }
 
+    dataBinding {
+        enabled = true
+    }
+
     signingConfigs {
         configs {
             keyAlias appProperties['APP_KEY_ALIAS']

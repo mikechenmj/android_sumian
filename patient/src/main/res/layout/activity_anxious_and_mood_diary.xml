@@ -29,23 +29,24 @@
             android:background="@color/white_50" />
 
         <TextView
-            android:id="@+id/tv_add_belief"
+            android:id="@+id/tv_mood_diary"
             style="@style/text_b2_14"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:drawableTop="@drawable/icon_belief"
+            android:drawableTop="@drawable/icon_mood_diary"
             android:gravity="center"
             android:paddingTop="20dp"
             android:paddingBottom="20dp"
-            android:text="@string/add_belief" />
+            android:text="@string/mood_diary" />
     </LinearLayout>
 
     <FrameLayout
         android:id="@+id/vg_question"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:background="@color/b5_color">
+        android:background="@color/b5_color"
+        android:visibility="gone">
 
         <TextView
             style="@style/text_b2_14"
@@ -112,7 +113,7 @@
             <Space style="@style/space_height_10" />
 
             <LinearLayout
-                android:id="@+id/vg_faith_label"
+                android:id="@+id/vg_mood_diary_label"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/normal_item_height_62"
                 android:background="@drawable/bg_line_l1_margin_start_20dp_white_bg"
@@ -121,25 +122,25 @@
                 android:paddingEnd="20dp">
 
                 <TextView
-                    android:id="@+id/tv_belief_record"
+                    android:id="@+id/tv_mood_diary_list_title"
                     style="@style/tv_title_with_white_bg_and_bottom_line"
                     android:layout_width="wrap_content"
                     android:background="@null"
                     android:paddingStart="0dp"
                     android:paddingEnd="0dp"
-                    android:text="@string/faith_record" />
+                    android:text="@string/mood_diary_list_title" />
 
                 <Space style="@style/space_horizontal_weight_1" />
 
                 <ImageView
-                    android:id="@+id/iv_faith_arrow"
+                    android:id="@+id/iv_mood_diary_arrow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_arrow_right_light_blue"
                     tools:ignore="ContentDescription" />
 
                 <TextView
-                    android:id="@+id/tv_faith_no_record"
+                    android:id="@+id/tv_mood_diary_no_record"
                     style="@style/text_t2_16"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -148,7 +149,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/vg_faith_record"
+                android:id="@+id/vg_mood_diary_record"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical" />

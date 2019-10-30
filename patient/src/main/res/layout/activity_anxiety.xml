@@ -1,91 +1,410 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-    <LinearLayout
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.sumian.sd.buz.anxiousandfaith.databinding.ActivityAnxiousEditData" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="data"
+            type="ActivityAnxiousEditData" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/activity_anxiety"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <Space style="@style/space_height_10" />
-
-        <TextView
-            style="@style/tv_title_with_white_bg_and_bottom_line"
-            android:text="@string/anxiety" />
-
-        <EditText
-            android:id="@+id/et_anxiety"
-            style="@style/SumianEditTextWhiteBg"
-            android:layout_height="90dp"
-            android:hint="@string/anxiety_input_hint"
-            android:padding="20dp"
-            tools:ignore="Autofill,TextFields" />
-
-        <TextView
-            android:id="@+id/tv_anxiety_text_count"
-            style="@style/text_t2_13"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:gravity="center_vertical|end"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:text="0/200"
-            tools:ignore="HardcodedText" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:background="@color/white" />
+            <Space style="@style/space_height_10" />
 
-        <Space style="@style/space_height_10" />
+            <TextView
+                style="@style/tv_title_with_white_bg_and_bottom_line"
+                android:text="@string/anxiety"
+                android:textStyle="bold" />
 
-        <TextView
-            style="@style/tv_title_with_white_bg_and_bottom_line"
-            android:text="@string/solution" />
+            <EditText
+                android:id="@+id/et_anxiety"
+                style="@style/SumianEditTextWhiteBg"
+                android:layout_height="wrap_content"
+                android:hint="@string/anxiety_input_hint"
+                android:minHeight="90dp"
+                android:padding="@dimen/normal_padding"
+                android:text="@={data.detailText}"
+                tools:ignore="Autofill,TextFields" />
 
-        <EditText
-            android:id="@+id/et_anxiety_solution"
-            style="@style/SumianEditTextWhiteBg"
-            android:height="90dp"
-            android:hint="@string/anxiety_solution_input_hint"
-            android:padding="20dp"
-            tools:ignore="Autofill,TextFields" />
+            <TextView
+                android:id="@+id/tv_anxiety_text_count"
+                style="@style/text_t2_13"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center_vertical|end"
+                android:paddingStart="@dimen/normal_padding"
+                android:paddingEnd="@dimen/normal_padding"
+                android:paddingBottom="@dimen/normal_padding"
+                android:text="@{data.detailTextCount}"
+                android:textColor="@{data.detailTextCountOutOfMax ? @color/t4_color : @color/t2_color}"
+                tools:ignore="HardcodedText"
+                tools:text="0/200" />
 
-        <TextView
-            android:id="@+id/tv_anxiety_solution_text_count"
-            style="@style/text_t2_13"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:gravity="center_vertical|end"
-            android:maxLength="200"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:text="0/200"
-            tools:ignore="HardcodedText" />
+            <Space style="@style/space_height_10" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:background="@color/white" />
+            <TextView
+                style="@style/tv_title_with_white_bg_and_bottom_line"
+                android:text="@string/anxiety_ask_is_has_solution_title"
+                android:textStyle="bold" />
 
-        <TextView
-            style="@style/text_t2_14"
-            android:layout_margin="20dp"
-            android:text="@string/add_anxiety_bottom_hint" />
+            <RadioGroup
+                android:id="@+id/rg_anxiety_ask_is_has_solution"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_line_l1_margin_start_20dp_white_bg"
+                android:checkedButton="@={ActivityAnxiousEditData.getIdFromIsChecked(@id/rb_anxiety_ask_solution_yes,@id/rb_anxiety_ask_solution_no,data.solutionChecked)}"
+                android:orientation="horizontal"
+                android:padding="16dp">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/bt_save"
-            style="@style/SumianButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="35dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="35dp"
-            android:layout_marginBottom="20dp"
-            android:text="@string/save" />
-    </LinearLayout>
-</androidx.core.widget.NestedScrollView>
+                <RadioButton
+                    android:id="@+id/rb_anxiety_ask_solution_yes"
+                    style="@style/text_t1_15"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:buttonTint="@color/b3_color"
+                    android:text="@string/yes" />
+
+                <RadioButton
+                    android:id="@+id/rb_anxiety_ask_solution_no"
+                    style="@style/text_t1_15"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:buttonTint="@color/b3_color"
+                    android:text="@string/no" />
+            </RadioGroup>
+
+
+            <EditText
+                android:id="@+id/et_anxiety_solution"
+                style="@style/SumianEditTextWhiteBg"
+                android:layout_height="wrap_content"
+                android:hint="@string/anxiety_solution_input_hint"
+                android:minHeight="90dp"
+                android:padding="@dimen/normal_padding"
+                android:text="@={data.solutionText}"
+                android:visibility="@{data.solutionChecked ? View.VISIBLE : View.GONE}"
+                tools:hint="@string/anxiety_solution_input_hint" />
+
+            <TextView
+                android:id="@+id/tv_anxiety_solution_text_count"
+                style="@style/text_t2_13"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center_vertical|end"
+                android:maxLength="200"
+                android:paddingStart="@dimen/normal_padding"
+                android:paddingEnd="@dimen/normal_padding"
+                android:paddingBottom="@dimen/normal_padding"
+                android:text="@{data.solutionTextCount}"
+                android:textColor="@{data.solutionTextCountOutOfMax ? @color/t4_color : @color/t2_color}"
+                android:visibility="@{data.solutionChecked ? View.VISIBLE : View.GONE}"
+                tools:text="0/50" />
+
+            <TextView
+                android:id="@+id/tv_anxiety_ask_is_hard_problem_title"
+                style="@style/tv_title_with_white_bg_and_bottom_line"
+                android:text="@string/anxiety_ask_is_hard_problem_title"
+                android:textStyle="bold"
+                android:visibility="@{data.solutionChecked ? View.GONE :View.VISIBLE}" />
+
+            <RadioGroup
+                android:id="@+id/rg_anxiety_ask_is_hard_problem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_line_l1_margin_start_20dp_white_bg"
+                android:checkedButton="@={ActivityAnxiousEditData.getIdFromIsChecked(@id/rb_anxiety_ask_is_hard_problem_yes, @id/rb_anxiety_ask_is_hard_problem_no, data.hardChecked)}"
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:visibility="@{data.solutionChecked ? View.GONE :View.VISIBLE}">
+
+                <RadioButton
+                    android:id="@+id/rb_anxiety_ask_is_hard_problem_yes"
+                    style="@style/text_t1_15"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:buttonTint="@color/b3_color"
+                    android:text="@string/yes" />
+
+                <RadioButton
+                    android:id="@+id/rb_anxiety_ask_is_hard_problem_no"
+                    style="@style/text_t1_15"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:buttonTint="@color/b3_color"
+                    android:text="@string/no" />
+
+            </RadioGroup>
+
+            <Space
+                style="@style/space_height_10"
+                android:visibility="@{!data.solutionChecked &amp;&amp; !data.hardChecked ? View.VISIBLE :  View.GONE }" />
+
+            <TextView
+                android:id="@+id/tv_record_anxiety_tip"
+                style="@style/tv_title_with_white_bg_and_bottom_line"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/normal_padding"
+                android:paddingBottom="@dimen/normal_padding"
+                android:text="@string/anxiety_record_tip_text"
+                android:visibility="@{!data.solutionChecked &amp;&amp; !data.hardChecked ? View.VISIBLE :  View.GONE }" />
+
+            <EditText
+                android:id="@+id/et_anxiety_hard"
+                style="@style/SumianEditTextWhiteBg"
+                android:layout_height="wrap_content"
+                android:hint="@string/anxiety_record_hint"
+                android:minHeight="90dp"
+                android:padding="@dimen/normal_padding"
+                android:text="@={data.hardText}"
+                android:visibility="@{!data.solutionChecked &amp;&amp; !data.hardChecked ? View.VISIBLE : View.GONE}"
+                tools:hint="@string/anxiety_ask_how_to_resolve_three_edit_hint" />
+
+            <TextView
+                android:id="@+id/tv_anxiety_hard_text_count"
+                style="@style/text_t2_13"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center_vertical|end"
+                android:maxLength="200"
+                android:paddingStart="@dimen/normal_padding"
+                android:paddingEnd="@dimen/normal_padding"
+                android:paddingBottom="@dimen/normal_padding"
+                android:text="@{data.hardTextCount}"
+                android:textColor="@{data.hardTextCountOutOfMax ? @color/t4_color : @color/t2_color}"
+                android:visibility="@{!data.solutionChecked &amp;&amp; !data.hardChecked ? View.VISIBLE : View.GONE}"
+                tools:text="0/50" />
+
+            <TextView
+                style="@style/tv_title_with_white_bg_and_bottom_line"
+                android:text="@string/anxiety_ask_how_to_solution_title"
+                android:textStyle="bold"
+                android:visibility="@{!data.solutionChecked &amp;&amp; data.hardChecked ? View.VISIBLE : View.GONE}" />
+
+            <RadioGroup
+                android:id="@+id/rg_anxiety_ask_how_to_resolve"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_line_l1_margin_start_20dp_white_bg"
+                android:checkedButton="@={data.howToResolveCheckedId}"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:visibility="@{!data.solutionChecked &amp;&amp; data.hardChecked ? View.VISIBLE : View.GONE}">
+
+                <RadioButton
+                    android:id="@+id/rb_anxiety_ask_how_to_resolve_one"
+                    style="@style/text_t1_15"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/b3_color"
+                    android:paddingTop="@dimen/normal_interval"
+                    android:paddingBottom="@dimen/normal_padding"
+                    android:text="@string/anxiety_ask_how_to_resolve_one_checkbox_text"
+                    android:textColor="@{data.howToResolveCheckedId == @id/rb_anxiety_ask_how_to_resolve_one ? @color/t1_color : @color/t2_color}" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:background="@drawable/bg_line_l1_margin_start_20dp_white_bg"
+                    android:visibility="@{data.howToResolveCheckedId == @id/rb_anxiety_ask_how_to_resolve_one ? View.VISIBLE : View.GONE}" />
+
+                <EditText
+                    android:id="@+id/et_anxiety_ask_how_to_resolve_one"
+                    style="@style/SumianEditTextWhiteBg"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/anxiety_ask_how_to_resolve_one_edit_hint"
+                    android:minHeight="90dp"
+                    android:padding="@dimen/normal_padding"
+                    android:text="@={data.askHowToResolveOneText}"
+                    android:visibility="@{data.howToResolveCheckedId == @id/rb_anxiety_ask_how_to_resolve_one ? View.VISIBLE : View.GONE}"
+                    tools:hint="@string/anxiety_ask_how_to_resolve_one_edit_hint" />
+
+                <TextView
+                    android:id="@+id/tv_anxiety_ask_how_to_resolve_one_text_count"
+                    style="@style/text_t2_13"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:gravity="center_vertical|end"
+                    android:maxLength="200"
+                    android:paddingStart="@dimen/normal_padding"
+                    android:paddingEnd="@dimen/normal_padding"
+                    android:paddingBottom="@dimen/normal_padding"
+                    android:text="@{data.askHowToResolveOneTextCount}"
+                    android:textColor="@{data.askHowToResolveOneTextCountOutOfMax ? @color/t4_color : @color/t2_color}"
+                    android:visibility="@{data.howToResolveCheckedId == @id/rb_anxiety_ask_how_to_resolve_one ? View.VISIBLE : View.GONE}"
+                    tools:text="0/100" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:background="@drawable/bg_line_l1_margin_start_20dp_white_bg"
+                    android:visibility="@{data.howToResolveCheckedId == @id/rb_anxiety_ask_how_to_resolve_one ? View.VISIBLE : View.GONE}" />
+
+                <RadioButton
+                    android:id="@+id/rb_anxiety_ask_how_to_resolve_two"
+                    style="@style/text_t1_15"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/b3_color"
+                    android:paddingTop="@dimen/normal_interval"
+                    android:paddingBottom="@dimen/normal_padding"
+                    android:text="@string/anxiety_ask_how_to_resolve_two_checkbox_text"
+                    android:textColor="@{data.howToResolveCheckedId == @id/rb_anxiety_ask_how_to_resolve_two ? @color/t1_color : @color/t2_color}" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:background="@drawable/bg_line_l1_margin_start_20dp_white_bg"
+                    android:visibility="@{data.howToResolveCheckedId == @id/rb_anxiety_ask_how_to_resolve_two ? View.VISIBLE : View.GONE}" />
+
+                <EditText
+                    android:id="@+id/et_anxiety_ask_how_to_resolve_two"
+                    style="@style/SumianEditTextWhiteBg"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/anxiety_ask_how_to_resolve_two_edit_hint"
+                    android:minHeight="90dp"
+                    android:padding="@dimen/normal_padding"
+                    android:text="@={data.askHowToResolveTwoText}"
+                    android:visibility="@{data.howToResolveCheckedId == @id/rb_anxiety_ask_how_to_resolve_two ? View.VISIBLE : View.GONE}"
+                    tools:hint="@string/anxiety_ask_how_to_resolve_two_edit_hint" />
+
+                <TextView
+                    android:id="@+id/tv_anxiety_ask_how_to_resolve_two_text_count"
+                    style="@style/text_t2_13"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:gravity="center_vertical|end"
+                    android:maxLength="200"
+                    android:paddingStart="@dimen/normal_padding"
+                    android:paddingEnd="@dimen/normal_padding"
+                    android:paddingBottom="@dimen/normal_padding"
+                    android:text="@{data.askHowToResolveTwoTextCount}"
+                    android:textColor="@{data.askHowToResolveTwoTextCountOutOfMax ? @color/t4_color : @color/t2_color}"
+                    android:visibility="@{data.howToResolveCheckedId == @id/rb_anxiety_ask_how_to_resolve_two ? View.VISIBLE : View.GONE}"
+                    tools:text="0/100" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:background="@drawable/bg_line_l1_margin_start_20dp_white_bg"
+                    android:visibility="@{data.howToResolveCheckedId == @id/rb_anxiety_ask_how_to_resolve_two ? View.VISIBLE : View.GONE}" />
+
+                <RadioButton
+                    android:id="@+id/rb_anxiety_ask_how_to_resolve_three"
+                    style="@style/text_t1_15"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/b3_color"
+                    android:paddingTop="@dimen/normal_interval"
+                    android:paddingBottom="@dimen/normal_padding"
+                    android:text="@string/anxiety_ask_how_to_resolve_three_checkbox_text"
+                    android:textColor="@{data.howToResolveCheckedId == @id/rb_anxiety_ask_how_to_resolve_three ? @color/t1_color : @color/t2_color}" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:background="@drawable/bg_line_l1_margin_start_20dp_white_bg"
+                    android:visibility="@{data.howToResolveCheckedId == @id/rb_anxiety_ask_how_to_resolve_three ? View.VISIBLE : View.GONE}" />
+
+                <EditText
+                    android:id="@+id/et_anxiety_ask_how_to_resolve_three"
+                    style="@style/SumianEditTextWhiteBg"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/anxiety_ask_how_to_resolve_three_edit_hint"
+                    android:minHeight="90dp"
+                    android:padding="@dimen/normal_padding"
+                    android:text="@={data.askHowToResolveThreeText}"
+                    android:visibility="@{data.howToResolveCheckedId == @id/rb_anxiety_ask_how_to_resolve_three ? View.VISIBLE : View.GONE}"
+                    tools:hint="@string/anxiety_record_hint" />
+
+                <TextView
+                    android:id="@+id/tv_anxiety_ask_how_to_resolve_three_text_count"
+                    style="@style/text_t2_13"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:gravity="center_vertical|end"
+                    android:maxLength="200"
+                    android:paddingStart="@dimen/normal_padding"
+                    android:paddingEnd="@dimen/normal_padding"
+                    android:paddingBottom="@dimen/normal_padding"
+                    android:text="@{data.askHowToResolveThreeTextCount}"
+                    android:textColor="@{data.askHowToResolveThreeTextCountOutOfMax ? @color/t4_color : @color/t2_color}"
+                    android:visibility="@{data.howToResolveCheckedId == @id/rb_anxiety_ask_how_to_resolve_three ? View.VISIBLE : View.GONE}"
+                    tools:text="0/100" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:background="@drawable/bg_line_l1_margin_start_20dp_white_bg"
+                    android:visibility="@{data.howToResolveCheckedId == @id/rb_anxiety_ask_how_to_resolve_three ? View.VISIBLE : View.GONE}" />
+            </RadioGroup>
+
+            <Space style="@style/space_height_10" />
+
+            <TextView
+                style="@style/tv_title_with_white_bg_and_bottom_line"
+                android:text="@string/anxiety_remind_alarm_title" />
+
+            <com.sumian.sd.widget.divider.SettingDividerView
+                android:id="@+id/remind_anxiety_alarm_setting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/normal_item_background"
+                android:enabled="@{data.anxietyData.remindAt == 0}"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                app:divider_line_visible="visible"
+                app:moreVisible="@{data.anxietyData.remindAt == 0}"
+                app:onShowMoreListener="@{() -> data.anxietyEditActivity.showBottomSheet()}"
+                app:type_content="@{data.remindSettingTypeContent}"
+                app:type_content_text_color="@color/t2_color"
+                app:type_desc="@string/anxiety_remind_alarm_setting_desc"
+                app:type_icon="@drawable/icon_remind" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/normal_padding"
+                android:text="@string/anxiety_remind_alarm_and_rest_tip"
+                android:textColor="@color/t2_color"
+                android:textSize="13sp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/bt_save"
+                style="@style/SumianButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="35dp"
+                android:layout_marginTop="@dimen/normal_padding"
+                android:layout_marginEnd="35dp"
+                android:layout_marginBottom="@dimen/normal_padding"
+                android:enabled="@{data.saveButtonEnable}"
+                android:onClick="@{() -> data.saveAnxiety()}"
+                android:text="@string/save" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</layout>

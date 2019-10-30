@@ -444,19 +444,34 @@
             android:theme="@style/BaseAppTheme.TranslucentStatus"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
-            android:name=".buz.anxiousandfaith.AnxiousAndFaithActivity"
+            android:name=".buz.anxiousandfaith.AnxiousAndMoodDiaryActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".buz.anxiousandfaith.AnxietyActivity"
+            android:name=".buz.anxiousandfaith.AnxietyEditActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".buz.anxiousandfaith.FaithActivity"
+            android:name=".buz.anxiousandfaith.AnxietyDetailActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".buz.anxiousandfaith.MoodDiaryEditActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".buz.anxiousandfaith.MoodCognitionBiasActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".buz.anxiousandfaith.MoodDiaryDetailActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".buz.anxiousandfaith.AnxietyListActivity"
@@ -464,7 +479,7 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".buz.anxiousandfaith.FaithListActivity"
+            android:name=".buz.anxiousandfaith.MoodDiaryListActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />

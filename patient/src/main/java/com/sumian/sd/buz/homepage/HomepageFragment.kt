@@ -20,7 +20,7 @@ import com.sumian.sd.buz.account.achievement.contract.LastAchievementContract
 import com.sumian.sd.buz.account.achievement.presenter.LastAchievementPresenter
 import com.sumian.sd.buz.account.bean.Token
 import com.sumian.sd.buz.account.userProfile.UserInfoActivity
-import com.sumian.sd.buz.anxiousandfaith.AnxiousAndFaithActivity
+import com.sumian.sd.buz.anxiousandfaith.AnxiousAndMoodDiaryActivity
 import com.sumian.sd.buz.cbti.activity.CBTIIntroductionActivity
 import com.sumian.sd.buz.cbti.activity.CbtiFinalReportDialogActivity
 import com.sumian.sd.buz.cbti.event.CBTIProgressChangeEvent
@@ -102,7 +102,7 @@ HomepageFragment : BaseViewModelFragment<BaseViewModel>(), OnEnterListener, Last
         sleep_prescription_view.setOnClickListener { SleepPrescriptionActivity.launch() }
         tv_anxious_and_faith.setOnClickListener {
             StatUtil.event(StatConstants.click_home_page_anxiety_and_faith)
-            ActivityUtils.startActivity(AnxiousAndFaithActivity::class.java)
+            ActivityUtils.startActivity(AnxiousAndMoodDiaryActivity::class.java)
         }
         home_page_sleep_guide_enter_btn.setOnClickListener {
             SleepGuideActivity.start()

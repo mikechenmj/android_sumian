@@ -15,8 +15,9 @@ import com.sumian.sd.buz.account.bean.UserInfo
 import com.sumian.sd.buz.advisory.bean.Advisory
 import com.sumian.sd.buz.advisory.bean.PictureOssSts
 import com.sumian.sd.buz.advisory.body.AdvisoryRecordBody
+import com.sumian.sd.buz.anxiousandfaith.bean.AnxietyAnswer
 import com.sumian.sd.buz.anxiousandfaith.bean.AnxietyData
-import com.sumian.sd.buz.anxiousandfaith.bean.FaithData
+import com.sumian.sd.buz.anxiousandfaith.bean.MoodDiaryData
 import com.sumian.sd.buz.cbti.bean.*
 import com.sumian.sd.buz.coupon.bean.Coupon
 import com.sumian.sd.buz.devicemanager.pattern.PatternData
@@ -442,13 +443,24 @@ interface SdApi {
     fun getAnxieties(@Query("page") page: Int = 1,
                      @Query("per_page") perPage: Int = 15): Call<PaginationResponseV2<AnxietyData>>
 
+    @GET("user/anxieties/{id}")
+    fun getAnxiety(@Path("id") id: Int): Call<AnxietyData>
+
     @FormUrlEncoded
     @POST("user/anxieties")
     fun addAnxiety(@Field("anxiety") anxiety: String, @Field("solution") solution: String): Call<AnxietyData>
 
+    @POST("user/anxieties")
+    fun addAnxietyBody(@Body anxietyData: AnxietyData): Call<AnxietyData>
+
     @FormUrlEncoded
     @PATCH("user/anxieties/{id}")
     fun updateAnxiety(@Path("id") id: Int, @Field("anxiety") anxiety: String, @Field("solution") solution: String): Call<AnxietyData>
+
+    @PATCH("user/anxieties/{id}")
+    fun updateAnxietyBody(
+            @Path("id") id: Int,
+            @Body anxietyData: AnxietyData): Call<AnxietyData>
 
     @DELETE("user/anxieties/{id}")
     fun deleteAnxiety(@Path("id") id: Int): Call<Any>
@@ -458,18 +470,35 @@ interface SdApi {
      */
     @FormUrlEncoded
     @PATCH("user/faiths/{id}")
-    fun updateFaiths(@Path("id") id: Int, @Field("scene") scene: String, @Field("idea") idea: String, @Field("emotion_type") emotion_type: Int): Call<FaithData>
+    fun updateFaiths(@Path("id") id: Int,
+                     @Field("emotion_type") emotionType: Int,
+                     @Field("emotions[]") emotions: List<String>,
+                     @Field("scene") scene: String,
+                     @Field("irrational_belief") irrationalBelief: String = "",
+                     @Field("cognition_bias[]") cognitionBias: List<String>? = emptyList(),
+                     @Field("irrational_belief_result") irrationalBeliefResult: String = "",
+                     @Field("idea") idea: String = "",
+                     @Field("rational_belief") rationalBelief: String = "",
+                     @Field("rational_belief_result") rationalBeliefResult: String = ""): Call<MoodDiaryData>
 
     @DELETE("user/faiths/{id}")
     fun deleteFaiths(@Path("id") id: Int): Call<Any>
 
     @FormUrlEncoded
     @POST("user/faiths")
-    fun addFaiths(@Field("scene") scene: String, @Field("idea") idea: String, @Field("emotion_type") emotion_type: Int): Call<FaithData>
+    fun addFaiths(@Field("emotion_type") emotionType: Int,
+                  @Field("emotions[]") emotions: List<String>,
+                  @Field("scene") scene: String,
+                  @Field("irrational_belief") irrationalBelief: String = "",
+                  @Field("cognition_bias[]") cognitionBias: List<String> = emptyList(),
+                  @Field("irrational_belief_result") irrationalBeliefResult: String = "",
+                  @Field("idea") idea: String = "",
+                  @Field("rational_belief") rationalBelief: String = "",
+                  @Field("rational_belief_result") rationalBeliefResult: String = ""): Call<MoodDiaryData>
 
     @GET("user/faiths")
     fun getFaiths(@Query("page") page: Int = 1,
-                  @Query("per_page") perPage: Int = 15): Call<PaginationResponseV2<FaithData>>
+                  @Query("per_page") perPage: Int = 15): Call<PaginationResponseV2<MoodDiaryData>>
 
     @GET("firmware/latest")
     fun getFirmwareLatestVersion(

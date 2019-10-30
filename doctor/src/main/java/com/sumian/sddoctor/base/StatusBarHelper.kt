@@ -17,7 +17,7 @@ class StatusBarHelper {
         fun initTitleBarUI(context: Context, titleBar: TitleBar) {
             val primaryColor = ColorCompatUtil.getColor(context, R.color.colorPrimary)
             titleBar.setBackgroundColor(ColorCompatUtil.getColor(context, R.color.b2_color))
-            titleBar.mTvTitle.setTextColor(ColorCompatUtil.getColor(context, R.color.t1_color))
+            titleBar.title.setTextColor(ColorCompatUtil.getColor(context, R.color.t1_color))
             titleBar.mIvBack.setImageDrawable(context.resources.getDrawable(R.drawable.ic_nav_icon_back))
             titleBar.mIvBack.setColorFilter(primaryColor)
             titleBar.mTvMenu.setTextColor(primaryColor)

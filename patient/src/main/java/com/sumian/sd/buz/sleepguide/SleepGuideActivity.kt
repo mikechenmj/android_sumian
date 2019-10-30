@@ -7,7 +7,7 @@ import com.sumian.common.h5.bean.H5PayloadData
 import com.sumian.common.h5.bean.ShareData
 import com.sumian.common.statistic.StatUtil
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.buz.anxiousandfaith.AnxiousAndFaithActivity
+import com.sumian.sd.buz.anxiousandfaith.AnxiousAndMoodDiaryActivity
 import com.sumian.sd.buz.cbti.activity.CBTIIntroductionActivity
 import com.sumian.sd.buz.diary.fillsleepdiary.SleepDiaryActivity
 import com.sumian.sd.buz.relaxation.RelaxationListActivity
@@ -58,7 +58,7 @@ class SleepGuideActivity : SimpleWebActivity() {
 //                StatUtil.event(StatConstants.click_sleep_guide_page_)
             }
             "anxietyAndFaith" -> {
-                ActivityUtils.startActivity(AnxiousAndFaithActivity::class.java)
+                ActivityUtils.startActivity(AnxiousAndMoodDiaryActivity::class.java)
                 StatUtil.event(StatConstants.click_sleep_guide_page_anxiety_and_faith_item)
             }
             "sleepHealth" -> {

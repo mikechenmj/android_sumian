@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
-import com.sumian.common.base.BaseActivity
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.network.response.PaginationResponseV2
 import com.sumian.common.statistic.StatUtil
@@ -14,13 +13,12 @@ import com.sumian.common.widget.dialog.SumianDialog
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.anxiousandfaith.bean.AnxietyData
-import com.sumian.sd.buz.anxiousandfaith.bean.AnxietyFaithItemViewData
-import com.sumian.sd.buz.anxiousandfaith.bean.FaithData
-import com.sumian.sd.buz.anxiousandfaith.widget.AnxiousFaithItemView
+import com.sumian.sd.buz.anxiousandfaith.bean.MoodDiaryData
+import com.sumian.sd.buz.anxiousandfaith.widget.AnxiousMoodDiaryItemView
 import com.sumian.sd.buz.anxiousandfaith.widget.EditAnxietyBottomSheetDialog
 import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
-import kotlinx.android.synthetic.main.activity_anxious_and_faith.*
+import kotlinx.android.synthetic.main.activity_anxious_and_mood_diary.*
 
 /**
  * @author : Zhan Xuzhao
@@ -29,21 +27,20 @@ import kotlinx.android.synthetic.main.activity_anxious_and_faith.*
  * desc   :
  * version: 1.0
  */
-class AnxiousAndFaithActivity : BaseActivity() {
+class AnxiousAndMoodDiaryActivity : TitleBaseActivity() {
     private var mHasAnxiety = false
-    private var mHasBelief = false
-
-    override fun showBackNav(): Boolean {
-        return true
-    }
+    private var mHasMoodDiary = false
 
     override fun getLayoutId(): Int {
-        return R.layout.activity_anxious_and_faith
+        return R.layout.activity_anxious_and_mood_diary
     }
 
     companion object {
+
+        private const val PER_PAGE_PREVIEW_COUNT = 3
+
         fun getLaunchIntent(): Intent {
-            return Intent(ActivityUtils.getTopActivity(), AnxiousAndFaithActivity::class.java)
+            return Intent(ActivityUtils.getTopActivity(), AnxiousAndMoodDiaryActivity::class.java)
         }
     }
 
@@ -53,15 +50,15 @@ class AnxiousAndFaithActivity : BaseActivity() {
 
     override fun initWidget() {
         super.initWidget()
-        setTitle(R.string.anxious_and_belief)
-        tv_add_anxiety.setOnClickListener { AnxietyActivity.launch() }
-        tv_add_belief.setOnClickListener { FaithActivity.launch() }
+        setTitle(R.string.anxious_and_belief_title)
+        tv_add_anxiety.setOnClickListener { AnxietyEditActivity.launch() }
+        tv_mood_diary.setOnClickListener { MoodDiaryEditActivity.launch() }
         vg_question.setOnClickListener {
             showExplainDialog()
             StatUtil.event(StatConstants.click_anxiety_and_faith_page_question_mark)
         }
         vg_anxiety_label.setOnClickListener { if (mHasAnxiety) ActivityUtils.startActivity(AnxietyListActivity::class.java) }
-        vg_faith_label.setOnClickListener { if (mHasBelief) ActivityUtils.startActivity(FaithListActivity::class.java) }
+        vg_mood_diary_label.setOnClickListener { if (mHasMoodDiary) ActivityUtils.startActivity(MoodDiaryListActivity::class.java) }
     }
 
     private fun showExplainDialog() {
@@ -74,11 +71,11 @@ class AnxiousAndFaithActivity : BaseActivity() {
     override fun onStart() {
         super.onStart()
         getAnxious()
-        getFaith()
+        getMoodDiary()
     }
 
     private fun getAnxious() {
-        val call = AppManager.getSdHttpService().getAnxieties(1, 2)
+        val call = AppManager.getSdHttpService().getAnxieties(1, PER_PAGE_PREVIEW_COUNT)
         addCall(call)
         call.enqueue(object : BaseSdResponseCallback<PaginationResponseV2<AnxietyData>>() {
             override fun onSuccess(response: PaginationResponseV2<AnxietyData>?) {
@@ -102,31 +99,36 @@ class AnxiousAndFaithActivity : BaseActivity() {
         iv_anxiety_arrow.visibility = if (!hasData) View.GONE else View.VISIBLE
         vg_anxious_record.removeAllViews()
         for (data in list) {
-            val itemView = AnxiousFaithItemView(this@AnxiousAndFaithActivity)
-            itemView.setData(AnxietyFaithItemViewData.create(data), object : EditAnxietyBottomSheetDialog.OnItemClickListener {
+            val itemView = AnxiousMoodDiaryItemView(this@AnxiousAndMoodDiaryActivity)
+            itemView.setData(data.anxiety, data.getUpdateAtInMillis(), null, object : EditAnxietyBottomSheetDialog.OnItemClickListener {
                 override fun onEditClick() {
-                    AnxietyActivity.launch(data)
+                    AnxietyEditActivity.launch(data)
                 }
 
                 override fun onDeleteClick() {
                     deleteAnxiety(data.id)
                 }
             })
+            var isAnxiousUnHandle = data.getRemindAtInMillis() > System.currentTimeMillis()
+            if (isAnxiousUnHandle) {
+                itemView.showUnHandlerTip(getString(R.string.anxious_un_handle_tip_text))
+            }
+            itemView.setOnClickListener { AnxietyDetailActivity.launch(data) }
             itemView.tag = data.id
             vg_anxious_record.addView(itemView)
         }
     }
 
-    private fun getFaith() {
-        val call = AppManager.getSdHttpService().getFaiths(1, 2)
+    private fun getMoodDiary() {
+        val call = AppManager.getSdHttpService().getFaiths(1, PER_PAGE_PREVIEW_COUNT)
         addCall(call)
-        call.enqueue(object : BaseSdResponseCallback<PaginationResponseV2<FaithData>>() {
-            override fun onSuccess(response: PaginationResponseV2<FaithData>?) {
+        call.enqueue(object : BaseSdResponseCallback<PaginationResponseV2<MoodDiaryData>>() {
+            override fun onSuccess(response: PaginationResponseV2<MoodDiaryData>?) {
                 if (response == null) {
                     return
                 }
                 val list = response.data
-                updateFaithList(list)
+                updateMoodDiaryList(list)
             }
 
             override fun onFailure(errorResponse: ErrorResponse) {
@@ -135,28 +137,40 @@ class AnxiousAndFaithActivity : BaseActivity() {
         })
     }
 
-    private fun updateFaithList(list: ArrayList<FaithData>) {
+    private fun updateMoodDiaryList(list: ArrayList<MoodDiaryData>) {
         val hasData = list.size > 0
-        mHasBelief = hasData
-        tv_faith_no_record.visibility = if (hasData) View.GONE else View.VISIBLE
-        iv_faith_arrow.visibility = if (!hasData) View.GONE else View.VISIBLE
-        vg_faith_record.removeAllViews()
+        mHasMoodDiary = hasData
+        tv_mood_diary_no_record.visibility = if (hasData) View.GONE else View.VISIBLE
+        iv_mood_diary_arrow.visibility = if (!hasData) View.GONE else View.VISIBLE
+        vg_mood_diary_record.removeAllViews()
         if (list.size == 0) {
 
         }
         for (data in list) {
-            val itemView = AnxiousFaithItemView(this@AnxiousAndFaithActivity)
-            itemView.setData(AnxietyFaithItemViewData.create(data), object : EditAnxietyBottomSheetDialog.OnItemClickListener {
+            val itemView = AnxiousMoodDiaryItemView(this@AnxiousAndMoodDiaryActivity)
+            itemView.setData(data.scene, data.getUpdateAtInMillis(), data.getEmotionImageRes(), object : EditAnxietyBottomSheetDialog.OnItemClickListener {
                 override fun onEditClick() {
-                    FaithActivity.launch(data)
+                    MoodDiaryEditActivity.launch(data, MoodDiaryEditActivity.MOOD_DETAIL_FRAGMENT_INDEX)
                 }
 
                 override fun onDeleteClick() {
-                    deleteFaith(data.id)
+                    deleteMoodDiary(data.id)
                 }
             })
+
+            var isNegativeNoFillAll = !data.isFillAll() && !data.isPositiveMoodType()
+            if (isNegativeNoFillAll) {
+                itemView.showUnHandlerTip(getString(R.string.faith_un_handle_tip_text))
+            }
+            itemView.setOnClickListener {
+                if (isNegativeNoFillAll) {
+                    MoodDiaryEditActivity.launch(data, MoodDiaryEditActivity.MOOD_DETAIL_FRAGMENT_INDEX)
+                } else {
+                    MoodDiaryDetailActivity.launch(data)
+                }
+            }
             itemView.tag = data.id
-            vg_faith_record.addView(itemView)
+            vg_mood_diary_record.addView(itemView)
         }
     }
 
@@ -176,13 +190,13 @@ class AnxiousAndFaithActivity : BaseActivity() {
         })
     }
 
-    private fun deleteFaith(id: Int) {
+    private fun deleteMoodDiary(id: Int) {
         showDeleteDialog(View.OnClickListener {
             val call = AppManager.getSdHttpService().deleteFaiths(id)
             addCall(call)
             call.enqueue(object : BaseSdResponseCallback<Any>() {
                 override fun onSuccess(response: Any?) {
-                    getFaith()
+                    getMoodDiary()
                 }
 
                 override fun onFailure(errorResponse: ErrorResponse) {
@@ -195,12 +209,12 @@ class AnxiousAndFaithActivity : BaseActivity() {
     private fun addVgChild(vg: ViewGroup, list: List<Any>, listener: EditAnxietyBottomSheetDialog.OnItemClickListener) {
         vg.removeAllViews()
         for (data in list) {
-            val itemView = AnxiousFaithItemView(this@AnxiousAndFaithActivity)
+            val itemView = AnxiousMoodDiaryItemView(this@AnxiousAndMoodDiaryActivity)
             if (data is AnxietyData) {
-                itemView.setData(AnxietyFaithItemViewData.create(data), listener)
+                itemView.setData(data.anxiety, data.getUpdateAtInMillis(), null, listener)
                 itemView.tag = data.id
-            } else if (data is FaithData) {
-                itemView.setData(AnxietyFaithItemViewData.create(data), listener)
+            } else if (data is MoodDiaryData) {
+                itemView.setData(data.scene, data.getUpdateAtInMillis(), data.getEmotionImageRes(), listener)
                 itemView.tag = data.id
             }
             vg.addView(itemView)

@@ -22,6 +22,10 @@
         <item name="android:textSize">@dimen/font_14</item>
     </style>
 
+    <style name="text_t1_15" parent="text_t1_style">
+        <item name="android:textSize">@dimen/font_15</item>
+    </style>
+
     <style name="text_t1_16" parent="text_t1_style">
         <item name="android:textSize">@dimen/font_16</item>
     </style>

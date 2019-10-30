@@ -11,7 +11,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.sumian.common.utils.ColorCompatUtil
 import com.sumian.sd.R
-import com.sumian.sd.buz.anxiousandfaith.bean.AnxietyFaithItemViewData
+import com.sumian.sd.buz.anxiousandfaith.bean.AnxietyMoodDiaryItemViewData
 import com.sumian.sd.buz.anxiousandfaith.event.EmotionData
 import kotlinx.android.synthetic.main.recycler_view.view.*
 
@@ -30,7 +30,7 @@ class EmotionPickView(context: Context, attributeSet: AttributeSet) : FrameLayou
         LayoutInflater.from(context).inflate(R.layout.recycler_view, this, true)
         recycler_view.layoutManager = GridLayoutManager(context, 4)
         recycler_view.adapter = mAdapter
-        mAdapter.setNewData(AnxietyFaithItemViewData.EMOTION_LIST)
+        mAdapter.setNewData(AnxietyMoodDiaryItemViewData.EMOTION_LIST)
         mAdapter.setOnItemClickListener { adapter, view, position -> onItemClick(position) }
     }
 

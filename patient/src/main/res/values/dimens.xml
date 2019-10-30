@@ -79,4 +79,9 @@
     <dimen name="relaxation_detail_default_height">253dp</dimen>
     <dimen name="fill_diary_default_content_height">300dp</dimen>
     <dimen name="today_yesterday_picker_item_height">56dp</dimen>
+
+    <dimen name="normal_padding">20dp</dimen>
+    <dimen name="normal_text_size">16sp</dimen>
+    <dimen name="secondary_text_size">13sp</dimen>
+    <dimen name="normal_interval">10dp</dimen>
 </resources>

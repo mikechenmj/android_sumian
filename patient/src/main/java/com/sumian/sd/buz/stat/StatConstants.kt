@@ -44,8 +44,8 @@ object StatConstants {
     const val page_anxiety_and_faith = "记事本页"
     const val page_anxiety_list = "忧虑列表页"
     const val page_add_anxiety = "添加忧虑页"
-    const val page_faith_list = "信念列表页"
-    const val page_add_faith = "添加信念页"
+    const val page_mood_diary_list = "心情日记列表页"
+    const val page_add_mood_diary = "心情日记页"
     const val page_sleep_guide_cover = "睡眠指南封面页"
     const val page_sleep_guide_result = "睡眠指南结果页"   // h5
     const val page_sleep_guide_question = "睡眠指南题目页" // h5

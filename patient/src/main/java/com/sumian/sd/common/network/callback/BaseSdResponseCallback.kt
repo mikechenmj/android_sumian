@@ -1,5 +1,6 @@
 package com.sumian.sd.common.network.callback
 
+import android.util.Log
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.network.response.BaseResponseCallback
 import com.sumian.sd.R

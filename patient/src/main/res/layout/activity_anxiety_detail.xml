@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="com.sumian.sd.buz.anxiousandfaith.databinding.ActivityAnxiousDetailData" />
+
+        <import type="com.sumian.sd.buz.anxiousandfaith.bean.AnxietyData" />
+
+        <variable
+            name="data"
+            type="ActivityAnxiousDetailData" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/activity_anxiety_detail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ll_anxiety_detail_content_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/normal_interval"
+                android:background="@drawable/bg_line_l1_margin_start_20dp_white_bg"
+                android:gravity="center_vertical"
+                android:padding="@dimen/normal_padding"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/tv_anxiety_detail_content_title"
+                    style="@style/text_t1_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/anxiety"
+                    tools:text="忧虑" />
+
+                <TextView
+                    android:id="@+id/tv_anxiety_switch_edit_mode"
+                    style="@style/text_b3_16"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|end"
+                    android:onClick="@{data.onEditListener}"
+                    android:text="@string/anxiety_mood_diary_detail_edit_menu_text" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_anxiety_detail_content"
+                style="@style/text_t1_16"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:padding="@dimen/normal_padding"
+                android:text="@{data.detailContent}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ll_anxiety_detail_content_title"
+                tools:text="购买今年年会的相关物品，无详细计划认为该事情是难题" />
+
+            <LinearLayout
+                android:id="@+id/ll_anxiety_solution_content_container"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@color/normal_item_background"
+                android:orientation="vertical"
+                android:paddingStart="@dimen/normal_padding"
+                android:paddingEnd="@dimen/normal_padding"
+                android:paddingBottom="@dimen/normal_padding"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_anxiety_detail_content">
+
+                <TextView
+                    android:id="@+id/tv_anxiety_resolve_plan_content"
+                    style="@style/text_t2_14"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/vector_drawable_ic_gray_dot"
+                    android:gravity="center_vertical"
+                    android:text='@{data.resolvePlanContent}'
+                    tools:text="无详细计划" />
+
+                <TextView
+                    android:id="@+id/tv_anxiety_is_hard_content"
+                    style="@style/text_t2_14"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/vector_drawable_ic_gray_dot"
+                    android:gravity="center_vertical"
+                    android:paddingTop="@dimen/normal_interval"
+                    android:text='@{data.notHardProblemContent}'
+                    android:visibility="@{!data.hasDetailedPlanChecked ? View.VISIBLE : View.GONE}"
+                    tools:text="认为该事情是难题" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_anxiety_need_help_content_title"
+                style="@style/text_t1_16"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/normal_interval"
+                android:background="@drawable/bg_line_l1_margin_start_20dp_white_bg"
+                android:gravity="center_vertical"
+                android:padding="@dimen/normal_padding"
+                android:text="@{data.howToResolveTitle}"
+                android:visibility="@{!data.hasDetailedPlanChecked &amp;&amp; data.hasHardChecked &amp;&amp; !data.howToResolveTitle.empty ? View.VISIBLE : View.GONE}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ll_anxiety_solution_content_container"
+                tools:text="需要求助: " />
+
+            <TextView
+                android:id="@+id/tv_anxiety_need_help_content"
+                style="@style/text_t1_16"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@color/normal_item_background"
+                android:gravity="center_vertical"
+                android:padding="@dimen/normal_padding"
+                android:text="@{data.howToResolveContent}"
+                android:visibility="@{!data.hasDetailedPlanChecked &amp;&amp; data.hasHardChecked ? View.VISIBLE : View.GONE}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_anxiety_need_help_content_title"
+                tools:text="求助行政同事帮忙一起负责" />
+
+            <TextView
+                android:id="@+id/tv_anxiety_solution_problem_time_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/normal_interval"
+                android:background="@drawable/bg_line_l1_margin_start_20dp_white_bg"
+                android:gravity="center_vertical"
+                android:padding="@dimen/normal_padding"
+                android:text="@string/anxiety_solution_problem_time_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_anxiety_need_help_content"
+                tools:text="@string/anxiety_solution_problem_time_title" />
+
+            <TextView
+                android:id="@+id/tv_anxiety_solution_problem_time"
+                style="@style/text_t1_16"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:padding="@dimen/normal_padding"
+                android:text="@{data.solutionProblemTime}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_anxiety_solution_problem_time_title"
+                tools:text="2019.07.01 09:00" />
+
+            <TextView
+                android:id="@+id/tv_mood_diary_record_time"
+                style="@style/text_t2_14"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="end|center_horizontal"
+                android:padding="@dimen/normal_padding"
+                android:text="@{data.updateTimeFormatted}"
+                android:textColor="@color/t2_color"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_anxiety_solution_problem_time"
+                tools:text="2019.07.01 09:00:32" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</layout>

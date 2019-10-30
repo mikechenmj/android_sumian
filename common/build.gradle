@@ -134,8 +134,8 @@ dependencies {
     // EventBus
     api 'org.greenrobot:eventbus:3.1.1'
     // Base Adapter
-    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.40'
-    api('com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.40') {
+    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.47'
+    api('com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.47') {
         exclude module: 'support-recyclerview'
     }
     api 'net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:2.2.1'
@@ -149,4 +149,5 @@ dependencies {
 
     //奔溃收集
     api 'com.iqiyi.xcrash:xcrash-android-lib:2.4.6'
+    api 'com.google.android:flexbox:1.1.0'
 }
