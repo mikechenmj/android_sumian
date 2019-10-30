@@ -268,7 +268,7 @@ object AppManager {
 
     private fun initAppNotificationManager(app: Application) {
         AppNotificationManager.init(app,
-                R.drawable.ic_notification_small, R.mipmap.ic_launcher,
+                R.drawable.vector_drawable_notification_logo, R.mipmap.ic_launcher,
                 BuildConfig.LEANCLOUD_APP_ID, BuildConfig.LEANCLOUD_APP_KEY,
                 NotificationDelegate(), SchemeResolver, NotificationConst.USER_ID_KEY)
 
