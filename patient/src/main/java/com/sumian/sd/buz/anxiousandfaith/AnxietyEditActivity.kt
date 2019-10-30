@@ -58,11 +58,7 @@ class AnxietyEditActivity : WhileTitleNavBgActivity() {
         setTitle(string.add_anxious)
         var binding = DataBindingUtil.bind<ActivityAnxietyBinding>(findViewById(R.id.activity_anxiety))
         binding?.data = ActivityAnxiousEditData(this,
-                mAnxietyData?.id ?: ActivityAnxiousEditData.ANXIETY_INVALID_ID)
-                .apply {
-                    detailText = mAnxietyData?.anxiety ?: detailText
-                    solutionText = mAnxietyData?.solution ?: solutionText
-                }
+                mAnxietyData)
     }
 
     fun showBottomSheet() {
@@ -76,7 +72,7 @@ class AnxietyEditActivity : WhileTitleNavBgActivity() {
                         var formatDateContent = getString(string.pattern_yyyy_MM_dd_hh_mm).format(year, month, day, hour, minute)
                         var binding = DataBindingUtil.findBinding<ActivityAnxietyBinding>(findViewById(R.id.activity_anxiety))
                         binding?.data?.remindSettingTypeContent = formatDateContent
-                        binding?.data?.remindTimeInMillis = Calendar.getInstance().apply { set(year, month, day, hour, minute) }.timeInMillis
+                        binding?.data?.remindTimeInMillis = Calendar.getInstance().apply { set(year, month, day, hour, minute, 0) }.timeInMillis
                     }
                 })
         bottomSheet.setOnDismissListener {}
@@ -85,5 +81,10 @@ class AnxietyEditActivity : WhileTitleNavBgActivity() {
 
     fun onSaveAnxietyFail(errMessage: String) {
         ToastUtils.showShort(errMessage)
+    }
+
+    fun onSaveAnxietySuccess(response: AnxietyData?) {
+        AnxietyDetailActivity.launch(response)
+        finish()
     }
 }

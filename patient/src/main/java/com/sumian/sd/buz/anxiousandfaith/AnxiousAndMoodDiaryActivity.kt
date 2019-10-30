@@ -110,6 +110,10 @@ class AnxiousAndMoodDiaryActivity : WhileTitleNavBgActivity() {
                     deleteAnxiety(data.id)
                 }
             })
+            var isAnxiousUnHandle = data.getRemindAtInMillis() > System.currentTimeMillis()
+            if (isAnxiousUnHandle) {
+                itemView.showUnHandlerTip(getString(R.string.anxious_un_handle_tip_text))
+            }
             itemView.setOnClickListener { AnxietyDetailActivity.launch(data) }
             itemView.tag = data.id
             vg_anxious_record.addView(itemView)

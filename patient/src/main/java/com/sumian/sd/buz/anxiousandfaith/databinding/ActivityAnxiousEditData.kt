@@ -1,20 +1,20 @@
 package com.sumian.sd.buz.anxiousandfaith.databinding
 
-import android.content.Context
 import android.text.TextUtils
+import android.util.Log
 import androidx.databinding.*
 import androidx.databinding.library.baseAdapters.BR
-import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.network.response.ErrorResponse
+import com.sumian.common.utils.TimeUtilV2
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.anxiousandfaith.AnxietyEditActivity
+import com.sumian.sd.buz.anxiousandfaith.bean.AnxietyAnswer
 import com.sumian.sd.buz.anxiousandfaith.bean.AnxietyData
 import com.sumian.sd.buz.anxiousandfaith.event.AnxietyChangeEvent
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import com.sumian.sd.common.utils.EventBusUtil
 import com.sumian.sd.widget.divider.SettingDividerView
-import com.sumian.sd.widget.sheet.SelectTimeHHmmBottomSheet
 import java.util.*
 
 @BindingMethods(value = [
@@ -23,13 +23,16 @@ import java.util.*
             attribute = "type_content",
             method = "setContent")])
 
-class ActivityAnxiousEditData(var anxietyEditActivity: AnxietyEditActivity, var anxietyId: Int) : BaseObservable() {
+class ActivityAnxiousEditData(
+        var anxietyEditActivity: AnxietyEditActivity,
+        var anxietyData: AnxietyData?) : BaseObservable() {
 
     companion object {
         private const val DETAIL_TEXT_MAX_COUNT = 200
         private const val SOLUTION_TEXT_MAX_COUNT = 50
         private const val HARD_TEXT_MAX_COUNT = 50
-        const val ANXIETY_INVALID_ID = -1
+        private const val HOW_TO_SOLVE_MAX_COUNT = 50
+
         @InverseMethod("getIsCheckedFromId")
         @JvmStatic
         fun getIdFromIsChecked(positiveId: Int, negativeId: Int, isChecked: Boolean): Int {
@@ -43,7 +46,7 @@ class ActivityAnxiousEditData(var anxietyEditActivity: AnxietyEditActivity, var 
     }
 
     @get:Bindable
-    var detailText: String = ""
+    var detailText: String = anxietyData?.anxiety ?: ""
         set(value) {
             if (value == field) {
                 return
@@ -56,7 +59,7 @@ class ActivityAnxiousEditData(var anxietyEditActivity: AnxietyEditActivity, var 
         }
 
     @get:Bindable
-    var detailTextCount: String = "0/$DETAIL_TEXT_MAX_COUNT"
+    var detailTextCount: String = "${detailText.length}/$DETAIL_TEXT_MAX_COUNT"
         set(value) {
             if (value == field) {
                 return
@@ -76,7 +79,12 @@ class ActivityAnxiousEditData(var anxietyEditActivity: AnxietyEditActivity, var 
         }
 
     @get:Bindable
-    var solutionChecked: Boolean = true
+    var solutionChecked: Boolean =
+            if (anxietyData != null) {
+                anxietyData!!.hasDetailedPlanChecked()
+            } else {
+                true
+            }
         set(value) {
             if (value == field) {
                 return
@@ -86,7 +94,12 @@ class ActivityAnxiousEditData(var anxietyEditActivity: AnxietyEditActivity, var 
         }
 
     @get:Bindable
-    var solutionText: String = ""
+    var solutionText: String =
+            if (anxietyData != null && anxietyData!!.hasDetailedPlanChecked())
+                anxietyData!!.solution
+            else {
+                ""
+            }
         set(value) {
             if (value == field) {
                 return
@@ -99,7 +112,7 @@ class ActivityAnxiousEditData(var anxietyEditActivity: AnxietyEditActivity, var 
         }
 
     @get:Bindable
-    var solutionTextCount: String = "0/$SOLUTION_TEXT_MAX_COUNT"
+    var solutionTextCount: String = "${solutionText.length}/$SOLUTION_TEXT_MAX_COUNT"
         set(value) {
             if (value == field) {
                 return
@@ -119,7 +132,11 @@ class ActivityAnxiousEditData(var anxietyEditActivity: AnxietyEditActivity, var 
         }
 
     @get:Bindable
-    var hardChecked: Boolean = false
+    var hardChecked: Boolean =
+            if (anxietyData != null)
+                anxietyData!!.hardChecked()
+            else
+                false
         set(value) {
             if (value == field) {
                 return
@@ -130,7 +147,12 @@ class ActivityAnxiousEditData(var anxietyEditActivity: AnxietyEditActivity, var 
 
 
     @get:Bindable
-    var hardText: String = ""
+    var hardText: String =
+            if (anxietyData != null && !anxietyData!!.hardChecked() && !anxietyData!!.hasDetailedPlanChecked())
+                anxietyData!!.solution
+            else {
+                ""
+            }
         set(value) {
             if (value == field) {
                 return
@@ -143,7 +165,7 @@ class ActivityAnxiousEditData(var anxietyEditActivity: AnxietyEditActivity, var 
         }
 
     @get:Bindable
-    var hardTextCount: String = "0/$HARD_TEXT_MAX_COUNT"
+    var hardTextCount: String = "${hardText.length}/$HARD_TEXT_MAX_COUNT"
         set(value) {
             if (value == field) {
                 return
@@ -162,32 +184,66 @@ class ActivityAnxiousEditData(var anxietyEditActivity: AnxietyEditActivity, var 
             notifyPropertyChanged(BR.hardTextCountOutOfMax)
         }
 
+    var howToResolveCheckedIndex: String = AnxietyData.ANSWER_HOW_TO_SOLVE_ONE_INDEX
 
     @get:Bindable
-    var howToResolveCheckedId: Int = R.id.rb_anxiety_ask_how_to_resolve_one
+    var howToResolveCheckedId: Int =
+            when (anxietyData?.getAnswer(AnxietyData.ANSWER_HOW_TO_SOLVE_ID)) {
+                AnxietyData.ANSWER_HOW_TO_SOLVE_ONE_INDEX -> {
+                    R.id.rb_anxiety_ask_how_to_resolve_one
+                }
+                AnxietyData.ANSWER_HOW_TO_SOLVE_TWO_INDEX -> {
+                    R.id.rb_anxiety_ask_how_to_resolve_two
+                }
+                AnxietyData.ANSWER_HOW_TO_SOLVE_THREE_INDEX -> {
+                    R.id.rb_anxiety_ask_how_to_resolve_three
+                }
+                else -> {
+                    R.id.rb_anxiety_ask_how_to_resolve_one
+                }
+            }
         set(value) {
             if (value == field) {
                 return
             }
             field = value
+            howToResolveCheckedIndex = when (value) {
+                R.id.rb_anxiety_ask_how_to_resolve_one -> {
+                    AnxietyData.ANSWER_HOW_TO_SOLVE_ONE_INDEX
+                }
+                R.id.rb_anxiety_ask_how_to_resolve_two -> {
+                    AnxietyData.ANSWER_HOW_TO_SOLVE_TWO_INDEX
+                }
+                R.id.rb_anxiety_ask_how_to_resolve_three -> {
+                    AnxietyData.ANSWER_HOW_TO_SOLVE_THREE_INDEX
+                }
+                else -> {
+                    AnxietyData.ANSWER_INVALID_VALUE
+                }
+            }
             notifyPropertyChanged(BR.howToResolveCheckedId)
         }
 
     @get:Bindable
-    var askHowToResolveOneText: String = ""
+    var askHowToResolveOneText: String =
+            if (anxietyData != null && anxietyData!!.getHowToResolveCheckedId() == AnxietyData.ANSWER_HOW_TO_SOLVE_ONE_INDEX) {
+                anxietyData!!.solution
+            } else {
+                ""
+            }
         set(value) {
             if (value == field) {
                 return
             }
             field = value
             val length = value.length
-            askHowToResolveOneTextCount = "$length/100"
-            askHowToResolveOneTextCountOutOfMax = length > 100
+            askHowToResolveOneTextCount = "$length/$HOW_TO_SOLVE_MAX_COUNT"
+            askHowToResolveOneTextCountOutOfMax = length > HOW_TO_SOLVE_MAX_COUNT
             notifyPropertyChanged(BR.askHowToResolveOneText)
         }
 
     @get:Bindable
-    var askHowToResolveOneTextCount: String = "0/100"
+    var askHowToResolveOneTextCount: String = "${askHowToResolveOneText.length}/$HOW_TO_SOLVE_MAX_COUNT"
         set(value) {
             if (value == field) {
                 return
@@ -207,20 +263,25 @@ class ActivityAnxiousEditData(var anxietyEditActivity: AnxietyEditActivity, var 
         }
 
     @get:Bindable
-    var askHowToResolveTwoText: String = ""
+    var askHowToResolveTwoText: String =
+            if (anxietyData != null && anxietyData!!.getHowToResolveCheckedId() == AnxietyData.ANSWER_HOW_TO_SOLVE_TWO_INDEX) {
+                anxietyData!!.solution
+            } else {
+                ""
+            }
         set(value) {
             if (value == field) {
                 return
             }
             field = value
             val length = value.length
-            askHowToResolveTwoTextCount = "$length/100"
-            askHowToResolveTwoTextCountOutOfMax = length > 100
+            askHowToResolveTwoTextCount = "$length/$HOW_TO_SOLVE_MAX_COUNT"
+            askHowToResolveTwoTextCountOutOfMax = length > HOW_TO_SOLVE_MAX_COUNT
             notifyPropertyChanged(BR.askHowToResolveTwoText)
         }
 
     @get:Bindable
-    var askHowToResolveTwoTextCount: String = "0/100"
+    var askHowToResolveTwoTextCount: String = "${askHowToResolveTwoText.length}/$HOW_TO_SOLVE_MAX_COUNT"
         set(value) {
             if (value == field) {
                 return
@@ -240,20 +301,25 @@ class ActivityAnxiousEditData(var anxietyEditActivity: AnxietyEditActivity, var 
         }
 
     @get:Bindable
-    var askHowToResolveThreeText: String = ""
+    var askHowToResolveThreeText: String =
+            if (anxietyData != null && anxietyData!!.getHowToResolveCheckedId() == AnxietyData.ANSWER_HOW_TO_SOLVE_THREE_INDEX) {
+                anxietyData!!.solution
+            } else {
+                ""
+            }
         set(value) {
             if (value == field) {
                 return
             }
             field = value
             val length = value.length
-            askHowToResolveThreeTextCount = "$length/100"
-            askHowToResolveThreeTextCountOutOfMax = length > 100
+            askHowToResolveThreeTextCount = "$length/$HOW_TO_SOLVE_MAX_COUNT"
+            askHowToResolveThreeTextCountOutOfMax = length > HOW_TO_SOLVE_MAX_COUNT
             notifyPropertyChanged(BR.askHowToResolveThreeText)
         }
 
     @get:Bindable
-    var askHowToResolveThreeTextCount: String = "0/100"
+    var askHowToResolveThreeTextCount: String = "${askHowToResolveThreeText.length}/$HOW_TO_SOLVE_MAX_COUNT"
         set(value) {
             if (value == field) {
                 return
@@ -273,7 +339,12 @@ class ActivityAnxiousEditData(var anxietyEditActivity: AnxietyEditActivity, var 
         }
 
     @get:Bindable
-    var remindSettingTypeContent: String = "请设置"
+    var remindSettingTypeContent: String =
+            if (anxietyData != null && anxietyData!!.remindAt > 0) {
+                TimeUtilV2.formatYYYYMMDDHHMM(anxietyData!!.getRemindAtInMillis())
+            } else {
+                anxietyEditActivity.getString(R.string.anxiety_set_remind_time_tip)
+            }
         set(value) {
             if (value == field) {
                 return
@@ -293,49 +364,104 @@ class ActivityAnxiousEditData(var anxietyEditActivity: AnxietyEditActivity, var 
         }
 
     var remindTimeInMillis: Long = 0
-
-    fun showBottomSheet(context: Context) {
-        val bottomSheet = SelectTimeHHmmBottomSheet(context, R.string.set_remind_time, SelectTimeHHmmBottomSheet.DEFAULT_DAY,
-                SelectTimeHHmmBottomSheet.DEFAULT_HOUR, SelectTimeHHmmBottomSheet.DEFAULT_MINUTE,
-                object : SelectTimeHHmmBottomSheet.OnTimePickedListener {
-                    override fun onTimePicked(hour: Int, minute: Int) {}
-
-                    override fun onTimePicked(year: Int, month: Int, day: Int, hour: Int, minute: Int) {
-                        super.onTimePicked(year, month, day, hour, minute)
-                        var formatDateContent = context.getString(R.string.pattern_yyyy_MM_dd_hh_mm).format(year, month, day, hour, minute)
-                        remindSettingTypeContent = formatDateContent
-                        remindTimeInMillis = Calendar.getInstance().apply { set(year, month, day, hour, minute) }.timeInMillis
-                    }
-                })
-        bottomSheet.setOnDismissListener {}
-        bottomSheet.show()
-    }
+        set(value) {
+            if (value == field) {
+                return
+            }
+            field = value
+            anxietyData?.setRemindAtInSecond(value)
+        }
 
     fun saveAnxiety() {
-        if (detailTextCountOutOfMax || solutionTextCountOutOfMax || hardTextCountOutOfMax) {
+        if (detailTextCountOutOfMax || solutionTextCountOutOfMax
+                || hardTextCountOutOfMax || askHowToResolveOneTextCountOutOfMax
+                || askHowToResolveTwoTextCountOutOfMax || askHowToResolveThreeTextCountOutOfMax) {
             anxietyEditActivity.onSaveAnxietyFail(anxietyEditActivity.getString(R.string.input_is_too_long))
             return
         }
-        if (TextUtils.isEmpty(detailText) || (TextUtils.isEmpty(solutionText) && solutionChecked) || remindTimeInMillis < Calendar.getInstance().timeInMillis) {
+        var checkedIndex = howToResolveCheckedIndex
+
+        var data: AnxietyData =
+                if (anxietyData != null) {
+                    anxietyData!!
+                } else {
+                    AnxietyData(AnxietyData.ANXIETY_INVALID_ID, AnxietyData.ANXIETY_INVALID_ID)
+                }
+
+        var solution =
+                if (solutionChecked) {
+                    solutionText
+                } else if (!hardChecked) {
+                    if (hardText.isEmpty()) {
+                        anxietyEditActivity.getString(R.string.anxiety_ask_how_to_resolve_three_edit_hint)
+                    } else {
+                        hardText
+                    }
+                } else {
+                    when (checkedIndex) {
+                        AnxietyData.ANSWER_HOW_TO_SOLVE_ONE_INDEX -> {
+                            if (askHowToResolveOneText.isEmpty()) {
+                                anxietyEditActivity.getString(R.string.anxiety_ask_how_to_resolve_one_default_text)
+                            } else {
+                                askHowToResolveOneText
+                            }
+                        }
+                        AnxietyData.ANSWER_HOW_TO_SOLVE_TWO_INDEX -> {
+                            askHowToResolveTwoText
+                        }
+                        AnxietyData.ANSWER_HOW_TO_SOLVE_THREE_INDEX -> {
+                            if (askHowToResolveTwoText.isEmpty()) {
+                                anxietyEditActivity.getString(R.string.anxiety_ask_how_to_resolve_three_default_text)
+                            } else {
+                                askHowToResolveTwoText
+                            }
+                        }
+                        else -> {
+                            ""
+                        }
+                    }
+                }
+        var answers = arrayOf(
+                AnxietyAnswer(AnxietyData.ANSWER_HAS_DETAILED_PLAN_ID, if (solutionChecked) AnxietyData.ANSWER_CHECKED_YES else AnxietyData.ANSWER_CHECKED_NO),
+                AnxietyAnswer(AnxietyData.ANSWER_IS_HARD_PROBLEM_ID, if (hardChecked) AnxietyData.ANSWER_CHECKED_YES else AnxietyData.ANSWER_CHECKED_NO),
+                AnxietyAnswer(AnxietyData.ANSWER_HOW_TO_SOLVE_ID, checkedIndex))
+                .toList()
+        data.apply {
+            anxiety = detailText
+            this.solution = solution
+            this.answers = answers
+            if (id == AnxietyData.ANXIETY_INVALID_ID) {
+                setRemindAtInSecond(remindTimeInMillis)
+            }
+        }
+
+        Log.i("MCJ", "add: $data")
+
+        if (TextUtils.isEmpty(data.anxiety) || TextUtils.isEmpty(data.solution)
+                || checkedIndex == AnxietyData.ANSWER_INVALID_VALUE
+                || data.getRemindAtInMillis() <= 0) {
             anxietyEditActivity.onSaveAnxietyFail(anxietyEditActivity.getString(R.string.please_finish_question_first))
             return
         }
 
-        val call = if (anxietyId == -1) {
-            AppManager.getSdHttpService().addAnxiety(detailText, solutionText)
+
+        val call = if (data.id == AnxietyData.ANXIETY_INVALID_ID) {
+            AppManager.getSdHttpService().addAnxietyBody(data)
         } else {
-            AppManager.getSdHttpService().updateAnxiety(anxietyId, detailText, solutionText)
+            AppManager.getSdHttpService().updateAnxietyBody(data.id, data)
         }
         anxietyEditActivity.addCall(call)
         saveButtonEnable = false
         call.enqueue(object : BaseSdResponseCallback<AnxietyData>() {
             override fun onSuccess(response: AnxietyData?) {
+                anxietyData = response ?: anxietyData
+                Log.i("MCJ", "response: $response")
                 EventBusUtil.postStickyEvent(AnxietyChangeEvent(response!!))
-                anxietyEditActivity.finish()
+                anxietyEditActivity.onSaveAnxietySuccess(response)
             }
 
             override fun onFailure(errorResponse: ErrorResponse) {
-                ToastUtils.showShort(errorResponse.message)
+                anxietyEditActivity.onSaveAnxietyFail(errorResponse.message)
                 saveButtonEnable = true
             }
         })

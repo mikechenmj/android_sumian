@@ -3,11 +3,13 @@ package com.sumian.sd.buz.notification
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import com.sumian.common.notification.ISchemeResolver
 import com.sumian.common.notification.SchemeResolveUtil
 import com.sumian.sd.R
 import com.sumian.sd.buz.advisory.activity.AdvisoryDetailActivity
 import com.sumian.sd.buz.advisory.activity.AdvisoryListActivity
+import com.sumian.sd.buz.anxiousandfaith.AnxietyDetailActivity
 import com.sumian.sd.buz.anxiousandfaith.AnxiousAndMoodDiaryActivity
 import com.sumian.sd.buz.cbti.activity.CBTIIntroductionActivity
 import com.sumian.sd.buz.cbti.activity.CBTIMessageBoardDetailActivity
@@ -52,6 +54,7 @@ object SchemeResolver : ISchemeResolver {
             "diary-evaluations" -> resolveDiaryEvaluationScheme(context, uri)
             "message-boards" -> resolveMessageBoards(context, uri)
             "system-notifications-detail" -> resolveSystemNotificationsDetail(context, uri)
+            "anxiety-reminder" -> { resolveAnxietyScheme(context, uri) }
             else -> null
         }
     }
@@ -194,6 +197,15 @@ object SchemeResolver : ISchemeResolver {
     fun resolveOnlineReportScheme(context: Context, uri: Uri): Intent {
         val id = uri.getQueryParameter("id")?.toInt() ?: 0
         return OnlineReportDetailActivity.getLaunchIntent(context, id)
+    }
+
+    /**
+    处理忧虑时间
+    "scheme" => 'sleepdoctor://anxiety-reminder
+     */
+    fun resolveAnxietyScheme(context: Context, uri: Uri): Intent {
+        val data = uri.getQueryParameter("id")
+        return AnxietyDetailActivity.getLaunchIntent(data.toInt())
     }
 
 }

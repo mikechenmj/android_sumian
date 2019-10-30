@@ -59,7 +59,7 @@ class AnxietyListActivity : WhileTitleNavBgActivity() {
 
     override fun initWidget() {
         super.initWidget()
-        setTitle(R.string.anxiety_record)
+        setTitle(R.string.anxious_record)
         recycler_view.layoutManager = LinearLayoutManager(this)
         recycler_view.adapter = mAdapter
         mAdapter.setOnLoadMoreListener({ loadData() }, recycler_view)

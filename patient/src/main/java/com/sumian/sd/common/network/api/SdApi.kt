@@ -15,6 +15,7 @@ import com.sumian.sd.buz.account.bean.UserInfo
 import com.sumian.sd.buz.advisory.bean.Advisory
 import com.sumian.sd.buz.advisory.bean.PictureOssSts
 import com.sumian.sd.buz.advisory.body.AdvisoryRecordBody
+import com.sumian.sd.buz.anxiousandfaith.bean.AnxietyAnswer
 import com.sumian.sd.buz.anxiousandfaith.bean.AnxietyData
 import com.sumian.sd.buz.anxiousandfaith.bean.MoodDiaryData
 import com.sumian.sd.buz.cbti.bean.*
@@ -436,13 +437,24 @@ interface SdApi {
     fun getAnxieties(@Query("page") page: Int = 1,
                      @Query("per_page") perPage: Int = 15): Call<PaginationResponseV2<AnxietyData>>
 
+    @GET("user/anxieties/{id}")
+    fun getAnxiety(@Path("id") id: Int): Call<AnxietyData>
+
     @FormUrlEncoded
     @POST("user/anxieties")
     fun addAnxiety(@Field("anxiety") anxiety: String, @Field("solution") solution: String): Call<AnxietyData>
 
+    @POST("user/anxieties")
+    fun addAnxietyBody(@Body anxietyData: AnxietyData): Call<AnxietyData>
+
     @FormUrlEncoded
     @PATCH("user/anxieties/{id}")
     fun updateAnxiety(@Path("id") id: Int, @Field("anxiety") anxiety: String, @Field("solution") solution: String): Call<AnxietyData>
+
+    @PATCH("user/anxieties/{id}")
+    fun updateAnxietyBody(
+            @Path("id") id: Int,
+            @Body anxietyData: AnxietyData): Call<AnxietyData>
 
     @DELETE("user/anxieties/{id}")
     fun deleteAnxiety(@Path("id") id: Int): Call<Any>

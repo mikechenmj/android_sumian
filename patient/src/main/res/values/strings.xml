@@ -619,7 +619,6 @@
     <string name="save">保存</string>
     <string name="edit">编辑</string>
     <string name="delete">删除</string>
-    <string name="anxiety_record">忧虑记录</string>
     <string name="delete_record">删除记录</string>
     <string name="delete_record_confirm_hint">确定要删除此条记录吗？</string>
     <string name="cbti_introduction_more"><![CDATA[查看介绍 >]]></string>
@@ -907,11 +906,11 @@
     <string name="anxiety_record_tip_text">如果你认为所面对的不是什么大难题，可以先放下它，不需要理会，请也将这种放下的想法记下</string>
     <string name="anxiety_record_hint">这不是什么大问题，我们可以暂时将它放下（点击这里开始输入）</string>
     <string name="anxiety_ask_how_to_resolve_one_checkbox_text">如果是你的朋友遇到这样的难题，你会如何去给他建议呢？这个建议可能对你也有用。</string>
-    <string name="anxiety_ask_how_to_resolve_two_checkbox_text">如果是你的朋友遇到这样的难题，你会如何去给他建议呢？这个建议可能对你也有用。</string>
-    <string name="anxiety_ask_how_to_resolve_three_checkbox_text">如果是你的朋友遇到这样的难题，你会如何去给他建议呢？这个建议可能对你也有用。</string>
-    <string name="anxiety_ask_how_to_resolve_one_edit_hint">请写下需要求助或者求助的对象，以便跟进，例：需要求助小张 (点击这里开始输入)。</string>
-    <string name="anxiety_ask_how_to_resolve_two_edit_hint">请写下需要求助或者求助的对象，以便跟进，例：需要求助小张 (点击这里开始输入)。</string>
-    <string name="anxiety_ask_how_to_resolve_three_edit_hint">请写下需要求助或者求助的对象，以便跟进，例：需要求助小张 (点击这里开始输入)。</string>
+    <string name="anxiety_ask_how_to_resolve_two_checkbox_text">如果你对这难题毫无头绪，需要求助，请记下你需要求助，或者求助的人，以便跟进。</string>
+    <string name="anxiety_ask_how_to_resolve_three_checkbox_text">如果这难题目前并没有令你满意的对策，打算暂时作罢，等待日后有更佳的方法出现。请你也记下你这想法。</string>
+    <string name="anxiety_ask_how_to_resolve_one_edit_hint">请输入你可能会怎么建议朋友~</string>
+    <string name="anxiety_ask_how_to_resolve_two_edit_hint">请写下需要求助或者求助的对象，以便跟进，例：需要求助小张。</string>
+    <string name="anxiety_ask_how_to_resolve_three_edit_hint">这不是什么大问题，我们可以暂时将它放下~</string>
     <string name="anxiety_remind_alarm_title">设置闹钟提醒自己执行计划</string>
     <string name="anxiety_remind_alarm_setting_desc">提醒时间</string>
     <string name="anxiety_remind_alarm_and_rest_tip">那么，到了设定的时间再去想吧，现在，我们可以清空内心，忘记这些事情~</string>
@@ -920,6 +919,15 @@
 
     <string name="anxiety_mood_diary_detail_edit_menu_text">修改</string>
     <string name="anxiety_mood_diary_detail_save_menu_text">@string/save</string>
+    <string name="anxiety_set_remind_time_tip">请设置</string>
+    <string name="anxiety_no_detailed_plan_text">无详细计划</string>
+    <string name="anxiety_is_hard_problem_text">认为该事情是难题</string>
+    <string name="anxiety_is_not_hard_problem_text">不认为该事件是难题</string>
+    <string name="anxiety_suggest_to_friend_title">给朋友的建议：</string>
+    <string name="anxiety_need_help_title">需要求助：</string>
+    <string name="anxiety_no_idea_content">暂时没有什么想法，以后再来想吧。</string>
+    <string name="anxiety_ask_how_to_resolve_one_default_text">请写下你的建议。</string>
+    <string name="anxiety_ask_how_to_resolve_three_default_text">请写下你的想法。</string>
 
     <string name="mood_diary">心情日记</string>
     <string name="mood_diary_list_title">心情记录</string>
@@ -949,11 +957,12 @@
     <string name="mood_challenge_cognitive_bias_content">认知偏差</string>
     <string name="mood_challenge_result_title">结果</string>
     <string name="mood_reasonable_practice_text">合理信念练习</string>
-    <string name="mood_challenge_result_content_hint">在这样的想法下,产生了怎样的结果,例如:我变得很焦虑,一晚上都没睡(点击这里开始输入)</string>
+    <string name="mood_challenge_result_content_hint">在这样的想法下,产生了怎样的结果,例如:我变得很焦虑,一晚上都没睡。</string>
     <string name="mood_cognition_bias_title">选择认知偏差</string>
     <string name="mood_cognition_bias_no_checked_tip">请至少选择一个标签。</string>
     <string name="mood_rational_belief_tip">经过上面的练习之后我们明白了我们的想法有时候可能是片面的，可能是夸大的， 那么接下来请结合你的事件，来挑战刚刚你提出来的信念的不合理的地方。</string>
     <string name="mood_refute_unreasonable_belief_content">找出你的信念中，不合理的地方，例如：以前也试过睡不好，但是并不影响工作。我只是目前还未睡着，并不代表我会一直都睡不着。（点击这里开始输入）</string>
     <string name="reasonable_belief_content">请提出一个理性的信念，例如：虽然我现在睡不着，但可能待会儿就会有睡意了。（点击这里开始输入）</string>
     <string name="mood_reasonable_belief_result_content">如果你这么想，情绪会怎样，例如：我感觉放松一点了（点击这里开始输入）</string>
+
 </resources>
