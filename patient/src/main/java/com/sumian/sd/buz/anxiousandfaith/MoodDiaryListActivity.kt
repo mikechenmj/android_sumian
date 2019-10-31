@@ -168,6 +168,11 @@ class MoodDiaryListActivity : TitleBaseActivity() {
                 override fun onSuccess(response: Any?) {
                     val itemPosition = getItemPosition(id)
                     mAdapter.remove(itemPosition)
+                    if (itemPosition > 0
+                            && mAdapter.data[itemPosition - 1].isHeader
+                            && mAdapter.data.size == itemPosition) {
+                        mAdapter.remove(itemPosition - 1)
+                    }
                     if (mAdapter.data.size == 0) {
                         finish()
                     }

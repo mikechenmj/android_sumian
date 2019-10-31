@@ -161,6 +161,11 @@ class AnxietyListActivity : TitleBaseActivity() {
                 override fun onSuccess(response: Any?) {
                     val itemPosition = getItemPosition(id)
                     mAdapter.remove(itemPosition)
+                    if (itemPosition > 0
+                            && mAdapter.data[itemPosition - 1].isHeader
+                            && mAdapter.data.size == itemPosition) {
+                        mAdapter.remove(itemPosition - 1)
+                    }
                     if (mAdapter.data.size == 0) {
                         finish()
                     }
@@ -195,7 +200,7 @@ class AnxietyListActivity : TitleBaseActivity() {
     private fun getItemPosition(id: Int): Int {
         val list = mAdapter.data
         for ((index, data) in list.withIndex()) {
-            if(data.t != null) {
+            if (data.t != null) {
                 if (data.t.id == id) {
                     return index
                 }
