@@ -41,6 +41,7 @@
                 android:minHeight="90dp"
                 android:padding="@dimen/normal_padding"
                 android:text="@={data.detailText}"
+                android:textColorHint="@{data.anxietyHintColor}"
                 tools:ignore="Autofill,TextFields" />
 
             <TextView
@@ -76,20 +77,20 @@
 
                 <RadioButton
                     android:id="@+id/rb_anxiety_ask_solution_yes"
-                    style="@style/text_t1_15"
+                    style="@style/text_t1_16"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:buttonTint="@color/b3_color"
+                    android:buttonTint="@{data.hasPlanCheckBoxColor}"
                     android:text="@string/yes" />
 
                 <RadioButton
                     android:id="@+id/rb_anxiety_ask_solution_no"
-                    style="@style/text_t1_15"
+                    style="@style/text_t1_16"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:buttonTint="@color/b3_color"
+                    android:buttonTint="@{data.hasPlanCheckBoxColor}"
                     android:text="@string/no" />
             </RadioGroup>
 
@@ -102,6 +103,7 @@
                 android:minHeight="90dp"
                 android:padding="@dimen/normal_padding"
                 android:text="@={data.solutionText}"
+                android:textColorHint="@{data.solutionHintColor}"
                 android:visibility="@{data.detailPlanSelectAnswer.equals(AnxietyData.ANSWER_CHECKED_YES) ? View.VISIBLE : View.GONE}"
                 tools:hint="@string/anxiety_solution_input_hint" />
 
@@ -140,20 +142,20 @@
 
                 <RadioButton
                     android:id="@+id/rb_anxiety_ask_is_hard_problem_yes"
-                    style="@style/text_t1_15"
+                    style="@style/text_t1_16"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:buttonTint="@color/b3_color"
+                    android:buttonTint="@{data.hardCheckBoxColor}"
                     android:text="@string/yes" />
 
                 <RadioButton
                     android:id="@+id/rb_anxiety_ask_is_hard_problem_no"
-                    style="@style/text_t1_15"
+                    style="@style/text_t1_16"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:buttonTint="@color/b3_color"
+                    android:buttonTint="@{data.hardCheckBoxColor}"
                     android:text="@string/no" />
 
             </RadioGroup>
@@ -216,10 +218,10 @@
 
                 <RadioButton
                     android:id="@+id/rb_anxiety_ask_how_to_resolve_one"
-                    style="@style/text_t1_15"
+                    style="@style/text_t1_16"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:buttonTint="@color/b3_color"
+                    android:buttonTint="@{data.howToSolveCheckBoxColor}"
                     android:paddingTop="@dimen/normal_interval"
                     android:paddingBottom="@dimen/normal_padding"
                     android:text="@string/anxiety_ask_how_to_resolve_one_checkbox_text"
@@ -239,6 +241,7 @@
                     android:minHeight="90dp"
                     android:padding="@dimen/normal_padding"
                     android:text="@={data.askHowToResolveOneText}"
+                    android:textColorHint="@{data.solutionHintColor}"
                     android:visibility="@{data.howToResolveCheckedId == @id/rb_anxiety_ask_how_to_resolve_one ? View.VISIBLE : View.GONE}"
                     tools:hint="@string/anxiety_ask_how_to_resolve_one_edit_hint" />
 
@@ -266,10 +269,10 @@
 
                 <RadioButton
                     android:id="@+id/rb_anxiety_ask_how_to_resolve_two"
-                    style="@style/text_t1_15"
+                    style="@style/text_t1_16"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:buttonTint="@color/b3_color"
+                    android:buttonTint="@{data.howToSolveCheckBoxColor}"
                     android:paddingTop="@dimen/normal_interval"
                     android:paddingBottom="@dimen/normal_padding"
                     android:text="@string/anxiety_ask_how_to_resolve_two_checkbox_text"
@@ -289,6 +292,7 @@
                     android:minHeight="90dp"
                     android:padding="@dimen/normal_padding"
                     android:text="@={data.askHowToResolveTwoText}"
+                    android:textColorHint="@{data.solutionHintColor}"
                     android:visibility="@{data.howToResolveCheckedId == @id/rb_anxiety_ask_how_to_resolve_two ? View.VISIBLE : View.GONE}"
                     tools:hint="@string/anxiety_ask_how_to_resolve_two_edit_hint" />
 
@@ -316,10 +320,10 @@
 
                 <RadioButton
                     android:id="@+id/rb_anxiety_ask_how_to_resolve_three"
-                    style="@style/text_t1_15"
+                    style="@style/text_t1_16"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:buttonTint="@color/b3_color"
+                    android:buttonTint="@{data.howToSolveCheckBoxColor}"
                     android:paddingTop="@dimen/normal_interval"
                     android:paddingBottom="@dimen/normal_padding"
                     android:text="@string/anxiety_ask_how_to_resolve_three_checkbox_text"
