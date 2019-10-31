@@ -83,14 +83,15 @@ class MoodDetailFragment : BaseFragment() {
         }
         binding.data = FragmentMoodDetailData(this,
                 MoodDiaryData.getEmotionTextRes(type), MoodDiaryData.getEmotionImageRes(type),
-                moodLabelAdapter, moodDiaryPositive).apply {
-            var data = mMoodDiaryDataOwner?.getMoodDiaryData()
-            detailText = data?.scene ?: detailText
-            savedMoodDiaryData = data?.apply {
-                emotionType = type
-                emotions = typeLabels
-            }
-        }
+                moodLabelAdapter, moodDiaryPositive)
+                .apply {
+                    var data = mMoodDiaryDataOwner?.getMoodDiaryData()
+                    detailText = data?.scene ?: detailText
+                    savedMoodDiaryData = data?.apply {
+                        emotionType = type
+                        emotions = typeLabels
+                    }
+                }
         mBinding = binding
     }
 

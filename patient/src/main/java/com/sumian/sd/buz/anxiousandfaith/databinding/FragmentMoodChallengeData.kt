@@ -132,7 +132,10 @@ data class FragmentMoodChallengeData(
                 moodDiaryData.scene,
                 challengeBeliefContent,
                 cognitionBias,
-                challengeResultContent)
+                challengeResultContent,
+                moodDiaryData.idea,
+                moodDiaryData.rationalBelief,
+                moodDiaryData.rationalBeliefResult)
         call.enqueue(object : BaseSdResponseCallback<MoodDiaryData>() {
             override fun onSuccess(response: MoodDiaryData?) {
                 onSaveSuccess(response)
