@@ -62,6 +62,7 @@
                 android:minHeight="90dp"
                 android:padding="@dimen/normal_padding"
                 android:text="@={data.challengeBeliefContent}"
+                android:textColorHint="@{data.challengeBeliefHintColor}"
                 tools:ignore="Autofill,TextFields" />
 
             <TextView
@@ -106,6 +107,7 @@
                     android:layout_height="wrap_content"
                     android:padding="@dimen/normal_padding"
                     android:text="@string/mood_challenge_cognitive_bias_content"
+                    android:textColor="@{data.cognitionBiasTitleColor}"
                     android:textStyle="bold" />
 
                 <ImageView
@@ -147,6 +149,7 @@
                 android:id="@+id/et_mood_challenge_result_content"
                 style="@style/SumianEditTextWhiteBg"
                 android:layout_height="wrap_content"
+                android:textColorHint="@{data.challengeBeliefResultHintColor}"
                 android:hint="@string/mood_challenge_result_content_hint"
                 android:minHeight="90dp"
                 android:padding="@dimen/normal_padding"

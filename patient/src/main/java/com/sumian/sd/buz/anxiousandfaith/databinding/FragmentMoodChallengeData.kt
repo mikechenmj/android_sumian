@@ -35,7 +35,18 @@ data class FragmentMoodChallengeData(
                 return
             }
             field = value
+            cognitionBiasTitleColor = moodChallengeFragment.resources.getColor(R.color.t1_color)
             notifyPropertyChanged(BR.cognitionBias)
+        }
+
+    @get:Bindable
+    var cognitionBiasTitleColor = moodChallengeFragment.resources.getColor(R.color.t1_color)
+        set(value) {
+            if (value == field) {
+                return
+            }
+            field = value
+            notifyPropertyChanged(BR.cognitionBiasTitleColor)
         }
 
     @get:Bindable
@@ -46,9 +57,20 @@ data class FragmentMoodChallengeData(
             }
             field = value
             val length = value.length
+            challengeBeliefHintColor = moodChallengeFragment.resources.getColor(R.color.t2_color)
             challengeBeliefContentCount = "$length/$CHALLENGE_BELIEF_CONTENT_MAX_COUNT"
             challengeBeliefContentOutOfMax = length > CHALLENGE_BELIEF_CONTENT_MAX_COUNT
             notifyPropertyChanged(BR.challengeBeliefContent)
+        }
+
+    @get:Bindable
+    var challengeBeliefHintColor = moodChallengeFragment.resources.getColor(R.color.t2_color)
+        set(value) {
+            if (value == field) {
+                return
+            }
+            field = value
+            notifyPropertyChanged(BR.challengeBeliefHintColor)
         }
 
     @get:Bindable
@@ -79,9 +101,20 @@ data class FragmentMoodChallengeData(
             }
             field = value
             val length = value.length
+            challengeBeliefResultHintColor = moodChallengeFragment.resources.getColor(R.color.t2_color)
             challengeResultContentCount = "$length/$CHALLENGE_BELIEF_CONTENT_MAX_COUNT"
             challengeResultContentOutOfMax = length > CHALLENGE_BELIEF_CONTENT_MAX_COUNT
             notifyPropertyChanged(BR.challengeResultContent)
+        }
+
+    @get:Bindable
+    var challengeBeliefResultHintColor = moodChallengeFragment.resources.getColor(R.color.t2_color)
+        set(value) {
+            if (value == field) {
+                return
+            }
+            field = value
+            notifyPropertyChanged(BR.challengeBeliefResultHintColor)
         }
 
     @get:Bindable
@@ -110,7 +143,20 @@ data class FragmentMoodChallengeData(
             return
         }
 
-        if (TextUtils.isEmpty(challengeResultContent) || TextUtils.isEmpty(challengeBeliefContent) || cognitionBias.isEmpty()) {
+        var cognitionBiasIsEmpty = cognitionBias.isEmpty()
+        if (cognitionBiasIsEmpty) {
+            cognitionBiasTitleColor = moodChallengeFragment.resources.getColor(R.color.t4_color)
+        }
+        var challengeBeliefIsEmpty = TextUtils.isEmpty(challengeBeliefContent)
+        if (challengeBeliefIsEmpty) {
+            challengeBeliefHintColor = moodChallengeFragment.resources.getColor(R.color.t4_color)
+        }
+        var challengeResultIsEmpty = TextUtils.isEmpty(challengeResultContent)
+        if (challengeResultIsEmpty) {
+            challengeBeliefResultHintColor = moodChallengeFragment.resources.getColor(R.color.t4_color)
+        }
+
+        if (challengeBeliefIsEmpty || challengeResultIsEmpty || cognitionBiasIsEmpty) {
             moodChallengeFragment.onSaveMoodDiaryFail(moodChallengeFragment.getString(R.string.please_finish_question_first))
             return
         }

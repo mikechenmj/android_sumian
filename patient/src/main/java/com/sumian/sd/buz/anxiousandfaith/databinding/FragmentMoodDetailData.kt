@@ -35,6 +35,7 @@ data class FragmentMoodDetailData(
             }
             field = value
             val length = value.length
+            detailHintColor = moodDetailFragment.resources.getColor(R.color.t2_color)
             savedMoodDiaryData?.scene = detailText
             detailTextCount = "$length/$DETAIL_TEXT_MAX_COUNT"
             detailTextCountOutOfMax = length > DETAIL_TEXT_MAX_COUNT
@@ -71,6 +72,16 @@ data class FragmentMoodDetailData(
             notifyPropertyChanged(BR.saveButtonClickable)
         }
 
+    @get:Bindable
+    var detailHintColor = moodDetailFragment.resources.getColor(R.color.t2_color)
+        set(value) {
+            if (value == field) {
+                return
+            }
+            field = value
+            notifyPropertyChanged(BR.detailHintColor)
+        }
+
 
     fun saveMoodDiary() {
         saveMoodDiaryWithCallback {}
@@ -84,6 +95,7 @@ data class FragmentMoodDetailData(
 
         if (TextUtils.isEmpty(detailText)) {
             moodDetailFragment.onSaveMoodDiaryFail(moodDetailFragment.getString(R.string.please_finish_question_first))
+            detailHintColor = moodDetailFragment.resources.getColor(R.color.t4_color)
             return
         }
 

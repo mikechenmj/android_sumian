@@ -81,6 +81,7 @@
             android:padding="20dp"
             android:text="@={data.detailText}"
             tools:ignore="Autofill,TextFields"
+            android:textColorHint="@{data.detailHintColor}"
             tools:text="@string/mood_detail_negative_content_hint" />
 
         <TextView
