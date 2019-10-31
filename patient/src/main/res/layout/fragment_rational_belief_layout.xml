@@ -32,7 +32,6 @@
                 android:text="@string/mood_rational_belief_tip" />
 
             <TextView
-                android:textStyle="bold"
                 android:id="@+id/tv_refute_unreasonable_belief_title"
                 style="@style/text_t1_16"
                 textStyle="bold"
@@ -42,7 +41,8 @@
                 android:background="@drawable/bg_line_l1_margin_start_20dp_white_bg"
                 android:gravity="center_vertical"
                 android:padding="@dimen/normal_padding"
-                android:text="@string/mood_diary_refute_unreasonable_title" />
+                android:text="@string/mood_diary_refute_unreasonable_title"
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/et_refute_unreasonable_belief"
@@ -52,6 +52,7 @@
                 android:minHeight="90dp"
                 android:padding="@dimen/normal_padding"
                 android:text="@={data.refuteUnreasonableBelief}"
+                android:textColorHint="@{data.refuteUnreasonableBeliefHintColor}"
                 tools:ignore="Autofill,TextFields" />
 
             <TextView
@@ -89,6 +90,7 @@
                 android:minHeight="90dp"
                 android:padding="@dimen/normal_padding"
                 android:text="@={data.reasonableBelief}"
+                android:textColorHint="@{data.reasonableBeliefHintColor}"
                 tools:ignore="Autofill,TextFields" />
 
             <TextView
@@ -126,6 +128,7 @@
                 android:minHeight="90dp"
                 android:padding="@dimen/normal_padding"
                 android:text="@={data.reasonableBeliefResult}"
+                android:textColorHint="@{data.reasonableBeliefResultHintColor}"
                 tools:ignore="Autofill,TextFields" />
 
             <TextView

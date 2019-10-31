@@ -1,5 +1,6 @@
 package com.sumian.sd.buz.anxiousandfaith
 
+import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ToastUtils
@@ -83,8 +84,8 @@ class AnxietyListActivity : TitleBaseActivity() {
                 if (response == null) {
                     return
                 }
-                var data = response.data
-                if (data.size < 1) {
+                var data = response.data.sortedByDescending { it.updatedAt }
+                if (data.isEmpty()) {
                     return
                 }
                 var currentTime = System.currentTimeMillis()
@@ -143,7 +144,9 @@ class AnxietyListActivity : TitleBaseActivity() {
             })
             var isAnxiousUnHandle = item.t.getRemindAtInMillis() > System.currentTimeMillis()
             if (isAnxiousUnHandle) {
-                itemView.showUnHandlerTip(getString(R.string.anxious_un_handle_tip_text))
+                itemView.showUnHandleTip(getString(R.string.anxious_un_handle_tip_text))
+            }else{
+                itemView.hideUnHandleTip()
             }
             itemView.setOnClickListener { AnxietyDetailActivity.launch(item.t) }
         }
@@ -161,6 +164,11 @@ class AnxietyListActivity : TitleBaseActivity() {
                 override fun onSuccess(response: Any?) {
                     val itemPosition = getItemPosition(id)
                     mAdapter.remove(itemPosition)
+                    if (itemPosition > 0
+                            && mAdapter.data[itemPosition - 1].isHeader
+                            && mAdapter.data.size == itemPosition) {
+                        mAdapter.remove(itemPosition - 1)
+                    }
                     if (mAdapter.data.size == 0) {
                         finish()
                     }
@@ -195,7 +203,7 @@ class AnxietyListActivity : TitleBaseActivity() {
     private fun getItemPosition(id: Int): Int {
         val list = mAdapter.data
         for ((index, data) in list.withIndex()) {
-            if(data.t != null) {
+            if (data.t != null) {
                 if (data.t.id == id) {
                     return index
                 }

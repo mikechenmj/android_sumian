@@ -15,7 +15,7 @@ import com.sumian.sd.buz.anxiousandfaith.event.AnxietyChangeEvent
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import com.sumian.sd.common.utils.EventBusUtil
 import com.sumian.sd.widget.divider.SettingDividerView
-import java.util.*
+import kotlin.collections.ArrayList
 
 @BindingMethods(value = [
     BindingMethod(
@@ -28,6 +28,8 @@ class ActivityAnxiousEditData(
         var anxietyData: AnxietyData?) : BaseObservable() {
 
     companion object {
+        private const val TIME_ONE_DAY_IN_MILLIS = 24 * 60 * 60 * 1000L
+
         private const val DETAIL_TEXT_MAX_COUNT = 200
         private const val SOLUTION_TEXT_MAX_COUNT = 50
         private const val HARD_TEXT_MAX_COUNT = 50
@@ -43,6 +45,25 @@ class ActivityAnxiousEditData(
         fun getIsCheckedFromId(positiveId: Int, negativeId: Int, id: Int): Boolean {
             return id == positiveId
         }
+
+        @InverseMethod("getAnswerValueFromId")
+        @JvmStatic
+        fun getIdFromIsAnswerValue(positiveId: Int, negativeId: Int, value: String): Int {
+            return when (value) {
+                AnxietyData.ANSWER_CHECKED_YES -> positiveId
+                AnxietyData.ANSWER_CHECKED_NO -> negativeId
+                else -> 0
+            }
+        }
+
+        @JvmStatic
+        fun getAnswerValueFromId(positiveId: Int, negativeId: Int, id: Int): String {
+            return when (id) {
+                positiveId -> AnxietyData.ANSWER_CHECKED_YES
+                negativeId -> AnxietyData.ANSWER_CHECKED_NO
+                else -> AnxietyData.ANSWER_INVALID_VALUE
+            }
+        }
     }
 
     @get:Bindable
@@ -53,6 +74,7 @@ class ActivityAnxiousEditData(
             }
             field = value
             val length = value.length
+            anxietyHintColor = anxietyEditActivity.resources.getColor(R.color.t2_color)
             detailTextCount = "$length/$DETAIL_TEXT_MAX_COUNT"
             detailTextCountOutOfMax = length > DETAIL_TEXT_MAX_COUNT
             notifyPropertyChanged(BR.detailText)
@@ -79,18 +101,32 @@ class ActivityAnxiousEditData(
         }
 
     @get:Bindable
-    var solutionChecked: Boolean =
+    var detailPlanSelectAnswer: String =
             if (anxietyData != null) {
-                anxietyData!!.hasDetailedPlanChecked()
+                anxietyData!!.getAnswer(AnxietyData.ANSWER_HAS_DETAILED_PLAN_ID)
             } else {
-                true
+                AnxietyData.ANSWER_INVALID_VALUE
             }
         set(value) {
             if (value == field) {
                 return
             }
             field = value
-            notifyPropertyChanged(BR.solutionChecked)
+            if (value == AnxietyData.ANSWER_CHECKED_YES) {
+                hardSelectAnswer = AnxietyData.ANSWER_INVALID_VALUE
+                howToResolveCheckedIndex = AnxietyData.ANSWER_INVALID_VALUE
+                howToResolveCheckedId = 0
+            } else if (value == AnxietyData.ANSWER_CHECKED_NO) {
+                hardSelectAnswer = anxietyData?.getAnswer(AnxietyData.ANSWER_IS_HARD_PROBLEM_ID)
+                        ?: hardSelectAnswer
+                howToResolveCheckedIndex = anxietyData?.getAnswer(AnxietyData.ANSWER_HOW_TO_SOLVE_ID)
+                        ?: howToResolveCheckedIndex
+                howToResolveCheckedId = refreshHowToResolveCheckedId()
+            }
+            hardCheckBoxColor = anxietyEditActivity.resources.getColor(R.color.b3_color)
+            hasPlanCheckBoxColor = anxietyEditActivity.resources.getColor(R.color.b3_color)
+            solutionHintColor = anxietyEditActivity.resources.getColor(R.color.t2_color)
+            notifyPropertyChanged(BR.detailPlanSelectAnswer)
         }
 
     @get:Bindable
@@ -106,6 +142,7 @@ class ActivityAnxiousEditData(
             }
             field = value
             val length = value.length
+            solutionHintColor = anxietyEditActivity.resources.getColor(R.color.t2_color)
             solutionTextCount = "$length/$SOLUTION_TEXT_MAX_COUNT"
             solutionTextCountOutOfMax = length > SOLUTION_TEXT_MAX_COUNT
             notifyPropertyChanged(BR.solutionText)
@@ -132,19 +169,30 @@ class ActivityAnxiousEditData(
         }
 
     @get:Bindable
-    var hardChecked: Boolean =
-            if (anxietyData != null)
-                anxietyData!!.hardChecked()
-            else
-                false
+    var hardSelectAnswer: String =
+            if (anxietyData != null) {
+                anxietyData!!.getAnswer(AnxietyData.ANSWER_IS_HARD_PROBLEM_ID)
+            } else {
+                AnxietyData.ANSWER_INVALID_VALUE
+            }
         set(value) {
             if (value == field) {
                 return
             }
             field = value
-            notifyPropertyChanged(BR.hardChecked)
+            if (value == AnxietyData.ANSWER_CHECKED_NO) {
+                howToResolveCheckedIndex = AnxietyData.ANSWER_INVALID_VALUE
+                howToResolveCheckedId = 0
+            } else if (value == AnxietyData.ANSWER_CHECKED_YES) {
+                howToResolveCheckedIndex = anxietyData?.getAnswer(AnxietyData.ANSWER_HOW_TO_SOLVE_ID)
+                        ?: howToResolveCheckedIndex
+                howToResolveCheckedId = refreshHowToResolveCheckedId()
+            }
+            howToSolveCheckBoxColor = anxietyEditActivity.resources.getColor(R.color.b3_color)
+            hardCheckBoxColor = anxietyEditActivity.resources.getColor(R.color.b3_color)
+            solutionHintColor = anxietyEditActivity.resources.getColor(R.color.t2_color)
+            notifyPropertyChanged(BR.hardSelectAnswer)
         }
-
 
     @get:Bindable
     var hardText: String =
@@ -159,6 +207,7 @@ class ActivityAnxiousEditData(
             }
             field = value
             val length = value.length
+            solutionHintColor = anxietyEditActivity.resources.getColor(R.color.t2_color)
             hardTextCount = "$length/$HARD_TEXT_MAX_COUNT"
             hardTextCountOutOfMax = length > HARD_TEXT_MAX_COUNT
             notifyPropertyChanged(BR.hardText)
@@ -184,24 +233,11 @@ class ActivityAnxiousEditData(
             notifyPropertyChanged(BR.hardTextCountOutOfMax)
         }
 
-    var howToResolveCheckedIndex: String = AnxietyData.ANSWER_HOW_TO_SOLVE_ONE_INDEX
+    private var howToResolveCheckedIndex: String = anxietyData?.getAnswer(AnxietyData.ANSWER_HOW_TO_SOLVE_ID)
+            ?: AnxietyData.ANSWER_INVALID_VALUE
 
     @get:Bindable
-    var howToResolveCheckedId: Int =
-            when (anxietyData?.getAnswer(AnxietyData.ANSWER_HOW_TO_SOLVE_ID)) {
-                AnxietyData.ANSWER_HOW_TO_SOLVE_ONE_INDEX -> {
-                    R.id.rb_anxiety_ask_how_to_resolve_one
-                }
-                AnxietyData.ANSWER_HOW_TO_SOLVE_TWO_INDEX -> {
-                    R.id.rb_anxiety_ask_how_to_resolve_two
-                }
-                AnxietyData.ANSWER_HOW_TO_SOLVE_THREE_INDEX -> {
-                    R.id.rb_anxiety_ask_how_to_resolve_three
-                }
-                else -> {
-                    R.id.rb_anxiety_ask_how_to_resolve_one
-                }
-            }
+    var howToResolveCheckedId: Int = refreshHowToResolveCheckedId()
         set(value) {
             if (value == field) {
                 return
@@ -221,6 +257,8 @@ class ActivityAnxiousEditData(
                     AnxietyData.ANSWER_INVALID_VALUE
                 }
             }
+            howToSolveCheckBoxColor = anxietyEditActivity.resources.getColor(R.color.b3_color)
+            solutionHintColor = anxietyEditActivity.resources.getColor(R.color.t2_color)
             notifyPropertyChanged(BR.howToResolveCheckedId)
         }
 
@@ -237,6 +275,7 @@ class ActivityAnxiousEditData(
             }
             field = value
             val length = value.length
+            solutionHintColor = anxietyEditActivity.resources.getColor(R.color.t2_color)
             askHowToResolveOneTextCount = "$length/$HOW_TO_SOLVE_MAX_COUNT"
             askHowToResolveOneTextCountOutOfMax = length > HOW_TO_SOLVE_MAX_COUNT
             notifyPropertyChanged(BR.askHowToResolveOneText)
@@ -275,6 +314,7 @@ class ActivityAnxiousEditData(
             }
             field = value
             val length = value.length
+            solutionHintColor = anxietyEditActivity.resources.getColor(R.color.t2_color)
             askHowToResolveTwoTextCount = "$length/$HOW_TO_SOLVE_MAX_COUNT"
             askHowToResolveTwoTextCountOutOfMax = length > HOW_TO_SOLVE_MAX_COUNT
             notifyPropertyChanged(BR.askHowToResolveTwoText)
@@ -313,6 +353,7 @@ class ActivityAnxiousEditData(
             }
             field = value
             val length = value.length
+            solutionHintColor = anxietyEditActivity.resources.getColor(R.color.t2_color)
             askHowToResolveThreeTextCount = "$length/$HOW_TO_SOLVE_MAX_COUNT"
             askHowToResolveThreeTextCountOutOfMax = length > HOW_TO_SOLVE_MAX_COUNT
             notifyPropertyChanged(BR.askHowToResolveThreeText)
@@ -338,13 +379,22 @@ class ActivityAnxiousEditData(
             notifyPropertyChanged(BR.askHowToResolveThreeTextCountOutOfMax)
         }
 
-    @get:Bindable
-    var remindSettingTypeContent: String =
+    var remindTimeInMillis: Long =
             if (anxietyData != null && anxietyData!!.remindAt > 0) {
-                TimeUtilV2.formatYYYYMMDDHHMM(anxietyData!!.getRemindAtInMillis())
+                anxietyData!!.getRemindAtInMillis()
             } else {
-                anxietyEditActivity.getString(R.string.anxiety_set_remind_time_tip)
+                System.currentTimeMillis() + TIME_ONE_DAY_IN_MILLIS
             }
+        set(value) {
+            if (value == field) {
+                return
+            }
+            field = value
+            anxietyData?.setRemindAtInSecond(value)
+        }
+
+    @get:Bindable
+    var remindSettingTypeContent: String = TimeUtilV2.formatYYYYMMDDHHMM(remindTimeInMillis)
         set(value) {
             if (value == field) {
                 return
@@ -363,14 +413,72 @@ class ActivityAnxiousEditData(
             notifyPropertyChanged(BR.saveButtonEnable)
         }
 
-    var remindTimeInMillis: Long = 0
+    @get:Bindable
+    var anxietyHintColor = anxietyEditActivity.resources.getColor(R.color.t2_color)
         set(value) {
             if (value == field) {
                 return
             }
             field = value
-            anxietyData?.setRemindAtInSecond(value)
+            notifyPropertyChanged(BR.anxietyHintColor)
         }
+
+    @get:Bindable
+    var solutionHintColor = anxietyEditActivity.resources.getColor(R.color.t2_color)
+        set(value) {
+            if (value == field) {
+                return
+            }
+            field = value
+            notifyPropertyChanged(BR.solutionHintColor)
+        }
+
+    @get:Bindable
+    var hasPlanCheckBoxColor = anxietyEditActivity.resources.getColor(R.color.b3_color)
+        set(value) {
+            if (value == field) {
+                return
+            }
+            field = value
+            notifyPropertyChanged(BR.hasPlanCheckBoxColor)
+        }
+
+    @get:Bindable
+    var hardCheckBoxColor = anxietyEditActivity.resources.getColor(R.color.b3_color)
+        set(value) {
+            if (value == field) {
+                return
+            }
+            field = value
+            notifyPropertyChanged(BR.hardCheckBoxColor)
+        }
+
+    @get:Bindable
+    var howToSolveCheckBoxColor = anxietyEditActivity.resources.getColor(R.color.b3_color)
+        set(value) {
+            if (value == field) {
+                return
+            }
+            field = value
+            notifyPropertyChanged(BR.howToSolveCheckBoxColor)
+        }
+
+    private fun refreshHowToResolveCheckedId(): Int {
+        return when (anxietyData?.getAnswer(AnxietyData.ANSWER_HOW_TO_SOLVE_ID)) {
+            AnxietyData.ANSWER_HOW_TO_SOLVE_ONE_INDEX -> {
+                R.id.rb_anxiety_ask_how_to_resolve_one
+            }
+            AnxietyData.ANSWER_HOW_TO_SOLVE_TWO_INDEX -> {
+                R.id.rb_anxiety_ask_how_to_resolve_two
+            }
+            AnxietyData.ANSWER_HOW_TO_SOLVE_THREE_INDEX -> {
+                R.id.rb_anxiety_ask_how_to_resolve_three
+            }
+            else -> {
+                0
+            }
+        }
+    }
 
     fun saveAnxiety() {
         if (detailTextCountOutOfMax || solutionTextCountOutOfMax
@@ -389,31 +497,27 @@ class ActivityAnxiousEditData(
                 }
 
         var solution =
-                if (solutionChecked) {
+                if (detailPlanSelectAnswer == AnxietyData.ANSWER_CHECKED_YES) {
                     solutionText
-                } else if (!hardChecked) {
+                } else if (hardSelectAnswer == AnxietyData.ANSWER_CHECKED_NO) {
                     if (hardText.isEmpty()) {
-                        anxietyEditActivity.getString(R.string.anxiety_ask_how_to_resolve_three_edit_hint)
+                        anxietyEditActivity.getString(R.string.anxiety_record_hint)
                     } else {
                         hardText
                     }
                 } else {
                     when (checkedIndex) {
                         AnxietyData.ANSWER_HOW_TO_SOLVE_ONE_INDEX -> {
-                            if (askHowToResolveOneText.isEmpty()) {
-                                anxietyEditActivity.getString(R.string.anxiety_ask_how_to_resolve_one_default_text)
-                            } else {
-                                askHowToResolveOneText
-                            }
+                            askHowToResolveOneText
                         }
                         AnxietyData.ANSWER_HOW_TO_SOLVE_TWO_INDEX -> {
                             askHowToResolveTwoText
                         }
                         AnxietyData.ANSWER_HOW_TO_SOLVE_THREE_INDEX -> {
-                            if (askHowToResolveTwoText.isEmpty()) {
-                                anxietyEditActivity.getString(R.string.anxiety_ask_how_to_resolve_three_default_text)
+                            if (askHowToResolveThreeText.isEmpty()) {
+                                anxietyEditActivity.getString(R.string.anxiety_ask_how_to_resolve_three_edit_hint)
                             } else {
-                                askHowToResolveTwoText
+                                askHowToResolveThreeText
                             }
                         }
                         else -> {
@@ -421,11 +525,16 @@ class ActivityAnxiousEditData(
                         }
                     }
                 }
-        var answers = arrayOf(
-                AnxietyAnswer(AnxietyData.ANSWER_HAS_DETAILED_PLAN_ID, if (solutionChecked) AnxietyData.ANSWER_CHECKED_YES else AnxietyData.ANSWER_CHECKED_NO),
-                AnxietyAnswer(AnxietyData.ANSWER_IS_HARD_PROBLEM_ID, if (hardChecked) AnxietyData.ANSWER_CHECKED_YES else AnxietyData.ANSWER_CHECKED_NO),
-                AnxietyAnswer(AnxietyData.ANSWER_HOW_TO_SOLVE_ID, checkedIndex))
-                .toList()
+
+        var answers = ArrayList<AnxietyAnswer>(3)
+        answers.add(AnxietyAnswer(AnxietyData.ANSWER_HAS_DETAILED_PLAN_ID, detailPlanSelectAnswer))
+        if (hardSelectAnswer != AnxietyData.ANSWER_INVALID_VALUE) {
+            answers.add(AnxietyAnswer(AnxietyData.ANSWER_IS_HARD_PROBLEM_ID, hardSelectAnswer))
+        }
+        if (checkedIndex != AnxietyData.ANSWER_INVALID_VALUE) {
+            answers.add(AnxietyAnswer(AnxietyData.ANSWER_HOW_TO_SOLVE_ID, checkedIndex))
+        }
+
         data.apply {
             anxiety = detailText
             this.solution = solution
@@ -435,17 +544,38 @@ class ActivityAnxiousEditData(
             }
         }
 
+        var isUpdate = data.id != AnxietyData.ANXIETY_INVALID_ID
         Log.i("MCJ", "add: $data")
 
-        if (TextUtils.isEmpty(data.anxiety) || TextUtils.isEmpty(data.solution)
-                || checkedIndex == AnxietyData.ANSWER_INVALID_VALUE
-                || data.getRemindAtInMillis() <= 0) {
+        var anxietyIsEmpty = TextUtils.isEmpty(data.anxiety)
+        if (anxietyIsEmpty) {
+            anxietyHintColor = anxietyEditActivity.resources.getColor(R.color.t4_color)
+        }
+        var solutionIsEmpty = TextUtils.isEmpty(data.solution)
+        if (solutionIsEmpty) {
+            solutionHintColor = anxietyEditActivity.resources.getColor(R.color.t4_color)
+        }
+
+        if (detailPlanSelectAnswer == AnxietyData.ANSWER_INVALID_VALUE) {
+            hasPlanCheckBoxColor = anxietyEditActivity.resources.getColor(R.color.t4_color)
+        } else if (detailPlanSelectAnswer == AnxietyData.ANSWER_CHECKED_NO
+                && hardSelectAnswer == AnxietyData.ANSWER_INVALID_VALUE) {
+            hardCheckBoxColor = anxietyEditActivity.resources.getColor(R.color.t4_color)
+        } else if (hardSelectAnswer == AnxietyData.ANSWER_CHECKED_YES
+                && howToResolveCheckedIndex == AnxietyData.ANSWER_INVALID_VALUE) {
+            howToSolveCheckBoxColor = anxietyEditActivity.resources.getColor(R.color.t4_color)
+        }
+
+        if (anxietyIsEmpty || solutionIsEmpty) {
             anxietyEditActivity.onSaveAnxietyFail(anxietyEditActivity.getString(R.string.please_finish_question_first))
             return
         }
 
+        if (data.getRemindAtInMillis() <= System.currentTimeMillis() && !isUpdate) {
+            anxietyEditActivity.onSaveAnxietyFail(anxietyEditActivity.getString(R.string.anxiety_remind_time_too_old_tip))
+        }
 
-        val call = if (data.id == AnxietyData.ANXIETY_INVALID_ID) {
+        val call = if (!isUpdate) {
             AppManager.getSdHttpService().addAnxietyBody(data)
         } else {
             AppManager.getSdHttpService().updateAnxietyBody(data.id, data)

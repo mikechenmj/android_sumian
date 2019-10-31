@@ -141,6 +141,7 @@
                 tools:text="求助行政同事帮忙一起负责" />
 
             <TextView
+                style="@style/text_t1_16"
                 android:id="@+id/tv_anxiety_solution_problem_time_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

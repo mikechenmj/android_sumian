@@ -94,6 +94,7 @@ class AnxiousAndMoodDiaryActivity : TitleBaseActivity() {
 
     private fun updateAnxietyList(list: ArrayList<AnxietyData>) {
         val hasData = list.size > 0
+        list.sortByDescending { it.updatedAt }
         mHasAnxiety = hasData
         tv_anxiety_no_record.visibility = if (hasData) View.GONE else View.VISIBLE
         iv_anxiety_arrow.visibility = if (!hasData) View.GONE else View.VISIBLE
@@ -111,7 +112,9 @@ class AnxiousAndMoodDiaryActivity : TitleBaseActivity() {
             })
             var isAnxiousUnHandle = data.getRemindAtInMillis() > System.currentTimeMillis()
             if (isAnxiousUnHandle) {
-                itemView.showUnHandlerTip(getString(R.string.anxious_un_handle_tip_text))
+                itemView.showUnHandleTip(getString(R.string.anxious_un_handle_tip_text))
+            }else{
+                itemView.hideUnHandleTip()
             }
             itemView.setOnClickListener { AnxietyDetailActivity.launch(data) }
             itemView.tag = data.id
@@ -139,6 +142,7 @@ class AnxiousAndMoodDiaryActivity : TitleBaseActivity() {
 
     private fun updateMoodDiaryList(list: ArrayList<MoodDiaryData>) {
         val hasData = list.size > 0
+        list.sortByDescending { it.updatedAt }
         mHasMoodDiary = hasData
         tv_mood_diary_no_record.visibility = if (hasData) View.GONE else View.VISIBLE
         iv_mood_diary_arrow.visibility = if (!hasData) View.GONE else View.VISIBLE
@@ -160,7 +164,9 @@ class AnxiousAndMoodDiaryActivity : TitleBaseActivity() {
 
             var isNegativeNoFillAll = !data.isFillAll() && !data.isPositiveMoodType()
             if (isNegativeNoFillAll) {
-                itemView.showUnHandlerTip(getString(R.string.faith_un_handle_tip_text))
+                itemView.showUnHandleTip(getString(R.string.faith_un_handle_tip_text))
+            }else{
+                itemView.hideUnHandleTip()
             }
             itemView.setOnClickListener {
                 if (isNegativeNoFillAll) {

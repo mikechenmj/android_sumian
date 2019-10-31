@@ -36,9 +36,13 @@ class AnxiousMoodDiaryItemView(context: Context, attributeSet: AttributeSet? = n
         tv_title.maxLines = if (noLimit) Integer.MAX_VALUE else 1
     }
 
-    fun showUnHandlerTip(text: String) {
+    fun showUnHandleTip(text: String) {
         tv_un_handle_tip.text = text
         tv_un_handle_tip.isVisible = true
+    }
+
+    fun hideUnHandleTip() {
+        tv_un_handle_tip.isVisible = false
     }
 
 }

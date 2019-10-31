@@ -30,9 +30,20 @@ data class FragmentRationalBeliefData(
             field = value
             savedMoodDiaryData?.idea = value
             val length = value.length
+            refuteUnreasonableBeliefHintColor = rationalBeliefFragment.resources.getColor(R.color.t2_color)
             refuteUnreasonableBeliefCount = "$length/$NORMAL_CONTENT_MAX_COUNT"
             refuteUnreasonableBeliefOutOfMax = length > NORMAL_CONTENT_MAX_COUNT
             notifyPropertyChanged(BR.refuteUnreasonableBelief)
+        }
+
+    @get:Bindable
+    var refuteUnreasonableBeliefHintColor = rationalBeliefFragment.resources.getColor(R.color.t2_color)
+        set(value) {
+            if (value == field) {
+                return
+            }
+            field = value
+            notifyPropertyChanged(BR.refuteUnreasonableBeliefHintColor)
         }
 
     @get:Bindable
@@ -64,9 +75,20 @@ data class FragmentRationalBeliefData(
             field = value
             savedMoodDiaryData?.rationalBelief = value
             val length = value.length
+            reasonableBeliefHintColor = rationalBeliefFragment.resources.getColor(R.color.t2_color)
             reasonableBeliefCount = "$length/$NORMAL_CONTENT_MAX_COUNT"
             reasonableBeliefOutOfMax = length > NORMAL_CONTENT_MAX_COUNT
             notifyPropertyChanged(BR.reasonableBelief)
+        }
+
+    @get:Bindable
+    var reasonableBeliefHintColor = rationalBeliefFragment.resources.getColor(R.color.t2_color)
+        set(value) {
+            if (value == field) {
+                return
+            }
+            field = value
+            notifyPropertyChanged(BR.reasonableBeliefHintColor)
         }
 
     @get:Bindable
@@ -98,9 +120,20 @@ data class FragmentRationalBeliefData(
             field = value
             savedMoodDiaryData?.rationalBeliefResult = value
             val length = value.length
+            reasonableBeliefResultHintColor = rationalBeliefFragment.resources.getColor(R.color.t2_color)
             reasonableBeliefResultCount = "$length/$NORMAL_CONTENT_MAX_COUNT"
             reasonableBeliefResultOutOfMax = length > NORMAL_CONTENT_MAX_COUNT
             notifyPropertyChanged(BR.reasonableBeliefResult)
+        }
+
+    @get:Bindable
+    var reasonableBeliefResultHintColor = rationalBeliefFragment.resources.getColor(R.color.t2_color)
+        set(value) {
+            if (value == field) {
+                return
+            }
+            field = value
+            notifyPropertyChanged(BR.reasonableBeliefResultHintColor)
         }
 
     @get:Bindable
@@ -139,7 +172,20 @@ data class FragmentRationalBeliefData(
             return
         }
 
-        if (TextUtils.isEmpty(refuteUnreasonableBelief) || TextUtils.isEmpty(reasonableBelief) || TextUtils.isEmpty(reasonableBeliefResult)) {
+        var refuteUnreasonableBeliefIsEmpty = TextUtils.isEmpty(refuteUnreasonableBelief)
+        var reasonableBeliefIsEmpty = TextUtils.isEmpty(reasonableBelief)
+        var reasonableBeliefResultIsEmpty = TextUtils.isEmpty(reasonableBeliefResult)
+        if (refuteUnreasonableBeliefIsEmpty) {
+            refuteUnreasonableBeliefHintColor = rationalBeliefFragment.resources.getColor(R.color.t4_color)
+        }
+        if (reasonableBeliefIsEmpty) {
+            reasonableBeliefHintColor = rationalBeliefFragment.resources.getColor(R.color.t4_color)
+        }
+        if (reasonableBeliefResultIsEmpty) {
+            reasonableBeliefResultHintColor = rationalBeliefFragment.resources.getColor(R.color.t4_color)
+        }
+
+        if (refuteUnreasonableBeliefIsEmpty || reasonableBeliefIsEmpty || reasonableBeliefResultIsEmpty) {
             rationalBeliefFragment.onSaveMoodDiaryFail(rationalBeliefFragment.getString(R.string.please_finish_question_first))
             return
         }

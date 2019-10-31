@@ -84,8 +84,8 @@ class MoodDiaryListActivity : TitleBaseActivity() {
                 if (response == null) {
                     return
                 }
-                var data = response.data
-                if (data.size < 1) {
+                var data = response.data.sortedByDescending { it.updatedAt }
+                if (data.isEmpty()) {
                     return
                 }
                 var currentTime = System.currentTimeMillis()
@@ -144,7 +144,9 @@ class MoodDiaryListActivity : TitleBaseActivity() {
             })
             var isNegativeNoFillAll = !item.t.isFillAll() && !item.t.isPositiveMoodType()
             if (isNegativeNoFillAll) {
-                itemView.showUnHandlerTip(getString(R.string.faith_un_handle_tip_text))
+                itemView.showUnHandleTip(getString(R.string.faith_un_handle_tip_text))
+            } else {
+                itemView.hideUnHandleTip()
             }
             itemView.setOnClickListener {
                 if (isNegativeNoFillAll) {
@@ -168,6 +170,11 @@ class MoodDiaryListActivity : TitleBaseActivity() {
                 override fun onSuccess(response: Any?) {
                     val itemPosition = getItemPosition(id)
                     mAdapter.remove(itemPosition)
+                    if (itemPosition > 0
+                            && mAdapter.data[itemPosition - 1].isHeader
+                            && mAdapter.data.size == itemPosition) {
+                        mAdapter.remove(itemPosition - 1)
+                    }
                     if (mAdapter.data.size == 0) {
                         finish()
                     }
