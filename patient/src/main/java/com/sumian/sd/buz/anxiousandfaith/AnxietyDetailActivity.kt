@@ -100,20 +100,17 @@ class AnxietyDetailActivity : TitleBaseActivity() {
         var anxiety = data.anxiety
         var resolvePlanContent = if (hasDetailedPlanChecked) data.solution else getString(R.string.anxiety_no_detailed_plan_text)
         var notHardProblemContent = if (!hasHardChecked && !hasDetailedPlanChecked) data.solution else getString(R.string.anxiety_is_hard_problem_text)
-        var howToResolveContent = AnxietyData.ANSWER_INVALID_VALUE
+        var howToResolveContent = data.solution
         var howToResolveTitle =
                 if (!hasDetailedPlanChecked && hasHardChecked) {
                     when (data.getHowToResolveCheckedId()) {
                         AnxietyData.ANSWER_HOW_TO_SOLVE_ONE_INDEX -> {
-                            howToResolveContent = data.solution
                             getString(R.string.anxiety_suggest_to_friend_title)
                         }
                         AnxietyData.ANSWER_HOW_TO_SOLVE_TWO_INDEX -> {
-                            howToResolveContent = data.solution
                             getString(R.string.anxiety_need_help_title)
                         }
                         AnxietyData.ANSWER_HOW_TO_SOLVE_THREE_INDEX -> {
-                            howToResolveContent = getString(R.string.anxiety_no_idea_content)
                             ""
                         }
                         else -> {

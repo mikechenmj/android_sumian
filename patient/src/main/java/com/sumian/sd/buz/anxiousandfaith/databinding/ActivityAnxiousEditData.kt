@@ -450,10 +450,10 @@ class ActivityAnxiousEditData(
                             askHowToResolveTwoText
                         }
                         AnxietyData.ANSWER_HOW_TO_SOLVE_THREE_INDEX -> {
-                            if (askHowToResolveTwoText.isEmpty()) {
-                                anxietyEditActivity.getString(R.string.anxiety_ask_how_to_resolve_three_default_text)
+                            if (askHowToResolveThreeText.isEmpty()) {
+                                anxietyEditActivity.getString(R.string.anxiety_ask_how_to_resolve_three_edit_hint)
                             } else {
-                                askHowToResolveTwoText
+                                askHowToResolveThreeText
                             }
                         }
                         else -> {
