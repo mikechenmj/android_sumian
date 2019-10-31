@@ -6,6 +6,8 @@
 
         <import type="com.sumian.sd.buz.anxiousandfaith.databinding.ActivityAnxiousEditData" />
 
+        <import type="com.sumian.sd.buz.anxiousandfaith.bean.AnxietyData" />
+
         <import type="android.view.View" />
 
         <variable
@@ -68,7 +70,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_line_l1_margin_start_20dp_white_bg"
-                android:checkedButton="@={ActivityAnxiousEditData.getIdFromIsChecked(@id/rb_anxiety_ask_solution_yes,@id/rb_anxiety_ask_solution_no,data.solutionChecked)}"
+                android:checkedButton="@={ActivityAnxiousEditData.getIdFromIsAnswerValue(@id/rb_anxiety_ask_solution_yes,@id/rb_anxiety_ask_solution_no,data.detailPlanSelectAnswer)}"
                 android:orientation="horizontal"
                 android:padding="16dp">
 
@@ -100,7 +102,7 @@
                 android:minHeight="90dp"
                 android:padding="@dimen/normal_padding"
                 android:text="@={data.solutionText}"
-                android:visibility="@{data.solutionChecked ? View.VISIBLE : View.GONE}"
+                android:visibility="@{data.detailPlanSelectAnswer.equals(AnxietyData.ANSWER_CHECKED_YES) ? View.VISIBLE : View.GONE}"
                 tools:hint="@string/anxiety_solution_input_hint" />
 
             <TextView
@@ -116,7 +118,7 @@
                 android:paddingBottom="@dimen/normal_padding"
                 android:text="@{data.solutionTextCount}"
                 android:textColor="@{data.solutionTextCountOutOfMax ? @color/t4_color : @color/t2_color}"
-                android:visibility="@{data.solutionChecked ? View.VISIBLE : View.GONE}"
+                android:visibility="@{data.detailPlanSelectAnswer.equals(AnxietyData.ANSWER_CHECKED_YES) ? View.VISIBLE : View.GONE}"
                 tools:text="0/50" />
 
             <TextView
@@ -124,17 +126,17 @@
                 style="@style/tv_title_with_white_bg_and_bottom_line"
                 android:text="@string/anxiety_ask_is_hard_problem_title"
                 android:textStyle="bold"
-                android:visibility="@{data.solutionChecked ? View.GONE :View.VISIBLE}" />
+                android:visibility="@{data.detailPlanSelectAnswer.equals(AnxietyData.ANSWER_CHECKED_NO) ? View.VISIBLE :View.GONE}" />
 
             <RadioGroup
                 android:id="@+id/rg_anxiety_ask_is_hard_problem"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_line_l1_margin_start_20dp_white_bg"
-                android:checkedButton="@={ActivityAnxiousEditData.getIdFromIsChecked(@id/rb_anxiety_ask_is_hard_problem_yes, @id/rb_anxiety_ask_is_hard_problem_no, data.hardChecked)}"
+                android:checkedButton="@={ActivityAnxiousEditData.getIdFromIsAnswerValue(@id/rb_anxiety_ask_is_hard_problem_yes, @id/rb_anxiety_ask_is_hard_problem_no, data.hardSelectAnswer)}"
                 android:orientation="horizontal"
                 android:padding="16dp"
-                android:visibility="@{data.solutionChecked ? View.GONE :View.VISIBLE}">
+                android:visibility="@{data.detailPlanSelectAnswer.equals(AnxietyData.ANSWER_CHECKED_NO) ? View.VISIBLE :View.GONE}">
 
                 <RadioButton
                     android:id="@+id/rb_anxiety_ask_is_hard_problem_yes"
@@ -158,7 +160,7 @@
 
             <Space
                 style="@style/space_height_10"
-                android:visibility="@{!data.solutionChecked &amp;&amp; !data.hardChecked ? View.VISIBLE :  View.GONE }" />
+                android:visibility="@{data.detailPlanSelectAnswer.equals(AnxietyData.ANSWER_CHECKED_NO) &amp;&amp; data.hardSelectAnswer.equals(AnxietyData.ANSWER_CHECKED_NO) ? View.VISIBLE :  View.GONE }" />
 
             <TextView
                 android:id="@+id/tv_record_anxiety_tip"
@@ -167,7 +169,7 @@
                 android:paddingTop="@dimen/normal_padding"
                 android:paddingBottom="@dimen/normal_padding"
                 android:text="@string/anxiety_record_tip_text"
-                android:visibility="@{!data.solutionChecked &amp;&amp; !data.hardChecked ? View.VISIBLE :  View.GONE }" />
+                android:visibility="@{data.detailPlanSelectAnswer.equals(AnxietyData.ANSWER_CHECKED_NO) &amp;&amp; data.hardSelectAnswer.equals(AnxietyData.ANSWER_CHECKED_NO) ? View.VISIBLE :  View.GONE }" />
 
             <EditText
                 android:id="@+id/et_anxiety_hard"
@@ -177,7 +179,7 @@
                 android:minHeight="90dp"
                 android:padding="@dimen/normal_padding"
                 android:text="@={data.hardText}"
-                android:visibility="@{!data.solutionChecked &amp;&amp; !data.hardChecked ? View.VISIBLE : View.GONE}"
+                android:visibility="@{data.detailPlanSelectAnswer.equals(AnxietyData.ANSWER_CHECKED_NO) &amp;&amp; data.hardSelectAnswer.equals(AnxietyData.ANSWER_CHECKED_NO) ? View.VISIBLE : View.GONE}"
                 tools:hint="@string/anxiety_ask_how_to_resolve_three_edit_hint" />
 
             <TextView
@@ -193,14 +195,14 @@
                 android:paddingBottom="@dimen/normal_padding"
                 android:text="@{data.hardTextCount}"
                 android:textColor="@{data.hardTextCountOutOfMax ? @color/t4_color : @color/t2_color}"
-                android:visibility="@{!data.solutionChecked &amp;&amp; !data.hardChecked ? View.VISIBLE : View.GONE}"
+                android:visibility="@{data.detailPlanSelectAnswer.equals(AnxietyData.ANSWER_CHECKED_NO) &amp;&amp; data.hardSelectAnswer.equals(AnxietyData.ANSWER_CHECKED_NO) ? View.VISIBLE : View.GONE}"
                 tools:text="0/50" />
 
             <TextView
                 style="@style/tv_title_with_white_bg_and_bottom_line"
                 android:text="@string/anxiety_ask_how_to_solution_title"
                 android:textStyle="bold"
-                android:visibility="@{!data.solutionChecked &amp;&amp; data.hardChecked ? View.VISIBLE : View.GONE}" />
+                android:visibility="@{data.detailPlanSelectAnswer.equals(AnxietyData.ANSWER_CHECKED_NO) &amp;&amp; data.hardSelectAnswer.equals(AnxietyData.ANSWER_CHECKED_YES) ? View.VISIBLE : View.GONE}" />
 
             <RadioGroup
                 android:id="@+id/rg_anxiety_ask_how_to_resolve"
@@ -210,7 +212,7 @@
                 android:checkedButton="@={data.howToResolveCheckedId}"
                 android:orientation="vertical"
                 android:padding="16dp"
-                android:visibility="@{!data.solutionChecked &amp;&amp; data.hardChecked ? View.VISIBLE : View.GONE}">
+                android:visibility="@{data.detailPlanSelectAnswer.equals(AnxietyData.ANSWER_CHECKED_NO) &amp;&amp; data.hardSelectAnswer.equals(AnxietyData.ANSWER_CHECKED_YES) ? View.VISIBLE : View.GONE}">
 
                 <RadioButton
                     android:id="@+id/rb_anxiety_ask_how_to_resolve_one"

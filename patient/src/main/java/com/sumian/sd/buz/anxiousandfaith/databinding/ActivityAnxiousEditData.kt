@@ -15,7 +15,7 @@ import com.sumian.sd.buz.anxiousandfaith.event.AnxietyChangeEvent
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import com.sumian.sd.common.utils.EventBusUtil
 import com.sumian.sd.widget.divider.SettingDividerView
-import java.util.*
+import kotlin.collections.ArrayList
 
 @BindingMethods(value = [
     BindingMethod(
@@ -42,6 +42,25 @@ class ActivityAnxiousEditData(
         @JvmStatic
         fun getIsCheckedFromId(positiveId: Int, negativeId: Int, id: Int): Boolean {
             return id == positiveId
+        }
+
+        @InverseMethod("getAnswerValueFromId")
+        @JvmStatic
+        fun getIdFromIsAnswerValue(positiveId: Int, negativeId: Int, value: String): Int {
+            return when (value) {
+                AnxietyData.ANSWER_CHECKED_YES -> positiveId
+                AnxietyData.ANSWER_CHECKED_NO -> negativeId
+                else -> 0
+            }
+        }
+
+        @JvmStatic
+        fun getAnswerValueFromId(positiveId: Int, negativeId: Int, id: Int): String {
+            return when (id) {
+                positiveId -> AnxietyData.ANSWER_CHECKED_YES
+                negativeId -> AnxietyData.ANSWER_CHECKED_NO
+                else -> AnxietyData.ANSWER_INVALID_VALUE
+            }
         }
     }
 
@@ -79,18 +98,29 @@ class ActivityAnxiousEditData(
         }
 
     @get:Bindable
-    var solutionChecked: Boolean =
+    var detailPlanSelectAnswer: String =
             if (anxietyData != null) {
-                anxietyData!!.hasDetailedPlanChecked()
+                anxietyData!!.getAnswer(AnxietyData.ANSWER_HAS_DETAILED_PLAN_ID)
             } else {
-                true
+                AnxietyData.ANSWER_INVALID_VALUE
             }
         set(value) {
             if (value == field) {
                 return
             }
             field = value
-            notifyPropertyChanged(BR.solutionChecked)
+            if (value == AnxietyData.ANSWER_CHECKED_YES) {
+                hardSelectAnswer = AnxietyData.ANSWER_INVALID_VALUE
+                howToResolveCheckedIndex = AnxietyData.ANSWER_INVALID_VALUE
+                howToResolveCheckedId = 0
+            } else if (value == AnxietyData.ANSWER_CHECKED_NO) {
+                hardSelectAnswer = anxietyData?.getAnswer(AnxietyData.ANSWER_IS_HARD_PROBLEM_ID)
+                        ?: hardSelectAnswer
+                howToResolveCheckedIndex = anxietyData?.getAnswer(AnxietyData.ANSWER_HOW_TO_SOLVE_ID)
+                        ?: howToResolveCheckedIndex
+                howToResolveCheckedId = refreshHowToResolveCheckedId()
+            }
+            notifyPropertyChanged(BR.detailPlanSelectAnswer)
         }
 
     @get:Bindable
@@ -132,19 +162,27 @@ class ActivityAnxiousEditData(
         }
 
     @get:Bindable
-    var hardChecked: Boolean =
-            if (anxietyData != null)
-                anxietyData!!.hardChecked()
-            else
-                false
+    var hardSelectAnswer: String =
+            if (anxietyData != null) {
+                anxietyData!!.getAnswer(AnxietyData.ANSWER_IS_HARD_PROBLEM_ID)
+            } else {
+                AnxietyData.ANSWER_INVALID_VALUE
+            }
         set(value) {
             if (value == field) {
                 return
             }
             field = value
-            notifyPropertyChanged(BR.hardChecked)
+            if (value == AnxietyData.ANSWER_CHECKED_NO) {
+                howToResolveCheckedIndex = AnxietyData.ANSWER_INVALID_VALUE
+                howToResolveCheckedId = 0
+            } else if (value == AnxietyData.ANSWER_CHECKED_YES) {
+                howToResolveCheckedIndex = anxietyData?.getAnswer(AnxietyData.ANSWER_HOW_TO_SOLVE_ID)
+                        ?: howToResolveCheckedIndex
+                howToResolveCheckedId = refreshHowToResolveCheckedId()
+            }
+            notifyPropertyChanged(BR.hardSelectAnswer)
         }
-
 
     @get:Bindable
     var hardText: String =
@@ -184,24 +222,11 @@ class ActivityAnxiousEditData(
             notifyPropertyChanged(BR.hardTextCountOutOfMax)
         }
 
-    var howToResolveCheckedIndex: String = AnxietyData.ANSWER_HOW_TO_SOLVE_ONE_INDEX
+    private var howToResolveCheckedIndex: String = anxietyData?.getAnswer(AnxietyData.ANSWER_HOW_TO_SOLVE_ID)
+            ?: AnxietyData.ANSWER_INVALID_VALUE
 
     @get:Bindable
-    var howToResolveCheckedId: Int =
-            when (anxietyData?.getAnswer(AnxietyData.ANSWER_HOW_TO_SOLVE_ID)) {
-                AnxietyData.ANSWER_HOW_TO_SOLVE_ONE_INDEX -> {
-                    R.id.rb_anxiety_ask_how_to_resolve_one
-                }
-                AnxietyData.ANSWER_HOW_TO_SOLVE_TWO_INDEX -> {
-                    R.id.rb_anxiety_ask_how_to_resolve_two
-                }
-                AnxietyData.ANSWER_HOW_TO_SOLVE_THREE_INDEX -> {
-                    R.id.rb_anxiety_ask_how_to_resolve_three
-                }
-                else -> {
-                    R.id.rb_anxiety_ask_how_to_resolve_one
-                }
-            }
+    var howToResolveCheckedId: Int = refreshHowToResolveCheckedId()
         set(value) {
             if (value == field) {
                 return
@@ -372,6 +397,23 @@ class ActivityAnxiousEditData(
             anxietyData?.setRemindAtInSecond(value)
         }
 
+    private fun refreshHowToResolveCheckedId(): Int {
+        return when (anxietyData?.getAnswer(AnxietyData.ANSWER_HOW_TO_SOLVE_ID)) {
+            AnxietyData.ANSWER_HOW_TO_SOLVE_ONE_INDEX -> {
+                R.id.rb_anxiety_ask_how_to_resolve_one
+            }
+            AnxietyData.ANSWER_HOW_TO_SOLVE_TWO_INDEX -> {
+                R.id.rb_anxiety_ask_how_to_resolve_two
+            }
+            AnxietyData.ANSWER_HOW_TO_SOLVE_THREE_INDEX -> {
+                R.id.rb_anxiety_ask_how_to_resolve_three
+            }
+            else -> {
+                0
+            }
+        }
+    }
+
     fun saveAnxiety() {
         if (detailTextCountOutOfMax || solutionTextCountOutOfMax
                 || hardTextCountOutOfMax || askHowToResolveOneTextCountOutOfMax
@@ -389,22 +431,18 @@ class ActivityAnxiousEditData(
                 }
 
         var solution =
-                if (solutionChecked) {
+                if (detailPlanSelectAnswer == AnxietyData.ANSWER_CHECKED_YES) {
                     solutionText
-                } else if (!hardChecked) {
+                } else if (hardSelectAnswer == AnxietyData.ANSWER_CHECKED_NO) {
                     if (hardText.isEmpty()) {
-                        anxietyEditActivity.getString(R.string.anxiety_ask_how_to_resolve_three_edit_hint)
+                        anxietyEditActivity.getString(R.string.anxiety_record_hint)
                     } else {
                         hardText
                     }
                 } else {
                     when (checkedIndex) {
                         AnxietyData.ANSWER_HOW_TO_SOLVE_ONE_INDEX -> {
-                            if (askHowToResolveOneText.isEmpty()) {
-                                anxietyEditActivity.getString(R.string.anxiety_ask_how_to_resolve_one_default_text)
-                            } else {
-                                askHowToResolveOneText
-                            }
+                            askHowToResolveOneText
                         }
                         AnxietyData.ANSWER_HOW_TO_SOLVE_TWO_INDEX -> {
                             askHowToResolveTwoText
@@ -421,11 +459,16 @@ class ActivityAnxiousEditData(
                         }
                     }
                 }
-        var answers = arrayOf(
-                AnxietyAnswer(AnxietyData.ANSWER_HAS_DETAILED_PLAN_ID, if (solutionChecked) AnxietyData.ANSWER_CHECKED_YES else AnxietyData.ANSWER_CHECKED_NO),
-                AnxietyAnswer(AnxietyData.ANSWER_IS_HARD_PROBLEM_ID, if (hardChecked) AnxietyData.ANSWER_CHECKED_YES else AnxietyData.ANSWER_CHECKED_NO),
-                AnxietyAnswer(AnxietyData.ANSWER_HOW_TO_SOLVE_ID, checkedIndex))
-                .toList()
+
+        var answers = ArrayList<AnxietyAnswer>(3)
+        answers.add(AnxietyAnswer(AnxietyData.ANSWER_HAS_DETAILED_PLAN_ID, detailPlanSelectAnswer))
+        if (hardSelectAnswer != AnxietyData.ANSWER_INVALID_VALUE) {
+            answers.add(AnxietyAnswer(AnxietyData.ANSWER_IS_HARD_PROBLEM_ID, hardSelectAnswer))
+        }
+        if (checkedIndex != AnxietyData.ANSWER_INVALID_VALUE) {
+            answers.add(AnxietyAnswer(AnxietyData.ANSWER_HOW_TO_SOLVE_ID, checkedIndex))
+        }
+
         data.apply {
             anxiety = detailText
             this.solution = solution
@@ -438,12 +481,10 @@ class ActivityAnxiousEditData(
         Log.i("MCJ", "add: $data")
 
         if (TextUtils.isEmpty(data.anxiety) || TextUtils.isEmpty(data.solution)
-                || checkedIndex == AnxietyData.ANSWER_INVALID_VALUE
-                || data.getRemindAtInMillis() <= 0) {
+                || (data.getRemindAtInMillis() <= System.currentTimeMillis() && data.id == AnxietyData.ANXIETY_INVALID_ID)) {
             anxietyEditActivity.onSaveAnxietyFail(anxietyEditActivity.getString(R.string.please_finish_question_first))
             return
         }
-
 
         val call = if (data.id == AnxietyData.ANXIETY_INVALID_ID) {
             AppManager.getSdHttpService().addAnxietyBody(data)
