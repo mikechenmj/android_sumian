@@ -32,6 +32,8 @@ class AnxietyEditActivity : TitleBaseActivity() {
     }
 
     companion object {
+        private const val TIME_FIVE_SECOND_IN_MILLIS = 5 * 60 * 1000L
+
         fun launch(anxiety: AnxietyData? = null) {
             val intent = Intent(ActivityUtils.getTopActivity(), AnxietyEditActivity::class.java)
             intent.putExtra(EXTRA_KEY_ANXIETY, anxiety)
@@ -64,6 +66,7 @@ class AnxietyEditActivity : TitleBaseActivity() {
     fun showBottomSheet() {
         val bottomSheet = SelectTimeHHmmBottomSheet(this, string.set_remind_time, SelectTimeHHmmBottomSheet.DEFAULT_DAY,
                 SelectTimeHHmmBottomSheet.DEFAULT_HOUR, SelectTimeHHmmBottomSheet.DEFAULT_MINUTE,
+                Calendar.getInstance().apply { timeInMillis = System.currentTimeMillis() + TIME_FIVE_SECOND_IN_MILLIS },
                 object : SelectTimeHHmmBottomSheet.OnTimePickedListener {
                     override fun onTimePicked(hour: Int, minute: Int) {}
 

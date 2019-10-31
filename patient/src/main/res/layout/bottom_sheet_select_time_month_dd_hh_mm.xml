@@ -68,7 +68,7 @@
                 app:npv_TextSizeHint="@dimen/font_20"
                 app:npv_TextSizeNormal="16sp"
                 app:npv_TextSizeSelected="20sp"
-                app:npv_WrapSelectorWheel="true" />
+                app:npv_WrapSelectorWheel="false" />
 
             <TextView
                 style="@style/text_t2_16"
@@ -94,7 +94,7 @@
                 app:npv_TextSizeHint="@dimen/font_16"
                 app:npv_TextSizeNormal="@dimen/font_16"
                 app:npv_TextSizeSelected="@dimen/font_16"
-                app:npv_WrapSelectorWheel="true" />
+                app:npv_WrapSelectorWheel="false" />
         </LinearLayout>
     </FrameLayout>
 
