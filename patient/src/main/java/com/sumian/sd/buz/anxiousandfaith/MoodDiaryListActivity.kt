@@ -84,8 +84,8 @@ class MoodDiaryListActivity : TitleBaseActivity() {
                 if (response == null) {
                     return
                 }
-                var data = response.data
-                if (data.size < 1) {
+                var data = response.data.sortedByDescending { it.updatedAt }
+                if (data.isEmpty()) {
                     return
                 }
                 var currentTime = System.currentTimeMillis()
@@ -145,7 +145,7 @@ class MoodDiaryListActivity : TitleBaseActivity() {
             var isNegativeNoFillAll = !item.t.isFillAll() && !item.t.isPositiveMoodType()
             if (isNegativeNoFillAll) {
                 itemView.showUnHandleTip(getString(R.string.faith_un_handle_tip_text))
-            }else{
+            } else {
                 itemView.hideUnHandleTip()
             }
             itemView.setOnClickListener {

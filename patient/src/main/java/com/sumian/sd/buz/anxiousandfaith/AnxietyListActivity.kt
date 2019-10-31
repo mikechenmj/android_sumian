@@ -1,5 +1,6 @@
 package com.sumian.sd.buz.anxiousandfaith
 
+import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ToastUtils
@@ -83,8 +84,8 @@ class AnxietyListActivity : TitleBaseActivity() {
                 if (response == null) {
                     return
                 }
-                var data = response.data
-                if (data.size < 1) {
+                var data = response.data.sortedByDescending { it.updatedAt }
+                if (data.isEmpty()) {
                     return
                 }
                 var currentTime = System.currentTimeMillis()
