@@ -144,7 +144,9 @@ class MoodDiaryListActivity : TitleBaseActivity() {
             })
             var isNegativeNoFillAll = !item.t.isFillAll() && !item.t.isPositiveMoodType()
             if (isNegativeNoFillAll) {
-                itemView.showUnHandlerTip(getString(R.string.faith_un_handle_tip_text))
+                itemView.showUnHandleTip(getString(R.string.faith_un_handle_tip_text))
+            }else{
+                itemView.hideUnHandleTip()
             }
             itemView.setOnClickListener {
                 if (isNegativeNoFillAll) {

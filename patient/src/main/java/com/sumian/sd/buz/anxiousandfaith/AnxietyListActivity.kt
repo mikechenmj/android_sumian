@@ -143,7 +143,9 @@ class AnxietyListActivity : TitleBaseActivity() {
             })
             var isAnxiousUnHandle = item.t.getRemindAtInMillis() > System.currentTimeMillis()
             if (isAnxiousUnHandle) {
-                itemView.showUnHandlerTip(getString(R.string.anxious_un_handle_tip_text))
+                itemView.showUnHandleTip(getString(R.string.anxious_un_handle_tip_text))
+            }else{
+                itemView.hideUnHandleTip()
             }
             itemView.setOnClickListener { AnxietyDetailActivity.launch(item.t) }
         }
