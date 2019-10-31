@@ -28,6 +28,8 @@ class ActivityAnxiousEditData(
         var anxietyData: AnxietyData?) : BaseObservable() {
 
     companion object {
+        private const val TIME_ONE_DAY_IN_MILLIS = 24 * 60 * 60 * 1000L
+
         private const val DETAIL_TEXT_MAX_COUNT = 200
         private const val SOLUTION_TEXT_MAX_COUNT = 50
         private const val HARD_TEXT_MAX_COUNT = 50
@@ -367,7 +369,7 @@ class ActivityAnxiousEditData(
             if (anxietyData != null && anxietyData!!.remindAt > 0) {
                 anxietyData!!.getRemindAtInMillis()
             } else {
-                System.currentTimeMillis() + 24 * 60 * 60 * 1000L
+                System.currentTimeMillis() + TIME_ONE_DAY_IN_MILLIS
             }
         set(value) {
             if (value == field) {
@@ -478,15 +480,19 @@ class ActivityAnxiousEditData(
             }
         }
 
+        var isUpdate = data.id != AnxietyData.ANXIETY_INVALID_ID
         Log.i("MCJ", "add: $data")
 
-        if (TextUtils.isEmpty(data.anxiety) || TextUtils.isEmpty(data.solution)
-                || (data.getRemindAtInMillis() <= System.currentTimeMillis() && data.id == AnxietyData.ANXIETY_INVALID_ID)) {
+        if (TextUtils.isEmpty(data.anxiety) || TextUtils.isEmpty(data.solution)) {
             anxietyEditActivity.onSaveAnxietyFail(anxietyEditActivity.getString(R.string.please_finish_question_first))
             return
         }
 
-        val call = if (data.id == AnxietyData.ANXIETY_INVALID_ID) {
+        if (data.getRemindAtInMillis() <= System.currentTimeMillis() && !isUpdate) {
+            anxietyEditActivity.onSaveAnxietyFail(anxietyEditActivity.getString(R.string.anxiety_remind_time_too_old_tip))
+        }
+
+        val call = if (!isUpdate) {
             AppManager.getSdHttpService().addAnxietyBody(data)
         } else {
             AppManager.getSdHttpService().updateAnxietyBody(data.id, data)

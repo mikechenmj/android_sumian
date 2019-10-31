@@ -963,5 +963,6 @@
     <string name="mood_refute_unreasonable_belief_content">找出你的信念中，不合理的地方，例如：以前也试过睡不好，但是并不影响工作。我只是目前还未睡着，并不代表我会一直都睡不着。</string>
     <string name="reasonable_belief_content">请提出一个理性的信念，例如：虽然我现在睡不着，但可能待会儿就会有睡意了。</string>
     <string name="mood_reasonable_belief_result_content">如果你这么想，情绪会怎样，例如：我感觉放松一点了。</string>
+    <string name="anxiety_remind_time_too_old_tip">预设时间不能早于当前。</string>
 
 </resources>
