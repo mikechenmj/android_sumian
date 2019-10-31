@@ -363,13 +363,22 @@ class ActivityAnxiousEditData(
             notifyPropertyChanged(BR.askHowToResolveThreeTextCountOutOfMax)
         }
 
-    @get:Bindable
-    var remindSettingTypeContent: String =
+    var remindTimeInMillis: Long =
             if (anxietyData != null && anxietyData!!.remindAt > 0) {
-                TimeUtilV2.formatYYYYMMDDHHMM(anxietyData!!.getRemindAtInMillis())
+                anxietyData!!.getRemindAtInMillis()
             } else {
-                anxietyEditActivity.getString(R.string.anxiety_set_remind_time_tip)
+                System.currentTimeMillis() + 24 * 60 * 60 * 1000L
             }
+        set(value) {
+            if (value == field) {
+                return
+            }
+            field = value
+            anxietyData?.setRemindAtInSecond(value)
+        }
+
+    @get:Bindable
+    var remindSettingTypeContent: String = TimeUtilV2.formatYYYYMMDDHHMM(remindTimeInMillis)
         set(value) {
             if (value == field) {
                 return
@@ -386,15 +395,6 @@ class ActivityAnxiousEditData(
             }
             field = value
             notifyPropertyChanged(BR.saveButtonEnable)
-        }
-
-    var remindTimeInMillis: Long = 0
-        set(value) {
-            if (value == field) {
-                return
-            }
-            field = value
-            anxietyData?.setRemindAtInSecond(value)
         }
 
     private fun refreshHowToResolveCheckedId(): Int {
