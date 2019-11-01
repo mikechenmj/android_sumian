@@ -99,7 +99,10 @@ class MoodDetailFragment : BaseFragment() {
         ToastUtils.showShort(errMessage)
     }
 
-    fun onSaveMoodDiarySuccess(response: MoodDiaryData?) {
+    fun onSaveMoodDiarySuccess(message: String = "", response: MoodDiaryData?) {
+        if (message.isNotEmpty()) {
+            ToastUtils.showShort(message)
+        }
         mMoodDiaryDataOwner?.setMoodDiaryData(response)
         EventBusUtil.postStickyEvent(MoodDiaryChangeEvent(response!!))
         if (response.isPositiveMoodType()) {
