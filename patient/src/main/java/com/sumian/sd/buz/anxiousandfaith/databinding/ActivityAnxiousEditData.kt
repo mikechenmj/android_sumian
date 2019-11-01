@@ -573,6 +573,7 @@ class ActivityAnxiousEditData(
 
         if (data.getRemindAtInMillis() <= System.currentTimeMillis() && !isUpdate) {
             anxietyEditActivity.onSaveAnxietyFail(anxietyEditActivity.getString(R.string.anxiety_remind_time_too_old_tip))
+            return
         }
 
         val call = if (!isUpdate) {
