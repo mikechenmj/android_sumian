@@ -3,6 +3,7 @@ package com.sumian.sd.buz.anxiousandfaith
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.databinding.DataBindingUtil
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
@@ -72,7 +73,7 @@ class AnxietyEditActivity : TitleBaseActivity() {
 
                     override fun onTimePicked(year: Int, month: Int, day: Int, hour: Int, minute: Int) {
                         super.onTimePicked(year, month, day, hour, minute)
-                        var formatDateContent = getString(string.pattern_yyyy_MM_dd_hh_mm).format(year, month, day, hour, minute)
+                        var formatDateContent = getString(string.pattern_yyyy_MM_dd_hh_mm).format(year, month + 1, day, hour, minute)
                         var binding = DataBindingUtil.findBinding<ActivityAnxietyBinding>(findViewById(R.id.activity_anxiety))
                         binding?.data?.remindSettingTypeContent = formatDateContent
                         binding?.data?.remindTimeInMillis = Calendar.getInstance().apply { set(year, month, day, hour, minute, 0) }.timeInMillis
