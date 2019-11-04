@@ -964,5 +964,6 @@
     <string name="reasonable_belief_content">请提出一个理性的信念，例如：虽然我现在睡不着，但可能待会儿就会有睡意了。</string>
     <string name="mood_reasonable_belief_result_content">如果你这么想，情绪会怎样，例如：我感觉放松一点了。</string>
     <string name="anxiety_remind_time_too_old_tip">预设时间不能早于当前。</string>
+    <string name="mood_detail_save_success_text">保存成功</string>
 
 </resources>

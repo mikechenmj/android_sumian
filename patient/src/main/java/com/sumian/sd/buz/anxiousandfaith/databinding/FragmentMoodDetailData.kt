@@ -115,7 +115,7 @@ data class FragmentMoodDetailData(
             override fun onSuccess(response: MoodDiaryData?) {
                 onSaveSuccess(response)
                 savedMoodDiaryData = response
-                moodDetailFragment.onSaveMoodDiarySuccess(response)
+                moodDetailFragment.onSaveMoodDiarySuccess(moodDetailFragment.getString(R.string.mood_detail_save_success_text), response)
                 saveButtonClickable = true
             }
 
@@ -143,7 +143,7 @@ data class FragmentMoodDetailData(
             override fun onSuccess(response: MoodDiaryData?) {
                 onSaveSuccess(response)
                 savedMoodDiaryData = response
-                moodDetailFragment.onSaveMoodDiarySuccess(response)
+                moodDetailFragment.onSaveMoodDiarySuccess(moodDetailFragment.getString(R.string.mood_detail_save_success_text), response)
                 saveButtonClickable = true
             }
 
@@ -155,6 +155,6 @@ data class FragmentMoodDetailData(
     }
 
     fun challengeUnreasonableBelief() {
-        saveMoodDiaryWithCallback { response ->  moodDetailFragment.onChallengeUnreasonableBelief(response) }
+        saveMoodDiaryWithCallback { response -> moodDetailFragment.onChallengeUnreasonableBelief(response) }
     }
 }
