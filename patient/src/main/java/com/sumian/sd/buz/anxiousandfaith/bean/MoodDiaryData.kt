@@ -64,6 +64,7 @@ data class MoodDiaryData(
 
         fun isPositiveMoodType(moodDiaryType: Int): Boolean {
             return moodDiaryType == MoodDiaryType.DULL.value || moodDiaryType == MoodDiaryType.HAPPEN.value || moodDiaryType == MoodDiaryType.EXCITED.value
+                    || moodDiaryType == MoodDiaryType.CALM.value || moodDiaryType == MoodDiaryType.EASY.value || moodDiaryType == MoodDiaryType.PLEASURE.value
         }
     }
 
