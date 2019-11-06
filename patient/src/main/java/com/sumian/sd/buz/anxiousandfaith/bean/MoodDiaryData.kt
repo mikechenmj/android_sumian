@@ -21,7 +21,7 @@ data class MoodDiaryData(
         @SerializedName("irrational_belief")
         var irrationalBelief: String,
         @SerializedName("cognition_bias")
-        var cognitionBias: List<String>,
+        var cognitionBias: List<String>?,
         @SerializedName("irrational_belief_result")
         var irrationalBeliefResult: String,
         var idea: String,
@@ -84,7 +84,7 @@ data class MoodDiaryData(
     }
 
     fun isFillChallenge(): Boolean {
-        return !TextUtils.isEmpty(irrationalBelief) && !TextUtils.isEmpty(irrationalBeliefResult) && cognitionBias.isNotEmpty()
+        return !TextUtils.isEmpty(irrationalBelief) && !TextUtils.isEmpty(irrationalBeliefResult) && cognitionBias?.isNotEmpty() ?: false
     }
 
     fun isFillReasonableBelief(): Boolean {
