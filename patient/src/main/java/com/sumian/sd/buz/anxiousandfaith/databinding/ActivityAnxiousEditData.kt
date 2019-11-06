@@ -380,7 +380,7 @@ class ActivityAnxiousEditData(
         }
 
     var remindTimeInMillis: Long =
-            if (anxietyData != null && anxietyData!!.remindAt > 0) {
+            if (anxietyData != null && anxietyData!!.getRemindAtInMillis() > 0) {
                 anxietyData!!.getRemindAtInMillis()
             } else {
                 System.currentTimeMillis() + TIME_ONE_DAY_IN_MILLIS

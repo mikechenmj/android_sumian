@@ -51,6 +51,9 @@ data class AnxietyData(
     }
 
     fun getRemindAtInMillis(): Long {
+        if (remindAt == 0L) {
+            return createdAt * 1000L
+        }
         return remindAt * 1000L
     }
 
