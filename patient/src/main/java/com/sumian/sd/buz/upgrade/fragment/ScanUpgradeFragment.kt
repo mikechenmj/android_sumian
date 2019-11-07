@@ -61,7 +61,7 @@ class ScanUpgradeFragment(private var mDeviceType: Int) : BaseScanDeviceFragment
 
         override fun onSuccess() {
             LogManager.deviceUpgradeLog("升级固件成功：$mDeviceType")
-            mProgressDialog?.dismiss()
+            mProgressDialog?.dismissAllowingStateLoss()
             var upgradeConfirmDialog: UpgradeConfirmDialog? = null
             upgradeConfirmDialog = UpgradeConfirmDialog(
                     getString(R.string.upgrade_success_title_text),
