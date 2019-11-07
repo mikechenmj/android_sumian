@@ -723,14 +723,14 @@
     <string name="wake_up">醒來</string>
     <string name="get_up">起床</string>
     <string-array name="fill_diary_title">
-        <item>昨晚幾點準備睡覺?</item>
+        <item>昨晚幾點開始嘗試入睡?</item>
         <item>昨晚大概幾點睡著?</item>
         <item>今早幾點醒來?</item>
         <item>今早幾點起床?</item>
         <item>昨晚有醒來過嗎?</item>
         <item>昨天白天有小睡壹會嗎?</item>
         <item>昨天有服用過安眠類藥物嗎?</item>
-        <item>妳早上起來感覺如何?</item>
+        <item>妳認為妳的睡眠質量如何?</item>
         <item>還有什麽想記錄的?</item>
     </string-array>
     <string name="no_night_wake">沒醒過</string>
