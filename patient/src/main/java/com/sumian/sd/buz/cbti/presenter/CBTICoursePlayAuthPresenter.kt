@@ -9,6 +9,7 @@ import com.sumian.sd.buz.cbti.activity.CBTICoursePlayActivity
 import com.sumian.sd.buz.cbti.bean.CoursePlayAuth
 import com.sumian.sd.buz.cbti.bean.CoursePlayLog
 import com.sumian.sd.buz.cbti.job.CBTICourseWatchLogJobService
+import com.sumian.sd.common.log.SdLogManager
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import java.util.regex.Pattern
 
@@ -102,7 +103,11 @@ class CBTICoursePlayAuthPresenter(view: CBTICoursePlayActivity) : BaseViewModel(
             }
             mCurrentCourseId = currentCourseId
         }
-
+        if (currentFrame.toInt() >= mBrowseFrame.length) {
+            SdLogManager.logCrash("catch StringIndexOutOfBoundsException: currentFrame: " +
+                    "$currentFrame oldFrame: $oldFrame totalFrame: $totalFrame  mBrowseFrame: ${mBrowseFrame.length} ")
+            return
+        }
         if (currentFrame.toInt() >= 0 && currentFrame < totalFrame) {
             if (mBrowseFrame[currentFrame.toInt()] == '0') {
                 mBrowseFrame[currentFrame.toInt()] = '1'
