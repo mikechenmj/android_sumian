@@ -541,6 +541,9 @@ public class TxVideoPlayerController extends NiceVideoPlayerController implement
     protected void updateProgress() {
         long position = mNiceVideoPlayer.getCurrentPosition();
         long duration = mNiceVideoPlayer.getDuration();
+        if (position <= 0) {
+            return;
+        }
         int bufferPercentage = mNiceVideoPlayer.getBufferPercentage();
         mSeek.setSecondaryProgress(bufferPercentage);
         int progress = (int) (100f * position / duration);
@@ -550,7 +553,7 @@ public class TxVideoPlayerController extends NiceVideoPlayerController implement
         // 更新时间
         mTime.setText(new SimpleDateFormat("HH:mm", Locale.CHINA).format(new Date()));
 
-        mNiceVideoPlayer.onFrameChange(position / 1000L, duration / 1000L);
+        mNiceVideoPlayer.onFrameChange(position / 1000L - 1, duration / 1000L);
     }
 
     @Override

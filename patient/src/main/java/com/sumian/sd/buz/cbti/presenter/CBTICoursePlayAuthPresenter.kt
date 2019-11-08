@@ -24,7 +24,6 @@ class CBTICoursePlayAuthPresenter(view: CBTICoursePlayActivity) : BaseViewModel(
 
     private var mView: CBTICoursePlayActivity? = null
 
-    private var mCurrentCourseId = -1
     private var mCurrentFrame: Long = 0
     private val mBrowseFrame: StringBuilder by lazy {
         StringBuilder()
@@ -96,13 +95,13 @@ class CBTICoursePlayAuthPresenter(view: CBTICoursePlayActivity) : BaseViewModel(
 
     fun calculatePlayFrame(videoId: String, currentCourseId: Int, currentFrame: Long, oldFrame: Long, totalFrame: Long) {
         this.mCurrentFrame = currentFrame
-        if (mCurrentCourseId != currentCourseId) {//不一致说明是第一次播放，或者不是同一个视频,需要重新初始化
+        if (currentFrame == 0L) {
             mBrowseFrame.clear()
             for (i in 0 until totalFrame) {
                 mBrowseFrame.append("0")
             }
-            mCurrentCourseId = currentCourseId
         }
+
         if (currentFrame.toInt() >= mBrowseFrame.length) {
             SdLogManager.logCrash("catch StringIndexOutOfBoundsException: currentFrame: " +
                     "$currentFrame oldFrame: $oldFrame totalFrame: $totalFrame  mBrowseFrame: ${mBrowseFrame.length} ")
@@ -177,10 +176,7 @@ class CBTICoursePlayAuthPresenter(view: CBTICoursePlayActivity) : BaseViewModel(
             return
         }
         val hexPlayFrameProgress = mBrowseFrame.toString().toBigInteger(2).toString(16)
-        if (mCurrentCourseId != courseId) {
-            mCurrentCourseId = courseId
-        }
-        CBTICourseWatchLogJobService.execute(mCurrentCourseId, videoId, hexPlayFrameProgress, mCurrentFrame.toInt(), hexWatchLength)
+        CBTICourseWatchLogJobService.execute(courseId, videoId, hexPlayFrameProgress, mCurrentFrame.toInt(), hexWatchLength)
     }
 
     /**
