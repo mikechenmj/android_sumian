@@ -545,7 +545,6 @@ class ActivityAnxiousEditData(
         }
 
         var isUpdate = data.id != AnxietyData.ANXIETY_INVALID_ID
-        Log.i("MCJ", "add: $data")
 
         var anxietyIsEmpty = TextUtils.isEmpty(data.anxiety)
         if (anxietyIsEmpty) {
@@ -586,7 +585,6 @@ class ActivityAnxiousEditData(
         call.enqueue(object : BaseSdResponseCallback<AnxietyData>() {
             override fun onSuccess(response: AnxietyData?) {
                 anxietyData = response ?: anxietyData
-                Log.i("MCJ", "response: $response")
                 EventBusUtil.postStickyEvent(AnxietyChangeEvent(response!!))
                 anxietyEditActivity.onSaveAnxietySuccess(response)
             }
