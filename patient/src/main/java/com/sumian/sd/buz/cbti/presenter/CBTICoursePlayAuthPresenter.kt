@@ -101,6 +101,9 @@ class CBTICoursePlayAuthPresenter(view: CBTICoursePlayActivity) : BaseViewModel(
                 mBrowseFrame.append("0")
             }
         }
+        if (mBrowseFrame.isEmpty()) {
+            return
+        }
 
         if (currentFrame.toInt() >= mBrowseFrame.length) {
             SdLogManager.logCrash("catch StringIndexOutOfBoundsException: currentFrame: " +
