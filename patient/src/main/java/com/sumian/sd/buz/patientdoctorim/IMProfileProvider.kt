@@ -34,7 +34,9 @@ class IMProfileProvider : LCChatProfileProvider {
 
     private fun initAppUserInfo() {
         val userInfo = AppManager.getAccountViewModel().userInfo
-        mImUserInfoCache.put(userInfo!!.im_id!!, LCChatKitUser(userInfo.im_id, userInfo.name, userInfo.avatar))
+        if (userInfo != null) {
+            mImUserInfoCache.put(userInfo.im_id, LCChatKitUser(userInfo.im_id, userInfo.name, userInfo.avatar))
+        }
     }
 
     override fun fetchProfiles(userIdList: MutableList<String>, profilesCallBack: LCChatProfilesCallBack?) {
