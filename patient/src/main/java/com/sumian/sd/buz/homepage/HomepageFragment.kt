@@ -81,9 +81,6 @@ HomepageFragment : BaseViewModelFragment<BaseViewModel>(), OnEnterListener, Last
             refresh_layout.postDelayed({ refresh_layout?.hideRefreshAnim() }, 1000)
         }
         initUserInfo()
-        cbti_progress_view.setOnEnterLearnBtnClickListener(View.OnClickListener {
-            CBTIIntroductionActivity.show()
-        })
         tv_relaxation.setOnClickListener {
             ActivityUtils.startActivity(RelaxationListActivity::class.java)
             StatUtil.event(StatConstants.click_home_page_relaxation_icon)
@@ -160,12 +157,6 @@ HomepageFragment : BaseViewModelFragment<BaseViewModel>(), OnEnterListener, Last
             cbti_banner_view_pager.hide()
         } else {
             cbti_banner_view_pager.bindBannerList(banners)
-            cbti_banner_view_pager.setBannerClickListener(object : BannerViewPager.OnBannerClickListener {
-                override fun onClick(banner: View, position: Int) {
-                    CBTIIntroductionActivity.show()
-                    StatUtil.event(StatConstants.click_home_page_cbti_banner)
-                }
-            })
             cbti_banner_view_pager.show()
             iv_default_banner.visibility = View.GONE
         }
@@ -225,16 +216,21 @@ HomepageFragment : BaseViewModelFragment<BaseViewModel>(), OnEnterListener, Last
                 isLock = response?.meta?.isLock != false
                 cbti_progress_view.setData(response)
                 if (isLock) {
-                    iv_default_banner.setOnClickListener {
-                        CBTIIntroductionActivity.show()
-                        StatUtil.event(StatConstants.click_home_page_cbti_banner)
-                    }
                     cbti_progress_view.visibility = View.GONE
                     cbti_banner_view_pager.visibility = View.INVISIBLE
                     BannerPresenter.init(this@HomepageFragment).getBannerList()
                 } else {
                     iv_default_banner.visibility = View.GONE
                     cbti_progress_view.visibility = View.VISIBLE
+                    cbti_progress_view.setOnEnterLearnBtnClickListener(View.OnClickListener {
+                        CBTIIntroductionActivity.show()
+                    })
+                    cbti_banner_view_pager.setBannerClickListener(object : BannerViewPager.OnBannerClickListener {
+                        override fun onClick(banner: View, position: Int) {
+                            CBTIIntroductionActivity.show()
+                            StatUtil.event(StatConstants.click_home_page_cbti_banner)
+                        }
+                    })
                     cbti_banner_view_pager.hide()
                 }
             }
