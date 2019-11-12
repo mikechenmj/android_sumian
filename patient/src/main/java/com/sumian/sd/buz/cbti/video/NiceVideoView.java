@@ -826,7 +826,10 @@ public class NiceVideoView extends FrameLayout implements INiceVideoPlayer, Text
 
     @Override
     public void onFrameChange(long currentFrame, long totalFrame) {
-        if (currentFrame <= 1) {
+        if (currentFrame < 0) {
+            return;
+        }
+        if (currentFrame == 0) {
             this.mOldFrame = currentFrame;
         }
         mOnVideoViewEvent.onFrameChangeCallback(currentFrame, mOldFrame, totalFrame);
