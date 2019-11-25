@@ -21,14 +21,17 @@ import com.sumian.sd.databinding.FragmentMoodSelectLayoutBinding
 class MoodSelectFragment : BaseFragment() {
 
     private val mAngryLabelData = arrayOf(
-            SumianFlexboxLayout.SimpleLabelBean("尴尬", false),
-            SumianFlexboxLayout.SimpleLabelBean("警觉", false),
+            SumianFlexboxLayout.SimpleLabelBean("嫉妒", false),
+            SumianFlexboxLayout.SimpleLabelBean("厌恶", false),
+            SumianFlexboxLayout.SimpleLabelBean("鄙夷", false),
             SumianFlexboxLayout.SimpleLabelBean("愤怒", false),
             SumianFlexboxLayout.SimpleLabelBean("怨恨", false)
     )
 
     private val mSadLabelData = arrayOf(
             SumianFlexboxLayout.SimpleLabelBean("价值感低", false),
+            SumianFlexboxLayout.SimpleLabelBean("无助", false),
+            SumianFlexboxLayout.SimpleLabelBean("羞愧", false),
             SumianFlexboxLayout.SimpleLabelBean("悲伤", false),
             SumianFlexboxLayout.SimpleLabelBean("担忧", false),
             SumianFlexboxLayout.SimpleLabelBean("害怕", false),
@@ -37,14 +40,16 @@ class MoodSelectFragment : BaseFragment() {
     )
 
     private val mDullLabelData = arrayOf(
+            SumianFlexboxLayout.SimpleLabelBean("接受", false),
             SumianFlexboxLayout.SimpleLabelBean("平静", false),
             SumianFlexboxLayout.SimpleLabelBean("轻松", false),
-            SumianFlexboxLayout.SimpleLabelBean("幸福", false)
+            SumianFlexboxLayout.SimpleLabelBean("信任", false)
     )
 
     private val mHappenLabelData = arrayOf(
             SumianFlexboxLayout.SimpleLabelBean("自信", false),
             SumianFlexboxLayout.SimpleLabelBean("充满希望", false),
+            SumianFlexboxLayout.SimpleLabelBean("幸福", false),
             SumianFlexboxLayout.SimpleLabelBean("喜悦", false),
             SumianFlexboxLayout.SimpleLabelBean("高兴", false)
     )
