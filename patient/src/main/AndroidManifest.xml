@@ -529,6 +529,11 @@
             android:name=".buz.version.ui.AppUpgradeDialogActivity"
             android:launchMode="singleTop"
             android:theme="@style/DialogActivity" />
+
+        <activity
+            android:name=".buz.account.login.ImageCaptchaDialogActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/DialogActivity" />
         <activity
             android:name=".buz.cbti.activity.CbtiFinalReportDialogActivity"
             android:launchMode="singleTop"

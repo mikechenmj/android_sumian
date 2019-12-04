@@ -15,6 +15,7 @@ class LoginContract {
 
     interface View : BaseShowLoadingView {
         fun onRequestCaptchaSuccess()
+        fun onRequestCaptchaFail(code: Int)
     }
 
 }

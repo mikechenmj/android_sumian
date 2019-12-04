@@ -130,8 +130,35 @@ class LoginPresenter(var view: LoginContract.View) : BaseViewModel() {
     }
 
     fun requestCaptcha(mobile: String) {
-        var call : Call<*>? = null
+        var call: Call<*>? = null
         call = CaptchaHelper.requestCaptcha(mobile, object : CaptchaHelper.RequestCaptchaListener {
+            override fun onFail(code: Int) {
+                view.onRequestCaptchaFail(code)
+            }
+
+            override fun onStart() {
+                view.showLoading()
+            }
+
+            override fun onSuccess() {
+                view.onRequestCaptchaSuccess()
+            }
+
+            override fun onFinish() {
+                view.dismissLoading()
+                removeCall(call)
+            }
+        })
+        addCall(call)
+    }
+
+    fun requestCaptcha(mobile: String, captchaId: String, captchaPhrase: String) {
+        var call: Call<*>? = null
+        call = CaptchaHelper.requestCaptcha(mobile, captchaId, captchaPhrase, object : CaptchaHelper.RequestCaptchaListener {
+            override fun onFail(code: Int) {
+                view.onRequestCaptchaFail(code)
+            }
+
             override fun onStart() {
                 view.showLoading()
             }
