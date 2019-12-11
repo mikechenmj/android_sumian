@@ -250,7 +250,7 @@ interface SdApi {
 
     @GET("filled-scale-collections")
     fun getFilledScaleCollections(@Query("page") page: Int,
-                                    @Query("per_page") perPage: Int = 15): Call<PaginationResponseV2<FilledScaleCollection>>
+                                  @Query("per_page") perPage: Int = 15): Call<PaginationResponseV2<FilledScaleCollection>>
     // ---------- device info ----------
     /**
      *
@@ -510,7 +510,9 @@ interface SdApi {
     @GET("firmware/latest")
     fun getFirmwareLatestVersion(
             @Query("monitor_hw_version") monitorHardwareVersion: String?,
-            @Query("sleeper_hw_version") sleeperHardwareVersion: String?
+            @Query("sleeper_hw_version") sleeperHardwareVersion: String?,
+            @Query("monitor_firmware_version") monitorFirmwareVersion: String?,
+            @Query("sleeper_firmware_version") sleeperFirmwareVersion: String?
     ): Call<FirmwareVersionInfo>
 
     @GET("app-version/latest")

@@ -699,7 +699,9 @@ object DeviceManager {
         NetworkManager.getApi()
                 .getDeviceLatestVersionInfo(
                         mSumianDevice?.monitorVersionInfo?.hardwareVersion,
-                        mSumianDevice?.sleepMasterVersionInfo?.hardwareVersion
+                        mSumianDevice?.sleepMasterVersionInfo?.hardwareVersion,
+                        mSumianDevice?.monitorVersionInfo?.softwareVersion,
+                        mSumianDevice?.sleepMasterVersionInfo?.softwareVersion
                 ).enqueue(object : retrofit2.Callback<DeviceVersionInfo> {
                     override fun onFailure(call: Call<DeviceVersionInfo>, t: Throwable) {
                         callback.onFail(1, t.message ?: "error known")
