@@ -32,7 +32,9 @@ interface Api {
     @GET("firmware/latest")
     fun getDeviceLatestVersionInfo(
             @Query("monitor_hw_version") monitorHardwareVersion: String?,
-            @Query("sleeper_hw_version") sleeperHardwareVersion: String?
+            @Query("sleeper_hw_version") sleeperHardwareVersion: String?,
+            @Query("monitor_firmware_version") monitorFirmwareVersion: String?,
+            @Query("sleeper_firmware_version") sleeperFirmwareVersion: String?
     ): Call<DeviceVersionInfo>
 
     //在日历中获取日报告信息

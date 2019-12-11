@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.sumian.sd.buz.account.model.AccountManager;
 
 import java.io.IOException;
 import java.util.Map;
@@ -663,7 +664,8 @@ public class NiceVideoView extends FrameLayout implements INiceVideoPlayer, Text
 
     @NonNull
     private String formatVideoUrl2SavePlayPosition() {
-        return String.valueOf(mCBTIChapterId) + mCurrentVid;
+        String userId = AccountManager.INSTANCE.getUserInfo() != null ? String.valueOf(AccountManager.INSTANCE.getUserInfo().id) : "";
+        return mCBTIChapterId + mCurrentVid + userId;
     }
 
     /**

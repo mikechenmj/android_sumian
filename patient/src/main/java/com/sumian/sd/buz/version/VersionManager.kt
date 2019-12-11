@@ -92,7 +92,10 @@ object VersionManager {
         val device = DeviceManager.getDevice()
         val call = AppManager.getSdHttpService().getFirmwareLatestVersion(
                 device?.monitorVersionInfo?.hardwareVersion,
-                device?.sleepMasterVersionInfo?.hardwareVersion)
+                device?.sleepMasterVersionInfo?.hardwareVersion,
+                device?.monitorVersionInfo?.softwareVersion,
+                device?.sleepMasterVersionInfo?.softwareVersion
+                )
         call.enqueue(object : BaseSdResponseCallback<FirmwareVersionInfo>() {
             override fun onFailure(errorResponse: ErrorResponse) {}
 
