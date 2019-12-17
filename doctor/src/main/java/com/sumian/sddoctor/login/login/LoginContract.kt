@@ -20,6 +20,7 @@ class LoginContract {
         fun launchMain()
         fun onRequestCaptchaSuccess()
         fun getContext(): Context
+        fun onRequestCaptchaFail(code: Int)
     }
 
     interface Presenter : BasePresenter {
@@ -27,5 +28,6 @@ class LoginContract {
         fun loginByCaptcha(mobile: String, captcha: String)
         fun loginByWechat(activity: Activity)
         fun requestCaptcha(mobile: String)
+        fun requestCaptcha(mobile: String, captchaId: String, captchaPhrase: String)
     }
 }

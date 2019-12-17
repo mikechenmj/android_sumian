@@ -1,16 +1,13 @@
-package com.sumian.sd.buz.account.login
+package com.sumian.sddoctor.login.login
 
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
-import android.util.Log
 import com.sumian.common.image.ImageLoader
 import com.sumian.common.network.response.ErrorResponse
-import com.sumian.sd.R
-import com.sumian.sd.app.AppManager
-import com.sumian.sd.common.network.api.SdApi
-import com.sumian.sd.common.network.callback.BaseSdResponseCallback
+import com.sumian.sddoctor.R
+import com.sumian.sddoctor.app.AppManager
+import com.sumian.sddoctor.network.callback.BaseSdResponseCallback
 import kotlinx.android.synthetic.main.dialog_image_captcha.*
 
 class ImageCaptchaDialog(context: Context, var onImageCaptchaResultListener: OnImageCaptchaResultListener) : Dialog(context, R.style.SumianDialog) {
@@ -44,7 +41,7 @@ class ImageCaptchaDialog(context: Context, var onImageCaptchaResultListener: OnI
     }
 
     private fun refreshImageCaptcha() {
-        val call = AppManager.getSdHttpService().queryImageCaptcha()
+        val call = AppManager.getHttpService().queryImageCaptcha()
         call.enqueue(object : BaseSdResponseCallback<ImageCaptcha>() {
             override fun onSuccess(response: ImageCaptcha?) {
                 if (response == null) {

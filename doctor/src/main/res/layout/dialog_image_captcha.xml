@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/image_captcha_background"
+    android:orientation="vertical"
+    android:padding="@dimen/normal_padding">
+
+    <ImageView
+        android:id="@+id/iv_close"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_gravity="end"
+        android:src="@drawable/ic_close"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/tv_image_captcha_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/image_captcha_title"
+        android:textSize="@dimen/font_18"
+        android:textStyle="bold" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:layout_marginTop="30dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/et_image_captcha_content"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:gravity="center_vertical"
+                android:hint="@string/image_captcha_content_hint"
+                android:paddingLeft="@dimen/normal_padding"
+                android:paddingRight="@dimen/normal_padding"
+                android:textColor="@color/t1_color"
+                android:textColorHint="@color/t2_color"
+                android:textSize="@dimen/font_16" />
+
+            <ImageView
+                android:id="@+id/iv_image_captcha"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="right|center"
+                android:scaleType="fitXY" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/image_captcha_content_background" />
+    </FrameLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/normal_interval"
+        android:gravity="end"
+        android:text="@string/image_captcha_tip"
+        android:textColor="@color/t2_color"
+        android:textSize="@dimen/font_12" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/bt_image_captcha_confirm"
+        style="@style/SumianButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="@dimen/normal_padding"
+        android:text="@string/sure" />
+
+</LinearLayout>

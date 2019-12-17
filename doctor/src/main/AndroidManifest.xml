@@ -98,6 +98,12 @@
             android:name=".login.login.LoginActivity"
             android:launchMode="singleTask" />
         <activity android:name=".login.login.BindWechatActivity" />
+
+        <activity
+            android:name=".login.login.ImageCaptchaDialogActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/DialogActivity" />
+
         <!-- booking -->
         <activity android:name=".booking.BookingManagementActivity" />
         <service android:name=".notification.MarkNotificationAsReadService" />

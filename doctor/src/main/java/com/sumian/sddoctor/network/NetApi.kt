@@ -9,6 +9,7 @@ import com.sumian.common.buz.notification.NotificationListResponse
 import com.sumian.sddoctor.account.bean.Feedback
 import com.sumian.sddoctor.account.bean.Version
 import com.sumian.sddoctor.account.kefu.KeFuMessage
+import com.sumian.sddoctor.login.login.ImageCaptcha
 import com.sumian.sddoctor.booking.bean.*
 import com.sumian.sddoctor.homepage.FreeCallResponse
 import com.sumian.sddoctor.homepage.bean.PatientDashboardData
@@ -85,6 +86,15 @@ interface NetApi {
     @FormUrlEncoded
     @POST("doctor/authorizations/captcha")
     fun requestLoginCaptcha(@Field("mobile") mobile: String): Call<Any>
+
+    @FormUrlEncoded
+    @POST("doctor/authorizations/captcha")
+    fun requestLoginCaptcha(@Field("mobile") mobile: String,
+                            @Field("captcha_id") captchaId: String,
+                            @Field("captcha_phrase") captchaPhrase: String): Call<Any>
+
+    @POST("doctor/image-captcha")
+    fun queryImageCaptcha(): Call<ImageCaptcha>
 
     @JvmSuppressWildcards
     @FormUrlEncoded
