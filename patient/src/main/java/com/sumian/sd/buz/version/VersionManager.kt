@@ -140,6 +140,9 @@ object VersionManager {
         val isConnected = if (versionType == VERSION_TYPE_MONITOR) DeviceManager.isMonitorConnected() else DeviceManager.isSleepMasterConnected()
         val currentVersionInfo = if (versionType == VERSION_TYPE_MONITOR) DeviceManager.getMonitorSoftwareVersion() else DeviceManager.getSleepMasterSoftwareVersion()
         val newVersionInfo = if (versionType == VERSION_TYPE_MONITOR) firmwareVersionInfo.monitor else firmwareVersionInfo.sleeper
+        if(currentVersionInfo == null || currentVersionInfo == "0.0.0") {
+            return false
+        }
         return (isConnected
                 && newVersionInfo != null
                 && currentVersionInfo != null
