@@ -139,27 +139,6 @@ class LoginPresenter(var view: LoginContract.View) : LoginContract.Presenter {
                 })
     }
 
-    override fun requestCaptcha(mobile: String, captchaId: String, captchaPhrase: String) {
-        view.showLoading()
-        AppManager.getHttpService().requestLoginCaptcha(mobile, captchaId, captchaPhrase)
-                .enqueue(object : BaseSdResponseCallback<Any>() {
-                    override fun onSuccess(response: Any?) {
-                        view.onRequestCaptchaSuccess()
-                    }
-
-                    override fun onFailure(errorResponse: ErrorResponse) {
-                        if (errorResponse.code != 4001) {
-                            ToastUtils.showShort(errorResponse.message)
-                        }
-                        view.onRequestCaptchaFail(errorResponse.code)
-                    }
-
-                    override fun onFinish() {
-                        view.dismissLoading()
-                    }
-                })
-    }
-
     fun onLoginSuccess(response: LoginResponse?) {
         StatUtil.event(StatConstants.on_login_success)
         SumianImageTextToast.showToast(App.getAppContext(), R.drawable.ic_dialog_success, "登录成功", false)

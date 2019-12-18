@@ -197,7 +197,8 @@ class LoginActivity : BaseActivity(), LoginContract.View {
     }
 
     private fun showImageCaptcha() {
-        ImageCaptchaDialogActivity.startForResult(this, RESULT_CODE_IMAGE_CAPTCHA)
+        ImageCaptchaDialogActivity.startForResult(this, getPhoneNumberWithCheck()
+                ?: "", RESULT_CODE_IMAGE_CAPTCHA)
     }
 
 
@@ -210,9 +211,7 @@ class LoginActivity : BaseActivity(), LoginContract.View {
                     if (data == null) {
                         return
                     }
-                    var id = data.getStringExtra(ImageCaptchaDialog.EXTRA_CAPTCHA_ID)
-                    var phrase = data.getStringExtra(ImageCaptchaDialog.EXTRA_CAPTCHA_PHRASE)
-                    mPresenter.requestCaptcha(getPhoneNumberWithCheck() ?: "", id, phrase)
+                    onRequestCaptchaSuccess()
                 }
             }
         }

@@ -43,7 +43,6 @@ class BindWechatActivity : BaseActivity() {
     }
 
     override fun initWidget() {
-        Log.i("MCJ","initWidget")
         super.initWidget()
         title_bar.setOnBackClickListener { run { finish() } }
         tv_send_captcha.setOnClickListener { onSendCaptchaClick() }
@@ -73,7 +72,7 @@ class BindWechatActivity : BaseActivity() {
             override fun onFailure(errorResponse: ErrorResponse) {
                 if (errorResponse.code == 4001) {
                     showImageCaptcha()
-                }else {
+                } else {
                     ToastUtils.showShort(errorResponse.message)
                 }
             }
@@ -85,7 +84,8 @@ class BindWechatActivity : BaseActivity() {
     }
 
     private fun showImageCaptcha() {
-        ImageCaptchaDialogActivity.startForResult(this, RESULT_CODE_IMAGE_CAPTCHA)
+        ImageCaptchaDialogActivity.startForResult(this, getPhoneNumberWithCheck()
+                ?: "", RESULT_CODE_IMAGE_CAPTCHA)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -97,36 +97,9 @@ class BindWechatActivity : BaseActivity() {
                     if (data == null) {
                         return
                     }
-                    var id = data.getStringExtra(ImageCaptchaDialog.EXTRA_CAPTCHA_ID)
-                    var phrase = data.getStringExtra(ImageCaptchaDialog.EXTRA_CAPTCHA_PHRASE)
-                    requestCaptchaAfterImageCaptcha(id, phrase)
-                }
-            }
-        }
-    }
-
-    private fun requestCaptchaAfterImageCaptcha(captchaId: String, captchaPhrase: String) {
-        val number = getPhoneNumberWithCheck()
-        if (number != null) {
-            val call = AppManager.getHttpService().requestLoginCaptcha(number, captchaId, captchaPhrase)
-            addCall(call)
-            call.enqueue(object : BaseSdResponseCallback<Any>() {
-                override fun onSuccess(response: Any?) {
                     tv_send_captcha.startCountDown()
                 }
-
-                override fun onFailure(errorResponse: ErrorResponse) {
-                    if (errorResponse.code == 4001) {
-                        showImageCaptcha()
-                    }else {
-                        ToastUtils.showShort(errorResponse.message)
-                    }
-                }
-
-                override fun onFinish() {
-                    dismissLoading()
-                }
-            })
+            }
         }
     }
 

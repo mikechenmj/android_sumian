@@ -77,7 +77,8 @@ class RegisterVerifyPhoneNumberFragment : BaseFragment() {
     }
 
     private fun showImageCaptcha() {
-        ImageCaptchaDialogActivity.startForResult(activity!!, RESULT_CODE_IMAGE_CAPTCHA)
+        ImageCaptchaDialogActivity.startForResult(activity!!, EditTextUtil.getPhoneNumberWithCheck(context!!, et_phone)
+                ?: "", RESULT_CODE_IMAGE_CAPTCHA)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -89,38 +90,9 @@ class RegisterVerifyPhoneNumberFragment : BaseFragment() {
                     if (data == null) {
                         return
                     }
-                    var id = data.getStringExtra(ImageCaptchaDialog.EXTRA_CAPTCHA_ID)
-                    var phrase = data.getStringExtra(ImageCaptchaDialog.EXTRA_CAPTCHA_PHRASE)
-                    requestCaptchaAfterImageCaptcha(id, phrase)
-                }
-            }
-        }
-    }
-
-    private fun requestCaptchaAfterImageCaptcha(captchaId: String, captchaPhrase: String) {
-        val number = EditTextUtil.getPhoneNumberWithCheck(context!!, et_phone)
-        if (number != null) {
-            val call = AppManager.getHttpService().requestLoginCaptcha(number, captchaId, captchaPhrase)
-            addCall(call)
-            call.enqueue(object : BaseSdResponseCallback<Any>() {
-                override fun onSuccess(response: Any?) {
-                    LogUtils.d(response)
                     tv_send_captcha.startCountDown()
                 }
-
-                override fun onFailure(errorResponse: ErrorResponse) {
-                    LogUtils.d(errorResponse)
-                    ToastUtils.showShort(errorResponse.message)
-                    if (errorResponse.code == 4001) {
-                        showImageCaptcha()
-                    }
-                }
-
-                override fun onFinish() {
-                    super.onFinish()
-                    dismissLoading()
-                }
-            })
+            }
         }
     }
 
