@@ -35,14 +35,13 @@ class ImageCaptchaDialog(context: Context, private var onImageCaptchaResultListe
                 return@setOnClickListener
             }
             var data = Intent()
-            refreshImageCaptcha()
             data.putExtra(EXTRA_CAPTCHA_ID, mImageCaptcha!!.id)
             data.putExtra(EXTRA_CAPTCHA_PHRASE, imageCaptcha.toString())
             onImageCaptchaResultListener.onSend(data)
         }
     }
 
-    private fun refreshImageCaptcha() {
+    fun refreshImageCaptcha() {
         val call = AppManager.getHttpService().queryImageCaptcha()
         call.enqueue(object : BaseSdResponseCallback<ImageCaptcha>() {
             override fun onSuccess(response: ImageCaptcha?) {

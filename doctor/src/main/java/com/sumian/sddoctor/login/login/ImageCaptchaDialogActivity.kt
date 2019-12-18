@@ -22,6 +22,7 @@ class ImageCaptchaDialogActivity : BaseActivity(), ImageCaptchaDialog.OnImageCap
 
     private var mNumber: String = ""
     private var mSending = false
+    private var mDialog: ImageCaptchaDialog? = null
 
     override fun onSend(data: Intent) {
         if (data == null) {
@@ -47,6 +48,7 @@ class ImageCaptchaDialogActivity : BaseActivity(), ImageCaptchaDialog.OnImageCap
 
             override fun onFailure(errorResponse: ErrorResponse) {
                 ToastUtils.showShort(errorResponse.message)
+                mDialog?.refreshImageCaptcha()
             }
 
             override fun onFinish() {
@@ -76,7 +78,7 @@ class ImageCaptchaDialogActivity : BaseActivity(), ImageCaptchaDialog.OnImageCap
     }
 
     private fun showDialog() {
-        ImageCaptchaDialog(this, this).show()
+        mDialog = ImageCaptchaDialog(this, this).apply { show() }
     }
 
 }

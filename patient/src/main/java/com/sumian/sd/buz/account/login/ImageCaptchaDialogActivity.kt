@@ -21,6 +21,7 @@ class ImageCaptchaDialogActivity : BaseActivity(), ImageCaptchaDialog.OnImageCap
 
     private var mNumber: String = ""
     private var mSending = false
+    private var mDialog: ImageCaptchaDialog? = null
 
     override fun onSend(data: Intent) {
         if (data == null) {
@@ -38,6 +39,7 @@ class ImageCaptchaDialogActivity : BaseActivity(), ImageCaptchaDialog.OnImageCap
         var call: Call<*>? = null
         call = CaptchaHelper.requestCaptcha(number, captchaId, captchaPhrase, object : CaptchaHelper.RequestCaptchaListener {
             override fun onFail(code: Int) {
+                mDialog?.refreshImageCaptcha()
             }
 
             override fun onStart() {
@@ -76,6 +78,6 @@ class ImageCaptchaDialogActivity : BaseActivity(), ImageCaptchaDialog.OnImageCap
     }
 
     private fun showDialog() {
-        ImageCaptchaDialog(this, this).show()
+        mDialog = ImageCaptchaDialog(this, this).apply { show() }
     }
 }
