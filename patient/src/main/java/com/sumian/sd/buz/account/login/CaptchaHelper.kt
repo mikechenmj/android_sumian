@@ -51,9 +51,7 @@ object CaptchaHelper {
         call.enqueue(object : BaseSdResponseCallback<Unit>() {
             override fun onFailure(errorResponse: ErrorResponse) {
                 listenerWf.get()?.onFail(errorResponse.code)
-                if (errorResponse.code != 4001) {
-                    ToastUtils.showShort(errorResponse.message)
-                }
+                ToastUtils.showShort(errorResponse.message)
             }
 
             override fun onSuccess(response: Unit?) {

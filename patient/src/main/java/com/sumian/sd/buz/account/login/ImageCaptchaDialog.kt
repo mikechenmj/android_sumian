@@ -27,7 +27,7 @@ class ImageCaptchaDialog(context: Context, var onImageCaptchaResultListener: OnI
         setContentView(R.layout.dialog_image_captcha)
         refreshImageCaptcha()
         iv_image_captcha.setOnClickListener { refreshImageCaptcha() }
-        iv_close.setOnClickListener { onImageCaptchaResultListener.onFail() }
+        iv_close.setOnClickListener { onImageCaptchaResultListener.onClose() }
         bt_image_captcha_confirm.setOnClickListener {
             var imageCaptcha = et_image_captcha_content.text
             if (imageCaptcha.isEmpty()) {
@@ -39,7 +39,7 @@ class ImageCaptchaDialog(context: Context, var onImageCaptchaResultListener: OnI
             var data = Intent()
             data.putExtra(EXTRA_CAPTCHA_ID, mImageCaptcha!!.id)
             data.putExtra(EXTRA_CAPTCHA_PHRASE, imageCaptcha.toString())
-            onImageCaptchaResultListener.onSuccess(data)
+            onImageCaptchaResultListener.onSend(data)
         }
     }
 
@@ -60,7 +60,7 @@ class ImageCaptchaDialog(context: Context, var onImageCaptchaResultListener: OnI
     }
 
     interface OnImageCaptchaResultListener {
-        fun onSuccess(data: Intent)
-        fun onFail()
+        fun onSend(data: Intent)
+        fun onClose()
     }
 }

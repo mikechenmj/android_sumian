@@ -86,14 +86,6 @@ class LoginActivity : BaseViewModelActivity<LoginPresenter>(), LoginContract.Vie
         }
     }
 
-    private fun requestCaptchaAfterImageCaptcha(captchaId: String, captchaPhrase: String) {
-        val number = getPhoneNumberWithCheck()
-        if (number != null) {
-            mViewModel!!.requestCaptcha(number, captchaId, captchaPhrase)
-            StatUtil.event(StatConstants.click_captcha, mapOf("usage" to "登录注册", "mobile" to number))
-        }
-    }
-
     override fun onStart() {
         super.onStart()
         AppManager.getAccountViewModel().clearToken()
@@ -160,7 +152,8 @@ class LoginActivity : BaseViewModelActivity<LoginPresenter>(), LoginContract.Vie
     }
 
     private fun showImageCaptcha() {
-        ImageCaptchaDialogActivity.startForResult(this, RESULT_CODE_IMAGE_CAPTCHA)
+        ImageCaptchaDialogActivity.startForResult(this, getPhoneNumberWithCheck()
+                ?: "", RESULT_CODE_IMAGE_CAPTCHA)
     }
 
 
@@ -173,9 +166,7 @@ class LoginActivity : BaseViewModelActivity<LoginPresenter>(), LoginContract.Vie
                     if (data == null) {
                         return
                     }
-                    var id = data.getStringExtra(ImageCaptchaDialog.EXTRA_CAPTCHA_ID)
-                    var phrase = data.getStringExtra(ImageCaptchaDialog.EXTRA_CAPTCHA_PHRASE)
-                    requestCaptchaAfterImageCaptcha(id, phrase)
+                    onRequestCaptchaSuccess()
                 }
             }
         }
