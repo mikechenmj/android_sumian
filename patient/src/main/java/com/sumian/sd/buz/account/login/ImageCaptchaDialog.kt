@@ -24,6 +24,7 @@ class ImageCaptchaDialog(context: Context, var onImageCaptchaResultListener: OnI
     }
 
     init {
+        setCancelable(false)
         setContentView(R.layout.dialog_image_captcha)
         refreshImageCaptcha()
         iv_image_captcha.setOnClickListener { refreshImageCaptcha() }
