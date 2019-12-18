@@ -35,6 +35,7 @@ class ImageCaptchaDialog(context: Context, private var onImageCaptchaResultListe
                 return@setOnClickListener
             }
             var data = Intent()
+            refreshImageCaptcha()
             data.putExtra(EXTRA_CAPTCHA_ID, mImageCaptcha!!.id)
             data.putExtra(EXTRA_CAPTCHA_PHRASE, imageCaptcha.toString())
             onImageCaptchaResultListener.onSend(data)

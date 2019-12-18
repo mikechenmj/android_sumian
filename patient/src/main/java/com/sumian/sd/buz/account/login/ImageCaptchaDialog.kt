@@ -13,7 +13,7 @@ import com.sumian.sd.common.network.api.SdApi
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import kotlinx.android.synthetic.main.dialog_image_captcha.*
 
-class ImageCaptchaDialog(context: Context, var onImageCaptchaResultListener: OnImageCaptchaResultListener) : Dialog(context, R.style.SumianDialog) {
+class ImageCaptchaDialog(context: Context, private var onImageCaptchaResultListener: OnImageCaptchaResultListener) : Dialog(context, R.style.SumianDialog) {
 
     private val mContext = context
     private var mImageCaptcha: ImageCaptcha? = null
@@ -38,6 +38,7 @@ class ImageCaptchaDialog(context: Context, var onImageCaptchaResultListener: OnI
                 return@setOnClickListener
             }
             var data = Intent()
+            refreshImageCaptcha()
             data.putExtra(EXTRA_CAPTCHA_ID, mImageCaptcha!!.id)
             data.putExtra(EXTRA_CAPTCHA_PHRASE, imageCaptcha.toString())
             onImageCaptchaResultListener.onSend(data)
