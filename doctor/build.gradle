@@ -41,7 +41,7 @@ android {
         applicationId = "com.sumian.sddoctor"
         applicationIdSuffix = null
         versionCode = new Date().format('yyyyMMddHH').toInteger()
-        versionName = "1.19.0-build1"
+        versionName = "1.20.0-build1"
         versionNameSuffix = null
 
         minSdkVersion rootProject.ext.minSdkVersion
