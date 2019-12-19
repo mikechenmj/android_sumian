@@ -60,10 +60,10 @@ public class ImageAdapter extends BaseRecyclerAdapter<Image> {
             h.mMaskView.setVisibility(item.isSelect() ? View.VISIBLE : View.GONE);
 
             // Show gif mask
-            h.mGifMask.setVisibility(item.getPath().toLowerCase().endsWith("gif") ?
+            h.mGifMask.setVisibility(item.getRawPath().toLowerCase().endsWith("gif") ?
                     View.VISIBLE : View.GONE);
 
-            loader.displayImage(h.mImageView, item.getPath());
+            loader.displayImage(h.mImageView, item.getImagePath());
             h.mCheckView.setVisibility(isSingleSelect ? View.GONE : View.VISIBLE);
         }
     }

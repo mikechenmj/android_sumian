@@ -28,6 +28,7 @@ import com.sumian.sd.buz.account.sheet.ModifySelectBottomSheet;
 import com.sumian.sd.buz.stat.StatConstants;
 import com.sumian.sd.widget.TitleBar;
 import com.sumian.sd.widget.dialog.SumianAlertDialog;
+import com.sumian.sd.widget.divider.OnShowMoreListener;
 import com.sumian.sd.widget.divider.SettingDividerView;
 import com.sumian.sd.widget.sheet.PictureBottomSheet;
 import com.umeng.socialize.UMAuthListener;
@@ -54,7 +55,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 @SuppressWarnings("ALL")
 public class UserInfoActivity extends BaseViewModelActivity<SdUserInfoPresenter> implements View.OnClickListener, TitleBar.OnBackClickListener,
-        SettingDividerView.OnShowMoreListener, PictureBottomSheet.OnTakePhotoCallback, EasyPermissions.PermissionCallbacks,
+        OnShowMoreListener, PictureBottomSheet.OnTakePhotoCallback, EasyPermissions.PermissionCallbacks,
         CompoundButton.OnCheckedChangeListener, UMAuthListener {
 
     @SuppressWarnings("unused")
@@ -257,7 +258,6 @@ public class UserInfoActivity extends BaseViewModelActivity<SdUserInfoPresenter>
     public void onTakePhotoCallback() {
         String[] perms = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
         if (EasyPermissions.hasPermissions(this, perms)) {
-
             cameraFile = new File(generateImagePath(String.valueOf(AppManager.getAccountViewModel().getToken().user.id), App.Companion.getAppContext()), AppManager.getAccountViewModel().getToken().user.id + System.currentTimeMillis() + ".jpg");
             //noinspection ResultOfMethodCallIgnored
             cameraFile.getParentFile().mkdirs();

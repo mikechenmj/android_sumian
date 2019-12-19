@@ -24,6 +24,7 @@ import com.sumian.common.dns.HttpDnsEngine
 import com.sumian.common.dns.IHttpDns
 import com.sumian.common.h5.WebViewManger
 import com.sumian.common.helper.ToastHelper
+import com.sumian.common.image.ImagesScopeStorageHelper
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.notification.AppNotificationManager
 import com.sumian.common.notification.LeanCloudManager
@@ -82,7 +83,7 @@ object AppManager {
         OpenEngine().create(App.getAppContext(), BuildConfig.DEBUG, BuildConfig.WECHAT_APP_ID, BuildConfig.WECHAT_APP_SECRET)
     }
 
-    private val mNetworkManager: NetworkManager  by lazy {
+    private val mNetworkManager: NetworkManager by lazy {
         //注册网络引擎框架
         NetworkManager.create()
     }
@@ -158,6 +159,7 @@ object AppManager {
         initWebView(app)
         VideoDownloadManager.init(app)
         initDeviceManager()
+        ImagesScopeStorageHelper.init(app)
     }
 
     private fun initKefu(app: Application) {

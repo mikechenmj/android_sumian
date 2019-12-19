@@ -1,5 +1,7 @@
 package com.sumian.common.media.bean;
 
+import android.os.Build;
+
 import java.io.Serializable;
 
 /**
@@ -9,7 +11,8 @@ import java.io.Serializable;
 
 public class Image implements Serializable {
     private int id;
-    private String path;
+    private String rawPath;
+    private String contentPath;
     private String thumbPath;
     private boolean isSelect;
     private String folderName;
@@ -24,12 +27,30 @@ public class Image implements Serializable {
         this.id = id;
     }
 
-    public String getPath() {
-        return path;
+    public String getRawPath() {
+        return rawPath;
     }
 
-    public void setPath(String path) {
-        this.path = path;
+    public String getContentPath() {
+        return contentPath;
+    }
+
+    public String getImagePath() {
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
+            if (contentPath.isEmpty()) {
+                return rawPath;
+            }
+            return contentPath;
+        }
+        return rawPath;
+    }
+
+    public void setRawPath(String rawPath) {
+        this.rawPath = rawPath;
+    }
+
+    public void setContentPath(String path) {
+        this.contentPath = path;
     }
 
     public String getThumbPath() {
@@ -75,7 +96,7 @@ public class Image implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (o instanceof Image) {
-            return this.path.equals(((Image) o).getPath());
+            return this.rawPath.equals(((Image) o).getRawPath());
         }
         return false;
     }

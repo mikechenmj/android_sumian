@@ -149,10 +149,6 @@ class SettingDividerView @JvmOverloads constructor(context: Context, attrs: Attr
         sw.setOnCheckedChangeListener(mOnCheckedChangeListener)
     }
 
-    interface OnShowMoreListener {
-        fun onShowMore(v: View)
-    }
-
     fun showRedDot(show: Boolean) {
         v_dot.visibility = if (show) View.VISIBLE else View.GONE
     }

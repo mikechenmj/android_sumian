@@ -40,7 +40,7 @@ public class Util {
     public static ArrayList<String> toArrayList(List<Image> images) {
         ArrayList<String> strings = new ArrayList<>();
         for (Image i : images) {
-            strings.add(i.getPath());
+            strings.add(i.getRawPath());
         }
         return strings;
     }
@@ -55,7 +55,7 @@ public class Util {
         String[] strings = new String[len];
         int i = 0;
         for (Image image : images) {
-            strings[i] = image.getPath();
+            strings[i] = image.getContentPath();
             i++;
         }
         return strings;
