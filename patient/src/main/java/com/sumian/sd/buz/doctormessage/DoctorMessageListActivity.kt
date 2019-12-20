@@ -33,8 +33,8 @@ class DoctorMessageListActivity : BaseViewModelActivity<BaseViewModel>() {
     }
 
     class MessageAdapter : BaseQuickAdapter<Any, BaseViewHolder>(R.layout.list_item_doctor_message) {
-        override fun convert(helper: BaseViewHolder?, item: Any?) {
-            helper!!.getView<View>(R.id.iv_message_dot).visibility = View.VISIBLE
+        override fun convert(helper: BaseViewHolder, item: Any?) {
+            helper.getView<View>(R.id.iv_message_dot).visibility = View.VISIBLE
         }
     }
 }

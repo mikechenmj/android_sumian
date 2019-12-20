@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="data"
+            type="com.sumian.sd.buz.anxiousandfaith.databinding.ActivityMoodDiaryDetailData" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="@{data.filledChallenge ? View.VISIBLE : View.GONE}">
+
+            <TextView
+                android:id="@+id/tv_challenge_unreasonable_belief_title"
+                style="@style/SecondaryItemTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="@dimen/normal_interval"
+                android:text="@string/mood_diary_challenge_unreasonable_belief_title" />
+
+            <TextView
+                android:id="@+id/tv_belief_title"
+                style="@style/NormalItemTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/normal_interval"
+                android:background="@drawable/bg_line_l1_margin_start_20dp_white_bg"
+                android:text="@string/mood_diary_belief_title"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/et_belief_content"
+                style="@style/NormalItemTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="@{data.editMode}"
+                android:focusableInTouchMode="@{data.editMode}"
+                android:text="@={data.beliefContent}"
+                tools:text="如果我一直睡不着，明天会累到无法完成工作" />
+
+            <TextView
+                android:id="@+id/tv_belief_content_count"
+                style="@style/text_t2_13"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/normal_item_background"
+                android:gravity="center_vertical|end"
+                android:paddingStart="@dimen/normal_padding"
+                android:paddingTop="@dimen/normal_interval"
+                android:paddingEnd="@dimen/normal_padding"
+                android:paddingBottom="@dimen/normal_padding"
+                android:text="@{data.beliefContentCount}"
+                android:textColor="@{data.beliefContentCountOutOfMax ? @color/t4_color : @color/t2_color}"
+                android:visibility="@{data.editMode ? View.VISIBLE : View.GONE}"
+                tools:ignore="HardcodedText"
+                tools:text="0/200" />
+
+            <LinearLayout
+                android:id="@+id/ll_mood_challenge_cognitive_bias_entrance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/normal_interval"
+                android:background="@drawable/bg_line_l1_margin_start_20dp_white_bg"
+                android:clickable="@{data.editMode}"
+                android:onClick="@{data.onCognitiveBiasClickListener}"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_mood_challenge_cognitive_bias_content"
+                    style="@style/text_t1_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/normal_padding"
+                    android:text="@string/mood_challenge_cognitive_bias_content"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/iv_mood_challenge_cognitive_bias_arrow"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="@dimen/normal_interval"
+                    android:layout_weight="1"
+                    android:padding="@dimen/normal_padding"
+                    android:scaleType="fitEnd"
+                    android:src="@drawable/ic_arrow_right_light_blue"
+                    android:visibility="@{data.editMode ? View.VISIBLE : View.GONE}" />
+            </LinearLayout>
+
+            <com.sumian.common.widget.SumianFlexboxLayout
+                android:id="@+id/flex_box_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:padding="@dimen/normal_padding"
+                android:visibility="@{data.cognitionBias.size() > 0 ? View.VISIBLE : View.GONE}"
+                app:adapter="@{data.cognitionBiasAdapter}"
+                app:dividerDrawable="@drawable/flex_box_space_divider"
+                app:flexWrap="wrap"
+                app:showDivider="middle" />
+
+            <TextView
+                android:id="@+id/tv_unreasonable_belief_result_title"
+                style="@style/NormalItemTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/normal_interval"
+                android:background="@drawable/bg_line_l1_margin_start_20dp_white_bg"
+                android:text="@string/mood_diary_result_title"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/et_unreasonable_belief_result_content"
+                style="@style/NormalItemTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="@{data.editMode}"
+                android:focusableInTouchMode="@{data.editMode}"
+                android:text="@={data.unreasonableResultContent}"
+                tools:text="一晚上没睡着" />
+
+            <TextView
+                android:id="@+id/tv_unreasonable_belief_result_content_count"
+                style="@style/text_t2_13"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/normal_item_background"
+                android:gravity="center_vertical|end"
+                android:paddingStart="@dimen/normal_padding"
+                android:paddingTop="@dimen/normal_interval"
+                android:paddingEnd="@dimen/normal_padding"
+                android:paddingBottom="@dimen/normal_padding"
+                android:text="@{data.unreasonableResultContentCount}"
+                android:textColor="@{data.unreasonableResultContentCountOutOfMax ? @color/t4_color : @color/t2_color}"
+                android:visibility="@{data.editMode ? View.VISIBLE : View.GONE}"
+                tools:ignore="HardcodedText"
+                tools:text="0/200" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="@{data.filledReasonableBelief ? View.VISIBLE : View.GONE}">
+
+            <TextView
+                android:id="@+id/tv_reasonable_belief_practice_title"
+                style="@style/SecondaryItemTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="@dimen/normal_interval"
+                android:text="@string/mood_diary_reasonable_belief_practice_title" />
+
+            <TextView
+                android:id="@+id/tv_refute_unreasonable_title"
+                style="@style/NormalItemTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/normal_interval"
+                android:background="@drawable/bg_line_l1_margin_start_20dp_white_bg"
+                android:text="@string/mood_diary_refute_unreasonable_title"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/et_refute_unreasonable_content"
+                style="@style/NormalItemTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="@{data.editMode}"
+                android:focusableInTouchMode="@{data.editMode}"
+                android:text="@={data.refuteUnreasonableContent}"
+                tools:text="以前也试过睡不好，但是并不影响工作。我只是目前没有睡着，并不代表我会一直都睡不着" />
+
+            <TextView
+                android:id="@+id/tv_refute_unreasonable_content_count"
+                style="@style/text_t2_13"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/normal_item_background"
+                android:gravity="center_vertical|end"
+                android:paddingStart="@dimen/normal_padding"
+                android:paddingTop="@dimen/normal_interval"
+                android:paddingEnd="@dimen/normal_padding"
+                android:paddingBottom="@dimen/normal_padding"
+                android:text="@{data.refuteUnreasonableContentCount}"
+                android:textColor="@{data.refuteUnreasonableContentCountOutOfMax ? @color/t4_color : @color/t2_color}"
+                android:visibility="@{data.editMode ? View.VISIBLE : View.GONE}"
+                tools:ignore="HardcodedText"
+                tools:text="0/200" />
+
+            <TextView
+                android:id="@+id/tv_reasonable_belief_title"
+                style="@style/NormalItemTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/normal_interval"
+                android:background="@drawable/bg_line_l1_margin_start_20dp_white_bg"
+                android:text="@string/mood_diary_reasonable_belief_title"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/et_reasonable_belief_content"
+                style="@style/NormalItemTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="@{data.editMode}"
+                android:focusableInTouchMode="@{data.editMode}"
+                android:text="@={data.reasonableBeliefContent}"
+                tools:text="虽然我现在睡不着，但可能待会儿就有睡意了" />
+
+            <TextView
+                android:id="@+id/tv_reasonable_belief_content_count"
+                style="@style/text_t2_13"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/normal_item_background"
+                android:gravity="center_vertical|end"
+                android:paddingStart="@dimen/normal_padding"
+                android:paddingTop="@dimen/normal_interval"
+                android:paddingEnd="@dimen/normal_padding"
+                android:paddingBottom="@dimen/normal_padding"
+                android:text="@{data.reasonableBeliefContentCount}"
+                android:textColor="@{data.reasonableBeliefContentCountOutOfMax ? @color/t4_color : @color/t2_color}"
+                android:visibility="@{data.editMode ? View.VISIBLE : View.GONE}"
+                tools:ignore="HardcodedText"
+                tools:text="0/200" />
+
+            <TextView
+                android:id="@+id/tv_reasonable_belief_result_title"
+                style="@style/NormalItemTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/normal_interval"
+                android:background="@drawable/bg_line_l1_margin_start_20dp_white_bg"
+                android:text="@string/mood_diary_result_title"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/et_reasonable_belief_result_content"
+                style="@style/NormalItemTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="@{data.editMode}"
+                android:focusableInTouchMode="@{data.editMode}"
+                android:text="@={data.reasonableBeliefResultContent}"
+                tools:text="我这么想之后，感觉轻松一点了" />
+
+            <TextView
+                android:id="@+id/tv_reasonable_belief_result_content_count"
+                style="@style/text_t2_13"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/normal_item_background"
+                android:gravity="center_vertical|end"
+                android:paddingStart="@dimen/normal_padding"
+                android:paddingTop="@dimen/normal_interval"
+                android:paddingEnd="@dimen/normal_padding"
+                android:paddingBottom="@dimen/normal_padding"
+                android:text="@{data.reasonableBeliefResultContentCount}"
+                android:textColor="@{data.reasonableBeliefResultContentCountOutOfMax ? @color/t4_color : @color/t2_color}"
+                android:visibility="@{data.editMode ? View.VISIBLE : View.GONE}"
+                tools:ignore="HardcodedText"
+                tools:text="0/200" />
+        </LinearLayout>
+    </LinearLayout>
+</layout>

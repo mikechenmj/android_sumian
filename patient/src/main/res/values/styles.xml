@@ -468,4 +468,22 @@
         <item name="android:textSize">21sp</item>
     </style>
 
+    <style name="NormalItemStyle">
+        <item name="android:background">@android:color/white</item>
+        <item name="android:padding">@dimen/normal_padding</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="NormalItemTextStyle" parent="NormalItemStyle">
+        <item name="android:textSize">@dimen/normal_text_size</item>
+        <item name="android:textColor">@color/t1_color</item>
+    </style>
+
+    <style name="SecondaryItemTextStyle">
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textSize">@dimen/secondary_text_size</item>
+        <item name="android:textColor">@color/t2_color</item>
+    </style>
+
+
 </resources>

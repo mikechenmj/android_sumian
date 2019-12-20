@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout>
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="data"
+            type="com.sumian.sd.buz.anxiousandfaith.databinding.FragmentRationalBeliefData" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_rational_belief_tip"
+                style="@style/text_t2_14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_line_top_l1_margin_start_20dp_white_bg"
+                android:gravity="center_vertical"
+                android:padding="@dimen/normal_padding"
+                android:text="@string/mood_rational_belief_tip" />
+
+            <TextView
+                android:id="@+id/tv_refute_unreasonable_belief_title"
+                style="@style/text_t1_16"
+                textStyle="bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/normal_interval"
+                android:background="@drawable/bg_line_l1_margin_start_20dp_white_bg"
+                android:gravity="center_vertical"
+                android:padding="@dimen/normal_padding"
+                android:text="@string/mood_diary_refute_unreasonable_title"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/et_refute_unreasonable_belief"
+                style="@style/SumianEditTextWhiteBg"
+                android:layout_height="wrap_content"
+                android:hint="@string/mood_refute_unreasonable_belief_content"
+                android:minHeight="90dp"
+                android:padding="@dimen/normal_padding"
+                android:text="@={data.refuteUnreasonableBelief}"
+                android:textColorHint="@{data.refuteUnreasonableBeliefHintColor}"
+                tools:ignore="Autofill,TextFields" />
+
+            <TextView
+                android:id="@+id/tv_refute_unreasonable_belief_content_count"
+                style="@style/text_t2_13"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center_vertical|end"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="20dp"
+                android:text="@{data.refuteUnreasonableBeliefCount}"
+                android:textColor="@{data.refuteUnreasonableBeliefOutOfMax ? @color/t4_color : @color/t2_color}"
+                tools:ignore="HardcodedText"
+                tools:text="0/200" />
+
+            <TextView
+                android:id="@+id/tv_reasonable_belief_title"
+                style="@style/text_t1_16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/normal_interval"
+                android:background="@drawable/bg_line_l1_margin_start_20dp_white_bg"
+                android:gravity="center_vertical"
+                android:padding="@dimen/normal_padding"
+                android:text="@string/mood_diary_reasonable_belief_title"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/et_reasonable_belief"
+                style="@style/SumianEditTextWhiteBg"
+                android:layout_height="wrap_content"
+                android:hint="@string/reasonable_belief_content"
+                android:minHeight="90dp"
+                android:padding="@dimen/normal_padding"
+                android:text="@={data.reasonableBelief}"
+                android:textColorHint="@{data.reasonableBeliefHintColor}"
+                tools:ignore="Autofill,TextFields" />
+
+            <TextView
+                android:id="@+id/tv_reasonable_belief_count"
+                style="@style/text_t2_13"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/normal_item_background"
+                android:gravity="center_vertical|end"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="20dp"
+                android:text="@{data.reasonableBeliefCount}"
+                android:textColor="@{data.reasonableBeliefOutOfMax ? @color/t4_color : @color/t2_color}"
+                tools:ignore="HardcodedText"
+                tools:text="0/200" />
+
+            <TextView
+                android:id="@+id/tv_reasonable_belief_result_title"
+                style="@style/text_t1_16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/normal_interval"
+                android:background="@drawable/bg_line_l1_margin_start_20dp_white_bg"
+                android:gravity="center_vertical"
+                android:padding="@dimen/normal_padding"
+                android:text="@string/mood_challenge_result_title"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/et_reasonable_belief_result"
+                style="@style/SumianEditTextWhiteBg"
+                android:layout_height="wrap_content"
+                android:hint="@string/mood_reasonable_belief_result_content"
+                android:minHeight="90dp"
+                android:padding="@dimen/normal_padding"
+                android:text="@={data.reasonableBeliefResult}"
+                android:textColorHint="@{data.reasonableBeliefResultHintColor}"
+                tools:ignore="Autofill,TextFields" />
+
+            <TextView
+                android:id="@+id/tv_reasonable_belief_result_count"
+                style="@style/text_t2_13"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/normal_item_background"
+                android:gravity="center_vertical|end"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="20dp"
+                android:text="@{data.reasonableBeliefResultCount}"
+                android:textColor="@{data.reasonableBeliefResultOutOfMax ? @color/t4_color : @color/t2_color}"
+                tools:ignore="HardcodedText"
+                tools:text="0/200" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/bt_mood_diary_save"
+                style="@style/SumianButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="35dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginEnd="35dp"
+                android:layout_marginBottom="40dp"
+                android:onClick="@{() -> data.saveMoodChallenge()}"
+                android:text="@string/anxiety_mood_diary_detail_save_menu_text" />
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</layout>

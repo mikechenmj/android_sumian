@@ -73,6 +73,7 @@ abstract class CommonLogManager : ILog {
         const val ACTION_TYPE_PAGE = "page"
         const val ACTION_TYPE_HTTP = "http"
         const val ACTION_TYPE_DEVICE = "device"
+        const val ACTION_TYPE_CRASH = "crash"
         const val ACTION_TYPE_OTHERS = "others"
 
         const val PAGE_OPERATION = ""
@@ -135,6 +136,13 @@ abstract class CommonLogManager : ILog {
         log(mapOf(
                 KEY_ACTION_TYPE to ACTION_TYPE_PAGE,
                 KEY_PAGE_DATA to "$pageClassName ${if (open) "打开" else "关闭"}"
+        ))
+    }
+
+    fun logCrash(s: String) {
+        log(mapOf(
+                KEY_ACTION_TYPE to ACTION_TYPE_CRASH,
+                KEY_REMARK to s
         ))
     }
 

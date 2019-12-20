@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout>
+
+    <data>
+
+        <variable
+            name="data"
+            type="com.sumian.sd.buz.anxiousandfaith.databinding.ActivityMoodCognitionBiasData" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/mood_cognition_bias_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/normal_item_background"
+        android:orientation="vertical">
+
+        <com.sumian.common.widget.SumianFlexboxLayout
+            android:id="@+id/fb_mood_diary_dull_labels"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/normal_padding"
+            app:adapter="@{data.cognitionBiasAdapter}"
+            app:dividerDrawable="@drawable/flex_box_space_divider"
+            app:flexWrap="wrap"
+            app:onItemClickListener="@{data.cognitionBiasItemListener}"
+            app:showDivider="middle" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_mood_reasonable_practice"
+            style="@style/SumianButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="35dp"
+            android:onClick="@{data.onConfirmClickListener}"
+            android:text="@string/confirm" />
+
+    </LinearLayout>
+
+</layout>

@@ -19,6 +19,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 
+import static android.util.TypedValue.COMPLEX_UNIT_SP;
+
 /**
  * Created by jzz
  * on 2017/09/30.
@@ -29,7 +31,7 @@ import androidx.annotation.StringRes;
 public class TitleBar extends FrameLayout implements View.OnClickListener {
 
     public ImageView mIvBack;
-    public TextView mTvTitle;
+    private TextView mTvTitle;
     public ImageView mIvMenu;
     public TextView mTvMenu;
 
@@ -202,6 +204,15 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
         mTvTitle.setTextColor(color);
         mTvMenu.setTextColor(color);
         mIvBack.setColorFilter(color);
+    }
+
+    public void setMenuColor(int color) {
+        mTvMenu.setTextColor(color);
+        mIvMenu.setColorFilter(color);
+    }
+
+    public void setMenuTextDpSize(int size) {
+        mTvMenu.setTextSize(COMPLEX_UNIT_SP, size);
     }
 
     public void openTopPadding(boolean open) {

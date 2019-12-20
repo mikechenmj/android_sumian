@@ -1,6 +1,9 @@
 package com.sumian.sddoctor.login.login
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
@@ -22,6 +25,8 @@ class BindWechatActivity : BaseActivity() {
     companion object {
         const val KEY_SOCIAL_INFO = "KEY_SOCIAL_INFO"
 
+        private const val RESULT_CODE_IMAGE_CAPTCHA = 1
+
         fun launch(socialInfo: String) {
             val bundle = Bundle()
             bundle.putString(KEY_SOCIAL_INFO, socialInfo)
@@ -34,7 +39,7 @@ class BindWechatActivity : BaseActivity() {
     }
 
     override fun initBundle(bundle: Bundle) {
-        mSocialInfo = bundle.getString(KEY_SOCIAL_INFO)?:""
+        mSocialInfo = bundle.getString(KEY_SOCIAL_INFO) ?: ""
     }
 
     override fun initWidget() {
@@ -59,20 +64,43 @@ class BindWechatActivity : BaseActivity() {
         showLoading()
         val call = AppManager.getHttpService().requestLoginCaptcha(phoneNumber)
         addCall(call)
-        call
-                .enqueue(object : BaseSdResponseCallback<Any>() {
-                    override fun onSuccess(response: Any?) {
-                        tv_send_captcha.startCountDown()
-                    }
+        call.enqueue(object : BaseSdResponseCallback<Any>() {
+            override fun onSuccess(response: Any?) {
+                tv_send_captcha.startCountDown()
+            }
 
-                    override fun onFailure(errorResponse: ErrorResponse) {
-                        ToastUtils.showShort(errorResponse.message)
-                    }
+            override fun onFailure(errorResponse: ErrorResponse) {
+                if (errorResponse.code == 4001) {
+                    showImageCaptcha()
+                } else {
+                    ToastUtils.showShort(errorResponse.message)
+                }
+            }
 
-                    override fun onFinish() {
-                        dismissLoading()
+            override fun onFinish() {
+                dismissLoading()
+            }
+        })
+    }
+
+    private fun showImageCaptcha() {
+        ImageCaptchaDialogActivity.startForResult(this, getPhoneNumberWithCheck()
+                ?: "", RESULT_CODE_IMAGE_CAPTCHA)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        AppManager.getOpenLogin().delegateActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                RESULT_CODE_IMAGE_CAPTCHA -> {
+                    if (data == null) {
+                        return
                     }
-                })
+                    tv_send_captcha.startCountDown()
+                }
+            }
+        }
     }
 
     private fun onLoginClick() {

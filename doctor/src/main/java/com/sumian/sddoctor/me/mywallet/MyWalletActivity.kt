@@ -3,6 +3,7 @@ package com.sumian.sddoctor.me.mywallet
 import android.animation.ArgbEvaluator
 import android.annotation.SuppressLint
 import android.graphics.Color
+import android.util.TypedValue
 import android.view.View
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -61,7 +62,7 @@ class MyWalletActivity : SddBaseActivity() {
         StatusBarUtil.setStatusBarTextColorDark(this@MyWalletActivity, false)
         scroll_view.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
             val headHeight = resources.getDimension(R.dimen.my_wallet_head_height)
-            val barHeight = resources.getDimension(R.dimen.dp_72)
+            val barHeight = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 72f, resources.displayMetrics)
             val barScrollThreshold = headHeight - barHeight
             val walletDetailThreshold = barScrollThreshold + resources.getDimension(R.dimen.space_90)
             LogUtils.d(scrollY)

@@ -599,4 +599,8 @@
 
     <string name="counselor_experience_years_list_page_title">选择从业经验</string>
     <string name="jifen">积分</string>
+
+    <string name="image_captcha_title">请输入图片验证码</string>
+    <string name="image_captcha_content_hint">请输入图片中字符</string>
+    <string name="image_captcha_tip">点击图片刷新验证码</string>
 </resources>

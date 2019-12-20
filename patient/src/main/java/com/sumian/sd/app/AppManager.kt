@@ -7,9 +7,6 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.net.ConnectivityManager
 import android.os.Build
-import android.os.Handler
-import android.os.Looper
-import android.os.Message
 import android.util.Log
 import android.view.Gravity
 import androidx.lifecycle.Lifecycle
@@ -25,6 +22,7 @@ import com.sumian.common.dns.IHttpDns
 import com.sumian.common.h5.WebViewManger
 import com.sumian.common.helper.ToastHelper
 import com.sumian.common.image.ImagesScopeStorageHelper
+import com.sumian.common.log.CrashLogSender
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.notification.AppNotificationManager
 import com.sumian.common.notification.LeanCloudManager
@@ -147,12 +145,13 @@ object AppManager {
 
     fun initOnAppStart(app: Application) {
         mApplication = app
+        initLeanCloud()
+        initLogManager(app)
+        startCrashListen(app)
         initUtils(app)
         initLeakCanary(app)
         BaseActivityManager.setActivityDelegateFactory(ActivityDelegateFactory())
-        initLeanCloud()
         initAppNotificationManager(app)
-        initLogManager(app)
         initStatic(app)
         observeAppLifecycle()
         observeNetworkState()
@@ -161,6 +160,15 @@ object AppManager {
         initDeviceManager()
         ImagesScopeStorageHelper.init(app)
     }
+
+    private fun startCrashListen(app: Application) {
+        CrashLogSender.listen(app, object : CrashLogSender.CrashCallback {
+            override fun onCrash(logPath: String?, emergency: String?) {
+                SdLogManager.logCrash(CrashLogSender.getNormalCrashLog(logPath, emergency))
+            }
+        })
+    }
+
 
     private fun initKefu(app: Application) {
         KefuManager.init(app,
@@ -298,7 +306,7 @@ object AppManager {
 
     private fun initAppNotificationManager(app: Application) {
         AppNotificationManager.init(app,
-                R.drawable.ic_notification_small, R.mipmap.ic_launcher,
+                R.drawable.vector_drawable_notification_logo, R.mipmap.ic_launcher,
                 BuildConfig.LEANCLOUD_APP_ID, BuildConfig.LEANCLOUD_APP_KEY,
                 NotificationDelegate(), SchemeResolver, NotificationConst.USER_ID_KEY)
 

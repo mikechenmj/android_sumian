@@ -20,6 +20,7 @@ class LoginContract {
         fun launchMain()
         fun onRequestCaptchaSuccess()
         fun getContext(): Context
+        fun onRequestCaptchaFail(code: Int)
     }
 
     interface Presenter : BasePresenter {

@@ -7,12 +7,12 @@ data class FilledScaleCollection(
 ) {
     data class CollectionDistributions(
             val id: Long,
-            val updated_at: Long,
+            val filled_at: Long,
             var collectionId: Long,
             var title: String
     ) {
         fun getUpdateAtInMillis(): Long {
-            return updated_at * 1000L
+            return filled_at * 1000L
         }
     }
 }

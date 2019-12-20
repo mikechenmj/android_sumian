@@ -16,6 +16,7 @@ import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.annotation.Dimension
 import androidx.annotation.DrawableRes
+import androidx.core.view.isVisible
 import com.sumian.sd.R
 import kotlinx.android.synthetic.main.lay_setting_divider_item.view.*
 
@@ -115,6 +116,10 @@ class SettingDividerView @JvmOverloads constructor(context: Context, attrs: Attr
 
     fun goneMoreIcon() {
         iv_more.visibility = View.GONE
+    }
+
+    fun setMoreVisible(visible : Boolean) {
+        iv_more.isVisible = visible
     }
 
     fun setContent(content: CharSequence) {

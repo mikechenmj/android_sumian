@@ -1,6 +1,7 @@
 package com.sumian.sddoctor.login.login
 
 import android.app.Activity
+import android.util.Log
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.dialog.SumianImageTextToast
@@ -126,7 +127,10 @@ class LoginPresenter(var view: LoginContract.View) : LoginContract.Presenter {
                     }
 
                     override fun onFailure(errorResponse: ErrorResponse) {
-                        ToastUtils.showShort(errorResponse.message)
+                        if (errorResponse.code != 4001) {
+                            ToastUtils.showShort(errorResponse.message)
+                        }
+                        view.onRequestCaptchaFail(errorResponse.code)
                     }
 
                     override fun onFinish() {
