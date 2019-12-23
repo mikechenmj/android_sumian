@@ -153,6 +153,11 @@ android {
             resValue "string", "app_name", "${app_name}医生版"
         }
 
+        huawei {
+            dimension "market"
+            resValue "string", "app_name", "${app_name}-医生版"
+        }
+
         official {
             dimension "environment"
             versionNameSuffix null
