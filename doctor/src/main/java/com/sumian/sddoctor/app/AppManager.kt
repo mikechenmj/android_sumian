@@ -3,6 +3,7 @@ package com.sumian.sddoctor.app
 import android.app.Application
 import android.content.Context
 import android.os.Build
+import android.view.Gravity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
@@ -10,6 +11,7 @@ import androidx.lifecycle.ProcessLifecycleOwner
 import cn.leancloud.chatkit.LCIMManager
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.blankj.utilcode.util.Utils
 import com.sumian.common.base.BaseActivityManager
 import com.sumian.common.buz.async.AsyncCallback
@@ -121,6 +123,7 @@ object AppManager {
         )
         startCrashListen(application)
         Utils.init(application)
+        ToastUtils.setGravity(Gravity.CENTER, 0, 0)
         observeTokenInvalidation()
         ToastHelper.init(application)
         OpenEngine.init(application, BuildConfig.DEBUG, BuildConfig.UMENG_APP_KEY, BuildConfig.UMENG_CHANNEL, BuildConfig.UMENG_PUSH_SECRET)

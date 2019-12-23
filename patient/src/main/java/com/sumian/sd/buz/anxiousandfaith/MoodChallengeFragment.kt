@@ -84,7 +84,7 @@ class MoodChallengeFragment : BaseFragment() {
             if (act == null) {
                 return@OnClickListener
             }
-            MoodCognitionBiasActivity.startForResult(this, ACTIVITY_REQUEST_CODE_COGNITION_BIAS)
+            MoodCognitionBiasListActivity.startForResult(this, ACTIVITY_REQUEST_CODE_COGNITION_BIAS)
         }
 
         var moodDiaryData = mMoodDiaryDataOwner?.getMoodDiaryData()
@@ -99,7 +99,7 @@ class MoodChallengeFragment : BaseFragment() {
         when (requestCode) {
             ACTIVITY_REQUEST_CODE_COGNITION_BIAS -> {
                 if (resultCode == Activity.RESULT_OK) {
-                    mCognitionBias = data?.getStringArrayExtra(MoodCognitionBiasActivity.EXTRA_COGNITION_BIAS_CHECKED_LABELS)?.toList()
+                    mCognitionBias = data?.getStringArrayExtra(MoodCognitionBiasListActivity.EXTRA_COGNITION_BIAS_CHECKED_LABELS)?.toList()
                             ?: mCognitionBias
                     var data = mBinding?.data
                     data?.moodLabelAdapter?.notifyDataSetChanged()

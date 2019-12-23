@@ -120,7 +120,7 @@ class MoodDiaryDetailActivity : TitleBaseActivity() {
         }
 
         var onCognitiveBiasClickListener = View.OnClickListener {
-            MoodCognitionBiasActivity.startForResult(this, ACTIVITY_REQUEST_CODE_COGNITION_BIAS)
+            MoodCognitionBiasListActivity.startForResult(this, ACTIVITY_REQUEST_CODE_COGNITION_BIAS)
         }
 
         var binding = mViewDataBinding
@@ -136,7 +136,7 @@ class MoodDiaryDetailActivity : TitleBaseActivity() {
             ACTIVITY_REQUEST_CODE_COGNITION_BIAS -> {
                 if (resultCode == Activity.RESULT_OK) {
                     var bindingData = mViewDataBinding?.data
-                    var cognitionBias = data?.getStringArrayExtra(MoodCognitionBiasActivity.EXTRA_COGNITION_BIAS_CHECKED_LABELS)?.toList()
+                    var cognitionBias = data?.getStringArrayExtra(MoodCognitionBiasListActivity.EXTRA_COGNITION_BIAS_CHECKED_LABELS)?.toList()
                             ?: mMoodDiaryData?.cognitionBias ?: emptyList()
                     bindingData?.cognitionBias = cognitionBias
                     bindingData?.cognitionBiasAdapter?.notifyDataSetChanged()

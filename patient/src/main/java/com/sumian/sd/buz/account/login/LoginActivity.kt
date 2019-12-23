@@ -1,9 +1,11 @@
 package com.sumian.sd.buz.account.login
 
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
+import android.util.Log
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
 import com.qmuiteam.qmui.util.QMUISpanHelper
@@ -21,6 +23,9 @@ import kotlinx.android.synthetic.main.activity_login.*
 class LoginActivity : BaseViewModelActivity<LoginPresenter>(), LoginContract.View {
 
     companion object {
+
+        private const val RESULT_CODE_IMAGE_CAPTCHA = 1
+
         @JvmStatic
         fun show() {
             ActivityUtils.startActivity(LoginActivity::class.java)
@@ -42,11 +47,7 @@ class LoginActivity : BaseViewModelActivity<LoginPresenter>(), LoginContract.Vie
         StatusBarUtil.setStatusBarTextColorDark(this, true)
         iv_user_agreement.isSelected = true
         tv_send_captcha.setOnClickListener {
-            val number = getPhoneNumberWithCheck()
-            if (number != null) {
-                mViewModel!!.requestCaptcha(number)
-                StatUtil.event(StatConstants.click_captcha, mapOf("usage" to "登录注册", "mobile" to number))
-            }
+            requestCaptcha()
         }
         bt_login.setOnClickListener { onLoginClick() }
         iv_user_agreement.setOnClickListener { onIvUserAgreementClick() }
@@ -75,6 +76,14 @@ class LoginActivity : BaseViewModelActivity<LoginPresenter>(), LoginContract.Vie
                 ll_password_et_container.isActivated = highlight
             }
         })
+    }
+
+    private fun requestCaptcha() {
+        val number = getPhoneNumberWithCheck()
+        if (number != null) {
+            mViewModel!!.requestCaptcha(number)
+            StatUtil.event(StatConstants.click_captcha, mapOf("usage" to "登录注册", "mobile" to number))
+        }
     }
 
     override fun onStart() {
@@ -136,9 +145,31 @@ class LoginActivity : BaseViewModelActivity<LoginPresenter>(), LoginContract.Vie
         tv_send_captcha.startCountDown()
     }
 
+    override fun onRequestCaptchaFail(code: Int) {
+        if (code == 4001) {
+            showImageCaptcha()
+        }
+    }
+
+    private fun showImageCaptcha() {
+        ImageCaptchaDialogActivity.startForResult(this, getPhoneNumberWithCheck()
+                ?: "", RESULT_CODE_IMAGE_CAPTCHA)
+    }
+
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         AppManager.getOpenLogin().delegateActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                RESULT_CODE_IMAGE_CAPTCHA -> {
+                    if (data == null) {
+                        return
+                    }
+                    onRequestCaptchaSuccess()
+                }
+            }
+        }
     }
 
     override fun onBackPressed() {

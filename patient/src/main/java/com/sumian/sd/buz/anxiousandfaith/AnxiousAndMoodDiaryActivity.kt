@@ -113,7 +113,7 @@ class AnxiousAndMoodDiaryActivity : TitleBaseActivity() {
             var isAnxiousUnHandle = data.getRemindAtInMillis() > System.currentTimeMillis()
             if (isAnxiousUnHandle) {
                 itemView.showUnHandleTip(getString(R.string.anxious_un_handle_tip_text))
-            }else{
+            } else {
                 itemView.hideUnHandleTip()
             }
             itemView.setOnClickListener { AnxietyDetailActivity.launch(data) }
@@ -165,15 +165,11 @@ class AnxiousAndMoodDiaryActivity : TitleBaseActivity() {
             var isNegativeNoFillAll = !data.isFillAll() && !data.isPositiveMoodType()
             if (isNegativeNoFillAll) {
                 itemView.showUnHandleTip(getString(R.string.faith_un_handle_tip_text))
-            }else{
+            } else {
                 itemView.hideUnHandleTip()
             }
             itemView.setOnClickListener {
-                if (isNegativeNoFillAll) {
-                    MoodDiaryEditActivity.launch(data, MoodDiaryEditActivity.MOOD_DETAIL_FRAGMENT_INDEX)
-                } else {
-                    MoodDiaryDetailActivity.launch(data)
-                }
+                MoodDiaryDetailActivity.launch(data)
             }
             itemView.tag = data.id
             vg_mood_diary_record.addView(itemView)

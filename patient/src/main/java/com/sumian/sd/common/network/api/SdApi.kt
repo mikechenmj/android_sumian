@@ -12,6 +12,7 @@ import com.sumian.sd.buz.account.achievement.bean.LastAchievementData
 import com.sumian.sd.buz.account.bean.Social
 import com.sumian.sd.buz.account.bean.Token
 import com.sumian.sd.buz.account.bean.UserInfo
+import com.sumian.sd.buz.account.login.ImageCaptcha
 import com.sumian.sd.buz.advisory.bean.Advisory
 import com.sumian.sd.buz.advisory.bean.PictureOssSts
 import com.sumian.sd.buz.advisory.body.AdvisoryRecordBody
@@ -101,6 +102,12 @@ interface SdApi {
     @FormUrlEncoded
     @POST("captcha")
     fun getCaptcha(@Field("mobile") mobile: String): Call<Unit>
+
+    @FormUrlEncoded
+    @POST("captcha")
+    fun getCaptcha(@Field("mobile") mobile: String,
+                   @Field("captcha_id") captchaId: String,
+                   @Field("captcha_phrase") captchaPhrase: String): Call<Unit>
 
     @GET("user/profile")
     fun getUserProfile(): Call<UserInfo>
@@ -665,4 +672,7 @@ interface SdApi {
 
     @POST("doctor/im-ids")
     fun queryImUserInfo(@Body imIds: ImIds): Call<Map<String, ImUser?>>
+
+    @POST("image-captcha")
+    fun queryImageCaptcha(): Call<ImageCaptcha>
 }

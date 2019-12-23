@@ -41,7 +41,7 @@ android {
         applicationId = "com.sumian.sddoctor"
         applicationIdSuffix = null
         versionCode = new Date().format('yyyyMMddHH').toInteger()
-        versionName = "1.19.0-build1"
+        versionName = "1.20.0"
         versionNameSuffix = null
 
         minSdkVersion rootProject.ext.minSdkVersion
@@ -151,6 +151,11 @@ android {
         _360 {
             dimension "market"
             resValue "string", "app_name", "${app_name}医生版"
+        }
+
+        huawei {
+            dimension "market"
+            resValue "string", "app_name", "${app_name}-医生版"
         }
 
         official {

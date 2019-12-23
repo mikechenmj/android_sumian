@@ -1,7 +1,9 @@
 package com.sumian.sddoctor.login.login
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import com.blankj.utilcode.util.ActivityUtils
@@ -24,12 +26,13 @@ class LoginActivity : BaseActivity(), LoginContract.View {
     private lateinit var mPresenter: LoginPresenter
 
     companion object {
+        private const val RESULT_CODE_IMAGE_CAPTCHA = 1
         fun start() {
             ActivityUtils.startActivity(ActivityUtils.getTopActivity(), LoginActivity::class.java)
         }
     }
 
-    private val mVersionDelegate: VersionDelegate  by lazy {
+    private val mVersionDelegate: VersionDelegate by lazy {
         VersionDelegate.init()
     }
 
@@ -170,11 +173,6 @@ class LoginActivity : BaseActivity(), LoginContract.View {
         tv_send_captcha.startCountDown()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        AppManager.getOpenLogin().delegateActivityResult(requestCode, resultCode, data)
-    }
-
     override fun onBackPressed() {
         super.onBackPressed()
         ActivityUtils.finishAllActivities()
@@ -190,5 +188,32 @@ class LoginActivity : BaseActivity(), LoginContract.View {
 
     override fun dismissLoading() {
         super<BaseActivity>.dismissLoading()
+    }
+
+    override fun onRequestCaptchaFail(code: Int) {
+        if (code == 4001) {
+            showImageCaptcha()
+        }
+    }
+
+    private fun showImageCaptcha() {
+        ImageCaptchaDialogActivity.startForResult(this, getPhoneNumberWithCheck()
+                ?: "", RESULT_CODE_IMAGE_CAPTCHA)
+    }
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        AppManager.getOpenLogin().delegateActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                RESULT_CODE_IMAGE_CAPTCHA -> {
+                    if (data == null) {
+                        return
+                    }
+                    onRequestCaptchaSuccess()
+                }
+            }
+        }
     }
 }
