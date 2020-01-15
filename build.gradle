@@ -65,7 +65,7 @@ ext {
     libVersionCode = 1
     libVersionName = "1.0"
 
-    supportVersion = '27.1.1'
+    supportVersion = '29.0.0'
 
     abortOnError = true
     debuggable = true

@@ -2,12 +2,13 @@ package com.sumian.common.image
 
 import android.Manifest
 import android.app.Application
+import android.content.ContentValues
+import android.content.Context
 import android.content.pm.PackageManager
 import android.database.ContentObserver
 import android.net.Uri
 import android.os.Handler
 import android.provider.MediaStore
-import android.util.Log
 import androidx.core.app.ActivityCompat
 import com.sumian.common.media.bean.Image
 import java.io.ByteArrayOutputStream
@@ -99,6 +100,9 @@ object ImagesScopeStorageHelper {
     fun contentUriToByte(contentUri: String): ByteArray {
         var byteOutputStream = ByteArrayOutputStream()
         var inputStream = mContext.contentResolver.openInputStream(Uri.parse(contentUri))
+        if (inputStream == null) {
+            return byteArrayOf()
+        }
         var bufferSize = 1024
         var buffer = ByteArray(bufferSize)
         var len: Int
@@ -107,6 +111,30 @@ object ImagesScopeStorageHelper {
             byteOutputStream.write(buffer)
         } while (len != -1)
         return byteOutputStream.toByteArray()
+    }
+
+    fun generateContentUri(context: Context, name: String, mimeType: String, isPending: Boolean): Uri? {
+        var contentValues = ContentValues()
+        contentValues.put(MediaStore.Images.Media.DISPLAY_NAME, name)
+        contentValues.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis())
+        contentValues.put(MediaStore.Images.Media.MIME_TYPE, mimeType)
+        if (isPending) {
+            contentValues.put(MediaStore.Images.Media.IS_PENDING, 1)
+        }
+        return context.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+    }
+
+    fun isContentUriFileExisted(context: Context, uri: Uri): Boolean {
+        try {
+            context.contentResolver.openFileDescriptor(uri, "r").use { fd ->
+                if (fd != null) {
+                    return true
+                }
+            }
+        } catch (e: Exception) {
+            return false
+        }
+        return false
     }
 
     interface ImageChangeListener {
