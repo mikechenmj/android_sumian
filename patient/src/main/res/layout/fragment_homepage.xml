@@ -46,8 +46,6 @@
                         android:maxLines="2"
                         android:text="@string/homepage_sleep_slogan"
                         tools:text="LinearLayoutLinearLayoutLinearLayoutLinearLayoutLinearLayoutLinearLayoutLinearLayout" />
-
-                    <include layout="@layout/layout_homepage_fragment_grid_items" />
                 </LinearLayout>
 
                 <ImageView
@@ -99,6 +97,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp" />
+
+            <include layout="@layout/layout_homepage_fragment_grid_items" />
 
             <com.sumian.sd.buz.homepage.widget.SleepPrescriptionView
                 android:id="@+id/sleep_prescription_view"
