@@ -6,9 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/b1_color_day">
@@ -48,6 +46,8 @@
                         android:maxLines="2"
                         android:text="@string/homepage_sleep_slogan"
                         tools:text="LinearLayoutLinearLayoutLinearLayoutLinearLayoutLinearLayoutLinearLayoutLinearLayout" />
+
+                    <include layout="@layout/layout_homepage_fragment_grid_items" />
                 </LinearLayout>
 
                 <ImageView
@@ -100,8 +100,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp" />
 
-            <include layout="@layout/layout_homepage_fragment_grid_items" />
-
             <com.sumian.sd.buz.homepage.widget.SleepPrescriptionView
                 android:id="@+id/sleep_prescription_view"
                 android:layout_width="match_parent"
@@ -114,6 +112,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/device_card_view_height"
                 android:layout_marginTop="10dp" />
+
+            <ImageView
+                android:id="@+id/iv_bind_huawei_health"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/normal_interval"
+                android:adjustViewBounds="true"
+                android:background="@color/normal_item_background"
+                android:padding="10dp"
+                android:src="@drawable/ic_binding_bracelet_banner" />
 
             <Space
                 android:layout_width="0dp"

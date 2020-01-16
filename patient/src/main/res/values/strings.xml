@@ -972,5 +972,8 @@
     <string name="mood_diary_positive_tip">一切事情最终都能解决，学会放下，乐观豁达能拥有更好的睡眠</string>
     <string name="user_agreement">用户协议</string>
     <string name="settings_user_privacy_policy">隐私政策</string>
-
+    <string name="bind_huawei_health_title">数据授权</string>
+    <string name="bind_huawei_health_tip_content">授权说明：尊敬的失眠体验官您好，感谢您参与由华为运动健康联合速眠科技、华西医院睡眠专家学者共同开展的华为手环睡眠改善研究计划，请点击上方绑定按钮进行数据授权。（若您不是参与该研究的失眠体验官，请勿绑定）</string>
+    <string name="bind_huawei_health_dialog_title">绑定提示</string>
+    <string name="bind_huawei_health_dialog_content">检测到您还尚未安装华为运动健康app，赶快去应用中心安装吧~</string>
 </resources>

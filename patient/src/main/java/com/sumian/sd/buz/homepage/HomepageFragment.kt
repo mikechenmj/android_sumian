@@ -32,6 +32,7 @@ import com.sumian.sd.buz.homepage.banner.BannerPresenter
 import com.sumian.sd.buz.homepage.bean.GetCbtiChaptersResponse
 import com.sumian.sd.buz.homepage.bean.SentencePoolText
 import com.sumian.sd.buz.homepage.bean.SleepPrescriptionStatus
+import com.sumian.sd.buz.huawei.BindHuaweiHealthActivity
 import com.sumian.sd.buz.relaxation.RelaxationListActivity
 import com.sumian.sd.buz.scale.ScaleListActivity
 import com.sumian.sd.buz.sleepguide.SleepGuideActivity
@@ -107,6 +108,11 @@ HomepageFragment : BaseViewModelFragment<BaseViewModel>(), OnEnterListener, Last
         home_page_sleep_guide_enter_btn.setOnClickListener {
             SleepGuideActivity.start()
             StatUtil.event(StatConstants.click_home_page_sleep_guide)
+        }
+        iv_bind_huawei_health.setOnClickListener {
+            if (this.activity != null) {
+                BindHuaweiHealthActivity.start(this.activity!!)
+            }
         }
     }
 

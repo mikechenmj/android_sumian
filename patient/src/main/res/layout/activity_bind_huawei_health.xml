@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/normal_padding">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="7"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="60dp">
+
+            <com.sumian.sd.widget.ripple.RippleScanningView
+                android:id="@+id/ripple_view"
+                android:layout_width="@dimen/space_200"
+                android:layout_height="@dimen/space_200"
+                android:layout_gravity="center"
+                android:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/iv_device"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_binding_bracelet"
+                tools:visibility="visible" />
+        </FrameLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_bind"
+            style="@style/SumianButton"
+            android:layout_width="match_parent"
+            android:layout_marginBottom="@dimen/normal_padding"
+            android:layout_height="50dp"
+            android:layout_gravity="bottom|center_horizontal"
+            android:text="@string/confirm_bind" />
+
+    </FrameLayout>
+
+        <TextView
+            android:id="@+id/tv_bind_huawei_health_tip"
+            android:layout_weight="3"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:textColor="@color/t2_color"
+            android:textSize="@dimen/font_14" />
+
+</LinearLayout>
