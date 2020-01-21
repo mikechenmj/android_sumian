@@ -2,6 +2,7 @@ package com.sumian.sddoctor.account.presenter
 
 import android.text.TextUtils
 import com.sumian.common.base.BaseViewModel
+import com.sumian.common.image.ImagesScopeStorageHelper
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sddoctor.account.contract.UserAvatarContract
 import com.sumian.sddoctor.app.AppManager
@@ -37,7 +38,7 @@ open class UserAvatarPresenter private constructor(view: UserAvatarContract.View
 
             override fun onSuccess(response: OssResponse?) {
                 response?.let {
-                    OssEngine.uploadFile(it, avatarPathUrl, object : OssEngine.UploadCallback {
+                    var callback = object : OssEngine.UploadCallback {
                         override fun onSuccess(response: String?) {
                             try {
                                 if (!TextUtils.isEmpty(response)) {
@@ -64,7 +65,13 @@ open class UserAvatarPresenter private constructor(view: UserAvatarContract.View
                                 mView?.onUploadAvatarFailed(error = message)
                             }
                         }
-                    })
+                    }
+                    if (avatarPathUrl.startsWith("content://")) {
+                        val imageData = ImagesScopeStorageHelper.contentUriToByte(avatarPathUrl)
+                        OssEngine.uploadFile(it, imageData, callback)
+                    } else {
+                        OssEngine.uploadFile(it, avatarPathUrl, callback)
+                    }
                 }
             }
 
