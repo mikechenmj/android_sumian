@@ -1,13 +1,23 @@
 package com.sumian.common.h5
 
+import android.util.Log
+import android.view.View
 import com.blankj.utilcode.util.LogUtils
+import com.google.gson.reflect.TypeToken
 import com.sumian.common.base.BaseViewModel
 import com.sumian.common.base.BaseViewModelFragment
+import com.sumian.common.dialog.SumianImageTextDialog
+import com.sumian.common.h5.bean.H5ShowToastData
+import com.sumian.common.h5.bean.ShareData
 import com.sumian.common.h5.widget.SWebView
 import com.sumian.common.h5.widget.SWebViewLayout
+import com.sumian.common.utils.JsonUtil
+import com.sumian.common.utils.StatusBarUtil
 import com.tencent.smtt.sdk.WebView
 
 abstract class BaseWebViewFragment : BaseViewModelFragment<BaseViewModel>() ,SWebView.OnWebViewListener{
+
+    protected var mSumianImageTextDialog: SumianImageTextDialog? = null
 
     override fun onPageStarted(view: WebView?) {
     }
@@ -34,6 +44,56 @@ abstract class BaseWebViewFragment : BaseViewModelFragment<BaseViewModel>() ,SWe
         super.initData()
         getSWebViewLayout().setWebListener(this)
         getSWebViewLayout().loadRequestUrl(getCompleteUrl())
+        registerHandler(getSWebViewLayout().sWebView)
+        registerBaseHandler(getSWebViewLayout().sWebView)
+    }
+
+    protected open fun registerHandler(sWebView: SWebView) {}
+
+    private fun registerBaseHandler(sWebView: SWebView) {
+        sWebView.registerHandler("showToast") { data, function ->
+            LogUtils.d(data)
+            val toastData = H5ShowToastData.fromJson(data)
+            if (mSumianImageTextDialog != null) {
+                mSumianImageTextDialog!!.dismiss()
+            } else {
+                mSumianImageTextDialog = SumianImageTextDialog(activity!!)
+            }
+            mSumianImageTextDialog!!.show(toastData)
+        }
+        sWebView.registerHandler("hideToast") { data, function ->
+            LogUtils.d(data)
+            val toastData = H5ShowToastData.fromJson(data)
+            if (mSumianImageTextDialog != null) {
+                mSumianImageTextDialog!!.dismiss(toastData.delay)
+            }
+        }
+        sWebView.registerHandler("return") { data, function -> goBack() }
+        sWebView.registerHandler("goToPage") { data, function ->
+            run {
+                val page = JsonUtil.getJsonObject(data)?.get("page")?.asString
+                        ?: return@registerHandler
+                onGoToPage(page, data)
+            }
+        }
+        sWebView.registerHandler("share") { data, function ->
+            run {
+                val shareData = JsonUtil.fromJson(data, ShareData::class.java) ?: return@run
+                onShare(shareData)
+            }
+        }
+    }
+
+    protected open fun onGoToPage(page: String) {
+
+    }
+
+    protected open fun onGoToPage(page: String, rawData: String) {
+
+    }
+
+    protected open fun onShare(shareData: ShareData) {
+
     }
 
     protected open fun getCompleteUrl(): String {
@@ -76,6 +136,11 @@ abstract class BaseWebViewFragment : BaseViewModelFragment<BaseViewModel>() ,SWe
 
     fun goBack(): Boolean {
         return getSWebViewLayout().webViewCanGoBack()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        mSumianImageTextDialog?.release()
     }
 
 }
