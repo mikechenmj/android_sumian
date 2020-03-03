@@ -74,4 +74,8 @@ abstract class BaseWebViewFragment : BaseViewModelFragment<BaseViewModel>() ,SWe
         return getSWebViewLayout().sWebView
     }
 
+    fun goBack(): Boolean {
+        return getSWebViewLayout().webViewCanGoBack()
+    }
+
 }

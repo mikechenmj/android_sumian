@@ -2,6 +2,7 @@ package com.sumian.sd.buz.homepage
 
 import android.app.Activity
 import android.content.Intent
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
 import com.blankj.utilcode.util.*
@@ -36,6 +37,7 @@ import com.sumian.sd.buz.relaxation.RelaxationListActivity
 import com.sumian.sd.buz.scale.ScaleListActivity
 import com.sumian.sd.buz.sleepguide.SleepGuideActivity
 import com.sumian.sd.buz.stat.StatConstants
+import com.sumian.sd.common.h5.ChannelH5Fragment
 import com.sumian.sd.common.h5.H5Uri
 import com.sumian.sd.common.h5.SimpleWebActivity
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
@@ -53,5 +55,14 @@ class H5HomepageFragment : BaseViewModelFragment<BaseViewModel>() {
 
     override fun getLayoutId(): Int {
         return R.layout.h5_fragment_homepage
+    }
+
+    fun goBack(): Boolean {
+        var fragment = childFragmentManager?.findFragmentById(R.id.channel_h5_card_view)
+        if (fragment != null) {
+            fragment as ChannelH5Fragment
+            return fragment.goBack()
+        }
+        return false
     }
 }
