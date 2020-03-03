@@ -4,8 +4,10 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.util.Log
+import com.sumian.common.log.CommonLog
 import com.sumian.common.notification.ISchemeResolver
 import com.sumian.common.notification.SchemeResolveUtil
+import com.sumian.sd.BuildConfig
 import com.sumian.sd.R
 import com.sumian.sd.buz.advisory.activity.AdvisoryDetailActivity
 import com.sumian.sd.buz.advisory.activity.AdvisoryListActivity
@@ -23,6 +25,9 @@ import com.sumian.sd.buz.tel.activity.TelBookingDetailActivity
 import com.sumian.sd.buz.tel.activity.TelBookingListActivity
 import com.sumian.sd.common.h5.H5Uri
 import com.sumian.sd.common.h5.SimpleWebActivity
+import com.sumian.sd.common.utils.TimeUtil
+import com.sumian.sd.main.MainActivity
+import java.text.SimpleDateFormat
 import java.util.*
 
 @Suppress("UNUSED_PARAMETER")
@@ -36,9 +41,10 @@ import java.util.*
 object SchemeResolver : ISchemeResolver {
     override fun schemeResolver(context: Context, scheme: String): Intent? {
         val uri = SchemeResolveUtil.stringToUri(scheme)
+        CommonLog.log("schemeResolver scheme: $scheme")
         return when (uri.host) {
             "not-jump" -> null
-            "diaries" -> resolveDiaryScheme(context, uri)
+            "diaries" -> resolveH5DiaryScheme(context, uri)
             "online-reports" -> resolveOnlineReportScheme(context, uri)
             "refund" -> resolveRefundScheme(context, uri)
             "advisories" -> resolveAdvisoriesScheme(context, uri)
@@ -55,9 +61,23 @@ object SchemeResolver : ISchemeResolver {
             "diary-evaluations" -> resolveDiaryEvaluationScheme(context, uri)
             "message-boards" -> resolveMessageBoards(context, uri)
             "system-notifications-detail" -> resolveSystemNotificationsDetail(context, uri)
-            "anxiety-reminder" -> { resolveAnxietyScheme(context, uri) }
+            "anxiety-reminder" -> resolveAnxietyScheme(context, uri)
+            "mission-list-reminder" -> resolveAndGoH5Homepage(context, uri)
+            "scenario" -> resolveAndGoH5Homepage(context, uri)
+            "mission" -> resolveAndGoH5Homepage(context, uri)
+            "scenario-finished" -> resolveAndGoH5Homepage(context, uri)
+            "new-tip" -> resolveH5TipScheme(context, uri)
             else -> null
         }
+    }
+
+    private fun resolveAndGoH5Homepage(context: Context, uri: Uri): Intent? {
+        val userId = uri.getQueryParameter("user_id")
+        val orgId = uri.getQueryParameter("org_id")
+        var url = BuildConfig.CHANNEL_H5_URL + "?user_id=" + userId + "&org_id=" + orgId
+        var intent = MainActivity.getLaunchIntentForH5(url)
+        CommonLog.log("resolveAndGoH5Homepage url: $url intent: $intent")
+        return intent
     }
 
     private fun resolveSystemNotificationsDetail(context: Context, uri: Uri): Intent? {
@@ -79,6 +99,25 @@ object SchemeResolver : ISchemeResolver {
         return SleepRecordActivity.getLaunchIntent(context, dateInMills)
     }
 
+    fun resolveH5DiaryScheme(context: Context, uri: Uri): Intent {
+        val userId = uri.getQueryParameter("user_id")
+        val orgId = uri.getQueryParameter("org_id")
+        val date = uri.getQueryParameter("date")
+        val formatDate = TimeUtil.unixTimeToDateString(date!!.toInt())
+        var url = BuildConfig.CHANNEL_H5_URL + "sleepDiary" + "?user_id=" + userId + "&org_id=" + orgId + "&date=" + formatDate
+        var intent = MainActivity.getLaunchIntentForH5(url)
+        CommonLog.log("resolveH5DiaryScheme url: $url intent: $intent")
+        return intent
+    }
+
+    fun resolveH5TipScheme(context: Context, uri: Uri): Intent {
+        val userId = uri.getQueryParameter("user_id")
+        val orgId = uri.getQueryParameter("org_id")
+        var url = BuildConfig.CHANNEL_H5_URL + "sleepDiary" + "?user_id=" + userId + "&org_id=" + orgId
+        var intent = MainActivity.getLaunchIntentForH5(url)
+        CommonLog.log("resolveH5TipScheme url: $url intent: $intent")
+        return intent
+    }
     /**
      * "scheme" =>  sleepdoctor://diary-evaluations?id=91&notification_id=c9b459ca-6a81-4ad8-99f3-2b2b6a06ffc2&user_id=2939
      */
@@ -196,9 +235,20 @@ object SchemeResolver : ISchemeResolver {
     电子报告更新
     "scheme" => 'sleepdoctor://online-reports?id=1&url=www.baidu.com&notification_id=9f3f9091-ab98-421c-ac2c-47709c80ba16&user_id=1',   //urlencode后
      */
-    fun resolveOnlineReportScheme(context: Context, uri: Uri): Intent {
+    private fun resolveOnlineReportScheme(context: Context, uri: Uri): Intent {
         val id = uri.getQueryParameter("id")?.toInt() ?: 0
-        return OnlineReportDetailActivity.getLaunchIntent(context, id)
+        val userId = uri.getQueryParameter("user_id")?.toInt() ?: 0
+        val url = uri.getQueryParameter("url").toString()
+        val reportUrl = uri.getQueryParameter("report_url").toString()
+        val title = uri.getQueryParameter("title").toString()
+        val orgId = uri.getQueryParameter("org_id")?.toInt() ?: 0
+        CommonLog.log("resolveAndGoH5Homepage uri: $uri")
+        CommonLog.log("resolveOnlineReportScheme userId: $userId")
+        CommonLog.log("resolveOnlineReportScheme url: $url")
+        CommonLog.log("resolveOnlineReportScheme reportUrl: $reportUrl")
+        CommonLog.log("resolveOnlineReportScheme title: $title")
+        CommonLog.log("resolveOnlineReportScheme orgId: $orgId")
+        return OnlineReportDetailActivity.getLaunchIntent(context, id, userId, url, reportUrl, title, orgId)
     }
 
     /**

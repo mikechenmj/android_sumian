@@ -65,4 +65,12 @@ class H5HomepageFragment : BaseViewModelFragment<BaseViewModel>() {
         }
         return false
     }
+
+    fun loadRequestUrl(url: String) {
+        var fragment = childFragmentManager?.findFragmentById(R.id.channel_h5_card_view)
+        if (fragment != null) {
+            fragment as ChannelH5Fragment
+            fragment.getSWebViewLayout().loadRequestUrl(url)
+        }
+    }
 }

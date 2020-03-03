@@ -9,6 +9,7 @@ import com.avos.avoscloud.AVInstallation
 import com.avos.avoscloud.SaveCallback
 import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.LogUtils
+import com.sumian.common.log.CommonLog
 
 /**
  * @author : Zhan Xuzhao
@@ -62,6 +63,7 @@ object AppNotificationManager {
     }
 
     fun showNotificationIfPossible(context: Context, pushData: PushData) {
+        CommonLog.log("showNotificationIfPossible pushData: $pushData")
         LogUtils.d("pushData", pushData)
         val scheme = pushData.scheme ?: return
         if (!isUserIdValid(scheme)) {
@@ -74,6 +76,7 @@ object AppNotificationManager {
                 ?: mNotificationDelegate.getDefaultIntent(context)
         intent.putExtra(KEY_PUSH_NOTIFICATION_ID, notificationId)
         intent.putExtra(KEY_PUSH_NOTIFICATION_DATA_ID, notificationDataId)
+        CommonLog.log("showNotificationIfPossible intent: $intent")
         val contentText = pushData.alert ?: return
         NotificationUtil.showNotification(
                 context,
