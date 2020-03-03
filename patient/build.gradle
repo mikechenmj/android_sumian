@@ -165,6 +165,7 @@ android {
 
             buildConfigField("String", "BASE_URL", appProperties['BASE_DEV_URL'])
             buildConfigField("String", "BASE_H5_URL", appProperties['BASE_DEV_H5_URL'])
+            buildConfigField("String", "CHANNEL_H5_URL", appProperties['CHANNEL_DEV_H5_URL'])
             buildConfigField("String", "LEANCLOUD_APP_ID", appProperties['DEV_LEANCLOUD_APP_ID'])
             buildConfigField("String", "LEANCLOUD_APP_KEY", appProperties['DEV_LEANCLOUD_APP_KEY'])
             buildConfigField("String", "LEANCLOUD_ONLINE_SERVICE_ID", appProperties['LEANCLOUD_ONLINE_SERVICE_ID'])
@@ -184,6 +185,7 @@ android {
 
             buildConfigField("String", "BASE_URL", appProperties['BASE_TEST_URL'])
             buildConfigField("String", "BASE_H5_URL", appProperties['BASE_TEST_H5_URL'])
+            buildConfigField("String", "CHANNEL_H5_URL", appProperties['CHANNEL_TEST_H5_URL'])
             buildConfigField("String", "LEANCLOUD_APP_ID", appProperties['TEST_LEANCLOUD_APP_ID'])
             buildConfigField("String", "LEANCLOUD_APP_KEY", appProperties['TEST_LEANCLOUD_APP_KEY'])
             buildConfigField("String", "LEANCLOUD_ONLINE_SERVICE_ID", appProperties['LEANCLOUD_ONLINE_SERVICE_ID'])
@@ -201,6 +203,7 @@ android {
             versionNameSuffix = "-release"
             buildConfigField("String", "BASE_URL", appProperties['BASE_OFFICIAL_URL'])
             buildConfigField("String", "BASE_H5_URL", appProperties['BASE_OFFICIAL_H5_URL'])
+            buildConfigField("String", "CHANNEL_H5_URL", appProperties['CHANNEL_OFFICIAL_H5_URL'])
             buildConfigField("String", "LEANCLOUD_APP_ID", appProperties['OFFICIAL_LEANCLOUD_APP_ID'])
             buildConfigField("String", "LEANCLOUD_APP_KEY", appProperties['OFFICIAL_LEANCLOUD_APP_KEY'])
             buildConfigField("String", "LEANCLOUD_ONLINE_SERVICE_ID", appProperties['LEANCLOUD_ONLINE_SERVICE_ID'])

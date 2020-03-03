@@ -23,6 +23,7 @@
             android:orientation="vertical">
 
             <com.sumian.sd.widget.divider.SettingDividerView
+                android:visibility="gone"
                 android:id="@+id/sdv_remind"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -52,6 +53,7 @@
                 app:type_desc="@string/change_bind" />
 
             <com.sumian.sd.widget.divider.SettingDividerView
+                android:visibility="gone"
                 android:id="@+id/sdv_feedback"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

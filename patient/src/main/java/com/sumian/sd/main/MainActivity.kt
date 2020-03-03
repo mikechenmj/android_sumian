@@ -23,6 +23,7 @@ import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.devicemanager.AutoSyncDeviceDataUtil
 import com.sumian.sd.buz.diary.DataFragment
+import com.sumian.sd.buz.homepage.H5HomepageFragment
 import com.sumian.sd.buz.homepage.HomepageFragment
 import com.sumian.sd.buz.notification.NotificationUnreadCountChangeEvent
 import com.sumian.sd.buz.notification.NotificationViewModel
@@ -69,7 +70,7 @@ class MainActivity : BaseActivity() {
     }
 
     private val mFragmentTags = arrayOf(
-            HomepageFragment::class.java.simpleName,
+            H5HomepageFragment::class.java.simpleName,
             DataFragment::class.java.simpleName,
             DoctorFragment::class.java.simpleName,
             MeFragment::class.java.simpleName)
@@ -226,7 +227,7 @@ class MainActivity : BaseActivity() {
     private fun changeStatusBarColorByPosition(position: Int) {
         val isDark = when (position) {
             0 -> true
-            1 -> false
+            1 -> true
             2 -> !AppManager.getAccountViewModel().isBindDoctor
             else -> false
         }
@@ -262,11 +263,11 @@ class MainActivity : BaseActivity() {
                 object : FragmentUtil.FragmentCreator {
                     override fun createFragmentByPosition(position: Int): Fragment {
                         return when (position) {
-                            0 -> HomepageFragment()
+                            0 -> H5HomepageFragment()
                             1 -> DataFragment()
                             2 -> DoctorFragment()
                             3 -> MeFragment()
-                            else -> HomepageFragment()
+                            else -> H5HomepageFragment()
                         }
                     }
                 })

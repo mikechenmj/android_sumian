@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,14 +24,9 @@ import com.sumian.device.manager.DeviceManager
 import com.sumian.device.manager.helper.SyncSleepDataHelper
 import com.sumian.sd.R
 import com.sumian.sd.buz.device.scan.ScanDeviceActivity
-import com.sumian.sd.buz.diary.DataFragment
-import com.sumian.sd.buz.diary.event.ChangeDataFragmentTabEvent
 import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.buz.upgrade.activity.DeviceVersionNoticeActivity
-import com.sumian.sd.common.utils.EventBusUtil
 import com.sumian.sd.common.utils.UiUtils
-import com.sumian.sd.main.MainActivity
-import com.sumian.sd.main.event.ChangeMainTabEvent
 import com.sumian.sd.widget.dialog.SumianImageTextToast
 import com.sumian.sd.wxapi.MiniProgramHelper
 import kotlinx.android.synthetic.main.layout_device_card_view_device.*
@@ -109,11 +105,6 @@ class DeviceCardFragment : BaseFragment() {
                     }
                 }
             }
-        }
-        tv_device_data.setOnClickListener {
-            StatUtil.event(StatConstants.click_home_page_device_data_icon)
-            EventBusUtil.postStickyEvent(ChangeMainTabEvent(MainActivity.TAB_1))
-            EventBusUtil.postStickyEvent(ChangeDataFragmentTabEvent(DataFragment.TAB_1))
         }
         tv_know_device.setOnClickListener {
             StatUtil.event(StatConstants.click_home_page_learn_more_about_device)
@@ -206,9 +197,9 @@ class DeviceCardFragment : BaseFragment() {
         val deviceNotConnected =
                 device != null && isBluetoothEnable && device.isMonitorConnected()
         ll_device.visibility = if (deviceNotConnected) View.VISIBLE else View.GONE
+        ll_sync.visibility = if (deviceNotConnected) View.VISIBLE else View.GONE
         vg_no_device.visibility = if (!deviceNotConnected) View.VISIBLE else View.GONE
         tv_know_device.visibility = if (device == null) View.VISIBLE else View.GONE
-        tv_device_data.visibility = if (device != null) View.VISIBLE else View.GONE
         if (device == null) {
             updateNoDeviceUI(
                     R.drawable.ic_home_icon_adddevice,
@@ -261,8 +252,8 @@ class DeviceCardFragment : BaseFragment() {
                 tv_sync.isEnabled = !isSyncing
                 tv_sync.text =
                         resources.getString(if (isSyncing) R.string.syncing else R.string.sync)
-                tv_progress.visibility = if (isSyncing) View.VISIBLE else View.GONE
-                tv_progress.text = "${device.syncProgress * 100 / device.syncTotalCount}%"
+                tv_sync_progress.visibility = if (isSyncing) View.VISIBLE else View.GONE
+                tv_sync_progress.text = "${device.syncProgress * 100 / device.syncTotalCount}%"
                 if (isSyncing && (mRotateAnimator == null || !mRotateAnimator!!.isRunning)) {
                     startSyncAnimation()
                 }

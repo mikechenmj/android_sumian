@@ -2,6 +2,7 @@ package com.sumian.sd.buz.diary.monitorrecord
 
 import android.os.Handler
 import android.text.format.DateUtils
+import android.util.Log
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -25,11 +26,13 @@ import com.sumian.sd.buz.devicemanager.uploadsleepdata.UploadSleepDataFinishedEv
 import com.sumian.sd.buz.diary.event.UpdateMonitorDataEvent
 import com.sumian.sd.buz.diary.sleeprecord.calendar.calendarView.CalendarView
 import com.sumian.sd.buz.diary.sleeprecord.calendar.custom.CalendarPopup
+import com.sumian.sd.buz.diary.sleeprecord.widget.SleepDataDateBar
 import com.sumian.sd.buz.report.weeklyreport.CalendarItemSleepReport
 import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import com.sumian.sd.common.utils.EventBusUtil
 import kotlinx.android.synthetic.main.fragment_monitor_data_vp.*
+import kotlinx.android.synthetic.main.lay_pay_calculate_item_view.*
 import java.util.*
 
 /**
@@ -137,6 +140,14 @@ class MonitorDataVpFragment : BaseFragment() {
         val previewDays = if (calendar.get(Calendar.HOUR_OF_DAY) >= 20) 1 else 0
         date_bar.setPreviewDays(previewDays)
         date_bar.setCurrentTime(getInitTime())
+        date_bar.setOnSleepDataDateBarClickListener(object : SleepDataDateBar.OnSleepDataDateBarClickListener {
+            override fun onClick(show: Boolean) {
+                if(show && activity != null) {
+                    nsv_fragment_monitor_data_vp.scrollTo(nsv_fragment_monitor_data_vp.scrollX,
+                            activity!!.resources.getDimension(R.dimen.device_card_view_height).toInt())
+                }
+            }
+        })
         date_bar.setDataLoader(object : CalendarPopup.DataLoader {
             override fun loadData(startMonthTime: Long, monthCount: Int, isInit: Boolean) {
                 val map = HashMap<String, Any>(0)

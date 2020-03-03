@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/refresh_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="@dimen/normal_padding"
+    android:background="@color/white"
+    android:orientation="vertical">
+    <fragment
+        android:layout_marginTop="5dp"
+        android:id="@+id/channel_h5_card_view"
+        android:name="com.sumian.sd.common.h5.ChannelH5Fragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+</LinearLayout>
