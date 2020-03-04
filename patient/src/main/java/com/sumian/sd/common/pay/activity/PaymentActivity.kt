@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.fragment.app.Fragment
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.image.ImageLoader
@@ -40,6 +41,8 @@ class PaymentActivity : BaseViewModelActivity<PayPresenter>(), View.OnClickListe
         private const val ARGS_DOCTOR_SERVICE = "com.sumian.app.extra.doctor.service"
         private const val ARGS_DOCTOR_SERVICE_PACKAGE_ID = "com.sumian.app.extra.doctor.service.packageId"
 
+        const val EXTRA_ERROR_REASON = "error_reason"
+
         @JvmStatic
         fun startForResult(activity: Activity, doctorService: DoctorService, packageId: Int, requestCode: Int) {
             val extras = Bundle()
@@ -50,6 +53,17 @@ class PaymentActivity : BaseViewModelActivity<PayPresenter>(), View.OnClickListe
             }
             activity.startActivityForResult(intent, requestCode)
         }
+
+        @JvmStatic
+        fun startForResult(fragment: Fragment, doctorService: DoctorService, packageId: Int, requestCode: Int) {
+            val extras = Bundle()
+            extras.putParcelable(ARGS_DOCTOR_SERVICE, doctorService)
+            val intent = Intent(fragment.activity, PaymentActivity::class.java).apply {
+                putExtras(extras)
+                putExtra(ARGS_DOCTOR_SERVICE_PACKAGE_ID, packageId)
+            }
+            fragment.startActivityForResult(intent, requestCode)
+        }
     }
 
     private var mPayChannel = WECHAT_PAY_TYPE
@@ -58,7 +72,7 @@ class PaymentActivity : BaseViewModelActivity<PayPresenter>(), View.OnClickListe
 //        ActionLoadingDialogV2(this)
 //    }
 
-    private val mPayDialog: PayDialog  by lazy {
+    private val mPayDialog: PayDialog by lazy {
         val payDialog = PayDialog(this, object : PayDialog.Listener {
             override fun onRepayClick() {
                 return pay()
@@ -71,6 +85,7 @@ class PaymentActivity : BaseViewModelActivity<PayPresenter>(), View.OnClickListe
     private var mDoctorService: DoctorService? = null
     private var mServicePackage: DoctorServicePackage? = null
     private var mPackage: DoctorServicePackage.ServicePackage? = null
+    private var mErrorReason: String = ""
 
     override fun initBundle(bundle: Bundle) {
         bundle.let {
@@ -149,6 +164,7 @@ class PaymentActivity : BaseViewModelActivity<PayPresenter>(), View.OnClickListe
     override fun onBackPressed() {
         dismissLoading()
         cancelPayDialog()
+        setResult(Activity.RESULT_CANCELED, Intent().apply { putExtra(EXTRA_ERROR_REASON, mErrorReason) })
         finish()
     }
 
@@ -193,12 +209,14 @@ class PaymentActivity : BaseViewModelActivity<PayPresenter>(), View.OnClickListe
         if (!mPayDialog.isShowing) {
             mPayDialog.setPayStatus(PayDialog.PAY_FAILED).show()
         }
+        mErrorReason = payMsg
     }
 
     fun onOrderPayInvalid(payMsg: String) {
         if (!mPayDialog.isShowing) {
             mPayDialog.setPayStatus(PayDialog.PAY_INVALID).show()
         }
+        mErrorReason = payMsg
     }
 
     fun onOrderPayCancel(payMsg: String) {
@@ -206,6 +224,7 @@ class PaymentActivity : BaseViewModelActivity<PayPresenter>(), View.OnClickListe
             mPayDialog.setPayStatus(PayDialog.PAY_CANCELED).show()
         }
         dismissLoading()
+        mErrorReason = payMsg
     }
 
     fun onCheckOrderPayIsOk() {
@@ -223,10 +242,13 @@ class PaymentActivity : BaseViewModelActivity<PayPresenter>(), View.OnClickListe
         }
     }
 
-    fun onCheckOrderPayFinialIsInvalid(invalidError: String) {
+    fun onCheckOrderPayFinialIsInvalid(invalidError: String, errorReason: String?) {
         ToastUtils.showShort(invalidError)
         cancelPayDialog()
-        setResult(Activity.RESULT_CANCELED)
+        if (errorReason != null) {
+            mErrorReason = errorReason
+        }
+        setResult(Activity.RESULT_CANCELED, Intent().apply { putExtra(EXTRA_ERROR_REASON, mErrorReason) })
         finish()
     }
 
