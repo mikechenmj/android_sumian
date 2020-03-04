@@ -91,7 +91,7 @@ class ChannelH5Fragment : BaseWebViewFragment() {
         if (requestCode == REQUEST_CODE_PAY) {
             when (resultCode) {
                 Activity.RESULT_OK -> {
-                    mBuyCallBackFunction?.onCallBack("{result:'success'}")
+                    mBuyCallBackFunction?.onCallBack("{\"result\":\"success\"}")
                 }
                 Activity.RESULT_CANCELED -> {
                     var errMes = data?.getStringExtra(PaymentActivity.EXTRA_ERROR_REASON)
