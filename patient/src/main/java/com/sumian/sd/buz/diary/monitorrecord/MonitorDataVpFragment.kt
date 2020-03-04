@@ -2,9 +2,9 @@ package com.sumian.sd.buz.diary.monitorrecord
 
 import android.os.Handler
 import android.text.format.DateUtils
-import android.util.Log
 import android.view.View
 import androidx.core.view.isVisible
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
@@ -32,7 +32,6 @@ import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import com.sumian.sd.common.utils.EventBusUtil
 import kotlinx.android.synthetic.main.fragment_monitor_data_vp.*
-import kotlinx.android.synthetic.main.lay_pay_calculate_item_view.*
 import java.util.*
 
 /**
@@ -143,7 +142,8 @@ class MonitorDataVpFragment : BaseFragment() {
         date_bar.setOnSleepDataDateBarClickListener(object : SleepDataDateBar.OnSleepDataDateBarClickListener {
             override fun onClick(show: Boolean) {
                 if(show && activity != null) {
-                    nsv_fragment_monitor_data_vp.scrollTo(nsv_fragment_monitor_data_vp.scrollX,
+                    var scrollView = mRoot as NestedScrollView
+                    scrollView.scrollTo(scrollView.scrollX,
                             activity!!.resources.getDimension(R.dimen.device_card_view_height).toInt())
                 }
             }

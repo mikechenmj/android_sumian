@@ -24,8 +24,9 @@ import retrofit2.Call
 abstract class BaseFragment : Fragment(), BaseShowLoadingView {
 
     private var mCalls = HashSet<Call<*>>()
+    protected var mRoot: View? = null
 
-    protected val mActivity: AppCompatActivity  by lazy {
+    protected val mActivity: AppCompatActivity by lazy {
         activity as AppCompatActivity
     }
 
@@ -42,7 +43,8 @@ abstract class BaseFragment : Fragment(), BaseShowLoadingView {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         onInitWidgetBefore()
-        return inflater.inflate(getLayoutId(), container, false)
+        mRoot = inflater.inflate(getLayoutId(), container, false)
+        return mRoot
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
