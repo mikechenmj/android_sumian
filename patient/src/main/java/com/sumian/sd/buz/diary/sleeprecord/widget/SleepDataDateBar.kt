@@ -25,6 +25,7 @@ class SleepDataDateBar(context: Context, attributeSet: AttributeSet) : FrameLayo
     private var mOnDateClickListener: CalendarView.OnDateClickListener? = null
     private var mSelectedTime = 0L
     private var mPreviewDays = 0
+    private var mOnSleepDataDateBarClickListener: OnSleepDataDateBarClickListener? = null
 
     init {
         LayoutInflater.from(context).inflate(R.layout.view_sleep_data_date_bar, this, true)
@@ -32,6 +33,10 @@ class SleepDataDateBar(context: Context, attributeSet: AttributeSet) : FrameLayo
         iv_date_arrow.setOnClickListener(onDateClickListener)
         tv_date.setOnClickListener(onDateClickListener)
         setCurrentTime(TimeUtilV2.getDayStartTime(System.currentTimeMillis()))
+    }
+
+    fun setOnSleepDataDateBarClickListener(onSleepDataDateBarClickListener: OnSleepDataDateBarClickListener) {
+        mOnSleepDataDateBarClickListener = onSleepDataDateBarClickListener
     }
 
     fun setDataLoader(dataLoader: CalendarPopup.DataLoader) {
@@ -55,6 +60,7 @@ class SleepDataDateBar(context: Context, attributeSet: AttributeSet) : FrameLayo
     }
 
     private fun showDatePopup(show: Boolean) {
+        mOnSleepDataDateBarClickListener?.onClick(show)
         iv_date_arrow.isActivated = show
         if (show) {
             mCalendarPopup = CalendarPopup(context, mDataLoader!!, mPreviewDays)
@@ -75,6 +81,10 @@ class SleepDataDateBar(context: Context, attributeSet: AttributeSet) : FrameLayo
 
     fun getCurrentTime(): Long {
         return mSelectedTime
+    }
+
+    interface OnSleepDataDateBarClickListener {
+        fun onClick(show: Boolean)
     }
 
 }

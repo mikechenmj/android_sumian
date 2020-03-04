@@ -151,7 +151,7 @@ class PayPresenter private constructor(view: PaymentActivity) : BaseViewModel() 
     fun autoCheckOrderStatus() {
         if (mCheckOrderCount >= 10) {
             mCheckOrderCount = 0
-            mView?.onCheckOrderPayFinialIsInvalid("该订单支付失败,请重新购买")
+            mView?.onCheckOrderPayFinialIsInvalid("该订单支付失败,请重新购买", "{result:'order_error'}")
         } else {
             mHandler.removeCallbacksAndMessages(null)
             mHandler.postDelayed({ checkPayOrder() }, 1000L)
@@ -182,28 +182,26 @@ class PayPresenter private constructor(view: PaymentActivity) : BaseViewModel() 
                 }
                 "fail" -> {
                     payResultMsg = R.string.pay_failed
-
                     val errorMsg = data.extras!!.getString("error_msg") // 错误信息
                     // String extraMsg = data.getExtras().getString("extra_msg"); // 错误信息
-
-                    mView?.onOrderPayFailed(App.getAppContext().getString(payResultMsg) + "," + errorMsg)
+                    mView?.onOrderPayFailed("{result:'order_error'}")
                 }
                 "cancel" -> {
                     payResultMsg = R.string.pay_cancel
-                    mView?.onOrderPayCancel(App.getAppContext().getString(payResultMsg))
+                    mView?.onOrderPayCancel("{result:'cancel'}")
                     clearPayAction()
                 }
                 "invalid" -> {
                     payResultMsg = R.string.pay_invalid
-                    mView?.onOrderPayInvalid(App.getAppContext().getString(payResultMsg))
+                    mView?.onOrderPayInvalid("{result:'unknown_error'}")
                 }
                 "unknown" -> {
                     payResultMsg = R.string.pay_unknown
-                    mView?.onOrderPayFailed(App.getAppContext().getString(payResultMsg))
+                    mView?.onOrderPayFailed("{result:'unknown_error'}")
                 }
                 else -> {
                     payResultMsg = R.string.pay_unknown
-                    mView?.onOrderPayFailed(App.getAppContext().getString(payResultMsg))
+                    mView?.onOrderPayFailed("{result:'unknown_error'}")
                 }
             }
 

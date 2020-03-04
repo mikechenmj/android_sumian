@@ -426,6 +426,7 @@
     <!--<string name="input_career_hint">请输入您的职业</string>-->
     <string name="new_areer_too_much_more_error">职业信息太长了,超过了12个字符</string>
     <string name="tab_data">数据</string>
+    <string name="tab_device">设备</string>
     <!--<string name="complete">已完成评估</string>-->
     <string name="go_today">回到今天</string>
     <string name="is_read">全部已读</string>

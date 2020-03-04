@@ -5,6 +5,8 @@ package com.sumian.sd.main
 import android.Manifest
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -23,7 +25,7 @@ import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.devicemanager.AutoSyncDeviceDataUtil
 import com.sumian.sd.buz.diary.DataFragment
-import com.sumian.sd.buz.homepage.HomepageFragment
+import com.sumian.sd.buz.homepage.H5HomepageFragment
 import com.sumian.sd.buz.notification.NotificationUnreadCountChangeEvent
 import com.sumian.sd.buz.notification.NotificationViewModel
 import com.sumian.sd.buz.stat.StatConstants
@@ -50,9 +52,12 @@ class MainActivity : BaseActivity() {
         const val TAB_2 = 2
         const val TAB_3 = 3
 
+        private var mH5Fragment: H5HomepageFragment? = null
+
         private const val SLEEP_RECORD_PREVIOUS_SHOW_NOTIFICATION_TIME = "SLEEP_RECORD_PREVIOUS_SHOW_NOTIFICATION_TIME"
         private const val KEY_TAB_INDEX = "key_tab_name"
         private const val KEY_TAB_DATA = "key_tab_data"
+        private const val KEY_H5_URL = "key_h5_url"
         private const val REQUEST_CODE_OPEN_NOTIFICATION = 1
 
         @JvmStatic
@@ -66,10 +71,17 @@ class MainActivity : BaseActivity() {
             intent.putExtra(KEY_TAB_DATA, tabData)
             return intent
         }
+
+        fun getLaunchIntentForH5(url: String): Intent {
+            val intent = Intent(App.getAppContext(), MainActivity::class.java)
+            intent.putExtra(KEY_TAB_INDEX, 0)
+            intent.putExtra(KEY_H5_URL, url)
+            return intent
+        }
     }
 
     private val mFragmentTags = arrayOf(
-            HomepageFragment::class.java.simpleName,
+            H5HomepageFragment::class.java.simpleName,
             DataFragment::class.java.simpleName,
             DoctorFragment::class.java.simpleName,
             MeFragment::class.java.simpleName)
@@ -89,7 +101,6 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         AppManager.onMainActivityCreate()
         requestPermission()
-
         LogUtils.d("app sha1: ${Sha1Util.getCertificateSHA1Fingerprint(this)}")
     }
 
@@ -213,7 +224,33 @@ class MainActivity : BaseActivity() {
     }
 
     override fun onBackPressed() {
-        returnToPhoneLauncher()
+        if (mCurrentPosition == TAB_0 && canWebViewGoBack()) {
+        } else {
+            returnToPhoneLauncher()
+        }
+    }
+
+    private fun loadRequestUrl(url: String) {
+        var fragment: Fragment?
+        if (mH5Fragment == null) {
+            mH5Fragment = supportFragmentManager.findFragmentByTag(H5HomepageFragment::class.java.simpleName) as H5HomepageFragment?
+        }
+        fragment = mH5Fragment
+        if (fragment != null) {
+            fragment?.loadRequestUrl(url)
+        }
+    }
+
+    private fun canWebViewGoBack(): Boolean {
+        var fragment: Fragment?
+        if (mH5Fragment == null) {
+            mH5Fragment = supportFragmentManager.findFragmentByTag(H5HomepageFragment::class.java.simpleName) as H5HomepageFragment?
+        }
+        fragment = mH5Fragment
+        if (fragment != null) {
+            return fragment.goBack()
+        }
+        return false
     }
 
     private fun returnToPhoneLauncher() {
@@ -226,7 +263,7 @@ class MainActivity : BaseActivity() {
     private fun changeStatusBarColorByPosition(position: Int) {
         val isDark = when (position) {
             0 -> true
-            1 -> false
+            1 -> true
             2 -> !AppManager.getAccountViewModel().isBindDoctor
             else -> false
         }
@@ -262,11 +299,11 @@ class MainActivity : BaseActivity() {
                 object : FragmentUtil.FragmentCreator {
                     override fun createFragmentByPosition(position: Int): Fragment {
                         return when (position) {
-                            0 -> HomepageFragment()
+                            0 -> H5HomepageFragment()
                             1 -> DataFragment()
                             2 -> DoctorFragment()
                             3 -> MeFragment()
-                            else -> HomepageFragment()
+                            else -> H5HomepageFragment()
                         }
                     }
                 })

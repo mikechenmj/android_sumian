@@ -2,11 +2,13 @@ package com.sumian.common.h5.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.sumian.common.R;
@@ -25,6 +27,7 @@ import static com.sumian.common.network.error.ErrorCode.BUSINESS_ERROR;
  **/
 public class SWebViewLayout extends FrameLayout implements SWebView.OnWebViewListener, EmptyErrorView.OnEmptyCallback {
 
+    ImageView mShare;
     ProgressBar mWebViewProgress;
     EmptyErrorView mEmptyErrorView;
 
@@ -46,6 +49,7 @@ public class SWebViewLayout extends FrameLayout implements SWebView.OnWebViewLis
 
     private void initView(Context context) {
         View inflate = LayoutInflater.from(context).inflate(R.layout.common_lay_webview_container_view, this, true);
+        mShare = inflate.findViewById(R.id.iv_share);
         mWebViewProgress = inflate.findViewById(R.id.web_view_progress);
         mEmptyErrorView = inflate.findViewById(R.id.empty_error_view);
         this.mEmptyErrorView.setOnEmptyCallback(this);
@@ -94,8 +98,13 @@ public class SWebViewLayout extends FrameLayout implements SWebView.OnWebViewLis
         this.mSWebView.loadRequestUrl(requestUrl);
     }
 
+    public ImageView getShareView() {
+        return mShare;
+    }
+
     @Override
     public void onPageStarted(WebView view) {
+        mShare.setVisibility(View.GONE);
         this.mEmptyErrorView.hide();
         this.mWebViewProgress.setVisibility(VISIBLE);
         this.mWebViewProgress.setProgress(0);

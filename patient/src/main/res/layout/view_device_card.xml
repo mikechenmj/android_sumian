@@ -13,27 +13,88 @@
     <include layout="@layout/layout_device_card_view_device" />
 
     <TextView
-        android:id="@+id/tv_device_data"
-        style="@style/text_b3_14"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|top"
-        android:drawableStart="@drawable/home_icon_devicedate"
-        android:drawablePadding="5dp"
-        android:padding="20dp"
-        android:text="@string/data"
-        android:visibility="gone"
-        tools:visibility="visible" />
+        android:layout_height="50dp"
+        android:layout_marginStart="@dimen/normal_padding"
+        android:gravity="center"
+        android:text="@string/add_device"
+        android:textColor="#475266"
+        android:textSize="@dimen/font_16" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="@dimen/normal_padding"
+        android:layout_marginTop="62dp"
+        android:background="#EDEFF0" />
+
+    <LinearLayout
+        android:id="@+id/ll_sync"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_gravity="end"
+        android:gravity="center_vertical">
+
+        <FrameLayout
+            android:id="@+id/vg_sync"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:enabled="false"
+            android:gravity="center_vertical"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <TextView
+                android:id="@+id/tv_sync"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:background="@drawable/shape_device_sync_bg"
+                android:enabled="false"
+                android:gravity="center"
+                android:paddingStart="28dp"
+                android:paddingEnd="10dp"
+                android:text="@string/syncing"
+                android:textColor="@color/sel_home_sync_tv" />
+
+            <ImageView
+                android:id="@+id/iv_sync"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="10dp"
+                android:src="@drawable/sel_home_sync_tv_bg"
+                tools:ignore="ContentDescription" />
+        </FrameLayout>
+
+        <!--<TextView-->
+        <!--android:id="@+id/tv_package_index"-->
+        <!--style="@style/text_t1_14"-->
+        <!--android:textStyle="bold"-->
+        <!--tools:text="第 1 段" />-->
+
+        <TextView
+            android:id="@+id/tv_sync_progress"
+            style="@style/text_t2_14"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="20dp"
+            android:textStyle="bold"
+            tools:text="(90%)" />
+
+        <Space style="@style/space_horizontal_weight_1" />
+
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/tv_know_device"
         style="@style/text_b3_14"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_gravity="end|top"
         android:drawableEnd="@drawable/home_icon_understandmore"
         android:drawablePadding="5dp"
-        android:padding="20dp"
+        android:gravity="center"
+        android:paddingEnd="15dp"
         android:text="@string/know_device"
         android:visibility="gone"
         tools:visibility="visible" />
