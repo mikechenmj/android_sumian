@@ -4,16 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/iv_share"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_marginTop="@dimen/status_bar_height"
-        android:padding="15dp"
-        android:src="@drawable/nav_icon_share_black"
-        tools:ignore="ContentDescription" />
-
     <ProgressBar
         android:id="@+id/web_view_progress"
         style="?android:attr/progressBarStyleHorizontal"

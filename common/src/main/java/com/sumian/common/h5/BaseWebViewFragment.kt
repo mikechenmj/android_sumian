@@ -2,8 +2,11 @@ package com.sumian.common.h5
 
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
+import androidx.core.view.isVisible
 import com.blankj.utilcode.util.LogUtils
 import com.google.gson.reflect.TypeToken
+import com.sumian.common.R
 import com.sumian.common.base.BaseViewModel
 import com.sumian.common.base.BaseViewModelFragment
 import com.sumian.common.dialog.SumianImageTextDialog
@@ -14,15 +17,21 @@ import com.sumian.common.h5.widget.SWebViewLayout
 import com.sumian.common.utils.JsonUtil
 import com.sumian.common.utils.StatusBarUtil
 import com.tencent.smtt.sdk.WebView
+import kotlinx.android.synthetic.main.base_h5_fragment.*
 
-abstract class BaseWebViewFragment : BaseViewModelFragment<BaseViewModel>() ,SWebView.OnWebViewListener{
+abstract class BaseWebViewFragment : BaseViewModelFragment<BaseViewModel>(), SWebView.OnWebViewListener {
 
     protected var mSumianImageTextDialog: SumianImageTextDialog? = null
 
+    protected var mShare: ImageView? = null
+    
     override fun onPageStarted(view: WebView?) {
     }
 
     override fun onProgressChange(view: WebView?, newProgress: Int) {
+        if (newProgress <= 20) {
+            iv_share.visibility = View.GONE
+        }
     }
 
     override fun onPageFinish(view: WebView?) {
@@ -35,10 +44,21 @@ abstract class BaseWebViewFragment : BaseViewModelFragment<BaseViewModel>() ,SWe
     }
 
     override fun onReceiveTitle(view: WebView?, title: String?) {
+        tv_title.text = title
     }
 
+    override fun getLayoutId(): Int {
+        return R.layout.base_h5_fragment
+    }
 
-    abstract fun getSWebViewLayout(): SWebViewLayout
+    open fun getSWebViewLayout(): SWebViewLayout {
+        return sm_webview_container
+    }
+
+    override fun initWidget() {
+        super.initWidget()
+        mShare = iv_share
+    }
 
     override fun initData() {
         super.initData()
@@ -46,6 +66,11 @@ abstract class BaseWebViewFragment : BaseViewModelFragment<BaseViewModel>() ,SWe
         getSWebViewLayout().loadRequestUrl(getCompleteUrl())
         registerHandler(getSWebViewLayout().sWebView)
         registerBaseHandler(getSWebViewLayout().sWebView)
+        iv_back.setOnClickListener {
+            if (sm_webview_container.sWebView.canGoBack()) {
+                sm_webview_container.sWebView.goBack()
+            }
+        }
     }
 
     protected open fun registerHandler(sWebView: SWebView) {}
@@ -69,17 +94,36 @@ abstract class BaseWebViewFragment : BaseViewModelFragment<BaseViewModel>() ,SWe
             }
         }
         sWebView.registerHandler("return") { data, function -> goBack() }
+        sWebView.registerHandler("updatePageUI") { data, function ->
+            val map = JsonUtil.fromJson<Map<String, Any>>(data, object : TypeToken<Map<String, Any>>() {
+            }.type) ?: return@registerHandler
+            for ((key, value) in map) {
+                when (key) {
+                    "showNavigationBar" -> if (value is Boolean) {
+                        fl_header.isVisible = value
+                    }
+                    "showTitle" -> if (value is Boolean) {
+                        tv_title.isVisible = value
+                    }
+                    "showBackArrow" -> if (value is Boolean) {
+                        iv_back.isVisible = value
+                    }
+                    "setStatusBarTextColorDark" -> if (value is Boolean) {
+                        if (activity == null) {
+                            return@registerHandler
+                        }
+                        StatusBarUtil.setStatusBarTextColorDark(activity!!, value)
+                    }
+                    else -> {
+                    }
+                }
+            }
+        }
         sWebView.registerHandler("goToPage") { data, function ->
             run {
                 val page = JsonUtil.getJsonObject(data)?.get("page")?.asString
                         ?: return@registerHandler
                 onGoToPage(page, data)
-            }
-        }
-        sWebView.registerHandler("share") { data, function ->
-            run {
-                val shareData = JsonUtil.fromJson(data, ShareData::class.java) ?: return@run
-                onShare(shareData)
             }
         }
     }

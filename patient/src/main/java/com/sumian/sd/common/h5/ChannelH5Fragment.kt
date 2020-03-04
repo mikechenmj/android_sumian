@@ -10,19 +10,16 @@ import com.sumian.common.h5.BaseWebViewFragment
 import com.sumian.common.h5.bean.H5BaseResponse
 import com.sumian.common.h5.bean.H5BindShareData
 import com.sumian.common.h5.widget.SWebView
-import com.sumian.common.h5.widget.SWebViewLayout
 import com.sumian.common.helper.ToastHelper
 import com.sumian.common.statistic.StatUtil
 import com.sumian.common.utils.JsonUtil
 import com.sumian.sd.BuildConfig
-import com.sumian.sd.R
 import com.sumian.sd.buz.doctor.bean.H5DoctorServiceShoppingResult
 import com.sumian.sd.buz.homepage.sheet.ShareBottomSheet
 import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.pay.activity.PaymentActivity
 import com.umeng.socialize.UMShareListener
 import com.umeng.socialize.bean.SHARE_MEDIA
-import kotlinx.android.synthetic.main.channel_h5_fragment.*
 
 class ChannelH5Fragment : BaseWebViewFragment() {
 
@@ -31,25 +28,18 @@ class ChannelH5Fragment : BaseWebViewFragment() {
     companion object {
         private const val REQUEST_CODE_PAY = 104
     }
-    override fun getLayoutId(): Int {
-        return R.layout.channel_h5_fragment
-    }
-
-    override fun getSWebViewLayout(): SWebViewLayout {
-        return sm_webview_container
-    }
 
     override fun getCompleteUrl(): String {
         val token = "?token=" + getToken()
-        val completeUrl = BuildConfig.CHANNEL_H5_URL + token
-        return completeUrl
+        return BuildConfig.CHANNEL_H5_URL + token
     }
+
 
     override fun registerHandler(sWebView: SWebView) {
         sWebView.registerHandler("bindShare") { data, function ->
             val shareData = H5BindShareData.fromJson(data)
-            getSWebViewLayout().shareView.visibility = View.VISIBLE
-            getSWebViewLayout().shareView.setOnClickListener {
+            mShare?.visibility = View.VISIBLE
+            mShare?.setOnClickListener {
                 if (shareData.weixin == null || shareData.weixinCircle == null) {
                     return@setOnClickListener
                 }
