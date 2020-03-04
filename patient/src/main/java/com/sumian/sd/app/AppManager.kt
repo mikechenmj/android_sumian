@@ -21,6 +21,7 @@ import com.sumian.common.dns.HttpDnsEngine
 import com.sumian.common.dns.IHttpDns
 import com.sumian.common.h5.WebViewManger
 import com.sumian.common.helper.ToastHelper
+import com.sumian.common.image.ImagesScopeStorageHelper
 import com.sumian.common.log.CrashLogSender
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.notification.AppNotificationManager
@@ -157,6 +158,7 @@ object AppManager {
         initWebView(app)
         VideoDownloadManager.init(app)
         initDeviceManager()
+        ImagesScopeStorageHelper.init(app)
     }
 
     private fun startCrashListen(app: Application) {

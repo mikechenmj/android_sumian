@@ -32,9 +32,41 @@ class OssEngine {
     }
 
     companion object {
+        fun uploadFile(ossResponse: OssResponse, imageData: ByteArray, uploadCallback: UploadCallback): OSSAsyncTask<PutObjectResult> {
+            return uploadFile(ossResponse, imageData, uploadCallback, null)
+        }
 
         fun uploadFile(ossResponse: OssResponse, localUploadFilePath: String, uploadCallback: UploadCallback): OSSAsyncTask<PutObjectResult> {
             return uploadFile(ossResponse, localUploadFilePath, uploadCallback, null)
+        }
+
+        fun uploadFile(ossResponse: OssResponse, imageData: ByteArray, uploadCallback: UploadCallback, progressListener: UploadProgressListener?): OSSAsyncTask<PutObjectResult> {
+            val credentialProvider = OSSStsTokenCredentialProvider(ossResponse.accessKeyId, ossResponse.accessKeySecret, ossResponse.securityToken)
+            val ossClient = OSSClient(App.getAppContext(), ossResponse.endpoint, credentialProvider)
+            val putObjectRequest = PutObjectRequest(ossResponse.bucket, ossResponse.objectX, imageData)
+            val callbackParam = HashMap<String, String>(2)
+            callbackParam["callbackUrl"] = ossResponse.callbackUrl
+            callbackParam["callbackBody"] = ossResponse.callbackBody
+            putObjectRequest.callbackParam = callbackParam
+            putObjectRequest.setProgressCallback { _, currentSize, totalSize ->
+                LogUtils.d(currentSize, totalSize, (100 * currentSize / totalSize).toString() + "%")
+                if (progressListener != null) {
+                    SumianExecutor.runOnUiThread({ progressListener.onProgressChange(currentSize, totalSize) })
+                }
+            }
+            return ossClient.asyncPutObject(putObjectRequest, object : OSSCompletedCallback<PutObjectRequest, PutObjectResult> {
+                override fun onSuccess(request: PutObjectRequest, result: PutObjectResult?) {
+                    LogUtils.d(result)
+                    SumianExecutor.runOnUiThread({ uploadCallback.onSuccess(result?.serverCallbackReturnBody) })
+                }
+
+                override fun onFailure(request: PutObjectRequest?, clientException: ClientException?, serviceException: ServiceException?) {
+                    LogUtils.d(clientException, serviceException)
+                    val errorCode = (serviceException?.errorCode)
+                    val message = (clientException?.message ?: serviceException?.message)
+                    SumianExecutor.runOnUiThread({ uploadCallback.onFailure(errorCode, message) })
+                }
+            })
         }
 
         fun uploadFile(ossResponse: OssResponse, localUploadFilePath: String, uploadCallback: UploadCallback, progressListener: UploadProgressListener?): OSSAsyncTask<PutObjectResult> {

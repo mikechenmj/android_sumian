@@ -10,12 +10,14 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.sumian.common.base.BaseViewModelActivity;
 import com.sumian.common.image.ImageLoader;
+import com.sumian.common.image.ImagesScopeStorageHelper;
 import com.sumian.common.media.SelectImageActivity;
 import com.sumian.common.media.config.SelectOptions;
 import com.sumian.common.utils.JsonUtil;
@@ -28,6 +30,7 @@ import com.sumian.sd.buz.account.sheet.ModifySelectBottomSheet;
 import com.sumian.sd.buz.stat.StatConstants;
 import com.sumian.sd.widget.TitleBar;
 import com.sumian.sd.widget.dialog.SumianAlertDialog;
+import com.sumian.sd.widget.divider.OnShowMoreListener;
 import com.sumian.sd.widget.divider.SettingDividerView;
 import com.sumian.sd.widget.sheet.PictureBottomSheet;
 import com.umeng.socialize.UMAuthListener;
@@ -42,6 +45,7 @@ import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.Observer;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -54,7 +58,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 @SuppressWarnings("ALL")
 public class UserInfoActivity extends BaseViewModelActivity<SdUserInfoPresenter> implements View.OnClickListener, TitleBar.OnBackClickListener,
-        SettingDividerView.OnShowMoreListener, PictureBottomSheet.OnTakePhotoCallback, EasyPermissions.PermissionCallbacks,
+        OnShowMoreListener, PictureBottomSheet.OnTakePhotoCallback, EasyPermissions.PermissionCallbacks,
         CompoundButton.OnCheckedChangeListener, UMAuthListener {
 
     @SuppressWarnings("unused")
@@ -80,6 +84,7 @@ public class UserInfoActivity extends BaseViewModelActivity<SdUserInfoPresenter>
     private File cameraFile;
     private File storageDir = null;
     private String mLocalImagePath;
+    private Uri mContentUri;
 
     @Override
     protected int getLayoutId() {
@@ -196,9 +201,10 @@ public class UserInfoActivity extends BaseViewModelActivity<SdUserInfoPresenter>
         if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
                 case PIC_REQUEST_CODE_CAMERA:// capture new image
-                    if (cameraFile != null && cameraFile.exists()) {
-                        this.mLocalImagePath = cameraFile.getAbsolutePath();
-                        uploadAvatar(mLocalImagePath);
+                    if (ImagesScopeStorageHelper.INSTANCE.isContentUriFileExisted(this, mContentUri)) {
+                        ContentValues values = new ContentValues(1);
+                        getContentResolver().update(mContentUri, values, null, null);
+                        uploadAvatar(mContentUri.toString());
                     }
                     break;
                 default:
@@ -257,9 +263,7 @@ public class UserInfoActivity extends BaseViewModelActivity<SdUserInfoPresenter>
     public void onTakePhotoCallback() {
         String[] perms = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
         if (EasyPermissions.hasPermissions(this, perms)) {
-
             cameraFile = new File(generateImagePath(String.valueOf(AppManager.getAccountViewModel().getToken().user.id), App.Companion.getAppContext()), AppManager.getAccountViewModel().getToken().user.id + System.currentTimeMillis() + ".jpg");
-            //noinspection ResultOfMethodCallIgnored
             cameraFile.getParentFile().mkdirs();
 
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -269,10 +273,8 @@ public class UserInfoActivity extends BaseViewModelActivity<SdUserInfoPresenter>
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(cameraFile));
                 startActivityForResult(intent, PIC_REQUEST_CODE_CAMERA);
             } else {
-                ContentValues contentValues = new ContentValues(1);
-                contentValues.put(MediaStore.Images.Media.DATA, cameraFile.getAbsolutePath());
-                Uri uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+                mContentUri = ImagesScopeStorageHelper.INSTANCE.generateContentUri(this, cameraFile.getName(), "image/jpeg", false);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, mContentUri);
                 startActivityForResult(intent, PIC_REQUEST_CODE_CAMERA);
             }
 
