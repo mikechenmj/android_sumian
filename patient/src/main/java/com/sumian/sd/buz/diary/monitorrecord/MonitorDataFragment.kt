@@ -6,6 +6,7 @@ import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.base.BaseFragment
 import com.sumian.common.network.response.ErrorResponse
+import com.sumian.common.widget.refresh.SumianSwipeRefreshLayout
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.devicemanager.uploadsleepdata.UploadSleepDataFinishedEvent
@@ -30,6 +31,7 @@ import org.greenrobot.eventbus.ThreadMode
 class MonitorDataFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
 
     private var mSelectedTime = System.currentTimeMillis()
+    private var mRefresh: SumianSwipeRefreshLayout? = null
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_monitor_data
@@ -45,6 +47,11 @@ class MonitorDataFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener
             fragment.arguments = bundle
             return fragment
         }
+    }
+
+    fun setRefresh(refresh: SumianSwipeRefreshLayout?) {
+        mRefresh = refresh
+        mRefresh?.setOnRefreshListener(this)
     }
 
     override fun initData() {
@@ -110,7 +117,7 @@ class MonitorDataFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener
 
             override fun onFinish() {
                 super.onFinish()
-                refresh?.isRefreshing = false
+                mRefresh?.isRefreshing = false
             }
         })
     }
@@ -120,11 +127,7 @@ class MonitorDataFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener
     }
 
     fun updateDailyReport(dailyReport: DailyReport) {
-        if (refresh == null) {
-            return
-        }
-        refresh.isRefreshing = false
-        refresh.setOnRefreshListener(this)
+        mRefresh?.isRefreshing = false
         day_sleep_histogram_view.setData(dailyReport)
         report_sleep_duration_view.setSleepTodayDuration(dailyReport.sleep_duration)
         report_sleep_duration_view.setLightSleepData(dailyReport.light_duration, dailyReport.light_duration_percent)

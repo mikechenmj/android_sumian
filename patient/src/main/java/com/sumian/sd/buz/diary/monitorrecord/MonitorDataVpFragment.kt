@@ -16,6 +16,7 @@ import com.sumian.common.base.BaseFragment
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.statistic.StatUtil
 import com.sumian.common.utils.TimeUtilV2
+import com.sumian.common.widget.refresh.SumianSwipeRefreshLayout
 import com.sumian.device.callback.DeviceStatusListener
 import com.sumian.device.manager.DeviceManager
 import com.sumian.device.manager.helper.SyncSleepDataHelper
@@ -103,7 +104,7 @@ class MonitorDataVpFragment : BaseFragment() {
     }
 
     private fun initViewPager() {
-        view_pager_monitor.adapter = mAdapter
+        view_pager_monitor.adapter = mAdapter.apply { mRefresh = mRoot as SumianSwipeRefreshLayout }
         mAdapter.addDays(TimeUtilV2.getDayStartTime(getInitTime()), PRELOAD_THRESHOLD * 2, true)
         view_pager_monitor.setCurrentItem(mAdapter.count - 1, false)
         view_pager_monitor.addOnPageChangeListener(object : androidx.viewpager.widget.ViewPager.OnPageChangeListener {
@@ -141,7 +142,7 @@ class MonitorDataVpFragment : BaseFragment() {
         date_bar.setCurrentTime(getInitTime())
         date_bar.setOnSleepDataDateBarClickListener(object : SleepDataDateBar.OnSleepDataDateBarClickListener {
             override fun onClick(show: Boolean) {
-                if(show && activity != null) {
+                if (show && activity != null) {
                     var scrollView = mRoot as NestedScrollView
                     scrollView.scrollTo(scrollView.scrollX,
                             activity!!.resources.getDimension(R.dimen.device_card_view_height).toInt())
@@ -201,8 +202,12 @@ class MonitorDataVpFragment : BaseFragment() {
     class InnerPagerAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
         val times = ArrayList<Long>()
 
+        var mRefresh : SumianSwipeRefreshLayout? = null
+
         override fun getItem(position: Int): Fragment {
-            return MonitorDataFragment.newInstance(times[position])
+            return MonitorDataFragment.newInstance(times[position]).apply {
+                setRefresh(mRefresh)
+            }
         }
 
         override fun getItemId(position: Int): Long {
