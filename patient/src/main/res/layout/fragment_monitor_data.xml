@@ -12,45 +12,47 @@
         app:ssrl_progress_bg_color="@color/l2_color_day"
         app:ssrl_progress_color="@color/n2_color_day">
 
-            <LinearLayout
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.sumian.sd.buz.report.widget.histogram.TouchDailySleepHistogramView
+                android:id="@+id/day_sleep_histogram_view"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="@dimen/space_200"
+                android:gravity="center"
+                app:tdshv_coordinate_color="@color/l3_color_day"
+                app:tdshv_deep_color="@color/g1_color_day"
+                app:tdshv_empty_text_color="@color/t5_color_day"
+                app:tdshv_eog_color="@color/g2_color_day"
+                app:tdshv_light_color="@color/g2_color_day"
+                app:tdshv_sober_color="@color/g3_color_day" />
 
-                <com.sumian.sd.buz.report.widget.histogram.TouchDailySleepHistogramView
-                    android:id="@+id/day_sleep_histogram_view"
+            <com.sumian.sd.buz.report.widget.ReportIndicatorRuleView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_26" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/space_10"
+                android:layout_marginTop="@dimen/space_24"
+                android:layout_marginRight="@dimen/space_10"
+                android:layout_marginBottom="@dimen/space_20"
+                app:cardBackgroundColor="@color/b2_color_day"
+                app:cardCornerRadius="@dimen/space_4"
+                app:cardElevation="0dp"
+                app:contentPaddingLeft="@dimen/space_20"
+                app:contentPaddingBottom="@dimen/space_20"
+                app:contentPaddingRight="@dimen/space_20">
+
+                <com.sumian.sd.buz.report.widget.ReportSleepDurationView
+                    android:id="@+id/report_sleep_duration_view"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/space_200"
-                    android:gravity="center"
-                    app:tdshv_coordinate_color="@color/l3_color_day"
-                    app:tdshv_deep_color="@color/g1_color_day"
-                    app:tdshv_empty_text_color="@color/t5_color_day"
-                    app:tdshv_eog_color="@color/g2_color_day"
-                    app:tdshv_light_color="@color/g2_color_day"
-                    app:tdshv_sober_color="@color/g3_color_day" />
+                    android:layout_height="wrap_content" />
 
-                <com.sumian.sd.buz.report.widget.ReportIndicatorRuleView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/space_26" />
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/space_10"
-                    android:layout_marginTop="@dimen/space_24"
-                    android:layout_marginRight="@dimen/space_10"
-                    android:layout_marginBottom="@dimen/space_20"
-                    app:cardBackgroundColor="@color/b2_color_day"
-                    app:cardCornerRadius="@dimen/space_4"
-                    app:cardElevation="0dp"
-                    app:contentPadding="@dimen/space_20">
-
-                    <com.sumian.sd.buz.report.widget.ReportSleepDurationView
-                        android:id="@+id/report_sleep_duration_view"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-
-                </androidx.cardview.widget.CardView>
-            </LinearLayout>
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
     </com.sumian.common.widget.refresh.SumianSwipeRefreshLayout>
 </FrameLayout>

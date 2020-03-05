@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:visibility="gone"
-    android:layout_marginTop="60dp"
+    android:layout_marginTop="50dp"
     tools:background="@color/white"
     tools:visibility="visible">
 

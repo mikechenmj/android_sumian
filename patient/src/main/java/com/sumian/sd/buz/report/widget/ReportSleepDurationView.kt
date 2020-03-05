@@ -3,6 +3,7 @@ package com.sumian.sd.buz.report.widget
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
+import android.widget.LinearLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.sumian.sd.R
 import kotlinx.android.synthetic.main.hw_lay_sleep_duration_view.view.*
@@ -13,7 +14,7 @@ import kotlinx.android.synthetic.main.hw_lay_sleep_duration_view.view.*
  * desc:
  */
 
-class ReportSleepDurationView : ConstraintLayout {
+class ReportSleepDurationView : LinearLayout {
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
@@ -22,6 +23,7 @@ class ReportSleepDurationView : ConstraintLayout {
     }
 
     private fun initView(context: Context) {
+        orientation = VERTICAL
         View.inflate(context, R.layout.hw_lay_sleep_duration_view, this)
     }
 
