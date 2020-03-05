@@ -263,7 +263,7 @@ class MainActivity : BaseActivity() {
     private fun changeStatusBarColorByPosition(position: Int) {
         val isDark = when (position) {
             0 -> true
-            1 -> true
+            1 -> false
             2 -> !AppManager.getAccountViewModel().isBindDoctor
             else -> false
         }
