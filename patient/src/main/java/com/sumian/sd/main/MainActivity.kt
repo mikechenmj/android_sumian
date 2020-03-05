@@ -7,6 +7,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -181,6 +182,10 @@ class MainActivity : BaseActivity() {
         StatusBarUtil.setStatusBarTextColorDark(this@MainActivity, isDark)
     }
 
+    fun setNavTabVisible(visible: Boolean) {
+        nav_tab.isVisible = visible
+    }
+
     override fun initBundle(bundle: Bundle) {
         if (KefuManager.isFromUnicorn(bundle)) {
             intent = Intent()   // 将intent清掉，以免从堆栈恢复时又打开客服窗口
@@ -204,6 +209,9 @@ class MainActivity : BaseActivity() {
      * @see changeSelectFragment
      */
     private fun changeSelectTab(position: Int) {
+        if (position > 0) {
+            nav_tab.isVisible = true
+        }
         nav_tab.selectItem(position, true)
     }
 
