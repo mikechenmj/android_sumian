@@ -9,7 +9,6 @@
     app:ssrl_progress_color="@color/n2_color_day">
 
     <androidx.core.widget.NestedScrollView
-
         android:id="@+id/nsv_fragment_monitor_data_vp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">

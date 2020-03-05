@@ -143,7 +143,7 @@ class MonitorDataVpFragment : BaseFragment() {
         date_bar.setOnSleepDataDateBarClickListener(object : SleepDataDateBar.OnSleepDataDateBarClickListener {
             override fun onClick(show: Boolean) {
                 if (show && activity != null) {
-                    var scrollView = mRoot as NestedScrollView
+                    var scrollView = nsv_fragment_monitor_data_vp as NestedScrollView
                     scrollView.scrollTo(scrollView.scrollX,
                             activity!!.resources.getDimension(R.dimen.device_card_view_height).toInt())
                 }
