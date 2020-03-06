@@ -36,7 +36,7 @@ class NormalInterceptor private constructor() : Interceptor {
                 .addHeader("User-Agent", "$userAgent Sumian-Doctor-Android uid:${AppManager.getAccountViewModel().userInfo?.id
                         ?: 0}")
                 .addHeader("Host", chain.request().url().newBuilder().build().host())
-
+                .addHeader("X-Api-Ver", "1.0")
         return chain.proceed(builder.build())
     }
 
