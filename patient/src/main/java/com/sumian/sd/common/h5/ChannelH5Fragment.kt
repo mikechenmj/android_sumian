@@ -2,7 +2,6 @@ package com.sumian.sd.common.h5
 
 import android.app.Activity
 import android.content.Intent
-import android.util.Log
 import android.view.View
 import com.github.lzyzsd.jsbridge.CallBackFunction
 import com.google.gson.reflect.TypeToken
@@ -63,6 +62,10 @@ class ChannelH5Fragment : BaseWebViewFragment() {
     override fun registerHandler(sWebView: SWebView) {
         sWebView.registerHandler("bindShare") { data, function ->
             val shareData = H5BindShareData.fromJson(data)
+            if (shareData.platform.size <= 0) {
+                mShare?.visibility = View.GONE
+                return@registerHandler
+            }
             mShare?.visibility = View.VISIBLE
             mShare?.setOnClickListener {
                 if (shareData.weixin == null || shareData.weixinCircle == null) {
