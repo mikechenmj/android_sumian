@@ -16,8 +16,7 @@
         android:gravity="center"
         android:text="@string/tab_device"
         android:textColor="@color/black"
-        android:textSize="@dimen/font_16"
-        android:textStyle="bold" />
+        android:textSize="19sp" />
 
     <View
         android:layout_width="match_parent"

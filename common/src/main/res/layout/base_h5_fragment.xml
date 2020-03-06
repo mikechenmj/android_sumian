@@ -41,8 +41,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:textColor="@color/black"
-            android:textSize="@dimen/ysf_text_size_19"
-            android:textStyle="bold" />
+            android:textSize="19sp" />
 
         <ImageView
             android:id="@+id/iv_share"
