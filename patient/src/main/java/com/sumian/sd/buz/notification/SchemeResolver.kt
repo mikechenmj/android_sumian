@@ -118,6 +118,7 @@ object SchemeResolver : ISchemeResolver {
         CommonLog.log("resolveH5TipScheme url: $url intent: $intent")
         return intent
     }
+
     /**
      * "scheme" =>  sleepdoctor://diary-evaluations?id=91&notification_id=c9b459ca-6a81-4ad8-99f3-2b2b6a06ffc2&user_id=2939
      */
@@ -238,9 +239,9 @@ object SchemeResolver : ISchemeResolver {
     private fun resolveOnlineReportScheme(context: Context, uri: Uri): Intent {
         val id = uri.getQueryParameter("id")?.toInt() ?: 0
         val userId = uri.getQueryParameter("user_id")?.toInt() ?: 0
-        val url = uri.getQueryParameter("url").toString()
-        val reportUrl = uri.getQueryParameter("report_url").toString()
-        val title = uri.getQueryParameter("title").toString()
+        val url = uri.getQueryParameter("url") ?: ""
+        val reportUrl = uri.getQueryParameter("report_url") ?: ""
+        val title = uri.getQueryParameter("title") ?: ""
         val orgId = uri.getQueryParameter("org_id")?.toInt() ?: 0
         CommonLog.log("resolveAndGoH5Homepage uri: $uri")
         CommonLog.log("resolveOnlineReportScheme userId: $userId")
