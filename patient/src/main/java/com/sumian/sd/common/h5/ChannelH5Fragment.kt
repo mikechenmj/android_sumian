@@ -38,6 +38,11 @@ class ChannelH5Fragment : BaseWebViewFragment() {
             return
         }
         var url = view?.url ?: return
+
+        if (url == "https://ch-test.sumian.com/ks-index") {
+            parent.setNavTabVisible(true)
+            return
+        }
         var index = url.indexOfFirst { c ->
             c.toString() == "?"
         }
