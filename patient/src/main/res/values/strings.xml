@@ -970,5 +970,7 @@
     <string name="image_captcha_content_hint">请输入图片中字符</string>
     <string name="image_captcha_tip">点击图片刷新验证码</string>
     <string name="mood_diary_positive_tip">一切事情最终都能解决，学会放下，乐观豁达能拥有更好的睡眠</string>
+    <string name="user_agreement">用户协议</string>
+    <string name="settings_user_privacy_policy">隐私政策</string>
 
 </resources>
