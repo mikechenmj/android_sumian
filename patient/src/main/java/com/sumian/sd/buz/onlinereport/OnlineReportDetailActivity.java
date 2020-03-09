@@ -7,6 +7,7 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.sumian.common.h5.handler.SBridgeHandler;
 import com.sumian.common.h5.widget.SWebView;
+import com.sumian.common.log.CommonLog;
 import com.sumian.common.utils.JsonUtil;
 import com.sumian.sd.common.h5.SimpleWebActivity;
 import com.sumian.sd.main.MainActivity;
@@ -30,6 +31,21 @@ public class OnlineReportDetailActivity extends SimpleWebActivity {
     public static void launch(Context context, OnlineReport onlineReport) {
         Intent intent = getLaunchIntent(context, onlineReport.getId());
         ActivityUtils.startActivity(intent);
+    }
+
+    public static Intent getLaunchIntent(Context context, int id, int userId, String url, String reportUrl, String title, int orgId) {
+        Map<String, Object> payload = new HashMap<>(2);
+        payload.put("id", id);
+        payload.put("user_id", userId);
+        payload.put("url", url);
+        payload.put("report_url", reportUrl);
+        payload.put("title", title);
+        payload.put("org_id", orgId);
+        Map<String, Object> page = new HashMap<>(2);
+        page.put("page", "onlineReport");
+        page.put("payload", payload);
+        CommonLog.INSTANCE.log("OnLineReportDetailActivity JsonUtil.toJson(page): " + JsonUtil.toJson(page));
+        return SimpleWebActivity.Companion.getLaunchIntentWithRouteData(context, JsonUtil.toJson(page), OnlineReportDetailActivity.class);
     }
 
     public static Intent getLaunchIntent(Context context, int id) {

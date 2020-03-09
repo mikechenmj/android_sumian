@@ -258,7 +258,7 @@ object DfuUpgradeHelper {
 
     interface SimpleLogDfuProgressListener : DfuProgressListener {
         override fun onProgressChanged(deviceAddress: String, percent: Int, speed: Float, avgSpeed: Float, currentPart: Int, partsTotal: Int) {
-            LogManager.deviceUpgradeLog("dfu onDeviceDisconnecting: $deviceAddress")
+            LogManager.deviceUpgradeLog("dfu onProgressChanged: $deviceAddress $percent $speed $avgSpeed $currentPart $partsTotal")
         }
 
         override fun onDeviceDisconnecting(deviceAddress: String?) {

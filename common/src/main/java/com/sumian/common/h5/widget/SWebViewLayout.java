@@ -2,11 +2,13 @@ package com.sumian.common.h5.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.sumian.common.R;
@@ -94,16 +96,19 @@ public class SWebViewLayout extends FrameLayout implements SWebView.OnWebViewLis
         this.mSWebView.loadRequestUrl(requestUrl);
     }
 
+
     @Override
     public void onPageStarted(WebView view) {
         this.mEmptyErrorView.hide();
         this.mWebViewProgress.setVisibility(VISIBLE);
         this.mWebViewProgress.setProgress(0);
+        mWebListener.onPageStarted(view);
     }
 
     @Override
     public void onProgressChange(WebView view, int newProgress) {
         this.mWebViewProgress.setProgress(newProgress);
+        mWebListener.onProgressChange(view, newProgress);
     }
 
     @Override
@@ -111,6 +116,7 @@ public class SWebViewLayout extends FrameLayout implements SWebView.OnWebViewLis
         this.mWebViewProgress.setVisibility(GONE);
         this.mWebViewProgress.setProgress(0);
         this.mEmptyErrorView.hide();
+        mWebListener.onPageFinish(view);
     }
 
     @Override

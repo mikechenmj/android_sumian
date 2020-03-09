@@ -1,5 +1,6 @@
 package com.sumian.common.image
 
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
@@ -34,7 +35,6 @@ class ImageLoader {
             if (iv.visibility != View.VISIBLE) {
                 iv.visibility = View.VISIBLE
             }
-
             Glide.with(iv.context).load(url).apply(options).into(iv)
         }
 
@@ -51,7 +51,6 @@ class ImageLoader {
             if (iv.visibility != View.VISIBLE) {
                 iv.visibility = View.VISIBLE
             }
-
             Glide.with(iv.context).load(drawableId).apply(options).into(iv)
         }
 

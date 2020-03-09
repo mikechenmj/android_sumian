@@ -97,16 +97,19 @@
             <com.sumian.sd.widget.tips.PatientServiceTips
                 android:id="@+id/tips_service"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/space_10" />
+                android:layout_height="@dimen/space_10"
+                android:visibility="gone" />
 
             <com.sumian.sd.widget.tips.PatientRecordTips
                 android:id="@+id/tips_record"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
 
             <Space
                 android:layout_width="match_parent"
@@ -121,6 +124,7 @@
                 app:type_icon="@drawable/ic_info_icon_set" />
 
             <com.sumian.sd.widget.divider.SettingDividerView
+                android:visibility="gone"
                 android:id="@+id/dv_my_metal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -145,6 +149,7 @@
                 app:type_icon="@drawable/info_icon_mall" />
 
             <com.sumian.sd.widget.divider.SettingDividerView
+                android:visibility="gone"
                 android:id="@+id/dv_coupon_center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

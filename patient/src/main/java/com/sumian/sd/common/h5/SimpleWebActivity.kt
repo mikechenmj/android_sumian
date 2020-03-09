@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.h5.bean.H5PayloadData
+import com.sumian.common.log.CommonLog
 import com.sumian.sd.BuildConfig
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.SdBaseWebViewActivity
@@ -76,6 +77,7 @@ open class SimpleWebActivity : SdBaseWebViewActivity() {
                     .replace("{pageData}", routePageData)
                     .replace("{token}", AppManager.getAccountViewModel().token!!.token)
             val completeUrl = BuildConfig.BASE_H5_URL + urlContent
+            CommonLog.log("SimpleWebActivity completeUrl: $completeUrl")
             return getLaunchIntentWithCompleteUrl(context, completeUrl, cls, pageNameForStat)
         }
     }

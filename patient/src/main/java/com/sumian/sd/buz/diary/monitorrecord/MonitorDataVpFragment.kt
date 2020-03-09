@@ -4,6 +4,7 @@ import android.os.Handler
 import android.text.format.DateUtils
 import android.view.View
 import androidx.core.view.isVisible
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
@@ -15,6 +16,7 @@ import com.sumian.common.base.BaseFragment
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.statistic.StatUtil
 import com.sumian.common.utils.TimeUtilV2
+import com.sumian.common.widget.refresh.SumianSwipeRefreshLayout
 import com.sumian.device.callback.DeviceStatusListener
 import com.sumian.device.manager.DeviceManager
 import com.sumian.device.manager.helper.SyncSleepDataHelper
@@ -25,6 +27,7 @@ import com.sumian.sd.buz.devicemanager.uploadsleepdata.UploadSleepDataFinishedEv
 import com.sumian.sd.buz.diary.event.UpdateMonitorDataEvent
 import com.sumian.sd.buz.diary.sleeprecord.calendar.calendarView.CalendarView
 import com.sumian.sd.buz.diary.sleeprecord.calendar.custom.CalendarPopup
+import com.sumian.sd.buz.diary.sleeprecord.widget.SleepDataDateBar
 import com.sumian.sd.buz.report.weeklyreport.CalendarItemSleepReport
 import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
@@ -101,7 +104,7 @@ class MonitorDataVpFragment : BaseFragment() {
     }
 
     private fun initViewPager() {
-        view_pager_monitor.adapter = mAdapter
+        view_pager_monitor.adapter = mAdapter.apply { mRefresh = mRoot as SumianSwipeRefreshLayout }
         mAdapter.addDays(TimeUtilV2.getDayStartTime(getInitTime()), PRELOAD_THRESHOLD * 2, true)
         view_pager_monitor.setCurrentItem(mAdapter.count - 1, false)
         view_pager_monitor.addOnPageChangeListener(object : androidx.viewpager.widget.ViewPager.OnPageChangeListener {
@@ -137,6 +140,15 @@ class MonitorDataVpFragment : BaseFragment() {
         val previewDays = if (calendar.get(Calendar.HOUR_OF_DAY) >= 20) 1 else 0
         date_bar.setPreviewDays(previewDays)
         date_bar.setCurrentTime(getInitTime())
+        date_bar.setOnSleepDataDateBarClickListener(object : SleepDataDateBar.OnSleepDataDateBarClickListener {
+            override fun onClick(show: Boolean) {
+                if (show && activity != null) {
+                    var scrollView = nsv_fragment_monitor_data_vp as NestedScrollView
+                    scrollView.scrollTo(scrollView.scrollX,
+                            activity!!.resources.getDimension(R.dimen.device_card_view_height).toInt())
+                }
+            }
+        })
         date_bar.setDataLoader(object : CalendarPopup.DataLoader {
             override fun loadData(startMonthTime: Long, monthCount: Int, isInit: Boolean) {
                 val map = HashMap<String, Any>(0)
@@ -190,8 +202,12 @@ class MonitorDataVpFragment : BaseFragment() {
     class InnerPagerAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
         val times = ArrayList<Long>()
 
+        var mRefresh : SumianSwipeRefreshLayout? = null
+
         override fun getItem(position: Int): Fragment {
-            return MonitorDataFragment.newInstance(times[position])
+            return MonitorDataFragment.newInstance(times[position]).apply {
+                setRefresh(mRefresh)
+            }
         }
 
         override fun getItemId(position: Int): Long {

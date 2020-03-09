@@ -57,15 +57,15 @@ task clean(type: Delete) {
 
 ext {
 
-    compileSdkVersion = 28
-    buildToolsVersion = "28.0.3"
+    compileSdkVersion = 29
+    buildToolsVersion = "29.0.0"
     minSdkVersion = 21
-    targetSdkVersion = 28
+    targetSdkVersion = 29
 
     libVersionCode = 1
     libVersionName = "1.0"
 
-    supportVersion = '27.1.1'
+    supportVersion = '29.0.0'
 
     abortOnError = true
     debuggable = true

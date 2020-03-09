@@ -5,6 +5,7 @@ import android.text.TextUtils;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.sumian.common.base.BaseViewModel;
+import com.sumian.common.image.ImagesScopeStorageHelper;
 import com.sumian.common.network.response.ErrorResponse;
 import com.sumian.sd.app.AppManager;
 import com.sumian.sd.buz.account.bean.Social;
@@ -86,7 +87,7 @@ public class SdUserInfoPresenter extends BaseViewModel {
 
             @Override
             protected void onSuccess(OssResponse ossResponse) {
-                OssEngine.Companion.uploadFile(ossResponse, imageUrl, new OssEngine.UploadCallback() {
+                OssEngine.UploadCallback callback = new OssEngine.UploadCallback() {
                     @Override
                     public void onSuccess(String response) {
                         mView.onFinish();
@@ -109,7 +110,13 @@ public class SdUserInfoPresenter extends BaseViewModel {
                     public void onFailure(String errorCode, String serviceExceptionMessage) {
                         mView.onFinish();
                     }
-                });
+                };
+                if(imageUrl.startsWith("content://")) {
+                    byte[] imageData = ImagesScopeStorageHelper.INSTANCE.contentUriToByte(imageUrl);
+                    OssEngine.Companion.uploadFile(ossResponse, imageData, callback);
+                }else {
+                    OssEngine.Companion.uploadFile(ossResponse, imageUrl, callback);
+                }
             }
         });
     }

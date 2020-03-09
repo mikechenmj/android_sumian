@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -16,6 +17,7 @@ import com.sumian.common.R;
 import com.sumian.common.base.BaseFragment;
 import com.sumian.common.helper.FileProviderHelper;
 import com.sumian.common.image.ImageLoader;
+import com.sumian.common.image.ImagesScopeStorageHelper;
 import com.sumian.common.media.adapter.ImageAdapter;
 import com.sumian.common.media.adapter.ImageFolderAdapter;
 import com.sumian.common.media.base.BaseRecyclerAdapter;
@@ -28,6 +30,7 @@ import com.sumian.common.widget.empty.EmptyLayout;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,6 +39,8 @@ import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * 图片选择库实现界面
@@ -47,7 +52,7 @@ import androidx.recyclerview.widget.RecyclerView;
  */
 @SuppressWarnings("ALL")
 public class SelectFragment extends BaseFragment implements SelectImageContract.View, View.OnClickListener,
-        ImageLoaderListener, BaseRecyclerAdapter.OnItemClickListener {
+        ImageLoaderListener, BaseRecyclerAdapter.OnItemClickListener, ImagesScopeStorageHelper.ImageChangeListener {
 
     private RecyclerView mContentView;
     private Button mSelectFolderView;
@@ -122,7 +127,13 @@ public class SelectFragment extends BaseFragment implements SelectImageContract.
             @Override
             public void onClick(View v) {
                 mErrorLayout.setErrorType(EmptyLayout.NETWORK_LOADING);
-                getLoaderManager().initLoader(0, null, mCursorLoader);
+//                getLoaderManager().initLoader(0, null, mCursorLoader);
+                HashMap<Integer, Image> imagesMap = ImagesScopeStorageHelper.INSTANCE.getImages().get();
+                if (imagesMap == null || imagesMap.size() <= 0) {
+                    ImagesScopeStorageHelper.INSTANCE.loadMedia();
+                    return;
+                }
+                loaderMedia(imagesMap);
             }
         });
     }
@@ -142,13 +153,27 @@ public class SelectFragment extends BaseFragment implements SelectImageContract.
                 if (s != null && new File(s).exists()) {
                     Image image = new Image();
                     image.setSelect(true);
-                    image.setPath(s);
+                    image.setRawPath(s);
                     mSelectedImage.add(image);
                 }
             }
         }
-        getLoaderManager().initLoader(0, null, mCursorLoader);
+//        getLoaderManager().initLoader(0, null, mCursorLoader);
+        ImagesScopeStorageHelper.INSTANCE.registerImageChangeListener(this);
+        HashMap<Integer, Image> imagesMap = ImagesScopeStorageHelper.INSTANCE.getImages().get();
+        if (imagesMap == null || imagesMap.size() <= 0) {
+            ImagesScopeStorageHelper.INSTANCE.loadMedia();
+            return;
+        }
+        loaderMedia(imagesMap);
     }
+
+    @Override
+    protected void onRelease() {
+        super.onRelease();
+        ImagesScopeStorageHelper.INSTANCE.unregisterImageChangeListener(this);
+    }
+
 
     @Override
     public void onClick(View v) {
@@ -227,7 +252,7 @@ public class SelectFragment extends BaseFragment implements SelectImageContract.
             if (mOption.isCrop()) {
                 List<String> selectedImage = mOption.getSelectedImages();
                 selectedImage.clear();
-                selectedImage.add(mSelectedImage.get(0).getPath());
+                selectedImage.add(mSelectedImage.get(0).getImagePath());
                 mSelectedImage.clear();
 //                CropActivity.show(this, mOption);
             } else {
@@ -350,6 +375,85 @@ public class SelectFragment extends BaseFragment implements SelectImageContract.
         ImageLoader.loadImage(path, iv, R.mipmap.ic_split_graph);
     }
 
+    private void loaderMedia(HashMap<Integer, Image> imagesMap) {
+        final ArrayList<Image> images = new ArrayList<>();
+        final List<ImageFolder> imageFolders = new ArrayList<>();
+
+        final ImageFolder defaultFolder = new ImageFolder();
+        defaultFolder.setName("全部照片");
+        defaultFolder.setPath("");
+        imageFolders.add(defaultFolder);
+
+        int count = imagesMap.size();
+        if (count > 0) {
+            for (Image image : imagesMap.values()) {
+                images.add(image);
+                //如果是新拍的照片
+                if (mCamImageName != null && mCamImageName.equals(image.getName())) {
+                    image.setSelect(true);
+                    mSelectedImage.add(image);
+                }
+                //如果是被选中的图片
+                if (mSelectedImage.size() > 0) {
+                    for (Image i : mSelectedImage) {
+                        if (i.getRawPath().equals(image.getRawPath())) {
+                            image.setSelect(true);
+                        }
+                    }
+                }
+                File imageFile = new File(image.getRawPath());
+                File folderFile = imageFile.getParentFile();
+                ImageFolder folder = new ImageFolder();
+                folder.setName(folderFile.getName());
+                folder.setPath(folderFile.getAbsolutePath());
+                if (!imageFolders.contains(folder)) {
+                    folder.getImages().add(image);
+                    folder.setAlbumPath(image.getImagePath());//默认相册封面
+                    imageFolders.add(folder);
+                } else {
+                    // 更新
+                    ImageFolder f = imageFolders.get(imageFolders.indexOf(folder));
+                    f.getImages().add(image);
+                }
+            }
+        }
+        addImagesToAdapter(images);
+        defaultFolder.getImages().addAll(images);
+        int imageIndex = -1;
+        if (mOption.isHasCam()) {
+            defaultFolder.setAlbumPath(images.size() > 1 ? images.get(1).getImagePath() : null);
+        } else {
+            defaultFolder.setAlbumPath(images.size() > 0 ? images.get(0).getImagePath() : null);
+        }
+        mImageFolderAdapter.resetItem(imageFolders);
+
+        //删除掉不存在的，在于用户选择了相片，又去相册删除
+        if (mSelectedImage.size() > 0) {
+            List<Image> rs = new ArrayList<>();
+            for (Image i : mSelectedImage) {
+                File f = new File(i.getRawPath());
+                if (!f.exists()) {
+                    rs.add(i);
+                }
+            }
+            mSelectedImage.removeAll(rs);
+        }
+
+        // If add new mCamera picture, and we only need one picture, we result it.
+        if (mOption.getSelectCount() == 1 && mCamImageName != null) {
+            handleResult();
+        }
+
+        handleSelectSizeChange(mSelectedImage.size());
+        mErrorLayout.setErrorType(EmptyLayout.HIDE_LAYOUT);
+
+    }
+
+    @Override
+    public void onChange(@NotNull HashMap<Integer, Image> map) {
+        loaderMedia(map);
+    }
+
     private class LoaderListener implements LoaderManager.LoaderCallbacks<Cursor> {
         private final String[] IMAGE_PROJECTION = {
                 MediaStore.Images.Media.DATA,
@@ -373,7 +477,6 @@ public class SelectFragment extends BaseFragment implements SelectImageContract.
         @Override
         public void onLoadFinished(Loader<Cursor> loader, final Cursor data) {
             if (data != null) {
-
                 final ArrayList<Image> images = new ArrayList<>();
                 final List<ImageFolder> imageFolders = new ArrayList<>();
 
@@ -394,7 +497,9 @@ public class SelectFragment extends BaseFragment implements SelectImageContract.
                         String bucket = data.getString(data.getColumnIndexOrThrow(IMAGE_PROJECTION[5]));
 
                         Image image = new Image();
-                        image.setPath(path);
+                        image.setRawPath(path);
+                        String contentPath = MediaStore.Images.Media.EXTERNAL_CONTENT_URI.toString() + "/" + id;
+                        image.setContentPath(contentPath);
                         image.setName(name);
                         image.setDate(dateTime);
                         image.setId(id);
@@ -412,7 +517,7 @@ public class SelectFragment extends BaseFragment implements SelectImageContract.
                         //如果是被选中的图片
                         if (mSelectedImage.size() > 0) {
                             for (Image i : mSelectedImage) {
-                                if (i.getPath().equals(image.getPath())) {
+                                if (i.getRawPath().equals(image.getRawPath())) {
                                     image.setSelect(true);
                                 }
                             }
@@ -425,7 +530,7 @@ public class SelectFragment extends BaseFragment implements SelectImageContract.
                         folder.setPath(folderFile.getAbsolutePath());
                         if (!imageFolders.contains(folder)) {
                             folder.getImages().add(image);
-                            folder.setAlbumPath(image.getPath());//默认相册封面
+                            folder.setAlbumPath(image.getImagePath());//默认相册封面
                             imageFolders.add(folder);
                         } else {
                             // 更新
@@ -438,10 +543,11 @@ public class SelectFragment extends BaseFragment implements SelectImageContract.
                 }
                 addImagesToAdapter(images);
                 defaultFolder.getImages().addAll(images);
+                int imageIndex = -1;
                 if (mOption.isHasCam()) {
-                    defaultFolder.setAlbumPath(images.size() > 1 ? images.get(1).getPath() : null);
+                    defaultFolder.setAlbumPath(images.size() > 1 ? images.get(1).getImagePath() : null);
                 } else {
-                    defaultFolder.setAlbumPath(images.size() > 0 ? images.get(0).getPath() : null);
+                    defaultFolder.setAlbumPath(images.size() > 0 ? images.get(0).getImagePath() : null);
                 }
                 mImageFolderAdapter.resetItem(imageFolders);
 
@@ -449,7 +555,7 @@ public class SelectFragment extends BaseFragment implements SelectImageContract.
                 if (mSelectedImage.size() > 0) {
                     List<Image> rs = new ArrayList<>();
                     for (Image i : mSelectedImage) {
-                        File f = new File(i.getPath());
+                        File f = new File(i.getRawPath());
                         if (!f.exists()) {
                             rs.add(i);
                         }

@@ -7,71 +7,26 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/status_bar_height"
-        android:background="@color/colorPrimary" />
-
-    <LinearLayout
-        android:id="@+id/vg_tabs"
-        android:layout_width="match_parent"
-        android:layout_height="44dp"
-        android:background="@color/colorPrimary"
-        android:gravity="center">
-
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/tab_sleep_diary"
-                style="@style/text_white_16"
-                android:layout_gravity="center"
-                android:drawableBottom="@drawable/shape_rect_white_2dp_height"
-                android:text="@string/sleep_diary" />
-
-            <View
-                android:id="@+id/v_line_0"
-                android:layout_width="64dp"
-                android:layout_height="2dp"
-                android:layout_gravity="bottom"
-                android:layout_marginBottom="2dp"
-                android:background="@drawable/shape_rect_white_2dp_height" />
-        </FrameLayout>
-
-        <Space
-            android:layout_width="40dp"
-            android:layout_height="0dp" />
-
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/tab_monitor_data"
-                style="@style/text_white_16"
-                android:layout_gravity="center"
-                android:text="@string/monitor_data" />
-
-            <View
-                android:id="@+id/v_line_1"
-                android:layout_width="64dp"
-                android:layout_height="2dp"
-                android:layout_gravity="bottom"
-                android:layout_marginBottom="2dp"
-                android:background="@drawable/shape_rect_white_2dp_height" />
-        </FrameLayout>
-    </LinearLayout>
+        android:background="@color/white" />
 
     <TextView
-        android:id="@+id/tv_sleep_diary"
-        style="@style/text_white_16"
         android:layout_width="match_parent"
         android:layout_height="44dp"
-        android:background="@color/colorPrimary"
+        android:background="@color/white"
         android:gravity="center"
-        android:text="@string/sleep_diary"
-        android:visibility="gone" />
+        android:text="@string/tab_device"
+        android:textColor="@color/black"
+        android:textSize="19sp" />
 
-    <FrameLayout
-        android:id="@+id/fl_container"
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_gravity="bottom"
+        android:background="#E3E5E6" />
+
+    <fragment
+        android:id="@+id/device_monitor_data_card_view"
+        android:name="com.sumian.sd.buz.diary.monitorrecord.MonitorDataVpFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

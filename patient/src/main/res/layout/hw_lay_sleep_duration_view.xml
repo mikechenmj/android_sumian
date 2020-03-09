@@ -6,42 +6,44 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/text_view_1"
-        style="@style/text_t1_14"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawableStart="@drawable/ic_home_sleep_time_day"
-        android:drawablePadding="@dimen/space_9"
-        android:gravity="center"
-        android:text="@string/all_today_duration"
-        android:textColor="@color/t1_color_day"
-        app:layout_constraintTop_toTopOf="parent"
-        skin:enable="true"
-        tools:ignore="MissingPrefix" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp">
 
-    <com.sumian.sd.buz.report.widget.text.CountSleepDurationTextView
-        android:id="@+id/tv_sleep_today_duration"
-        style="@style/text_t5_14"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/t5_color_day"
-        android:textStyle="bold"
-        app:csdtv_default_drawable="@drawable/bg_text_t5"
-        app:csdtv_number_text_size="@dimen/font_21"
-        app:csdtv_unit_text_size="@dimen/font_13"
-        app:layout_constraintBottom_toBottomOf="@id/text_view_1"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/text_view_1"
-        skin:enable="true" />
+        <TextView
+            android:id="@+id/text_view_1"
+            style="@style/text_t1_14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|center"
+            android:drawableStart="@drawable/ic_home_sleep_time_day"
+            android:drawablePadding="@dimen/space_9"
+            android:gravity="center"
+            android:text="@string/all_today_duration"
+            android:textColor="@color/t1_color_day"
+            skin:enable="true"
+            tools:ignore="MissingPrefix" />
+
+        <com.sumian.sd.buz.report.widget.text.CountSleepDurationTextView
+            android:id="@+id/tv_sleep_today_duration"
+            style="@style/text_t5_14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|end"
+            android:textColor="@color/t5_color_day"
+            android:textStyle="bold"
+            app:csdtv_default_drawable="@drawable/bg_text_t5"
+            app:csdtv_number_text_size="@dimen/font_21"
+            app:csdtv_unit_text_size="@dimen/font_13"
+            skin:enable="true" />
+    </FrameLayout>
 
     <View
         android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="@dimen/space_1"
-        android:layout_marginTop="@dimen/space_25"
+        android:layout_gravity="bottom"
         android:background="@color/l1_color_day"
-        app:layout_constraintTop_toBottomOf="@id/text_view_1"
         skin:enable="true"
         tools:ignore="MissingPrefix" />
 
@@ -49,8 +51,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/space_20"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toTopOf="@+id/divider">
+        android:orientation="horizontal">
 
         <com.sumian.sd.buz.report.widget.SleepStateDurationView
             android:id="@+id/light_sleep_duration_view"
