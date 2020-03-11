@@ -30,7 +30,7 @@ abstract class BaseWebViewFragment : BaseViewModelFragment<BaseViewModel>(), SWe
 
     override fun onProgressChange(view: WebView?, newProgress: Int) {
         if (newProgress <= 20) {
-            iv_share.visibility = View.GONE
+            iv_share.visibility = View.INVISIBLE
         }
     }
 
@@ -106,7 +106,7 @@ abstract class BaseWebViewFragment : BaseViewModelFragment<BaseViewModel>(), SWe
                         tv_title.isVisible = value
                     }
                     "showBackArrow" -> if (value is Boolean) {
-                        iv_back.isVisible = value
+                        iv_back.visibility = if (value) View.VISIBLE else View.INVISIBLE
                     }
                     "setStatusBarTextColorDark" -> if (value is Boolean) {
                         if (activity == null) {

@@ -65,7 +65,7 @@ class ChannelH5Fragment : BaseWebViewFragment() {
         sWebView.registerHandler("bindShare") { data, function ->
             val shareData = H5BindShareData.fromJson(data)
             if (shareData.platform.size <= 0) {
-                mShare?.visibility = View.GONE
+                mShare?.visibility = View.INVISIBLE
                 return@registerHandler
             }
             mShare?.visibility = View.VISIBLE
