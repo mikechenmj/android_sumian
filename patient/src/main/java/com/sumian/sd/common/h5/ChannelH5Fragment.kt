@@ -37,25 +37,22 @@ class ChannelH5Fragment : BaseWebViewFragment() {
         } else {
             return
         }
-        var url = view?.url ?: return
+        parent.setNavTabVisible(isCurrentH5HomeUrl())
+    }
 
+    fun isCurrentH5HomeUrl(): Boolean {
+        var url = getSWebViewLayout().sWebView.url
         if (url == "https://ch-test.sumian.com/ks-index") {
-            parent.setNavTabVisible(true)
-            return
+            return true
         }
         var index = url.indexOfFirst { c ->
             c.toString() == "?"
         }
         if (index <= 0) {
-            parent.setNavTabVisible(false)
-            return
+            return false
         }
         var baseUrl = url.substring(0, index)
-        if (baseUrl != BuildConfig.CHANNEL_H5_URL) {
-            parent.setNavTabVisible(false)
-        } else {
-            parent.setNavTabVisible(true)
-        }
+        return baseUrl == BuildConfig.CHANNEL_H5_URL
     }
 
     override fun getCompleteUrl(): String {

@@ -73,4 +73,22 @@ class H5HomepageFragment : BaseViewModelFragment<BaseViewModel>() {
             fragment.getSWebViewLayout().loadRequestUrl(url)
         }
     }
+
+    fun getH5Url(): String {
+        var fragment = childFragmentManager?.findFragmentById(R.id.channel_h5_card_view)
+        if (fragment != null) {
+            fragment as ChannelH5Fragment
+            return fragment.getSWebViewLayout().sWebView.url
+        }
+        return ""
+    }
+
+    fun isCurrentH5HomeUrl(): Boolean {
+        var fragment = childFragmentManager?.findFragmentById(R.id.channel_h5_card_view)
+        if (fragment != null) {
+            fragment as ChannelH5Fragment
+            return fragment.isCurrentH5HomeUrl()
+        }
+        return false
+    }
 }

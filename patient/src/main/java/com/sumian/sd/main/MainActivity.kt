@@ -183,7 +183,14 @@ class MainActivity : BaseActivity() {
     }
 
     fun setNavTabVisible(visible: Boolean) {
-        nav_tab.isVisible = visible
+        if (visible) {
+            nav_tab.isVisible = true
+        } else {
+            if (mCurrentPosition === TAB_0) {
+                nav_tab.isVisible = false
+            }
+        }
+
     }
 
     override fun initBundle(bundle: Bundle) {
@@ -249,6 +256,30 @@ class MainActivity : BaseActivity() {
         }
     }
 
+    private fun getH5Url(): String {
+        var fragment: Fragment?
+        if (mH5Fragment == null) {
+            mH5Fragment = supportFragmentManager.findFragmentByTag(H5HomepageFragment::class.java.simpleName) as H5HomepageFragment?
+        }
+        fragment = mH5Fragment
+        if (fragment != null) {
+            return fragment?.getH5Url()
+        }
+        return ""
+    }
+
+    private fun isCurrentH5HomeUrl(): Boolean {
+        var fragment: Fragment?
+        if (mH5Fragment == null) {
+            mH5Fragment = supportFragmentManager.findFragmentByTag(H5HomepageFragment::class.java.simpleName) as H5HomepageFragment?
+        }
+        fragment = mH5Fragment
+        if (fragment != null) {
+            return fragment?.isCurrentH5HomeUrl()
+        }
+        return false
+    }
+
     private fun canWebViewGoBack(): Boolean {
         var fragment: Fragment?
         if (mH5Fragment == null) {
@@ -286,18 +317,22 @@ class MainActivity : BaseActivity() {
             0 -> {
                 LogManager.appendUserOperationLog("首页Tab切换 -> $position 首页")
                 StatUtil.trackBeginPage(this, StatConstants.page_home_tab)
+                setNavTabVisible(isCurrentH5HomeUrl())
             }
             1 -> {
                 LogManager.appendUserOperationLog("首页Tab切换 -> $position 数据")
                 StatUtil.trackBeginPage(this, StatConstants.page_data_tab)
+                setNavTabVisible(true)
             }
             2 -> {
                 LogManager.appendUserOperationLog("首页Tab切换 -> $position 医生")
                 StatUtil.trackBeginPage(this, StatConstants.page_doctor_tab)
+                setNavTabVisible(true)
             }
             3 -> {
                 LogManager.appendUserOperationLog("首页Tab切换 -> $position 我的")
                 StatUtil.trackBeginPage(this, StatConstants.page_me_tab)
+                setNavTabVisible(true)
             }
         }
     }
