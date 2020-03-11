@@ -23,11 +23,11 @@
             android:orientation="vertical">
 
             <com.sumian.sd.widget.divider.SettingDividerView
-                android:visibility="gone"
                 android:id="@+id/sdv_remind"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_16"
+                android:visibility="gone"
                 app:divider_line_visible="visible"
                 app:type_desc="@string/remind_setting" />
 
@@ -53,10 +53,10 @@
                 app:type_desc="@string/change_bind" />
 
             <com.sumian.sd.widget.divider.SettingDividerView
-                android:visibility="gone"
                 android:id="@+id/sdv_feedback"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 app:divider_line_visible="visible"
                 app:type_desc="@string/feedback" />
 
@@ -78,8 +78,22 @@
                 android:id="@+id/sdv_clear_cache"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:divider_line_visible="gone"
+                app:divider_line_visible="visible"
                 app:type_desc="@string/clear_cache" />
+
+            <com.sumian.sd.widget.divider.SettingDividerView
+                android:id="@+id/sdv_user_agreement"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:divider_line_visible="visible"
+                app:type_desc="@string/user_agreement" />
+
+            <com.sumian.sd.widget.divider.SettingDividerView
+                android:id="@+id/sdv_user_privacy_policy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:divider_line_visible="gone"
+                app:type_desc="@string/settings_user_privacy_policy" />
 
             <TextView
                 android:id="@+id/tv_logout"

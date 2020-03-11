@@ -66,6 +66,8 @@ class SettingActivity : BaseActivity(), TitleBar.OnBackClickListener, View.OnCli
         findViewById<View>(R.id.sdv_change_bind).setOnClickListener(this)
         findViewById<View>(R.id.sdv_feedback).setOnClickListener(this)
         findViewById<View>(R.id.sdv_modify_password).setOnClickListener(this)
+        findViewById<View>(R.id.sdv_user_agreement).setOnClickListener(this)
+        findViewById<View>(R.id.sdv_user_privacy_policy).setOnClickListener(this)
         findViewById<View>(R.id.sdv_clear_cache).setOnClickListener(this)
         val packageInfo = UiUtils.getPackageInfo(this)
         val versionName = packageInfo!!.versionName
@@ -114,6 +116,8 @@ class SettingActivity : BaseActivity(), TitleBar.OnBackClickListener, View.OnCli
             R.id.sdv_feedback -> FeedbackActivity.show()
             R.id.sdv_modify_password -> SettingPasswordActivity.start(AppManager.getAccountViewModel().userInfo!!.hasPassword, null)
             R.id.tv_logout -> showLogoutDialog()
+            R.id.sdv_user_agreement -> SimpleWebActivity.launch(this, H5Uri.USER_AGREEMENT_URL)
+            R.id.sdv_user_privacy_policy -> SimpleWebActivity.launch(this, H5Uri.USER_POLICY_URL)
             R.id.sdv_clear_cache -> SumianAlertDialog(this)
                     .hideTopIcon(true)
                     .setTitle(R.string.clear_cache)
