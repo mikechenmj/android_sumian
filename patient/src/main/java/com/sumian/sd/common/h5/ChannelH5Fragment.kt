@@ -42,6 +42,9 @@ class ChannelH5Fragment : BaseWebViewFragment() {
 
     fun isCurrentH5HomeUrl(): Boolean {
         var url = getSWebViewLayout().sWebView.url
+        if (url === null) {
+            return true
+        }
         if (url == "https://ch-test.sumian.com/ks-index") {
             return true
         }
