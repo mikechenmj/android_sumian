@@ -5,7 +5,6 @@ import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.base.BaseFragment
@@ -129,7 +128,11 @@ abstract class BaseScanDeviceFragment : BaseFragment() {
         if (!isBluetoothEnable()) {
             return
         }
-        val perms = arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        val perms = arrayOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_BACKGROUND_LOCATION,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
         if (EasyPermissions.hasPermissions(activity!!, *perms)) {
             if (checkLocationService()) {
                 onPermissionGranted()
