@@ -83,8 +83,9 @@ object ImagesScopeStorageHelper {
                     imagesMap[id] = image
                 } while (data.moveToNext())
             }
+            images = SoftReference(imagesMap)
             for (listener in mImageChangeListeners) {
-                mHandler.post { listener.onChange(images?.get() ?: HashMap()) }
+                mHandler.post { listener.onChange(imagesMap) }
             }
         }.start()
     }
