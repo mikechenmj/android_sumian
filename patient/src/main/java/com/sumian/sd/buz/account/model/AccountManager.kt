@@ -1,6 +1,7 @@
 package com.sumian.sd.buz.account.model
 
 import android.os.Handler
+import android.os.Looper
 import android.text.TextUtils
 import androidx.annotation.MainThread
 import androidx.lifecycle.LiveData
@@ -89,7 +90,7 @@ object AccountManager {
     }
 
     fun updateToken(token: Token?) {
-        Handler().post {
+        Handler(Looper.getMainLooper()).post {
             mTokenLiveData.value = token
             persistentToken(token)
             onTokenChange(token)

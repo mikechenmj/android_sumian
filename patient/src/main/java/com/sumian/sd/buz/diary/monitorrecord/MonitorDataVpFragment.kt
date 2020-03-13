@@ -78,14 +78,14 @@ class MonitorDataVpFragment : BaseFragment() {
                 }
                 DeviceManager.EVENT_SYNC_SLEEP_DATA_FAIL -> {
                     tv_is_syncing_hint?.isVisible = false
-                    tv_sync_fail_hint.isVisible = false
+                    tv_sync_fail_hint?.isVisible = false
                 }
                 DeviceManager.EVENT_SYNC_SLEEP_DATA_AND_UPLOAD_FINISH -> {
                     tv_is_syncing_hint?.isVisible = false
                     if (!(data as Boolean)) {
                         LogManager.uploadSleepDataLog("上传数据异常")
-                        tv_sync_fail_hint.isVisible = true
-                        tv_sync_fail_hint.postDelayed({ tv_sync_fail_hint.isVisible = false }, 3000)
+                        tv_sync_fail_hint?.isVisible = true
+                        tv_sync_fail_hint?.postDelayed({ tv_sync_fail_hint.isVisible = false }, 3000)
                     }
                 }
             }

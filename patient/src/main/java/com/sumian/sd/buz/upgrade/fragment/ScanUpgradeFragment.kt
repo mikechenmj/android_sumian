@@ -32,6 +32,7 @@ class ScanUpgradeFragment(private var mDeviceType: Int) : BaseScanDeviceFragment
     private lateinit var mDeviceNamePrefix: String
     private val mScanResults = ArrayList<BlueDevice>()
     private var mFindDeviceSuccess = false
+    private var mSaveInstance = false
 
     private var mProgressDialog: VersionDialog? = null
 
@@ -46,6 +47,7 @@ class ScanUpgradeFragment(private var mDeviceType: Int) : BaseScanDeviceFragment
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putInt("device_type", mDeviceType)
+        mSaveInstance = true
     }
 
     private val mUpgradeCallback = object : DfuUpgradeManager.UpgradeCallback {
@@ -69,7 +71,7 @@ class ScanUpgradeFragment(private var mDeviceType: Int) : BaseScanDeviceFragment
                 upgradeConfirmDialog?.dismiss()
                 activity?.finish()
             }
-            if (activity != null) {
+            if (activity != null && !mSaveInstance) {
                 upgradeConfirmDialog?.show(activity!!.supportFragmentManager, upgradeConfirmDialog.javaClass.simpleName)
             }
             upgradeSuccess()
@@ -208,6 +210,7 @@ class ScanUpgradeFragment(private var mDeviceType: Int) : BaseScanDeviceFragment
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mDeviceType = savedInstanceState?.getInt("device_type", mDeviceType) ?: mDeviceType
+        mSaveInstance = true
     }
 
     private fun rescan() {

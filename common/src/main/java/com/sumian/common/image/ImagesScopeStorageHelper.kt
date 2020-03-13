@@ -57,7 +57,7 @@ object ImagesScopeStorageHelper {
             if (data == null) {
                 return@Thread
             }
-            var imagesMap = images.get()!!
+            var imagesMap = images.get() ?: HashMap()
             imagesMap.clear()
             val count = data.count
             if (count > 0) {

@@ -30,7 +30,7 @@ abstract class BaseWebViewFragment : BaseViewModelFragment<BaseViewModel>(), SWe
 
     override fun onProgressChange(view: WebView?, newProgress: Int) {
         if (newProgress <= 20) {
-            iv_share.visibility = View.INVISIBLE
+            iv_share?.visibility = View.INVISIBLE
         }
     }
 
