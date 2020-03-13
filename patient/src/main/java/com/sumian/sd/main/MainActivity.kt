@@ -274,10 +274,10 @@ class MainActivity : BaseActivity() {
             mH5Fragment = supportFragmentManager.findFragmentByTag(H5HomepageFragment::class.java.simpleName) as H5HomepageFragment?
         }
         fragment = mH5Fragment
-        if (fragment != null) {
+        if (fragment != null && fragment.isAdded) {
             return fragment?.isCurrentH5HomeUrl()
         }
-        return false
+        return true
     }
 
     private fun canWebViewGoBack(): Boolean {
@@ -317,22 +317,30 @@ class MainActivity : BaseActivity() {
             0 -> {
                 LogManager.appendUserOperationLog("首页Tab切换 -> $position 首页")
                 StatUtil.trackBeginPage(this, StatConstants.page_home_tab)
-                setNavTabVisible(isCurrentH5HomeUrl())
+                if (mIsResume) {
+                    setNavTabVisible(isCurrentH5HomeUrl())
+                }
             }
             1 -> {
                 LogManager.appendUserOperationLog("首页Tab切换 -> $position 数据")
                 StatUtil.trackBeginPage(this, StatConstants.page_data_tab)
-                setNavTabVisible(true)
+                if (mIsResume) {
+                    setNavTabVisible(true)
+                }
             }
             2 -> {
                 LogManager.appendUserOperationLog("首页Tab切换 -> $position 医生")
                 StatUtil.trackBeginPage(this, StatConstants.page_doctor_tab)
-                setNavTabVisible(true)
+                if (mIsResume) {
+                    setNavTabVisible(true)
+                }
             }
             3 -> {
                 LogManager.appendUserOperationLog("首页Tab切换 -> $position 我的")
                 StatUtil.trackBeginPage(this, StatConstants.page_me_tab)
-                setNavTabVisible(true)
+                if (mIsResume) {
+                    setNavTabVisible(true)
+                }
             }
         }
     }
