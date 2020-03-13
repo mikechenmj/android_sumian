@@ -3,6 +3,7 @@ package com.sumian.sd.buz.diary.monitorrecord
 import android.os.Handler
 import android.text.format.DateUtils
 import android.view.View
+import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
@@ -205,9 +206,7 @@ class MonitorDataVpFragment : BaseFragment() {
         var mRefresh : SumianSwipeRefreshLayout? = null
 
         override fun getItem(position: Int): Fragment {
-            return MonitorDataFragment.newInstance(times[position]).apply {
-                setRefresh(mRefresh)
-            }
+            return MonitorDataFragment.newInstance(times[position])
         }
 
         override fun getItemId(position: Int): Long {
@@ -216,6 +215,13 @@ class MonitorDataVpFragment : BaseFragment() {
 
         override fun getCount(): Int {
             return times.size
+        }
+
+        override fun setPrimaryItem(container: ViewGroup, position: Int, `object`: Any) {
+            if (`object` is MonitorDataFragment) {
+                `object`.setRefresh(mRefresh)
+            }
+            super.setPrimaryItem(container, position, `object`)
         }
 
         override fun getItemPosition(obj: Any): Int {

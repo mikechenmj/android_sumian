@@ -128,10 +128,9 @@ class MonitorDataFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener
 
     fun updateDailyReport(dailyReport: DailyReport) {
         mRefresh?.isRefreshing = false
-        day_sleep_histogram_view.setData(dailyReport)
-        report_sleep_duration_view.setSleepTodayDuration(dailyReport.sleep_duration)
-        report_sleep_duration_view.setLightSleepData(dailyReport.light_duration, dailyReport.light_duration_percent)
-        report_sleep_duration_view.setDeepSleepData(dailyReport.deep_duration, dailyReport.deep_duration_percent)
+        day_sleep_histogram_view?.setData(dailyReport)
+        report_sleep_duration_view?.setSleepTodayDuration(dailyReport.sleep_duration)
+        report_sleep_duration_view?.setLightSleepData(dailyReport.light_duration, dailyReport.light_duration_percent)
+        report_sleep_duration_view?.setDeepSleepData(dailyReport.deep_duration, dailyReport.deep_duration_percent)
     }
-
 }
