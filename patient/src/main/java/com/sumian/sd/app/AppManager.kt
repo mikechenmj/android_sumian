@@ -373,6 +373,9 @@ object AppManager {
     }
 
     fun onMainActivityCreate() {
+        if (getAccountViewModel().userInfo == null || getAccountViewModel().userInfo?.im_id?.isEmpty() != false) {
+            getAccountViewModel().clearToken()
+        }
         initKefu(mApplication)
         AppNotificationManager.uploadPushId()
         sendHeartbeat()
