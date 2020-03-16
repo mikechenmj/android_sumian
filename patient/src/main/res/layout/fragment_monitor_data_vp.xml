@@ -38,7 +38,7 @@
                 <androidx.viewpager.widget.ViewPager
                     android:id="@+id/view_pager_monitor"
                     android:layout_width="match_parent"
-                    android:layout_height="527dp" />
+                    android:layout_height="540dp" />
 
                 <FrameLayout
                     android:layout_width="match_parent"
