@@ -29,6 +29,7 @@ import com.sumian.sd.buz.diary.event.UpdateMonitorDataEvent
 import com.sumian.sd.buz.diary.sleeprecord.calendar.calendarView.CalendarView
 import com.sumian.sd.buz.diary.sleeprecord.calendar.custom.CalendarPopup
 import com.sumian.sd.buz.diary.sleeprecord.widget.SleepDataDateBar
+import com.sumian.sd.buz.huawei.BindHuaweiHealthActivity
 import com.sumian.sd.buz.report.weeklyreport.CalendarItemSleepReport
 import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
@@ -59,6 +60,11 @@ class MonitorDataVpFragment : BaseFragment() {
         super.initWidget()
         initDateBar()
         initViewPager()
+        iv_bind_huawei_health.setOnClickListener {
+            if (this.activity != null) {
+                BindHuaweiHealthActivity.start(this.activity!!)
+            }
+        }
     }
 
     override fun onResume() {
@@ -203,7 +209,7 @@ class MonitorDataVpFragment : BaseFragment() {
     class InnerPagerAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
         val times = ArrayList<Long>()
 
-        var mRefresh : SumianSwipeRefreshLayout? = null
+        var mRefresh: SumianSwipeRefreshLayout? = null
 
         override fun getItem(position: Int): Fragment {
             return MonitorDataFragment.newInstance(times[position])

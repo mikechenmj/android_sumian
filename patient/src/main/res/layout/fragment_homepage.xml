@@ -113,16 +113,6 @@
                 android:layout_height="@dimen/device_card_view_height"
                 android:layout_marginTop="10dp" />
 
-            <ImageView
-                android:id="@+id/iv_bind_huawei_health"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/normal_interval"
-                android:adjustViewBounds="true"
-                android:background="@color/normal_item_background"
-                android:padding="10dp"
-                android:src="@drawable/ic_binding_bracelet_banner" />
-
             <Space
                 android:layout_width="0dp"
                 android:layout_height="10dp" />

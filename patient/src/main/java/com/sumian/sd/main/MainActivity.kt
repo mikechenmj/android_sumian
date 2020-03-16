@@ -5,8 +5,6 @@ package com.sumian.sd.main
 import android.Manifest
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.util.Log
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -27,7 +25,6 @@ import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.devicemanager.AutoSyncDeviceDataUtil
 import com.sumian.sd.buz.diary.DataFragment
 import com.sumian.sd.buz.homepage.H5HomepageFragment
->>>>>>> 3e6c8ee6... [patient][feature] -> 初步完成绑定华为健康UI
 import com.sumian.sd.buz.notification.NotificationUnreadCountChangeEvent
 import com.sumian.sd.buz.notification.NotificationViewModel
 import com.sumian.sd.buz.stat.StatConstants

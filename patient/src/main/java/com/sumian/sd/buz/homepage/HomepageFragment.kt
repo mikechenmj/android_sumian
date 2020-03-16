@@ -109,11 +109,6 @@ HomepageFragment : BaseViewModelFragment<BaseViewModel>(), OnEnterListener, Last
             SleepGuideActivity.start()
             StatUtil.event(StatConstants.click_home_page_sleep_guide)
         }
-        iv_bind_huawei_health.setOnClickListener {
-            if (this.activity != null) {
-                BindHuaweiHealthActivity.start(this.activity!!)
-            }
-        }
     }
 
     private fun showSleepGuideDialogIfNeed() {
