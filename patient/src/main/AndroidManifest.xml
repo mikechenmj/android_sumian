@@ -54,6 +54,10 @@
             android:required="false" />
 
         <meta-data
+            android:name="com.huawei.hms.client.appid"
+            android:value="@string/huawei_health_app_id" />
+
+        <meta-data
             android:name="UMENG_APPKEY"
             android:value="@string/umeng_app_key" />
         <meta-data
