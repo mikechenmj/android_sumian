@@ -1,4 +1,4 @@
-package com.sumian.sd.buz.huawei
+package com.sumian.sd.buz.huaweihealth
 
 import android.content.Context
 import android.content.Intent
@@ -6,10 +6,14 @@ import android.graphics.Color
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
+import android.util.Log
+import com.google.gson.Gson
 import com.sumian.common.base.BaseActivity
+import com.sumian.common.helper.ToastHelper
 import com.sumian.common.widget.dialog.SumianDialog
 import com.sumian.sd.R
 import com.sumian.sd.buz.stat.StatConstants
+import com.sumian.sd.common.log.SdLogManager
 import kotlinx.android.synthetic.main.activity_bind_huawei_health.*
 import kotlinx.android.synthetic.main.fragment_scan_device.ripple_view
 
@@ -46,12 +50,26 @@ class BindHuaweiHealthActivity : BaseActivity() {
         spannableString.setSpan(ForegroundColorSpan(Color.parseColor("#FF475266")), 0, 5, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
         tv_bind_huawei_health_tip.text = spannableString
         bt_bind.setOnClickListener {
-//            ToastUtils.showShort("绑定失败")
-            SumianDialog(this)
-                    .setTitleText(getString(R.string.bind_huawei_health_dialog_title))
-                    .setMessageText(getString(R.string.bind_huawei_health_dialog_content))
-                    .setLeftBtn(R.string.confirm, null)
-                    .show()
+            if (HuaweiHealthUtil.isHuaweiHealthInstalled(this)) {
+                HuaweiHealthUtil.requestAuthorization(this) { code, message ->
+                    if (code == 0) {
+                        HuaweiHealthUtil.queryHuaweiHealthData(this, "2019-11-11", "2020-3-19") { code, data ->
+                            if (code == -1 || data == null) {
+                                SdLogManager.logHuaweiHealth("绑定失败，请确保已完整授权。")
+                                ToastHelper.show("绑定失败，请确保已完整授权。")
+                            } else {
+                                Log.i("MCJ", "Gson().toJson(it): ${Gson().toJson(data)}")
+                            }
+                        }
+                    }
+                }
+            } else {
+                SumianDialog(this)
+                        .setTitleText(getString(R.string.bind_huawei_health_dialog_title))
+                        .setMessageText(getString(R.string.bind_huawei_health_dialog_content))
+                        .setLeftBtn(R.string.confirm, null)
+                        .show()
+            }
         }
     }
 

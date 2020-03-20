@@ -601,7 +601,7 @@
             android:name=".buz.sleepertalk.SleeperTalkListActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name=".buz.huawei.BindHuaweiHealthActivity"
+            android:name=".buz.huaweihealth.BindHuaweiHealthActivity"
             android:launchMode="singleTop" />
         <activity android:name=".buz.patientdoctorim.ConversationListActivity" />
         <activity android:name=".buz.sleepertalk.SleeperTalkActivity" />

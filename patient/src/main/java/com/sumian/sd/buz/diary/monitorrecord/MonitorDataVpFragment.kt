@@ -29,7 +29,7 @@ import com.sumian.sd.buz.diary.event.UpdateMonitorDataEvent
 import com.sumian.sd.buz.diary.sleeprecord.calendar.calendarView.CalendarView
 import com.sumian.sd.buz.diary.sleeprecord.calendar.custom.CalendarPopup
 import com.sumian.sd.buz.diary.sleeprecord.widget.SleepDataDateBar
-import com.sumian.sd.buz.huawei.BindHuaweiHealthActivity
+import com.sumian.sd.buz.huaweihealth.BindHuaweiHealthActivity
 import com.sumian.sd.buz.report.weeklyreport.CalendarItemSleepReport
 import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback

@@ -51,11 +51,10 @@ public class HuaweiHealthDemo {
             @Override
             public void onResult(int i, Object o) {
                 if (i != 0) {
-                    Log.i("MCJ", "请求 requestAuthorization  失败");
                     return;
                 }
                 if (i == 0) {
-//                    getDataAuthStatus(context);
+                    getDataAuthStatus(context);
 //                    getGender(context);
 //                    getBirthday(context);
 //                    getHeight(context);
@@ -81,7 +80,6 @@ public class HuaweiHealthDemo {
                     @Override
                     public void onResult(int i, Object o) {
                         if (i != 0) {
-                            Log.i("MCJ", "请求 " + write + " 失败");
                             return;
                         }
                         List<Integer> list = (List) o;
@@ -98,7 +96,6 @@ public class HuaweiHealthDemo {
                                 perStr = "已拒绝";
                                 break;
                         }
-                        Log.i("MCJ", "DATA_SET_BLOOD_SUGAR" + perStr);
                     }
                 });
     }
@@ -121,9 +118,7 @@ public class HuaweiHealthDemo {
                             genderStr = "未知";
                             break;
                     }
-                    Log.i("MCJ", "性别:" + genderStr);
                 } else {
-                    Log.i("MCJ", "errorCode: " + errorCode + " gender: " + gender);
                 }
             }
         });
@@ -134,9 +129,7 @@ public class HuaweiHealthDemo {
             @Override
             public void onResult(int errorCode, Object birthday) {
                 if (errorCode == HiHealthError.SUCCESS) {
-                    Log.i("MCJ", "birthday:" + birthday);
                 } else {
-                    Log.i("MCJ", "errorCode: " + errorCode + " birthday: " + birthday);
                 }
             }
         });
@@ -147,9 +140,7 @@ public class HuaweiHealthDemo {
             @Override
             public void onResult(int errorCode, Object height) {
                 if (errorCode == HiHealthError.SUCCESS) {
-                    Log.i("MCJ", "height:" + height);
                 } else {
-                    Log.i("MCJ", "errorCode: " + errorCode + " height: " + height);
                 }
             }
         });
@@ -159,11 +150,8 @@ public class HuaweiHealthDemo {
         HiHealthDataStore.getWeight(context, new ResultCallback() {
             @Override
             public void onResult(int errorCode, Object weight) {
-                Log.i("MCJ", "errorCode: " + errorCode + " weight: " + weight);
                 if (errorCode == HiHealthError.SUCCESS) {
-                    Log.i("MCJ", "weight:" + weight);
                 } else {
-                    Log.i("MCJ", "errorCode: " + errorCode + " weight: " + weight);
                 }
             }
         });
@@ -183,22 +171,15 @@ public class HuaweiHealthDemo {
                 ResultCallback() {
                     @Override
                     public void onResult(int i, Object data) {
-                        Log.i("MCJ", "enter query onSuccess: " + i);
                         if (data != null) {
-                            Log.i("MCJ", finType + " enter query not null");
                             List<HiHealthData> dataList = (ArrayList<HiHealthData>) data;
-                            Log.i("MCJ", "dataList[0]: " + dataList.get(0));
                             for (HiHealthData hiHealthData : dataList) {
                                 if (hiHealthData instanceof HiHealthSetData) {
-                                    Log.i("MCJ", "hiHealthData: " + hiHealthData);
                                     HiHealthSetData hiHealthSetData = (HiHealthSetData) hiHealthData;
                                     for (Object entry : hiHealthSetData.getMap().entrySet()) {
-                                        Log.i("MCJ", "entry: " + entry);
                                     }
                                 } else if (hiHealthData instanceof HiHealthPointData) {
                                     HiHealthPointData hiHealthPointData = (HiHealthPointData) hiHealthData;
-                                    Log.i("MCJ", "hiHealthData.unit: " + hiHealthPointData.getPointUnit());
-                                    Log.i("MCJ", "hiHealthData.value: " + hiHealthPointData.getValue());
                                 }
 //
                             }
@@ -216,13 +197,11 @@ public class HuaweiHealthDemo {
         int type = HiHealthSetType.DATA_SET_CORE_SLEEP;
         HiHealthDataQuery hiHealthDataQuery = new HiHealthDataQuery(type,
                 startTime, endTime, new HiHealthDataQueryOption());
-        Log.i("MCJ", "sampletype = " + hiHealthDataQuery.getSampleType());
         HiHealthDataStore.getCount(context, hiHealthDataQuery, new
                 ResultCallback() {
                     @Override
                     public void onResult(int i, Object data) {
                         if (data != null) {
-                            Log.i("MCJ", type + " 数据一共有 " + data + " 条");
                         }
                     }
                 });
@@ -232,17 +211,13 @@ public class HuaweiHealthDemo {
         HiHealthDataStore.startReadingHeartRate(context, new HiRealTimeListener() {
             @Override
             public void onResult(int state) {
-                Log.i("MCJ", "startReadingHeartRate onResult state:" + state);
                 if (state == HiHealthError.SUCCESS) {
-                    Log.i("MCJ", "startReadingHeartRate onResult SUCCESS");
                 } else {
-                    Log.i("MCJ", "startReadingHeartRate onResult FAIL");
                 }
             }
 
             @Override
             public void onChange(int errCode, String value) {
-                Log.i("MCJ", "onChange: " + "errCode: " + errCode + " value: " + value);
                 if (errCode == HiHealthError.SUCCESS) {
                     try {
                         JSONArray jsonArray = new JSONArray(value);
@@ -250,8 +225,6 @@ public class HuaweiHealthDemo {
                         JSONObject jsonObject = new JSONObject(heartRateStr);
                         long timeStamp = jsonObject.getLong("time_info");
                         int rate = jsonObject.getInt("hr_info");
-                        Log.i("MCJ", "timeStamp: " + timeStamp);
-                        Log.i("MCJ", "rate: " + rate);
                     } catch (JSONException e) {
                     }
                 } else {
@@ -264,24 +237,17 @@ public class HuaweiHealthDemo {
         HiHealthDataStore.startReadingRri(context, new HiRealTimeListener() {
             @Override
             public void onResult(int state) {
-                Log.i("MCJ","startReadingRRI onResult state:"+state);
                 if (state == HiHealthError.SUCCESS){
-                    Log.i("MCJ","startReadingRRI onResult SUCCESS");
                 }else {
-                    Log.i("MCJ","startReadingRRI onResult FAIL");
                 }
             }
 
             @Override
             public void onChange(int errCode, String value) {
-                Log.i("MCJ","startReadingRRI onChange errCode: "+errCode
-                        +" value: "+value.toString());
                 try {
                     JSONObject jsonObject = new JSONObject(value);
                     String str = jsonObject.getString("value");
-                    Log.i("MCJ","RRI result: "+ str);
                 } catch (JSONException e){
-                    Log.e("MCJ","JSONException e"+e.getMessage());
                 }
             }
         });

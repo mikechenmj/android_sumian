@@ -74,6 +74,7 @@ abstract class CommonLogManager : ILog {
         const val ACTION_TYPE_HTTP = "http"
         const val ACTION_TYPE_DEVICE = "device"
         const val ACTION_TYPE_CRASH = "crash"
+        const val ACTION_TYPE_HUAWEI_HEALTH = "huawei_health"
         const val ACTION_TYPE_OTHERS = "others"
 
         const val PAGE_OPERATION = ""
@@ -142,6 +143,13 @@ abstract class CommonLogManager : ILog {
     fun logCrash(s: String) {
         log(mapOf(
                 KEY_ACTION_TYPE to ACTION_TYPE_CRASH,
+                KEY_REMARK to s
+        ))
+    }
+
+    fun logHuaweiHealth(s: String) {
+        log(mapOf(
+                KEY_ACTION_TYPE to ACTION_TYPE_HUAWEI_HEALTH,
                 KEY_REMARK to s
         ))
     }

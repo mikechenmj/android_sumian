@@ -32,7 +32,6 @@ import com.sumian.sd.buz.homepage.banner.BannerPresenter
 import com.sumian.sd.buz.homepage.bean.GetCbtiChaptersResponse
 import com.sumian.sd.buz.homepage.bean.SentencePoolText
 import com.sumian.sd.buz.homepage.bean.SleepPrescriptionStatus
-import com.sumian.sd.buz.huawei.BindHuaweiHealthActivity
 import com.sumian.sd.buz.relaxation.RelaxationListActivity
 import com.sumian.sd.buz.scale.ScaleListActivity
 import com.sumian.sd.buz.sleepguide.SleepGuideActivity

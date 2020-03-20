@@ -3,6 +3,7 @@ package com.sumian.sd.common.utils;
 
 import android.text.format.DateUtils;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -314,6 +315,22 @@ public final class TimeUtil {
      */
     public static String timeToDateString(long time) {
         return new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date(time));
+    }
+
+    public static long dateStringToTime(String formatDate, String pattern) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        try {
+            Date date = simpleDateFormat.parse(formatDate);
+            return date.getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public static long dateStringToTime(String formatDate) {
+        String pattern = "yyyy-MM-dd";
+        return dateStringToTime(formatDate, pattern);
     }
 
     public static void printCalendar(Calendar calendar) {
