@@ -26,7 +26,7 @@ import retrofit2.Call
  */
 abstract class BaseActivity : AppCompatActivity(), BaseShowLoadingView {
 
-    protected val mBackRootView: LinearLayout  by lazy {
+    protected val mBackRootView: LinearLayout by lazy {
         val layout = findViewById<LinearLayout>(R.id.lay_child_content_container)
                 ?: throw RuntimeException("please return true in showBackNav()")
         layout
@@ -51,8 +51,8 @@ abstract class BaseActivity : AppCompatActivity(), BaseShowLoadingView {
         if (portrait()) {
             requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         }
-        checkBundle(intent)
         setContentView(if (showBackNav()) R.layout.activity_main_back_container else getLayoutId())
+        checkBundle(intent)
         initWidgetBefore()
         initWidget()
         initData()
