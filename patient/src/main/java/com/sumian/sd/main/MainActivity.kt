@@ -85,6 +85,7 @@ class MainActivity : BaseActivity() {
             MeFragment::class.java.simpleName)
     private var mLaunchTabData: String? = null
     private var mIsResume = false
+    var targetUrl: String? = null
     var mCurrentPosition = TAB_INVALID
 
     private val mDeviceVersionDialog: SumianAlertDialog by lazy {
@@ -99,7 +100,20 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         AppManager.onMainActivityCreate()
         requestPermission()
+        if (savedInstanceState == null) {
+            targetUrl = intent?.getStringExtra(KEY_H5_URL)
+        } else {
+            var url = savedInstanceState.getString(KEY_H5_URL)
+            if (url != null && url.isNotEmpty()) {
+                targetUrl = url
+            }
+        }
         LogUtils.d("app sha1: ${Sha1Util.getCertificateSHA1Fingerprint(this)}")
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(KEY_H5_URL, getH5Url())
     }
 
     private fun requestPermission() {
@@ -188,6 +202,13 @@ class MainActivity : BaseActivity() {
             }
         }
 
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        var url = intent?.getStringExtra(KEY_H5_URL)
+        if (url != null && url!!.isNotEmpty()) {
+            loadRequestUrl(url)
+        }
     }
 
     override fun initBundle(bundle: Bundle) {

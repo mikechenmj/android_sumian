@@ -48,8 +48,19 @@ class ChannelH5Fragment : BaseWebViewFragment() {
         parent.setNavTabVisible(isCurrentH5HomeUrl())
     }
 
-    fun isCurrentH5HomeUrl(): Boolean {
-        var url = getSWebViewLayout().sWebView.url
+    override fun onPageFinish(view: WebView?) {
+        super.onPageFinish(view)
+        if (activity != null) {
+            var act = activity as MainActivity
+            var targetUrl = act.targetUrl
+            if (!isH5HomeUrl(targetUrl) && getSWebViewLayout().sWebView.url != targetUrl) {
+                Handler().postDelayed({ getSWebViewLayout().sWebView.loadRequestUrl(targetUrl) }, 1000)
+            }
+            act.targetUrl = null
+        }
+    }
+
+    private fun isH5HomeUrl(url: String?): Boolean {
         if (url === null) {
             return true
         }
@@ -64,6 +75,12 @@ class ChannelH5Fragment : BaseWebViewFragment() {
         }
         var baseUrl = url.substring(0, index)
         return baseUrl == BuildConfig.CHANNEL_H5_URL
+    }
+
+    fun isCurrentH5HomeUrl(): Boolean {
+        var url = getSWebViewLayout().sWebView.url
+        return isH5HomeUrl(url)
+
     }
 
     override fun getCompleteUrl(): String {
