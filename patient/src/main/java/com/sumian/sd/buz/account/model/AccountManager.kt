@@ -90,10 +90,17 @@ object AccountManager {
     }
 
     fun updateToken(token: Token?) {
-        Handler(Looper.getMainLooper()).post {
+        var isMainLooper = Looper.myLooper() === Looper.getMainLooper()
+        if (isMainLooper) {
             mTokenLiveData.value = token
             persistentToken(token)
             onTokenChange(token)
+        } else {
+            Handler(Looper.getMainLooper()).post {
+                mTokenLiveData.value = token
+                persistentToken(token)
+                onTokenChange(token)
+            }
         }
     }
 

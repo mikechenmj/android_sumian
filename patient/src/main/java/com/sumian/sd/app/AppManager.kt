@@ -374,6 +374,9 @@ object AppManager {
 
     fun onMainActivityCreate() {
         if (getAccountViewModel().userInfo == null || getAccountViewModel().userInfo?.im_id?.isEmpty() != false) {
+            SdLogManager.logToken("getAccountViewModel().userInfo: ${getAccountViewModel().userInfo}")
+            SdLogManager.logToken("getAccountViewModel().userInfo?.im_id: ${getAccountViewModel().userInfo?.im_id}")
+            SdLogManager.logToken("clearToken in onMainActivityCreate")
             getAccountViewModel().clearToken()
         }
         initKefu(mApplication)
