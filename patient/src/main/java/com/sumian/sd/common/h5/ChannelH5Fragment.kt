@@ -2,6 +2,8 @@ package com.sumian.sd.common.h5
 
 import android.app.Activity
 import android.content.Intent
+import android.os.Handler
+import android.util.TypedValue
 import android.view.View
 import com.github.lzyzsd.jsbridge.CallBackFunction
 import com.google.gson.reflect.TypeToken
@@ -28,6 +30,12 @@ class ChannelH5Fragment : BaseWebViewFragment() {
 
     companion object {
         private const val REQUEST_CODE_PAY = 104
+    }
+
+    override fun initWidget() {
+        super.initWidget()
+        mTitleBar?.layoutParams?.height = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 65f, resources.displayMetrics).toInt()
+        mTitleBar?.setPadding(0, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20f, resources.displayMetrics).toInt(), 0, 0)
     }
 
     override fun onProgressChange(view: WebView?, newProgress: Int) {

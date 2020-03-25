@@ -1,8 +1,8 @@
 package com.sumian.common.h5
 
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
+import android.widget.LinearLayout
 import androidx.core.view.isVisible
 import com.blankj.utilcode.util.LogUtils
 import com.google.gson.reflect.TypeToken
@@ -22,9 +22,9 @@ import kotlinx.android.synthetic.main.base_h5_fragment.*
 abstract class BaseWebViewFragment : BaseViewModelFragment<BaseViewModel>(), SWebView.OnWebViewListener {
 
     protected var mSumianImageTextDialog: SumianImageTextDialog? = null
-
     protected var mShare: ImageView? = null
-    
+    protected var mTitleBar : LinearLayout? = null
+
     override fun onPageStarted(view: WebView?) {
     }
 
@@ -44,7 +44,7 @@ abstract class BaseWebViewFragment : BaseViewModelFragment<BaseViewModel>(), SWe
     }
 
     override fun onReceiveTitle(view: WebView?, title: String?) {
-        tv_title.text = title
+        tv_title?.text = title
     }
 
     override fun getLayoutId(): Int {
@@ -58,6 +58,7 @@ abstract class BaseWebViewFragment : BaseViewModelFragment<BaseViewModel>(), SWe
     override fun initWidget() {
         super.initWidget()
         mShare = iv_share
+        mTitleBar = fl_header
     }
 
     override fun initData() {
@@ -66,7 +67,7 @@ abstract class BaseWebViewFragment : BaseViewModelFragment<BaseViewModel>(), SWe
         getSWebViewLayout().loadRequestUrl(getCompleteUrl())
         registerHandler(getSWebViewLayout().sWebView)
         registerBaseHandler(getSWebViewLayout().sWebView)
-        iv_back.setOnClickListener {
+        iv_back?.setOnClickListener {
             if (sm_webview_container.sWebView.canGoBack()) {
                 sm_webview_container.sWebView.goBack()
             }
@@ -100,13 +101,13 @@ abstract class BaseWebViewFragment : BaseViewModelFragment<BaseViewModel>(), SWe
             for ((key, value) in map) {
                 when (key) {
                     "showNavigationBar" -> if (value is Boolean) {
-                        fl_header.isVisible = value
+                        fl_header?.isVisible = value
                     }
                     "showTitle" -> if (value is Boolean) {
-                        tv_title.isVisible = value
+                        tv_title?.isVisible = value
                     }
                     "showBackArrow" -> if (value is Boolean) {
-                        iv_back.visibility = if (value) View.VISIBLE else View.INVISIBLE
+                        iv_back?.visibility = if (value) View.VISIBLE else View.INVISIBLE
                     }
                     "setStatusBarTextColorDark" -> if (value is Boolean) {
                         if (activity == null) {

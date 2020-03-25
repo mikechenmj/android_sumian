@@ -5,7 +5,6 @@ package com.sumian.sd.main
 import android.Manifest
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -26,13 +25,13 @@ import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.devicemanager.AutoSyncDeviceDataUtil
 import com.sumian.sd.buz.diary.DataFragment
-import com.sumian.sd.buz.homepage.H5HomepageFragment
 import com.sumian.sd.buz.notification.NotificationUnreadCountChangeEvent
 import com.sumian.sd.buz.notification.NotificationViewModel
 import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.buz.tab.DoctorFragment
 import com.sumian.sd.buz.tab.MeFragment
 import com.sumian.sd.buz.version.VersionManager
+import com.sumian.sd.common.h5.ChannelH5Fragment
 import com.sumian.sd.common.log.LogManager
 import com.sumian.sd.common.utils.EventBusUtil
 import com.sumian.sd.common.utils.FragmentUtil
@@ -52,8 +51,6 @@ class MainActivity : BaseActivity() {
         const val TAB_1 = 1
         const val TAB_2 = 2
         const val TAB_3 = 3
-
-        private var mH5Fragment: H5HomepageFragment? = null
 
         private const val SLEEP_RECORD_PREVIOUS_SHOW_NOTIFICATION_TIME = "SLEEP_RECORD_PREVIOUS_SHOW_NOTIFICATION_TIME"
         private const val KEY_TAB_INDEX = "key_tab_name"
@@ -82,7 +79,7 @@ class MainActivity : BaseActivity() {
     }
 
     private val mFragmentTags = arrayOf(
-            H5HomepageFragment::class.java.simpleName,
+            ChannelH5Fragment::class.java.simpleName,
             DataFragment::class.java.simpleName,
             DoctorFragment::class.java.simpleName,
             MeFragment::class.java.simpleName)
@@ -246,47 +243,31 @@ class MainActivity : BaseActivity() {
     }
 
     private fun loadRequestUrl(url: String) {
-        var fragment: Fragment?
-        if (mH5Fragment == null) {
-            mH5Fragment = supportFragmentManager.findFragmentByTag(H5HomepageFragment::class.java.simpleName) as H5HomepageFragment?
-        }
-        fragment = mH5Fragment
-        if (fragment != null) {
-            fragment?.loadRequestUrl(url)
+        var fragment: ChannelH5Fragment? = supportFragmentManager.findFragmentByTag(ChannelH5Fragment::class.java.simpleName) as ChannelH5Fragment?
+        if (fragment != null && fragment.isAdded) {
+            fragment.getSWebViewLayout().loadRequestUrl(url)
         }
     }
 
     private fun getH5Url(): String {
-        var fragment: Fragment?
-        if (mH5Fragment == null) {
-            mH5Fragment = supportFragmentManager.findFragmentByTag(H5HomepageFragment::class.java.simpleName) as H5HomepageFragment?
-        }
-        fragment = mH5Fragment
-        if (fragment != null) {
-            return fragment?.getH5Url()
+        var fragment: ChannelH5Fragment? = supportFragmentManager.findFragmentByTag(ChannelH5Fragment::class.java.simpleName) as ChannelH5Fragment?
+        if (fragment != null && fragment.isAdded) {
+            return fragment.getSWebViewLayout().sWebView.url
         }
         return ""
     }
 
     private fun isCurrentH5HomeUrl(): Boolean {
-        var fragment: Fragment?
-        if (mH5Fragment == null) {
-            mH5Fragment = supportFragmentManager.findFragmentByTag(H5HomepageFragment::class.java.simpleName) as H5HomepageFragment?
-        }
-        fragment = mH5Fragment
+        var fragment: ChannelH5Fragment? = supportFragmentManager.findFragmentByTag(ChannelH5Fragment::class.java.simpleName) as ChannelH5Fragment?
         if (fragment != null && fragment.isAdded) {
-            return fragment?.isCurrentH5HomeUrl()
+            return fragment.isCurrentH5HomeUrl()
         }
         return true
     }
 
     private fun canWebViewGoBack(): Boolean {
-        var fragment: Fragment?
-        if (mH5Fragment == null) {
-            mH5Fragment = supportFragmentManager.findFragmentByTag(H5HomepageFragment::class.java.simpleName) as H5HomepageFragment?
-        }
-        fragment = mH5Fragment
-        if (fragment != null) {
+        var fragment: ChannelH5Fragment? = supportFragmentManager.findFragmentByTag(ChannelH5Fragment::class.java.simpleName) as ChannelH5Fragment?
+        if (fragment != null && fragment.isAdded) {
             return fragment.goBack()
         }
         return false
@@ -350,11 +331,11 @@ class MainActivity : BaseActivity() {
                 object : FragmentUtil.FragmentCreator {
                     override fun createFragmentByPosition(position: Int): Fragment {
                         return when (position) {
-                            0 -> H5HomepageFragment()
+                            0 -> ChannelH5Fragment()
                             1 -> DataFragment()
                             2 -> DoctorFragment()
                             3 -> MeFragment()
-                            else -> H5HomepageFragment()
+                            else -> ChannelH5Fragment()
                         }
                     }
                 })
