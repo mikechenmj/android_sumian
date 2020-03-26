@@ -12,6 +12,7 @@ import com.sumian.device.manager.DeviceManager
 import com.sumian.device.manager.upload.SleepDataUploadManager
 import com.sumian.device.util.BleCmdUtil
 import com.sumian.device.util.LogManager
+import java.io.File
 
 /**
  * @author : Zhan Xuzhao
@@ -328,14 +329,20 @@ object SyncSleepDataHelper {
     }
 
     private fun onCurrentPackageReceivedSuccess() {
-        saveSleepDataToFile()
-        writeResponse(mEndBytes!!, BleCmd.RESPONSE_CODE_SUCCESS)
-        bleFlowLog("writeResponse RESPONSE_CODE_SUCCESS for ${HexUtil.formatHexString(mEndBytes)}")
-        if (mCurrentPackageIndex == mTotalPackageCount) {
+        var file = saveSleepDataToFile()
+        if (file.length() > 0) {
+            writeResponse(mEndBytes!!, BleCmd.RESPONSE_CODE_SUCCESS)
+            bleFlowLog("writeResponse RESPONSE_CODE_SUCCESS for ${HexUtil.formatHexString(mEndBytes)}")
+            if (mCurrentPackageIndex == mTotalPackageCount) {
+                removePayloadTimeoutMessage()
+                onSyncSuccess()
+            } else {
+                sendNextPayloadTimeoutDelay()
+            }
+        }else {
+            bleFlowLog("${file.name} saveSleepDataToFile.length <= 0")
             removePayloadTimeoutMessage()
-            onSyncSuccess()
-        } else {
-            sendNextPayloadTimeoutDelay()
+            onSyncFailed()
         }
     }
 
@@ -353,13 +360,13 @@ object SyncSleepDataHelper {
         }
     }
 
-    private fun saveSleepDataToFile() {
+    private fun saveSleepDataToFile(): File {
         val sleepData = ArrayList<String?>()
         sleepData.add(mBeginCmd)
         sleepData.addAll(mTransData.toMutableList())
         sleepData.add(mEndCmd)
         log("0x8e0f 透传数据" + mTransData.size + "包接收成功,准备写入本地文件 cmd=" + mEndCmd)
-        var fileName = SleepDataUploadManager
+        var file = SleepDataUploadManager
                 .saveAndUploadData(
                         DeviceManager.mApplication,
                         sleepData,
@@ -371,8 +378,9 @@ object SyncSleepDataHelper {
                         getCurrentTimeInSecond()
                 )
         if (isSyncSleepData()) {
-            mUploadTags.add(fileName)
+            mUploadTags.add(file.name)
         }
+        return file
     }
 
     private fun requestNextLostFrame() {

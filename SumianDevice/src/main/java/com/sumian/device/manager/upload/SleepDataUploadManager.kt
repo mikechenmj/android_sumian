@@ -45,7 +45,7 @@ object SleepDataUploadManager {
             sleepMasterSn: String?,
             receiveStartTime: Int,
             receiveEndTime: Int
-    ): String {
+    ): File {
         val file = saveDataToFile(context, transType, transId, monitorSn, sleepData)
         val uploadSleepDataParams = UploadSleepDataParams(
                 file.name,
@@ -61,7 +61,7 @@ object SleepDataUploadManager {
         )
         addTask(task)
         uploadFile(task)
-        return file.name
+        return file
     }
 
     fun uploadNextTask() {
