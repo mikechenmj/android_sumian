@@ -266,14 +266,14 @@ class MainActivity : BaseActivity() {
     private fun loadRequestUrl(url: String) {
         var fragment: ChannelH5Fragment? = supportFragmentManager.findFragmentByTag(ChannelH5Fragment::class.java.simpleName) as ChannelH5Fragment?
         if (fragment != null && fragment.isAdded) {
-            fragment.getSWebViewLayout().loadRequestUrl(url)
+            fragment.getSWebViewLayout()?.loadRequestUrl(url)
         }
     }
 
-    private fun getH5Url(): String {
+    private fun getH5Url(): String? {
         var fragment: ChannelH5Fragment? = supportFragmentManager.findFragmentByTag(ChannelH5Fragment::class.java.simpleName) as ChannelH5Fragment?
         if (fragment != null && fragment.isAdded) {
-            return fragment.getSWebViewLayout().sWebView.url
+            return fragment.getSWebViewLayout()?.sWebView?.url
         }
         return ""
     }

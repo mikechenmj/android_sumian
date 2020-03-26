@@ -53,8 +53,8 @@ class ChannelH5Fragment : BaseWebViewFragment() {
         if (activity != null) {
             var act = activity as MainActivity
             var targetUrl = act.targetUrl
-            if (!isH5HomeUrl(targetUrl) && getSWebViewLayout().sWebView.url != targetUrl) {
-                Handler().postDelayed({ getSWebViewLayout().sWebView.loadRequestUrl(targetUrl) }, 1000)
+            if (!isH5HomeUrl(targetUrl) && getSWebViewLayout()?.sWebView?.url != targetUrl) {
+                Handler().postDelayed({ getSWebViewLayout()?.sWebView?.loadRequestUrl(targetUrl) }, 1000)
             }
             act.targetUrl = null
         }
@@ -78,7 +78,7 @@ class ChannelH5Fragment : BaseWebViewFragment() {
     }
 
     fun isCurrentH5HomeUrl(): Boolean {
-        var url = getSWebViewLayout().sWebView.url
+        var url = getSWebViewLayout()?.sWebView?.url
         return isH5HomeUrl(url)
 
     }

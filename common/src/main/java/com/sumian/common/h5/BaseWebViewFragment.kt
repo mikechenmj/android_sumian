@@ -18,12 +18,13 @@ import com.sumian.common.utils.JsonUtil
 import com.sumian.common.utils.StatusBarUtil
 import com.tencent.smtt.sdk.WebView
 import kotlinx.android.synthetic.main.base_h5_fragment.*
+import kotlinx.android.synthetic.main.base_h5_fragment.sm_webview_container
 
 abstract class BaseWebViewFragment : BaseViewModelFragment<BaseViewModel>(), SWebView.OnWebViewListener {
 
     protected var mSumianImageTextDialog: SumianImageTextDialog? = null
     protected var mShare: ImageView? = null
-    protected var mTitleBar : LinearLayout? = null
+    protected var mTitleBar: LinearLayout? = null
 
     override fun onPageStarted(view: WebView?) {
     }
@@ -51,7 +52,7 @@ abstract class BaseWebViewFragment : BaseViewModelFragment<BaseViewModel>(), SWe
         return R.layout.base_h5_fragment
     }
 
-    open fun getSWebViewLayout(): SWebViewLayout {
+    open fun getSWebViewLayout(): SWebViewLayout? {
         return sm_webview_container
     }
 
@@ -63,15 +64,25 @@ abstract class BaseWebViewFragment : BaseViewModelFragment<BaseViewModel>(), SWe
 
     override fun initData() {
         super.initData()
-        getSWebViewLayout().setWebListener(this)
-        getSWebViewLayout().loadRequestUrl(getCompleteUrl())
-        registerHandler(getSWebViewLayout().sWebView)
-        registerBaseHandler(getSWebViewLayout().sWebView)
+        getSWebViewLayout()?.setWebListener(this)
+        getSWebViewLayout()?.loadRequestUrl(getCompleteUrl())
+        registerHandler(getSWebViewLayout()!!.sWebView)
+        registerBaseHandler(getSWebViewLayout()!!.sWebView)
         iv_back?.setOnClickListener {
             if (sm_webview_container.sWebView.canGoBack()) {
                 sm_webview_container.sWebView.goBack()
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        sm_webview_container?.resumeWebView()
+    }
+
+    override fun onPause() {
+        sm_webview_container?.pauseWebView()
+        super.onPause()
     }
 
     protected open fun registerHandler(sWebView: SWebView) {}
@@ -172,20 +183,22 @@ abstract class BaseWebViewFragment : BaseViewModelFragment<BaseViewModel>(), SWe
     }
 
     protected fun reload() {
-        getSWebViewLayout().reload()
+        getSWebViewLayout()?.reload()
     }
 
-    protected fun getWebView(): SWebView {
-        return getSWebViewLayout().sWebView
+    protected fun getWebView(): SWebView? {
+        return getSWebViewLayout()?.sWebView
     }
 
     fun goBack(): Boolean {
-        return getSWebViewLayout().webViewCanGoBack()
+        return getSWebViewLayout()?.webViewCanGoBack() ?: false
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        sm_webview_container?.destroyWebView()
         mSumianImageTextDialog?.release()
+
     }
 
 }
