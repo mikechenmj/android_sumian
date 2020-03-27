@@ -2,8 +2,6 @@ package com.sumian.device.util;
 
 import android.os.ParcelUuid;
 import android.util.Log;
-import android.util.SparseArray;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -41,11 +39,14 @@ public final class ScanRecord {
     // Flags of the advertising data.
     private final int advertiseFlags;
 
-    @Nullable private final List<ParcelUuid> serviceUuids;
+    @Nullable
+    private final List<ParcelUuid> serviceUuids;
 
-    @Nullable private final SparseArray<byte[]> manufacturerSpecificData;
+    @Nullable
+    private final byte[] manufacturerSpecificData;
 
-    @Nullable private final Map<ParcelUuid, byte[]> serviceData;
+    @Nullable
+    private final Map<ParcelUuid, byte[]> serviceData;
 
     // Transmission power level(in dB).
     private final int txPowerLevel;
@@ -78,20 +79,8 @@ public final class ScanRecord {
      * data.
      */
     @Nullable
-    public SparseArray<byte[]> getManufacturerSpecificData() {
+    public byte[] getManufacturerSpecificData() {
         return manufacturerSpecificData;
-    }
-
-    /**
-     * Returns the manufacturer specific data associated with the manufacturer id. Returns
-     * {@code null} if the {@code manufacturerId} is not found.
-     */
-    @Nullable
-    public byte[] getManufacturerSpecificData(final int manufacturerId) {
-        if (manufacturerSpecificData == null) {
-            return null;
-        }
-        return manufacturerSpecificData.get(manufacturerId);
     }
 
     /**
@@ -143,7 +132,7 @@ public final class ScanRecord {
     }
 
     private ScanRecord(@Nullable final List<ParcelUuid> serviceUuids,
-                       @Nullable final SparseArray<byte[]> manufacturerData,
+                       @Nullable final byte[] manufacturerData,
                        @Nullable final Map<ParcelUuid, byte[]> serviceData,
                        final int advertiseFlags, final int txPowerLevel,
                        final String localName, final byte[] bytes) {
@@ -177,7 +166,7 @@ public final class ScanRecord {
         int txPowerLevel = Integer.MIN_VALUE;
         String localName = null;
         List<ParcelUuid> serviceUuids = null;
-        SparseArray<byte[]> manufacturerData = null;
+        byte[] manufacturerData = null;
         Map<ParcelUuid, byte[]> serviceData = null;
 
         try {
@@ -247,13 +236,19 @@ public final class ScanRecord {
                     case DATA_TYPE_MANUFACTURER_SPECIFIC_DATA:
                         // The first two bytes of the manufacturer specific data are
                         // manufacturer ids in little endian.
-                        final int manufacturerId = ((scanRecord[currentPos + 1] & 0xFF) << 8) +
-                                (scanRecord[currentPos] & 0xFF);
-                        final byte[] manufacturerDataBytes = extractBytes(scanRecord, currentPos + 2,
-                                dataLength - 2);
-                        if (manufacturerData == null)
-                            manufacturerData = new SparseArray<>();
-                        manufacturerData.put(manufacturerId, manufacturerDataBytes);
+                        if (manufacturerData == null) {
+                            manufacturerData = extractBytes(scanRecord, currentPos,
+                                    dataLength - 2);
+                        } else {
+                            byte[] currentManufacturerData = extractBytes(scanRecord, currentPos + 2,
+                                    dataLength - 2);
+                            byte[] manufacturerDataBytes = new byte[manufacturerData.length + currentManufacturerData.length];
+                            System.arraycopy(manufacturerData, 0,
+                                    manufacturerDataBytes, 0, manufacturerData.length);
+                            System.arraycopy(currentManufacturerData, 0,
+                                    manufacturerDataBytes, manufacturerData.length, currentManufacturerData.length);
+                            manufacturerData = manufacturerDataBytes;
+                        }
                         break;
                     default:
                         // Just ignore, we don't handle such data type.

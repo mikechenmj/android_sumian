@@ -1,5 +1,6 @@
 package com.sumian.sd.buz.devicemanager.util;
 
+import com.sumian.device.util.ScanRecord;
 import com.sumian.sd.buz.devicemanager.command.BlueCmd;
 
 import java.lang.annotation.Retention;
@@ -21,6 +22,8 @@ public class BluetoothDeviceUtil {
     public static final int BLUETOOTH_DEVICE_VERSION_OLD = 0;
     public static final int BLUETOOTH_DEVICE_VERSION_CLINICAL = 1;
     public static final int BLUETOOTH_DEVICE_VERSION_RELEASE = 2;
+    public static final String BLUETOOTH_DEVICE_VERSION_CLINICAL_FLAG = "0c";
+    public static final String BLUETOOTH_DEVICE_VERSION_RELEASE_FLAG = "0e";
 
     @IntDef({
             BLUETOOTH_DEVICE_VERSION_OLD,
@@ -50,14 +53,20 @@ public class BluetoothDeviceUtil {
     @BluetoothDeviceVersion
     public static int getBluetoothDeviceVersion(byte[] scanRecord) {
         int deviceVersion = BLUETOOTH_DEVICE_VERSION_OLD;
-        String scanRecordStr = BlueCmd.bytes2HexString(scanRecord);
-        if (scanRecordStr.length() >= 16) {
-            String substring = scanRecordStr.substring(14, 16);
-            if ("0c".equalsIgnoreCase(substring)) {
-                deviceVersion = BLUETOOTH_DEVICE_VERSION_CLINICAL;
-            } else if ("0e".equalsIgnoreCase(substring)) {
-                deviceVersion = BLUETOOTH_DEVICE_VERSION_RELEASE;
-            }
+        ScanRecord scanRecordData = ScanRecord.parseFromBytes(scanRecord);
+        byte[] manufacturerSpecificData = scanRecordData.getManufacturerSpecificData();
+        if (manufacturerSpecificData == null) {
+            return deviceVersion;
+        }
+        String manufacturerSpecificDataStr = BlueCmd.bytes2HexString(manufacturerSpecificData);
+        if (manufacturerSpecificDataStr.length() < 6) {
+            return deviceVersion;
+        }
+        String version = manufacturerSpecificDataStr.substring(4,6);
+        if (BLUETOOTH_DEVICE_VERSION_CLINICAL_FLAG.equalsIgnoreCase(version)) {
+            deviceVersion = BLUETOOTH_DEVICE_VERSION_CLINICAL;
+        } else if (BLUETOOTH_DEVICE_VERSION_RELEASE_FLAG.equalsIgnoreCase(version)) {
+            deviceVersion = BLUETOOTH_DEVICE_VERSION_RELEASE;
         }
         return deviceVersion;
     }
