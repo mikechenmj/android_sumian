@@ -1,57 +1,260 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="@dimen/normal_padding">
+    android:background="#F2F3F5"
+    android:paddingStart="@dimen/normal_interval"
+    android:paddingTop="@dimen/normal_interval"
+    android:paddingEnd="@dimen/normal_interval">
 
-    <FrameLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="7"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <FrameLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="60dp">
+            android:background="@color/transparent"
+            android:orientation="vertical">
 
-            <com.sumian.sd.widget.ripple.RippleScanningView
-                android:id="@+id/ripple_view"
-                android:layout_width="@dimen/space_200"
-                android:layout_height="@dimen/space_200"
-                android:layout_gravity="center"
-                android:visibility="visible" />
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/iv_device"
-                android:layout_width="wrap_content"
+                <com.sumian.sd.widget.ripple.RippleScanningView
+                    android:id="@+id/ripple_view"
+                    android:layout_width="@dimen/space_200"
+                    android:layout_height="394dp"
+                    android:layout_gravity="center"
+                    android:visibility="visible" />
+
+                <ImageView
+                    android:id="@+id/iv_device"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_binding_bracelet"
+                    tools:visibility="visible" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_permission_explain"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:contentDescription="@null"
-                android:src="@drawable/ic_binding_bracelet"
-                tools:visibility="visible" />
-        </FrameLayout>
+                android:background="@color/normal_item_background"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/normal_padding">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/bt_bind"
-            style="@style/SumianButton"
-            android:layout_width="match_parent"
-            android:layout_marginBottom="@dimen/normal_padding"
-            android:layout_height="50dp"
-            android:layout_gravity="bottom|center_horizontal"
-            android:text="@string/confirm_bind" />
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_margin="5dp"
+                    android:src="@drawable/icon_question_mark" />
 
-    </FrameLayout>
+                <TextView
+                    style="@style/text_t1_16"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="授权说明"
+                    android:textSize="@dimen/font_16" />
 
-        <TextView
-            android:id="@+id/tv_bind_huawei_health_tip"
-            android:layout_weight="3"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:textColor="@color/t2_color"
-            android:textSize="@dimen/font_14" />
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_margin="5dp"
+                    android:src="@drawable/ic_arrow_right_light_blue" />
+            </LinearLayout>
 
-</LinearLayout>
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/normal_interval"
+                android:background="@color/normal_item_background"
+                android:divider="@drawable/qmui_divider"
+                android:padding="@dimen/normal_padding"
+                android:showDividers="middle|beginning|end"
+                android:shrinkColumns="*">
+
+                <TableRow
+                    android:divider="@drawable/qmui_divider"
+                    android:showDividers="middle|beginning|end">
+
+                    <TextView
+                        style="@style/text_t1_16"
+                        android:layout_width="0dp"
+                        android:layout_height="47dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="数据名称" />
+
+                    <TextView
+                        style="@style/text_t1_16"
+                        android:layout_width="0dp"
+                        android:layout_height="47dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="获取状态" />
+                </TableRow>
+
+                <TableRow
+                    android:divider="@drawable/qmui_divider"
+                    android:showDividers="middle|beginning|end">
+
+                    <TextView
+                        style="@style/text_t1_16"
+                        android:layout_width="0dp"
+                        android:layout_height="47dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="步数" />
+
+                    <ImageView
+                        android:id="@+id/iv_step_sum_state"
+                        style="@style/text_t1_16"
+                        android:layout_width="0dp"
+                        android:layout_height="47dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/ic_cross" />
+                </TableRow>
+
+                <TableRow
+                    android:divider="@drawable/qmui_divider"
+                    android:showDividers="middle|beginning|end">
+
+                    <TextView
+                        style="@style/text_t1_16"
+                        android:layout_width="0dp"
+                        android:layout_height="47dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="距离" />
+
+                    <ImageView
+                        android:id="@+id/iv_distance_state"
+                        style="@style/text_t1_16"
+                        android:layout_width="0dp"
+                        android:layout_height="47dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/ic_cross" />
+                </TableRow>
+
+                <TableRow
+                    android:divider="@drawable/qmui_divider"
+                    android:showDividers="middle|beginning|end">
+
+                    <TextView
+                        style="@style/text_t1_16"
+                        android:layout_width="0dp"
+                        android:layout_height="47dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="热量" />
+
+                    <ImageView
+                        android:id="@+id/iv_calories_state"
+                        style="@style/text_t1_16"
+                        android:layout_width="0dp"
+                        android:layout_height="47dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/ic_cross" />
+                </TableRow>
+
+                <TableRow
+                    android:divider="@drawable/qmui_divider"
+                    android:showDividers="middle|beginning|end">
+
+                    <TextView
+                        style="@style/text_t1_16"
+                        android:layout_width="0dp"
+                        android:layout_height="47dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="睡眠" />
+
+                    <ImageView
+                        android:id="@+id/iv_sleep_state"
+                        style="@style/text_t1_16"
+                        android:layout_width="0dp"
+                        android:layout_height="47dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/ic_cross" />
+                </TableRow>
+
+                <TableRow
+                    android:divider="@drawable/qmui_divider"
+                    android:showDividers="middle|beginning|end">
+
+                    <TextView
+                        style="@style/text_t1_16"
+                        android:layout_width="0dp"
+                        android:layout_height="47dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="个人基本信息" />
+
+                    <ImageView
+                        android:id="@+id/iv_personal_info_state"
+                        style="@style/text_t1_16"
+                        android:layout_width="0dp"
+                        android:layout_height="47dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/ic_cross" />
+                </TableRow>
+
+                <TableRow
+                    android:divider="@drawable/qmui_divider"
+                    android:showDividers="middle|beginning|end">
+
+                    <TextView
+                        style="@style/text_t1_16"
+                        android:layout_width="0dp"
+                        android:layout_height="47dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="个人基本体征" />
+
+                    <ImageView
+                        android:id="@+id/iv_personal_sign_state"
+                        style="@style/text_t1_16"
+                        android:layout_width="0dp"
+                        android:layout_height="47dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/ic_cross" />
+                </TableRow>
+            </TableLayout>
+
+            <TextView
+                android:id="@+id/tv_update_time"
+                style="@style/text_t2_14"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
+                tools:text="最近一次更新时间：2020.03.25  11:48" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/bt_bind"
+        style="@style/SumianButton"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="40dp"
+        android:text="@string/confirm_bind" />
+</FrameLayout>

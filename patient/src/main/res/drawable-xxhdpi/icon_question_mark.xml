@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android" android:viewportWidth="33"
+    android:viewportHeight="33" android:width="11dp" android:height="11dp">
+    <group android:name="分组" android:translateY="0" android:translateX="0">
+        <path android:fillColor="#6595F4" android:strokeWidth="1" android:name="形状"
+            android:fillType="nonZero" android:strokeColor="#00000000"
+            android:pathData="M16.5 33 C7.37 33 0 25.63 0 16.5 C0 7.37 7.37 0 16.5 0 C25.63 0 33 7.37 33 16.5 C33 25.63 25.63 33 16.5 33 Z M16.5 30.8 C24.42 30.8 30.8 24.42 30.8 16.5 C30.8 8.58 24.42 2.2 16.5 2.2 C8.58 2.2 2.2 8.58 2.2 16.5 C2.2 24.42 8.58 30.8 16.5 30.8 Z" />
+        <path android:fillColor="#6595F4" android:strokeWidth="1" android:name="形状"
+            android:fillType="nonZero" android:strokeColor="#00000000"
+            android:pathData="M16.72 7.7 C18.26 7.7 19.58 8.03 20.57 8.91 C21.56 9.68 22 10.78 22 12.1 C22 13.2 21.67 14.08 21.12 14.85 C20.9 15.07 20.24 15.62 19.03 16.61 C18.59 16.94 18.26 17.38 18.04 17.71 C17.82 18.15 17.6 18.59 17.6 19.14 L17.6 20.13 L14.96 20.13 L14.96 19.14 C14.96 18.37 15.07 17.6 15.4 17.05 C15.73 16.39 16.61 15.51 18.15 14.3 L18.59 13.86 C19.03 13.31 19.25 12.87 19.25 12.21 C19.25 11.44 19.03 10.89 18.59 10.45 C18.15 10.01 17.38 9.79 16.5 9.79 C15.4 9.79 14.63 10.12 14.08 10.67 C13.64 11.22 13.42 11.99 13.42 12.98 L11 12.98 C11 11.33 11.55 10.12 12.54 9.13 C13.53 8.14 14.96 7.7 16.72 7.7 Z M16.5 25.3 C15.51 25.3 14.63 24.53 14.63 23.54 C14.63 22.55 15.4 21.78 16.5 21.78 C17.6 21.78 18.37 22.55 18.37 23.54 C18.37 24.53 17.49 25.3 16.5 25.3 Z" />
+    </group>
+</vector>
