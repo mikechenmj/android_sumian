@@ -29,6 +29,7 @@ class ScanUpgradeFragment(private var mDeviceType: Int) : BaseScanDeviceFragment
 
     constructor() : this(-1)
 
+    private var mUpgrading: Boolean = false
     private lateinit var mDeviceNamePrefix: String
     private val mScanResults = ArrayList<BlueDevice>()
     private var mFindDeviceSuccess = false
@@ -53,8 +54,15 @@ class ScanUpgradeFragment(private var mDeviceType: Int) : BaseScanDeviceFragment
     private val mUpgradeCallback = object : DfuUpgradeManager.UpgradeCallback {
 
         override fun onStart() {
+            if (mUpgrading) {
+                return
+            }
+            mUpgrading = true
             LogManager.deviceUpgradeLog("升级固件开始：$mDeviceType")
-            mProgressDialog?.show(activity!!.supportFragmentManager, mProgressDialog?.javaClass?.simpleName)
+            if (mProgressDialog?.isAdded == true) {
+            }else {
+                mProgressDialog?.show(activity!!.supportFragmentManager, mProgressDialog?.javaClass?.simpleName)
+            }
         }
 
         override fun onProgressChange(progress: Int) {
@@ -62,6 +70,7 @@ class ScanUpgradeFragment(private var mDeviceType: Int) : BaseScanDeviceFragment
         }
 
         override fun onSuccess() {
+            mUpgrading = false
             LogManager.deviceUpgradeLog("升级固件成功：$mDeviceType")
             mProgressDialog?.dismissAllowingStateLoss()
             var upgradeConfirmDialog: UpgradeConfirmDialog? = null
@@ -78,6 +87,7 @@ class ScanUpgradeFragment(private var mDeviceType: Int) : BaseScanDeviceFragment
         }
 
         override fun onFail(code: Int, msg: String?) {
+            mUpgrading = false
             LogManager.deviceUpgradeLog("升级固件失败：code: $code msg: $msg mDeviceType: $mDeviceType")
             mProgressDialog?.dismiss()
             var upgradeConfirmDialog: UpgradeConfirmDialog? = null
@@ -263,6 +273,9 @@ class ScanUpgradeFragment(private var mDeviceType: Int) : BaseScanDeviceFragment
             }
 
             override fun onCompleted(path: String) {
+                if (mUpgrading) {
+                    return
+                }
                 DfuUpgradeManager.upgradeDfuDevice(dfuMac, path,
                         onStart = { mUpgradeCallback.onStart() },
                         onProgressChange = { progress -> mUpgradeCallback.onProgressChange(progress) },
