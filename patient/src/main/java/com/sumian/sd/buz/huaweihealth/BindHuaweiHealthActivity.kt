@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.widget.ImageView
+import com.google.gson.Gson
 import com.sumian.common.base.BaseActivity
 import com.sumian.common.widget.dialog.SumianDialog
 import com.sumian.sd.R
@@ -79,13 +80,13 @@ class BindHuaweiHealthActivity : BaseActivity() {
                 .show()
     }
 
-    private fun queryHuaweiHealthData(start: String = "2019-11-11", end: String = "2020-3-19") {
+    private fun queryHuaweiHealthData(start: String = "2019-11-11", end: String = "2019-11-30") {
         HuaweiHealthUtil.queryHuaweiHealthData(this, start, end) { code, data ->
             if (data == null) {
                 return@queryHuaweiHealthData
             }
             updateHealthDataTable(data)
-//            Log.i("MCJ", "Gson().toJson(it): ${Gson().toJson(data)}")
+            Log.i("MCJ", "Gson().toJson(it): ${Gson().toJson(data)}")
         }
     }
 
@@ -95,8 +96,8 @@ class BindHuaweiHealthActivity : BaseActivity() {
             iv_distance_state.updateResult(data.distanceSum.size > 0)
             iv_calories_state.updateResult(data.caloriesSum.size > 0)
             iv_sleep_state.updateResult(data.coreSleeps.size > 0)
-            iv_personal_info_state.updateResult(data.let { it.birthday.isNotEmpty() && it.gender.isNotEmpty() })
-            iv_personal_sign_state.updateResult(data.let { it.height.isNotEmpty() && it.weight.isNotEmpty() })
+            iv_personal_info_state.updateResult(data.let { it.birthday.isNotEmpty() && it.gender != -1 })
+            iv_personal_sign_state.updateResult(data.let { it.height != 0f && it.weight != 0f })
         }
     }
 

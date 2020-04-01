@@ -1,13 +1,10 @@
 package com.sumian.sd.buz.huaweihealth
 
 import android.content.Context
-import android.os.Looper
-import android.util.Log
 
 import com.huawei.hihealth.error.HiHealthError
 import com.huawei.hihealthkit.HiHealthDataQuery
 import com.huawei.hihealthkit.HiHealthDataQueryOption
-import com.huawei.hihealthkit.auth.HiHealthAuth
 import com.huawei.hihealthkit.auth.IAuthorizationListener
 import com.huawei.hihealthkit.data.HiHealthData
 import com.huawei.hihealthkit.data.HiHealthPointData
@@ -112,40 +109,39 @@ object HuaweiHealthUtil {
                         val value = it[it.size - 1]
                         when (key) {
                             "44209" -> {
-                                coreSleep.nightSleepDuration = value
                                 nightSleepDuration = value.toFloatOrNull()
                             }
                             "44101" -> {
-                                coreSleep.remSleepDuration = value
+                                coreSleep.remSleepDuration = value.toFloat()
                             }
                             "44102" -> {
-                                coreSleep.deepSleepDuration = value
+                                coreSleep.deepSleepDuration = value.toFloat()
                             }
                             "44103" -> {
-                                coreSleep.lightSleepDuration = value
+                                coreSleep.lightSleepDuration = value.toFloat()
                             }
                             "44105" -> {
-                                coreSleep.totalSleepDuration = value
+                                coreSleep.totalSleepDuration = value.toFloat()
                                 totalSleepDuration = value.toFloatOrNull()
                             }
                             "44201" -> {
-                                coreSleep.fallAsleepTime = value
+                                coreSleep.fallAsleepTime = value.toLong()
                             }
                             "44202" -> {
-                                coreSleep.wakeUpTime = value
+                                coreSleep.wakeUpTime = value.toLong()
                             }
                             "44106" -> {
-                                coreSleep.deepSleepContinuityScore = value
+                                coreSleep.deepSleepContinuityScore = value.toFloat()
                             }
                             "44107" -> {
-                                coreSleep.numberOfSleepWakefulness = value
+                                coreSleep.numberOfSleepWakefulness = value.toFloat()
                             }
                             "44203" -> {
-                                coreSleep.SleepScore = value
+                                coreSleep.sleepScore = value.toFloat()
                             }
                         }
                         if (totalSleepDuration != null && nightSleepDuration != null) {
-                            coreSleep.dozeDuration = (totalSleepDuration!! - nightSleepDuration!!).toString()
+                            coreSleep.dozeDuration = totalSleepDuration!! - nightSleepDuration!!
                         }
                     }
                 }
@@ -232,18 +228,12 @@ object HuaweiHealthUtil {
                 })
     }
 
-    fun queryGender(context: Context, onResult: (Int, String) -> Unit) {
+    fun queryGender(context: Context, onResult: (Int, Int) -> Unit) {
         SumianHiHealthDataStore.getGender(context) { code, gender ->
             if (code == HiHealthError.SUCCESS) {
-                var genderStr = "未知"
-                when (gender) {
-                    0 -> genderStr = "女"
-                    1 -> genderStr = "男"
-                    2 -> genderStr = "未知"
-                }
-                onResult(code, genderStr)
+                onResult(code, gender as Int)
             } else {
-                onResult(code, "")
+                onResult(code, -1)
             }
         }
     }
@@ -258,22 +248,22 @@ object HuaweiHealthUtil {
         }
     }
 
-    fun queryHeight(context: Context, onResult: (Int, String) -> Unit) {
+    fun queryHeight(context: Context, onResult: (Int, Float) -> Unit) {
         SumianHiHealthDataStore.getHeight(context) { code, height ->
             if (code == HiHealthError.SUCCESS) {
-                onResult(code, height.toString())
+                onResult(code, height.toString().toFloat())
             } else {
-                onResult(code, "")
+                onResult(code, 0f)
             }
         }
     }
 
-    fun queryWeight(context: Context, onResult: (Int, String) -> Unit) {
+    fun queryWeight(context: Context, onResult: (Int, Float) -> Unit) {
         SumianHiHealthDataStore.getWeight(context) { code, weight ->
             if (code == HiHealthError.SUCCESS) {
-                onResult(code, weight.toString())
+                onResult(code, weight.toString().toFloat())
             } else {
-                onResult(code, "")
+                onResult(code, 0f)
             }
         }
     }
