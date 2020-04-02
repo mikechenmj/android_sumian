@@ -117,6 +117,9 @@ dependencies {
     implementation('com.aliyun.ams:alicloud-android-httpdns:1.1.7@aar') {
         transitive true
     }
+
+    //preference
+    api "androidx.preference:preference-ktx:1.1.0"
     // utils
     api 'com.blankj:utilcode:1.19.0'
     // LeanCloud 基础包

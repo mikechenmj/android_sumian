@@ -2,7 +2,7 @@ package com.sumian.sd.buz.huaweihealth
 
 import com.google.gson.annotations.SerializedName
 
-data class HuaweiHealthData(var gender: Int = -1,
+data class HuaweiHealthData(var gender: Int = 3,
                             var birthday: String = "",
                             @SerializedName("heights")
                             var height: Float = 0f,

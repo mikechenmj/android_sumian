@@ -24,50 +24,22 @@ import kotlin.collections.ArrayList
 
 object HuaweiHealthUtil {
 
-    fun queryHuaweiHealthData(context: Context, start: String, end: String, onResult: (Int, HuaweiHealthData?) -> Unit) {
+    fun queryHuaweiHealthData(context: Context, start: String, end: String, onResult: (Int, HuaweiHealthData) -> Unit) {
         Thread {
             var huaweiHealthData = HuaweiHealthData()
             queryGender(context) { code, gender ->
-//                if (code != HiHealthError.SUCCESS) {
-//                    onResult(-1, null)
-//                    return@queryGender
-//                }
                 huaweiHealthData.gender = gender
                 queryBirthday(context) { code, birthday ->
-//                    if (code != HiHealthError.SUCCESS) {
-//                        onResult(-1, null)
-//                        return@queryBirthday
-//                    }
                     huaweiHealthData.birthday = birthday
                     queryHeight(context) { code, height ->
-//                        if (code != HiHealthError.SUCCESS) {
-//                            onResult(-1, null)
-//                            return@queryHeight
-//                        }
                         huaweiHealthData.height = height
                         queryWeight(context) { code, weight ->
-//                            if (code != HiHealthError.SUCCESS) {
-//                                onResult(-1, null)
-//                                return@queryWeight
-//                            }
                             huaweiHealthData.weight = weight
                             queryStepSum(context, start, end) { code, stepSum ->
-//                                if (code != HiHealthPointType.DATA_POINT_STEP_SUM) {
-//                                    onResult(-1, null)
-//                                    return@queryStepSum
-//                                }
                                 huaweiHealthData.stepSum = stepSum
                                 queryDistanceSum(context, start, end) { code, distanceSum ->
-//                                    if (code != HiHealthPointType.DATA_POINT_DISTANCE_SUM) {
-//                                        onResult(-1, null)
-//                                        return@queryDistanceSum
-//                                    }
                                     huaweiHealthData.distanceSum = distanceSum
                                     queryCaloriesSum(context, start, end) { code, caloriesSum ->
-//                                        if (code != HiHealthPointType.DATA_POINT_CALORIES_SUM) {
-//                                            onResult(-1, null)
-//                                            return@queryCaloriesSum
-//                                        }
                                         huaweiHealthData.caloriesSum = caloriesSum
                                         queryCoreSleep(context, start, end) { code, coreSleeps ->
                                             huaweiHealthData.coreSleeps = coreSleeps
@@ -233,7 +205,7 @@ object HuaweiHealthUtil {
             if (code == HiHealthError.SUCCESS) {
                 onResult(code, gender as Int)
             } else {
-                onResult(code, -1)
+                onResult(code, 3)
             }
         }
     }

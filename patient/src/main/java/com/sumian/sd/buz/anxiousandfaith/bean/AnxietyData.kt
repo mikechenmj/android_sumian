@@ -1,5 +1,6 @@
 package com.sumian.sd.buz.anxiousandfaith.bean
 
+import android.content.SharedPreferences
 import android.os.Parcelable
 import android.util.Log
 import com.google.gson.annotations.SerializedName
