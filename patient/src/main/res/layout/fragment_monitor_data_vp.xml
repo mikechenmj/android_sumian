@@ -68,9 +68,20 @@
                         android:textColor="@color/b2_color"
                         android:visibility="gone"
                         tools:visibility="visible" />
-
                 </FrameLayout>
             </FrameLayout>
+
+            <ImageView
+                android:id="@+id/iv_bind_huawei_health"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/normal_interval"
+                android:layout_marginBottom="@dimen/normal_interval"
+                android:adjustViewBounds="true"
+                android:background="@color/normal_item_background"
+                android:layout_marginStart="@dimen/normal_interval"
+                android:layout_marginEnd="@dimen/normal_interval"
+                android:src="@drawable/ic_binding_bracelet_banner" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </com.sumian.common.widget.refresh.SumianSwipeRefreshLayout>

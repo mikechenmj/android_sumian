@@ -16,7 +16,6 @@ import com.sumian.sd.buz.account.login.ImageCaptcha
 import com.sumian.sd.buz.advisory.bean.Advisory
 import com.sumian.sd.buz.advisory.bean.PictureOssSts
 import com.sumian.sd.buz.advisory.body.AdvisoryRecordBody
-import com.sumian.sd.buz.anxiousandfaith.bean.AnxietyAnswer
 import com.sumian.sd.buz.anxiousandfaith.bean.AnxietyData
 import com.sumian.sd.buz.anxiousandfaith.bean.MoodDiaryData
 import com.sumian.sd.buz.cbti.bean.*
@@ -34,6 +33,9 @@ import com.sumian.sd.buz.doctor.bean.DoctorService
 import com.sumian.sd.buz.homepage.bean.GetCbtiChaptersResponse
 import com.sumian.sd.buz.homepage.bean.SentencePoolText
 import com.sumian.sd.buz.homepage.bean.SleepPrescriptionStatus
+import com.sumian.sd.buz.huaweihealth.HuaweiHealthConfigInfo
+import com.sumian.sd.buz.huaweihealth.HuaweiHealthData
+import com.sumian.sd.buz.huaweihealth.HuaweiHealthDataResponse
 import com.sumian.sd.buz.kefu.KeFuMessage
 import com.sumian.sd.buz.notification.bean.SystemNotificationData
 import com.sumian.sd.buz.onlinereport.OnlineReport
@@ -675,4 +677,10 @@ interface SdApi {
 
     @POST("image-captcha")
     fun queryImageCaptcha(): Call<ImageCaptcha>
+
+    @POST("hw-sport-data")
+    fun updateHuaweiHealthData(@Body huaweiHealthData: HuaweiHealthData): Call<HuaweiHealthDataResponse>
+
+    @GET("hw-sport-data/config-info")
+    fun getHuaweiHealthConfigInfo(): Call<HuaweiHealthConfigInfo>
 }

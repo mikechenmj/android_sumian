@@ -56,6 +56,7 @@ object StatConstants {
     const val page_sleep_prescription_edit = "睡眠处方原始页"
     const val page_sleep_prescription_result = "睡眠处方结果页"
     const val page_add_device = "添加设备页（搜索中）"
+    const val page_bind_huawei_health = "绑定华为健康设备页面"
     const val page_scan_device = "搜索结果页"
     const val page_data_page_monitor_data_tab = "监测数据页"
     const val page_data_page_sleep_data_tab = "睡眠数据页(TAB)"

@@ -33,6 +33,7 @@ import com.sumian.sd.buz.account.achievement.presenter.GetAchievementListPresent
 import com.sumian.sd.buz.account.bean.UserInfo
 import com.sumian.sd.buz.account.userProfile.UserInfoActivity
 import com.sumian.sd.buz.advisory.activity.AdvisoryListActivity
+import com.sumian.sd.buz.cbti.activity.CBTIIntroduction2WebActivity
 import com.sumian.sd.buz.coupon.activity.CouponCenterActivity
 import com.sumian.sd.buz.device.devicemanage.DeviceManageActivity
 import com.sumian.sd.buz.diaryevaluation.DiaryEvaluationListActivity
@@ -104,8 +105,8 @@ class MeFragment : BaseViewModelFragment<GetAchievementListPresenter>(), View.On
         tips_service.setOnServiceTipsCallback(this)
         tips_record.setOnRecordTipsCallback(this)
         dv_device_market.setOnClickListener { MiniProgramHelper.launchYouZanOrWeb(activity!!) }
-        dv_test.isVisible = BuildConfig.DEBUG
-        dv_test.setOnClickListener { ActivityUtils.startActivity(DeviceTestActivity::class.java) }
+        dv_test.isVisible = true
+        dv_test.setOnClickListener { CBTIIntroduction2WebActivity.show() }
     }
 
 
