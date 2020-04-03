@@ -22,6 +22,7 @@ import kotlinx.android.synthetic.main.fragment_scan_device.ripple_view
 
 class BindHuaweiHealthActivity : BaseActivity() {
 
+    private var mMaxDate: Int = 0
     private lateinit var mSharedPreferences: SharedPreferences
 
     override fun showBackNav(): Boolean {
@@ -37,7 +38,7 @@ class BindHuaweiHealthActivity : BaseActivity() {
         private const val HAD_SHOW_PERMISSION_EXPLAIN = "had_show_permission_explain"
         private const val MAX_DATE_DURATION = "max_date_duration"
 
-        private const val ONE_DAY_MILLS = 24 * 60 * 60 * 1000
+        private const val ONE_DAY_MILLS = 24 * 60 * 60 * 1000L
 
         fun start(context: Context) {
             context.startActivity(Intent(context, BindHuaweiHealthActivity::class.java))
@@ -75,7 +76,7 @@ class BindHuaweiHealthActivity : BaseActivity() {
         call.enqueue(object : BaseSdResponseCallback<HuaweiHealthConfigInfo>() {
             override fun onSuccess(response: HuaweiHealthConfigInfo?) {
                 SdLogManager.logHuaweiHealth("getHuaweiHealthConfigInfo: $response")
-                Log.i("MCJ","getHuaweiHealthConfigInfo: $response")
+                Log.i("MCJ", "getHuaweiHealthConfigInfo: $response")
                 if (response == null) {
                     ToastHelper.show("未获取到配置信息")
                     return
@@ -84,8 +85,8 @@ class BindHuaweiHealthActivity : BaseActivity() {
                 var localMaxDateDuration = mSharedPreferences.getInt(MAX_DATE_DURATION, 0)
                 var startTime = 0L
                 var endTime = 0L
-                Log.i("MCJ","localMaxDateDuration: $localMaxDateDuration")
-                Log.i("MCJ","response.maxDateDuration: ${response.maxDateDuration}")
+                Log.i("MCJ", "localMaxDateDuration: $localMaxDateDuration")
+                Log.i("MCJ", "response.maxDateDuration: ${response.maxDateDuration}")
                 if (localMaxDateDuration != response.maxDateDuration) {
                     mSharedPreferences.edit().putInt(MAX_DATE_DURATION, response.maxDateDuration).commit()
                     startTime = System.currentTimeMillis() - response.maxDateDuration * ONE_DAY_MILLS
@@ -94,6 +95,7 @@ class BindHuaweiHealthActivity : BaseActivity() {
                     startTime = response.startDate
                     endTime = response.endDate
                 }
+                mMaxDate = response.maxDateDuration
                 queryHuaweiHealthData(TimeUtil.formatDate("yyyy-MM-dd", startTime), TimeUtil.formatDate("yyyy-MM-dd", endTime))
             }
 
@@ -111,13 +113,13 @@ class BindHuaweiHealthActivity : BaseActivity() {
         addCall(call)
         call.enqueue(object : BaseSdResponseCallback<HuaweiHealthDataResponse>() {
             override fun onSuccess(response: HuaweiHealthDataResponse?) {
-                Log.i("MCJ","updateHuaweiHealthData.onSuccess: $response")
+                Log.i("MCJ", "updateHuaweiHealthData.onSuccess: $response")
                 SdLogManager.logHuaweiHealth("updateHuaweiHealthData.onSuccess: $response")
                 if (response == null) {
                     ToastHelper.show("未获取到更新日期")
                     return
                 }
-                updateHealthDataTable(data)
+                updateHealthDataTable()
                 refreshUpdateTime(response.latestTime)
             }
 
@@ -171,23 +173,29 @@ class BindHuaweiHealthActivity : BaseActivity() {
 
     private fun queryHuaweiHealthData(start: String, end: String) {
         SdLogManager.logHuaweiHealth("queryHuaweiHealthData: $start $end")
-        Log.i("MCJ","start: $start")
-        Log.i("MCJ","end: $end")
+        Log.i("MCJ", "start: $start")
+        Log.i("MCJ", "end: $end")
         HuaweiHealthUtil.queryHuaweiHealthData(this, start, end) { code, data ->
             updateHuaweiHealthData(data)
             Log.i("MCJ", "Gson().toJson(it): ${Gson().toJson(data)}")
         }
     }
 
-    private fun updateHealthDataTable(data: HuaweiHealthData) {
-        runOnUiThread {
-            iv_step_sum_state.updateResult(data.stepSum.size > 0)
-            iv_distance_state.updateResult(data.distanceSum.size > 0)
-            iv_calories_state.updateResult(data.caloriesSum.size > 0)
-            iv_sleep_state.updateResult(data.coreSleeps.size > 0)
-            iv_personal_info_state.updateResult(data.let { it.birthday.isNotEmpty() && it.gender != 3 })
-            iv_personal_sign_state.updateResult(data.let { it.height != 0f && it.weight != 0f })
+    private fun updateHealthDataTable() {
+        var start = TimeUtil.formatDate("yyyy-MM-dd", System.currentTimeMillis() - ONE_DAY_MILLS * mMaxDate)
+        var end = TimeUtil.formatDate("yyyy-MM-dd", System.currentTimeMillis())
+        Log.i("MCJ", "updateHealthDataTable: $start $end")
+        HuaweiHealthUtil.queryHuaweiHealthData(this, start, end) { code, data ->
+            runOnUiThread {
+                iv_step_sum_state.updateResult(data.stepSum.size > 0)
+                iv_distance_state.updateResult(data.distanceSum.size > 0)
+                iv_calories_state.updateResult(data.caloriesSum.size > 0)
+                iv_sleep_state.updateResult(data.coreSleeps.size > 0)
+                iv_personal_info_state.updateResult(data.let { it.birthday.isNotEmpty() && it.gender != 3 })
+                iv_personal_sign_state.updateResult(data.let { it.height != 0f && it.weight != 0f })
+            }
         }
+
     }
 
     private fun ImageView.updateResult(result: Boolean) {
