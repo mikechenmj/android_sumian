@@ -37,6 +37,7 @@ class BindHuaweiHealthActivity : BaseActivity() {
 
         private const val HAD_SHOW_PERMISSION_EXPLAIN = "had_show_permission_explain"
         private const val MAX_DATE_DURATION = "max_date_duration"
+        private const val LATEST_UPDATE_TIME = "latest_update_time"
 
         private const val ONE_DAY_MILLS = 24 * 60 * 60 * 1000L
 
@@ -81,7 +82,7 @@ class BindHuaweiHealthActivity : BaseActivity() {
                     ToastHelper.show("未获取到配置信息")
                     return
                 }
-                refreshUpdateTime(response.latestTime)
+                refreshUpdateTime(mSharedPreferences.getLong(LATEST_UPDATE_TIME, 0))
                 var localMaxDateDuration = mSharedPreferences.getInt(MAX_DATE_DURATION, 0)
                 var startTime = 0L
                 var endTime = 0L
@@ -119,8 +120,7 @@ class BindHuaweiHealthActivity : BaseActivity() {
                     ToastHelper.show("未获取到更新日期")
                     return
                 }
-                updateHealthDataTable()
-                refreshUpdateTime(response.latestTime)
+                updateHealthUi(response)
             }
 
             override fun onFinish() {
@@ -181,10 +181,10 @@ class BindHuaweiHealthActivity : BaseActivity() {
         }
     }
 
-    private fun updateHealthDataTable() {
+    private fun updateHealthUi(response: HuaweiHealthDataResponse) {
         var start = TimeUtil.formatDate("yyyy-MM-dd", System.currentTimeMillis() - ONE_DAY_MILLS * mMaxDate)
         var end = TimeUtil.formatDate("yyyy-MM-dd", System.currentTimeMillis())
-        Log.i("MCJ", "updateHealthDataTable: $start $end")
+        Log.i("MCJ", "updateHealthUi: $start $end")
         HuaweiHealthUtil.queryHuaweiHealthData(this, start, end) { code, data ->
             runOnUiThread {
                 iv_step_sum_state.updateResult(data.stepSum.size > 0)
@@ -193,9 +193,12 @@ class BindHuaweiHealthActivity : BaseActivity() {
                 iv_sleep_state.updateResult(data.coreSleeps.size > 0)
                 iv_personal_info_state.updateResult(data.let { it.birthday.isNotEmpty() && it.gender != 3 })
                 iv_personal_sign_state.updateResult(data.let { it.height != 0f && it.weight != 0f })
+                if (data.coreSleeps.size > 0) {
+                    mSharedPreferences.edit().putLong(LATEST_UPDATE_TIME, response.latestTime).commit()
+                    refreshUpdateTime(response.latestTime)
+                }
             }
         }
-
     }
 
     private fun ImageView.updateResult(result: Boolean) {
