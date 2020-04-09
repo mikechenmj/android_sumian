@@ -15,6 +15,7 @@ import com.sumian.common.helper.ToastHelper
 import com.sumian.common.statistic.StatUtil
 import com.sumian.common.utils.JsonUtil
 import com.sumian.sd.BuildConfig
+import com.sumian.sd.buz.account.login.LoginActivity
 import com.sumian.sd.buz.doctor.bean.H5DoctorServiceShoppingResult
 import com.sumian.sd.buz.homepage.sheet.ShareBottomSheet
 import com.sumian.sd.buz.stat.StatConstants
@@ -131,6 +132,9 @@ class ChannelH5Fragment : BaseWebViewFragment() {
             response?.let {
                 PaymentActivity.startForResult(this, it.result!!.service!!, it.result!!.packageId, REQUEST_CODE_PAY)
             }
+        }
+        sWebView.registerHandler("tokenInvalid") { data, function ->
+            LoginActivity.show()
         }
     }
 
