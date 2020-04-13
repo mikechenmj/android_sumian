@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
+import android.util.Log
 import com.clj.fastble.utils.HexUtil
 import com.sumian.device.callback.BleCommunicationWatcher
 import com.sumian.device.callback.WriteBleDataCallback
@@ -24,6 +25,7 @@ import java.io.File
  * version: 1.0
  */
 object SyncSleepDataHelper {
+    private var mSyncFinish: Boolean = false
     private var mIsSyncing = false
     private const val PAYLOAD_TIMEOUT_TIME = 1000L * 8
     private const val TAG = "[SyncSleepData]"
@@ -189,6 +191,10 @@ object SyncSleepDataHelper {
                 onSyncFailed()
                 log("收到0x4f回复 设备4f 指令识别异常  cmd=$cmd")
             }
+            BleCmd.RESPONSE_CODE_FINISH -> {
+                mSyncFinish = true
+                log("收到0x4f回复 单段同步完成 cmd=$cmd")
+            }
             else -> {
             }
         }
@@ -238,6 +244,7 @@ object SyncSleepDataHelper {
             onSyncFailed()
             return
         }
+        mSyncFinish = false
         val dataCount: Int = subHexStringToInt(cmd, 5, 8)
         mTransData = arrayOfNulls(dataCount)
         mTranType = cmd.substring(4, 5).toInt()
@@ -332,9 +339,23 @@ object SyncSleepDataHelper {
     private fun onCurrentPackageReceivedSuccess() {
         var file = saveSleepDataToFile()
         if (file.length() > 0) {
-            writeResponse(mEndBytes!!, BleCmd.RESPONSE_CODE_SUCCESS)
+            writeResponse(mEndBytes!!, BleCmd.RESPONSE_CODE_SUCCESS, object : WriteBleDataCallback {
+                override fun onSuccess(data: ByteArray) {
+                }
+
+                override fun onFail(code: Int, msg: String) {
+                    writeResponse(mEndBytes!!, BleCmd.RESPONSE_CODE_SUCCESS)
+                }
+            })
             bleFlowLog("writeResponse RESPONSE_CODE_SUCCESS for ${HexUtil.formatHexString(mEndBytes)}")
             if (mCurrentPackageIndex == mTotalPackageCount) {
+                if (isSyncSleepData()) {
+                    mMainHandler.postDelayed({
+                        if (!mSyncFinish) {
+                            writeResponse(mEndBytes!!, BleCmd.RESPONSE_CODE_SUCCESS)
+                        }
+                    }, 1500)
+                }
                 removePayloadTimeoutMessage()
                 onSyncSuccess()
             } else {

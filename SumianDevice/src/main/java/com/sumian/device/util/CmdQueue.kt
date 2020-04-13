@@ -39,10 +39,8 @@ object CmdQueue {
     const val EXTRA_CMD_WRITE_RESULT = "extra_cmd_write_result"
 
     fun registerDeviceStatusListener() {
-        Log.i("MCJ", "cmdQueue register")
         DeviceManager.registerDeviceStatusListener(object : DeviceStatusListener {
             override fun onStatusChange(type: String, data: Any?) {
-                Log.i("MCJ", "onStatusChange: type: $type data:$data")
                 if (type == DeviceManager.EVENT_MONITOR_CONNECT_STATUS_CHANGE) {
                     blockSyncInfo(false)
                     if (data != null) {
@@ -71,7 +69,6 @@ object CmdQueue {
     }
 
     private fun startSyncInfoQueue() {
-        Log.i("MCJ", "startSyncInfoQueue")
         mSyncInfoQueue.clear()
         mSyncInfoThread = HandlerThread("SyncInfo")
         mSyncInfoThread!!.start()

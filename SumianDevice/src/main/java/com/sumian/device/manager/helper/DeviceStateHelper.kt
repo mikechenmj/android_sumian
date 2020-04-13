@@ -181,11 +181,9 @@ object DeviceStateHelper {
                         generateResultCmd(BleCmd.QUERY_MONITOR_BATTERY), callback = object : BleRequestCallback {
                     override fun onResponse(data: ByteArray, hexString: String) {
                         LogManager.bleRequestStatusLog("请求蓝牙状态成功,cmd: $hexString")
-                        Log.i("MCJ", "hexString: $hexString")
                     }
 
                     override fun onFail(code: Int, msg: String) {
-                        Log.i("MCJ", "putQueryMonitorBattery: onFail: $msg")
                         LogManager.bleRequestStatusLog("请求蓝牙状态失败，cmd:${BleCmd.QUERY_MONITOR_BATTERY} code: $code msg: $msg")
                     }
                 }))
