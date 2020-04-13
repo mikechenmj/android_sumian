@@ -10,6 +10,7 @@ import com.sumian.device.manager.DeviceManager
 import java.util.concurrent.PriorityBlockingQueue
 
 object CmdQueue {
+    private var mInMsgSendBlock: Boolean = false
     private var mCommunicationWatcher: BleCommunicationWatcher? = null
     private var mPutCmdHandler: Handler? = null
     private var mPutCmdThread: HandlerThread? = null
@@ -27,7 +28,7 @@ object CmdQueue {
     const val MSG_ON_READ = 3
     const val MSG_ON_WRITE = 4
 
-    const val QUEUE_MESSAGE_INTERVAL = 100L
+    const val QUEUE_MESSAGE_INTERVAL = 200L
 
     const val ERROR_CODE_TIMEOUT = 1
     const val ERROR_CODE_TIMEOUT_AND_RETRY_FAIL = 2
@@ -77,6 +78,7 @@ object CmdQueue {
                 when (msg?.what) {
                     MSG_SEND -> {
                         var cmd = takeSyncInfoCmd()
+                        mSyncInfoHandler?.removeMessages(MSG_SEND)
                         Log.i("MCJ", "Sync: ${HexUtil.formatHexString(cmd.cmd)}")
                         mCurrentSyncInfoCmd = cmd
                         mCurrentRetrySyncInfoCmd = cmd.copy(resultCmds = mutableListOf<String>().apply {
@@ -202,6 +204,9 @@ object CmdQueue {
     }
 
     private fun sendMsgSyncInfo() {
+        if (mInMsgSendBlock) {
+            return
+        }
         removeMsgSyncInfoTimeOut()
         mSyncInfoHandler?.removeMessages(MSG_SEND)
         mSyncInfoHandler?.sendEmptyMessageDelayed(MSG_SEND, QUEUE_MESSAGE_INTERVAL)
@@ -225,9 +230,12 @@ object CmdQueue {
     }
 
     fun takeSyncInfoCmd(): Cmd {
+        mInMsgSendBlock = true
         while (mIsBlockSyncInfoQueue) {
         }
-        return mSyncInfoQueue.take()
+        var cmd = mSyncInfoQueue.take()
+        mInMsgSendBlock = false
+        return cmd
     }
 
     fun blockSyncInfo(block: Boolean) {
