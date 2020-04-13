@@ -32,6 +32,7 @@ import com.sumian.device.manager.helper.*
 import com.sumian.device.manager.helper.DeviceStateHelper.syncState
 import com.sumian.device.manager.upload.SleepDataUploadManager
 import com.sumian.device.net.NetworkManager
+import com.sumian.device.util.CmdQueue
 import com.sumian.device.util.ILogger
 import com.sumian.device.util.LogManager
 import retrofit2.Call
@@ -143,6 +144,7 @@ object DeviceManager {
         DeviceStateHelper.init(application.applicationContext)
         initBoundDevice()
         mBluetoothEnabled = BleManager.getInstance().isBlueEnable
+        CmdQueue.registerDeviceStatusListener()
     }
 
     private fun registerBluetoothReceiver(context: Context) {
@@ -462,15 +464,11 @@ object DeviceManager {
         if (mSumianDevice != null) {
             mSumianDevice?.monitorConnectStatus = status
         }
-        postEvent(EVENT_MONITOR_CONNECT_STATUS_CHANGE)
+        postEvent(EVENT_MONITOR_CONNECT_STATUS_CHANGE, status)
     }
 
     fun writeData(data: ByteArray, delay: Long = 0, callback: WriteBleDataCallback? = null) {
         BleCommunicationController.writeData(data, delay, callback)
-    }
-
-    fun writeData(data: String, delay: Long = 0, callback: WriteBleDataCallback? = null) {
-        BleCommunicationController.writeData(HexUtil.hexStringToBytes(data), delay, callback)
     }
 
     fun disconnect() {
@@ -502,7 +500,7 @@ object DeviceManager {
 
     private fun queryMonitorVersionInNeed(onNext: () -> Unit) {
         if (!isMonitorVersionCompat()) {
-            DeviceStateHelper.queryMonitorVersion()
+            DeviceStateHelper.putQueryMonitorVersion()
             LogManager.bleFlowLog("因手环版本不兼容需要重试")
             registerDeviceStatusListener(object : DeviceStatusListener {
                 override fun onStatusChange(type: String) {
@@ -520,7 +518,7 @@ object DeviceManager {
 
     private fun querySleepMasterVersionInNeed(onNext: () -> Unit) {
         if (isSleepMasterConnected() && !isSleepMasterVersionCompat()) {
-            DeviceStateHelper.querySleepMasterVersion()
+            DeviceStateHelper.putQuerySleepMasterVersion()
             LogManager.bleFlowLog("因速眠仪版本不兼容需要重试")
             registerDeviceStatusListener(object : DeviceStatusListener {
                 override fun onStatusChange(type: String) {
@@ -673,10 +671,6 @@ object DeviceManager {
             }
         }
         mDeviceStatusListener.onStatusChange(event, data)
-    }
-
-    fun makeRequest(data: ByteArray, callback: BleRequestCallback) {
-        BleCommunicationController.requestWithRetry(data, callback)
     }
 
     fun upgradeBoundDevice(target: DeviceType, filePath: String,

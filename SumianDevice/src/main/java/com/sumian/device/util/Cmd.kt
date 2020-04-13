@@ -1,6 +1,10 @@
 package com.sumian.device.util
 
-data class Cmd(var cmd: ByteArray, var resultCmds: MutableList<ByteArray> = mutableListOf(), var retry: Boolean = true, var priority: Priority = Priority.NORMAL, var timeMill: Long = 0, var retryTime: Int = 0) : Comparable<Cmd> {
+import com.sumian.device.callback.BleRequestCallback
+
+data class Cmd(var cmd: ByteArray, var resultCmds: MutableList<String> = mutableListOf(), var retry: Boolean = true,
+               var priority: Priority = Priority.NORMAL, var timeMill: Long = 0, var retryTime: Int = 0,
+               var callback: BleRequestCallback? = null) : Comparable<Cmd> {
 
     override fun compareTo(other: Cmd): Int {
         return if (priority > other.priority) {
@@ -28,6 +32,7 @@ data class Cmd(var cmd: ByteArray, var resultCmds: MutableList<ByteArray> = muta
         if (priority != other.priority) return false
         if (timeMill != other.timeMill) return false
         if (retryTime != other.retryTime) return false
+        if (callback != other.callback) return false
 
         return true
     }
@@ -39,10 +44,11 @@ data class Cmd(var cmd: ByteArray, var resultCmds: MutableList<ByteArray> = muta
         result = 31 * result + priority.hashCode()
         result = 31 * result + timeMill.hashCode()
         result = 31 * result + retryTime
+        result = 31 * result + (callback?.hashCode() ?: 0)
         return result
     }
 
     enum class Priority {
-        RETRY, NORMAL
+        RETRY, FIRST, NORMAL, SLEEP_DATA
     }
 }

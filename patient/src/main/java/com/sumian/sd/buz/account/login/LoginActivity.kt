@@ -11,8 +11,6 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.qmuiteam.qmui.util.QMUISpanHelper
 import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.statistic.StatUtil
-import com.sumian.device.util.Cmd
-import com.sumian.device.util.CmdQueue
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.stat.StatConstants
@@ -23,9 +21,6 @@ import com.sumian.sd.common.utils.StatusBarUtil
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : BaseViewModelActivity<LoginPresenter>(), LoginContract.View {
-
-    private lateinit var mTestRunnable: Runnable
-    private lateinit var mTesthandler: Handler
 
     companion object {
 
@@ -81,41 +76,6 @@ class LoginActivity : BaseViewModelActivity<LoginPresenter>(), LoginContract.Vie
                 ll_password_et_container.isActivated = highlight
             }
         })
-
-        /** test start **/
-        CmdQueue.init()
-        testQueryInfo()
-        /** test end **/
-    }
-
-    private fun testQueryInfo() {
-        mTesthandler = Handler()
-        mTestRunnable = object : Runnable {
-            override fun run() {
-                var random = (Math.random() * 0xff).toByte()
-                var cmdArray = ByteArray(2).apply {
-                    set(0, 0xAA.toByte())
-                    set(1, random)
-                }
-                var cmd = Cmd(cmdArray, mutableListOf(cmdArray))
-                CmdQueue.putCmd(CmdQueue.CmdType.QUERY_INFO, cmd)
-                mTesthandler.postDelayed(this, 3000)
-            }
-        }
-        mTesthandler.postDelayed(mTestRunnable, 1000)
-        bt_login.setOnClickListener {
-            test()
-//            CmdQueue.blockQueryInfo(!CmdQueue.getIsBlockQueryInfo())
-        }
-    }
-
-    //test
-    private fun test() {
-        if (mTesthandler.hasCallbacks(mTestRunnable)) {
-            mTesthandler.removeCallbacks(mTestRunnable)
-        } else {
-            mTesthandler.post(mTestRunnable)
-        }
     }
 
     private fun requestCaptcha() {

@@ -105,8 +105,8 @@ class MeFragment : BaseViewModelFragment<GetAchievementListPresenter>(), View.On
         tips_service.setOnServiceTipsCallback(this)
         tips_record.setOnRecordTipsCallback(this)
         dv_device_market.setOnClickListener { MiniProgramHelper.launchYouZanOrWeb(activity!!) }
-        dv_test.isVisible = true
-        dv_test.setOnClickListener { CBTIIntroduction2WebActivity.show() }
+        dv_test.isVisible = BuildConfig.DEBUG
+        dv_test.setOnClickListener { ActivityUtils.startActivity(DeviceTestActivity::class.java) }
     }
 
 

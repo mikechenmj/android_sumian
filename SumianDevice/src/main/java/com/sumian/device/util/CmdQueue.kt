@@ -3,91 +3,108 @@ package com.sumian.device.util
 import android.os.*
 import android.util.Log
 import com.clj.fastble.utils.HexUtil
+import com.sumian.device.callback.BleCommunicationWatcher
+import com.sumian.device.callback.DeviceStatusListener
+import com.sumian.device.data.DeviceConnectStatus
+import com.sumian.device.manager.DeviceManager
 import java.util.concurrent.PriorityBlockingQueue
 
 object CmdQueue {
+    private var mCommunicationWatcher: BleCommunicationWatcher? = null
     private var mPutCmdHandler: Handler? = null
     private var mPutCmdThread: HandlerThread? = null
-    private var mSyncSleepDataQueue: PriorityBlockingQueue<Cmd> = PriorityBlockingQueue()
-    private var mQueryInfoQueue: PriorityBlockingQueue<Cmd> = PriorityBlockingQueue()
-    private var mQueryInfoHandler: Handler? = null
-    private var mQueryInfoThread: HandlerThread? = null
-    private var mCurrentQueryInfoCmd: Cmd? = null
-    private var mCurrentRetryQueryInfoCmd: Cmd? = null
     @Volatile
-    private var mIsBlockQueryInfoQueue = false
+    private var mSyncInfoQueue: PriorityBlockingQueue<Cmd> = PriorityBlockingQueue()
+    private var mSyncInfoHandler: Handler? = null
+    private var mSyncInfoThread: HandlerThread? = null
+    private var mCurrentSyncInfoCmd: Cmd? = null
+    private var mCurrentRetrySyncInfoCmd: Cmd? = null
     @Volatile
-    private var mIsBlockSyncSleepData = false
+    private var mIsBlockSyncInfoQueue = false
 
     const val MSG_SEND = 1
     const val MSG_TIMEOUT = 2
     const val MSG_ON_READ = 3
     const val MSG_ON_WRITE = 4
 
+    const val QUEUE_MESSAGE_INTERVAL = 100L
+
+    const val ERROR_CODE_TIMEOUT = 1
+    const val ERROR_CODE_TIMEOUT_AND_RETRY_FAIL = 2
+
     private const val CMD_RETRY_TIME = 3
-    private const val TIME_QUERY_INFO_TIMEOUT = 3000L
+    private const val TIME_SYNC_INFO_TIMEOUT = 3000L
     const val EXTRA_CMD_HEX_STRING = "extra_cmd_hex_string"
     const val EXTRA_CMD_HEX_ARRAY = "extra_cmd_hex_array"
     const val EXTRA_CMD_WRITE_RESULT = "extra_cmd_write_result"
 
-    fun init() {
-        startQueryInfoQueue()
-        mPutCmdThread = HandlerThread("putQueryInfo")
-        mPutCmdThread!!.start()
-        mPutCmdHandler = Handler(mPutCmdThread!!.looper)
+    fun registerDeviceStatusListener() {
+        Log.i("MCJ", "cmdQueue register")
+        DeviceManager.registerDeviceStatusListener(object : DeviceStatusListener {
+            override fun onStatusChange(type: String, data: Any?) {
+                Log.i("MCJ", "onStatusChange: type: $type data:$data")
+                if (type == DeviceManager.EVENT_MONITOR_CONNECT_STATUS_CHANGE) {
+                    blockSyncInfo(false)
+                    if (data != null) {
+                        var state = data as DeviceConnectStatus
+                        if (state == DeviceConnectStatus.CONNECTED) {
+                            startSyncInfoQueue()
+                        } else if (state == DeviceConnectStatus.DISCONNECTED) {
+                            stopSyncInfoQueue()
+                        }
+                    }
+                }
+            }
+        })
     }
 
-    private fun startQueryInfoQueue() {
-        mQueryInfoThread = HandlerThread("queryInfo")
-        mQueryInfoThread!!.start()
-        mQueryInfoHandler = object : Handler(mQueryInfoThread!!.looper) {
+    private fun stopSyncInfoQueue() {
+        mSyncInfoThread?.quit()
+        mSyncInfoThread = null
+        mSyncInfoHandler = null
+        var watcher = mCommunicationWatcher
+        if (watcher != null) DeviceManager.unregisterBleCommunicationWatcher(watcher)
+        mPutCmdThread?.quit()
+        mPutCmdThread = null
+        mPutCmdHandler = null
+        mSyncInfoQueue.clear()
+    }
+
+    private fun startSyncInfoQueue() {
+        Log.i("MCJ", "startSyncInfoQueue")
+        mSyncInfoQueue.clear()
+        mSyncInfoThread = HandlerThread("SyncInfo")
+        mSyncInfoThread!!.start()
+        mSyncInfoHandler = object : Handler(mSyncInfoThread!!.looper) {
             override fun handleMessage(msg: Message?) {
                 when (msg?.what) {
                     MSG_SEND -> {
-                        var cmd = takeQueryInfoCmd()
-                        Log.i("MCJ", "QUERY: ${HexUtil.formatHexString(cmd.cmd)}")
-                        mCurrentQueryInfoCmd = cmd
-                        mCurrentRetryQueryInfoCmd = cmd.copy(resultCmds = mutableListOf<ByteArray>().apply {
+                        var cmd = takeSyncInfoCmd()
+                        Log.i("MCJ", "Sync: ${HexUtil.formatHexString(cmd.cmd)}")
+                        mCurrentSyncInfoCmd = cmd
+                        mCurrentRetrySyncInfoCmd = cmd.copy(resultCmds = mutableListOf<String>().apply {
                             addAll(cmd.resultCmds)
                         })
-                        sendMsgQueryInfoTimeOut()
-
-                        /**need
+                        sendMsgSyncInfoTimeOut()
                         DeviceManager.writeData(cmd.cmd)
-                         **/
-
-                        /**test start**/
-                        mQueryInfoHandler?.sendMessageDelayed(Message.obtain().apply {
-                            what = MSG_ON_WRITE
-                            obj = Bundle().apply {
-                                putByteArray(EXTRA_CMD_HEX_ARRAY, cmd.cmd)
-                                putString(EXTRA_CMD_HEX_STRING, HexUtil.formatHexString(cmd.cmd))
-                                putBoolean(EXTRA_CMD_WRITE_RESULT, true)
-                            }
-                        }, (Math.random() * 3000).toLong())
-                        /**test end**/
                     }
                     MSG_TIMEOUT -> {
-                        Log.i("MCJ", "TIMEOUT: ${HexUtil.formatHexString(mCurrentQueryInfoCmd?.cmd)}")
-                        var currentCmd = mCurrentQueryInfoCmd
+                        Log.i("MCJ", "TIMEOUT: ${HexUtil.formatHexString(mCurrentSyncInfoCmd?.cmd)}")
+                        var currentCmd = mCurrentSyncInfoCmd
                         if (currentCmd == null) {
-                            sendMsgQueryInfo()
+                            sendMsgSyncInfo()
                             return
                         }
-                        mCurrentQueryInfoCmd = null
-                        var retryCmd = mCurrentRetryQueryInfoCmd
+                        mCurrentSyncInfoCmd = null
+                        var retryCmd = mCurrentRetrySyncInfoCmd
                         if (retryCmd == null) {
-                            sendMsgQueryInfo()
+                            sendMsgSyncInfo()
                             return
                         }
-                        if (retryCmd.retry) {
-                            retryCmd(retryCmd)
-                        } else {
-                            sendMsgQueryInfo()
-                        }
+                        retryCmd(retryCmd)
                     }
                     MSG_ON_WRITE -> {
-                        var currentCmd: Cmd? = mCurrentQueryInfoCmd ?: return
+                        var currentCmd: Cmd? = mCurrentSyncInfoCmd ?: return
                         var currentCmdHeader = HexUtil.formatHexString(currentCmd!!.cmd).substring(2, 4)
                         var bundle = msg.obj as Bundle
                         var cmd = bundle.getByteArray(EXTRA_CMD_HEX_ARRAY)
@@ -95,55 +112,47 @@ object CmdQueue {
                         var cmdHeader = cmdStr.substring(2, 4)
                         var success = bundle.getBoolean(EXTRA_CMD_WRITE_RESULT)
                         if (cmdHeader == currentCmdHeader) {
-                            Log.i("MCJ", "WRITE: ${HexUtil.formatHexString(mCurrentQueryInfoCmd?.cmd)}")
+                            Log.i("MCJ", "WRITE: ${HexUtil.formatHexString(mCurrentSyncInfoCmd?.cmd)} success: $success")
                             if (success) {
                                 if (currentCmd!!.resultCmds.isEmpty()) {
-                                    mCurrentQueryInfoCmd = null
-                                    sendMsgQueryInfo()
+                                    mCurrentSyncInfoCmd = null
+                                    sendMsgSyncInfo()
                                 } else {
-                                    sendMsgQueryInfoTimeOut()
-                                    /**test start**/
-                                    mQueryInfoHandler?.sendMessageDelayed(Message.obtain().apply {
-                                        what = MSG_ON_READ
-                                        obj = Bundle().apply {
-                                            putByteArray(EXTRA_CMD_HEX_ARRAY, cmd)
-                                            putString(EXTRA_CMD_HEX_STRING, cmdStr)
-                                        }
-                                    }, (Math.random() * 3000).toLong())
-                                    /**test end**/
+                                    sendMsgSyncInfoTimeOut()
                                 }
                             } else {
-                                var retryCmd = mCurrentRetryQueryInfoCmd ?: return
+                                var retryCmd = mCurrentRetrySyncInfoCmd ?: return
                                 retryCmd(retryCmd)
                             }
                         }
                     }
                     MSG_ON_READ -> {
-                        var currentCmd: Cmd? = mCurrentQueryInfoCmd ?: return
+                        var currentCmd: Cmd? = mCurrentSyncInfoCmd ?: return
                         var currentCmdHeader = HexUtil.formatHexString(currentCmd!!.cmd).substring(2, 4)
                         var bundle = msg.obj as Bundle
-                        var cmd = bundle.getString(EXTRA_CMD_HEX_ARRAY)
+                        var cmd = bundle.getByteArray(EXTRA_CMD_HEX_ARRAY)
                         var cmdStr = bundle.getString(EXTRA_CMD_HEX_STRING)
                         var cmdHeader = cmdStr?.substring(2, 4)
                         if (cmdHeader == currentCmdHeader) {
-                            Log.i("MCJ", "READ: ${HexUtil.formatHexString(mCurrentQueryInfoCmd?.cmd)}")
+                            Log.i("MCJ", "READ: $cmdStr")
                             var resultCmds = currentCmd.resultCmds
                             if (resultCmds.isEmpty()) {
-                                mCurrentQueryInfoCmd = null
-                                sendMsgQueryInfo()
+                                mCurrentSyncInfoCmd = null
+                                currentCmd.callback?.onResponse(cmd, cmdStr)
+                                sendMsgSyncInfo()
                             } else {
-                                sendMsgQueryInfoTimeOut()
+                                sendMsgSyncInfoTimeOut()
                                 for (resultCmd in resultCmds) {
-                                    Log.i("MCJ", "resultCmd: ${HexUtil.formatHexString(resultCmd)}")
+                                    Log.i("MCJ", "resultCmd: $resultCmd}")
                                 }
-                                if (HexUtil.formatHexString(resultCmds[0]).substring(2, 4).startsWith(cmdHeader)) {
+                                if (resultCmds[0].substring(2, 4) == cmdHeader) {
                                     resultCmds.removeAt(0)
                                 }
                                 Log.i("MCJ", "currentCmd.resultCmds.size: ${currentCmd.resultCmds.size}")
                                 if (resultCmds.isEmpty()) {
-                                    Log.i("MCJ", "isEmpty")
-                                    mCurrentQueryInfoCmd = null
-                                    sendMsgQueryInfo()
+                                    mCurrentSyncInfoCmd = null
+                                    currentCmd.callback?.onResponse(cmd, cmdStr)
+                                    sendMsgSyncInfo()
                                 }
                             }
                         }
@@ -151,110 +160,85 @@ object CmdQueue {
                 }
             }
         }
-        Log.i("MCJ", "start query info")
-        /** need
-        DeviceManager.registerBleCommunicationWatcher(object : BleCommunicationWatcher {
-        override fun onRead(data: ByteArray, hexString: String) {
-        mQueryInfoHandler?.sendMessage(Message.obtain().apply {
-        what = MSG_ON_READ
-        obj = Bundle().apply {
-        putByteArray(EXTRA_CMD_HEX_ARRAY, data)
-        putString(EXTRA_CMD_HEX_STRING, hexString)
-        }
-        })
-        }
+        Log.i("MCJ", "start sync info")
+        var communicationWatcher = object : BleCommunicationWatcher {
+            override fun onRead(data: ByteArray, hexString: String) {
+                mSyncInfoHandler?.sendMessage(Message.obtain().apply {
+                    what = MSG_ON_READ
+                    obj = Bundle().apply {
+                        putByteArray(EXTRA_CMD_HEX_ARRAY, data)
+                        putString(EXTRA_CMD_HEX_STRING, hexString)
+                    }
+                })
+            }
 
-        override fun onWrite(data: ByteArray, hexString: String, success: Boolean, errorMsg: String?) {
-        mQueryInfoHandler?.sendMessage(Message.obtain().apply {
-        what = MSG_ON_WRITE
-        obj = Bundle().apply {
-        putByteArray(EXTRA_CMD_HEX_ARRAY, data)
-        putString(EXTRA_CMD_HEX_STRING, hexString)
-        putBoolean(EXTRA_CMD_WRITE_RESULT, success)
+            override fun onWrite(data: ByteArray, hexString: String, success: Boolean, errorMsg: String?) {
+                mSyncInfoHandler?.sendMessage(Message.obtain().apply {
+                    what = MSG_ON_WRITE
+                    obj = Bundle().apply {
+                        putByteArray(EXTRA_CMD_HEX_ARRAY, data)
+                        putString(EXTRA_CMD_HEX_STRING, hexString)
+                        putBoolean(EXTRA_CMD_WRITE_RESULT, success)
+                    }
+                })
+            }
         }
-        })
-        }
-        })
-         **/
-        sendMsgQueryInfo()
+        DeviceManager.registerBleCommunicationWatcher(communicationWatcher)
+        mCommunicationWatcher = communicationWatcher
+        sendMsgSyncInfo()
+        mPutCmdThread = HandlerThread("putSyncInfo")
+        mPutCmdThread!!.start()
+        mPutCmdHandler = Handler(mPutCmdThread!!.looper)
     }
 
     private fun retryCmd(cmd: Cmd) {
-        Log.i("MCJ", "retryCmd ${HexUtil.formatHexString(cmd.cmd)}: $cmd")
-        if (cmd.retryTime < CMD_RETRY_TIME) {
-            cmd.retryTime += 1
-            cmd.priority = Cmd.Priority.RETRY
-            mQueryInfoQueue.put(cmd)
+        if (!cmd.retry || cmd.retryTime >= CMD_RETRY_TIME) {
+            cmd.callback?.onFail(if (!cmd.retry) ERROR_CODE_TIMEOUT else ERROR_CODE_TIMEOUT_AND_RETRY_FAIL, "${cmd.cmd} timeout")
+            sendMsgSyncInfo()
+            return
         }
-        sendMsgQueryInfo()
+        Log.i("MCJ", "retryCmd ${HexUtil.formatHexString(cmd.cmd)}")
+        cmd.retryTime += 1
+        cmd.priority = Cmd.Priority.RETRY
+        mSyncInfoQueue.put(cmd)
+        sendMsgSyncInfo()
     }
 
-    private fun sendMsgQueryInfo() {
-        removeMsgQueryInfoTimeOut()
-        mQueryInfoHandler?.removeMessages(MSG_SEND)
-        mQueryInfoHandler?.sendEmptyMessage(MSG_SEND)
+    private fun sendMsgSyncInfo() {
+        removeMsgSyncInfoTimeOut()
+        mSyncInfoHandler?.removeMessages(MSG_SEND)
+        mSyncInfoHandler?.sendEmptyMessageDelayed(MSG_SEND, QUEUE_MESSAGE_INTERVAL)
     }
 
-    private fun sendMsgQueryInfoTimeOut() {
-        removeMsgQueryInfoTimeOut()
-        mQueryInfoHandler?.sendEmptyMessageDelayed(MSG_TIMEOUT, TIME_QUERY_INFO_TIMEOUT)
+    private fun sendMsgSyncInfoTimeOut() {
+        removeMsgSyncInfoTimeOut()
+        mSyncInfoHandler?.sendEmptyMessageDelayed(MSG_TIMEOUT, TIME_SYNC_INFO_TIMEOUT)
     }
 
-    private fun removeMsgQueryInfoTimeOut() {
-        mQueryInfoHandler?.removeMessages(MSG_TIMEOUT)
+    private fun removeMsgSyncInfoTimeOut() {
+        mSyncInfoHandler?.removeMessages(MSG_TIMEOUT)
     }
 
-    private fun putQueryInfoCmd(cmd: Cmd) {
+    fun putSyncInfoCmd(cmd: Cmd) {
         mPutCmdHandler?.post {
             SystemClock.sleep(10)
             cmd.timeMill = System.currentTimeMillis()
-            mQueryInfoQueue.put(cmd)
+            mSyncInfoQueue.put(cmd)
         }
     }
 
-    private fun putSyncSleepDataCmd(cmd: Cmd) {
-        mPutCmdHandler?.post {
-            SystemClock.sleep(10)
-            cmd.timeMill = System.currentTimeMillis()
-            mSyncSleepDataQueue.put(cmd)
+    fun takeSyncInfoCmd(): Cmd {
+        while (mIsBlockSyncInfoQueue) {
         }
+        return mSyncInfoQueue.take()
     }
 
-    fun putCmd(type: CmdType, cmd: Cmd) {
-        if (type === CmdType.QUERY_INFO) {
-            putQueryInfoCmd(cmd)
-        } else if (type === CmdType.SYNC_SLEEP_DATA) {
-            putSyncSleepDataCmd(cmd)
-        }
+    fun blockSyncInfo(block: Boolean) {
+        Log.i("MCJ","blockSyncInfo: $block")
+        mIsBlockSyncInfoQueue = block
     }
 
-    fun takeQueryInfoCmd(): Cmd {
-        while (mIsBlockQueryInfoQueue) {
-        }
-        return mQueryInfoQueue.take()
-    }
-
-    fun takeSyncSleepDataCmd(): Cmd {
-        return mSyncSleepDataQueue.take()
-    }
-
-    fun blockQueryInfo(block: Boolean) {
-        mIsBlockQueryInfoQueue = block
-    }
-
-    fun getIsBlockQueryInfo(): Boolean {
-        return mIsBlockQueryInfoQueue
-    }
-
-    fun blockSyncSleepData(block: Boolean) {
-        mIsBlockSyncSleepData = block
-    }
-
-    fun getIsBlockSyncSleepData(): Boolean {
-        return mIsBlockSyncSleepData
-    }
-
-    enum class CmdType {
-        SYNC_SLEEP_DATA, QUERY_INFO
+    fun isBlockSyncInfo(): Boolean {
+        return mIsBlockSyncInfoQueue
     }
 }
