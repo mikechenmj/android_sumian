@@ -24,6 +24,8 @@ import kotlin.collections.ArrayList
 
 object HuaweiHealthUtil {
 
+    var isHuaweiHealthConnectSuccess: Boolean = false
+
     fun queryHuaweiHealthData(context: Context, start: String, end: String, onResult: (Int, HuaweiHealthData) -> Unit) {
         Thread {
             var huaweiHealthData = HuaweiHealthData()

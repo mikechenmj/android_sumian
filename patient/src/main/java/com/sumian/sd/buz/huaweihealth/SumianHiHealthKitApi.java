@@ -28,6 +28,7 @@ import com.huawei.hihealthkit.data.store.HiSportDataCallback;
 import com.huawei.hihealthkit.data.type.HiHealthDataType;
 import com.huawei.hihealthkit.data.type.HiHealthDataType.Category;
 import com.sumian.sd.common.log.SdLogManager;
+import com.sumian.sd.common.utils.EventBusUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -85,33 +86,37 @@ public class SumianHiHealthKitApi implements ServiceConnection {
 
     public void onServiceConnected(ComponentName name, IBinder service) {
         Log.i("HiHealthKit", "onServiceConnected");
-            int uid = Binder.getCallingUid();
-            String packageName = sContext.getPackageManager().getNameForUid(uid);
-            Log.d("HiHealthKit", "getCallingUid uid:" + uid + " packageName1:" + packageName);
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    IBinder binder = null;
-                    try {
-                        binder = Stub.asInterface(service).getServiceBinder((String)null);
-                        if (binder == null) {
-                            SdLogManager.INSTANCE.logHuaweiHealth("绑定基础服务失败");
-                        }
-                        Log.i("HiHealthKit", "binder: " + binder);
-                        mApiAidl = com.huawei.hihealth.IHiHealthKit.Stub.asInterface(binder);
-                        Log.i("HiHealthKit", "mApiAidl: " + mApiAidl);
-                        if (mApiAidl == null) {
-                            SdLogManager.INSTANCE.logHuaweiHealth("绑定基础服务成功，但无法获取指定业务 mApiAidl");
-                            Log.w("HiHealthKit", "onServiceConnected error !");
-                        }
-                        synchronized(bindLock) {
-                            bindLock.notifyAll();
-                        }
-                    } catch (RemoteException e) {
-                        e.printStackTrace();
+        int uid = Binder.getCallingUid();
+        String packageName = sContext.getPackageManager().getNameForUid(uid);
+        Log.d("HiHealthKit", "getCallingUid uid:" + uid + " packageName1:" + packageName);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                IBinder binder = null;
+                try {
+                    binder = Stub.asInterface(service).getServiceBinder((String) null);
+                    if (binder == null) {
+                        SdLogManager.INSTANCE.logHuaweiHealth("绑定基础服务失败");
                     }
+                    Log.i("HiHealthKit", "binder: " + binder);
+                    mApiAidl = com.huawei.hihealth.IHiHealthKit.Stub.asInterface(binder);
+                    Log.i("HiHealthKit", "mApiAidl: " + mApiAidl);
+                    if (mApiAidl == null) {
+                        SdLogManager.INSTANCE.logHuaweiHealth("绑定基础服务成功，但无法获取指定业务 mApiAidl");
+                        Log.w("HiHealthKit", "onServiceConnected error !");
+                    }
+                    synchronized (bindLock) {
+                        bindLock.notifyAll();
+                    }
+                    EventBusUtil.postEvent(new HuaweiHealthConnectSuccessEvent());
+                } catch (Exception e) {
+                    Log.i("MCJ", "SumianHiHealthKitApi exception: " + e.getMessage());
+                    SdLogManager.INSTANCE.logHuaweiHealth("SumianHiHealthKitApi exception: " + e.getMessage());
+                    EventBusUtil.postEvent(new HuaweiHealthExceptionEvent());
+                    e.printStackTrace();
                 }
-            }).start();
+            }
+        }).start();
     }
 
     public void onServiceDisconnected(ComponentName name) {
