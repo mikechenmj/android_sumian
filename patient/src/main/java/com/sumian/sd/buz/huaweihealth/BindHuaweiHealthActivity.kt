@@ -3,10 +3,8 @@ package com.sumian.sd.buz.huaweihealth
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.util.Log
 import android.widget.ImageView
 import androidx.preference.PreferenceManager
-import com.google.gson.Gson
 import com.sumian.common.base.BaseActivity
 import com.sumian.common.helper.ToastHelper
 import com.sumian.common.network.response.ErrorResponse
@@ -77,17 +75,15 @@ class BindHuaweiHealthActivity : BaseActivity() {
         call.enqueue(object : BaseSdResponseCallback<HuaweiHealthConfigInfo>() {
             override fun onSuccess(response: HuaweiHealthConfigInfo?) {
                 SdLogManager.logHuaweiHealth("getHuaweiHealthConfigInfo: $response")
-                Log.i("MCJ", "getHuaweiHealthConfigInfo: $response")
                 if (response == null) {
                     ToastHelper.show("未获取到配置信息")
                     return
                 }
                 refreshUpdateTime(mSharedPreferences.getLong(LATEST_UPDATE_TIME, 0))
                 var localMaxDateDuration = mSharedPreferences.getInt(MAX_DATE_DURATION, 0)
+                SdLogManager.logHuaweiHealth("localMaxDateDuration: $localMaxDateDuration")
                 var startTime = 0L
                 var endTime = 0L
-                Log.i("MCJ", "localMaxDateDuration: $localMaxDateDuration")
-                Log.i("MCJ", "response.maxDateDuration: ${response.maxDateDuration}")
                 if (localMaxDateDuration != response.maxDateDuration) {
                     mSharedPreferences.edit().putInt(MAX_DATE_DURATION, response.maxDateDuration).commit()
                     startTime = System.currentTimeMillis() - response.maxDateDuration * ONE_DAY_MILLS
@@ -114,7 +110,6 @@ class BindHuaweiHealthActivity : BaseActivity() {
         addCall(call)
         call.enqueue(object : BaseSdResponseCallback<HuaweiHealthDataResponse>() {
             override fun onSuccess(response: HuaweiHealthDataResponse?) {
-                Log.i("MCJ", "updateHuaweiHealthData.onSuccess: $response")
                 SdLogManager.logHuaweiHealth("updateHuaweiHealthData.onSuccess: $response")
                 if (response == null) {
                     ToastHelper.show("未获取到更新日期")
@@ -139,7 +134,6 @@ class BindHuaweiHealthActivity : BaseActivity() {
         super.onResume()
         ripple_view.startAnimation()
         getHuaweiHealthConfigInfo()
-//        queryHuaweiHealthData("2019-11-11","2019-11-30")
     }
 
     override fun onPause() {
@@ -173,19 +167,24 @@ class BindHuaweiHealthActivity : BaseActivity() {
 
     private fun queryHuaweiHealthData(start: String, end: String) {
         SdLogManager.logHuaweiHealth("queryHuaweiHealthData: $start $end")
-        Log.i("MCJ", "start: $start")
-        Log.i("MCJ", "end: $end")
         HuaweiHealthUtil.queryHuaweiHealthData(this, start, end) { code, data ->
             updateHuaweiHealthData(data)
-            Log.i("MCJ", "Gson().toJson(it): ${Gson().toJson(data)}")
         }
     }
 
     private fun updateHealthUi(response: HuaweiHealthDataResponse) {
         var start = TimeUtil.formatDate("yyyy-MM-dd", System.currentTimeMillis() - ONE_DAY_MILLS * mMaxDate)
         var end = TimeUtil.formatDate("yyyy-MM-dd", System.currentTimeMillis())
-        Log.i("MCJ", "updateHealthUi: $start $end")
         HuaweiHealthUtil.queryHuaweiHealthData(this, start, end) { code, data ->
+            SdLogManager.logHuaweiHealth("updateHealthUi: " +
+                    "data.stepSum.size: ${data.stepSum.size}" +
+                    "data.distanceSum.size: ${data.distanceSum.size}" +
+                    "data.caloriesSum.size: ${data.caloriesSum.size}" +
+                    "data.coreSleeps.size: ${data.coreSleeps.size}" +
+                    "data.birthday: ${data.birthday}" +
+                    "data.gender: ${data.gender}" +
+                    "data.height: ${data.height}" +
+                    "data.weight: ${data.weight}")
             runOnUiThread {
                 iv_step_sum_state.updateResult(data.stepSum.size > 0)
                 iv_distance_state.updateResult(data.distanceSum.size > 0)
