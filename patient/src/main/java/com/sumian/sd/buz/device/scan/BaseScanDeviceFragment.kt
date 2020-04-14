@@ -7,6 +7,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import androidx.core.app.ActivityCompat
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.base.BaseFragment
 import com.sumian.common.widget.dialog.SumianDialog
@@ -15,6 +16,7 @@ import com.sumian.device.manager.DeviceManager
 import com.sumian.sd.R
 import com.sumian.sd.buz.devicemanager.BlueDevice
 import com.sumian.sd.common.log.LogManager
+import com.sumian.sd.common.log.SdLogManager
 import com.sumian.sd.common.utils.LocationManagerUtil
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
@@ -61,6 +63,7 @@ abstract class BaseScanDeviceFragment : BaseFragment() {
     }
 
     protected fun startRequestBleEnable() {
+        SdLogManager.logPermission("startRequestBleEnable")
         startActivityForResult(Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), REQUEST_CODE_FUNCTION_BT)
     }
 
@@ -114,6 +117,14 @@ abstract class BaseScanDeviceFragment : BaseFragment() {
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
+        if (activity != null) {
+            var findLocation = ActivityCompat.checkSelfPermission(activity!!, Manifest.permission.ACCESS_FINE_LOCATION)
+            var coarseLocation = ActivityCompat.checkSelfPermission(activity!!, Manifest.permission.ACCESS_COARSE_LOCATION)
+            var backgroundLocation = ActivityCompat.checkSelfPermission(activity!!, Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+            var externalStorage = ActivityCompat.checkSelfPermission(activity!!, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            SdLogManager.logPermission("checkScanPermission: findLocation: $findLocation coarseLocation: $coarseLocation " +
+                    "backgroundLocation: $backgroundLocation externalStorage: $externalStorage")
+        }
     }
 
     private val mBluetoothStateChangeListener =

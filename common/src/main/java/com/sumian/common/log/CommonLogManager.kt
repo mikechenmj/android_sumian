@@ -77,7 +77,7 @@ abstract class CommonLogManager : ILog {
         const val ACTION_TYPE_TOKEN = "token"
         const val ACTION_TYPE_HUAWEI_HEALTH = "huawei_health"
         const val ACTION_TYPE_OTHERS = "others"
-
+        const val ACTION_TYPE_PERMISSION = "permission"
         const val PAGE_OPERATION = ""
     }
 
@@ -158,6 +158,13 @@ abstract class CommonLogManager : ILog {
     fun logHuaweiHealth(s: String) {
         log(mapOf(
                 KEY_ACTION_TYPE to ACTION_TYPE_HUAWEI_HEALTH,
+                KEY_REMARK to s
+        ))
+    }
+
+    fun logPermission(s: String) {
+        log(mapOf(
+                KEY_ACTION_TYPE to ACTION_TYPE_PERMISSION,
                 KEY_REMARK to s
         ))
     }
