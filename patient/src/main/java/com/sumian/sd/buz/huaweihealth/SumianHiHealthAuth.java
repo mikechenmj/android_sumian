@@ -3,7 +3,6 @@ package com.sumian.sd.buz.huaweihealth;
 
 import android.content.Context;
 import android.util.Log;
-import com.huawei.hihealth.HiHealthKitApi;
 import com.huawei.hihealthkit.auth.IAuthorizationListener;
 
 public class SumianHiHealthAuth {
@@ -19,7 +18,7 @@ public class SumianHiHealthAuth {
         } else if (context == null) {
             listener.onResult(4, "context is null");
         } else {
-            HiHealthKitApi.getInstance(context).requestAuthorization(userAllowTypesToWrite, userAllowTypesToRead, listener);
+            SumianHiHealthKitApi.getInstance(context).requestAuthorization(userAllowTypesToWrite, userAllowTypesToRead, listener);
         }
     }
 
@@ -30,7 +29,7 @@ public class SumianHiHealthAuth {
         } else if (context == null) {
             listener.onResult(4, "context is null");
         } else {
-            HiHealthKitApi.getInstance(context).getDataAuthStatus(writeType, listener);
+            SumianHiHealthKitApi.getInstance(context).getDataAuthStatus(writeType, listener);
         }
     }
 }
