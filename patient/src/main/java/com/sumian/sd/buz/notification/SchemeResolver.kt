@@ -113,7 +113,7 @@ object SchemeResolver : ISchemeResolver {
     fun resolveH5TipScheme(context: Context, uri: Uri): Intent {
         val userId = uri.getQueryParameter("user_id")
         val orgId = uri.getQueryParameter("org_id")
-        var url = BuildConfig.CHANNEL_H5_URL + "sleepDiary" + "?user_id=" + userId + "&org_id=" + orgId
+        var url = BuildConfig.CHANNEL_H5_URL + "tips" + "?user_id=" + userId + "&org_id=" + orgId
         var intent = MainActivity.getLaunchIntentForH5(url)
         CommonLog.log("resolveH5TipScheme url: $url intent: $intent")
         return intent
