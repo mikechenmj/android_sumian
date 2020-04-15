@@ -64,7 +64,6 @@ class MonitorDataVpFragment : BaseFragment() {
         initDateBar()
         initViewPager()
         SdLogManager.logHuaweiHealth("Build.MANUFACTURER.toLowerCase(): ${Build.MANUFACTURER.toLowerCase()}")
-        Log.i("MCJ","Build.MANUFACTURER.toLowerCase(): ${Build.MANUFACTURER.toLowerCase()}")
         iv_bind_huawei_health.isVisible = Build.MANUFACTURER.toLowerCase().contains("huawei")
         iv_bind_huawei_health.setOnClickListener {
             if (this.activity != null) {

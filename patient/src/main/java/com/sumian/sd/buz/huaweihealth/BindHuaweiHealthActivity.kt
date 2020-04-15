@@ -62,7 +62,6 @@ class BindHuaweiHealthActivity : BaseActivity() {
             if (HuaweiHealthUtil.isHuaweiHealthInstalled(this)) {
                 if (HuaweiHealthUtil.isHuaweiHealthVersionSupport(this)) {
                     HuaweiHealthUtil.requestAuthorization(this) { code, message ->
-                        Log.i("MCJ", "code: $code message: $code")
                         SdLogManager.logHuaweiHealth("requestAuthorization: code: $code")
                         if (code != 0) {
                             runOnUiThread {
@@ -92,7 +91,6 @@ class BindHuaweiHealthActivity : BaseActivity() {
         addCall(call)
         call.enqueue(object : BaseSdResponseCallback<HuaweiHealthConfigInfo>() {
             override fun onSuccess(response: HuaweiHealthConfigInfo?) {
-                Log.i("MCJ", "getHuaweiHealthConfigInfo: $response")
                 SdLogManager.logHuaweiHealth("getHuaweiHealthConfigInfo: $response")
                 if (response == null) {
                     ToastHelper.show("未获取到配置信息")
@@ -129,7 +127,6 @@ class BindHuaweiHealthActivity : BaseActivity() {
         addCall(call)
         call.enqueue(object : BaseSdResponseCallback<HuaweiHealthDataResponse>() {
             override fun onSuccess(response: HuaweiHealthDataResponse?) {
-                Log.i("MCJ", "updateHuaweiHealthData.onSuccess: $response")
                 SdLogManager.logHuaweiHealth("updateHuaweiHealthData.onSuccess: $response")
                 if (response == null) {
                     ToastHelper.show("未获取到更新日期")
@@ -142,7 +139,6 @@ class BindHuaweiHealthActivity : BaseActivity() {
             }
 
             override fun onFailure(errorResponse: ErrorResponse) {
-                Log.i("MCJ", "updateHuaweiHealthData.onFailure: $errorResponse")
                 SdLogManager.logHuaweiHealth("updateHuaweiHealthData.onFailure: $errorResponse")
                 ToastHelper.show("网络错误：${errorResponse.message}")
             }
