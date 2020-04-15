@@ -200,14 +200,6 @@ class MainActivity : BaseActivity() {
                 nav_tab.isVisible = false
             }
         }
-
-    }
-
-    override fun onNewIntent(intent: Intent?) {
-        var url = intent?.getStringExtra(KEY_H5_URL)
-        if (url != null && url!!.isNotEmpty()) {
-            loadRequestUrl(url)
-        }
     }
 
     override fun initBundle(bundle: Bundle) {
@@ -216,6 +208,10 @@ class MainActivity : BaseActivity() {
             KefuManager.launchKefuActivity(this)
         } else {
             switchTabByBundle(bundle)
+            var url = bundle.getString(KEY_H5_URL)
+            if (url != null && url!!.isNotEmpty()) {
+                loadRequestUrl(url)
+            }
         }
     }
 
