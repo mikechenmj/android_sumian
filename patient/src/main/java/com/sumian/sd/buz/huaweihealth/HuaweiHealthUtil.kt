@@ -1,18 +1,21 @@
 package com.sumian.sd.buz.huaweihealth
 
 import android.content.Context
+import android.util.Log
+import androidx.core.text.isDigitsOnly
 
 import com.huawei.hihealth.error.HiHealthError
 import com.huawei.hihealthkit.HiHealthDataQuery
 import com.huawei.hihealthkit.HiHealthDataQueryOption
+import com.huawei.hihealthkit.auth.HiHealthAuth
 import com.huawei.hihealthkit.auth.IAuthorizationListener
 import com.huawei.hihealthkit.data.HiHealthData
 import com.huawei.hihealthkit.data.HiHealthPointData
 import com.huawei.hihealthkit.data.HiHealthSetData
+import com.huawei.hihealthkit.data.store.HiHealthDataStore
 import com.huawei.hihealthkit.data.store.HiRealTimeListener
 import com.huawei.hihealthkit.data.type.HiHealthPointType
 import com.huawei.hihealthkit.data.type.HiHealthSetType
-import com.sumian.sd.R
 import com.sumian.sd.common.log.SdLogManager
 import com.sumian.sd.common.utils.TimeUtil
 
@@ -24,7 +27,7 @@ import kotlin.collections.ArrayList
 
 object HuaweiHealthUtil {
 
-    var isHuaweiHealthConnectSuccess: Boolean = false
+    private const val HUAWEI_HEALTH_SUPPORT_VERSION = "9.0.8.511"
 
     fun queryHuaweiHealthData(context: Context, start: String, end: String, onResult: (Int, HuaweiHealthData) -> Unit) {
         Thread {
@@ -65,7 +68,7 @@ object HuaweiHealthUtil {
                 HiHealthSetType.DATA_SET_CORE_SLEEP,
                 101001, 101002)
         val write = intArrayOf()
-        SumianHiHealthAuth.requestAuthorization(context, write, read) { code, message ->
+        HiHealthAuth.requestAuthorization(context, write, read) { code, message ->
             onResult(code, message.toString())
         }
     }
@@ -186,7 +189,7 @@ object HuaweiHealthUtil {
 
     fun getDataAuthStatus(context: Context) {
         val write = HiHealthSetType.DATA_SET_BLOOD_SUGAR
-        SumianHiHealthAuth.getDataAuthStatus(context, write,
+        HiHealthAuth.getDataAuthStatus(context, write,
                 IAuthorizationListener { i, o ->
                     if (i != 0) {
                         return@IAuthorizationListener
@@ -203,7 +206,7 @@ object HuaweiHealthUtil {
     }
 
     fun queryGender(context: Context, onResult: (Int, Int) -> Unit) {
-        SumianHiHealthDataStore.getGender(context) { code, gender ->
+        HiHealthDataStore.getGender(context) { code, gender ->
             if (code == HiHealthError.SUCCESS) {
                 onResult(code, gender as Int)
             } else {
@@ -213,7 +216,7 @@ object HuaweiHealthUtil {
     }
 
     fun queryBirthday(context: Context, onResult: (Int, String) -> Unit) {
-        SumianHiHealthDataStore.getBirthday(context) { code, birthday ->
+        HiHealthDataStore.getBirthday(context) { code, birthday ->
             if (code == HiHealthError.SUCCESS) {
                 onResult(code, birthday.toString())
             } else {
@@ -223,7 +226,7 @@ object HuaweiHealthUtil {
     }
 
     fun queryHeight(context: Context, onResult: (Int, Float) -> Unit) {
-        SumianHiHealthDataStore.getHeight(context) { code, height ->
+        HiHealthDataStore.getHeight(context) { code, height ->
             if (code == HiHealthError.SUCCESS) {
                 onResult(code, height.toString().toFloat())
             } else {
@@ -233,7 +236,7 @@ object HuaweiHealthUtil {
     }
 
     fun queryWeight(context: Context, onResult: (Int, Float) -> Unit) {
-        SumianHiHealthDataStore.getWeight(context) { code, weight ->
+        HiHealthDataStore.getWeight(context) { code, weight ->
             if (code == HiHealthError.SUCCESS) {
                 onResult(code, weight.toString().toFloat())
             } else {
@@ -246,7 +249,7 @@ object HuaweiHealthUtil {
         val timeout = 0
         val hiHealthDataQuery = HiHealthDataQuery(type,
                 start, end, HiHealthDataQueryOption())
-        SumianHiHealthDataStore.execQuery(context, hiHealthDataQuery, timeout) { i, data ->
+        HiHealthDataStore.execQuery(context, hiHealthDataQuery, timeout) { i, data ->
             if (data != null) {
                 onResult(i, data as ArrayList<HiHealthData>)
             } else {
@@ -263,14 +266,14 @@ object HuaweiHealthUtil {
         val type = HiHealthSetType.DATA_SET_CORE_SLEEP
         val hiHealthDataQuery = HiHealthDataQuery(type,
                 startTime, endTime, HiHealthDataQueryOption())
-        SumianHiHealthDataStore.getCount(context, hiHealthDataQuery) { i, data ->
+        HiHealthDataStore.getCount(context, hiHealthDataQuery) { i, data ->
             if (data != null) {
             }
         }
     }
 
     fun startReadingHeartRate(context: Context) {
-        SumianHiHealthDataStore.startReadingHeartRate(context, object : HiRealTimeListener {
+        HiHealthDataStore.startReadingHeartRate(context, object : HiRealTimeListener {
             override fun onResult(state: Int) {
                 if (state == HiHealthError.SUCCESS) {
                 } else {
@@ -295,7 +298,7 @@ object HuaweiHealthUtil {
     }
 
     fun startReadingRri(context: Context) {
-        SumianHiHealthDataStore.startReadingRri(context, object : HiRealTimeListener {
+        HiHealthDataStore.startReadingRri(context, object : HiRealTimeListener {
             override fun onResult(state: Int) {
                 if (state == HiHealthError.SUCCESS) {
                 } else {
@@ -312,14 +315,45 @@ object HuaweiHealthUtil {
         })
     }
 
+    fun isHuaweiHealthVersionSupport(context: Context): Boolean {
+        try {
+            var isSupport = true
+            var info = context.packageManager.getPackageInfo("com.huawei.health", 0)
+            var versionName = info.versionName
+            SdLogManager.logHuaweiHealth("HuaweiHealthVersion: $versionName")
+            var versionNames = versionName.split(".")
+            var supportVersionNames = HUAWEI_HEALTH_SUPPORT_VERSION.split(".")
+            for ((index, name) in versionNames.withIndex()) {
+                if (!name.isDigitsOnly()) {
+                    isSupport = false
+                    break
+                }
+                if (name.toInt() > supportVersionNames[index].toInt()) {
+                    isSupport = true
+                    break
+                } else if (name.toInt() < supportVersionNames[index].toInt()) {
+                    isSupport = false
+                    break
+                }
+            }
+            SdLogManager.logHuaweiHealth("isHuaweiHealthVersionSupport: $isSupport")
+            return isSupport
+        } catch (e: Exception) {
+            SdLogManager.logHuaweiHealth("isHuaweiHealthVersionSupport error: ${e.message}")
+            e.printStackTrace()
+        }
+        return false
+    }
+
     fun isHuaweiHealthInstalled(context: Context): Boolean {
         try {
             var info = context.packageManager.getApplicationInfo("com.huawei.health", 0)
+            SdLogManager.logHuaweiHealth("isHuaweiHealthInstalled: ${info.enabled}")
             return info.enabled
         } catch (e: Exception) {
+            SdLogManager.logHuaweiHealth("isHuaweiHealthInstalled error: ${e.message}")
             e.printStackTrace()
         }
-        SdLogManager.logHuaweiHealth(context.getString(R.string.bind_huawei_health_dialog_content))
         return false
     }
 }

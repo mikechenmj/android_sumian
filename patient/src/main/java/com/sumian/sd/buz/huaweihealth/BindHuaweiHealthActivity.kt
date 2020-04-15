@@ -24,7 +24,6 @@ import org.greenrobot.eventbus.Subscribe
 
 class BindHuaweiHealthActivity : BaseActivity() {
 
-    private var mIsHuaweiHealthInstalled: Boolean = false
     private var mMaxDate: Int = 0
     private lateinit var mSharedPreferences: SharedPreferences
 
@@ -56,17 +55,12 @@ class BindHuaweiHealthActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setTitle(R.string.bind_huawei_health_title)
-        EventBusUtil.register(this)
-        mIsHuaweiHealthInstalled = HuaweiHealthUtil.isHuaweiHealthInstalled(this)
-        SdLogManager.logHuaweiHealth("onCreate mIsHuaweiHealthInstalled: $mIsHuaweiHealthInstalled")
-        SdLogManager.logHuaweiHealth("onCreate isHuaweiHealthConnectSuccess: ${HuaweiHealthUtil.isHuaweiHealthConnectSuccess}")
-
         ll_permission_explain.setOnClickListener {
             showPermissionExplain()
         }
         bt_bind.setOnClickListener {
-            if (mIsHuaweiHealthInstalled) {
-                if (HuaweiHealthUtil.isHuaweiHealthConnectSuccess) {
+            if (HuaweiHealthUtil.isHuaweiHealthInstalled(this)) {
+                if (HuaweiHealthUtil.isHuaweiHealthVersionSupport(this)) {
                     HuaweiHealthUtil.requestAuthorization(this) { code, message ->
                         Log.i("MCJ", "code: $code message: $code")
                         SdLogManager.logHuaweiHealth("requestAuthorization: code: $code")
@@ -91,26 +85,6 @@ class BindHuaweiHealthActivity : BaseActivity() {
             showPermissionExplain()
             mSharedPreferences.edit().putBoolean(HAD_SHOW_PERMISSION_EXPLAIN, true).commit()
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        EventBusUtil.unregister(this)
-    }
-
-    @Subscribe
-    fun onHuaweiHealthException(event: HuaweiHealthExceptionEvent) {
-        HuaweiHealthUtil.isHuaweiHealthConnectSuccess = false
-        SdLogManager.logHuaweiHealth("onHuaweiHealthException")
-        Log.i("MCJ", "onHuaweiHealthException")
-    }
-
-    @Subscribe
-    fun onHuaweiHealthConnectSuccess(event: HuaweiHealthConnectSuccessEvent) {
-        HuaweiHealthUtil.isHuaweiHealthConnectSuccess = true
-        SdLogManager.logHuaweiHealth("onHuaweiHealthConnectSuccess")
-        Log.i("MCJ", "onHuaweiHealthConnectSuccess")
-        getHuaweiHealthConfigInfo()
     }
 
     private fun getHuaweiHealthConfigInfo() {
@@ -155,7 +129,7 @@ class BindHuaweiHealthActivity : BaseActivity() {
         addCall(call)
         call.enqueue(object : BaseSdResponseCallback<HuaweiHealthDataResponse>() {
             override fun onSuccess(response: HuaweiHealthDataResponse?) {
-                Log.i("MCJ","updateHuaweiHealthData.onSuccess: $response")
+                Log.i("MCJ", "updateHuaweiHealthData.onSuccess: $response")
                 SdLogManager.logHuaweiHealth("updateHuaweiHealthData.onSuccess: $response")
                 if (response == null) {
                     ToastHelper.show("未获取到更新日期")
@@ -168,7 +142,7 @@ class BindHuaweiHealthActivity : BaseActivity() {
             }
 
             override fun onFailure(errorResponse: ErrorResponse) {
-                Log.i("MCJ","updateHuaweiHealthData.onFailure: $errorResponse")
+                Log.i("MCJ", "updateHuaweiHealthData.onFailure: $errorResponse")
                 SdLogManager.logHuaweiHealth("updateHuaweiHealthData.onFailure: $errorResponse")
                 ToastHelper.show("网络错误：${errorResponse.message}")
             }
@@ -179,12 +153,7 @@ class BindHuaweiHealthActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
-        Log.i("MCJ", "isHuaweiHealthConnectSuccess: ${HuaweiHealthUtil.isHuaweiHealthConnectSuccess}")
-        SdLogManager.logHuaweiHealth("onResume isHuaweiHealthConnectSuccess: ${HuaweiHealthUtil.isHuaweiHealthConnectSuccess}")
-        SdLogManager.logHuaweiHealth("onResume mIsHuaweiHealthInstalled: $mIsHuaweiHealthInstalled")
-        mIsHuaweiHealthInstalled = HuaweiHealthUtil.isHuaweiHealthInstalled(this)
-        testHuaweiHealthService()
-        if (HuaweiHealthUtil.isHuaweiHealthConnectSuccess) {
+        if (HuaweiHealthUtil.isHuaweiHealthInstalled(this) && HuaweiHealthUtil.isHuaweiHealthVersionSupport(this)) {
             getHuaweiHealthConfigInfo()
         }
         ripple_view.startAnimation()
@@ -193,10 +162,6 @@ class BindHuaweiHealthActivity : BaseActivity() {
     override fun onPause() {
         super.onPause()
         ripple_view.stopAnimation()
-    }
-
-    private fun testHuaweiHealthService() {
-        HuaweiHealthUtil.queryBirthday(this, { i, s -> })
     }
 
     private fun refreshUpdateTime(latestTime: Long) {
@@ -236,47 +201,40 @@ class BindHuaweiHealthActivity : BaseActivity() {
 
     private fun queryHuaweiHealthData(start: String, end: String) {
         SdLogManager.logHuaweiHealth("queryHuaweiHealthData: $start $end")
-        Log.i("MCJ","queryHuaweiHealthData: $start $end")
-        if (mIsHuaweiHealthInstalled) {
-            HuaweiHealthUtil.queryHuaweiHealthData(this, start, end) { code, data ->
-                updateHuaweiHealthData(data)
-            }
+        HuaweiHealthUtil.queryHuaweiHealthData(this, start, end) { code, data ->
+            updateHuaweiHealthData(data)
         }
     }
 
     private fun updateHealthUi(response: HuaweiHealthDataResponse) {
         var start = TimeUtil.formatDate("yyyy-MM-dd", System.currentTimeMillis() - ONE_DAY_MILLS * mMaxDate)
         var end = TimeUtil.formatDate("yyyy-MM-dd", System.currentTimeMillis())
-        if (mIsHuaweiHealthInstalled) {
-            HuaweiHealthUtil.queryHuaweiHealthData(this, start, end) { code, data ->
-                SdLogManager.logHuaweiHealth("updateHealthUi: " +
-                        "data.stepSum.size: ${data.stepSum.size}" +
-                        "data.distanceSum.size: ${data.distanceSum.size}" +
-                        "data.caloriesSum.size: ${data.caloriesSum.size}" +
-                        "data.coreSleeps.size: ${data.coreSleeps.size}" +
-                        "data.birthday: ${data.birthday}" +
-                        "data.gender: ${data.gender}" +
-                        "data.height: ${data.height}" +
-                        "data.weight: ${data.weight}")
-                runOnUiThread {
-                    iv_step_sum_state.updateResult(data.stepSum.size > 0)
-                    iv_distance_state.updateResult(data.distanceSum.size > 0)
-                    iv_calories_state.updateResult(data.caloriesSum.size > 0)
-                    iv_sleep_state.updateResult(data.coreSleeps.size > 0)
-                    iv_personal_info_state.updateResult(data.let { it.birthday.isNotEmpty() && it.gender != 3 })
-                    iv_personal_sign_state.updateResult(data.let { it.height != 0f && it.weight != 0f })
-                    if (data.coreSleeps.size > 0) {
-                        mSharedPreferences.edit().putLong(LATEST_UPDATE_TIME, response.latestTime).commit()
-                        refreshUpdateTime(response.latestTime)
-                    }
+        HuaweiHealthUtil.queryHuaweiHealthData(this, start, end) { code, data ->
+            SdLogManager.logHuaweiHealth("updateHealthUi: " +
+                    "data.stepSum.size: ${data.stepSum.size}" +
+                    "data.distanceSum.size: ${data.distanceSum.size}" +
+                    "data.caloriesSum.size: ${data.caloriesSum.size}" +
+                    "data.coreSleeps.size: ${data.coreSleeps.size}" +
+                    "data.birthday: ${data.birthday}" +
+                    "data.gender: ${data.gender}" +
+                    "data.height: ${data.height}" +
+                    "data.weight: ${data.weight}")
+            runOnUiThread {
+                iv_step_sum_state.updateResult(data.stepSum.size > 0)
+                iv_distance_state.updateResult(data.distanceSum.size > 0)
+                iv_calories_state.updateResult(data.caloriesSum.size > 0)
+                iv_sleep_state.updateResult(data.coreSleeps.size > 0)
+                iv_personal_info_state.updateResult(data.let { it.birthday.isNotEmpty() && it.gender != 3 })
+                iv_personal_sign_state.updateResult(data.let { it.height != 0f && it.weight != 0f })
+                if (data.coreSleeps.size > 0) {
+                    mSharedPreferences.edit().putLong(LATEST_UPDATE_TIME, response.latestTime).commit()
+                    refreshUpdateTime(response.latestTime)
                 }
             }
-        } else {
-            runOnUiThread { refreshUpdateTime(response.latestTime) }
         }
     }
+}
 
-    private fun ImageView.updateResult(result: Boolean) {
-        if (result) setImageResource(R.drawable.ic_tick) else setImageResource(R.drawable.ic_cross)
-    }
+private fun ImageView.updateResult(result: Boolean) {
+    if (result) setImageResource(R.drawable.ic_tick) else setImageResource(R.drawable.ic_cross)
 }

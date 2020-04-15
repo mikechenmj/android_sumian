@@ -1,7 +1,9 @@
 package com.sumian.sd.buz.diary.monitorrecord
 
+import android.os.Build
 import android.os.Handler
 import android.text.format.DateUtils
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
@@ -32,6 +34,7 @@ import com.sumian.sd.buz.diary.sleeprecord.widget.SleepDataDateBar
 import com.sumian.sd.buz.huaweihealth.BindHuaweiHealthActivity
 import com.sumian.sd.buz.report.weeklyreport.CalendarItemSleepReport
 import com.sumian.sd.buz.stat.StatConstants
+import com.sumian.sd.common.log.SdLogManager
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import com.sumian.sd.common.utils.EventBusUtil
 import kotlinx.android.synthetic.main.fragment_monitor_data_vp.*
@@ -60,6 +63,9 @@ class MonitorDataVpFragment : BaseFragment() {
         super.initWidget()
         initDateBar()
         initViewPager()
+        SdLogManager.logHuaweiHealth("Build.MANUFACTURER.toLowerCase(): ${Build.MANUFACTURER.toLowerCase()}")
+        Log.i("MCJ","Build.MANUFACTURER.toLowerCase(): ${Build.MANUFACTURER.toLowerCase()}")
+        iv_bind_huawei_health.isVisible = Build.MANUFACTURER.toLowerCase().contains("huawei")
         iv_bind_huawei_health.setOnClickListener {
             if (this.activity != null) {
                 BindHuaweiHealthActivity.start(this.activity!!)
