@@ -20,7 +20,10 @@ import com.sumian.sd.buz.doctor.bean.H5DoctorServiceShoppingResult
 import com.sumian.sd.buz.homepage.sheet.ShareBottomSheet
 import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.pay.activity.PaymentActivity
+import com.sumian.sd.common.utils.EventBusUtil
 import com.sumian.sd.main.MainActivity
+import com.sumian.sd.main.MainActivity.Companion.TAB_1
+import com.sumian.sd.main.event.ChangeMainTabEvent
 import com.tencent.smtt.sdk.WebView
 import com.umeng.socialize.UMShareListener
 import com.umeng.socialize.bean.SHARE_MEDIA
@@ -61,11 +64,20 @@ class ChannelH5Fragment : BaseWebViewFragment() {
         }
     }
 
+    override fun onGoToPage(page: String, rawData: String) {
+        super.onGoToPage(page, rawData)
+        if (page == "deviceDatas") {
+            EventBusUtil.postStickyEvent(ChangeMainTabEvent(TAB_1))
+        }
+    }
+
     private fun isH5HomeUrl(url: String?): Boolean {
         if (url === null) {
             return true
         }
-        if (url == "https://ch-test.sumian.com/ks-index") {
+        if (url == "https://ch-test.sumian.com/ks-index"
+                ||url == "https://ch-dev.sumian.com/ks-index"
+                ||url == "https://ch.sumian.com/ks-index") {
             return true
         }
         var index = url.indexOfFirst { c ->
