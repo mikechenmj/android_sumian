@@ -378,6 +378,7 @@ object AppManager {
             SdLogManager.logToken("getAccountViewModel().userInfo?.im_id: ${getAccountViewModel().userInfo?.im_id}")
             SdLogManager.logToken("clearToken in onMainActivityCreate")
             getAccountViewModel().clearToken()
+            return
         }
         initKefu(mApplication)
         AppNotificationManager.uploadPushId()
