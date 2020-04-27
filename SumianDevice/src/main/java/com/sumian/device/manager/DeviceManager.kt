@@ -46,6 +46,9 @@ import retrofit2.Response
  */
 @Suppress("MemberVisibilityCanBePrivate")
 object DeviceManager {
+    private const val CONNECT_RETRY_COUNT: Int = 3
+    private var mConnectRetryCount: Int = 0
+    private var mForceScan: Boolean = false
     // monitor
     const val EVENT_RECEIVE_MONITOR_VERSION_INFO = "ReceiveMonitorVersionInfo"
     const val EVENT_RECEIVE_MONITOR_SN = "ReceiveMonitorSn"
@@ -205,7 +208,7 @@ object DeviceManager {
                 .enableLog(true)
                 .setReConnectCount(3, 5000)
                 .setSplitWriteNum(20)
-                .setConnectOverTime(20000)
+                .setConnectOverTime(10000)
                 .setOperateTimeout(5000)
 
         var scanRuleConfig = BleScanRuleConfig.Builder()
@@ -342,6 +345,7 @@ object DeviceManager {
             return
         }
         disconnect()
+        mConnectRetryCount = 0
         if (scanFirst) {
             scanAndConnect(address, callback)
         } else {
@@ -354,8 +358,8 @@ object DeviceManager {
         changeMonitorConnectStatus(DeviceConnectStatus.CONNECTING)
 
         var device = BleManager.getInstance().bluetoothAdapter?.getRemoteDevice(address)
-
-        if (device != null && device.name != null && !device.name.isEmpty()) {
+        LogManager.bleConnectLog("scanAndConnect remote device: ${device?.name} mForceScan: $mForceScan mConnectRetryCount: $mConnectRetryCount")
+        if (!mForceScan && device != null && device.name != null && device.name.isNotEmpty()) {
             connectWithoutScan(address, callback)
             return
         }
@@ -377,7 +381,7 @@ object DeviceManager {
             override fun onStop() {
                 if (!mFound) {
                     changeMonitorConnectStatus(DeviceConnectStatus.DISCONNECTED)
-                    callback?.onFail(1, "设备连接失败")
+                    callback?.onFail(1, "设备连接失败，未扫描到指定设备")
                 }
             }
         })
@@ -416,6 +420,7 @@ object DeviceManager {
                     gatt: BluetoothGatt?,
                     status: Int
             ) {
+                mForceScan = false
                 if (!SPUtils.getInstance().getString(SP_KEY_BOUND_DEVICE_ADDRESS).isNullOrEmpty()) {
                     mBleDevice = bleDevice
                     mGatt = gatt
@@ -440,9 +445,19 @@ object DeviceManager {
                     bleDevice: BleDevice?,
                     exception: BleException?
             ) {
-                changeMonitorConnectStatus(DeviceConnectStatus.DISCONNECTED)
-                callback?.onFail(1, "连接失败,请确保设备在手机附近并重试")
-                LogManager.bleConnectLog(exception?.description ?: "设备连接失败")
+                mForceScan = true
+                mConnectRetryCount += 1
+                if (mConnectRetryCount > CONNECT_RETRY_COUNT) {
+                    mConnectRetryCount = 0
+                    changeMonitorConnectStatus(DeviceConnectStatus.DISCONNECTED)
+                } else {
+                    LogManager.bleConnectLog("${bleDevice?.name}连接失败并重试")
+                    scanAndConnect(address, callback)
+                    callback?.onFail(1, "连接失败,请确保设备在手机附近并重试")
+                }
+                LogManager.bleConnectLog("${bleDevice?.name}连接失败 $mConnectRetryCount 次")
+                LogManager.bleConnectLog(exception?.description
+                        ?: "设备连接失败")
             }
         })
 
