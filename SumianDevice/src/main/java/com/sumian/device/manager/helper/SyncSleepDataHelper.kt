@@ -13,6 +13,7 @@ import com.sumian.device.manager.upload.SleepDataUploadManager
 import com.sumian.device.util.BleCmdUtil
 import com.sumian.device.util.LogManager
 import java.io.File
+import java.lang.Exception
 
 /**
  * @author : Zhan Xuzhao
@@ -308,7 +309,21 @@ object SyncSleepDataHelper {
         if (index == mTransData.size - 1) {
             bleFlowLog("SYNC_TRANSPARENT receiveSleepData end: $cmd")
         }
-        log("收到透传数据：cmd: $cmd， index：$index, currentPackage: $mCurrentPackageProgress / $mPackageTotalDataCount,  total: $mProgress / $mTotalDataCount")
+        if (index > mTransData.size - 1) {
+            log("收到数组越界透传数据 cmd: $cmd index: $index")
+        }
+        try {
+            if (mPackageTotalDataCount > 0 && mCurrentPackageProgress > 0) {
+                for (i in 1..10) {
+                    if (mCurrentPackageProgress === mPackageTotalDataCount / i) {
+                        log("收到透传数据：cmd: $cmd， index：$index, currentPackage: $mCurrentPackageProgress / $mPackageTotalDataCount,  total: $mProgress / $mTotalDataCount")
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            log("${e.message} 收到透传数据：cmd: $cmd， index：$index, currentPackage: $mCurrentPackageProgress / $mPackageTotalDataCount,  total: $mProgress / $mTotalDataCount")
+        }
+
         if (mTransData[index] == null) {
             mProgress++
             mCurrentPackageProgress++
@@ -339,7 +354,7 @@ object SyncSleepDataHelper {
             } else {
                 sendNextPayloadTimeoutDelay()
             }
-        }else {
+        } else {
             bleFlowLog("${file.name} saveSleepDataToFile.length <= 0")
             removePayloadTimeoutMessage()
             onSyncFailed()
