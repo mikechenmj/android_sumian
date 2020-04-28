@@ -450,10 +450,10 @@ object DeviceManager {
                 if (mConnectRetryCount > CONNECT_RETRY_COUNT) {
                     mConnectRetryCount = 0
                     changeMonitorConnectStatus(DeviceConnectStatus.DISCONNECTED)
+                    callback?.onFail(1, "连接失败,请确保设备在手机附近并重试")
                 } else {
                     LogManager.bleConnectLog("${bleDevice?.name}连接失败并重试")
                     scanAndConnect(address, callback)
-                    callback?.onFail(1, "连接失败,请确保设备在手机附近并重试")
                 }
                 LogManager.bleConnectLog("${bleDevice?.name}连接失败 $mConnectRetryCount 次")
                 LogManager.bleConnectLog(exception?.description
