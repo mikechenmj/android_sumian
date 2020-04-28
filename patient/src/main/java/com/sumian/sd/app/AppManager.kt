@@ -94,7 +94,7 @@ object AppManager {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
             //注册 aliyun httpDns
             val iHttpDns = HttpDnsEngine().init(App.getAppContext(), BuildConfig.DEBUG, BuildConfig.HTTP_DNS_ACCOUNT_ID, BuildConfig.HTTP_DNS_SECRET_KEY)
-            iHttpDns.setPreHostsList(BuildConfig.BASE_URL, BuildConfig.BASE_H5_URL)
+            iHttpDns.setPreHostsList(BuildConfig.BASE_URL, BuildConfig.CHANNEL_H5_URL)
             return@lazy iHttpDns
         } else {
             null
@@ -321,7 +321,7 @@ object AppManager {
     private fun initWebView(context: Context) {
         val webViewManger = WebViewManger.getInstance()
         webViewManger.registerX5WebView(context)
-        webViewManger.setBaseUrl(BuildConfig.BASE_H5_URL)
+        webViewManger.setBaseUrl(BuildConfig.CHANNEL_H5_URL)
         mHttpDns?.let {
             webViewManger.registerHttpDnsEngine(it)
         }
