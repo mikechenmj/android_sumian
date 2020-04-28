@@ -2,6 +2,7 @@ package com.sumian.sd.buz.upgrade.fragment
 
 import android.bluetooth.BluetoothDevice
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.annotation.StringRes
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -80,6 +81,7 @@ class ScanUpgradeFragment(private var mDeviceType: Int) : BaseScanDeviceFragment
                 upgradeConfirmDialog?.dismiss()
                 activity?.finish()
             }
+            upgradeConfirmDialog.isCancelable = false
             if (activity != null && !mSaveInstance) {
                 upgradeConfirmDialog?.show(activity!!.supportFragmentManager, upgradeConfirmDialog.javaClass.simpleName)
             }
@@ -220,7 +222,6 @@ class ScanUpgradeFragment(private var mDeviceType: Int) : BaseScanDeviceFragment
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mDeviceType = savedInstanceState?.getInt("device_type", mDeviceType) ?: mDeviceType
-        mSaveInstance = true
     }
 
     private fun rescan() {
