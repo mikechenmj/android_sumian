@@ -65,7 +65,9 @@ object BleCommunicationController {
                 errorMsg: String? = null
         ) {
             if (success) {
-                LogManager.log("Ble Data", "${if (isRead) "D" else "A"}: $hexString")
+                if (hexString.length > 3 && hexString.substring(2, 4) != "8f") {
+                    LogManager.log("Ble Data", "${if (isRead) "D" else "A"}: $hexString")
+                }
             } else if (!success) {
                 LogManager.bleFlowLog("$hexString 写入失败, errorMsg: $errorMsg")
             }
@@ -152,7 +154,7 @@ object BleCommunicationController {
                         ThreadManager.postToUIThread({ request(data, cmd, this) }, DeviceManager.WRITE_DATA_INTERVAL)
                         mRetryTimesMap[cmd] = mRetryTimesMap[cmd]!! + 1
                         LogManager.bleRequestStatusLog("同步状态失败且重试第${mRetryTimesMap[cmd]}次")
-                    }else {
+                    } else {
                         callback?.onFail(code, msg)
                     }
                 } else {

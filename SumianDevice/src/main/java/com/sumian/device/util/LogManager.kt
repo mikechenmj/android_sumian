@@ -64,15 +64,7 @@ object LogManager {
     }
 
     fun log(tag: String?, log: String?) {
-        mExecutor.execute {
-            sLogger?.log(tag ?: TAG_DEFAULT, log ?: "")
-        }
-    }
-
-    private val mExecutor: ExecutorService by lazy {
-        ThreadPoolExecutor(2, 5,
-                10L, TimeUnit.SECONDS,
-                LinkedBlockingQueue<Runnable>())
+        sLogger?.log(tag ?: TAG_DEFAULT, log ?: "")
     }
 
     fun setLogger(logger: ILogger) {

@@ -642,7 +642,6 @@ object DeviceManager {
     }
 
     fun postEvent(event: String, data: Any? = null) {
-        LogManager.log(event, data?.toString())
         when (event) {
             EVENT_MONITOR_BATTERY_CHANGE -> {
                 mSumianDevice?.monitorBattery = data as Int
