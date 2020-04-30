@@ -12,6 +12,7 @@ import com.sumian.common.base.BaseShowLoadingView
  */
 class ValidatePhoneNumberContract {
     interface View : BaseShowLoadingView {
+        fun onRequestCaptchaFail(code: Int)
         fun onValidateSuccess()
         fun onValidateFailure()
         fun onRequestCaptchaSuccess()

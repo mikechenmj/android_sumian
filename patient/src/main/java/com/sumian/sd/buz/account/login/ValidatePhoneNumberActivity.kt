@@ -1,10 +1,13 @@
 package com.sumian.sd.buz.account.login
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.statistic.StatUtil
 import com.sumian.sd.R
+import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.stat.StatConstants
 import kotlinx.android.synthetic.main.activity_validate_phone_number.*
 
@@ -21,6 +24,8 @@ class ValidatePhoneNumberActivity : BaseViewModelActivity<ValidatePhoneNumberPre
         const val KEY_LAUNCH_TYPE = "KEY_LAUNCH_TYPE"
         const val LAUNCH_TYPE_BIND_SOCIAL = 1
         const val LAUNCH_TYPE_FORGET_PASSWORD = 2
+
+        private const val RESULT_CODE_IMAGE_CAPTCHA = 1
 
         fun launchForForgetPassword() {
             launch(LAUNCH_TYPE_FORGET_PASSWORD, null)
@@ -91,5 +96,35 @@ class ValidatePhoneNumberActivity : BaseViewModelActivity<ValidatePhoneNumberPre
 
     override fun onRequestCaptchaSuccess() {
         tv_send_captcha.startCountDown()
+    }
+
+    override fun onRequestCaptchaFail(code: Int) {
+        if (code == 4001) {
+            showImageCaptcha()
+        }
+    }
+
+    private fun showImageCaptcha() {
+        val mobile = et_mobile.getValidText()
+        if (mobile == null) {
+            InputCheckUtil.toastPhoneNumberInvalidate()
+            return
+        }
+        ImageCaptchaDialogActivity.startForResult(this, mobile, RESULT_CODE_IMAGE_CAPTCHA)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        AppManager.getOpenLogin().delegateActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                RESULT_CODE_IMAGE_CAPTCHA -> {
+                    if (data == null) {
+                        return
+                    }
+                    onRequestCaptchaSuccess()
+                }
+            }
+        }
     }
 }

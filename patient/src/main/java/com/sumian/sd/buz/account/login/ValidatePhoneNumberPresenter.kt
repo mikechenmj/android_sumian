@@ -22,6 +22,10 @@ class ValidatePhoneNumberPresenter(var view: ValidatePhoneNumberContract.View) :
     fun requestCaptcha(mobile: String) {
         var call : Call<*>? = null
         call = CaptchaHelper.requestCaptcha(mobile, object : CaptchaHelper.RequestCaptchaListener {
+            override fun onFail(code: Int) {
+                view.onRequestCaptchaFail(code)
+            }
+
             override fun onStart() {
                 view.showLoading()
             }
