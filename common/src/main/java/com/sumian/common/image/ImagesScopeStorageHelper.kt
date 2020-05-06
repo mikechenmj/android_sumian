@@ -13,11 +13,17 @@ import androidx.core.app.ActivityCompat
 import com.sumian.common.media.bean.Image
 import java.io.ByteArrayOutputStream
 import java.lang.ref.SoftReference
+import java.util.concurrent.LinkedBlockingQueue
+import java.util.concurrent.ThreadPoolExecutor
+import java.util.concurrent.TimeUnit
 
 object ImagesScopeStorageHelper {
 
     private lateinit var mContext: Application
     private var mHandler: Handler = Handler()
+    private var mExecutor = ThreadPoolExecutor(1, 5,
+            5L, TimeUnit.SECONDS,
+            LinkedBlockingQueue())
 
     private var mImageChangeListeners: MutableList<ImageChangeListener> = mutableListOf()
 
@@ -48,14 +54,14 @@ object ImagesScopeStorageHelper {
         if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             return
         }
-        Thread {
+        mExecutor.execute(Runnable {
             if (images.get() == null) {
                 images = SoftReference(HashMap())
             }
             var data = mContext.contentResolver.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, IMAGE_PROJECTION,
                     null, null, IMAGE_PROJECTION[2] + " DESC")
             if (data == null) {
-                return@Thread
+                return@Runnable
             }
             var imagesMap = images.get() ?: HashMap()
             imagesMap.clear()
@@ -87,7 +93,7 @@ object ImagesScopeStorageHelper {
             for (listener in mImageChangeListeners) {
                 mHandler.post { listener.onChange(imagesMap) }
             }
-        }.start()
+        })
     }
 
     fun registerImageChangeListener(listener: ImageChangeListener) {
