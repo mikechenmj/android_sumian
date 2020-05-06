@@ -95,7 +95,14 @@ class ScanDeviceFragment : BaseScanDeviceFragment() {
 
     override fun initWidget() {
         super.initWidget()
-        iv_bt.setOnClickListener { startRequestBleEnable() }
+        iv_bt.setOnClickListener {
+            if (isForbidPermissionPopup() || shouldShowRequestPermissionRationale()) {
+                showScanPermissionDetail()
+            } else {
+                startRequestBleEnable()
+            }
+        }
+        fl_scan_permission_detail.setOnClickListener { showScanPermissionDetail(false) }
         tv_scan_more.setOnClickListener { startScanWithUi(true) }
         tv_rescan.setOnClickListener { startScanWithUi() }
         recycler_view.layoutManager = LinearLayoutManager(activity!!)
@@ -158,6 +165,7 @@ class ScanDeviceFragment : BaseScanDeviceFragment() {
         vg_device_list.visibility = View.GONE
         iv_device.visibility = View.GONE
         bt_confirm.visibility = View.GONE
+        fl_scan_permission_detail.visibility = View.GONE
     }
 
     private fun setTitles(@StringRes title: Int, @StringRes subTitle: Int) {
@@ -221,6 +229,7 @@ class ScanDeviceFragment : BaseScanDeviceFragment() {
     private fun showEnableBluetoothUI() {
         hideVgs()
         vg_bt_not_enable.visibility = View.VISIBLE
+        fl_scan_permission_detail.visibility = View.VISIBLE
         setTitles(R.string.open_bluetooth, R.string.please_turn_on_bluetooth_adapter)
     }
 

@@ -982,4 +982,5 @@
     <string name="bind_huawei_health_exception_dialog_content">调用运动健康接口出错，请确认是否已安装最新版本的华为运动健康App且正常登陆。</string>
     <string name="huawei_health_app_id">appid=100371911</string>
     <string name="gain_huawei_health_data">获取数据</string>
+    <string name="scan_permission_detail_title">授权操作步骤</string>
 </resources>

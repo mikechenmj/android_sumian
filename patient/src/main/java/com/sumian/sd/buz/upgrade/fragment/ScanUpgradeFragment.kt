@@ -2,7 +2,6 @@ package com.sumian.sd.buz.upgrade.fragment
 
 import android.bluetooth.BluetoothDevice
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.annotation.StringRes
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,7 +21,18 @@ import com.sumian.sd.buz.upgrade.manager.DfuUpgradeManager
 import com.sumian.sd.buz.version.ui.DeviceUpgradeDialogActivity
 import com.sumian.sd.buz.version.ui.DialogManager
 import com.sumian.sd.common.utils.EventBusUtil
+import kotlinx.android.synthetic.main.fragment_scan_device.*
 import kotlinx.android.synthetic.main.fragment_scan_upgrade.*
+import kotlinx.android.synthetic.main.fragment_scan_upgrade.fl_scan_permission_detail
+import kotlinx.android.synthetic.main.fragment_scan_upgrade.iv_bt
+import kotlinx.android.synthetic.main.fragment_scan_upgrade.recycler_view
+import kotlinx.android.synthetic.main.fragment_scan_upgrade.ripple_view
+import kotlinx.android.synthetic.main.fragment_scan_upgrade.tv_rescan
+import kotlinx.android.synthetic.main.fragment_scan_upgrade.tv_sub_title
+import kotlinx.android.synthetic.main.fragment_scan_upgrade.tv_title
+import kotlinx.android.synthetic.main.fragment_scan_upgrade.vg_bt_not_enable
+import kotlinx.android.synthetic.main.fragment_scan_upgrade.vg_device_list
+import kotlinx.android.synthetic.main.fragment_scan_upgrade.vg_scan
 import java.lang.IllegalArgumentException
 import java.util.ArrayList
 
@@ -209,7 +219,14 @@ class ScanUpgradeFragment(private var mDeviceType: Int) : BaseScanDeviceFragment
 
     override fun initWidget() {
         super.initWidget()
-        iv_bt.setOnClickListener { startRequestBleEnable() }
+        iv_bt.setOnClickListener {
+            if (isForbidPermissionPopup() || shouldShowRequestPermissionRationale()) {
+                showScanPermissionDetail()
+            } else {
+                startRequestBleEnable()
+            }
+        }
+        fl_scan_permission_detail.setOnClickListener { showScanPermissionDetail(false) }
         tv_rescan.setOnClickListener { rescan() }
         recycler_view.layoutManager = LinearLayoutManager(activity!!)
         recycler_view.adapter = mDeviceAdapter
@@ -242,6 +259,7 @@ class ScanUpgradeFragment(private var mDeviceType: Int) : BaseScanDeviceFragment
 
     private fun showEnableBluetoothUI() {
         hideVgs()
+        fl_scan_permission_detail.visibility = View.VISIBLE
         vg_bt_not_enable.visibility = View.VISIBLE
         setTitles(R.string.open_bluetooth, R.string.please_turn_on_bluetooth_adapter)
     }
@@ -266,6 +284,7 @@ class ScanUpgradeFragment(private var mDeviceType: Int) : BaseScanDeviceFragment
         vg_bt_not_enable.visibility = View.GONE
         vg_scan.visibility = View.INVISIBLE
         vg_device_list.visibility = View.GONE
+        fl_scan_permission_detail.visibility = View.GONE
     }
 
     private fun upgradeDfuModelDevice(dfuMac: String, type: Int) {

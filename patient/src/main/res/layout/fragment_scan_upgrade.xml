@@ -5,6 +5,29 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <FrameLayout
+        android:id="@+id/fl_scan_permission_detail"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/b5_color"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|left"
+            android:text="未获得完整授权，点击查看详情"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:tint="@color/white"
+            android:src="@drawable/ic_arrow_right_light_blue"
+            android:layout_width="7dp"
+            android:layout_height="12dp"
+            android:layout_gravity="center|right" />
+    </FrameLayout>
+
     <TextView
         android:id="@+id/tv_title"
         style="@style/text_t3_16"

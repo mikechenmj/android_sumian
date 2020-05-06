@@ -4,6 +4,7 @@ import android.Manifest
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -18,7 +19,6 @@ import com.sumian.sd.buz.devicemanager.BlueDevice
 import com.sumian.sd.common.log.LogManager
 import com.sumian.sd.common.log.SdLogManager
 import com.sumian.sd.common.utils.LocationManagerUtil
-import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
 import java.util.*
 
@@ -26,10 +26,23 @@ abstract class BaseScanDeviceFragment : BaseFragment() {
 
     protected var mScanning: Boolean = false
     protected var mFragmentDestroy = false
+    private val mPerms = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
+        arrayOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_BACKGROUND_LOCATION,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    else {
+        arrayOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    }
 
     companion object {
         const val REQUEST_CODE_FUNCTION_BT = 1
         const val REQUEST_CODE_FUNCTION_LOCATION = 2
+        const val REQUEST_CODE_PERMISSION_DETAIL = 3
         const val REQUEST_PERMISSION_LOCATION_AND_STORAGE = 3
         const val MONITOR_NAME = "M-SUMIAN"
         const val SLEEP_MASTER_NAME = "PDNWK"
@@ -80,8 +93,7 @@ abstract class BaseScanDeviceFragment : BaseFragment() {
     protected fun isBluetoothEnableAndHasPermissions() = isBluetoothEnable() && hasBluetoothPermissions()
 
     protected fun hasBluetoothPermissions(): Boolean {
-        val perms = arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-        return EasyPermissions.hasPermissions(activity!!, *perms)
+        return EasyPermissions.hasPermissions(activity!!, *mPerms)
     }
 
     protected fun checkLocationService(): Boolean {
@@ -104,7 +116,7 @@ abstract class BaseScanDeviceFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         DeviceManager.registerBluetoothAdapterStateChangeListener(mBluetoothStateChangeListener)
-        checkScanPermission()
+        requestPermissionIfNeed()
     }
 
     override fun onDestroyView() {
@@ -116,63 +128,92 @@ abstract class BaseScanDeviceFragment : BaseFragment() {
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
         if (activity != null) {
-            var findLocation = ActivityCompat.checkSelfPermission(activity!!, Manifest.permission.ACCESS_FINE_LOCATION)
-            var coarseLocation = ActivityCompat.checkSelfPermission(activity!!, Manifest.permission.ACCESS_COARSE_LOCATION)
-            var backgroundLocation = ActivityCompat.checkSelfPermission(activity!!, Manifest.permission.ACCESS_BACKGROUND_LOCATION)
-            var externalStorage = ActivityCompat.checkSelfPermission(activity!!, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-            SdLogManager.logPermission("checkScanPermission: findLocation: $findLocation coarseLocation: $coarseLocation " +
-                    "backgroundLocation: $backgroundLocation externalStorage: $externalStorage")
+            if (requestCode === REQUEST_PERMISSION_LOCATION_AND_STORAGE) {
+                var allGranted = true
+                for (i in permissions.indices) {
+                    SdLogManager.logPermission("requestPermissionIfNeed permission: ${ActivityCompat.checkSelfPermission(activity!!, permissions[i])}")
+                    if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                        allGranted = false
+                    }
+                }
+                if (allGranted) {
+                    if (checkLocationService()) {
+                        onPermissionGranted()
+                    }
+                }
+            }
+        }
+    }
+
+    fun isForbidPermissionPopup(): Boolean {
+        for (permission in mPerms) {
+            if (ActivityCompat.checkSelfPermission(activity!!, permission) != PackageManager.PERMISSION_GRANTED
+                    && !shouldShowRequestPermissionRationale(permission)) {
+                return true
+            }
+        }
+        return false
+    }
+
+    fun shouldShowRequestPermissionRationale(): Boolean {
+        for (permission in mPerms) {
+            if (shouldShowRequestPermissionRationale(permission)) {
+                return true
+            }
+        }
+        return false
+    }
+
+    fun showScanPermissionDetail(needResult: Boolean = true) {
+        var intent = Intent(activity!!, ScanPermissionDetailActivity::class.java)
+        if (needResult) {
+            startActivityForResult(intent, REQUEST_CODE_PERMISSION_DETAIL)
+        } else {
+            startActivity(intent)
         }
     }
 
     private val mBluetoothStateChangeListener =
             object : DeviceManager.BluetoothAdapterStateChangeListener {
                 override fun onStateChange(on: Boolean) {
-                    checkScanPermission()
+                    requestPermissionIfNeed()
                     onBluetoothStateChange(on)
                 }
             }
 
-    @AfterPermissionGranted(REQUEST_PERMISSION_LOCATION_AND_STORAGE)
-    private fun checkScanPermission() {
+    private fun requestPermissionIfNeed() {
+        if (activity == null) {
+            return
+        }
         if (!isBluetoothEnable()) {
             return
         }
-        val perms = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
-            arrayOf(
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION,
-                    Manifest.permission.ACCESS_BACKGROUND_LOCATION,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE)
-        else {
-            arrayOf(
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE)
-        }
-        if (EasyPermissions.hasPermissions(activity!!, *perms)) {
+        if (EasyPermissions.hasPermissions(activity!!, *mPerms)) {
             if (checkLocationService()) {
                 onPermissionGranted()
             }
         } else {
-            EasyPermissions.requestPermissions(this, resources.getString(R.string.request_permission_hint), REQUEST_PERMISSION_LOCATION_AND_STORAGE, *perms)
+            requestPermissions(mPerms, REQUEST_PERMISSION_LOCATION_AND_STORAGE)
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (activity == null) {
+            return
+        }
         if (requestCode == REQUEST_CODE_FUNCTION_BT) {
             if (isBluetoothEnable()) {
-                checkScanPermission()
+                requestPermissionIfNeed()
             } else {
                 ToastUtils.showShort("蓝牙未开启，无法搜索蓝牙设备")
             }
         } else if (requestCode == REQUEST_CODE_FUNCTION_LOCATION) {
-            checkScanPermission()
-        } else {
-            super.onActivityResult(requestCode, resultCode, data)
+            requestPermissionIfNeed()
+        } else if (requestCode == REQUEST_CODE_PERMISSION_DETAIL) {
+            requestPermissions(mPerms, REQUEST_PERMISSION_LOCATION_AND_STORAGE)
         }
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
     protected abstract fun onScanStart(success: Boolean)
