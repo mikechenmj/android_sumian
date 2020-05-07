@@ -60,6 +60,9 @@ public final class UiUtils {
             if (intent.resolveActivity(context.getPackageManager()) != null) {
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
+            } else {
+                ToastHelper.show(context, context.getString(R.string.none_market), Gravity.CENTER);
+                openLinkBySystem(context, BuildConfig.DEFAULT_APK_DOWNLOAD_URL);
             }
         } catch (ActivityNotFoundException e) {
             e.printStackTrace();
