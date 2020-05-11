@@ -540,12 +540,23 @@ object SyncSleepDataHelper {
         bleFlowLog("透传数据超时 type: $type beginCmd: $beginCmd")
         removePayloadTimeoutMessage()
         setIsSyncing(false, "onSyncTimeOut")
-        CmdQueue.blockSyncInfo(false)
         if (isSyncSleepData()) {
             resetSyncFlowFlag()
-            setIsSleepDataTypeSyncing(false)
-            DeviceManager.postEvent(DeviceManager.EVENT_SYNC_SLEEP_DATA_FAIL, null)
+            if (mSleepDataRetryTimes < SYNC_SLEEP_DATA_RETRY_TIME) {
+                retrySyncSleepData()
+                sendNextPayloadTimeoutDelay()
+                mSleepDataRetryTimes += 1
+            } else {
+                setIsSleepDataTypeSyncing(false)
+                setIsSyncing(false, "onSyncTimeOut")
+                CmdQueue.blockSyncInfo(false)
+                DeviceManager.postEvent(DeviceManager.EVENT_SYNC_SLEEP_DATA_FAIL, null)
+            }
+        } else {
+            setIsSyncing(false, "onSyncTimeOut")
+            CmdQueue.blockSyncInfo(false)
         }
+
     }
 
     private fun setIsSyncing(isSyncing: Boolean, tag: String? = null) {
