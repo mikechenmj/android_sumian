@@ -25,9 +25,11 @@ import java.io.File
  * version: 1.0
  */
 object SyncSleepDataHelper {
+    private var mSleepDataRetryTimes = 0
     private var mSyncFinish: Boolean = false
     private var mIsSyncing = false
     private const val PAYLOAD_TIMEOUT_TIME = 1000L * 8
+    private const val SYNC_SLEEP_DATA_RETRY_TIME = 3
     private const val TAG = "[SyncSleepData]"
     const val SYNC_TYPE_SLEEP_DATA = 1
     private const val SYNC_TYPE_SLEEP_MASTER_LOG = 2
@@ -130,12 +132,17 @@ object SyncSleepDataHelper {
         if (isSyncing()) {
             return false
         }
+        mSleepDataRetryTimes = 0
         setIsSyncing(true, "startSyncSleepData")
         sendSetSyncFlagFalseMessageDelay("startSyncSleepData")
         CmdQueue.putSyncInfoCmd(
                 Cmd(BleCmdUtil.createDataFromString(BleCmd.SYNC_DATA, BleCmd.SYNC_SLEEP_DATA_CONTENT),
                         DeviceStateHelper.generateResultCmd(BleCmd.SYNC_DATA), priority = Cmd.Priority.SLEEP_DATA, retry = false))
         return true
+    }
+
+    private fun retrySyncSleepData() {
+        DeviceManager.writeData(BleCmdUtil.createDataFromString(BleCmd.SYNC_DATA, BleCmd.SYNC_SLEEP_DATA_CONTENT))
     }
 
     internal fun startSendFakeSleepData() {
@@ -278,6 +285,7 @@ object SyncSleepDataHelper {
         mEndBytes = data
         calLostFrames()
         bleFlowLog("writeResponse RESPONSE_CODE_POSITIVE for $cmd")
+        sendNextPayloadTimeoutDelay()
         writeResponse(data, BleCmd.RESPONSE_CODE_POSITIVE, object : WriteBleDataCallback {
             override fun onSuccess(data: ByteArray) {
                 bleFlowLog("writeResponse RESPONSE_CODE_POSITIVE success for $cmd")
@@ -292,7 +300,6 @@ object SyncSleepDataHelper {
 
             override fun onFail(code: Int, msg: String) {
             }
-
         })
     }
 
@@ -363,7 +370,6 @@ object SyncSleepDataHelper {
             }
         } else {
             bleFlowLog("${file.name} saveSleepDataToFile.length <= 0")
-            removePayloadTimeoutMessage()
             onSyncFailed()
         }
     }
@@ -510,17 +516,29 @@ object SyncSleepDataHelper {
     }
 
     private fun onSyncFailed() {
-        setIsSyncing(false, "onSyncFailed")
-        CmdQueue.blockSyncInfo(false)
         if (isSyncSleepData()) {
             resetSyncFlowFlag()
             setIsSleepDataTypeSyncing(false)
-            DeviceManager.postEvent(DeviceManager.EVENT_SYNC_SLEEP_DATA_FAIL, null)
+            if (mSleepDataRetryTimes < SYNC_SLEEP_DATA_RETRY_TIME) {
+                retrySyncSleepData()
+                sendNextPayloadTimeoutDelay()
+                mSleepDataRetryTimes += 1
+            } else {
+                removePayloadTimeoutMessage()
+                setIsSyncing(false, "onSyncFailed")
+                CmdQueue.blockSyncInfo(false)
+                DeviceManager.postEvent(DeviceManager.EVENT_SYNC_SLEEP_DATA_FAIL, null)
+            }
+        } else {
+            CmdQueue.blockSyncInfo(false)
+            setIsSyncing(false, "onSyncFailed")
+            removePayloadTimeoutMessage()
         }
     }
 
     private fun onSyncTimeOut(type: Int, beginCmd: String) {
         bleFlowLog("透传数据超时 type: $type beginCmd: $beginCmd")
+        removePayloadTimeoutMessage()
         setIsSyncing(false, "onSyncTimeOut")
         CmdQueue.blockSyncInfo(false)
         if (isSyncSleepData()) {
