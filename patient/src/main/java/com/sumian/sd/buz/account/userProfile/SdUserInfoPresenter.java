@@ -1,13 +1,18 @@
 package com.sumian.sd.buz.account.userProfile;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.google.gson.Gson;
 import com.sumian.common.base.BaseViewModel;
 import com.sumian.common.image.ImagesScopeStorageHelper;
 import com.sumian.common.network.response.ErrorResponse;
+import com.sumian.sd.app.App;
 import com.sumian.sd.app.AppManager;
+import com.sumian.sd.buz.account.bean.Ethnicities;
 import com.sumian.sd.buz.account.bean.Social;
 import com.sumian.sd.buz.account.bean.UserInfo;
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback;
@@ -21,6 +26,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import retrofit2.Call;
+
+import static com.sumian.sd.buz.account.bean.Ethnicities.SP_ETHNICITIES;
 
 /**
  * <pre>
@@ -70,8 +77,26 @@ public class SdUserInfoPresenter extends BaseViewModel {
                 //mView.onFinish();
             }
         });
-
         addCall(call);
+    }
+
+    public void getEthnicities() {
+        Call<Ethnicities> call = AppManager.getSdHttpService().getEthnicities();
+        addCall(call);
+        call.enqueue(new BaseSdResponseCallback<Ethnicities>() {
+            @Override
+            protected void onSuccess(@Nullable Ethnicities response) {
+                mView.onGetEthnicitySuccess(response);
+                SharedPreferences sharedPreferences = App.getAppContext().getSharedPreferences(SP_ETHNICITIES, 0);
+                String ethnicitiesJson = new Gson().toJson(response);
+                sharedPreferences.edit().putString(SP_ETHNICITIES, ethnicitiesJson).commit();
+            }
+
+            @Override
+            protected void onFailure(@NotNull ErrorResponse errorResponse) {
+                mView.onGetEthnicityFailed(errorResponse.getMessage());
+            }
+        });
     }
 
     public void uploadAvatar(String imageUrl) {
@@ -111,10 +136,10 @@ public class SdUserInfoPresenter extends BaseViewModel {
                         mView.onFinish();
                     }
                 };
-                if(imageUrl.startsWith("content://")) {
+                if (imageUrl.startsWith("content://")) {
                     byte[] imageData = ImagesScopeStorageHelper.INSTANCE.contentUriToByte(imageUrl);
                     OssEngine.Companion.uploadFile(ossResponse, imageData, callback);
-                }else {
+                } else {
                     OssEngine.Companion.uploadFile(ossResponse, imageUrl, callback);
                 }
             }

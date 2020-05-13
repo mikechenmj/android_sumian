@@ -1,8 +1,10 @@
 package com.sumian.sd.buz.account.userProfile
 
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import com.alibaba.fastjson.JSON
+import com.google.gson.Gson
 import com.sumian.common.base.BaseViewModel
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.utils.SumianExecutor
@@ -11,6 +13,8 @@ import com.sumian.sd.R
 import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.account.bean.City
+import com.sumian.sd.buz.account.bean.Ethnicities
+import com.sumian.sd.buz.account.bean.Ethnicities.Companion.SP_ETHNICITIES
 import com.sumian.sd.buz.account.bean.Province
 import com.sumian.sd.buz.account.bean.UserInfo
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
@@ -34,7 +38,6 @@ class ModifyUserInfoPresenter private constructor(private val mView: ModifyUserI
     }
 
     companion object {
-
         private const val MIN_YEAR = 1920
         private const val MIN_HEIGHT = 30
         private const val MAX_HEIGHT = 241
@@ -55,8 +58,8 @@ class ModifyUserInfoPresenter private constructor(private val mView: ModifyUserI
     //private Map<Province, List<City>> mMapCities;
     private var mMapArea: MutableMap<City, MutableList<String>>? = null
 
-    override fun improveUserProfile(improveKey: String, newUserProfile: String) {
 
+    override fun improveUserProfile(improveKey: String, newUserProfile: String) {
         mView.onBegin()
 
         val map = HashMap<String, String>(1)
@@ -103,6 +106,15 @@ class ModifyUserInfoPresenter private constructor(private val mView: ModifyUserI
                 mView.showTwoPicker(View.GONE)
 
                 App.getAppContext().getString(R.string.height)
+            }
+            ImproveUserProfileContract.IMPROVE_ETHNICITY
+            -> {
+                transformEthnicity(userInfo!!)
+
+                mView.showOnePicker(View.VISIBLE)
+                mView.showTwoPicker(View.GONE)
+
+                App.getAppContext().getString(R.string.ethnicity)
             }
             ImproveUserProfileContract.IMPROVE_BIRTHDAY_KEY
             -> {
@@ -178,6 +190,18 @@ class ModifyUserInfoPresenter private constructor(private val mView: ModifyUserI
             }
             ImproveUserProfileContract.IMPROVE_HEIGHT_KEY -> {
                 pickerOne.contentByCurrValue
+            }
+            ImproveUserProfileContract.IMPROVE_ETHNICITY -> {
+                val ethnicities = Gson().fromJson<Ethnicities>(App.getAppContext()
+                        .getSharedPreferences(SP_ETHNICITIES, 0)
+                        .getString(SP_ETHNICITIES, ""),
+                        Ethnicities::class.java)
+                for (ethnicity in ethnicities.data) {
+                    if (ethnicity.name == pickerOne.contentByCurrValue) {
+                        return ethnicity.id.toString()
+                    }
+                }
+                "-1"
             }
             ImproveUserProfileContract.IMPROVE_BIRTHDAY_KEY -> {
                 "${pickerOne.contentByCurrValue}-${pickerTwo.contentByCurrValue}"
@@ -329,6 +353,22 @@ class ModifyUserInfoPresenter private constructor(private val mView: ModifyUserI
 
         mView.transformOneDisplayedValues(numberOnePosition, "cm", heights)
 //        mView.transformTwoDisplayedValues(numberTwoPosition, "cm", decimalHeights)
+    }
+
+    private fun transformEthnicity(userInfo: UserInfo) {
+        val ethnicities = Gson().fromJson<Ethnicities>(App.getAppContext()
+                .getSharedPreferences(SP_ETHNICITIES, 0)
+                .getString(SP_ETHNICITIES, ""),
+                Ethnicities::class.java)
+        val currentEthnicity: Ethnicities.Ethnicity? = userInfo.ethnicity
+        var currentIndex = ethnicities.data.indexOf(ethnicities.data.find { ethnicity ->
+            ethnicity.name === currentEthnicity?.name
+        })
+        if (currentIndex < 0) {
+            currentIndex = 0
+        }
+        val ethnicityNames = ethnicities.data.map { v -> v.name }.toTypedArray()
+        mView.transformOneDisplayedValues(currentIndex, "", ethnicityNames)
     }
 
     private fun transformProvince() {

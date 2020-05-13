@@ -47,5 +47,6 @@ interface ImproveUserProfileContract {
         const val IMPROVE_GENDER_KEY = "gender"
         const val IMPROVE_EDUCATION_KEY = "education"
         const val IMPROVE_MEDICINE_HISTORY = "sleep_pills"
+        const val IMPROVE_ETHNICITY = "ethnicity_id"
     }
 }

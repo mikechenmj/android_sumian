@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -16,6 +17,7 @@ import android.widget.CompoundButton;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.sumian.common.base.BaseViewModelActivity;
+import com.sumian.common.helper.ToastHelper;
 import com.sumian.common.image.ImageLoader;
 import com.sumian.common.image.ImagesScopeStorageHelper;
 import com.sumian.common.media.SelectImageActivity;
@@ -24,6 +26,7 @@ import com.sumian.common.utils.JsonUtil;
 import com.sumian.sd.R;
 import com.sumian.sd.app.App;
 import com.sumian.sd.app.AppManager;
+import com.sumian.sd.buz.account.bean.Ethnicities;
 import com.sumian.sd.buz.account.bean.Social;
 import com.sumian.sd.buz.account.bean.UserInfo;
 import com.sumian.sd.buz.account.sheet.ModifySelectBottomSheet;
@@ -45,10 +48,13 @@ import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.Observer;
+import androidx.preference.PreferenceManager;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
+
+import static com.sumian.sd.buz.account.bean.Ethnicities.SP_ETHNICITIES;
 
 /**
  * Created by jzz
@@ -77,6 +83,7 @@ public class UserInfoActivity extends BaseViewModelActivity<SdUserInfoPresenter>
     private SettingDividerView mDvWeight;
     private SettingDividerView mDvEduLevel;
     private SettingDividerView mDvCareer;
+    private SettingDividerView mDvEthnicity;
     private SettingDividerView mDvMobile;
     private SettingDividerView mDvWechat;
     private SettingDividerView mDvMedicineHistory;
@@ -111,6 +118,7 @@ public class UserInfoActivity extends BaseViewModelActivity<SdUserInfoPresenter>
         mDvWeight = findViewById(R.id.dv_weight);
         mDvEduLevel = findViewById(R.id.dv_edu_level);
         mDvCareer = findViewById(R.id.dv_career);
+        mDvEthnicity = findViewById(R.id.dv_ethnicity);
         mDvMobile = findViewById(R.id.dv_mobile);
         mDvWechat = findViewById(R.id.dv_wechat_bind);
         mDvMedicineHistory = findViewById(R.id.dv_medicine_history);
@@ -125,6 +133,7 @@ public class UserInfoActivity extends BaseViewModelActivity<SdUserInfoPresenter>
         mDvWeight.setOnShowMoreListener(this);
         mDvEduLevel.setOnShowMoreListener(this);
         mDvCareer.setOnShowMoreListener(this);
+        mDvEthnicity.setOnShowMoreListener(this);
         mDvWechat.setOnCheckedChangeListener(this);
         mDvMedicineHistory.setOnShowMoreListener(this);
         AppManager.getAccountViewModel().getUserInfoLiveData().observe(this, new Observer<UserInfo>() {
@@ -145,6 +154,7 @@ public class UserInfoActivity extends BaseViewModelActivity<SdUserInfoPresenter>
     protected void initData() {
         super.initData();
         getMViewModel().getUserInfo();
+        getMViewModel().getEthnicities();
     }
 
     public void setPresenter(SdUserInfoPresenter presenter) {
@@ -246,6 +256,13 @@ public class UserInfoActivity extends BaseViewModelActivity<SdUserInfoPresenter>
             case R.id.dv_career:
                 ModifyUserInfoActivity.show(this, ImproveUserProfileContract.IMPROVE_CAREER_KEY);
                 break;
+            case R.id.dv_ethnicity:
+                if (App.getAppContext().getSharedPreferences(SP_ETHNICITIES, 0).getString(SP_ETHNICITIES, "").isEmpty()) {
+                    ToastHelper.show("未获取到民族列表");
+                } else {
+                    commitModifySelectBottomSheet(ImproveUserProfileContract.IMPROVE_ETHNICITY);
+                }
+                break;
             default:
                 break;
         }
@@ -309,6 +326,13 @@ public class UserInfoActivity extends BaseViewModelActivity<SdUserInfoPresenter>
     }
 
     public void onGetUserInfoFailed(String error) {
+        ToastUtils.showShort(error);
+    }
+
+    public void onGetEthnicitySuccess(Ethnicities ethnicities) {
+    }
+
+    public void onGetEthnicityFailed(String error) {
         ToastUtils.showShort(error);
     }
 
@@ -418,6 +442,7 @@ public class UserInfoActivity extends BaseViewModelActivity<SdUserInfoPresenter>
         mDvWeight.setContent(userProfile.formatWeight(userProfile.formatField(userProfile.weight)));
         mDvEduLevel.setContent(userProfile.formatField(userProfile.education));
         mDvCareer.setContent(userProfile.formatField(userProfile.career));
+        mDvEthnicity.setContent(userProfile.formatField(userProfile.ethnicity.getName()));
         mDvMobile.setContent(userProfile.mobile);
         mDvMedicineHistory.setContent(userProfile.formatIsUsingSleepPills());
         updateDvWechatUI(userProfile.socialites);

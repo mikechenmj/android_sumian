@@ -191,6 +191,7 @@
     <string name="weight">体重</string>
     <string name="edu_level">教育程度</string>
     <string name="career">职业</string>
+    <string name="ethnicity">民族</string>
     <string name="is_using_sleep_pills">当前是否服用促进睡眠类药物？</string>
     <string name="input_career_hint">请填写您所从事的职业</string>
     <string name="male">男</string>

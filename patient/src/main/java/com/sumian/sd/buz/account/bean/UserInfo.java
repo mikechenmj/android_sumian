@@ -54,6 +54,7 @@ public class UserInfo implements Parcelable, Serializable, Cloneable {
     @SerializedName("set_password")
     public boolean hasPassword;
     public String[] internal_tag;
+    public Ethnicities.Ethnicity ethnicity;
 
     protected UserInfo(Parcel in) {
         id = in.readInt();
@@ -85,6 +86,7 @@ public class UserInfo implements Parcelable, Serializable, Cloneable {
         im_password = in.readString();
         socialites = in.createTypedArrayList(Social.CREATOR);
         doctor = in.readParcelable(Doctor.class.getClassLoader());
+        ethnicity = in.readParcelable(Ethnicities.Ethnicity.class.getClassLoader());
         role = in.readInt();
         hasPassword = in.readByte() != 0;
     }
@@ -261,6 +263,7 @@ public class UserInfo implements Parcelable, Serializable, Cloneable {
         dest.writeString(im_password);
         dest.writeTypedList(socialites);
         dest.writeParcelable(doctor, flags);
+        dest.writeParcelable(ethnicity, flags);
         dest.writeInt(role);
     }
 
@@ -528,6 +531,7 @@ public class UserInfo implements Parcelable, Serializable, Cloneable {
                 ", im_password='" + im_password + '\'' +
                 ", socialites=" + socialites +
                 ", doctor=" + doctor +
+                ", ethnicity=" + ethnicity +
                 ", role=" + role +
                 ", answers=" + answers +
                 '}';

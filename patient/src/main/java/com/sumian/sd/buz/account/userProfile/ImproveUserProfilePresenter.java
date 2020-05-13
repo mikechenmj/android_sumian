@@ -1,5 +1,7 @@
 package com.sumian.sd.buz.account.userProfile;
 
+import android.util.Log;
+
 import com.sumian.common.base.BaseViewModel;
 import com.sumian.common.network.response.ErrorResponse;
 import com.sumian.sd.app.AppManager;
@@ -36,7 +38,6 @@ public class ImproveUserProfilePresenter extends BaseViewModel implements Improv
 
     @Override
     public void improveUserProfile(@NonNull String improveKey, @NonNull String newUserProfile) {
-
         if (mView == null) return;
         mView.onBegin();
 

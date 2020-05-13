@@ -9,6 +9,7 @@ import com.sumian.sd.buz.account.achievement.bean.AchievementData
 import com.sumian.sd.buz.account.achievement.bean.AchievementRecord
 import com.sumian.sd.buz.account.achievement.bean.AchievementResponse
 import com.sumian.sd.buz.account.achievement.bean.LastAchievementData
+import com.sumian.sd.buz.account.bean.Ethnicities
 import com.sumian.sd.buz.account.bean.Social
 import com.sumian.sd.buz.account.bean.Token
 import com.sumian.sd.buz.account.bean.UserInfo
@@ -113,6 +114,9 @@ interface SdApi {
 
     @GET("user/profile")
     fun getUserProfile(): Call<UserInfo>
+
+    @GET("/ethnicities")
+    fun getEthnicities(): Call<Ethnicities>
 
     @FormUrlEncoded
     @POST("authorizations/socialite-bound")
