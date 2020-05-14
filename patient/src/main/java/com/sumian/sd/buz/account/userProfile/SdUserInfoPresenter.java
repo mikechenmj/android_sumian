@@ -176,7 +176,7 @@ public class SdUserInfoPresenter extends BaseViewModel {
     public void unBindWechat(int socialId) {
         mView.onBegin();
 
-        Call<String> call = AppManager.getSdHttpService().unbindSocialites(socialId);
+        Call<String> call = AppManager.getSdHttpService().unbindSocialites(socialId, true);
         addCall(call);
         call.enqueue(new BaseSdResponseCallback<String>() {
             @Override

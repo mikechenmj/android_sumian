@@ -3,15 +3,18 @@ package com.sumian.sd.buz.account.login
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.statistic.StatUtil
+import com.sumian.common.widget.dialog.SumianDialog
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.stat.StatConstants
 import kotlinx.android.synthetic.main.activity_validate_phone_number.*
 
 class ValidatePhoneNumberActivity : BaseViewModelActivity<ValidatePhoneNumberPresenter>(), ValidatePhoneNumberContract.View {
+
     private var mLaunchType = LAUNCH_TYPE_BIND_SOCIAL
     private var mSocialInfo: String? = null
 
@@ -97,6 +100,21 @@ class ValidatePhoneNumberActivity : BaseViewModelActivity<ValidatePhoneNumberPre
     override fun onRequestCaptchaSuccess() {
         tv_send_captcha.startCountDown()
     }
+
+    override fun onMobileRebind(mobile: String, captcha: String, socialInfo: String, rebind: Boolean) {
+        SumianDialog(this)
+                .setTitleText("手机号已绑定")
+                .setMessageText("该手机号已绑定了其他微信，重新绑定会解绑原微信并绑定新微信！")
+                .setLeftBtn(R.string.rebindMobileOk, object :View.OnClickListener {
+                    override fun onClick(v: View?) {
+                        mViewModel!!.bindMobile(mobile, captcha, mSocialInfo!!,true)
+                    }
+                })
+                .setRightBtn(android.R.string.cancel)
+                .showCloseIcon(true)
+                .show()
+    }
+
 
     override fun onRequestCaptchaFail(code: Int) {
         if (code == 4001) {

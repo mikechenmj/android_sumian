@@ -63,6 +63,7 @@ abstract class BaseResponseCallback<Data> : Callback<Data> {
                 if (errorResponse == null) {
                     onFailure(UNKNOWN_ERROR_RESPONSE)
                 } else {
+                    errorResponse.response = response
                     onFailure(errorResponse)
                     when (errorResponse.code) {
                         //token 鉴权失败

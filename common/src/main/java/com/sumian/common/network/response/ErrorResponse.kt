@@ -2,6 +2,7 @@ package com.sumian.common.network.response
 
 import com.sumian.common.network.error.ErrorInfo400
 import com.sumian.common.network.error.ErrorInfo499
+import java.util.*
 
 /**
  * <pre>
@@ -12,7 +13,7 @@ import com.sumian.common.network.error.ErrorInfo499
  *     version: 1.0
  * </pre>
  */
-data class ErrorResponse(var code: Int, var message: String) {
+data class ErrorResponse(var code: Int, var message: String, var response: Any? = null) {
 
     companion object {
         @JvmStatic

@@ -1,14 +1,18 @@
 package com.sumian.sd.buz.account.login
 
+import android.util.Log
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.base.BaseViewModel
+import com.sumian.common.network.error.ErrorCode.BUSINESS_ERROR
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.statistic.StatUtil
+import com.sumian.common.widget.dialog.SumianDialog
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.account.bean.Token
 import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import retrofit2.Call
+import retrofit2.Response
 
 /**
  * <pre>
@@ -20,7 +24,7 @@ import retrofit2.Call
  */
 class ValidatePhoneNumberPresenter(var view: ValidatePhoneNumberContract.View) : BaseViewModel() {
     fun requestCaptcha(mobile: String) {
-        var call : Call<*>? = null
+        var call: Call<*>? = null
         call = CaptchaHelper.requestCaptcha(mobile, object : CaptchaHelper.RequestCaptchaListener {
             override fun onFail(code: Int) {
                 view.onRequestCaptchaFail(code)
@@ -63,17 +67,30 @@ class ValidatePhoneNumberPresenter(var view: ValidatePhoneNumberContract.View) :
         addCall(call)
     }
 
-    fun bindMobile(mobile: String, captcha: String, socialInfo: String) {
+    fun bindMobile(mobile: String, captcha: String, socialInfo: String, rebinding: Boolean = false) {
         view.showLoading()
         val map = mutableMapOf<String, Any>()
         map["mobile"] = mobile
         map["captcha"] = captcha
         map["type"] = 0
         map["info"] = socialInfo
+        if (rebinding) {
+            map["rebinding"] = true
+        }
         val call = AppManager.getSdHttpService().bindSocial(map)
         call.enqueue(object : BaseSdResponseCallback<Token>() {
             override fun onFailure(errorResponse: ErrorResponse) {
                 ToastUtils.showShort(errorResponse.message)
+                if (!rebinding) {
+                    if (errorResponse.code === 2) {
+                        if (errorResponse.response is Response<*>) {
+                            val response = errorResponse.response as Response<*>
+                            if (response.code() === BUSINESS_ERROR) {
+                                view.onMobileRebind(mobile, captcha, socialInfo, true)
+                            }
+                        }
+                    }
+                }
             }
 
             override fun onSuccess(response: Token?) {

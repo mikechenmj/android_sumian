@@ -29,6 +29,7 @@ import com.sumian.sd.app.AppManager;
 import com.sumian.sd.buz.account.bean.Ethnicities;
 import com.sumian.sd.buz.account.bean.Social;
 import com.sumian.sd.buz.account.bean.UserInfo;
+import com.sumian.sd.buz.account.login.LoginActivity;
 import com.sumian.sd.buz.account.sheet.ModifySelectBottomSheet;
 import com.sumian.sd.buz.stat.StatConstants;
 import com.sumian.sd.widget.TitleBar;
@@ -339,6 +340,8 @@ public class UserInfoActivity extends BaseViewModelActivity<SdUserInfoPresenter>
     public void onUnBindWechatSuccess() {
         ToastUtils.showShort(R.string.unbind_success);
         updateSocialites(null);
+        finish();
+        LoginActivity.show();
     }
 
     public void onUnBindWechatFailed(String error) {
@@ -432,6 +435,9 @@ public class UserInfoActivity extends BaseViewModelActivity<SdUserInfoPresenter>
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     private void updateUserProfileUI(UserInfo userProfile) {
+        if (userProfile == null) {
+            return;
+        }
         ImageLoader.loadImage(userProfile.avatar, mIvAvatar, R.mipmap.ic_info_avatar_patient);
         mDvNickname.setContent(userProfile.nickname);
         mDvName.setContent(userProfile.formatField(userProfile.name));

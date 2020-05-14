@@ -16,6 +16,7 @@ class ValidatePhoneNumberContract {
         fun onValidateSuccess()
         fun onValidateFailure()
         fun onRequestCaptchaSuccess()
+        fun onMobileRebind(mobile: String, captcha: String, socialInfo: String, rebind: Boolean)
     }
 
 }

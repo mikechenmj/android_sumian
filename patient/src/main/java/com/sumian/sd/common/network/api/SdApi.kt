@@ -161,7 +161,7 @@ interface SdApi {
     fun bindSocialites(@Field("type") type: Int, @Field("info") info: String): Call<Social>
 
     @DELETE("socialites/{id}")
-    fun unbindSocialites(@Path("id") userId: Int): Call<String>
+    fun unbindSocialites(@Path("id") userId: Int, @Query("invalid") invalid: Boolean): Call<String>
 
     // ---------- sleep record ----------
 
