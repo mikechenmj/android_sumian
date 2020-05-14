@@ -619,7 +619,9 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
+        <activity android:name=".common.h5.ScanQrCodeActivity"
+            android:launchMode="singleTop">
+        </activity>
     </application>
 
 </manifest>

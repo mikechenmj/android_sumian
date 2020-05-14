@@ -984,4 +984,5 @@
     <string name="huawei_health_app_id">appid=100371911</string>
     <string name="gain_huawei_health_data">获取数据</string>
     <string name="scan_permission_detail_title">授权操作步骤</string>
+    <string name="scan_h5_qr_code_tip">将二维码放入框内，可自动扫描</string>
 </resources>

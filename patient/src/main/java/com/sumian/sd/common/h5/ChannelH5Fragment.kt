@@ -1,10 +1,13 @@
 package com.sumian.sd.common.h5
 
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Handler
 import android.util.TypedValue
 import android.view.View
+import androidx.core.app.ActivityCompat
 import com.github.lzyzsd.jsbridge.CallBackFunction
 import com.google.gson.reflect.TypeToken
 import com.sumian.common.h5.BaseWebViewFragment
@@ -19,6 +22,8 @@ import com.sumian.sd.buz.account.login.LoginActivity
 import com.sumian.sd.buz.doctor.bean.H5DoctorServiceShoppingResult
 import com.sumian.sd.buz.homepage.sheet.ShareBottomSheet
 import com.sumian.sd.buz.stat.StatConstants
+import com.sumian.sd.common.h5.ScanQrCodeActivity.EXTRA_RESULT_QR_CODE
+import com.sumian.sd.common.h5.ScanQrCodeActivity.RESULT_CODE_SCAN_QR_CODE
 import com.sumian.sd.common.pay.activity.PaymentActivity
 import com.sumian.sd.common.utils.EventBusUtil
 import com.sumian.sd.main.MainActivity
@@ -31,9 +36,11 @@ import com.umeng.socialize.bean.SHARE_MEDIA
 class ChannelH5Fragment : BaseWebViewFragment() {
 
     private var mBuyCallBackFunction: CallBackFunction? = null
+    private var mScanQrCodeCallBackFunction: CallBackFunction? = null
 
     companion object {
         private const val REQUEST_CODE_PAY = 104
+        private const val REQUEST_CODE_SCAN_QR = 1
     }
 
     override fun initWidget() {
@@ -76,8 +83,8 @@ class ChannelH5Fragment : BaseWebViewFragment() {
             return true
         }
         if (url == "https://ch-test.sumian.com/ks-index"
-                ||url == "https://ch-dev.sumian.com/ks-index"
-                ||url == "https://ch.sumian.com/ks-index") {
+                || url == "https://ch-dev.sumian.com/ks-index"
+                || url == "https://ch.sumian.com/ks-index") {
             return true
         }
         var index = url.indexOfFirst { c ->
@@ -95,12 +102,6 @@ class ChannelH5Fragment : BaseWebViewFragment() {
         return isH5HomeUrl(url)
 
     }
-
-    override fun getCompleteUrl(): String {
-        val token = "?token=" + getToken()
-        return BuildConfig.CHANNEL_H5_URL + token
-    }
-
 
     override fun registerHandler(sWebView: SWebView) {
         sWebView.registerHandler("bindShare") { data, function ->
@@ -148,21 +149,82 @@ class ChannelH5Fragment : BaseWebViewFragment() {
         sWebView.registerHandler("tokenInvalid") { data, function ->
             LoginActivity.show()
         }
+        sWebView.registerHandler("scanQRCode") { data, function ->
+            mScanQrCodeCallBackFunction = function
+            startScanQrOrRequestPermission()
+        }
+    }
+
+    private fun startScanQrOrRequestPermission() {
+        val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
+        var permissionsGranted = true
+        for (perm in permissions) {
+            permissionsGranted = permissionsGranted && ActivityCompat.checkSelfPermission(activity!!,perm) === PackageManager.PERMISSION_GRANTED
+        }
+        if (permissionsGranted) {
+            startScanQr()
+        }else {
+            requestQrPermission(permissions)
+        }
+    }
+
+    private fun requestQrPermission(perms :Array<String>) {
+        requestPermissions(perms, REQUEST_CODE_SCAN_QR)
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            REQUEST_CODE_SCAN_QR -> {
+                var success = true
+                for (result in grantResults) {
+                    success = success && result === PackageManager.PERMISSION_GRANTED
+                }
+                if (success) {
+                    startScanQr()
+                }else {
+                    mScanQrCodeCallBackFunction?.onCallBack("{\"error\": \"未获取到扫码所需权限\"}")
+                }
+            }
+        }
+    }
+
+    private fun startScanQr() {
+        startActivityForResult(Intent(activity, ScanQrCodeActivity::class.java), RESULT_CODE_SCAN_QR_CODE)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_CODE_PAY) {
-            when (resultCode) {
-                Activity.RESULT_OK -> {
-                    mBuyCallBackFunction?.onCallBack("{\"result\":\"success\"}")
-                }
-                Activity.RESULT_CANCELED -> {
-                    var errMes = data?.getStringExtra(PaymentActivity.EXTRA_ERROR_REASON)
-                    if (errMes != null && errMes.isNotEmpty()) {
-                        mBuyCallBackFunction?.onCallBack(errMes)
+        when (requestCode) {
+            REQUEST_CODE_PAY -> {
+                when (resultCode) {
+                    Activity.RESULT_OK -> {
+                        mBuyCallBackFunction?.onCallBack("{\"result\":\"success\"}")
+                    }
+                    Activity.RESULT_CANCELED -> {
+                        var errMes = data?.getStringExtra(PaymentActivity.EXTRA_ERROR_REASON)
+                        if (errMes != null && errMes.isNotEmpty()) {
+                            mBuyCallBackFunction?.onCallBack(errMes)
+                        }
                     }
                 }
+                mBuyCallBackFunction = null
+            }
+            RESULT_CODE_SCAN_QR_CODE -> {
+                when (resultCode) {
+                    Activity.RESULT_OK -> {
+                        val code = data?.getStringExtra(EXTRA_RESULT_QR_CODE) ?: ""
+                        if (code.isNotEmpty()) {
+                            mScanQrCodeCallBackFunction?.onCallBack("{\"content\": \"$code\"}")
+                        }else {
+                            mScanQrCodeCallBackFunction?.onCallBack("{\"error\": \"获取的二维码为空\"}")
+                        }
+                    }
+                    Activity.RESULT_CANCELED -> {
+                        mScanQrCodeCallBackFunction?.onCallBack("{\"error\": \"获取失败\"}")
+                    }
+                }
+                mScanQrCodeCallBackFunction = null
             }
         }
     }

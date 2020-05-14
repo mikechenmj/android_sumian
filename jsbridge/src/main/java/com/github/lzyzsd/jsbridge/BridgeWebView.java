@@ -10,6 +10,10 @@ import android.util.AttributeSet;
 
 import com.tencent.smtt.sdk.WebView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -68,6 +72,26 @@ public class BridgeWebView extends WebView implements WebViewJavascriptBridge {
             WebView.setWebContentsDebuggingEnabled(true);
         }
         this.setWebViewClient(generateBridgeWebViewClient());
+        registerHandler("checkIsFunctionSupport", new BridgeHandler() {
+            @Override
+            public void handler(String data, CallBackFunction function) {
+                try {
+                    JSONObject dataObject = new JSONObject(data);
+                    JSONObject callBackObject = new JSONObject();
+                    String functionKey = "functions";
+                    JSONArray functions = dataObject.getJSONArray(functionKey);
+                    for (int i = 0; i < functions.length(); i++) {
+                        String functionName = functions.get(i).toString();
+                        callBackObject.put(functionName, messageHandlers.containsKey(functionName));
+                    }
+                    String jsonStr = callBackObject.toString();
+                    function.onCallBack(jsonStr);
+                } catch (JSONException e) {
+                    function.onCallBack("{}");
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     protected BridgeWebViewClient generateBridgeWebViewClient() {
@@ -209,6 +233,14 @@ public class BridgeWebView extends WebView implements WebViewJavascriptBridge {
                             BridgeHandler handler;
                             if (!TextUtils.isEmpty(m.getHandlerName())) {
                                 handler = messageHandlers.get(m.getHandlerName());
+                                if (handler == null) {
+                                    handler = new BridgeHandler() {
+                                        @Override
+                                        public void handler(String data, CallBackFunction function) {
+                                            function.onCallBack("{\"result\":\"fail\"}");
+                                        }
+                                    };
+                                }
                             } else {
                                 handler = defaultHandler;
                             }
