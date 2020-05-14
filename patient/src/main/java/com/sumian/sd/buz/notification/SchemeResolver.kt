@@ -3,11 +3,10 @@ package com.sumian.sd.buz.notification
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.util.Log
+import com.sumian.common.h5.WebViewManger
 import com.sumian.common.log.CommonLog
 import com.sumian.common.notification.ISchemeResolver
 import com.sumian.common.notification.SchemeResolveUtil
-import com.sumian.sd.BuildConfig
 import com.sumian.sd.R
 import com.sumian.sd.buz.advisory.activity.AdvisoryDetailActivity
 import com.sumian.sd.buz.advisory.activity.AdvisoryListActivity
@@ -74,7 +73,7 @@ object SchemeResolver : ISchemeResolver {
     private fun resolveAndGoH5Homepage(context: Context, uri: Uri): Intent? {
         val userId = uri.getQueryParameter("user_id")
         val orgId = uri.getQueryParameter("org_id")
-        var url = BuildConfig.CHANNEL_H5_URL + "?user_id=" + userId + "&org_id=" + orgId
+        var url = WebViewManger.getInstance().getBaseUrl() + "?user_id=" + userId + "&org_id=" + orgId
         var intent = MainActivity.getLaunchIntentForH5(url)
         CommonLog.log("resolveAndGoH5Homepage url: $url intent: $intent")
         return intent
@@ -104,7 +103,7 @@ object SchemeResolver : ISchemeResolver {
         val orgId = uri.getQueryParameter("org_id")
         val date = uri.getQueryParameter("date")
         val formatDate = TimeUtil.unixTimeToDateString(date!!.toInt())
-        var url = BuildConfig.CHANNEL_H5_URL + "sleepDiary" + "?user_id=" + userId + "&org_id=" + orgId + "&date=" + formatDate
+        var url = WebViewManger.getInstance().getBaseUrl() + "sleepDiary" + "?user_id=" + userId + "&org_id=" + orgId + "&date=" + formatDate
         var intent = MainActivity.getLaunchIntentForH5(url)
         CommonLog.log("resolveH5DiaryScheme url: $url intent: $intent")
         return intent
@@ -113,7 +112,7 @@ object SchemeResolver : ISchemeResolver {
     fun resolveH5TipScheme(context: Context, uri: Uri): Intent {
         val userId = uri.getQueryParameter("user_id")
         val orgId = uri.getQueryParameter("org_id")
-        var url = BuildConfig.CHANNEL_H5_URL + "tips" + "?user_id=" + userId + "&org_id=" + orgId
+        var url = WebViewManger.getInstance().getBaseUrl() + "tips" + "?user_id=" + userId + "&org_id=" + orgId
         var intent = MainActivity.getLaunchIntentForH5(url)
         CommonLog.log("resolveH5TipScheme url: $url intent: $intent")
         return intent

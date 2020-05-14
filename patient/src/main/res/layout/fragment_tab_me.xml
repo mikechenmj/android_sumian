@@ -149,6 +149,14 @@
                 app:type_icon="@drawable/info_icon_mall" />
 
             <com.sumian.sd.widget.divider.SettingDividerView
+                android:id="@+id/dv_exchange_center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:divider_line_visible="visible"
+                app:type_desc="@string/exchange_center"
+                app:type_icon="@drawable/info_icon_mall" />
+
+            <com.sumian.sd.widget.divider.SettingDividerView
                 android:visibility="gone"
                 android:id="@+id/dv_coupon_center"
                 android:layout_width="match_parent"

@@ -818,6 +818,7 @@
     <string name="sleeper_firmware_upgrade">速眠仪固件升级</string>
     <string name="sleeper_firmware_upgrade_hint">速眠仪固件发布了新版本，为了保证给您最佳的体验，请及时升级</string>
     <string name="device_market">设备商城</string>
+    <string name="exchange_center">兑换中心</string>
     <string name="yesterday_night">昨夜</string>
     <string name="today">今天</string>
     <string name="cbti_final_report">CBTI 终期报告</string>

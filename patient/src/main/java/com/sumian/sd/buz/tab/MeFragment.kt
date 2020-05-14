@@ -1,6 +1,7 @@
 package com.sumian.sd.buz.tab
 
 import android.graphics.drawable.Drawable
+import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import androidx.core.view.isVisible
@@ -18,6 +19,7 @@ import com.bumptech.glide.request.target.Target
 import com.qmuiteam.qmui.util.QMUISpanHelper
 import com.sumian.common.base.BaseViewModelFragment
 import com.sumian.common.buz.kefu.KefuManager
+import com.sumian.common.h5.WebViewManger
 import com.sumian.common.image.loadImage
 import com.sumian.common.statistic.StatUtil
 import com.sumian.device.callback.DeviceStatusListener
@@ -47,6 +49,8 @@ import com.sumian.sd.buz.tel.activity.TelBookingListActivity
 import com.sumian.sd.buz.version.VersionManager
 import com.sumian.sd.common.h5.SleepFileWebActivity
 import com.sumian.sd.common.log.LogManager
+import com.sumian.sd.main.H5Router
+import com.sumian.sd.main.MainActivity
 import com.sumian.sd.main.OnEnterListener
 import com.sumian.sd.widget.tips.PatientRecordTips
 import com.sumian.sd.widget.tips.PatientServiceTips
@@ -104,6 +108,7 @@ class MeFragment : BaseViewModelFragment<GetAchievementListPresenter>(), View.On
         dv_coupon_center.setOnClickListener(this)
         tips_service.setOnServiceTipsCallback(this)
         tips_record.setOnRecordTipsCallback(this)
+        dv_exchange_center.setOnClickListener(this)
         dv_device_market.setOnClickListener { MiniProgramHelper.launchYouZanOrWeb(activity!!) }
         dv_test.isVisible = BuildConfig.DEBUG
         dv_test.setOnClickListener { ActivityUtils.startActivity(DeviceTestActivity::class.java) }
@@ -186,6 +191,17 @@ class MeFragment : BaseViewModelFragment<GetAchievementListPresenter>(), View.On
                 ActivityUtils.startActivity(DeviceManageActivity::class.java)
             }
             R.id.dv_coupon_center -> CouponCenterActivity.show()
+            R.id.dv_exchange_center -> {
+                if (activity is H5Router) {
+                    val act = activity as H5Router
+                    val url = WebViewManger.getInstance().getBaseUrl() + "redemption-code-center"
+                    val bundle = Bundle().apply {
+                        putInt(MainActivity.KEY_TAB_INDEX, 0)
+                        putString(MainActivity.KEY_H5_URL, url)
+                    }
+                    act.goto(bundle)
+                }
+            }
             else -> {
             }
         }

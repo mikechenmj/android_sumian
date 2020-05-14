@@ -5,6 +5,7 @@ package com.sumian.sd.main
 import android.Manifest
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -42,7 +43,14 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import pub.devrel.easypermissions.EasyPermissions
 
-class MainActivity : BaseActivity() {
+class MainActivity : BaseActivity(), H5Router {
+    override fun goto(bundle: Bundle) {
+        var url = bundle.getString(KEY_H5_URL)
+        if (!url.isNullOrEmpty()) {
+            loadRequestUrl(url)
+            Handler().postDelayed({ switchTabByBundle(bundle) }, 500)
+        }
+    }
 
     companion object {
         const val TAB_INVALID = -1
@@ -52,9 +60,8 @@ class MainActivity : BaseActivity() {
         const val TAB_3 = 3
 
         private const val SLEEP_RECORD_PREVIOUS_SHOW_NOTIFICATION_TIME = "SLEEP_RECORD_PREVIOUS_SHOW_NOTIFICATION_TIME"
-        private const val KEY_TAB_INDEX = "key_tab_name"
-        private const val KEY_TAB_DATA = "key_tab_data"
-        private const val KEY_H5_URL = "key_h5_url"
+        const val KEY_TAB_INDEX = "key_tab_name"
+        const val KEY_H5_URL = "key_h5_url"
         private const val REQUEST_CODE_OPEN_NOTIFICATION = 1
 
         @JvmStatic
@@ -65,7 +72,6 @@ class MainActivity : BaseActivity() {
         private fun getLaunchIntentForTab(tabIndex: Int, tabData: String? = null): Intent {
             val intent = Intent(App.getAppContext(), MainActivity::class.java)
             intent.putExtra(KEY_TAB_INDEX, tabIndex)
-            intent.putExtra(KEY_TAB_DATA, tabData)
             return intent
         }
 
@@ -82,7 +88,6 @@ class MainActivity : BaseActivity() {
             DataFragment::class.java.simpleName,
             DoctorFragment::class.java.simpleName,
             MeFragment::class.java.simpleName)
-    private var mLaunchTabData: String? = null
     private var mIsResume = false
     var targetUrl: String? = null
     var mCurrentPosition = TAB_INVALID
@@ -217,7 +222,6 @@ class MainActivity : BaseActivity() {
 
     private fun switchTabByBundle(bundle: Bundle) {
         var launchTabPosition = bundle.getInt(KEY_TAB_INDEX, mCurrentPosition)
-        mLaunchTabData = bundle.getString(KEY_TAB_DATA)
         if (launchTabPosition == TAB_INVALID) {
             launchTabPosition = 0
         }
@@ -373,4 +377,8 @@ class MainActivity : BaseActivity() {
         EventBusUtil.removeStickyEvent(event)
         changeSelectTab(event.tabIndex)
     }
+}
+
+interface H5Router {
+    fun goto(bundle: Bundle)
 }

@@ -11,6 +11,7 @@ import androidx.core.app.ActivityCompat
 import com.github.lzyzsd.jsbridge.CallBackFunction
 import com.google.gson.reflect.TypeToken
 import com.sumian.common.h5.BaseWebViewFragment
+import com.sumian.common.h5.WebViewManger
 import com.sumian.common.h5.bean.H5BaseResponse
 import com.sumian.common.h5.bean.H5BindShareData
 import com.sumian.common.h5.widget.SWebView
@@ -82,9 +83,7 @@ class ChannelH5Fragment : BaseWebViewFragment() {
         if (url === null) {
             return true
         }
-        if (url == "https://ch-test.sumian.com/ks-index"
-                || url == "https://ch-dev.sumian.com/ks-index"
-                || url == "https://ch.sumian.com/ks-index") {
+        if (url == WebViewManger.getInstance().getBaseUrl() + "ks-index") {
             return true
         }
         var index = url.indexOfFirst { c ->
@@ -94,7 +93,7 @@ class ChannelH5Fragment : BaseWebViewFragment() {
             return false
         }
         var baseUrl = url.substring(0, index)
-        return baseUrl == BuildConfig.CHANNEL_H5_URL
+        return baseUrl == WebViewManger.getInstance().getBaseUrl()
     }
 
     fun isCurrentH5HomeUrl(): Boolean {
@@ -159,16 +158,16 @@ class ChannelH5Fragment : BaseWebViewFragment() {
         val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
         var permissionsGranted = true
         for (perm in permissions) {
-            permissionsGranted = permissionsGranted && ActivityCompat.checkSelfPermission(activity!!,perm) === PackageManager.PERMISSION_GRANTED
+            permissionsGranted = permissionsGranted && ActivityCompat.checkSelfPermission(activity!!, perm) === PackageManager.PERMISSION_GRANTED
         }
         if (permissionsGranted) {
             startScanQr()
-        }else {
+        } else {
             requestQrPermission(permissions)
         }
     }
 
-    private fun requestQrPermission(perms :Array<String>) {
+    private fun requestQrPermission(perms: Array<String>) {
         requestPermissions(perms, REQUEST_CODE_SCAN_QR)
     }
 
@@ -182,7 +181,7 @@ class ChannelH5Fragment : BaseWebViewFragment() {
                 }
                 if (success) {
                     startScanQr()
-                }else {
+                } else {
                     mScanQrCodeCallBackFunction?.onCallBack("{\"error\": \"未获取到扫码所需权限\"}")
                 }
             }
@@ -216,7 +215,7 @@ class ChannelH5Fragment : BaseWebViewFragment() {
                         val code = data?.getStringExtra(EXTRA_RESULT_QR_CODE) ?: ""
                         if (code.isNotEmpty()) {
                             mScanQrCodeCallBackFunction?.onCallBack("{\"content\": \"$code\"}")
-                        }else {
+                        } else {
                             mScanQrCodeCallBackFunction?.onCallBack("{\"error\": \"获取的二维码为空\"}")
                         }
                     }
