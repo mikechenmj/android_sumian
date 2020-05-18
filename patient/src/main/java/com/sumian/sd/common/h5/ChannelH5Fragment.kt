@@ -29,6 +29,7 @@ import com.sumian.sd.common.pay.activity.PaymentActivity
 import com.sumian.sd.common.utils.EventBusUtil
 import com.sumian.sd.main.MainActivity
 import com.sumian.sd.main.MainActivity.Companion.TAB_1
+import com.sumian.sd.main.MainActivity.Companion.TAB_2
 import com.sumian.sd.main.event.ChangeMainTabEvent
 import com.tencent.smtt.sdk.WebView
 import com.umeng.socialize.UMShareListener
@@ -76,6 +77,9 @@ class ChannelH5Fragment : BaseWebViewFragment() {
         super.onGoToPage(page, rawData)
         if (page == "deviceDatas") {
             EventBusUtil.postStickyEvent(ChangeMainTabEvent(TAB_1))
+        }
+        if (page == "mine") {
+            EventBusUtil.postStickyEvent(ChangeMainTabEvent(TAB_2))
         }
     }
 
