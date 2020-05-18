@@ -448,7 +448,7 @@ public class UserInfoActivity extends BaseViewModelActivity<SdUserInfoPresenter>
         mDvWeight.setContent(userProfile.formatWeight(userProfile.formatField(userProfile.weight)));
         mDvEduLevel.setContent(userProfile.formatField(userProfile.education));
         mDvCareer.setContent(userProfile.formatField(userProfile.career));
-        mDvEthnicity.setContent(userProfile.formatField(userProfile.ethnicity.getName()));
+        mDvEthnicity.setContent(userProfile.formatField(userProfile.ethnicity != null ? userProfile.ethnicity.getName() : getString(R.string.user_none_default_hint)));
         mDvMobile.setContent(userProfile.mobile);
         mDvMedicineHistory.setContent(userProfile.formatIsUsingSleepPills());
         updateDvWechatUI(userProfile.socialites);
