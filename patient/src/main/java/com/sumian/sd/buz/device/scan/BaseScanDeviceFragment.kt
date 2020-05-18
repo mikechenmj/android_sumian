@@ -139,7 +139,11 @@ abstract class BaseScanDeviceFragment : BaseFragment() {
                 }
                 if (allGranted) {
                     if (checkLocationService()) {
-                        onPermissionGranted()
+                        if (isBluetoothEnable()) {
+                            onPermissionGranted()
+                        } else {
+                            startRequestBleEnable()
+                        }
                     }
                 }
             }
@@ -186,12 +190,13 @@ abstract class BaseScanDeviceFragment : BaseFragment() {
         if (activity == null) {
             return
         }
-        if (!isBluetoothEnable()) {
-            return
-        }
         if (EasyPermissions.hasPermissions(activity!!, *mPerms)) {
             if (checkLocationService()) {
-                onPermissionGranted()
+                if (isBluetoothEnable()) {
+                    onPermissionGranted()
+                } else {
+                    startRequestBleEnable()
+                }
             }
         } else {
             requestPermissions(mPerms, REQUEST_PERMISSION_LOCATION_AND_STORAGE)
