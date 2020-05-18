@@ -4,11 +4,13 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import com.blankj.utilcode.util.ActivityUtils
+import com.sumian.common.h5.WebViewManger
 import com.sumian.common.h5.bean.H5PayloadData
 import com.sumian.common.log.CommonLog
 import com.sumian.sd.BuildConfig
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.SdBaseWebViewActivity
+import com.sumian.sd.main.MainActivity
 
 open class SimpleWebActivity : SdBaseWebViewActivity() {
     private var mTitle: String? = null
@@ -79,6 +81,19 @@ open class SimpleWebActivity : SdBaseWebViewActivity() {
             val completeUrl = BuildConfig.BASE_H5_URL + urlContent
             CommonLog.log("SimpleWebActivity completeUrl: $completeUrl")
             return getLaunchIntentWithCompleteUrl(context, completeUrl, cls, pageNameForStat)
+        }
+    }
+
+    override fun onGoToPage(page: String, rawData: String) {
+        super.onGoToPage(page, rawData)
+        if (page == "homeH5") {
+            startActivity(MainActivity.getLaunchIntentForH5(WebViewManger.getInstance().getBaseUrl()
+                    ?: ""))
+            finish()
+        }
+        if (page == "mine") {
+            MainActivity.launch(MainActivity.TAB_2)
+            finish()
         }
     }
 }

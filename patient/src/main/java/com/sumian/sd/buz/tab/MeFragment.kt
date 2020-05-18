@@ -47,10 +47,9 @@ import com.sumian.sd.buz.setting.SettingActivity
 import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.buz.tel.activity.TelBookingListActivity
 import com.sumian.sd.buz.version.VersionManager
+import com.sumian.sd.common.h5.SimpleWebActivity
 import com.sumian.sd.common.h5.SleepFileWebActivity
 import com.sumian.sd.common.log.LogManager
-import com.sumian.sd.main.H5Router
-import com.sumian.sd.main.MainActivity
 import com.sumian.sd.main.OnEnterListener
 import com.sumian.sd.widget.tips.PatientRecordTips
 import com.sumian.sd.widget.tips.PatientServiceTips
@@ -192,15 +191,7 @@ class MeFragment : BaseViewModelFragment<GetAchievementListPresenter>(), View.On
             }
             R.id.dv_coupon_center -> CouponCenterActivity.show()
             R.id.dv_exchange_center -> {
-                if (activity is H5Router) {
-                    val act = activity as H5Router
-                    val url = WebViewManger.getInstance().getBaseUrl() + "redemption-code-center"
-                    val bundle = Bundle().apply {
-                        putInt(MainActivity.KEY_TAB_INDEX, 0)
-                        putString(MainActivity.KEY_H5_URL, url)
-                    }
-                    act.goto(bundle)
-                }
+                SimpleWebActivity.launch(activity!!, "redemption-code-center")
             }
             else -> {
             }

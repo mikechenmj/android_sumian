@@ -140,10 +140,6 @@ abstract class BaseWebViewFragment : BaseViewModelFragment<BaseViewModel>(), SWe
         }
     }
 
-    protected open fun onGoToPage(page: String) {
-
-    }
-
     protected open fun onGoToPage(page: String, rawData: String) {
 
     }

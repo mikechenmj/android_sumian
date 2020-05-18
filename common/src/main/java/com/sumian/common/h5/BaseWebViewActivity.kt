@@ -117,12 +117,7 @@ abstract class BaseWebViewActivity : BaseActivity(), SWebView.OnWebViewListener 
         }
     }
 
-    protected open fun onGoToPage(page: String) {
-
-    }
-
     protected open fun onGoToPage(page: String, rawData: String) {
-
     }
 
     protected open fun onShare(shareData: ShareData) {

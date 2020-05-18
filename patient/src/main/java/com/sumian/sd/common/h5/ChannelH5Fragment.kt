@@ -86,6 +86,9 @@ class ChannelH5Fragment : BaseWebViewFragment() {
         if (url == WebViewManger.getInstance().getBaseUrl() + "ks-index") {
             return true
         }
+        if (url == WebViewManger.getInstance().getBaseUrl()) {
+            return true
+        }
         var index = url.indexOfFirst { c ->
             c.toString() == "?"
         }
