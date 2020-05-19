@@ -38,6 +38,7 @@ import com.sumian.device.util.ILogger
 import com.sumian.sd.BuildConfig
 import com.sumian.sd.R
 import com.sumian.sd.base.ActivityDelegateFactory
+import com.sumian.sd.buz.account.bean.Organization
 import com.sumian.sd.buz.account.bean.Token
 import com.sumian.sd.buz.account.bean.UserInfo
 import com.sumian.sd.buz.account.login.LoginActivity
@@ -384,6 +385,7 @@ object AppManager {
         AppNotificationManager.uploadPushId()
         sendHeartbeat()
         syncUserInfo()
+        syncOrganization()
         initImManager()
     }
 
@@ -457,6 +459,18 @@ object AppManager {
 
             override fun onSuccess(response: UserInfo?) {
                 AppManager.getAccountViewModel().updateUserInfo(response)
+            }
+        })
+    }
+
+    fun syncOrganization() {
+        val call = getSdHttpService().getOrganization()
+        call.enqueue(object : BaseSdResponseCallback<Organization>() {
+            override fun onSuccess(response: Organization?) {
+                getAccountViewModel().updateOrganization(response)
+            }
+
+            override fun onFailure(errorResponse: ErrorResponse) {
             }
         })
     }

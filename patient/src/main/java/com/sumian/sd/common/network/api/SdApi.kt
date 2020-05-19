@@ -9,10 +9,7 @@ import com.sumian.sd.buz.account.achievement.bean.AchievementData
 import com.sumian.sd.buz.account.achievement.bean.AchievementRecord
 import com.sumian.sd.buz.account.achievement.bean.AchievementResponse
 import com.sumian.sd.buz.account.achievement.bean.LastAchievementData
-import com.sumian.sd.buz.account.bean.Ethnicities
-import com.sumian.sd.buz.account.bean.Social
-import com.sumian.sd.buz.account.bean.Token
-import com.sumian.sd.buz.account.bean.UserInfo
+import com.sumian.sd.buz.account.bean.*
 import com.sumian.sd.buz.account.login.ImageCaptcha
 import com.sumian.sd.buz.advisory.bean.Advisory
 import com.sumian.sd.buz.advisory.bean.PictureOssSts
@@ -94,6 +91,9 @@ interface SdApi {
      */
     @POST("authorizations/user/{userId}/easemob")
     fun notifyRegisterImServer(@Path("userId") userId: Int): Call<KeFuMessage>
+
+    @GET("/organizations/{orgId}")
+    fun getOrganization(@Path("orgId") orgId: Int = 1, @Query("include") include: String = "organizable"): Call<Organization>
 
     @FormUrlEncoded
     @POST("authorizations/password")

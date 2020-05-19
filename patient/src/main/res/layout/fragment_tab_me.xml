@@ -149,6 +149,7 @@
                 app:type_icon="@drawable/info_icon_mall" />
 
             <com.sumian.sd.widget.divider.SettingDividerView
+                android:visibility="gone"
                 android:id="@+id/dv_exchange_center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

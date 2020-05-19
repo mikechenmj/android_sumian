@@ -1,7 +1,6 @@
 package com.sumian.sd.buz.tab
 
 import android.graphics.drawable.Drawable
-import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import androidx.core.view.isVisible
@@ -19,7 +18,6 @@ import com.bumptech.glide.request.target.Target
 import com.qmuiteam.qmui.util.QMUISpanHelper
 import com.sumian.common.base.BaseViewModelFragment
 import com.sumian.common.buz.kefu.KefuManager
-import com.sumian.common.h5.WebViewManger
 import com.sumian.common.image.loadImage
 import com.sumian.common.statistic.StatUtil
 import com.sumian.device.callback.DeviceStatusListener
@@ -32,10 +30,10 @@ import com.sumian.sd.buz.account.achievement.MyAchievementActivity
 import com.sumian.sd.buz.account.achievement.bean.AchievementRecord
 import com.sumian.sd.buz.account.achievement.contract.GetAchievementListContract
 import com.sumian.sd.buz.account.achievement.presenter.GetAchievementListPresenter
+import com.sumian.sd.buz.account.bean.Organization
 import com.sumian.sd.buz.account.bean.UserInfo
 import com.sumian.sd.buz.account.userProfile.UserInfoActivity
 import com.sumian.sd.buz.advisory.activity.AdvisoryListActivity
-import com.sumian.sd.buz.cbti.activity.CBTIIntroduction2WebActivity
 import com.sumian.sd.buz.coupon.activity.CouponCenterActivity
 import com.sumian.sd.buz.device.devicemanage.DeviceManageActivity
 import com.sumian.sd.buz.diaryevaluation.DiaryEvaluationListActivity
@@ -118,11 +116,17 @@ class MeFragment : BaseViewModelFragment<GetAchievementListPresenter>(), View.On
         super.initData()
         val userProfile = AppManager.getAccountViewModel().userInfo!!
         updateUserProfile(userProfile)
+        updateOrganizationFeature(AppManager.getAccountViewModel().organization!!)
         AppManager.getAccountViewModel().getUserInfoLiveData().observe(this, Observer<UserInfo> { userInfo ->
             run {
                 userInfo?.let {
                     updateUserProfile(it)
                 }
+            }
+        })
+        AppManager.getAccountViewModel().getOrganizationLiveData().observe(this, Observer<Organization> { organization ->
+            organization?.let {
+                updateOrganizationFeature(it)
             }
         })
         mNotificationViewModel
@@ -202,6 +206,12 @@ class MeFragment : BaseViewModelFragment<GetAchievementListPresenter>(), View.On
         iv_avatar.loadImage(userProfile.avatar, R.mipmap.ic_info_avatar_patient, R.mipmap.ic_info_avatar_patient)
         val nickname = userProfile.nickname
         tv_nickname.text = if (TextUtils.isEmpty(nickname)) userProfile.mobile else nickname
+    }
+
+    private fun updateOrganizationFeature(organization: Organization?) {
+        if (organization != null) {
+            dv_exchange_center.isVisible = organization.organizable.features.redeemCode
+        }
     }
 
     override fun showGraphicService() {

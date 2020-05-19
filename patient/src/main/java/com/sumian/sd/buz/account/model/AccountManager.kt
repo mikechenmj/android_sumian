@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import com.blankj.utilcode.util.SPUtils
 import com.sumian.common.buz.kefu.KefuManager
 import com.sumian.common.utils.JsonUtil
+import com.sumian.sd.buz.account.bean.Organization
 import com.sumian.sd.buz.account.bean.Token
 import com.sumian.sd.buz.account.bean.UserInfo
 import com.sumian.sd.buz.doctor.bean.Doctor
@@ -22,8 +23,10 @@ import com.sumian.sd.buz.doctor.bean.Doctor
 object AccountManager {
     private val SP_KEY_TOKEN = "token"
     private val SP_KEY_USER_INFO = "user_info"
+    private val SP_KEY_ORGANIZATION = "organization"
     private val mTokenLiveData = MutableLiveData<Token>()
     private val mUserInfoLiveData = MutableLiveData<UserInfo>()
+    private val mOrganizationLiveData = MutableLiveData<Organization>()
     private val mTokenChangeListeners = ArrayList<TokenChangeListener>()
 
     val liveDataToken: LiveData<Token>
@@ -36,6 +39,11 @@ object AccountManager {
         get() {
             return mUserInfoLiveData.value
         }
+
+    val organization: Organization?
+    get () {
+        return mOrganizationLiveData.value
+    }
 
     val tokenString: String?
         get() = if (token == null) null else token!!.token
@@ -55,6 +63,7 @@ object AccountManager {
     init {
         updateToken(loadPersistedToken())
         updateUserInfo(loadPersistedUserInfo())
+        updateOrganization(loadOrganization())
     }
 
     private fun loadPersistedToken(): Token? {
@@ -76,6 +85,15 @@ object AccountManager {
 
     private fun persistUserInfo(userInfo: UserInfo?) {
         SPUtils.getInstance().put(SP_KEY_USER_INFO, JsonUtil.toJson(userInfo))
+    }
+
+    private fun loadOrganization(): Organization? {
+        val organizationJson = SPUtils.getInstance().getString(SP_KEY_ORGANIZATION, null)
+        return JsonUtil.fromJson(organizationJson, Organization::class.java)
+    }
+
+    private fun persistOrganization(organization: Organization?) {
+        SPUtils.getInstance().put(SP_KEY_ORGANIZATION, JsonUtil.toJson(organization))
     }
 
     fun updateBoundDoctor(doctor: Doctor?) {
@@ -113,9 +131,16 @@ object AccountManager {
         }
     }
 
+    @MainThread
+    fun updateOrganization(organization: Organization?) {
+        mOrganizationLiveData.value = organization
+        persistOrganization(organization)
+    }
+
     fun clearToken() {
         updateToken(null)
         updateUserInfo(null)
+        updateOrganization(null)
     }
 
     fun registerTokenChangeListener(listener: TokenChangeListener) {
@@ -136,6 +161,10 @@ object AccountManager {
 
     fun getUserInfoLiveData(): MutableLiveData<UserInfo> {
         return mUserInfoLiveData
+    }
+
+    fun getOrganizationLiveData(): MutableLiveData<Organization> {
+        return mOrganizationLiveData
     }
 
     interface TokenChangeListener {
