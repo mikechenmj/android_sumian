@@ -22,6 +22,8 @@
         android:text="@string/bluetooth_not_open" />
 
     <TextView
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
         android:id="@+id/tv_no_device_desc"
         style="@style/text_t2_14"
         android:layout_marginTop="10dp"

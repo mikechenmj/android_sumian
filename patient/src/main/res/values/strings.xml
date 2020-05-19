@@ -563,7 +563,7 @@
     <string name="connected">已连接</string>
     <string name="monitor_not_connect_click_upper_to_connect">监测仪未连接，点击上方尝试连接</string>
     <string name="monitor_is_connecting">监测仪连接中…</string>
-    <string name="please_keep_monito_in_5m">请保持监测仪与手机距离在5米内</string>
+    <string name="please_keep_monito_in_5m">请确保监测仪已开机且距离5米内，若依然连接超时，请关闭蓝牙后重试。</string>
     <string name="monitor_is_connected_please_check_sleeper">监测仪已连接\n请检查速眠仪是否开启</string>
     <string name="sleeper_is_idle">速眠仪已连接，待机中</string>
     <string name="sync_progress_package_progress">正在同步睡眠数据\n第 %d 段 (%d%%)</string>
@@ -585,7 +585,7 @@
     <string name="rescan">重新扫描</string>
     <string name="open_bluetooth">开启蓝牙</string>
     <string name="connect_time_out">连接超时</string>
-    <string name="connect_time_out_message">可关闭蓝牙5s后再次尝试连接</string>
+    <string name="connect_time_out_message">请确保监测仪已开机且距离5米内，若依然连接超时，请关闭蓝牙后重试。</string>
     <string name="please_connect_monitor_before_change_bind">请先连接监测仪，再使用换绑功能</string>
     <string name="sleep_version_title">速眠仪固件升级</string>
     <string name="monitor_version_title">监测仪固件升级</string>
