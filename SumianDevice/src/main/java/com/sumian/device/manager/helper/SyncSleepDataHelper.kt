@@ -551,7 +551,6 @@ object SyncSleepDataHelper {
     private fun onSyncTimeOut(type: Int, beginCmd: String) {
         bleFlowLog("透传数据超时 type: $type beginCmd: $beginCmd")
         removePayloadTimeoutMessage()
-        setIsSyncing(false, "onSyncTimeOut")
         if (isSyncSleepData()) {
             resetSyncFlowFlag()
             bleFlowLog("onSyncTimeOut: $mSleepDataRetryTimes")
