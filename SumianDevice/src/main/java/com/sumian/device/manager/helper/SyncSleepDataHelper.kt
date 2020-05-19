@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
-import android.util.Log
 import com.clj.fastble.utils.HexUtil
 import com.sumian.device.callback.BleCommunicationWatcher
 import com.sumian.device.callback.WriteBleDataCallback
@@ -142,6 +141,7 @@ object SyncSleepDataHelper {
     }
 
     private fun retrySyncSleepData() {
+        bleFlowLog("retrySyncSleepData: $mReceiveStartedTime")
         DeviceManager.writeData(BleCmdUtil.createDataFromString(BleCmd.SYNC_DATA, BleCmd.SYNC_SLEEP_DATA_CONTENT))
     }
 
@@ -324,6 +324,17 @@ object SyncSleepDataHelper {
             bleFlowLog("SYNC_TRANSPARENT receiveSleepData end: $cmd")
         }
         log("收到透传数据：cmd: $cmd， index：$index, currentPackage: $mCurrentPackageProgress / $mPackageTotalDataCount,  total: $mProgress / $mTotalDataCount")
+        if (index >= mTransData.size) {
+            bleFlowLog("睡眠数据索引超出：index: $index total: ${mTransData.size}")
+            if (mReceiveStartedTime < SYNC_SLEEP_DATA_RETRY_TIME) {
+                if (isSyncSleepData()) {
+                    retrySyncSleepData()
+                    mSleepDataRetryTimes += 1
+                }
+            }
+            sendNextPayloadTimeoutDelay()
+            return
+        }
         if (mTransData[index] == null) {
             mProgress++
             mCurrentPackageProgress++
@@ -519,6 +530,7 @@ object SyncSleepDataHelper {
         if (isSyncSleepData()) {
             resetSyncFlowFlag()
             setIsSleepDataTypeSyncing(false)
+            bleFlowLog("onSyncFailed: $mSleepDataRetryTimes")
             if (mSleepDataRetryTimes < SYNC_SLEEP_DATA_RETRY_TIME) {
                 retrySyncSleepData()
                 sendNextPayloadTimeoutDelay()
@@ -542,6 +554,7 @@ object SyncSleepDataHelper {
         setIsSyncing(false, "onSyncTimeOut")
         if (isSyncSleepData()) {
             resetSyncFlowFlag()
+            bleFlowLog("onSyncTimeOut: $mSleepDataRetryTimes")
             if (mSleepDataRetryTimes < SYNC_SLEEP_DATA_RETRY_TIME) {
                 retrySyncSleepData()
                 sendNextPayloadTimeoutDelay()
