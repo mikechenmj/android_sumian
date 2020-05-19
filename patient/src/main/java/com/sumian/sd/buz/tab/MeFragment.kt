@@ -125,9 +125,7 @@ class MeFragment : BaseViewModelFragment<GetAchievementListPresenter>(), View.On
             }
         })
         AppManager.getAccountViewModel().getOrganizationLiveData().observe(this, Observer<Organization> { organization ->
-            organization?.let {
-                updateOrganizationFeature(it)
-            }
+            updateOrganizationFeature(organization)
         })
         mNotificationViewModel
                 .unreadCount
@@ -151,6 +149,7 @@ class MeFragment : BaseViewModelFragment<GetAchievementListPresenter>(), View.On
         }
         dv_device_manage.setContent(monitorSn!!)
         DeviceManager.registerDeviceStatusListener(mDeviceStatusListener)
+        AppManager.syncOrganization()
 //        LCIMManager.getInstance().updateUnreadConversation()
     }
 
@@ -243,6 +242,7 @@ class MeFragment : BaseViewModelFragment<GetAchievementListPresenter>(), View.On
         if (isCanRequest()) {
             mViewModel?.getAchievementList()
         }
+        AppManager.syncOrganization()
     }
 
     override fun onGetAchievementListSuccess(achievementRecordList: List<AchievementRecord>) {

@@ -193,7 +193,6 @@ open class SimpleWebActivity : SdBaseWebViewActivity() {
                     Activity.RESULT_OK -> {
                         val code = data?.getStringExtra(ScanQrCodeActivity.EXTRA_RESULT_QR_CODE) ?: ""
                         if (code.isNotEmpty()) {
-                            Log.i("MCJ","onCallBack1")
                             mScanQrCodeCallBackFunction?.onCallBack("{\"content\": \"$code\"}")
                         } else {
                             mScanQrCodeCallBackFunction?.onCallBack("{\"error\": \"获取的二维码为空\"}")
