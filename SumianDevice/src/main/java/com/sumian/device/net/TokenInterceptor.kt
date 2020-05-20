@@ -29,8 +29,9 @@ class TokenInterceptor : Interceptor {
 
         val request = builder.addHeader(
                 AUTHORIZATION_HEADER,
-                "$BEARER${AuthenticationManager.mToken}"
-        ).build()
+                "$BEARER${AuthenticationManager.mToken}")
+                .addHeader("X-Api-Ver", "1.0")
+                .build()
 
         val response = chain.proceed(request)
         val authorizationHeader = response.header(AUTHORIZATION_HEADER)
