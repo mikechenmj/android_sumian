@@ -154,7 +154,7 @@ abstract class BaseWebViewFragment : BaseViewModelFragment<BaseViewModel>(), SWe
         val urlContentPart = getUrlContentPart()
         val contentContainerParams = urlContentPart != null && urlContentPart.contains("?")
         stringBuilder.append(urlServerPart)
-                .append(urlContentPart)
+                .append(if (urlContentPart.isNullOrEmpty()) "" else urlContentPart)
                 .append(if (contentContainerParams) "&" else "?")
                 .append(getUrlToken())
         val url = stringBuilder.toString()
