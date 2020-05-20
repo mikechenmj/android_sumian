@@ -77,10 +77,6 @@ class BleCmdUtil {
         fun createSuccessResponse(cmdType: String): ByteArray {
             return createDataFromString(cmdType, BleCmd.RESPONSE_CODE_SUCCESS)
         }
-
-        fun createNotSupportResponse(cmdType: String): ByteArray {
-            return createDataFromString(cmdType, BleCmd.RESPONSE_CODE_UNSUPPORT_CMD)
-        }
     }
 
 }

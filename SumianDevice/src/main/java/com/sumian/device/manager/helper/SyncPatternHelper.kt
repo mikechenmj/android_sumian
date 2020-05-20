@@ -7,9 +7,7 @@ import com.sumian.device.cmd.BleCmd
 import com.sumian.device.data.PatternData
 import com.sumian.device.manager.DeviceManager
 import com.sumian.device.net.NetworkManager
-import com.sumian.device.util.BleCmdUtil
-import com.sumian.device.util.LogManager
-import com.sumian.device.util.ThreadManager
+import com.sumian.device.util.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -75,10 +73,6 @@ object SyncPatternHelper {
         })
     }
 
-    private fun queryPattern() {
-        DeviceManager.writeData(BleCmdUtil.createDataFromString(BleCmd.GET_PATTERN))
-    }
-
     private fun sendPatternsToDevice(data: ArrayList<ByteArray>) {
         if (data.size == 0) {
             return
@@ -136,23 +130,30 @@ object SyncPatternHelper {
         })
     }
 
+    private fun putSendPatternToDeviceCmd(pattern: ByteArray, callback: AsyncCallback<Any>) {
+        CmdQueue.putSyncInfoCmd(
+                Cmd(pattern, DeviceStateHelper.generateResultCmd(BleCmd.SET_PATTERN), retry = false, callback = object : BleRequestCallback {
+                    override fun onResponse(data: ByteArray, hexString: String) {
+                        LogManager.bleRequestStatusLog("请求蓝牙状态成功,cmd: $hexString")
+                        LogUtils.d(hexString)
+                        if (hexString.endsWith(BleCmd.RESPONSE_CODE_SUCCESS)) {
+                            callback.onSuccess()
+                        } else {
+                            callback.onFail(1, "error unknown")
+                        }
+                    }
+
+                    override fun onFail(code: Int, msg: String) {
+                        LogManager.bleRequestStatusLog("请求蓝牙状态失败,pattern code: $code msg: $msg")
+                        callback.onFail(code, msg)
+                    }
+                }))
+    }
+
     /**
      * 发送单条pattern数据到device
      */
     private fun sendPatternToDevice(pattern: ByteArray, callback: AsyncCallback<Any>) {
-        DeviceManager.makeRequest(pattern, object : BleRequestCallback {
-            override fun onResponse(data: ByteArray, hexString: String) {
-                LogUtils.d(hexString)
-                if (hexString.endsWith(BleCmd.RESPONSE_CODE_SUCCESS)) {
-                    callback.onSuccess()
-                } else {
-                    callback.onFail(1, "error unknown")
-                }
-            }
-
-            override fun onFail(code: Int, msg: String) {
-                callback.onFail(code, msg)
-            }
-        })
+        putSendPatternToDeviceCmd(pattern, callback)
     }
 }

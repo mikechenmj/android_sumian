@@ -88,7 +88,7 @@ object DfuUpgradeHelper {
             DeviceType.SLEEP_MASTER -> "PDNWK"
             else -> throw IllegalArgumentException("type $target is illegal")
         }
-        isTargetDeviceType = isTargetDeviceType or name!!.startsWith(prefix)
+        isTargetDeviceType = isTargetDeviceType or name.startsWith(prefix)
         return if (isTargetDeviceType) {
             var scanRecordBean = ScanRecord.parseFromBytes(scanRecord)
             return if (scanRecordBean?.serviceUuids != null) {

@@ -19,7 +19,7 @@ class BleCmd {
         const val RESPONSE_CODE_SUCCESS = "88"
         const val RESPONSE_CODE_NONE = "00"
         const val RESPONSE_CODE_FAIL = "ff"
-        const val RESPONSE_CODE_UNSUPPORT_CMD = "fe"
+        const val RESPONSE_CODE_FINISH = "fe"
 
         const val SET_MONITOR_TIME = "40"
         const val SET_USER_INFO = "4b"

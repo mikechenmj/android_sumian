@@ -12,6 +12,8 @@ import com.sumian.device.cmd.BleCmd
 import com.sumian.device.manager.DeviceManager
 import com.sumian.device.manager.upload.SleepDataUploadManager
 import com.sumian.device.util.BleCmdUtil
+import com.sumian.device.util.Cmd
+import com.sumian.device.util.CmdQueue
 import com.sumian.device.util.LogManager
 import java.io.File
 
@@ -23,8 +25,11 @@ import java.io.File
  * version: 1.0
  */
 object SyncSleepDataHelper {
+    private var mSleepDataRetryTimes = 0
+    private var mSyncFinish: Boolean = false
     private var mIsSyncing = false
     private const val PAYLOAD_TIMEOUT_TIME = 1000L * 8
+    private const val SYNC_SLEEP_DATA_RETRY_TIME = 3
     private const val TAG = "[SyncSleepData]"
     const val SYNC_TYPE_SLEEP_DATA = 1
     private const val SYNC_TYPE_SLEEP_MASTER_LOG = 2
@@ -127,14 +132,18 @@ object SyncSleepDataHelper {
         if (isSyncing()) {
             return false
         }
+        mSleepDataRetryTimes = 0
         setIsSyncing(true, "startSyncSleepData")
         sendSetSyncFlagFalseMessageDelay("startSyncSleepData")
-        DeviceManager.writeData(BleCmdUtil.createDataFromString(BleCmd.SYNC_DATA, BleCmd.SYNC_SLEEP_DATA_CONTENT))
+        CmdQueue.putSyncInfoCmd(
+                Cmd(BleCmdUtil.createDataFromString(BleCmd.SYNC_DATA, BleCmd.SYNC_SLEEP_DATA_CONTENT),
+                        DeviceStateHelper.generateResultCmd(BleCmd.SYNC_DATA), priority = Cmd.Priority.SLEEP_DATA, retry = false))
         return true
     }
 
-    private fun startSyncSleepMasterLog() {
-        DeviceManager.writeData(BleCmdUtil.createDataFromString(BleCmd.SYNC_DATA, BleCmd.SYNC_SLEEP_MASTER_LOG_CONTENT))
+    private fun retrySyncSleepData() {
+        bleFlowLog("retrySyncSleepData: $mReceiveStartedTime")
+        DeviceManager.writeData(BleCmdUtil.createDataFromString(BleCmd.SYNC_DATA, BleCmd.SYNC_SLEEP_DATA_CONTENT))
     }
 
     internal fun startSendFakeSleepData() {
@@ -176,6 +185,7 @@ object SyncSleepDataHelper {
                 setIsSyncing(true, "RESPONSE_CODE_SUCCESS")
                 log("收到0x4f回复 发现设备有睡眠特征数据,准备同步中  cmd=$cmd")
                 DeviceManager.postEvent(DeviceManager.EVENT_SYNC_SLEEP_DATA_PREPARE)
+                CmdQueue.blockSyncInfo(true)
                 if (isSyncSleepData()) {
                     resetSyncFlowFlag()
                     mUploadTags.add(UPLOAD_TAG_SYNC_SLEEP_DATA)
@@ -188,6 +198,10 @@ object SyncSleepDataHelper {
             BleCmd.RESPONSE_CODE_FAIL -> {
                 onSyncFailed()
                 log("收到0x4f回复 设备4f 指令识别异常  cmd=$cmd")
+            }
+            BleCmd.RESPONSE_CODE_FINISH -> {
+                mSyncFinish = true
+                log("收到0x4f回复 单段同步完成 cmd=$cmd")
             }
             else -> {
             }
@@ -238,6 +252,7 @@ object SyncSleepDataHelper {
             onSyncFailed()
             return
         }
+        mSyncFinish = false
         val dataCount: Int = subHexStringToInt(cmd, 5, 8)
         mTransData = arrayOfNulls(dataCount)
         mTranType = cmd.substring(4, 5).toInt()
@@ -269,6 +284,8 @@ object SyncSleepDataHelper {
         mEndCmd = cmd
         mEndBytes = data
         calLostFrames()
+        bleFlowLog("writeResponse RESPONSE_CODE_POSITIVE for $cmd")
+        sendNextPayloadTimeoutDelay()
         writeResponse(data, BleCmd.RESPONSE_CODE_POSITIVE, object : WriteBleDataCallback {
             override fun onSuccess(data: ByteArray) {
                 if (hasLostFrames()) {
@@ -282,7 +299,6 @@ object SyncSleepDataHelper {
 
             override fun onFail(code: Int, msg: String) {
             }
-
         })
     }
 
@@ -306,13 +322,21 @@ object SyncSleepDataHelper {
         if (index == mTransData.size - 1) {
             bleFlowLog("单段透传数据最后一条指令: $cmd")
         }
-        if (index > mTransData.size - 1) {
-            log("收到数组越界透传数据 cmd: $cmd index: $index")
-        }
         if (mLogTransparent) {
             mLogTransparent = false
             mHandler.postDelayed({ mLogTransparent = true }, 1000)
             log("收到透传数据：cmd: $cmd， index：$index, currentPackage: $mCurrentPackageProgress / $mPackageTotalDataCount,  total: $mProgress / $mTotalDataCount")
+        }
+        if (index >= mTransData.size) {
+            bleFlowLog("睡眠数据索引超出：index: $index total: ${mTransData.size}")
+            if (mReceiveStartedTime < SYNC_SLEEP_DATA_RETRY_TIME) {
+                if (isSyncSleepData()) {
+                    retrySyncSleepData()
+                    mSleepDataRetryTimes += 1
+                }
+            }
+            sendNextPayloadTimeoutDelay()
+            return
         }
         if (mTransData[index] == null) {
             mProgress++
@@ -336,9 +360,23 @@ object SyncSleepDataHelper {
     private fun onCurrentPackageReceivedSuccess() {
         var file = saveSleepDataToFile()
         if (file.length() > 0) {
-            writeResponse(mEndBytes!!, BleCmd.RESPONSE_CODE_SUCCESS)
+            writeResponse(mEndBytes!!, BleCmd.RESPONSE_CODE_SUCCESS, object : WriteBleDataCallback {
+                override fun onSuccess(data: ByteArray) {
+                }
+
+                override fun onFail(code: Int, msg: String) {
+                    writeResponse(mEndBytes!!, BleCmd.RESPONSE_CODE_SUCCESS)
+                }
+            })
             bleFlowLog("单段接收完成 ${HexUtil.formatHexString(mEndBytes)}")
             if (mCurrentPackageIndex == mTotalPackageCount) {
+                if (isSyncSleepData()) {
+                    mMainHandler.postDelayed({
+                        if (!mSyncFinish) {
+                            writeResponse(mEndBytes!!, BleCmd.RESPONSE_CODE_SUCCESS)
+                        }
+                    }, 1500)
+                }
                 removePayloadTimeoutMessage()
                 onSyncSuccess()
             } else {
@@ -346,7 +384,6 @@ object SyncSleepDataHelper {
             }
         } else {
             bleFlowLog("${file.name} 文件保存失败")
-            removePayloadTimeoutMessage()
             onSyncFailed()
         }
     }
@@ -482,6 +519,7 @@ object SyncSleepDataHelper {
 
     private fun onSyncSuccess() {
         sendSetSyncFlagFalseMessageDelay("onSyncSuccess")
+        CmdQueue.blockSyncInfo(false)
         if (isSyncSleepData()) {
             mUploadCallback.onFinish(UPLOAD_TAG_SYNC_SLEEP_DATA)
             setIsSleepDataTypeSyncing(false)
@@ -490,22 +528,48 @@ object SyncSleepDataHelper {
     }
 
     private fun onSyncFailed() {
-        setIsSyncing(false, "onSyncFailed")
         if (isSyncSleepData()) {
             resetSyncFlowFlag()
             setIsSleepDataTypeSyncing(false)
-            DeviceManager.postEvent(DeviceManager.EVENT_SYNC_SLEEP_DATA_FAIL, null)
+            bleFlowLog("onSyncFailed: $mSleepDataRetryTimes")
+            if (mSleepDataRetryTimes < SYNC_SLEEP_DATA_RETRY_TIME) {
+                retrySyncSleepData()
+                sendNextPayloadTimeoutDelay()
+                mSleepDataRetryTimes += 1
+            } else {
+                removePayloadTimeoutMessage()
+                setIsSyncing(false, "onSyncFailed")
+                CmdQueue.blockSyncInfo(false)
+                DeviceManager.postEvent(DeviceManager.EVENT_SYNC_SLEEP_DATA_FAIL, null)
+            }
+        } else {
+            CmdQueue.blockSyncInfo(false)
+            setIsSyncing(false, "onSyncFailed")
+            removePayloadTimeoutMessage()
         }
     }
 
     private fun onSyncTimeOut(type: Int, beginCmd: String) {
         bleFlowLog("透传数据超时 type: $type beginCmd: $beginCmd")
-        setIsSyncing(false, "onSyncTimeOut")
+        removePayloadTimeoutMessage()
         if (isSyncSleepData()) {
             resetSyncFlowFlag()
-            setIsSleepDataTypeSyncing(false)
-            DeviceManager.postEvent(DeviceManager.EVENT_SYNC_SLEEP_DATA_FAIL, null)
+            bleFlowLog("onSyncTimeOut: $mSleepDataRetryTimes")
+            if (mSleepDataRetryTimes < SYNC_SLEEP_DATA_RETRY_TIME) {
+                retrySyncSleepData()
+                sendNextPayloadTimeoutDelay()
+                mSleepDataRetryTimes += 1
+            } else {
+                setIsSleepDataTypeSyncing(false)
+                setIsSyncing(false, "onSyncTimeOut")
+                CmdQueue.blockSyncInfo(false)
+                DeviceManager.postEvent(DeviceManager.EVENT_SYNC_SLEEP_DATA_FAIL, null)
+            }
+        } else {
+            setIsSyncing(false, "onSyncTimeOut")
+            CmdQueue.blockSyncInfo(false)
         }
+
     }
 
     private fun setIsSyncing(isSyncing: Boolean, tag: String? = null) {

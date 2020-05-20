@@ -260,9 +260,4 @@ object BleCommunicationController {
                     }
                 })
     }
-
-    fun makeSuccessResponse(hexString: String) {
-        val cmdType = BleCmdUtil.getCmdType(hexString)
-        writeData(BleCmdUtil.createSuccessResponse(cmdType))
-    }
 }
