@@ -142,7 +142,7 @@ object SyncSleepDataHelper {
     }
 
     private fun retrySyncSleepData() {
-        bleFlowLog("retrySyncSleepData: $mReceiveStartedTime")
+        log("retrySyncSleepData: $mReceiveStartedTime")
         DeviceManager.writeData(BleCmdUtil.createDataFromString(BleCmd.SYNC_DATA, BleCmd.SYNC_SLEEP_DATA_CONTENT))
     }
 
@@ -178,7 +178,7 @@ object SyncSleepDataHelper {
      * 55 4f 02 01 ff
      */
     fun receiveRequestSleepDataResponse(cmd: String) {
-        bleFlowLog("收到4f: $cmd")
+        log("收到4f: $cmd")
         mTranType = Integer.parseInt(cmd.substring(6, 8), 16)
         when (cmd.substring(cmd.length - 2)) {
             BleCmd.RESPONSE_CODE_SUCCESS -> {
@@ -239,18 +239,16 @@ object SyncSleepDataHelper {
                 onReceiveSleepDataEnd(cmd, data)
             }
             else -> {
-                bleFlowLog("收到 8e 错误: $cmd")
+                log("收到 8e 错误: $cmd")
             }
         }
     }
 
     private fun onReceiveSleepDataStart(cmd: String, data: ByteArray) {
-        bleFlowLog("单段透传开始: $cmd")
+        log("单段透传开始: $cmd")
+        mTranType = Integer.parseInt(cmd.substring(4, 5), 16)
         if (!DeviceManager.isDeviceVersionCompatForSyncingData()) {
-            writeResponse(data, BleCmd.RESPONSE_CODE_FAIL)
-            bleFlowLog("版本兼容因此拒绝透传 $cmd")
-            onSyncFailed()
-            return
+            log("版本信息不兼容 ${DeviceManager.getDevice()}")
         }
         mSyncFinish = false
         val dataCount: Int = subHexStringToInt(cmd, 5, 8)
@@ -276,15 +274,15 @@ object SyncSleepDataHelper {
     }
 
     private fun onReceiveSleepDataEnd(cmd: String, data: ByteArray) {
-        bleFlowLog("单段透传结束: $cmd")
+        log("单段透传结束: $cmd")
         if (!isSyncing()) {
-            bleFlowLog("未在同步状态中 $cmd")
+            log("未在同步状态中因此不处理单段透传结束命令 $cmd")
             return
         }
         mEndCmd = cmd
         mEndBytes = data
         calLostFrames()
-        bleFlowLog("writeResponse RESPONSE_CODE_POSITIVE for $cmd")
+        log("writeResponse RESPONSE_CODE_POSITIVE for $cmd")
         sendNextPayloadTimeoutDelay()
         writeResponse(data, BleCmd.RESPONSE_CODE_POSITIVE, object : WriteBleDataCallback {
             override fun onSuccess(data: ByteArray) {
@@ -312,24 +310,24 @@ object SyncSleepDataHelper {
     fun receiveSleepData(data: ByteArray, cmd: String) {
         // 透传超时可能会走到这一行。不在透传状态不响应透传数据。
         if (!isSyncing()) {
-            bleFlowLog("已不在同步状态，不接受数据 $cmd")
+            log("已不在同步状态，不接受数据 $cmd")
             return
         }
         val index = BleCmdUtil.hexStringToLong(cmd.substring(5, 8)).toInt()
         if (index == 0) {
-            bleFlowLog("单段透传数据第一条指令: $cmd")
+            log("单段透传数据第一条指令: $cmd")
         }
         if (index == mTransData.size - 1) {
-            bleFlowLog("单段透传数据最后一条指令: $cmd")
+            log("单段透传数据最后一条指令: $cmd")
         }
         if (mLogTransparent) {
             mLogTransparent = false
             mHandler.postDelayed({ mLogTransparent = true }, 1000)
-            log("收到透传数据：cmd: $cmd， index：$index, currentPackage: $mCurrentPackageProgress / $mPackageTotalDataCount,  total: $mProgress / $mTotalDataCount")
+            ("收到透传数据：cmd: $cmd， index：$index, currentPackage: $mCurrentPackageProgress / $mPackageTotalDataCount,  total: $mProgress / $mTotalDataCount")
         }
         if (index >= mTransData.size) {
-            bleFlowLog("睡眠数据索引超出：index: $index total: ${mTransData.size}")
-            if (mReceiveStartedTime < SYNC_SLEEP_DATA_RETRY_TIME) {
+            log("睡眠数据索引超出：index: $index total: ${mTransData.size}")
+            if (mSleepDataRetryTimes < SYNC_SLEEP_DATA_RETRY_TIME) {
                 if (isSyncSleepData()) {
                     retrySyncSleepData()
                     mSleepDataRetryTimes += 1
@@ -368,7 +366,7 @@ object SyncSleepDataHelper {
                     writeResponse(mEndBytes!!, BleCmd.RESPONSE_CODE_SUCCESS)
                 }
             })
-            bleFlowLog("单段接收完成 ${HexUtil.formatHexString(mEndBytes)}")
+            log("单段接收完成 ${HexUtil.formatHexString(mEndBytes)}")
             if (mCurrentPackageIndex == mTotalPackageCount) {
                 if (isSyncSleepData()) {
                     mMainHandler.postDelayed({
@@ -383,7 +381,7 @@ object SyncSleepDataHelper {
                 sendNextPayloadTimeoutDelay()
             }
         } else {
-            bleFlowLog("${file.name} 文件保存失败")
+            logError("${file.name} 文件保存失败")
             onSyncFailed()
         }
     }
@@ -408,6 +406,11 @@ object SyncSleepDataHelper {
         sleepData.addAll(mTransData.toMutableList())
         sleepData.add(mEndCmd)
         log("0x8e0f 透传数据" + mTransData.size + "包接收成功,准备写入本地文件 cmd=" + mEndCmd)
+        var transDataId = mTransDataId
+        if (transDataId == null) {
+            logError("transDataId 为空")
+            return File("")
+        }
         var file = SleepDataUploadManager
                 .saveAndUploadData(
                         DeviceManager.mApplication,
@@ -531,7 +534,7 @@ object SyncSleepDataHelper {
         if (isSyncSleepData()) {
             resetSyncFlowFlag()
             setIsSleepDataTypeSyncing(false)
-            bleFlowLog("onSyncFailed: $mSleepDataRetryTimes")
+            log("onSyncFailed: $mSleepDataRetryTimes")
             if (mSleepDataRetryTimes < SYNC_SLEEP_DATA_RETRY_TIME) {
                 retrySyncSleepData()
                 sendNextPayloadTimeoutDelay()
@@ -550,11 +553,11 @@ object SyncSleepDataHelper {
     }
 
     private fun onSyncTimeOut(type: Int, beginCmd: String) {
-        bleFlowLog("透传数据超时 type: $type beginCmd: $beginCmd")
+        log("透传数据超时 type: $type beginCmd: $beginCmd")
         removePayloadTimeoutMessage()
         if (isSyncSleepData()) {
             resetSyncFlowFlag()
-            bleFlowLog("onSyncTimeOut: $mSleepDataRetryTimes")
+            log("onSyncTimeOut: $mSleepDataRetryTimes")
             if (mSleepDataRetryTimes < SYNC_SLEEP_DATA_RETRY_TIME) {
                 retrySyncSleepData()
                 sendNextPayloadTimeoutDelay()
@@ -611,11 +614,11 @@ object SyncSleepDataHelper {
     }
 
     private fun log(s: String) {
-        LogManager.transparentLog(TAG + s)
+        LogManager.transparentLog(s)
     }
 
-    private fun bleFlowLog(s: String) {
-        LogManager.bleFlowLog(s)
+    private fun logError(s: String) {
+        LogManager.transparentLog("error: $s")
     }
 
     fun getSyncSleepDataProgress(): Int {

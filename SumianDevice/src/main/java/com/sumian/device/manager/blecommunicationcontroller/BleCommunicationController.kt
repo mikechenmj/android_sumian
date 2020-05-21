@@ -14,7 +14,6 @@ import com.sumian.device.callback.BleRequestCallback
 import com.sumian.device.callback.WriteBleDataCallback
 import com.sumian.device.cmd.BleCmd
 import com.sumian.device.manager.DeviceManager
-import com.sumian.device.util.BleCmdUtil
 import com.sumian.device.util.LogManager
 import com.sumian.device.util.ThreadManager
 import java.lang.ref.SoftReference
@@ -65,8 +64,12 @@ object BleCommunicationController {
                 errorMsg: String? = null
         ) {
             if (success) {
-                if (hexString.length > 3 && hexString.substring(2, 4) != "8f") {
-                    LogManager.log("Ble Data", "${if (isRead) "D" else "A"}: $hexString")
+                if (hexString.length > 3) {
+                    if (hexString.substring(2, 4) != "8f") {
+                        LogManager.log("Ble Data", "${if (isRead) "D" else "A"}: $hexString")
+                    }
+                } else {
+                    LogManager.log("Ble Data 错误长度", "${if (isRead) "D" else "A"}: $hexString")
                 }
             } else if (!success) {
                 LogManager.bleFlowLog("$hexString 写入失败, errorMsg: $errorMsg")
@@ -245,10 +248,18 @@ object BleCommunicationController {
                 NOTIFY_UUID,
                 object : BleNotifyCallback() {
                     override fun onCharacteristicChanged(data: ByteArray?) {
-                        if (data == null) return
+                        if (data == null)  {
+                            LogManager.bleFlowLog("监测仪传的数据为空")
+                            return
+                        }
+                        val formatData = HexUtil.formatHexString(data)
+                        if (formatData == null) {
+                            LogManager.bleFlowLog("监测仪传的数据格式化为空以及监测仪传的数据长度为: ${data.size}")
+                            return
+                        }
                         mOriginBleCommunicationWatcher.onRead(
-                                data,
-                                HexUtil.formatHexString(data)
+                                data, formatData
+
                         )
                     }
 

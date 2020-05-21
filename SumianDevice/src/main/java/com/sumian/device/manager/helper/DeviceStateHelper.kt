@@ -210,7 +210,7 @@ object DeviceStateHelper {
         putQueryMonitorSn()
         putQueryMonitorVersion()
         putQuerySleepMasterConnectStatus()
-        if (DeviceManager.isMonitorConnected()) DeviceManager.startSyncSleepData()
+        if (DeviceManager.isMonitorConnected()) SyncSleepDataHelper.startSyncSleepData()
     }
 
     private fun receiveMonitorBatteryInfo(cmd: String) {
@@ -335,6 +335,11 @@ object DeviceStateHelper {
 
     private fun receiveSleepMasterConnectionStatus(hexString: String) {
         val isConnected = BleCmdUtil.getContentFromData(hexString) == BleCmd.RESPONSE_CODE_POSITIVE
+        putQuerySleepMasterVersion()
+        putQuerySleepMasterBattery()
+        putQuerySleepMasterMac()
+        putQuerySleepMasterSn()
+        putQueryMonitorAndSleepMasterWorkMode()
         DeviceManager.postEvent(
                 DeviceManager.EVENT_SLEEP_MASTER_CONNECT_STATUS_CHANGE,
                 if (isConnected) DeviceConnectStatus.CONNECTED else DeviceConnectStatus.DISCONNECTED

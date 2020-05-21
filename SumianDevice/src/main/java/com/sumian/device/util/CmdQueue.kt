@@ -79,7 +79,6 @@ object CmdQueue {
                     MSG_SEND -> {
                         var cmd = takeSyncInfoCmd()
                         mSyncInfoHandler?.removeMessages(MSG_SEND)
-                        Log.i("MCJ", "Sync: ${HexUtil.formatHexString(cmd.cmd)}")
                         mCurrentSyncInfoCmd = cmd
                         mCurrentRetrySyncInfoCmd = cmd.copy(resultCmds = mutableListOf<String>().apply {
                             addAll(cmd.resultCmds)
@@ -88,16 +87,15 @@ object CmdQueue {
                         DeviceManager.writeData(cmd.cmd)
                     }
                     MSG_TIMEOUT -> {
-                        Log.i("MCJ", "TIMEOUT: ${HexUtil.formatHexString(mCurrentSyncInfoCmd?.cmd)}")
                         var currentCmd = mCurrentSyncInfoCmd
                         if (currentCmd == null) {
-                            sendMsgSyncInfo()
+                            sendNextMsgSyncInfo()
                             return
                         }
                         mCurrentSyncInfoCmd = null
                         var retryCmd = mCurrentRetrySyncInfoCmd
                         if (retryCmd == null) {
-                            sendMsgSyncInfo()
+                            sendNextMsgSyncInfo()
                             return
                         }
                         retryCmd(retryCmd)
@@ -111,11 +109,10 @@ object CmdQueue {
                         var cmdHeader = cmdStr.substring(2, 4)
                         var success = bundle.getBoolean(EXTRA_CMD_WRITE_RESULT)
                         if (cmdHeader == currentCmdHeader) {
-                            Log.i("MCJ", "WRITE: ${HexUtil.formatHexString(mCurrentSyncInfoCmd?.cmd)} success: $success")
                             if (success) {
                                 if (currentCmd!!.resultCmds.isEmpty()) {
                                     mCurrentSyncInfoCmd = null
-                                    sendMsgSyncInfo()
+                                    sendNextMsgSyncInfo()
                                 } else {
                                     sendMsgSyncInfoTimeOut()
                                 }
@@ -133,25 +130,22 @@ object CmdQueue {
                         var cmdStr = bundle.getString(EXTRA_CMD_HEX_STRING)
                         var cmdHeader = cmdStr?.substring(2, 4)
                         if (cmdHeader == currentCmdHeader) {
-                            Log.i("MCJ", "READ: $cmdStr")
                             var resultCmds = currentCmd.resultCmds
                             if (resultCmds.isEmpty()) {
                                 mCurrentSyncInfoCmd = null
                                 currentCmd.callback?.onResponse(cmd, cmdStr)
-                                sendMsgSyncInfo()
+                                sendNextMsgSyncInfo()
                             } else {
                                 sendMsgSyncInfoTimeOut()
                                 for (resultCmd in resultCmds) {
-                                    Log.i("MCJ", "resultCmd: $resultCmd}")
                                 }
                                 if (resultCmds[0].substring(2, 4) == cmdHeader) {
                                     resultCmds.removeAt(0)
                                 }
-                                Log.i("MCJ", "currentCmd.resultCmds.size: ${currentCmd.resultCmds.size}")
                                 if (resultCmds.isEmpty()) {
                                     mCurrentSyncInfoCmd = null
                                     currentCmd.callback?.onResponse(cmd, cmdStr)
-                                    sendMsgSyncInfo()
+                                    sendNextMsgSyncInfo()
                                 }
                             }
                         }
@@ -159,7 +153,6 @@ object CmdQueue {
                 }
             }
         }
-        Log.i("MCJ", "start sync info")
         var communicationWatcher = object : BleCommunicationWatcher {
             override fun onRead(data: ByteArray, hexString: String) {
                 mSyncInfoHandler?.sendMessage(Message.obtain().apply {
@@ -184,7 +177,7 @@ object CmdQueue {
         }
         DeviceManager.registerBleCommunicationWatcher(communicationWatcher)
         mCommunicationWatcher = communicationWatcher
-        sendMsgSyncInfo()
+        sendNextMsgSyncInfo()
         mPutCmdThread = HandlerThread("putSyncInfo")
         mPutCmdThread!!.start()
         mPutCmdHandler = Handler(mPutCmdThread!!.looper)
@@ -193,17 +186,16 @@ object CmdQueue {
     private fun retryCmd(cmd: Cmd) {
         if (!cmd.retry || cmd.retryTime >= CMD_RETRY_TIME) {
             cmd.callback?.onFail(if (!cmd.retry) ERROR_CODE_TIMEOUT else ERROR_CODE_TIMEOUT_AND_RETRY_FAIL, "${cmd.cmd} timeout")
-            sendMsgSyncInfo()
+            sendNextMsgSyncInfo()
             return
         }
-        Log.i("MCJ", "retryCmd ${HexUtil.formatHexString(cmd.cmd)}")
         cmd.retryTime += 1
         cmd.priority = Cmd.Priority.RETRY
         mSyncInfoQueue.put(cmd)
-        sendMsgSyncInfo()
+        sendNextMsgSyncInfo()
     }
 
-    private fun sendMsgSyncInfo() {
+    private fun sendNextMsgSyncInfo() {
         if (mInMsgSendBlock) {
             return
         }
@@ -239,7 +231,6 @@ object CmdQueue {
     }
 
     fun blockSyncInfo(block: Boolean) {
-        Log.i("MCJ","blockSyncInfo: $block")
         mIsBlockSyncInfoQueue = block
     }
 
