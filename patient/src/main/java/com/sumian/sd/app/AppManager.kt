@@ -361,7 +361,9 @@ object AppManager {
     fun onAppForeground() {
         LogManager.appendUserOperationLog("App 进入 前台")
         if (!DeviceManager.isMonitorConnected() && DeviceManager.isBluetoothEnable()) {
-            DeviceManager.connectBoundDevice(null)
+            if (getAccountViewModel().isLogin) {
+                DeviceManager.connectBoundDevice(null)
+            }
         }
         uploadSleepFile()
         sendHeartbeat()
@@ -387,6 +389,11 @@ object AppManager {
         syncUserInfo()
         syncOrganization()
         initImManager()
+        if (!DeviceManager.isMonitorConnected() && DeviceManager.isBluetoothEnable()) {
+            if (getAccountViewModel().isLogin) {
+                DeviceManager.connectBoundDevice(null)
+            }
+        }
     }
 
     private fun initImManager() {
