@@ -53,11 +53,11 @@ android {
         applicationId = "com.sumian.sd"
         applicationIdSuffix = null
         versionCode = new Date().format('yyyyMMddHH').toInteger()
-        versionName = "1.34.0"
+        versionName = "1.35.0-build1"
         versionNameSuffix = null
 
         minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
 
