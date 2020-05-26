@@ -4,11 +4,13 @@ import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
@@ -23,9 +25,14 @@ import com.sumian.device.data.SumianDevice
 import com.sumian.device.manager.DeviceManager
 import com.sumian.device.manager.helper.SyncSleepDataHelper
 import com.sumian.sd.R
+import com.sumian.sd.buz.device.scan.BaseScanDeviceFragment
+import com.sumian.sd.buz.device.scan.PermissionUtil
 import com.sumian.sd.buz.device.scan.ScanDeviceActivity
+import com.sumian.sd.buz.device.scan.ScanPermissionDetailActivity
 import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.buz.upgrade.activity.DeviceVersionNoticeActivity
+import com.sumian.sd.common.log.SdLogManager
+import com.sumian.sd.common.utils.LocationManagerUtil
 import com.sumian.sd.common.utils.UiUtils
 import com.sumian.sd.widget.dialog.SumianImageTextToast
 import com.sumian.sd.wxapi.MiniProgramHelper
@@ -46,6 +53,9 @@ class DeviceCardFragment : BaseFragment() {
 
     companion object {
         private const val REQUEST_CODE_SCAN_DEVICE = 100
+        private const val REQUEST_CODE_FUNCTION_LOCATION = 200
+        private const val REQUEST_CODE_PERMISSION_DETAIL = 300
+        private const val REQUEST_PERMISSION_LOCATION_AND_STORAGE = 1
     }
 
     private var mRotateAnimator: ObjectAnimator? = null
@@ -97,18 +107,32 @@ class DeviceCardFragment : BaseFragment() {
                         REQUEST_CODE_SCAN_DEVICE
                 )
             } else {
-                if (!DeviceManager.isBluetoothEnable()) {
-                    DeviceManager.enableBluetooth()
-                } else {
-                    if (monitor.monitorConnectStatus == DeviceConnectStatus.DISCONNECTED) {
-                        DeviceManager.connectBoundDevice(mConnectDeviceCallback)
-                    }
-                }
+                connectBoundDeviceIfCan(monitor)
             }
         }
         tv_know_device.setOnClickListener {
             StatUtil.event(StatConstants.click_home_page_learn_more_about_device)
             MiniProgramHelper.launchYouZanOrWeb(activity!!)
+        }
+    }
+
+    private fun connectBoundDeviceIfCan(device: SumianDevice) {
+        if (PermissionUtil.hasBluetoothPermissions(activity!!)) {
+            if (LocationManagerUtil.checkLocationService(this, REQUEST_CODE_FUNCTION_LOCATION)) {
+                if (!DeviceManager.isBluetoothEnable()) {
+                    DeviceManager.enableBluetooth()
+                } else {
+                    if (device.monitorConnectStatus == DeviceConnectStatus.DISCONNECTED) {
+                        DeviceManager.connectBoundDevice(mConnectDeviceCallback)
+                    }
+                }
+            }
+        } else {
+            if (PermissionUtil.isForbidPermissionPopup(this) || PermissionUtil.shouldShowRequestPermissionRationale(this)) {
+                PermissionUtil.showScanPermissionDetail(this, REQUEST_CODE_PERMISSION_DETAIL)
+            } else {
+                PermissionUtil.requestPermissions(this, REQUEST_PERMISSION_LOCATION_AND_STORAGE)
+            }
         }
     }
 
@@ -325,16 +349,32 @@ class DeviceCardFragment : BaseFragment() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQUEST_CODE_SCAN_DEVICE) {
-            if (resultCode == Activity.RESULT_OK) {
-//                DeviceManager.bind(
-//                        ScanDeviceActivity.getDeviceMacFromIntent(data!!)!!,
-//                        mConnectDeviceCallback
-//                )
+        when (requestCode) {
+            REQUEST_CODE_FUNCTION_LOCATION -> {
+                var device = DeviceManager.getDevice() ?: return
+                connectBoundDeviceIfCan(device)
             }
-        } else {
-            super.onActivityResult(requestCode, resultCode, data)
+            REQUEST_CODE_PERMISSION_DETAIL -> {
+                PermissionUtil.requestPermissions(this, REQUEST_PERMISSION_LOCATION_AND_STORAGE)
+            }
+            else -> super.onActivityResult(requestCode, resultCode, data)
         }
+    }
 
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode === REQUEST_PERMISSION_LOCATION_AND_STORAGE) {
+            var allGranted = true
+            for (i in permissions.indices) {
+                SdLogManager.logPermission("requestPermissionIfNeed permission: ${ActivityCompat.checkSelfPermission(activity!!, permissions[i])}")
+                if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                    allGranted = false
+                }
+            }
+            if (allGranted) {
+                DeviceManager.getDevice() ?: return
+                connectBoundDeviceIfCan(DeviceManager.getDevice()!!)
+            }
+        }
     }
 }

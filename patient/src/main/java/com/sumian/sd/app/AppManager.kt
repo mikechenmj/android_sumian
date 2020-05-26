@@ -45,6 +45,7 @@ import com.sumian.sd.buz.account.login.LoginActivity
 import com.sumian.sd.buz.account.login.NewUserGuideActivity
 import com.sumian.sd.buz.account.model.AccountManager
 import com.sumian.sd.buz.cbti.video.download.VideoDownloadManager
+import com.sumian.sd.buz.device.scan.PermissionUtil
 import com.sumian.sd.buz.devicemanager.AutoSyncDeviceDataUtil
 import com.sumian.sd.buz.doctor.model.DoctorViewModel
 import com.sumian.sd.buz.notification.NotificationConst
@@ -59,6 +60,7 @@ import com.sumian.sd.common.log.SdLogManager
 import com.sumian.sd.common.network.NetworkManager
 import com.sumian.sd.common.network.api.SdApi
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
+import com.sumian.sd.common.utils.LocationManagerUtil
 import com.sumian.sd.common.utils.getString
 import com.sumian.sd.main.MainActivity
 import java.util.HashMap
@@ -360,7 +362,9 @@ object AppManager {
 
     fun onAppForeground() {
         LogManager.appendUserOperationLog("App 进入 前台")
-        if (!DeviceManager.isMonitorConnected() && DeviceManager.isBluetoothEnable()) {
+        if (!DeviceManager.isMonitorConnected() && DeviceManager.isBluetoothEnable()
+                && LocationManagerUtil.isLocationProviderEnable(App.getAppContext())
+                && PermissionUtil.hasBluetoothPermissions(App.getAppContext())) {
             if (getAccountViewModel().isLogin) {
                 DeviceManager.connectBoundDevice(null)
             }
@@ -389,7 +393,10 @@ object AppManager {
         syncUserInfo()
         syncOrganization()
         initImManager()
-        if (!DeviceManager.isMonitorConnected() && DeviceManager.isBluetoothEnable()) {
+        if (!DeviceManager.isMonitorConnected() && DeviceManager.isBluetoothEnable()
+                && LocationManagerUtil.isLocationProviderEnable(App.getAppContext())
+                && PermissionUtil.hasBluetoothPermissions(App.getAppContext())
+        ) {
             if (getAccountViewModel().isLogin) {
                 DeviceManager.connectBoundDevice(null)
             }

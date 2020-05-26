@@ -4,6 +4,7 @@ package com.sumian.sd.buz.device.scan
 
 import android.bluetooth.BluetoothDevice
 import android.os.Handler
+import android.util.Log
 import android.view.View
 import androidx.annotation.StringRes
 import androidx.recyclerview.widget.LinearLayoutManager

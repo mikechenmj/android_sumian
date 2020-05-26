@@ -2,11 +2,15 @@ package com.sumian.sd.buz.device.devicemanage
 
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupWindow
+import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
 import com.blankj.utilcode.util.LogUtils
 import com.sumian.common.base.BaseFragment
@@ -19,9 +23,13 @@ import com.sumian.device.data.DeviceConnectStatus
 import com.sumian.device.data.SumianDevice
 import com.sumian.device.manager.DeviceManager
 import com.sumian.sd.R
+import com.sumian.sd.buz.device.scan.PermissionUtil
+import com.sumian.sd.buz.device.widget.DeviceCardFragment
 import com.sumian.sd.buz.device.widget.SyncAnimatorUtil
 import com.sumian.sd.buz.devicemanager.BlueDevice
+import com.sumian.sd.common.log.SdLogManager
 import com.sumian.sd.common.utils.BluetoothUtil
+import com.sumian.sd.common.utils.LocationManagerUtil
 import com.sumian.sd.widget.dialog.SumianAlertDialog
 import kotlinx.android.synthetic.main.fragment_device_manage.*
 import kotlinx.android.synthetic.main.layout_device_manage_fragment_no_device.*
@@ -45,6 +53,9 @@ class DeviceManageFragment : BaseFragment() {
         const val CARD_STATUS_BLUETOOTH_NOT_ENABLE = 3
 
         const val REQUEST_CODE_OPEN_BLUETOOTH = 1
+        private const val REQUEST_CODE_FUNCTION_LOCATION = 200
+        private const val REQUEST_CODE_PERMISSION_DETAIL = 300
+        private const val REQUEST_PERMISSION_LOCATION_AND_STORAGE = 1
     }
 
     private var mCardStatus = 0
@@ -121,12 +132,11 @@ class DeviceManageFragment : BaseFragment() {
             })
         }
         iv_device.setOnClickListener {
-            connectBoundDevice()
+            connectBoundDeviceIfCan()
         }
         iv_float_menu.setOnClickListener { showUnbindPopup() }
         iv_open_bluetooth.setOnClickListener {
-            // 由于监听了蓝牙装填的live data， 蓝牙状态改变会自动update ui
-            BluetoothUtil.startActivityForOpenBluetooth(this, REQUEST_CODE_OPEN_BLUETOOTH)
+            connectBoundDeviceIfCan()
         }
         monitor_battery_view.setTextSize(14f)
         sleeper_battery_view.setTextSize(14f)
@@ -168,21 +178,35 @@ class DeviceManageFragment : BaseFragment() {
         updateUI()
     }
 
-    private fun connectBoundDevice() {
-        if (!DeviceManager.isMonitorConnected()) {
-            DeviceManager.connectBoundDevice(object : ConnectDeviceCallback {
-                override fun onStart() {
-                    showRipple(true)
-                }
+    private fun connectBoundDeviceIfCan() {
+        if (PermissionUtil.hasBluetoothPermissions(activity!!)) {
+            if (LocationManagerUtil.checkLocationService(this, REQUEST_CODE_FUNCTION_LOCATION)) {
+                if (!DeviceManager.isBluetoothEnable()) {
+                    DeviceManager.enableBluetooth()
+                } else {
+                    if (DeviceManager.getDevice()?.monitorConnectStatus == DeviceConnectStatus.DISCONNECTED) {
+                        DeviceManager.connectBoundDevice(object : ConnectDeviceCallback {
+                            override fun onStart() {
+                                showRipple(true)
+                            }
 
-                override fun onSuccess() {
-                    showRipple(false)
-                }
+                            override fun onSuccess() {
+                                showRipple(false)
+                            }
 
-                override fun onFail(code: Int, msg: String) {
-                    showRipple(false)
+                            override fun onFail(code: Int, msg: String) {
+                                showRipple(false)
+                            }
+                        })
+                    }
                 }
-            })
+            }
+        } else {
+            if (PermissionUtil.isForbidPermissionPopup(this) || PermissionUtil.shouldShowRequestPermissionRationale(this)) {
+                PermissionUtil.showScanPermissionDetail(this, REQUEST_CODE_PERMISSION_DETAIL)
+            } else {
+                PermissionUtil.requestPermissions(this, REQUEST_PERMISSION_LOCATION_AND_STORAGE)
+            }
         }
     }
 
@@ -320,6 +344,33 @@ class DeviceManageFragment : BaseFragment() {
         if (mSumianImageTextDialog != null && mSumianImageTextDialog!!.isShowing) {
             mSumianImageTextDialog?.dismiss()
             mSumianImageTextDialog = null
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == REQUEST_CODE_FUNCTION_LOCATION) {
+            connectBoundDeviceIfCan()
+        }
+        if (requestCode == REQUEST_CODE_PERMISSION_DETAIL) {
+            PermissionUtil.requestPermissions(this, REQUEST_PERMISSION_LOCATION_AND_STORAGE)
+        } else {
+            super.onActivityResult(requestCode, resultCode, data)
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode === REQUEST_PERMISSION_LOCATION_AND_STORAGE) {
+            var allGranted = true
+            for (i in permissions.indices) {
+                SdLogManager.logPermission("requestPermissionIfNeed permission: ${ActivityCompat.checkSelfPermission(activity!!, permissions[i])}")
+                if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                    allGranted = false
+                }
+            }
+            if (allGranted) {
+                connectBoundDeviceIfCan()
+            }
         }
     }
 
