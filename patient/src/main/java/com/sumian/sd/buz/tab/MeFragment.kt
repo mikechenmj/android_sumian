@@ -106,6 +106,7 @@ class MeFragment : BaseViewModelFragment<GetAchievementListPresenter>(), View.On
         tips_service.setOnServiceTipsCallback(this)
         tips_record.setOnRecordTipsCallback(this)
         dv_exchange_center.setOnClickListener(this)
+        dv_my_reservation.setOnClickListener(this)
         dv_device_market.setOnClickListener { MiniProgramHelper.launchYouZanOrWeb(activity!!) }
         dv_test.isVisible = BuildConfig.DEBUG
         dv_test.setOnClickListener { ActivityUtils.startActivity(DeviceTestActivity::class.java) }
@@ -196,6 +197,9 @@ class MeFragment : BaseViewModelFragment<GetAchievementListPresenter>(), View.On
             R.id.dv_exchange_center -> {
                 SimpleWebActivity.launch(activity!!, "redemption-code-center")
             }
+            R.id.dv_my_reservation -> {
+                SimpleWebActivity.launch(activity!!, "my-reservation")
+            }
             else -> {
             }
         }
@@ -210,6 +214,7 @@ class MeFragment : BaseViewModelFragment<GetAchievementListPresenter>(), View.On
     private fun updateOrganizationFeature(organization: Organization?) {
         if (organization != null) {
             dv_exchange_center.isVisible = organization.organizable.features.redeemCode
+            dv_my_reservation.isVisible = organization.organizable.features.booking || true
         }
     }
 

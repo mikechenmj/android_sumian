@@ -124,10 +124,10 @@
                 app:type_icon="@drawable/ic_info_icon_set" />
 
             <com.sumian.sd.widget.divider.SettingDividerView
-                android:visibility="gone"
                 android:id="@+id/dv_my_metal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 app:divider_line_visible="visible"
                 app:type_desc="@string/my_metal"
                 app:type_icon="@drawable/ic_info_medal" />
@@ -149,22 +149,31 @@
                 app:type_icon="@drawable/info_icon_mall" />
 
             <com.sumian.sd.widget.divider.SettingDividerView
-                android:visibility="gone"
                 android:id="@+id/dv_exchange_center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 app:divider_line_visible="visible"
                 app:type_desc="@string/exchange_center"
-                app:type_icon="@drawable/info_icon_mall" />
+                app:type_icon="@drawable/ic_exchange_center" />
 
             <com.sumian.sd.widget.divider.SettingDividerView
-                android:visibility="gone"
                 android:id="@+id/dv_coupon_center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 app:divider_line_visible="visible"
                 app:type_desc="@string/coupon_center"
                 app:type_icon="@drawable/ic_info_card" />
+
+            <com.sumian.sd.widget.divider.SettingDividerView
+                android:id="@+id/dv_my_reservation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:divider_line_visible="visible"
+                app:type_desc="@string/my_reservation"
+                app:type_icon="@drawable/ic_my_reservation" />
 
             <com.sumian.sd.widget.divider.SettingDividerView
                 android:id="@+id/dv_setting"

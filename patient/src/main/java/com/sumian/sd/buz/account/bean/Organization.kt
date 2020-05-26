@@ -36,5 +36,6 @@ data class Features(var basic: Boolean,
                     var bedMap: Boolean,
                     var report: Boolean,
                     @SerializedName("redeem_code")
-                    var redeemCode: Boolean
+                    var redeemCode: Boolean,
+                    var booking: Boolean
 )
