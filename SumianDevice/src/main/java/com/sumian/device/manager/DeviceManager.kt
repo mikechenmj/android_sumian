@@ -13,6 +13,7 @@ import android.os.Handler
 import android.os.Looper
 import android.os.Message
 import android.text.TextUtils
+import android.util.Log
 import com.blankj.utilcode.util.SPUtils
 import com.clj.fastble.BleManager
 import com.clj.fastble.callback.BleGattCallback

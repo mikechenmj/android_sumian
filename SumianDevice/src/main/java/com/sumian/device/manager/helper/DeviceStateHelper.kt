@@ -335,11 +335,15 @@ object DeviceStateHelper {
 
     private fun receiveSleepMasterConnectionStatus(hexString: String) {
         val isConnected = BleCmdUtil.getContentFromData(hexString) == BleCmd.RESPONSE_CODE_POSITIVE
-        putQuerySleepMasterVersion()
-        putQuerySleepMasterBattery()
-        putQuerySleepMasterMac()
-        putQuerySleepMasterSn()
-        putQueryMonitorAndSleepMasterWorkMode()
+        if (isConnected) {
+            putQuerySleepMasterVersion()
+            putQuerySleepMasterBattery()
+            putQuerySleepMasterMac()
+            putQuerySleepMasterSn()
+            putQueryMonitorAndSleepMasterWorkMode()
+        }else {
+            DeviceManager.getDevice()?.sleepMasterVersionInfo = null
+        }
         DeviceManager.postEvent(
                 DeviceManager.EVENT_SLEEP_MASTER_CONNECT_STATUS_CHANGE,
                 if (isConnected) DeviceConnectStatus.CONNECTED else DeviceConnectStatus.DISCONNECTED
