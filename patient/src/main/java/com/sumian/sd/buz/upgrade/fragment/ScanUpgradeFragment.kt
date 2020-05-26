@@ -83,12 +83,14 @@ class ScanUpgradeFragment(private var mDeviceType: Int) : BaseScanDeviceFragment
         override fun onSuccess() {
             mUpgrading = false
             LogManager.deviceUpgradeLog("升级固件成功：$mDeviceType")
-            mProgressDialog?.dismissAllowingStateLoss()
+            if (mProgressDialog?.isAdded == true) {
+                mProgressDialog?.dismissAllowingStateLoss()
+            }
             var upgradeConfirmDialog: UpgradeConfirmDialog? = null
             upgradeConfirmDialog = UpgradeConfirmDialog(
                     getString(R.string.upgrade_success_title_text),
                     getString(R.string.upgrade_success_content_text)) {
-                upgradeConfirmDialog?.dismiss()
+                upgradeConfirmDialog?.dismissAllowingStateLoss()
                 activity?.finish()
             }
             upgradeConfirmDialog.isCancelable = false
@@ -102,12 +104,14 @@ class ScanUpgradeFragment(private var mDeviceType: Int) : BaseScanDeviceFragment
         override fun onFail(code: Int, msg: String?) {
             mUpgrading = false
             LogManager.deviceUpgradeLog("升级固件失败：code: $code msg: $msg mDeviceType: $mDeviceType")
-            mProgressDialog?.dismiss()
+            if (mProgressDialog?.isAdded == true) {
+                mProgressDialog?.dismissAllowingStateLoss()
+            }
             var upgradeConfirmDialog: UpgradeConfirmDialog? = null
             upgradeConfirmDialog = UpgradeConfirmDialog(
                     getString(R.string.upgrade_fail_title_text),
                     getString(R.string.upgrade_fail_content_text)) {
-                upgradeConfirmDialog?.dismiss()
+                upgradeConfirmDialog?.dismissAllowingStateLoss()
                 rescan()
             }
             if (activity != null) {
