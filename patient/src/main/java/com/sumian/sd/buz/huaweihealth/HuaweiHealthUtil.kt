@@ -208,7 +208,11 @@ object HuaweiHealthUtil {
     fun queryGender(context: Context, onResult: (Int, Int) -> Unit) {
         HiHealthDataStore.getGender(context) { code, gender ->
             if (code == HiHealthError.SUCCESS) {
-                onResult(code, gender as Int)
+                var genderInt = gender as Int
+                if (genderInt < 0) {
+                    genderInt = 3
+                }
+                onResult(code, genderInt)
             } else {
                 onResult(code, 3)
             }
