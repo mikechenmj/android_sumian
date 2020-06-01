@@ -8,6 +8,7 @@ import com.huawei.hihealth.error.HiHealthError
 import com.huawei.hihealthkit.HiHealthDataQuery
 import com.huawei.hihealthkit.HiHealthDataQueryOption
 import com.huawei.hihealthkit.auth.HiHealthAuth
+import com.huawei.hihealthkit.auth.HiHealthOpenPermissionType
 import com.huawei.hihealthkit.auth.IAuthorizationListener
 import com.huawei.hihealthkit.data.HiHealthData
 import com.huawei.hihealthkit.data.HiHealthPointData
@@ -62,11 +63,12 @@ object HuaweiHealthUtil {
 
     fun requestAuthorization(context: Context, onResult: (Int, String) -> Unit) {
         val read = intArrayOf(
-                HiHealthPointType.DATA_POINT_STEP_SUM,
-                HiHealthPointType.DATA_POINT_DISTANCE_SUM,
-                HiHealthPointType.DATA_POINT_CALORIES_SUM,
-                HiHealthSetType.DATA_SET_CORE_SLEEP,
-                101001, 101002)
+                HiHealthOpenPermissionType.HEALTH_OPEN_PERMISSION_TYPE_READ_DATA_POINT_STEP_SUM,
+                HiHealthOpenPermissionType.HEALTH_OPEN_PERMISSION_TYPE_READ_DATA_POINT_DISTANCE_SUM,
+                HiHealthOpenPermissionType.HEALTH_OPEN_PERMISSION_TYPE_READ_DATA_POINT_CALORIES_SUM,
+                HiHealthOpenPermissionType.HEALTH_OPEN_PERMISSION_TYPE_READ_DATA_SET_CORE_SLEEP,
+                HiHealthOpenPermissionType.HEALTH_OPEN_PERMISSION_TYPE_READ_USER_PROFILE_INFORMATION,
+                HiHealthOpenPermissionType.HEALTH_OPEN_PERMISSION_TYPE_READ_USER_PROFILE_FEATURE)
         val write = intArrayOf()
         HiHealthAuth.requestAuthorization(context, write, read) { code, message ->
             onResult(code, message.toString())
@@ -260,7 +262,6 @@ object HuaweiHealthUtil {
                 onResult(i, ArrayList())
             }
         }
-
     }
 
     fun getCount(context: Context) {

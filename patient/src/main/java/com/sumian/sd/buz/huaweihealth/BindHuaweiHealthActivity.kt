@@ -123,6 +123,7 @@ class BindHuaweiHealthActivity : BaseActivity() {
     }
 
     private fun updateHuaweiHealthData(data: HuaweiHealthData) {
+        SdLogManager.logHuaweiHealth("updateHuaweiHealthData: $data")
         val call = AppManager.getSdHttpService().updateHuaweiHealthData(data)
         addCall(call)
         call.enqueue(object : BaseSdResponseCallback<HuaweiHealthDataResponse>() {
