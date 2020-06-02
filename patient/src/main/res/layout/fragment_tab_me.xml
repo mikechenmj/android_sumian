@@ -176,6 +176,14 @@
                 app:type_icon="@drawable/ic_my_reservation" />
 
             <com.sumian.sd.widget.divider.SettingDividerView
+                android:id="@+id/dv_my_doctor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:divider_line_visible="visible"
+                app:type_desc="@string/my_doctor"
+                app:type_icon="@drawable/ic_my_doctor" />
+
+            <com.sumian.sd.widget.divider.SettingDividerView
                 android:id="@+id/dv_setting"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

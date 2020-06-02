@@ -820,6 +820,7 @@
     <string name="device_market">设备商城</string>
     <string name="exchange_center">兑换中心</string>
     <string name="my_reservation">我的预约</string>
+    <string name="my_doctor">我的医生</string>
     <string name="yesterday_night">昨夜</string>
     <string name="today">今天</string>
     <string name="cbti_final_report">CBTI 终期报告</string>

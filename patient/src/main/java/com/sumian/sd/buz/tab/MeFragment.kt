@@ -103,6 +103,7 @@ class MeFragment : BaseViewModelFragment<GetAchievementListPresenter>(), View.On
         dv_my_metal.setOnClickListener(this)
         dv_device_manage.setOnClickListener(this)
         dv_coupon_center.setOnClickListener(this)
+        dv_my_doctor.setOnClickListener(this)
         tips_service.setOnServiceTipsCallback(this)
         tips_record.setOnRecordTipsCallback(this)
         dv_exchange_center.setOnClickListener(this)
@@ -197,6 +198,9 @@ class MeFragment : BaseViewModelFragment<GetAchievementListPresenter>(), View.On
             R.id.dv_exchange_center -> {
                 SimpleWebActivity.launch(activity!!, "redemption-code-center")
             }
+            R.id.dv_my_doctor -> {
+                SimpleWebActivity.launch(activity!!, "my-doctor")
+            }
             R.id.dv_my_reservation -> {
                 SimpleWebActivity.launch(activity!!, "my-reservation")
             }
@@ -214,7 +218,7 @@ class MeFragment : BaseViewModelFragment<GetAchievementListPresenter>(), View.On
     private fun updateOrganizationFeature(organization: Organization?) {
         if (organization != null) {
             dv_exchange_center.isVisible = organization.organizable.features.redeemCode
-            dv_my_reservation.isVisible = organization.organizable.features.booking || true
+            dv_my_reservation.isVisible = organization.organizable.features.booking
         }
     }
 
