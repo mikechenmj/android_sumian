@@ -288,7 +288,7 @@ class MainActivity : BaseActivity(), H5Router {
     private fun canWebViewGoBack(): Boolean {
         var fragment: ChannelH5Fragment? = supportFragmentManager.findFragmentByTag(ChannelH5Fragment::class.java.simpleName) as ChannelH5Fragment?
         if (fragment != null && fragment.isAdded) {
-            return fragment.goBack()
+            return !fragment.isCurrentH5HomeUrl() &&  fragment.goBack()
         }
         return false
     }
