@@ -22,7 +22,8 @@ import com.clj.fastble.data.BleDevice
 import com.clj.fastble.data.BleScanState
 import com.clj.fastble.exception.BleException
 import com.clj.fastble.scan.BleScanRuleConfig
-import com.clj.fastble.utils.HexUtil
+import com.sumian.common.utils.LocationManagerUtil
+import com.sumian.common.utils.PermissionUtil
 import com.sumian.device.R
 import com.sumian.device.authentication.AuthenticationManager
 import com.sumian.device.callback.*
@@ -186,7 +187,7 @@ object DeviceManager {
             mSumianDevice = getBoundDevice()
             mGatt = null
             mBleDevice = null
-        } else {
+        } else if (LocationManagerUtil.isLocationProviderEnable(mApplication) && PermissionUtil.hasBluetoothPermissions(mApplication)) {
             connectBoundDevice()
         }
         postEvent(EVENT_BLUETOOTH_STATUS_CHANGE)

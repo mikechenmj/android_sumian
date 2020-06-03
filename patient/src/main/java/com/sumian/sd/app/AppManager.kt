@@ -31,6 +31,8 @@ import com.sumian.common.social.OpenEngine
 import com.sumian.common.social.analytics.OpenAnalytics
 import com.sumian.common.social.login.OpenLogin
 import com.sumian.common.statistic.StatUtil
+import com.sumian.common.utils.LocationManagerUtil
+import com.sumian.common.utils.PermissionUtil
 import com.sumian.device.callback.DeviceStatusListener
 import com.sumian.device.manager.DeviceManager
 import com.sumian.device.manager.upload.SleepDataUploadManager
@@ -45,7 +47,6 @@ import com.sumian.sd.buz.account.login.LoginActivity
 import com.sumian.sd.buz.account.login.NewUserGuideActivity
 import com.sumian.sd.buz.account.model.AccountManager
 import com.sumian.sd.buz.cbti.video.download.VideoDownloadManager
-import com.sumian.sd.buz.device.scan.PermissionUtil
 import com.sumian.sd.buz.devicemanager.AutoSyncDeviceDataUtil
 import com.sumian.sd.buz.doctor.model.DoctorViewModel
 import com.sumian.sd.buz.notification.NotificationConst
@@ -60,7 +61,6 @@ import com.sumian.sd.common.log.SdLogManager
 import com.sumian.sd.common.network.NetworkManager
 import com.sumian.sd.common.network.api.SdApi
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
-import com.sumian.sd.common.utils.LocationManagerUtil
 import com.sumian.sd.common.utils.getString
 import com.sumian.sd.main.MainActivity
 import java.util.HashMap

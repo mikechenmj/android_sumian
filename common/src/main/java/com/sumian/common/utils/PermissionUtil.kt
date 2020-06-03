@@ -1,4 +1,4 @@
-package com.sumian.sd.buz.device.scan
+package com.sumian.common.utils
 
 import android.Manifest
 import android.app.Activity
@@ -53,8 +53,7 @@ object PermissionUtil {
         fragment.requestPermissions(mPerms, code)
     }
 
-    fun showScanPermissionDetail(fragment: Fragment, code: Int, needResult: Boolean = true) {
-        var intent = Intent(fragment.activity!!, ScanPermissionDetailActivity::class.java)
+    fun showScanPermissionDetail(fragment: Fragment, intent: Intent, code: Int, needResult: Boolean = true) {
         if (needResult) {
             fragment.startActivityForResult(intent, code)
         } else {

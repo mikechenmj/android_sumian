@@ -2,11 +2,9 @@ package com.sumian.sd.buz.device.widget
 
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +14,8 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.base.BaseFragment
 import com.sumian.common.statistic.StatUtil
+import com.sumian.common.utils.LocationManagerUtil
+import com.sumian.common.utils.PermissionUtil
 import com.sumian.device.callback.AsyncCallback
 import com.sumian.device.callback.ConnectDeviceCallback
 import com.sumian.device.callback.DeviceStatusListener
@@ -25,14 +25,11 @@ import com.sumian.device.data.SumianDevice
 import com.sumian.device.manager.DeviceManager
 import com.sumian.device.manager.helper.SyncSleepDataHelper
 import com.sumian.sd.R
-import com.sumian.sd.buz.device.scan.BaseScanDeviceFragment
-import com.sumian.sd.buz.device.scan.PermissionUtil
 import com.sumian.sd.buz.device.scan.ScanDeviceActivity
 import com.sumian.sd.buz.device.scan.ScanPermissionDetailActivity
 import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.buz.upgrade.activity.DeviceVersionNoticeActivity
 import com.sumian.sd.common.log.SdLogManager
-import com.sumian.sd.common.utils.LocationManagerUtil
 import com.sumian.sd.common.utils.UiUtils
 import com.sumian.sd.widget.dialog.SumianImageTextToast
 import com.sumian.sd.wxapi.MiniProgramHelper
@@ -129,7 +126,7 @@ class DeviceCardFragment : BaseFragment() {
             }
         } else {
             if (PermissionUtil.isForbidPermissionPopup(this) || PermissionUtil.shouldShowRequestPermissionRationale(this)) {
-                PermissionUtil.showScanPermissionDetail(this, REQUEST_CODE_PERMISSION_DETAIL)
+                PermissionUtil.showScanPermissionDetail(this, Intent(activity!!, ScanPermissionDetailActivity::class.java), REQUEST_CODE_PERMISSION_DETAIL)
             } else {
                 PermissionUtil.requestPermissions(this, REQUEST_PERMISSION_LOCATION_AND_STORAGE)
             }

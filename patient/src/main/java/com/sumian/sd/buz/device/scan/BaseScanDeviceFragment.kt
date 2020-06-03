@@ -11,13 +11,14 @@ import android.view.View
 import androidx.core.app.ActivityCompat
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.base.BaseFragment
+import com.sumian.common.utils.LocationManagerUtil
+import com.sumian.common.utils.PermissionUtil
 import com.sumian.device.callback.ScanCallback
 import com.sumian.device.manager.DeviceManager
 import com.sumian.sd.buz.devicemanager.BlueDevice
 import com.sumian.sd.common.log.LogManager
 import com.sumian.sd.common.log.SdLogManager
 import com.sumian.sd.common.utils.BluetoothUtil
-import com.sumian.sd.common.utils.LocationManagerUtil
 import java.util.*
 
 abstract class BaseScanDeviceFragment : BaseFragment() {
@@ -132,7 +133,7 @@ abstract class BaseScanDeviceFragment : BaseFragment() {
     }
 
     fun showScanPermissionDetail(needResult: Boolean = true) {
-        PermissionUtil.showScanPermissionDetail(this, REQUEST_CODE_PERMISSION_DETAIL, needResult)
+        PermissionUtil.showScanPermissionDetail(this, Intent(activity!!, ScanPermissionDetailActivity::class.java), REQUEST_CODE_PERMISSION_DETAIL, needResult)
     }
 
     private val mBluetoothStateChangeListener =

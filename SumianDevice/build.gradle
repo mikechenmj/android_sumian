@@ -55,6 +55,7 @@ dependencies {
     // dfu
     implementation 'no.nordicsemi.android:dfu:1.9.0'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    implementation project(':common')
 }
 repositories {
     mavenCentral()

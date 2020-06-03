@@ -16,6 +16,8 @@ import com.blankj.utilcode.util.LogUtils
 import com.sumian.common.base.BaseFragment
 import com.sumian.common.dialog.SumianImageTextDialog
 import com.sumian.common.utils.ColorCompatUtil
+import com.sumian.common.utils.LocationManagerUtil
+import com.sumian.common.utils.PermissionUtil
 import com.sumian.device.callback.AsyncCallback
 import com.sumian.device.callback.ConnectDeviceCallback
 import com.sumian.device.callback.DeviceStatusListener
@@ -23,13 +25,10 @@ import com.sumian.device.data.DeviceConnectStatus
 import com.sumian.device.data.SumianDevice
 import com.sumian.device.manager.DeviceManager
 import com.sumian.sd.R
-import com.sumian.sd.buz.device.scan.PermissionUtil
-import com.sumian.sd.buz.device.widget.DeviceCardFragment
+import com.sumian.sd.buz.device.scan.ScanPermissionDetailActivity
 import com.sumian.sd.buz.device.widget.SyncAnimatorUtil
 import com.sumian.sd.buz.devicemanager.BlueDevice
 import com.sumian.sd.common.log.SdLogManager
-import com.sumian.sd.common.utils.BluetoothUtil
-import com.sumian.sd.common.utils.LocationManagerUtil
 import com.sumian.sd.widget.dialog.SumianAlertDialog
 import kotlinx.android.synthetic.main.fragment_device_manage.*
 import kotlinx.android.synthetic.main.layout_device_manage_fragment_no_device.*
@@ -203,7 +202,7 @@ class DeviceManageFragment : BaseFragment() {
             }
         } else {
             if (PermissionUtil.isForbidPermissionPopup(this) || PermissionUtil.shouldShowRequestPermissionRationale(this)) {
-                PermissionUtil.showScanPermissionDetail(this, REQUEST_CODE_PERMISSION_DETAIL)
+                PermissionUtil.showScanPermissionDetail(this, Intent(activity!!, ScanPermissionDetailActivity::class.java), REQUEST_CODE_PERMISSION_DETAIL)
             } else {
                 PermissionUtil.requestPermissions(this, REQUEST_PERMISSION_LOCATION_AND_STORAGE)
             }

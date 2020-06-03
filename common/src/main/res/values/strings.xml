@@ -81,4 +81,6 @@
     <string name="system_notification">系统通知</string>
     <string name="message_list">消息列表</string>
 
+    <string name="open_location_service_dialog_title">提示</string>
+    <string name="open_location_service_for_blue_scan_hint">扫描蓝牙需要开启位置服务，是否现在开启？</string>
 </resources>
