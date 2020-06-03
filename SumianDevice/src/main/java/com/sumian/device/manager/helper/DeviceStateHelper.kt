@@ -341,8 +341,9 @@ object DeviceStateHelper {
             putQuerySleepMasterMac()
             putQuerySleepMasterSn()
             putQueryMonitorAndSleepMasterWorkMode()
-        }else {
+        } else {
             DeviceManager.getDevice()?.sleepMasterVersionInfo = null
+            DeviceManager.postEvent(DeviceManager.EVENT_SLEEP_MASTER_BATTERY_CHANGE, 0)
         }
         DeviceManager.postEvent(
                 DeviceManager.EVENT_SLEEP_MASTER_CONNECT_STATUS_CHANGE,
