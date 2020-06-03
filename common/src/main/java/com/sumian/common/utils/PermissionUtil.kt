@@ -26,7 +26,6 @@ object PermissionUtil {
     }
 
     fun hasBluetoothPermissions(context: Context): Boolean {
-
         return EasyPermissions.hasPermissions(context, *mPerms)
     }
 

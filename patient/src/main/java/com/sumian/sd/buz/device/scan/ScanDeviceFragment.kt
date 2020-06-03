@@ -104,11 +104,20 @@ class ScanDeviceFragment : BaseScanDeviceFragment() {
             }
         }
         fl_scan_permission_detail.setOnClickListener { showScanPermissionDetail(false) }
-        tv_scan_more.setOnClickListener { startScanWithUi(true) }
-        tv_rescan.setOnClickListener { startScanWithUi() }
+        tv_scan_more.setOnClickListener {
+            mIsScanMore = true
+            requestPermissionOrStartScan()
+        }
+        tv_rescan.setOnClickListener {
+            mIsScanMore = false
+            requestPermissionOrStartScan()
+        }
         recycler_view.layoutManager = LinearLayoutManager(activity!!)
         recycler_view.adapter = mDeviceAdapter
-        bt_re_scan.setOnClickListener { startScanWithUi() }
+        bt_re_scan.setOnClickListener {
+            mIsScanMore = false
+            requestPermissionOrStartScan()
+        }
         bt_confirm.setOnClickListener {
             StatUtil.event(StatConstants.click_scan_device_page_confirm_bind_btn)
             bindDevice(mScanResults[0])
@@ -178,17 +187,16 @@ class ScanDeviceFragment : BaseScanDeviceFragment() {
         tv_sub_title.text = subTitle
     }
 
-    private fun startScanWithUi(isScanMore: Boolean = false) {
-        if (!isScanMore) {
+    private fun startScanWithUi() {
+        if (!mIsScanMore) {
             resetScanResults()
             sendCheckScanResultRunnable()
             iv_device.visibility = View.GONE
             vg_scan_more_tvs.visibility = View.GONE
             ripple_view.startAnimation()
         }
-        mIsScanMore = isScanMore
         startScan()
-        switchDeviceListUI(isScanMore)
+        switchDeviceListUI(mIsScanMore)
     }
 
     private val mCheckScanResultRunnable = Runnable {

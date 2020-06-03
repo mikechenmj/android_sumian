@@ -1,11 +1,8 @@
 package com.sumian.sd.buz.device.scan
 
-import android.Manifest
-import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.core.app.ActivityCompat
@@ -90,7 +87,7 @@ abstract class BaseScanDeviceFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         DeviceManager.registerBluetoothAdapterStateChangeListener(mBluetoothStateChangeListener)
-        requestPermissionIfNeed()
+        requestPermissionOrStartScan()
     }
 
     override fun onDestroyView() {
@@ -106,7 +103,7 @@ abstract class BaseScanDeviceFragment : BaseFragment() {
             if (requestCode === REQUEST_PERMISSION_LOCATION_AND_STORAGE) {
                 var allGranted = true
                 for (i in permissions.indices) {
-                    SdLogManager.logPermission("requestPermissionIfNeed permission: ${ActivityCompat.checkSelfPermission(activity!!, permissions[i])}")
+                    SdLogManager.logPermission("requestPermissionOrStartScan permission: ${ActivityCompat.checkSelfPermission(activity!!, permissions[i])}")
                     if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
                         allGranted = false
                     }
@@ -139,12 +136,12 @@ abstract class BaseScanDeviceFragment : BaseFragment() {
     private val mBluetoothStateChangeListener =
             object : DeviceManager.BluetoothAdapterStateChangeListener {
                 override fun onStateChange(on: Boolean) {
-                    requestPermissionIfNeed()
+                    requestPermissionOrStartScan()
                     onBluetoothStateChange(on)
                 }
             }
 
-    private fun requestPermissionIfNeed() {
+    fun requestPermissionOrStartScan() {
         if (activity == null) {
             return
         }
@@ -167,12 +164,12 @@ abstract class BaseScanDeviceFragment : BaseFragment() {
         }
         if (requestCode == REQUEST_CODE_FUNCTION_BT) {
             if (isBluetoothEnable()) {
-                requestPermissionIfNeed()
+                requestPermissionOrStartScan()
             } else {
                 ToastUtils.showShort("蓝牙未开启，无法搜索蓝牙设备")
             }
         } else if (requestCode == REQUEST_CODE_FUNCTION_LOCATION) {
-            requestPermissionIfNeed()
+            requestPermissionOrStartScan()
         } else if (requestCode == REQUEST_CODE_PERMISSION_DETAIL) {
             PermissionUtil.requestPermissions(this, REQUEST_PERMISSION_LOCATION_AND_STORAGE)
         }
