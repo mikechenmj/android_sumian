@@ -34,6 +34,7 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
     private TextView mTvTitle;
     public ImageView mIvMenu;
     public TextView mTvMenu;
+    private ImageView mShare;
 
     private OnSpannerListener mOnSpannerListener;
     private OnBackClickListener mOnBackClickListener;
@@ -92,6 +93,7 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
             mTvMenu.setOnClickListener(this);
         }
         this.mIvMenu = rootView.findViewById(R.id.iv_menu);
+        this.mShare = rootView.findViewById(R.id.iv_share);
         if (moreDrawable != null) {
             mIvMenu.setImageDrawable(moreDrawable);
             mIvMenu.setVisibility(VISIBLE);
@@ -136,6 +138,10 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
     public TitleBar hideMore() {
         this.mIvMenu.setVisibility(GONE);
         return this;
+    }
+
+    public ImageView getShareButton() {
+        return mShare;
     }
 
     public TextView getTitle() {

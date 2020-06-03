@@ -6,24 +6,30 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
+import android.view.View
 import androidx.core.app.ActivityCompat
 import com.blankj.utilcode.util.ActivityUtils
 import com.github.lzyzsd.jsbridge.CallBackFunction
 import com.google.gson.reflect.TypeToken
 import com.sumian.common.h5.WebViewManger
 import com.sumian.common.h5.bean.H5BaseResponse
+import com.sumian.common.h5.bean.H5BindShareData
 import com.sumian.common.h5.bean.H5PayloadData
 import com.sumian.common.h5.widget.SWebView
 import com.sumian.common.helper.ToastHelper
 import com.sumian.common.log.CommonLog
+import com.sumian.common.statistic.StatUtil
 import com.sumian.common.utils.JsonUtil
 import com.sumian.sd.BuildConfig
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.base.SdBaseWebViewActivity
 import com.sumian.sd.buz.doctor.bean.H5DoctorServiceShoppingResult
+import com.sumian.sd.buz.homepage.sheet.ShareBottomSheet
+import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.pay.activity.PaymentActivity
 import com.sumian.sd.main.MainActivity
+import com.umeng.socialize.UMShareListener
+import com.umeng.socialize.bean.SHARE_MEDIA
 
 open class SimpleWebActivity : SdBaseWebViewActivity() {
     private var mTitle: String? = null
@@ -117,6 +123,36 @@ open class SimpleWebActivity : SdBaseWebViewActivity() {
         sWebView.registerHandler("scanQRCode") { data, function ->
             mScanQrCodeCallBackFunction = function
             startScanQrOrRequestPermission()
+        }
+        sWebView.registerHandler("bindShare") { data, function ->
+            var shareData = H5BindShareData.fromJson(data)
+            val shareButton = mTitleBar.shareButton
+            if (shareData.platform.size <= 0) {
+                shareButton?.visibility = View.GONE
+                return@registerHandler
+            }
+            shareButton?.visibility = View.VISIBLE
+            shareButton?.setOnClickListener {
+                if (shareData.weixin == null || shareData.weixinCircle == null) {
+                    return@setOnClickListener
+                }
+                ShareBottomSheet.show(supportFragmentManager, shareData.weixin!!, shareData.weixinCircle!!,
+                        object : UMShareListener {
+                            override fun onResult(p0: SHARE_MEDIA?) {
+
+                            }
+
+                            override fun onCancel(p0: SHARE_MEDIA?) {
+                            }
+
+                            override fun onError(p0: SHARE_MEDIA?, p1: Throwable?) {
+                            }
+
+                            override fun onStart(p0: SHARE_MEDIA?) {
+                                StatUtil.event(StatConstants.on_relaxation_detail_page_share_success)
+                            }
+                        })
+            }
         }
     }
 
