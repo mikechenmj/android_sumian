@@ -136,7 +136,9 @@ abstract class BaseScanDeviceFragment : BaseFragment() {
     private val mBluetoothStateChangeListener =
             object : DeviceManager.BluetoothAdapterStateChangeListener {
                 override fun onStateChange(on: Boolean) {
-                    requestPermissionOrStartScan()
+                    if (!on) {
+                        requestPermissionOrStartScan()
+                    }
                     onBluetoothStateChange(on)
                 }
             }
@@ -146,12 +148,12 @@ abstract class BaseScanDeviceFragment : BaseFragment() {
             return
         }
         if (hasBluetoothPermissions()) {
-            if (checkLocationService()) {
-                if (isBluetoothEnable()) {
+            if (isBluetoothEnable()) {
+                if (checkLocationService()) {
                     onPermissionGranted()
-                } else {
-                    startRequestBleEnable()
                 }
+            } else {
+                startRequestBleEnable()
             }
         } else {
             PermissionUtil.requestPermissions(this, REQUEST_PERMISSION_LOCATION_AND_STORAGE)
