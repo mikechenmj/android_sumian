@@ -200,6 +200,15 @@
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" /> <!-- online report -->
+
+        <activity
+            android:name=".buz.doctor.activity.DoctorSimpleWebActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+
         <activity
             android:name=".buz.onlinereport.OnlineReportListActivity"
             android:configChanges="keyboardHidden|orientation"

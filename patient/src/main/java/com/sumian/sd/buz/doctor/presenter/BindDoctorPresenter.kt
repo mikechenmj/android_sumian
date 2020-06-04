@@ -5,12 +5,11 @@ import com.sumian.common.h5.bean.SBridgeResult
 import com.sumian.sd.R
 import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.buz.doctor.activity.DoctorWebActivity
 import com.sumian.sd.buz.doctor.bean.Doctor
 
-class BindDoctorPresenter private constructor(view: DoctorWebActivity) : BaseViewModel() {
+class BindDoctorPresenter private constructor(view: DoctorWebContainerView) : BaseViewModel() {
 
-    private var mView: DoctorWebActivity? = null
+    private var mView: DoctorWebContainerView? = null
 
     init {
         view.setPresenter(this)
@@ -20,7 +19,7 @@ class BindDoctorPresenter private constructor(view: DoctorWebActivity) : BaseVie
     companion object {
 
         @JvmStatic
-        fun init(view: DoctorWebActivity): BindDoctorPresenter {
+        fun init(view: DoctorWebContainerView): BindDoctorPresenter {
             return BindDoctorPresenter(view)
         }
 
@@ -44,5 +43,11 @@ class BindDoctorPresenter private constructor(view: DoctorWebActivity) : BaseVie
             mView?.onBindDoctorFailed(sBridgeResult.message)
         }
     }
+}
 
+interface DoctorWebContainerView {
+    fun setPresenter(presenter: BindDoctorPresenter)
+    fun onIsSameDoctorCallback(message: String)
+    fun onBindDoctorFailed(message: String)
+    fun onBindDoctorSuccess(message: String)
 }

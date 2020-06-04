@@ -37,6 +37,7 @@ import com.sumian.sd.buz.advisory.activity.AdvisoryListActivity
 import com.sumian.sd.buz.coupon.activity.CouponCenterActivity
 import com.sumian.sd.buz.device.devicemanage.DeviceManageActivity
 import com.sumian.sd.buz.diaryevaluation.DiaryEvaluationListActivity
+import com.sumian.sd.buz.doctor.activity.DoctorSimpleWebActivity
 import com.sumian.sd.buz.notification.NotificationListActivity
 import com.sumian.sd.buz.notification.NotificationViewModel
 import com.sumian.sd.buz.onlinereport.OnlineReportListActivity
@@ -199,7 +200,7 @@ class MeFragment : BaseViewModelFragment<GetAchievementListPresenter>(), View.On
                 SimpleWebActivity.launch(activity!!, "redemption-code-center")
             }
             R.id.dv_my_doctor -> {
-                SimpleWebActivity.launch(activity!!, "my-doctor")
+                DoctorSimpleWebActivity.launch(activity!!, "my-doctor")
             }
             R.id.dv_my_reservation -> {
                 SimpleWebActivity.launch(activity!!, "my-reservation")
