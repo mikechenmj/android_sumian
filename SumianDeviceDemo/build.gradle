@@ -13,6 +13,10 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders = [
+                MTA_APPKEY : "AXIKFUM4258E",
+                MTA_CHANNEL: "yyb"
+        ]
     }
     buildTypes {
         release {
