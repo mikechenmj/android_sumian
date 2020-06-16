@@ -56,5 +56,5 @@ dependencies {
     //noinspection GradleCompatible
     androidTestImplementation 'androidx.test:runner:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
-    api files('libs/tbs_sdk_thirdapp_v3.6.0.1352_43618_sharewithdownload_withoutGame_obfs_20180918_120327.jar')
+    api 'com.tencent.tbs.tbssdk:sdk:43903'
 }
