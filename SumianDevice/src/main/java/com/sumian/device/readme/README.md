@@ -117,7 +117,7 @@ a| mac(数字形式)
 ### 查询监测仪版本信息
 ```
 A: aa 50
-M: 55 50 07 [aaaaaa bb cccccc dddddd eeeeee]
+M: 55 50 15 [aaaaaa bb cccccc dddddd eeeeeeee pp]
 ```
 字段|解释
 ---|---
@@ -126,6 +126,7 @@ b| 渠道：临床0C， 正式0E
 c| 硬件版本
 d| 心率库版本
 e| 睡眠算法版本号
+p| 协议版本
 
 ### 查询速眠仪版本信息
 ```

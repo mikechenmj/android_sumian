@@ -137,15 +137,17 @@ object DeviceStateHelper {
                 Cmd(HexUtil.hexStringToBytes(BleCmd.APP_CMD_HEADER + BleCmd.QUERY_MONITOR_VERSION),
                         generateResultCmd(BleCmd.QUERY_MONITOR_VERSION), callback = object : BleRequestCallback {
                     override fun onResponse(data: ByteArray, hexString: String) {
-                        LogManager.bleRequestStatusLog("请求蓝牙状态成功,cmd: $hexString")
+                        LogManager.bleRequestStatusLog("请求蓝牙状态成功,监测仪版本cmd: $hexString")
                         // 55 50 0e 【00 09 09】 【0e】 【43 31 31】 【00 00 42】 【30 30 30 4a】【pp】【软件版本】【临床0C/正式0E】【bom版本号】【心率库版本号】【睡眠算法版本号】【协议版本号】
                         val softwareVersion = getVersionFromCmd(hexString, 6)
                         val deviceChannel =
-                                if (hexString.substring(
-                                                12,
-                                                14
-                                        ).equals("0C")
-                                ) MonitorChannel.CLINIC else MonitorChannel.NORMAL
+                                if (hexString.length >= 14) {
+                                    if (hexString.substring(
+                                                    12,
+                                                    14
+                                            ) == "0C"
+                                    ) MonitorChannel.CLINIC else MonitorChannel.NORMAL
+                                } else MonitorChannel.UNKNOWN
                         val hardwareVersion = getVersionFromCmd(hexString, 14)
                         val heartBeatVersion = getVersionFromCmd(hexString, 20)
                         val sleepAlgorithmVersion = getVersionFromCmd(hexString, 26, 4)
