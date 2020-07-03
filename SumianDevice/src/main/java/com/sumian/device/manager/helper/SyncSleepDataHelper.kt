@@ -142,6 +142,9 @@ object SyncSleepDataHelper {
     }
 
     private fun retrySyncSleepData() {
+        if (!DeviceManager.isDeviceVersionCompatForSyncingData()) {
+            return
+        }
         log("retrySyncSleepData: $mReceiveStartedTime")
         DeviceManager.writeData(BleCmdUtil.createDataFromString(BleCmd.SYNC_DATA, BleCmd.SYNC_SLEEP_DATA_CONTENT))
     }
@@ -249,6 +252,8 @@ object SyncSleepDataHelper {
         mTranType = Integer.parseInt(cmd.substring(4, 5), 16)
         if (!DeviceManager.isDeviceVersionCompatForSyncingData()) {
             log("版本信息不兼容 ${DeviceManager.getDevice()}")
+            onSyncFailed(false)
+            return
         }
         mSyncFinish = false
         val dataCount: Int = subHexStringToInt(cmd, 5, 8)
@@ -529,12 +534,12 @@ object SyncSleepDataHelper {
         }
     }
 
-    private fun onSyncFailed() {
+    private fun onSyncFailed(retry: Boolean = true) {
         if (isSyncSleepData()) {
             resetSyncFlowFlag()
             setIsSleepDataTypeSyncing(false)
             log("onSyncFailed: $mSleepDataRetryTimes")
-            if (mSleepDataRetryTimes < SYNC_SLEEP_DATA_RETRY_TIME) {
+            if (retry && mSleepDataRetryTimes < SYNC_SLEEP_DATA_RETRY_TIME) {
                 retrySyncSleepData()
                 sendNextPayloadTimeoutDelay()
                 mSleepDataRetryTimes += 1

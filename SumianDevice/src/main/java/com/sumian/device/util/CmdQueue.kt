@@ -10,6 +10,7 @@ import com.sumian.device.manager.DeviceManager
 import java.util.concurrent.PriorityBlockingQueue
 
 object CmdQueue {
+    @Volatile
     private var mInMsgSendBlock: Boolean = false
     private var mCommunicationWatcher: BleCommunicationWatcher? = null
     private var mPutCmdHandler: Handler? = null
@@ -39,7 +40,7 @@ object CmdQueue {
     const val EXTRA_CMD_HEX_ARRAY = "extra_cmd_hex_array"
     const val EXTRA_CMD_WRITE_RESULT = "extra_cmd_write_result"
 
-    fun registerDeviceStatusListener() {
+    fun startListenDeviceInfo() {
         DeviceManager.registerDeviceStatusListener(object : DeviceStatusListener {
             override fun onStatusChange(type: String, data: Any?) {
                 if (type == DeviceManager.EVENT_MONITOR_CONNECT_STATUS_CHANGE) {
@@ -78,6 +79,12 @@ object CmdQueue {
                 when (msg?.what) {
                     MSG_SEND -> {
                         var cmd = takeSyncInfoCmd()
+                        if (cmd.priority == Cmd.Priority.SLEEP_DATA) {
+                            if (!DeviceManager.isDeviceVersionCompatForSyncingData()) {
+                                sendNextMsgSyncInfo()
+                                return
+                            }
+                        }
                         mSyncInfoHandler?.removeMessages(MSG_SEND)
                         mCurrentSyncInfoCmd = cmd
                         mCurrentRetrySyncInfoCmd = cmd.copy(resultCmds = mutableListOf<String>().apply {

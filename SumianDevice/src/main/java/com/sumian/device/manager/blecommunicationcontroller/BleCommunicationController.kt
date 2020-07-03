@@ -13,6 +13,7 @@ import com.sumian.device.callback.BleCommunicationWatcher
 import com.sumian.device.callback.BleRequestCallback
 import com.sumian.device.callback.WriteBleDataCallback
 import com.sumian.device.cmd.BleCmd
+import com.sumian.device.cmd.BleCmd.Companion.SYNC_TRANSPARENT
 import com.sumian.device.manager.DeviceManager
 import com.sumian.device.util.LogManager
 import com.sumian.device.util.ThreadManager
@@ -65,7 +66,7 @@ object BleCommunicationController {
         ) {
             if (success) {
                 if (hexString.length > 3) {
-                    if (hexString.substring(2, 4) != "8f") {
+                    if (hexString.substring(2, 4) != SYNC_TRANSPARENT) {
                         LogManager.log("Ble Data", "${if (isRead) "D" else "A"}: $hexString")
                     }
                 } else {

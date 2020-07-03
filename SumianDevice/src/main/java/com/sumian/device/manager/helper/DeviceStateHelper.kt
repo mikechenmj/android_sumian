@@ -435,15 +435,19 @@ object DeviceStateHelper {
                             true
                     )
                 } else {
-                    val errorMsgId = when (hexString.substring(6)) {
-                        "e0" -> R.string.sleepy_not_connected_monitor
-                        "e1" -> R.string.not_wear_monitor
-                        "e2" -> R.string.head_not_at_pillow
-                        "e3" -> R.string.not_turn_on_pa_mode
-                        "e4" -> R.string.not_turn_on_pa_mode_in_sleep_time
-                        "e8" -> R.string.monitor_is_charging
-                        "e5", "e6", "e7", "ff" -> R.string.turn_on_sleepy_pa_mode_error_unknown
-                        else -> R.string.turn_on_sleepy_pa_mode_error_unknown
+                    val errorMsgId = if (hexString.length > 6) {
+                        when (hexString.substring(6)) {
+                            "e0" -> R.string.sleepy_not_connected_monitor
+                            "e1" -> R.string.not_wear_monitor
+                            "e2" -> R.string.head_not_at_pillow
+                            "e3" -> R.string.not_turn_on_pa_mode
+                            "e4" -> R.string.not_turn_on_pa_mode_in_sleep_time
+                            "e8" -> R.string.monitor_is_charging
+                            "e5", "e6", "e7", "ff" -> R.string.turn_on_sleepy_pa_mode_error_unknown
+                            else -> R.string.turn_on_sleepy_pa_mode_error_unknown
+                        }
+                    } else {
+                        R.string.turn_on_sleepy_pa_mode_error_unknown
                     }
                     val errorMessage = getString(errorMsgId)
                     DeviceManager.postEvent(
