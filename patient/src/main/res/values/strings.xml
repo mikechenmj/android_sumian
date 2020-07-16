@@ -989,4 +989,7 @@
     <string name="scan_permission_detail_title">授权操作步骤</string>
     <string name="scan_h5_qr_code_tip">将二维码放入框内，可自动扫描</string>
     <string name="rebindMobileOk">重新绑定</string>
+    <string name="agreement_and_privacy_dialog_title">速眠医生用户协议及用户隐私政策</string>
+    <string name="agreement_ok_text">同意并进入</string>
+    <string name="agreement_cancel_text">退出</string>
 </resources>

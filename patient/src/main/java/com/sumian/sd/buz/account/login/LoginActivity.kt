@@ -1,11 +1,11 @@
 package com.sumian.sd.buz.account.login
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
-import android.os.Handler
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
 import com.qmuiteam.qmui.util.QMUISpanHelper
@@ -76,6 +76,13 @@ class LoginActivity : BaseViewModelActivity<LoginPresenter>(), LoginContract.Vie
                 ll_password_et_container.isActivated = highlight
             }
         })
+        val needShowAgreement = AppManager.mApplication.getSharedPreferences(AgreementAndPrivacyDialog.AGREEMENT_AND_PRIVACY_DIALOG_NEED_SHOW, Context.MODE_PRIVATE)
+                .getBoolean(AgreementAndPrivacyDialog.AGREEMENT_AND_PRIVACY_DIALOG_NEED_SHOW, true)
+        if (needShowAgreement) {
+            val agreementDialog = AgreementAndPrivacyDialog()
+            agreementDialog.isCancelable = false
+            agreementDialog.show(supportFragmentManager, "")
+        }
     }
 
     private fun requestCaptcha() {

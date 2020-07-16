@@ -3,6 +3,7 @@
 package com.sumian.sd.main
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -23,6 +24,7 @@ import com.sumian.common.utils.Sha1Util
 import com.sumian.sd.R
 import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
+import com.sumian.sd.buz.account.login.AgreementAndPrivacyDialog
 import com.sumian.sd.buz.devicemanager.AutoSyncDeviceDataUtil
 import com.sumian.sd.buz.diary.DataFragment
 import com.sumian.sd.buz.notification.NotificationUnreadCountChangeEvent
@@ -113,6 +115,14 @@ class MainActivity : BaseActivity(), H5Router {
             }
         }
         LogUtils.d("app sha1: ${Sha1Util.getCertificateSHA1Fingerprint(this)}")
+        val needShowAgreement = AppManager.mApplication
+                .getSharedPreferences(AgreementAndPrivacyDialog.AGREEMENT_AND_PRIVACY_DIALOG_NEED_SHOW, Context.MODE_PRIVATE)
+                .getBoolean(AgreementAndPrivacyDialog.AGREEMENT_AND_PRIVACY_DIALOG_NEED_SHOW, true)
+        if (needShowAgreement) {
+            val agreementDialog = AgreementAndPrivacyDialog()
+            agreementDialog.isCancelable = false
+            agreementDialog.show(supportFragmentManager, "")
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
