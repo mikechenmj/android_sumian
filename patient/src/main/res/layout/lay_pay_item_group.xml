@@ -23,6 +23,7 @@
         android:id="@+id/alipay_pay_item"
         android:layout_width="match_parent"
         android:layout_height="@dimen/space_60"
+        android:visibility="gone"
         app:desc="@string/alipay"
         app:icon="@mipmap/ic_group_pay_icon_alipay"
         app:is_select="false" />

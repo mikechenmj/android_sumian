@@ -1,11 +1,9 @@
 package com.sumian.sd.common.pay.presenter
 
 import android.app.Activity
-import android.content.Intent
 import android.os.Handler
-import androidx.annotation.StringRes
+import android.util.Log
 import com.google.gson.Gson
-import com.pingplusplus.android.Pingpp
 import com.sumian.common.base.BaseViewModel
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.sd.BuildConfig
@@ -17,6 +15,11 @@ import com.sumian.sd.common.pay.activity.PaymentActivity
 import com.sumian.sd.common.pay.bean.OrderDetail
 import com.sumian.sd.common.pay.bean.PayCouponCode
 import com.sumian.sd.common.pay.bean.PayOrder
+import com.tencent.mm.opensdk.constants.ConstantsAPI
+import com.tencent.mm.opensdk.modelbase.BaseResp
+import com.tencent.mm.opensdk.modelpay.PayReq
+import com.tencent.mm.opensdk.openapi.IWXAPI
+import com.tencent.mm.opensdk.openapi.WXAPIFactory
 import org.json.JSONException
 import org.json.JSONObject
 import retrofit2.Call
@@ -28,11 +31,13 @@ import retrofit2.Callback
  * desc:
  */
 
-class PayPresenter private constructor(view: PaymentActivity) : BaseViewModel() {
+class PayPresenter private constructor(view: PaymentActivity, api: IWXAPI) : BaseViewModel() {
 
     private var mView: PaymentActivity? = null
 
-    private var mOrder: String? = null
+    var WXApi: IWXAPI? = null
+
+    private var mPayment: JSONObject? = null
 
     private var mOrderNo: String? = null
 
@@ -44,13 +49,16 @@ class PayPresenter private constructor(view: PaymentActivity) : BaseViewModel() 
 
     init {
         view.setPresenter(this)
-        this.mView = view
+        mView = view
+        WXApi = api
     }
 
     companion object {
         @JvmStatic
-        fun init(view: PaymentActivity) {
-            PayPresenter(view)
+        fun init(view: PaymentActivity): PayPresenter {
+            val msgApi = WXAPIFactory.createWXAPI(view, null)
+            msgApi.registerApp(BuildConfig.WECHAT_APP_ID)
+            return PayPresenter(view, msgApi)
         }
     }
 
@@ -65,9 +73,11 @@ class PayPresenter private constructor(view: PaymentActivity) : BaseViewModel() 
 
             override fun onSuccess(response: Any?) {
                 val toJson = Gson().toJson(response)
-                mOrder = toJson
                 try {
-                    mOrderNo = JSONObject(toJson).get("order_no") as String?
+                    val payment = JSONObject(toJson)
+                    val order = payment.getJSONObject("order")
+                    mOrderNo = order.getString("order_no")
+                    mPayment = payment
                     mView?.onCreatePayOrderSuccess()
                 } catch (e: JSONException) {
                     e.printStackTrace()
@@ -159,62 +169,39 @@ class PayPresenter private constructor(view: PaymentActivity) : BaseViewModel() 
     }
 
     fun doPay(activity: Activity) {
-        Pingpp.DEBUG = BuildConfig.DEBUG
-        Pingpp.enableDebugLog(BuildConfig.DEBUG)
-        Pingpp.createPayment(activity, mOrder)
+        val request = PayReq()
+        request.appId = mPayment!!.getString("app_id")
+        request.partnerId = mPayment!!.getString("partner_id")
+        request.prepayId = mPayment!!.getString("prepay_id")
+        request.packageValue = mPayment!!.getString("package")
+        request.timeStamp = mPayment!!.getString("timestamp")
+        request.sign = mPayment!!.getString("sign")
+        request.nonceStr = mPayment!!.getString("nonce_str")
+        WXApi!!.sendReq(request)
     }
 
     fun clearPayAction() {
-        this.mOrder = null
+        this.mPayment = null
         this.mOrderNo = null
     }
 
-    fun onPayActivityResultDelegate(requestCode: Int, resultCode: Int, data: Intent?) {
-        //支付页面返回处理
-        if (requestCode == Pingpp.REQUEST_CODE_PAYMENT) {
-            val result = data?.extras!!.getString("pay_result")
-            @StringRes val payResultMsg: Int
-
-            when (result) {
-                "success" -> {
-                    payResultMsg = R.string.pay_success
-                    mView?.onOrderPaySuccess(App.getAppContext().getString(payResultMsg))
+    fun onWXPayResult(resp: BaseResp?) {
+        if (resp?.type == ConstantsAPI.COMMAND_PAY_BY_WX) {
+            when (resp?.errCode) {
+                0 -> {
+                    mView?.onOrderPaySuccess(App.getAppContext().getString(R.string.pay_success))
                 }
-                "fail" -> {
-                    payResultMsg = R.string.pay_failed
-                    val errorMsg = data.extras!!.getString("error_msg") // 错误信息
-                    // String extraMsg = data.getExtras().getString("extra_msg"); // 错误信息
+                -1 -> {
                     mView?.onOrderPayFailed("{\"result\":\"order_error\"}")
                 }
-                "cancel" -> {
-                    payResultMsg = R.string.pay_cancel
+                -2 -> {
                     mView?.onOrderPayCancel("{\"result\":\"cancel\"}")
                     clearPayAction()
                 }
-                "invalid" -> {
-                    payResultMsg = R.string.pay_invalid
-                    mView?.onOrderPayInvalid("{\"result\":\"unknown_error\"}")
-                }
-                "unknown" -> {
-                    payResultMsg = R.string.pay_unknown
-                    mView?.onOrderPayFailed("{\"result\":\"unknown_error\"}")
-                }
                 else -> {
-                    payResultMsg = R.string.pay_unknown
                     mView?.onOrderPayFailed("{\"result\":\"unknown_error\"}")
                 }
             }
-
-            /* 处理返回值
-             * "success" - 支付成功
-             * "fail"    - 支付失败
-             * "cancel"  - 取消支付
-             * "invalid" - 支付插件未安装（一般是微信客户端未安装的情况）
-             * "unknown" - app进程异常被杀死(一般是低内存状态下,app进程被杀死)
-             */
-
-            // PlayLog.e(TAG, "onActivityResult: -------------->result=" + result + " package name=" + HwApp.Companion.getAppContext().getPackageName());
-
         }
     }
 }

@@ -131,29 +131,15 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" /> <!-- pay start -->
-        <activity
-            android:name="com.pingplusplus.android.PaymentActivity"
-            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
-            android:launchMode="singleTop"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" /> <!-- WeChat -->
         <activity-alias
             android:name="${applicationId}.wxapi.WXPayEntryActivity"
             android:exported="true"
-            android:targetActivity="com.pingplusplus.android.PaymentActivity"
+            android:targetActivity=".common.pay.activity.PaymentActivity"
             android:theme="@style/BaseAppTheme" /> <!-- Alipay -->
-        <activity
-            android:name="com.alipay.sdk.app.H5PayActivity"
-            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
-            android:exported="false"
-            android:screenOrientation="behind"
-            android:theme="@style/BaseAppTheme" />
-        <activity
-            android:name="com.alipay.sdk.auth.AuthActivity"
-            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
-            android:exported="false"
-            android:screenOrientation="behind"
-            android:theme="@style/BaseAppTheme" />
-
+<!--        <activity-->
+<!--            android:name=".common.pay.activity.WXPayEntryActivity"-->
+<!--            android:exported="true"-->
+<!--            android:launchMode="singleTop"/>-->
         <service
             android:name=".common.log.LogJobIntentService"
             android:permission="android.permission.BIND_JOB_SERVICE" /> <!-- 实时通信模块、推送（均需要加入以下声明） START -->

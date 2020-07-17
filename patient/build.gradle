@@ -276,10 +276,6 @@ dependencies {
     implementation(name: 'AlivcReporter-1.2', ext: 'aar')
     implementation(name: 'AlivcPlayer-3.4.10', ext: 'aar')
     implementation(name: 'AliyunVodPlayer-3.4.10', ext: 'aar')
-    //ping++
-    implementation 'com.pingxx:pingpp-core:2.1.18'
-    // 使用支付宝时添加
-    implementation 'com.pingxx:pingpp-alipay:2.1.18'
     //拼音分词
     //implementation 'com.belerweb:pinyin4j:2.5.1'
     //scan qr code

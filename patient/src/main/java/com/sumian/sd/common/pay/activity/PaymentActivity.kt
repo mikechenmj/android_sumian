@@ -21,6 +21,9 @@ import com.sumian.sd.common.pay.presenter.PayPresenter
 import com.sumian.sd.common.pay.widget.PayCalculateItemView
 import com.sumian.sd.common.pay.widget.PayItemGroupView
 import com.sumian.sd.widget.TitleBar
+import com.tencent.mm.opensdk.modelbase.BaseReq
+import com.tencent.mm.opensdk.modelbase.BaseResp
+import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler
 import kotlinx.android.synthetic.main.activity_main_shopping_car.*
 
 /**
@@ -29,7 +32,8 @@ import kotlinx.android.synthetic.main.activity_main_shopping_car.*
  * desc:
  */
 
-class PaymentActivity : BaseViewModelActivity<PayPresenter>(), View.OnClickListener, PayItemGroupView.OnSelectPayWayListener, TitleBar.OnBackClickListener, PayCalculateItemView.OnMoneyChangeCallback {
+class PaymentActivity : BaseViewModelActivity<PayPresenter>(), IWXAPIEventHandler, View.OnClickListener,
+        PayItemGroupView.OnSelectPayWayListener, TitleBar.OnBackClickListener, PayCalculateItemView.OnMoneyChangeCallback {
 
     companion object {
 
@@ -40,6 +44,8 @@ class PaymentActivity : BaseViewModelActivity<PayPresenter>(), View.OnClickListe
 
         private const val ARGS_DOCTOR_SERVICE = "com.sumian.app.extra.doctor.service"
         private const val ARGS_DOCTOR_SERVICE_PACKAGE_ID = "com.sumian.app.extra.doctor.service.packageId"
+
+        private var mPayPresenter: PayPresenter? = null
 
         const val EXTRA_ERROR_REASON = "error_reason"
 
@@ -89,13 +95,18 @@ class PaymentActivity : BaseViewModelActivity<PayPresenter>(), View.OnClickListe
 
     override fun initBundle(bundle: Bundle) {
         bundle.let {
-            this.mDoctorService = bundle.getParcelable(ARGS_DOCTOR_SERVICE)
-            val packageId = bundle.getInt(ARGS_DOCTOR_SERVICE_PACKAGE_ID)
-            for (servicePackage in mDoctorService!!.service_packages) {
-                if (servicePackage.id == packageId) {
-                    this.mServicePackage = servicePackage
-                    this.mPackage = mServicePackage!!.packages[0]
-                    break
+            val doctorService: DoctorService? = bundle.getParcelable(ARGS_DOCTOR_SERVICE)
+            if (doctorService != null) {
+                this.mDoctorService = doctorService
+                if (mDoctorService != null) {
+                    val packageId = bundle.getInt(ARGS_DOCTOR_SERVICE_PACKAGE_ID)
+                    for (servicePackage in mDoctorService!!.service_packages) {
+                        if (servicePackage.id == packageId) {
+                            this.mServicePackage = servicePackage
+                            this.mPackage = mServicePackage!!.packages[0]
+                            break
+                        }
+                    }
                 }
             }
         }
@@ -107,7 +118,7 @@ class PaymentActivity : BaseViewModelActivity<PayPresenter>(), View.OnClickListe
 
     override fun initWidget() {
         super.initWidget()
-        PayPresenter.init(this)
+        mPayPresenter = PayPresenter.init(this)
         nested_scroll_view.setOnClickListener {
             pay_calculate_item_view.closeKeyBoard()
         }
@@ -124,18 +135,18 @@ class PaymentActivity : BaseViewModelActivity<PayPresenter>(), View.OnClickListe
 
     override fun initData() {
         super.initData()
+        mPayPresenter?.WXApi!!.handleIntent(intent, this)
         mDoctorService?.let {
             ImageLoader.loadImage(mDoctorService!!.icon, lay_group_icon)
             tv_name.text = mDoctorService?.name
             tv_desc.text = mServicePackage?.name
             pay_calculate_item_view.defaultMoney = mPackage?.unit_price!!
         }
-
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        mViewModel?.onPayActivityResultDelegate(requestCode, resultCode, data)
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        mPayPresenter?.WXApi!!.handleIntent(intent, this)
     }
 
     override fun onClick(v: View) {
@@ -286,5 +297,13 @@ class PaymentActivity : BaseViewModelActivity<PayPresenter>(), View.OnClickListe
         if (mPayDialog.isShowing) {
             mPayDialog.cancel()
         }
+    }
+
+    override fun onResp(resp: BaseResp?) {
+        mPayPresenter?.onWXPayResult(resp)
+    }
+
+    override fun onReq(p0: BaseReq?) {
+        Log.i("MCJ", "onReq")
     }
 }
