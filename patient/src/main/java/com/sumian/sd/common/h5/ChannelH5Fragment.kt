@@ -25,6 +25,7 @@ import com.sumian.sd.buz.homepage.sheet.ShareBottomSheet
 import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.h5.ScanQrCodeActivity.EXTRA_RESULT_QR_CODE
 import com.sumian.sd.common.h5.ScanQrCodeActivity.RESULT_CODE_SCAN_QR_CODE
+import com.sumian.sd.common.h5.bean.ShowNavTab
 import com.sumian.sd.common.pay.activity.PaymentActivity
 import com.sumian.sd.common.utils.EventBusUtil
 import com.sumian.sd.main.MainActivity
@@ -142,7 +143,6 @@ class ChannelH5Fragment : BaseWebViewFragment() {
                         })
             }
         }
-
         sWebView.registerHandler("buyService") { data, function ->
             mBuyCallBackFunction = function
             val type = object : TypeToken<H5BaseResponse<H5DoctorServiceShoppingResult>>() {}
@@ -161,6 +161,16 @@ class ChannelH5Fragment : BaseWebViewFragment() {
         sWebView.registerHandler("scanQRCode") { data, function ->
             mScanQrCodeCallBackFunction = function
             startScanQrOrRequestPermission()
+        }
+        sWebView.registerHandler("showNavTab") { data, function ->
+            val act = activity ?: return@registerHandler
+            if (act is MainActivity) {
+            } else {
+                return@registerHandler
+            }
+            val type = object : TypeToken<ShowNavTab>() {}
+            val response = JsonUtil.fromJson<ShowNavTab>(data, type.type) ?: return@registerHandler
+            act.setNavTabVisible(response.showNavTab)
         }
     }
 
