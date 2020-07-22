@@ -82,6 +82,9 @@ class ChannelH5Fragment : BaseWebViewFragment() {
         if (page == "mine") {
             EventBusUtil.postStickyEvent(ChangeMainTabEvent(TAB_2))
         }
+        if (page == "homeH5") {
+            getSWebViewLayout()?.sWebView?.loadRequestUrl(WebViewManger.getInstance().getBaseUrl() + "home")
+        }
     }
 
     private fun isH5HomeUrl(url: String?): Boolean {
