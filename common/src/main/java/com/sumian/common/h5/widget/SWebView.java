@@ -265,32 +265,15 @@ public class SWebView extends BridgeWebView {
                         Log.e(TAG, "code:" + httpURLConnection.getResponseCode());
                         Log.e(TAG, "mime:" + mime + "; charset:" + charset);
                     }
-
-                    // 无mime类型的请求不拦截
-                    if (TextUtils.isEmpty(mime)) {
-                        if (isDebug()) {
-                            Log.e(TAG, "no MIME");
-                        }
-                        return super.shouldInterceptRequest(view, request);
-                    } else {
-                        // 二进制资源无需编码信息
-                        if (!TextUtils.isEmpty(charset) || (isBinaryRes(mime))) {
-                            WebResourceResponse resourceResponse = new WebResourceResponse(mime, charset, httpURLConnection.getInputStream());
-                            resourceResponse.setStatusCodeAndReasonPhrase(statusCode, response);
-                            Map<String, String> responseHeader = new HashMap<String, String>();
-                            for (String key : headerKeySet) {
-                                // HttpUrlConnection可能包含key为null的报头，指向该http请求状态码
-                                responseHeader.put(key, httpURLConnection.getHeaderField(key));
-                            }
-                            resourceResponse.setResponseHeaders(responseHeader);
-                            return resourceResponse;
-                        } else {
-                            if (isDebug()) {
-                                Log.e(TAG, "non binary resource for " + mime);
-                            }
-                            return super.shouldInterceptRequest(view, request);
-                        }
+                    WebResourceResponse resourceResponse = new WebResourceResponse(mime, charset, httpURLConnection.getInputStream());
+                    resourceResponse.setStatusCodeAndReasonPhrase(statusCode, response);
+                    Map<String, String> responseHeader = new HashMap<String, String>();
+                    for (String key : headerKeySet) {
+                        // HttpUrlConnection可能包含key为null的报头，指向该http请求状态码
+                        responseHeader.put(key, httpURLConnection.getHeaderField(key));
                     }
+                    resourceResponse.setResponseHeaders(responseHeader);
+                    return resourceResponse;
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
