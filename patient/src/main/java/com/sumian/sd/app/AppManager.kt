@@ -44,7 +44,7 @@ import com.sumian.sd.buz.account.bean.Organization
 import com.sumian.sd.buz.account.bean.Token
 import com.sumian.sd.buz.account.bean.UserInfo
 import com.sumian.sd.buz.account.login.LoginActivity
-import com.sumian.sd.buz.account.login.NewUserGuideActivity
+import com.sumian.sd.buz.account.login.NewUserInfoActivity
 import com.sumian.sd.buz.account.model.AccountManager
 import com.sumian.sd.buz.cbti.video.download.VideoDownloadManager
 import com.sumian.sd.buz.devicemanager.AutoSyncDeviceDataUtil
@@ -325,7 +325,7 @@ object AppManager {
         val webViewManger = WebViewManger.getInstance()
         webViewManger.registerX5WebView(context)
         webViewManger.setBaseUrl(BuildConfig.CHANNEL_H5_URL)
-//        webViewManger.setBaseUrl("http://192.168.27.230:9010/") 本地调试
+//        webViewManger.setBaseUrl("http://192.168.27.230:9010/")
         mHttpDns?.let {
             webViewManger.registerHttpDnsEngine(it)
         }
@@ -344,10 +344,10 @@ object AppManager {
         ActivityUtils.startActivity(MainActivity::class.java)
     }
 
-    fun launchMainOrNewUserGuide() {
-        val token = AppManager.getAccountViewModel().token
+    private fun launchMainOrNewUserInfo() {
+        val token = getAccountViewModel().token
         if (token != null && token.is_new) {
-            ActivityUtils.startActivity(NewUserGuideActivity::class.java)
+            ActivityUtils.startActivity(NewUserInfoActivity::class.java)
             ActivityUtils.finishAllActivities()
         } else {
             launchMainAndFinishAll()
@@ -424,7 +424,7 @@ object AppManager {
         }
         getAccountViewModel().updateToken(token)
         getAccountViewModel().updateUserInfo(token.user)
-        launchMainOrNewUserGuide()
+        launchMainOrNewUserInfo()
         StatUtil.reportAccount(token.user.mobile, token.expired_at.toLong())
         sendHeartbeat()
     }

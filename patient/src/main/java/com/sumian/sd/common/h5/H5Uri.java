@@ -35,7 +35,8 @@ public interface H5Uri {
     String SLEEP_PRESCRIPTION = "prescription";
     String CBTI_EXERCISES = "cbti/exercises?id={course-id}";
     String CBTI_WEEK_REVIEW = "cbti/week-review?review={last_chapter_summary}";
-    String NEW_USER_GUIDE = "guide?from=newUser";
+    String NEW_USER_INFO = "guide?from=newUser";
+    String NEW_USER_GUIDE = "new-user-guide";
     String CBTI_RELAXATIONS = "cbti/relaxations";
     String CBTI_RELAXATIONS_SHARE = "cbti/relaxations/{id}?isShare=true";
     String CBTI_SLEEP_HEALTH = "cbti/sleep-health";

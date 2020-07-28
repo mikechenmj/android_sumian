@@ -15,7 +15,7 @@ import com.sumian.sd.common.h5.H5Uri
 import com.sumian.sd.common.utils.StatusBarUtil
 import com.tencent.smtt.sdk.WebView
 
-class NewUserGuideActivity : SdBaseWebViewActivity() {
+class NewUserInfoActivity : SdBaseWebViewActivity() {
     override fun initWidget() {
         super.initWidget()
         StatusBarUtil.setStatusBarTextColorDark(this, true)
@@ -27,7 +27,7 @@ class NewUserGuideActivity : SdBaseWebViewActivity() {
     }
 
     override fun getUrlContentPart(): String {
-        return H5Uri.NEW_USER_GUIDE
+        return H5Uri.NEW_USER_INFO
     }
 
     override fun registerHandler(sWebView: SWebView) {

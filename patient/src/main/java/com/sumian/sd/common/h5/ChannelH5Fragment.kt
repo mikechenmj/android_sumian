@@ -18,7 +18,6 @@ import com.sumian.common.h5.widget.SWebView
 import com.sumian.common.helper.ToastHelper
 import com.sumian.common.statistic.StatUtil
 import com.sumian.common.utils.JsonUtil
-import com.sumian.sd.BuildConfig
 import com.sumian.sd.buz.account.login.LoginActivity
 import com.sumian.sd.buz.doctor.bean.H5DoctorServiceShoppingResult
 import com.sumian.sd.buz.homepage.sheet.ShareBottomSheet
@@ -174,6 +173,11 @@ class ChannelH5Fragment : BaseWebViewFragment() {
             val type = object : TypeToken<ShowNavTab>() {}
             val response = JsonUtil.fromJson<ShowNavTab>(data, type.type) ?: return@registerHandler
             act.setNavTabVisible(response.showNavTab)
+        }
+        sWebView.registerHandler("showNewUserGuide") { data, function ->
+            if (activity != null) {
+                TranslucentStatusWebActivity.launch(activity!!, H5Uri.NEW_USER_GUIDE)
+            }
         }
     }
 

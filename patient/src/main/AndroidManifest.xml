@@ -186,6 +186,13 @@
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" /> <!-- online report -->
+        <activity
+            android:name=".common.h5.TranslucentStatusWebActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.TranslucentStatus"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" /> <!-- online report -->
 
         <activity
             android:name=".buz.doctor.activity.DoctorSimpleWebActivity"
@@ -379,7 +386,7 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".buz.account.login.NewUserGuideActivity"
+            android:name=".buz.account.login.NewUserInfoActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
