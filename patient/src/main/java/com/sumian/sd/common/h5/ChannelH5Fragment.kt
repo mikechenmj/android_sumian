@@ -176,7 +176,7 @@ class ChannelH5Fragment : BaseWebViewFragment() {
         }
         sWebView.registerHandler("showNewUserGuide") { data, function ->
             if (activity != null) {
-                TranslucentStatusWebActivity.launch(activity!!, H5Uri.NEW_USER_GUIDE)
+                SimpleWebActivity.launch(activity!!, H5Uri.NEW_USER_GUIDE)
             }
         }
     }
