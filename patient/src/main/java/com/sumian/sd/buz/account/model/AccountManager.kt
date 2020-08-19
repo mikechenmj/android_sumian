@@ -7,12 +7,15 @@ import androidx.annotation.MainThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.blankj.utilcode.util.SPUtils
+import com.github.lzyzsd.jsbridge.CallBackFunction
 import com.sumian.common.buz.kefu.KefuManager
 import com.sumian.common.utils.JsonUtil
+import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.account.bean.Organization
 import com.sumian.sd.buz.account.bean.Token
 import com.sumian.sd.buz.account.bean.UserInfo
 import com.sumian.sd.buz.doctor.bean.Doctor
+import com.sumian.sd.common.log.SdLogManager
 
 /**
  * Created by jzz
@@ -22,11 +25,16 @@ import com.sumian.sd.buz.doctor.bean.Doctor
 
 object AccountManager {
     private val SP_KEY_TOKEN = "token"
+    private val SP_KEY_H5_BEARER_TOKEN = "h5_bearer_token"
     private val SP_KEY_USER_INFO = "user_info"
     private val SP_KEY_ORGANIZATION = "organization"
+    const val AUTHORIZATION_HEADER = "Authorization"
+    const val AUTHORIZATION_HEADER_BEARER_PART = "Bearer "
     private val mTokenLiveData = MutableLiveData<Token>()
     private val mUserInfoLiveData = MutableLiveData<UserInfo>()
     private val mOrganizationLiveData = MutableLiveData<Organization>()
+    var h5BearerToken: Token? = null
+    private val mH5BearerFunctions: ArrayList<H5BearerFunction?> = ArrayList()
     private val mTokenChangeListeners = ArrayList<TokenChangeListener>()
 
     val liveDataToken: LiveData<Token>
@@ -41,9 +49,9 @@ object AccountManager {
         }
 
     val organization: Organization?
-    get () {
-        return mOrganizationLiveData.value
-    }
+        get() {
+            return mOrganizationLiveData.value
+        }
 
     val tokenString: String?
         get() = if (token == null) null else token!!.token
@@ -62,6 +70,7 @@ object AccountManager {
 
     init {
         updateToken(loadPersistedToken())
+        updateH5BearerToken(loadH5BearerPersistedToken())
         updateUserInfo(loadPersistedUserInfo())
         updateOrganization(loadOrganization())
     }
@@ -71,8 +80,17 @@ object AccountManager {
         return JsonUtil.fromJson(tokenJson, Token::class.java)
     }
 
+    private fun loadH5BearerPersistedToken(): Token? {
+        val tokenJson = SPUtils.getInstance().getString(SP_KEY_H5_BEARER_TOKEN, null)
+        return JsonUtil.fromJson(tokenJson, Token::class.java)
+    }
+
     private fun persistentToken(token: Token?) {
         SPUtils.getInstance().put(SP_KEY_TOKEN, JsonUtil.toJson(token))
+    }
+
+    private fun persistentH5BearerToken(token: Token?) {
+        SPUtils.getInstance().put(SP_KEY_H5_BEARER_TOKEN, JsonUtil.toJson(token))
     }
 
     private fun loadPersistedUserInfo(): UserInfo? {
@@ -107,6 +125,14 @@ object AccountManager {
         }
     }
 
+    fun registerH5BearerFunction(function: H5BearerFunction?) {
+        mH5BearerFunctions.add(function)
+    }
+
+    fun unregisterH5BearerFunction(function: H5BearerFunction?) {
+        mH5BearerFunctions.remove(function)
+    }
+
     fun updateToken(token: Token?) {
         var isMainLooper = Looper.myLooper() === Looper.getMainLooper()
         if (isMainLooper) {
@@ -120,6 +146,29 @@ object AccountManager {
                 onTokenChange(token)
             }
         }
+    }
+
+    fun updateH5BearerToken(token: Token?) {
+        if (token?.token.isNullOrEmpty()) {
+            return
+        }
+        h5BearerToken = token
+        SdLogManager.logToken("updateH5BearerToken: " + token?.token)
+        var hasChannelH5Home = false
+        for (function in mH5BearerFunctions) {
+            hasChannelH5Home = hasChannelH5Home or (function?.isChannelH5Home ?: false)
+            function?.callBackFunction?.onCallBack(token?.token)
+        }
+        if (hasChannelH5Home) {
+            clearAndConsumeH5BearerToken()
+        } else {
+            persistentH5BearerToken(token)
+        }
+    }
+
+    fun clearAndConsumeH5BearerToken() {
+        h5BearerToken = null
+        persistentH5BearerToken(newToken(""))
     }
 
     @MainThread
@@ -167,7 +216,20 @@ object AccountManager {
         return mOrganizationLiveData
     }
 
+    fun newToken(it: String): Token {
+        return Token().apply {
+            val newTokenString = it.removePrefix(AUTHORIZATION_HEADER_BEARER_PART)
+            token = newTokenString
+            setExpired_at(0)
+            setRefresh_expired_at((System.currentTimeMillis() / 1000L).toInt())
+            setUser(AppManager.getAccountViewModel().userInfo)
+            is_new = false
+        }
+    }
+
     interface TokenChangeListener {
         fun onTokenChange(token: Token?)
     }
+
+    data class H5BearerFunction(val isChannelH5Home: Boolean = false, val callBackFunction: CallBackFunction)
 }

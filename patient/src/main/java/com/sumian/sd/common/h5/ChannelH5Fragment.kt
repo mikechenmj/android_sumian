@@ -13,18 +13,23 @@ import com.google.gson.reflect.TypeToken
 import com.sumian.common.h5.BaseWebViewFragment
 import com.sumian.common.h5.WebViewManger
 import com.sumian.common.h5.bean.H5BaseResponse
+import com.sumian.common.h5.bean.H5BearerToken
 import com.sumian.common.h5.bean.H5BindShareData
 import com.sumian.common.h5.widget.SWebView
 import com.sumian.common.helper.ToastHelper
 import com.sumian.common.statistic.StatUtil
 import com.sumian.common.utils.JsonUtil
+import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.account.login.LoginActivity
+import com.sumian.sd.buz.account.model.AccountManager
+import com.sumian.sd.buz.account.model.AccountManager.newToken
 import com.sumian.sd.buz.doctor.bean.H5DoctorServiceShoppingResult
 import com.sumian.sd.buz.homepage.sheet.ShareBottomSheet
 import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.h5.ScanQrCodeActivity.EXTRA_RESULT_QR_CODE
 import com.sumian.sd.common.h5.ScanQrCodeActivity.RESULT_CODE_SCAN_QR_CODE
 import com.sumian.sd.common.h5.bean.ShowNavTab
+import com.sumian.sd.common.log.SdLogManager
 import com.sumian.sd.common.pay.activity.PaymentActivity
 import com.sumian.sd.common.utils.EventBusUtil
 import com.sumian.sd.main.MainActivity
@@ -39,6 +44,7 @@ class ChannelH5Fragment : BaseWebViewFragment() {
 
     private var mBuyCallBackFunction: CallBackFunction? = null
     private var mScanQrCodeCallBackFunction: CallBackFunction? = null
+    private var mUpdateH5BearerFunction: AccountManager.H5BearerFunction? = null
 
     companion object {
         private const val REQUEST_CODE_PAY = 104
@@ -116,6 +122,25 @@ class ChannelH5Fragment : BaseWebViewFragment() {
     }
 
     override fun registerHandler(sWebView: SWebView) {
+        sWebView.registerHandler("updateH5BearerToken") { data, function ->
+            val type = object : TypeToken<H5BaseResponse<H5BearerToken>>() {}
+            val result = JsonUtil.fromJson<H5BaseResponse<H5BearerToken>>(data, type.type)?.result
+            if (result != null && !result.token.isNullOrEmpty()) {
+                SdLogManager.logToken("H5首页 通知 App 更新 token: " + result.token)
+                AppManager.getAccountViewModel().updateToken(newToken(result.token)) // H5 通知 App 更新 token
+            } else if (AppManager.getAccountViewModel().h5BearerToken != null) {
+                SdLogManager.logToken("H5首页 发现 App 中有需要更新的 token: " + AppManager.getAccountViewModel().h5BearerToken?.token)
+                function.onCallBack(AppManager.getAccountViewModel().h5BearerToken?.token) // H5 发现 App 中有需要更新的 token
+                AppManager.getAccountViewModel().clearAndConsumeH5BearerToken()
+            } else {
+                SdLogManager.logToken("H5首页 监听 App token 更新")
+                if (mUpdateH5BearerFunction != null) {
+                    AppManager.getAccountViewModel().unregisterH5BearerFunction(mUpdateH5BearerFunction)
+                }
+                mUpdateH5BearerFunction = AccountManager.H5BearerFunction(true, function)
+                AppManager.getAccountViewModel().registerH5BearerFunction(mUpdateH5BearerFunction) // 监听 App token 更新
+            }
+        }
         sWebView.registerHandler("bindShare") { data, function ->
             val shareData = H5BindShareData.fromJson(data)
             if (shareData.platform.size <= 0) {
@@ -217,6 +242,14 @@ class ChannelH5Fragment : BaseWebViewFragment() {
 
     private fun startScanQr() {
         startActivityForResult(Intent(activity, ScanQrCodeActivity::class.java), RESULT_CODE_SCAN_QR_CODE)
+    }
+
+    override fun onDestroyView() {
+        if (mUpdateH5BearerFunction != null) {
+            AppManager.getAccountViewModel().unregisterH5BearerFunction(mUpdateH5BearerFunction)
+            mUpdateH5BearerFunction = null
+        }
+        super.onDestroyView()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

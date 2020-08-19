@@ -1,7 +1,9 @@
 package com.sumian.sd.common.network.interceptor
 
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.buz.account.bean.Token
+import com.sumian.sd.buz.account.model.AccountManager.AUTHORIZATION_HEADER
+import com.sumian.sd.buz.account.model.AccountManager.AUTHORIZATION_HEADER_BEARER_PART
+import com.sumian.sd.buz.account.model.AccountManager.newToken
 import okhttp3.Interceptor
 import okhttp3.Response
 
@@ -17,10 +19,7 @@ import okhttp3.Response
  */
 
 class TokenAuthInterceptor private constructor() : Interceptor {
-
     companion object {
-        private const val AUTHORIZATION_HEADER = "Authorization"
-        private const val AUTHORIZATION_HEADER_BEARER_PART = "Bearer "
 
         @JvmStatic
         fun create(): Interceptor {
@@ -43,18 +42,8 @@ class TokenAuthInterceptor private constructor() : Interceptor {
         val authorizationHeader = response.header(AUTHORIZATION_HEADER)
         authorizationHeader?.let {
             AppManager.getAccountViewModel().updateToken(newToken(it))
+            AppManager.getAccountViewModel().updateH5BearerToken(newToken(it))
         }
         return response
-    }
-
-    private fun newToken(it: String): Token {
-        return Token().apply {
-            val newTokenString = it.removePrefix(AUTHORIZATION_HEADER_BEARER_PART)
-            token = newTokenString
-            setExpired_at(0)
-            setRefresh_expired_at((System.currentTimeMillis() / 1000L).toInt())
-            setUser(AppManager.getAccountViewModel().userInfo)
-            is_new = false
-        }
     }
 }
