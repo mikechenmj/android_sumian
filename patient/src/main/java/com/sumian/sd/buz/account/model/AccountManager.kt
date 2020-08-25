@@ -157,7 +157,7 @@ object AccountManager {
         var hasChannelH5Home = false
         for (function in mH5BearerFunctions) {
             hasChannelH5Home = hasChannelH5Home or (function?.isChannelH5Home ?: false)
-            function?.callBackFunction?.onCallBack(token?.token)
+            function?.callBackFunction?.onCallBack("{\"token\":\"${token?.token}\"}")
         }
         if (hasChannelH5Home) {
             clearAndConsumeH5BearerToken()

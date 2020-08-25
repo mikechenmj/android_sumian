@@ -29,7 +29,7 @@ abstract class SdBaseWebViewActivity : BaseWebViewActivity() {
                 AppManager.getAccountViewModel().updateToken(AccountManager.newToken(result.token)) // H5 通知 App 更新 token
             } else if (AppManager.getAccountViewModel().h5BearerToken != null) {
                 SdLogManager.logToken("$localClassName H5 发现 App 中有需要更新的 token: " + AppManager.getAccountViewModel().h5BearerToken?.token)
-                function.onCallBack(AppManager.getAccountViewModel().h5BearerToken?.token) // H5 发现 App 中有需要更新的 token
+                function.onCallBack("{\"token\":\"${AppManager.getAccountViewModel().h5BearerToken?.token}\"}") // H5 发现 App 中有需要更新的 token
                 AppManager.getAccountViewModel().clearAndConsumeH5BearerToken()
             } else {
                 SdLogManager.logToken("$localClassName 监听 App token 更新")
