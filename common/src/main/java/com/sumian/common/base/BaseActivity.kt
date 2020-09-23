@@ -139,13 +139,13 @@ abstract class BaseActivity : AppCompatActivity(), BaseShowLoadingView {
     protected open fun initWidgetBefore() {}
 
     override fun showLoading() {
-        if (!mLoadingDialog.isShowing) {
+        if (!mLoadingDialog.isShowing && !isFinishing) {
             mLoadingDialog.show()
         }
     }
 
     override fun dismissLoading() {
-        if (mLoadingDialog.isShowing) {
+        if (mLoadingDialog.isShowing  && !isFinishing) {
             mLoadingDialog.cancel()
         }
     }

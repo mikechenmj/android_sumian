@@ -70,9 +70,11 @@ class ScanUpgradeFragment(private var mDeviceType: Int) : BaseScanDeviceFragment
             }
             mUpgrading = true
             LogManager.deviceUpgradeLog("升级固件开始：$mDeviceType")
-            if (mProgressDialog?.isAdded == true || mSaveInstance) {
-            }else {
-                mProgressDialog?.show(activity!!.supportFragmentManager, mProgressDialog?.javaClass?.simpleName)
+            if (activity != null) {
+                if (mProgressDialog?.isAdded == true || mSaveInstance) {
+                } else {
+                    mProgressDialog?.show(activity!!.supportFragmentManager, mProgressDialog?.javaClass?.simpleName)
+                }
             }
         }
 
@@ -86,17 +88,19 @@ class ScanUpgradeFragment(private var mDeviceType: Int) : BaseScanDeviceFragment
             if (mProgressDialog?.isAdded == true) {
                 mProgressDialog?.dismissAllowingStateLoss()
             }
-            var upgradeConfirmDialog: UpgradeConfirmDialog? = null
-            upgradeConfirmDialog = UpgradeConfirmDialog(
-                    getString(R.string.upgrade_success_title_text),
-                    getString(R.string.upgrade_success_content_text)) {
-                upgradeConfirmDialog?.dismissAllowingStateLoss()
-                activity?.finish()
-            }
-            upgradeConfirmDialog.isCancelable = false
-            if (activity == null || upgradeConfirmDialog?.isAdded || mSaveInstance) {
-            }else {
-                upgradeConfirmDialog?.show(activity!!.supportFragmentManager, upgradeConfirmDialog.javaClass.simpleName)
+            if (activity != null) {
+                var upgradeConfirmDialog: UpgradeConfirmDialog? = null
+                upgradeConfirmDialog = UpgradeConfirmDialog(
+                        getString(R.string.upgrade_success_title_text),
+                        getString(R.string.upgrade_success_content_text)) {
+                    upgradeConfirmDialog?.dismissAllowingStateLoss()
+                    activity?.finish()
+                }
+                upgradeConfirmDialog.isCancelable = false
+                if (upgradeConfirmDialog.isAdded || mSaveInstance) {
+                }else {
+                    upgradeConfirmDialog.show(activity!!.supportFragmentManager, upgradeConfirmDialog.javaClass.simpleName)
+                }
             }
             upgradeSuccess()
         }
@@ -107,15 +111,18 @@ class ScanUpgradeFragment(private var mDeviceType: Int) : BaseScanDeviceFragment
             if (mProgressDialog?.isAdded == true) {
                 mProgressDialog?.dismissAllowingStateLoss()
             }
-            var upgradeConfirmDialog: UpgradeConfirmDialog? = null
-            upgradeConfirmDialog = UpgradeConfirmDialog(
-                    getString(R.string.upgrade_fail_title_text),
-                    getString(R.string.upgrade_fail_content_text)) {
-                upgradeConfirmDialog?.dismissAllowingStateLoss()
-                rescan()
-            }
             if (activity != null) {
-                upgradeConfirmDialog?.show(activity!!.supportFragmentManager, upgradeConfirmDialog?.javaClass?.simpleName)
+                var upgradeConfirmDialog: UpgradeConfirmDialog? = null
+                upgradeConfirmDialog = UpgradeConfirmDialog(
+                        getString(R.string.upgrade_fail_title_text),
+                        getString(R.string.upgrade_fail_content_text)) {
+                    upgradeConfirmDialog?.dismissAllowingStateLoss()
+                    rescan()
+                }
+                if (upgradeConfirmDialog?.isAdded == true || mSaveInstance) {
+                }else {
+                    upgradeConfirmDialog?.show(activity!!.supportFragmentManager, upgradeConfirmDialog?.javaClass?.simpleName)
+                }
             }
         }
     }
