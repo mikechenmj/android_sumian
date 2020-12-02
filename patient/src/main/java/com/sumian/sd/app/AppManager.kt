@@ -150,6 +150,7 @@ object AppManager {
         mApplication = app
         initLeanCloud()
         initLogManager(app)
+        initAccount()
         startCrashListen(app)
         initUtils(app)
         initLeakCanary(app)
@@ -162,6 +163,10 @@ object AppManager {
         VideoDownloadManager.init(app)
         initDeviceManager()
         ImagesScopeStorageHelper.init(app)
+    }
+
+    private fun initAccount() {
+        AccountManager.init()
     }
 
     private fun startCrashListen(app: Application) {
