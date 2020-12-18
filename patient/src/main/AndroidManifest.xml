@@ -187,6 +187,8 @@
             android:theme="@style/BaseAppTheme"
             android:windowSoftInputMode="stateHidden|stateUnchanged" /> <!-- online report -->
 
+        <service android:name=".common.h5.audio.H5KeepAliveService" />
+
         <activity
             android:name=".buz.doctor.activity.DoctorSimpleWebActivity"
             android:configChanges="keyboardHidden|orientation"
