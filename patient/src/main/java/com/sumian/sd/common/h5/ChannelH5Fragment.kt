@@ -29,6 +29,8 @@ import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.h5.ScanQrCodeActivity.EXTRA_RESULT_QR_CODE
 import com.sumian.sd.common.h5.ScanQrCodeActivity.RESULT_CODE_SCAN_QR_CODE
 import com.sumian.sd.common.h5.bean.ShowNavTab
+import com.sumian.sd.common.h5.music.H5MusicCommunication
+import com.sumian.sd.common.h5.music.H5MusicHelper
 import com.sumian.sd.common.log.SdLogManager
 import com.sumian.sd.common.pay.activity.PaymentActivity
 import com.sumian.sd.common.utils.EventBusUtil
@@ -45,6 +47,7 @@ class ChannelH5Fragment : BaseWebViewFragment() {
     private var mBuyCallBackFunction: CallBackFunction? = null
     private var mScanQrCodeCallBackFunction: CallBackFunction? = null
     private var mUpdateH5BearerFunction: AccountManager.H5BearerFunction? = null
+    private val mH5MusicCommunication by lazy { H5MusicCommunication(activity!!) }
 
     companion object {
         private const val REQUEST_CODE_PAY = 104
@@ -204,6 +207,7 @@ class ChannelH5Fragment : BaseWebViewFragment() {
                 SimpleWebActivity.launch(activity!!, H5Uri.NEW_USER_GUIDE)
             }
         }
+        mH5MusicCommunication.registerHandler(sWebView)
     }
 
     private fun startScanQrOrRequestPermission() {

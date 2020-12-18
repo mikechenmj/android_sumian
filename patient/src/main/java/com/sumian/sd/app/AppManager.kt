@@ -329,8 +329,8 @@ object AppManager {
     private fun initWebView(context: Context) {
         val webViewManger = WebViewManger.getInstance()
         webViewManger.registerX5WebView(context)
-        webViewManger.setBaseUrl(BuildConfig.CHANNEL_H5_URL)
-//        webViewManger.setBaseUrl("http://192.168.27.230:9010/")
+//        webViewManger.setBaseUrl(BuildConfig.CHANNEL_H5_URL)
+        webViewManger.setBaseUrl("http://192.168.27.238:9010/")
         mHttpDns?.let {
             webViewManger.registerHttpDnsEngine(it)
         }

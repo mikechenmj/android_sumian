@@ -12,4 +12,6 @@ object NotificationConst {
     const val CHANNEL_NAME: String = "com.sumian.sleepdoctor"
     const val PUSH_CHANNEL = "app-sd"
     const val USER_ID_KEY = "doctor_id"
+    const val H5_MUSIC_CHANNEL_ID = "h5_music_channel"
+    const val H5_MUSIC_CHANNEL_NAME = "速眠医生音乐"
 }
