@@ -259,7 +259,7 @@ object SyncSleepDataHelper {
         val dataCount: Int = subHexStringToInt(cmd, 5, 8)
         mTransData = arrayOfNulls(dataCount)
         mBeginCmd = cmd
-        mTransDataId = cmd.substring(10, 18)
+        mTransDataId = cmd.substring(18, 26)
         mBeginBytes = data
         mReceiveStartedTime = getCurrentTimeInSecond()
         mPackageTotalDataCount = dataCount
