@@ -1,9 +1,12 @@
 package com.sumian.sd.buz.diary.monitorrecord
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Build
 import android.os.Handler
 import android.text.format.DateUtils
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
@@ -38,7 +41,9 @@ import com.sumian.sd.common.log.SdLogManager
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import com.sumian.sd.common.utils.EventBusUtil
 import kotlinx.android.synthetic.main.fragment_monitor_data_vp.*
+import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * @author : Zhan Xuzhao
@@ -49,6 +54,25 @@ import java.util.*
  */
 class MonitorDataVpFragment : BaseFragment() {
     private val mAdapter by lazy { InnerPagerAdapter(fragmentManager!!) }
+    private val mDateChangeReceiver by lazy {
+        object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                val action = intent?.action ?: ""
+                when (action) {
+                    Intent.ACTION_TIME_TICK -> {
+                        val calendar = Calendar.getInstance()
+                        if ((calendar.get(Calendar.HOUR_OF_DAY) == 0 || calendar.get(Calendar.HOUR_OF_DAY) == 20)
+                                && calendar.get(Calendar.MINUTE) == 0) {
+                            reInitWidget()
+                        }
+                    }
+                    Intent.ACTION_TIME_CHANGED -> {
+                        reInitWidget()
+                    }
+                }
+            }
+        }
+    }
     private val mHandler: Handler = Handler()
 
     companion object {
@@ -63,13 +87,20 @@ class MonitorDataVpFragment : BaseFragment() {
         super.initWidget()
         initDateBar()
         initViewPager()
-        SdLogManager.logHuaweiHealth("Build.MANUFACTURER.toLowerCase(): ${Build.MANUFACTURER.toLowerCase()}")
         iv_bind_huawei_health.isVisible = Build.MANUFACTURER.toLowerCase().contains("huawei")
         iv_bind_huawei_health.setOnClickListener {
             if (this.activity != null) {
                 BindHuaweiHealthActivity.start(this.activity!!)
             }
         }
+    }
+
+    override fun initData() {
+        super.initData()
+        val filter = IntentFilter()
+        filter.addAction(Intent.ACTION_TIME_TICK)
+        filter.addAction(Intent.ACTION_TIME_CHANGED)
+        activity?.registerReceiver(mDateChangeReceiver, filter)
     }
 
     override fun onResume() {
@@ -105,6 +136,7 @@ class MonitorDataVpFragment : BaseFragment() {
 
     override fun onDestroy() {
         mHandler.removeCallbacks(null)
+        activity?.unregisterReceiver(mDateChangeReceiver)
         super.onDestroy()
     }
 
@@ -117,7 +149,7 @@ class MonitorDataVpFragment : BaseFragment() {
 
     private fun initViewPager() {
         view_pager_monitor.adapter = mAdapter.apply { mRefresh = mRoot as SumianSwipeRefreshLayout }
-        mAdapter.addDays(TimeUtilV2.getDayStartTime(getInitTime()), PRELOAD_THRESHOLD * 2, true)
+        mAdapter.setDays(TimeUtilV2.getDayStartTime(getInitTime()), PRELOAD_THRESHOLD * 2, true)
         view_pager_monitor.setCurrentItem(mAdapter.count - 1, false)
         view_pager_monitor.addOnPageChangeListener(object : androidx.viewpager.widget.ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {
@@ -212,7 +244,7 @@ class MonitorDataVpFragment : BaseFragment() {
     }
 
     class InnerPagerAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
-        val times = ArrayList<Long>()
+        var times: ArrayList<Long> = ArrayList()
 
         var mRefresh: SumianSwipeRefreshLayout? = null
 
@@ -250,7 +282,24 @@ class MonitorDataVpFragment : BaseFragment() {
 
         fun addDays(time: Long, dayCount: Int = PRELOAD_THRESHOLD, include: Boolean) {
             times.addAll(0, createDays(time, dayCount, include))
+            SdLogManager.logDeviceDiary("addDays days: ${JSONArray(times as List<Any>?)}")
             notifyDataSetChanged()
         }
+
+        fun setDays(time: Long, dayCount: Int = PRELOAD_THRESHOLD, include: Boolean) {
+            times = createDays(time, dayCount, include)
+            SdLogManager.logDeviceDiary("setDays days: ${JSONArray(times as List<Any>?)}")
+            notifyDataSetChanged()
+        }
+    }
+
+    private fun reInitWidget() {
+        SdLogManager.logDeviceDiary("reInitWidget: ${SimpleDateFormat().format(System.currentTimeMillis())}")
+        val calendar = Calendar.getInstance()
+        val previewDays = if (calendar.get(Calendar.HOUR_OF_DAY) >= 20) 1 else 0
+        date_bar.setPreviewDays(previewDays)
+        date_bar.setCurrentTime(getInitTime())
+        mAdapter.setDays(TimeUtilV2.getDayStartTime(getInitTime()), PRELOAD_THRESHOLD * 2, true)
+        view_pager_monitor.setCurrentItem(mAdapter.count - 1, false)
     }
 }
