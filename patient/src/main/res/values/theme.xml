@@ -22,6 +22,10 @@
         <item name="android:windowOverscan">true</item>
     </style>
 
+    <style name="BaseAppTheme.TranslucentStatus.Examine">
+        <item name="android:windowBackground">@color/examine_background</item>
+    </style>
+
     <style name="PlayActivityTheme" parent="@style/BaseAppTheme">
         <item name="android:windowIsTranslucent">false</item>
     </style>

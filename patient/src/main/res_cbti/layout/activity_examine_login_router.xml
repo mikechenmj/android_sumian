@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/iv_logo"
+            android:layout_width="@dimen/space_120"
+            android:layout_height="@dimen/space_120"
+            android:layout_gravity="center"
+            android:contentDescription="@null"
+            android:scaleType="fitCenter"
+            app:srcCompat="@mipmap/ic_login_logo" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_login"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_56"
+            android:layout_marginLeft="@dimen/space_32"
+            android:layout_marginRight="@dimen/space_32"
+            android:layout_marginTop="@dimen/space_72"
+            android:background="@drawable/bt_examine_bg"
+            android:text="@string/login_hint"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_20" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/tv_register"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_56"
+            android:layout_marginLeft="@dimen/space_32"
+            android:layout_marginRight="@dimen/space_32"
+            android:layout_marginTop="@dimen/space_20"
+            android:background="@drawable/bt_examine_light_bg"
+            android:text="@string/register_hint"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_20" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_login_bg_wechat">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_wechat"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/space_64"
+            android:layout_gravity="center"
+            android:background="@null"
+            android:contentDescription="@null"
+            android:drawablePadding="@dimen/space_8"
+            android:drawableStart="@drawable/ic_login_icon_wechat"
+            android:gravity="center"
+            android:text="@string/wechat_login"
+            android:visibility="visible"
+            tools:visibility="visible" />
+    </FrameLayout>
+
+</FrameLayout>

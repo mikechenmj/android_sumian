@@ -50,7 +50,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.sumian.sd"
+//        applicationId = "com.sumian.sd"
         applicationIdSuffix = null
         versionCode = new Date().format('yyyyMMddHH').toInteger()
         versionName = "1.37.0"
@@ -85,6 +85,7 @@ android {
         buildConfigField("String", "WECHAT_APP_SECRET", appProperties['WECHAT_APP_SECRET'])
         buildConfigField("String", "WECHAT_MINI_PROGRAM_ID_YOUZAN", appProperties['WECHAT_MINI_PROGRAM_ID_YOUZAN'])
         buildConfigField("String", "YOUZAN_URL", appProperties['YOUZAN_URL'])
+        buildConfigField("Boolean", "IS_EXAMINE_VERSION", "false")
 
         // Enabling multidex support.
         multiDexEnabled true
@@ -149,10 +150,21 @@ android {
     }
 
     //product flavors
-    flavorDimensions "market", "environment"
+    flavorDimensions "market", "environment", "version"
     productFlavors {
 
         def app_name = "速眠医生"
+
+        defaultType {
+            dimension "version"
+            applicationId = "com.sumian.sd"
+        }
+
+        examineType {
+            dimension "version"
+            applicationId = "com.sumian.app.temp"
+            buildConfigField("Boolean", "IS_EXAMINE_VERSION", "true")
+        }
 
         yyb {//应用宝
             dimension "market"

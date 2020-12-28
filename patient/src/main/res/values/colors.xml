@@ -91,4 +91,5 @@
 
     <color name="normal_item_background">@android:color/white</color>
 
+    <color name="examine_background">#ff212121</color>
 </resources>

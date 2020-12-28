@@ -1,3 +1,4 @@
+
 package com.sumian.sd.app
 
 import android.app.Application
@@ -9,6 +10,7 @@ import android.net.ConnectivityManager
 import android.os.Build
 import android.util.Log
 import android.view.Gravity
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
@@ -43,6 +45,7 @@ import com.sumian.sd.base.ActivityDelegateFactory
 import com.sumian.sd.buz.account.bean.Organization
 import com.sumian.sd.buz.account.bean.Token
 import com.sumian.sd.buz.account.bean.UserInfo
+import com.sumian.sd.buz.account.login.AgreementAndPrivacyDialog
 import com.sumian.sd.buz.account.login.LoginActivity
 import com.sumian.sd.buz.account.login.NewUserInfoActivity
 import com.sumian.sd.buz.account.model.AccountManager
@@ -62,6 +65,7 @@ import com.sumian.sd.common.network.NetworkManager
 import com.sumian.sd.common.network.api.SdApi
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import com.sumian.sd.common.utils.getString
+import com.sumian.sd.examine.main.ExamineMainActivity
 import com.sumian.sd.main.MainActivity
 import java.util.HashMap
 
@@ -346,12 +350,16 @@ object AppManager {
     }
 
     fun launchMain() {
+        if (BuildConfig.IS_EXAMINE_VERSION) {
+            ActivityUtils.startActivity(ExamineMainActivity::class.java)
+            return
+        }
         ActivityUtils.startActivity(MainActivity::class.java)
     }
 
     private fun launchMainOrNewUserInfo() {
         val token = getAccountViewModel().token
-        if (token != null && token.is_new) {
+        if (!BuildConfig.IS_EXAMINE_VERSION && token != null && token.is_new) {
             ActivityUtils.startActivity(NewUserInfoActivity::class.java)
             ActivityUtils.finishAllActivities()
         } else {
@@ -498,5 +506,16 @@ object AppManager {
     fun exitApp() {
         DeviceManager.disconnect()
         ActivityUtils.finishAllActivities()
+    }
+
+    fun checkAgreementShouldShow(supportFragmentManager: FragmentManager) {
+        val needShowAgreement = mApplication
+                .getSharedPreferences(AgreementAndPrivacyDialog.AGREEMENT_AND_PRIVACY_DIALOG_NEED_SHOW, Context.MODE_PRIVATE)
+                .getBoolean(AgreementAndPrivacyDialog.AGREEMENT_AND_PRIVACY_DIALOG_NEED_SHOW, true)
+        if (needShowAgreement) {
+            val agreementDialog = AgreementAndPrivacyDialog()
+            agreementDialog.isCancelable = false
+            agreementDialog.show(supportFragmentManager, "")
+        }
     }
 }

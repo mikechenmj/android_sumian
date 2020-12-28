@@ -136,10 +136,10 @@
             android:exported="true"
             android:targetActivity=".common.pay.activity.PaymentActivity"
             android:theme="@style/BaseAppTheme" /> <!-- Alipay -->
-<!--        <activity-->
-<!--            android:name=".common.pay.activity.WXPayEntryActivity"-->
-<!--            android:exported="true"-->
-<!--            android:launchMode="singleTop"/>-->
+        <!--        <activity-->
+        <!--            android:name=".common.pay.activity.WXPayEntryActivity"-->
+        <!--            android:exported="true"-->
+        <!--            android:launchMode="singleTop"/>-->
         <service
             android:name=".common.log.LogJobIntentService"
             android:permission="android.permission.BIND_JOB_SERVICE" /> <!-- 实时通信模块、推送（均需要加入以下声明） START -->
@@ -348,6 +348,24 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.TranslucentStatus" />
+
+        <activity
+            android:name=".examine.login.ExamineLoginRouterActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.TranslucentStatus.Examine" />
+
+        <activity
+            android:name=".examine.login.ExamineLoginActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.TranslucentStatus.Examine" />
+
+        <activity android:name=".examine.main.ExamineMainActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.TranslucentStatus.Examine" />
+
         <activity
             android:name=".buz.account.login.ValidatePhoneNumberActivity"
             android:theme="@style/BaseAppTheme" />
@@ -616,9 +634,9 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".common.h5.ScanQrCodeActivity"
-            android:launchMode="singleTop">
-        </activity>
+        <activity
+            android:name=".common.h5.ScanQrCodeActivity"
+            android:launchMode="singleTop"></activity>
     </application>
 
 </manifest>

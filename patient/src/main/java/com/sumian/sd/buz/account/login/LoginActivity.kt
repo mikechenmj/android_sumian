@@ -76,13 +76,7 @@ class LoginActivity : BaseViewModelActivity<LoginPresenter>(), LoginContract.Vie
                 ll_password_et_container.isActivated = highlight
             }
         })
-        val needShowAgreement = AppManager.mApplication.getSharedPreferences(AgreementAndPrivacyDialog.AGREEMENT_AND_PRIVACY_DIALOG_NEED_SHOW, Context.MODE_PRIVATE)
-                .getBoolean(AgreementAndPrivacyDialog.AGREEMENT_AND_PRIVACY_DIALOG_NEED_SHOW, true)
-        if (needShowAgreement) {
-            val agreementDialog = AgreementAndPrivacyDialog()
-            agreementDialog.isCancelable = false
-            agreementDialog.show(supportFragmentManager, "")
-        }
+        AppManager.checkAgreementShouldShow(supportFragmentManager)
     }
 
     private fun requestCaptcha() {

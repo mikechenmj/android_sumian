@@ -1,11 +1,15 @@
 package com.sumian.sd.main
 
+import android.graphics.Color
 import android.os.Handler
+import android.util.Log
 import com.sumian.common.base.BaseActivity
+import com.sumian.sd.BuildConfig
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.account.login.LoginActivity
 import com.sumian.sd.common.utils.StatusBarUtil
+import com.sumian.sd.examine.login.ExamineLoginRouterActivity
 
 /**
  * Created by jzz
@@ -28,6 +32,9 @@ class WelcomeActivity : BaseActivity() {
     override fun initWidget() {
         super.initWidget()
         StatusBarUtil.setStatusBarTextColorDark(this, true)
+        if (BuildConfig.IS_EXAMINE_VERSION) {
+            window.decorView.setBackgroundColor(Color.BLACK)
+        }
     }
 
     override fun initData() {
@@ -37,7 +44,11 @@ class WelcomeActivity : BaseActivity() {
             if (login) {
                 AppManager.launchMain()
             } else {
-                LoginActivity.show()
+                if (BuildConfig.IS_EXAMINE_VERSION) {
+                    ExamineLoginRouterActivity.show(this)
+                } else {
+                    LoginActivity.show()
+                }
             }
         }, SPLASH_DURATION)
     }
