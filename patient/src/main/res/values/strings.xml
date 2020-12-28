@@ -992,4 +992,5 @@
     <string name="agreement_and_privacy_dialog_title">速眠医生用户协议及用户隐私政策</string>
     <string name="agreement_ok_text">同意并进入</string>
     <string name="agreement_cancel_text">退出</string>
+    <string name="music_playing_tip">正在播放音乐</string>
 </resources>

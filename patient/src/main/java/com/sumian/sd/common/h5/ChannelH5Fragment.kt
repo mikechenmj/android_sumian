@@ -2,11 +2,15 @@ package com.sumian.sd.common.h5
 
 import android.Manifest
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Handler
+import android.os.PowerManager
+import android.util.Log
 import android.util.TypedValue
 import android.view.View
+import android.view.WindowManager
 import androidx.core.app.ActivityCompat
 import com.github.lzyzsd.jsbridge.CallBackFunction
 import com.google.gson.reflect.TypeToken
@@ -28,6 +32,8 @@ import com.sumian.sd.buz.homepage.sheet.ShareBottomSheet
 import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.h5.ScanQrCodeActivity.EXTRA_RESULT_QR_CODE
 import com.sumian.sd.common.h5.ScanQrCodeActivity.RESULT_CODE_SCAN_QR_CODE
+import com.sumian.sd.common.h5.audio.H5KeepAliveService
+import com.sumian.sd.common.h5.audio.H5AudioNotificationConst
 import com.sumian.sd.common.h5.bean.ShowNavTab
 import com.sumian.sd.common.log.SdLogManager
 import com.sumian.sd.common.pay.activity.PaymentActivity
@@ -45,6 +51,7 @@ class ChannelH5Fragment : BaseWebViewFragment() {
     private var mBuyCallBackFunction: CallBackFunction? = null
     private var mScanQrCodeCallBackFunction: CallBackFunction? = null
     private var mUpdateH5BearerFunction: AccountManager.H5BearerFunction? = null
+    private var mH5WakeLock: PowerManager.WakeLock? = null
 
     companion object {
         private const val REQUEST_CODE_PAY = 104
@@ -204,6 +211,30 @@ class ChannelH5Fragment : BaseWebViewFragment() {
                 SimpleWebActivity.launch(activity!!, H5Uri.NEW_USER_GUIDE)
             }
         }
+        sWebView.registerHandler("startKeepAlive") {data, function ->
+            startKeepAlive()
+        }
+        sWebView.registerHandler("stopKeepAlive") {data, function ->
+            stopKeepAlive()
+        }
+    }
+
+    private fun startKeepAlive() {
+        var manager: Any? = context?.getSystemService(Context.POWER_SERVICE) ?: return
+        manager = manager as PowerManager
+        mH5WakeLock = manager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, H5AudioNotificationConst.H5_MUSIC_WAKE_LOCK_TAG)
+        mH5WakeLock?.acquire(60 * 60 * 1000)
+        activity?.window?.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        activity?.startService(Intent(activity, H5KeepAliveService::class.java))
+    }
+
+    private fun stopKeepAlive() {
+        if (mH5WakeLock?.isHeld == true) mH5WakeLock?.release()
+        activity?.stopService(Intent(activity, H5KeepAliveService::class.java))
+    }
+
+    override fun isKeepAlive ():Boolean {
+        return mH5WakeLock?.isHeld == true
     }
 
     private fun startScanQrOrRequestPermission() {
@@ -249,6 +280,7 @@ class ChannelH5Fragment : BaseWebViewFragment() {
             AppManager.getAccountViewModel().unregisterH5BearerFunction(mUpdateH5BearerFunction)
             mUpdateH5BearerFunction = null
         }
+        stopKeepAlive()
         super.onDestroyView()
     }
 

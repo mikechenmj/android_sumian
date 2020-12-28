@@ -68,7 +68,7 @@ object AccountManager {
             return userInfo != null && userInfo.isBindDoctor
         }
 
-    init {
+    fun init() {
         updateToken(loadPersistedToken())
         updateH5BearerToken(loadH5BearerPersistedToken())
         updateUserInfo(loadPersistedUserInfo())

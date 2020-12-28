@@ -150,6 +150,7 @@ object AppManager {
         mApplication = app
         initLeanCloud()
         initLogManager(app)
+        initAccount()
         startCrashListen(app)
         initUtils(app)
         initLeakCanary(app)
@@ -162,6 +163,10 @@ object AppManager {
         VideoDownloadManager.init(app)
         initDeviceManager()
         ImagesScopeStorageHelper.init(app)
+    }
+
+    private fun initAccount() {
+        AccountManager.init()
     }
 
     private fun startCrashListen(app: Application) {
@@ -325,7 +330,7 @@ object AppManager {
         val webViewManger = WebViewManger.getInstance()
         webViewManger.registerX5WebView(context)
         webViewManger.setBaseUrl(BuildConfig.CHANNEL_H5_URL)
-//        webViewManger.setBaseUrl("http://192.168.27.230:9010/")
+//        webViewManger.setBaseUrl("http://192.168.27.238:9010/")
         mHttpDns?.let {
             webViewManger.registerHttpDnsEngine(it)
         }

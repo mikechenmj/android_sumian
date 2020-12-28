@@ -81,8 +81,14 @@ abstract class BaseWebViewFragment : BaseViewModelFragment<BaseViewModel>(), SWe
     }
 
     override fun onPause() {
-        sm_webview_container?.pauseWebView()
+        if (!isKeepAlive()) {
+            sm_webview_container?.pauseWebView()
+        }
         super.onPause()
+    }
+
+    protected open fun isKeepAlive(): Boolean {
+        return false
     }
 
     protected open fun registerHandler(sWebView: SWebView) {}
