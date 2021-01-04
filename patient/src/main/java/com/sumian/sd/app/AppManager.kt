@@ -1,4 +1,3 @@
-
 package com.sumian.sd.app
 
 import android.app.Application
@@ -101,7 +100,9 @@ object AppManager {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
             //注册 aliyun httpDns
             val iHttpDns = HttpDnsEngine().init(App.getAppContext(), BuildConfig.DEBUG, BuildConfig.HTTP_DNS_ACCOUNT_ID, BuildConfig.HTTP_DNS_SECRET_KEY)
-            iHttpDns.setPreHostsList(BuildConfig.BASE_URL, BuildConfig.CHANNEL_H5_URL)
+            iHttpDns.setPreHostsList(
+                    if (BuildConfig.IS_EXAMINE_VERSION) "https://esapi.sumian.com/" else BuildConfig.BASE_URL,
+                    BuildConfig.CHANNEL_H5_URL)
             return@lazy iHttpDns
         } else {
             null
@@ -193,7 +194,8 @@ object AppManager {
     }
 
     private fun initDeviceManager() {
-        DeviceManager.init(application = App.getAppContext(), params = DeviceManager.Params(baseUrl = BuildConfig.BASE_URL))
+        DeviceManager.init(application = App.getAppContext(), params = DeviceManager.Params(
+                baseUrl = if (BuildConfig.IS_EXAMINE_VERSION) "https://esapi.sumian.com/" else BuildConfig.BASE_URL))
         DeviceManager.setLogger(object : ILogger {
             override fun log(tag: String, log: String) {
                 SdLogManager.logDevice("[$tag] $log")

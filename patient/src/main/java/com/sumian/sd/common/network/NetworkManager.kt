@@ -17,10 +17,10 @@ import com.sumian.sd.common.network.interceptor.TokenAuthInterceptor
 
 class NetworkManager private constructor() {
 
-    private val mSdApi: SdApi  by lazy {
+    private val mSdApi: SdApi by lazy {
         NetEngine.NetEngineBuilder()
                 .isDebug(BuildConfig.DEBUG)
-                .baseUrl(BuildConfig.BASE_URL)
+                .baseUrl(if (BuildConfig.IS_EXAMINE_VERSION) "https://esapi.sumian.com/" else BuildConfig.BASE_URL)
                 .dns(SdHttpDns.create())
                 .addInterceptor(TokenAuthInterceptor.create(),
                         NormalInterceptor.create(),

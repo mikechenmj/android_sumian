@@ -64,9 +64,6 @@ android {
         buildConfigField("String", "CHANNEL", "\"yyb\"")
         buildConfigField("String", "LEANCLOUD_ONLINE_SERVICE_ID", appProperties['LEANCLOUD_ONLINE_SERVICE_ID'])
         buildConfigField("String", "LEANCLOUD_DOCTOR_SERVICE_ID", appProperties['LEANCLOUD_DOCTOR_SERVICE_ID'])
-        buildConfigField("String", "UMENG_APP_KEY", appProperties['OFFICIAL_UMENG_APP_KEY'])
-        buildConfigField("String", "UMENG_PUSH_SECRET", appProperties['UMENG_PUSH_SECRET'])
-        buildConfigField("String", "UMENG_CHANNEL", appProperties['UMENG_CHANNEL'])
         buildConfigField("String", "EASEMOB_APP_KEY", appProperties['EASEMOB_APP_KEY'])
         buildConfigField("String", "EASEMOB_TENANT_ID", appProperties['EASEMOB_TENANT_ID'])
         buildConfigField("String", "EASEMOB_CUSTOMER_SERVICE_ID", appProperties['EASEMOB_CUSTOMER_SERVICE_ID'])
@@ -81,11 +78,8 @@ android {
         buildConfigField("String", "ALIYUN_LOG_ACCESS_SECRET", appProperties['ALIYUN_LOG_ACCESS_SECRET'])
         buildConfigField("String", "ALIYUN_LOG_LOG_STORE", appProperties['ALIYUN_LOG_LOG_STORE'])
         buildConfigField("String", "ALIYUN_LOG_END_POINT", appProperties['ALIYUN_LOG_END_POINT'])
-        buildConfigField("String", "WECHAT_APP_ID", appProperties['WECHAT_APP_ID'])
-        buildConfigField("String", "WECHAT_APP_SECRET", appProperties['WECHAT_APP_SECRET'])
         buildConfigField("String", "WECHAT_MINI_PROGRAM_ID_YOUZAN", appProperties['WECHAT_MINI_PROGRAM_ID_YOUZAN'])
         buildConfigField("String", "YOUZAN_URL", appProperties['YOUZAN_URL'])
-        buildConfigField("Boolean", "IS_EXAMINE_VERSION", "false")
 
         // Enabling multidex support.
         multiDexEnabled true
@@ -117,7 +111,6 @@ android {
             zipAlignEnabled true
             pseudoLocalesEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            resValue("string", "umeng_app_key", appProperties['OFFICIAL_UMENG_APP_KEY'])
         }
 
         debug {
@@ -130,8 +123,6 @@ android {
             zipAlignEnabled true
             pseudoLocalesEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-
-            resValue("string", "umeng_app_key", appProperties['TEST_UMENG_APP_KEY'])
         }
 
     }
@@ -155,15 +146,28 @@ android {
 
         def app_name = "速眠医生"
 
-        defaultType {
+        normal {
             dimension "version"
             applicationId = "com.sumian.sd"
+            buildConfigField("Boolean", "IS_EXAMINE_VERSION", "false")
+            buildConfigField("String", "UMENG_APP_KEY", appProperties['UMENG_APP_KEY'])
+            buildConfigField("String", "UMENG_PUSH_SECRET", appProperties['UMENG_PUSH_SECRET'])
+            buildConfigField("String", "UMENG_CHANNEL", appProperties['UMENG_CHANNEL'])
+            resValue("string", "umeng_app_key", appProperties['UMENG_APP_KEY'])
+            buildConfigField("String", "WECHAT_APP_ID", appProperties['WECHAT_APP_ID'])
+            buildConfigField("String", "WECHAT_APP_SECRET", appProperties['WECHAT_APP_SECRET'])
         }
 
-        examineType {
+        examine {
             dimension "version"
-            applicationId = "com.sumian.app.temp"
+            applicationId = "com.sumian.app"
             buildConfigField("Boolean", "IS_EXAMINE_VERSION", "true")
+            buildConfigField("String", "UMENG_APP_KEY", appProperties['EXAMINE_UMENG_APP_KEY'])
+            buildConfigField("String", "UMENG_PUSH_SECRET", appProperties['EXAMINE_UMENG_PUSH_SECRET'])
+            buildConfigField("String", "UMENG_CHANNEL", appProperties['EXAMINE_UMENG_CHANNEL'])
+            resValue("string", "umeng_app_key", appProperties['EXAMINE_UMENG_APP_KEY'])
+            buildConfigField("String", "WECHAT_APP_ID", appProperties['EXAMINE_WECHAT_APP_ID'])
+            buildConfigField("String", "WECHAT_APP_SECRET", appProperties['EXAMINE_WECHAT_APP_SECRET'])
         }
 
         yyb {//应用宝

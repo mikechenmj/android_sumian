@@ -3,13 +3,21 @@ package com.sumian.sd.examine.login
 import android.text.TextUtils
 import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.lifecycleScope
+import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.base.BaseActivity
 import com.sumian.common.helper.ToastHelper
 import com.sumian.sd.R
+import com.sumian.sd.buz.account.login.LoginActivity
 import com.sumian.sd.examine.login.viewmodel.ExamineLoginViewModel
 import kotlinx.android.synthetic.main.activity_examine_login.*
 
 class ExamineLoginActivity : BaseActivity() {
+
+    companion object {
+        fun show() {
+            ActivityUtils.startActivity(ExamineLoginActivity::class.java)
+        }
+    }
 
     private val viewModel by lazy {
         ViewModelProviders.of(this).get(ExamineLoginViewModel::class.java)

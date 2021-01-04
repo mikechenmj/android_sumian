@@ -127,7 +127,7 @@
             android:launchMode="singleTop"
             android:theme="@style/BaseAppTheme.Fullscreen" /> <!-- third  loginByCaptcha -->
         <activity
-            android:name=".wxapi.WXEntryActivity"
+            android:name="${applicationId}.wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" /> <!-- pay start -->
@@ -361,7 +361,20 @@
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.TranslucentStatus.Examine" />
 
-        <activity android:name=".examine.main.ExamineMainActivity"
+        <activity
+            android:name=".examine.main.ExamineMainActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.TranslucentStatus.Examine" />
+
+        <activity
+            android:name=".examine.guide.ExamineUserGuidelineActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.TranslucentStatus.Examine" />
+
+        <activity
+            android:name=".examine.main.me.ExamineSettingActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/BaseAppTheme.TranslucentStatus.Examine" />

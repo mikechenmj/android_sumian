@@ -7,6 +7,7 @@ import com.blankj.utilcode.util.LogUtils
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.utils.VersionUtil
 import com.sumian.device.manager.DeviceManager
+import com.sumian.sd.BuildConfig
 import com.sumian.sd.app.App
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.version.bean.Version
@@ -53,7 +54,11 @@ object VersionManager {
         if (currentVersion.indexOf("-") != -1) {
             currentVersion = currentVersion.subSequence(0, currentVersion.indexOf("-")).toString()
         }
-        val call = AppManager.getSdHttpService().getAppVersion(currentVersion = currentVersion)
+        var app = 1
+        if (BuildConfig.IS_EXAMINE_VERSION) {
+            app = 7
+        }
+        val call = AppManager.getSdHttpService().getAppVersion(app = app, currentVersion = currentVersion)
         call.enqueue(object : BaseSdResponseCallback<Version>() {
             override fun onFailure(errorResponse: ErrorResponse) {
                 LogUtils.d(errorResponse.message)
@@ -95,7 +100,7 @@ object VersionManager {
                 device?.sleepMasterVersionInfo?.hardwareVersion,
                 device?.monitorVersionInfo?.softwareVersion,
                 device?.sleepMasterVersionInfo?.softwareVersion
-                )
+        )
         call.enqueue(object : BaseSdResponseCallback<FirmwareVersionInfo>() {
             override fun onFailure(errorResponse: ErrorResponse) {}
 
@@ -140,7 +145,7 @@ object VersionManager {
         val isConnected = if (versionType == VERSION_TYPE_MONITOR) DeviceManager.isMonitorConnected() else DeviceManager.isSleepMasterConnected()
         val currentVersionInfo = if (versionType == VERSION_TYPE_MONITOR) DeviceManager.getMonitorSoftwareVersion() else DeviceManager.getSleepMasterSoftwareVersion()
         val newVersionInfo = if (versionType == VERSION_TYPE_MONITOR) firmwareVersionInfo.monitor else firmwareVersionInfo.sleeper
-        if(currentVersionInfo == null || currentVersionInfo == "0.0.0") {
+        if (currentVersionInfo == null || currentVersionInfo == "0.0.0") {
             return false
         }
         return (isConnected

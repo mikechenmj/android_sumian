@@ -9,6 +9,8 @@ import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.account.login.LoginActivity
 import com.sumian.sd.common.utils.StatusBarUtil
+import com.sumian.sd.examine.guide.ExamineUserGuidelineActivity
+import com.sumian.sd.examine.login.ExamineLoginActivity
 import com.sumian.sd.examine.login.ExamineLoginRouterActivity
 
 /**
@@ -45,7 +47,7 @@ class WelcomeActivity : BaseActivity() {
                 AppManager.launchMain()
             } else {
                 if (BuildConfig.IS_EXAMINE_VERSION) {
-                    ExamineLoginRouterActivity.show(this)
+                    ExamineLoginRouterActivity.show()
                 } else {
                     LoginActivity.show()
                 }

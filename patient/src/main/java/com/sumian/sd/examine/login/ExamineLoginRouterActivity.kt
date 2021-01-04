@@ -5,6 +5,7 @@ import android.content.Intent
 import android.util.Log
 import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.lifecycleScope
+import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.base.BaseActivity
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
@@ -23,8 +24,8 @@ class ExamineLoginRouterActivity : BaseActivity() {
     }
 
     companion object {
-        fun show(context: Context) {
-            context.startActivity(Intent(context, ExamineLoginRouterActivity::class.java))
+        fun show() {
+            ActivityUtils.startActivity(ExamineLoginRouterActivity::class.java)
         }
     }
 

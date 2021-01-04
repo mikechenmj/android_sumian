@@ -208,11 +208,11 @@ object AccountManager {
         }
     }
 
-    fun getUserInfoLiveData(): MutableLiveData<UserInfo> {
+    fun getUserInfoLiveData(): LiveData<UserInfo> {
         return mUserInfoLiveData
     }
 
-    fun getOrganizationLiveData(): MutableLiveData<Organization> {
+    fun getOrganizationLiveData(): LiveData<Organization> {
         return mOrganizationLiveData
     }
 

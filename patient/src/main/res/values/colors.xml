@@ -92,4 +92,6 @@
     <color name="normal_item_background">@android:color/white</color>
 
     <color name="examine_background">#ff212121</color>
+    <color name="examine_grey_background">#ff2c2f37</color>
+    <color name="alpha_general_color">#cc7d8fb3</color>
 </resources>
