@@ -380,6 +380,48 @@
             android:theme="@style/BaseAppTheme.TranslucentStatus.Examine" />
 
         <activity
+            android:name=".examine.main.me.setting.ExamineFeedbackActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.TranslucentStatus.Examine" />
+
+        <activity
+            android:name=".examine.main.me.ExamineVersionUpdateActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.TranslucentStatus.Examine" />
+
+        <activity
+            android:name=".examine.main.me.ExamineNewActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.TranslucentStatus.Examine" />
+
+        <activity
+            android:name=".examine.main.me.ExamineSleepRemindActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.TranslucentStatus.Examine" />
+
+        <activity
+            android:name=".examine.main.me.ExamineQuestionActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.TranslucentStatus.Examine" />
+
+        <activity
+            android:name=".examine.main.me.userinfo.ExamineUserInfoActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.TranslucentStatus.Examine" />
+
+        <activity
+            android:name=".examine.main.consultant.ExamineConsultantMsgActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.TranslucentStatus.Examine" />
+
+        <activity
             android:name=".buz.account.login.ValidatePhoneNumberActivity"
             android:theme="@style/BaseAppTheme" />
         <activity

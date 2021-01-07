@@ -1,11 +1,16 @@
 package com.sumian.sd.widget;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.util.TypedValue;
+import android.view.Display;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -65,16 +70,15 @@ public class TitleBar extends FrameLayout implements View.OnClickListener {
         String menuText = a.getString(R.styleable.TitleBar_menu_text);
         Drawable moreDrawable = a.getDrawable(R.styleable.TitleBar_menu_icon);
         boolean isDarkTheme = a.getBoolean(R.styleable.TitleBar_tb_dark_theme, false);
+        float titleTextSize = a.getDimensionPixelSize(R.styleable.TitleBar_text_size, 44);
         a.recycle();
         View rootView = inflate(context, R.layout.lay_title_bar, this);
         mIvBack = rootView.findViewById(R.id.iv_back);
-
         mTvTitle = rootView.findViewById(R.id.tv_title);
+        mTvTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, titleTextSize);
         mIvMenu = rootView.findViewById(R.id.iv_menu);
         mTvMenu = rootView.findViewById(R.id.tv_menu);
         mRootView = rootView.findViewById(R.id.v_root);
-
-
         if (showBack) {
             mIvBack.setOnClickListener(this);
             mIvBack.setVisibility(VISIBLE);

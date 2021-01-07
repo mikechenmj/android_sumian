@@ -1,11 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.sumian.sd.widget.TitleBar
+        android:id="@+id/examine_title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/hw_colorPrimary"
+        android:paddingTop="@dimen/status_bar_height"
+        app:tb_dark_theme="true"
+        app:text="新手指南"
+        app:text_size="@dimen/font_20" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/vp_guide_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-</FrameLayout>
+</LinearLayout>

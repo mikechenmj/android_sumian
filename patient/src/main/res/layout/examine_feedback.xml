@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.sumian.sd.widget.TitleBar
+        android:id="@+id/examine_title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/hw_colorPrimary"
+        android:paddingTop="@dimen/status_bar_height"
+        app:tb_dark_theme="true"
+        app:text="意见反馈"
+        app:text_size="@dimen/font_20" />
+
+    <EditText
+        android:id="@+id/et_feedback"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:background="@null"
+        android:gravity="top"
+        android:hint="问题或建议"
+        android:padding="20dp"
+        android:textColor="#ff7ea5f4" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/bt_submit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_56"
+        android:layout_marginLeft="@dimen/space_32"
+        android:layout_marginTop="@dimen/space_72"
+        android:layout_marginRight="@dimen/space_32"
+        android:layout_marginBottom="100dp"
+        android:background="@drawable/bt_examine_bg"
+        android:text="@string/submit"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_20" />
+
+</LinearLayout>

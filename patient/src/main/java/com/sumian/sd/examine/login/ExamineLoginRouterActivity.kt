@@ -1,19 +1,14 @@
 package com.sumian.sd.examine.login
 
-import android.content.Context
 import android.content.Intent
-import android.util.Log
 import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.lifecycleScope
 import com.blankj.utilcode.util.ActivityUtils
 import com.sumian.common.base.BaseActivity
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
-import com.sumian.sd.examine.main.viewmodel.ExamineLoginRouterViewModel
+import com.sumian.sd.examine.login.viewmodel.ExamineLoginRouterViewModel
 import kotlinx.android.synthetic.main.activity_examine_login_router.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class ExamineLoginRouterActivity : BaseActivity() {
 

@@ -3,12 +3,16 @@ package com.sumian.sd.examine.main.me
 import android.text.TextUtils
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.blankj.utilcode.util.SPUtils
 import com.sumian.common.base.BaseFragment
 import com.sumian.common.image.loadImage
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.account.bean.UserInfo
 import com.sumian.sd.buz.account.model.AccountManager
+import com.sumian.sd.buz.setting.remind.SleepDiaryRemindSettingActivity
+import com.sumian.sd.examine.guide.ExamineUserGuidelineActivity
+import com.sumian.sd.examine.main.me.userinfo.ExamineUserInfoActivity
 import com.sumian.sd.main.OnEnterListener
 import kotlinx.android.synthetic.main.examine_me_fragment.*
 import java.util.*
@@ -39,6 +43,36 @@ class ExamineMeFragment : BaseFragment(), OnEnterListener {
         updateUi(AccountManager.userInfo)
         lay_setting.setOnClickListener {
             ExamineSettingActivity.show()
+        }
+        lay_user_guide.setOnClickListener {
+            ExamineUserGuidelineActivity.show()
+        }
+        lay_firmware_update.setOnClickListener {
+            ExamineVersionUpdateActivity.show()
+        }
+        lay_my_msg_notice.setOnClickListener {
+            ExamineNewActivity.show()
+        }
+        lay_sleepy_notice.setOnClickListener {
+            ExamineSleepRemindActivity.show()
+        }
+        lay_sleepy_answer.setOnClickListener {
+            ExamineQuestionActivity.show()
+        }
+        lay_go_to_info_center.setOnClickListener {
+            ExamineUserInfoActivity.show()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (SPUtils.getInstance().getBoolean("examine_sleep_remind", false)) {
+            val hours = String.format("%02d", SPUtils.getInstance().getInt("examine_sleep_remind_hours", -1))
+            val minutes = String.format("%02d", SPUtils.getInstance().getInt("examine_sleep_remind_minutes", -1))
+            val content = "$hours:$minutes"
+            tv_sleep_notice_state.text = content
+        } else {
+            tv_sleep_notice_state.text = getString(R.string.sleepy_notice_state_off_hint)
         }
     }
 

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_guide_line">
+    android:background="@color/deep_content_bg_color">
 
     <ImageView
         android:id="@+id/iv_guideline_icon"
@@ -23,9 +23,9 @@
             android:id="@+id/tv_guideline_one"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/space_30"
             android:layout_marginStart="@dimen/space_30"
             android:layout_marginTop="@dimen/space_84"
+            android:layout_marginEnd="@dimen/space_30"
             android:text="开启监测仪"
             android:textColor="@color/bt_hole_color"
             android:textSize="@dimen/font_20"
@@ -35,9 +35,9 @@
             android:id="@+id/tv_guideline_two"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/space_30"
             android:layout_marginStart="@dimen/space_30"
             android:layout_marginTop="@dimen/space_10"
+            android:layout_marginEnd="@dimen/space_30"
             android:text="将监测仪佩戴在手腕，长按3s，实时监测睡眠情况。"
             android:textColor="@color/full_general_color"
             android:textSize="@dimen/font_14"
@@ -64,8 +64,8 @@
             android:id="@+id/guideline_indicator"
             android:layout_width="match_parent"
             android:layout_height="@dimen/space_8"
-            android:layout_marginBottom="@dimen/space_20"
             android:layout_marginTop="35dp"
+            android:layout_marginBottom="@dimen/space_20"
             android:gravity="center"
             android:orientation="horizontal" />
 

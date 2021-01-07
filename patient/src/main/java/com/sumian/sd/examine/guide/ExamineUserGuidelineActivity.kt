@@ -60,8 +60,8 @@ class ExamineUserGuidelineActivity : BaseActivity() {
     }
 
     companion object {
-        fun show(context: Context) {
-            context.startActivity(Intent(context, ExamineUserGuidelineActivity::class.java))
+        fun show() {
+            ActivityUtils.startActivity(ExamineUserGuidelineActivity::class.java)
         }
     }
 
@@ -80,6 +80,7 @@ class ExamineUserGuidelineActivity : BaseActivity() {
             window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         }
         vp_guide_container.adapter = mAdapter
+        examine_title_bar.setOnBackClickListener { finish() }
     }
 
     override fun initData() {
@@ -147,7 +148,7 @@ class ExamineUserGuidelineActivity : BaseActivity() {
             val button = itemView.findViewById<Button>(R.id.bt_action)
             if (guideline.indicatorPosition == 4) {
                 button.setOnClickListener(this)
-                button.visibility = View.VISIBLE
+//                button.visibility = View.VISIBLE
             } else {
                 button.visibility = View.INVISIBLE
             }
@@ -155,12 +156,6 @@ class ExamineUserGuidelineActivity : BaseActivity() {
         }
 
         override fun onClick(v: View) {
-            val login: Boolean = AppManager.getAccountViewModel().isLogin
-            if (login) {
-                ActivityUtils.startActivity(ExamineMainActivity::class.java)
-            } else {
-                ExamineLoginRouterActivity.show()
-            }
             finish()
         }
 

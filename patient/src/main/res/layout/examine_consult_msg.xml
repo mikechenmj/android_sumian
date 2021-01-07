@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/deep_content_bg_color"
+    android:orientation="vertical">
+
+    <com.sumian.sd.widget.TitleBar
+        android:id="@+id/examine_title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/hw_colorPrimary"
+        android:paddingTop="@dimen/status_bar_height"
+        app:tb_dark_theme="true"
+        app:text="速眠医生"
+        app:text_size="@dimen/font_20" />
+
+    <TextView
+        android:id="@+id/tv_current_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bg_consultant_dark_deep"
+        android:padding="5dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_chat_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/hw_colorPrimary"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <ImageView
+            android:onClick="onClick"
+            android:id="@+id/iv_one"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_advisory_icon_voice" />
+
+        <EditText
+            android:id="@+id/et_input"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_consultant_deep" />
+
+        <ImageView
+            android:onClick="onClick"
+            android:id="@+id/iv_two"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/ic_advisory_icon_image" />
+
+        <ImageView
+            android:onClick="onClick"
+            android:id="@+id/iv_three"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/ic_advisory_icon_send" />
+    </LinearLayout>
+
+</LinearLayout>

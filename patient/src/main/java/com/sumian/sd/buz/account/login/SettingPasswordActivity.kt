@@ -8,10 +8,12 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.base.BaseActivity
 import com.sumian.common.network.response.ErrorResponse
+import com.sumian.sd.BuildConfig
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.account.bean.UserInfo
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
+import com.sumian.sd.examine.login.ExamineLoginRouterActivity
 import kotlinx.android.synthetic.main.activity_modify_password.*
 
 /**
@@ -101,7 +103,11 @@ class SettingPasswordActivity : BaseActivity() {
                 AppManager.getAccountViewModel().updateUserInfo(response)
                 ToastUtils.showShort(R.string.set_success)
                 ActivityUtils.finishAllActivities()
-                ActivityUtils.startActivity(this@SettingPasswordActivity, LoginActivity::class.java)
+                if (BuildConfig.IS_EXAMINE_VERSION) {
+                    ActivityUtils.startActivity(ExamineLoginRouterActivity::class.java)
+                }else {
+                    ActivityUtils.startActivity(LoginActivity::class.java)
+                }
             }
 
             override fun onFailure(errorResponse: ErrorResponse) {
@@ -126,7 +132,11 @@ class SettingPasswordActivity : BaseActivity() {
 
             override fun onSuccess(response: UserInfo?) {
                 ActivityUtils.finishAllActivities()
-                ActivityUtils.startActivity(LoginActivity::class.java)
+                if (BuildConfig.IS_EXAMINE_VERSION) {
+                    ActivityUtils.startActivity(ExamineLoginRouterActivity::class.java)
+                }else {
+                    ActivityUtils.startActivity(LoginActivity::class.java)
+                }
             }
 
             override fun onFinish() {

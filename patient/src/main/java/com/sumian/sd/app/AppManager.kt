@@ -64,6 +64,7 @@ import com.sumian.sd.common.network.NetworkManager
 import com.sumian.sd.common.network.api.SdApi
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import com.sumian.sd.common.utils.getString
+import com.sumian.sd.examine.login.ExamineLoginRouterActivity
 import com.sumian.sd.examine.main.ExamineMainActivity
 import com.sumian.sd.main.MainActivity
 import java.util.HashMap
@@ -458,7 +459,11 @@ object AppManager {
         AppManager.getOpenLogin().deleteWechatTokenCache(ActivityUtils.getTopActivity(), null)
         // finish all and start LoginActivity
         ActivityUtils.finishAllActivities()
-        LoginActivity.show()
+        if (BuildConfig.IS_EXAMINE_VERSION) {
+            ExamineLoginRouterActivity.show()
+        } else {
+            LoginActivity.show()
+        }
         StatUtil.removeAccount()
         LCIMManager.getInstance().close()
     }

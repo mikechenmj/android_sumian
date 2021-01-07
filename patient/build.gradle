@@ -311,4 +311,5 @@ dependencies {
     // file download
     implementation 'com.liulishuo.filedownloader:library:1.7.6'
     implementation files('libs/hihealthkit-2.0.1.jar')
+    implementation 'cn.carbswang.android:NumberPickerView:1.1.1'
 }

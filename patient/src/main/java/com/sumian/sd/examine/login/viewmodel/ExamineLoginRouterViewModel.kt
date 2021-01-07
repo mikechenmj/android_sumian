@@ -1,4 +1,4 @@
-package com.sumian.sd.examine.main.viewmodel
+package com.sumian.sd.examine.login.viewmodel
 
 import android.util.Log
 import com.blankj.utilcode.util.ToastUtils
@@ -7,11 +7,9 @@ import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.account.login.ValidatePhoneNumberActivity
 import com.sumian.sd.examine.login.ExamineLoginRouterActivity
-import com.sumian.sd.examine.login.viewmodel.BaseExamineViewModel
 import com.umeng.socialize.UMAuthListener
 import com.umeng.socialize.bean.SHARE_MEDIA
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.channels.ReceiveChannel
 import java.util.HashMap
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.*

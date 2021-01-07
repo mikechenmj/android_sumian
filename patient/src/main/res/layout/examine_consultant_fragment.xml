@@ -1,13 +1,289 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/deep_content_bg_color"
+    android:orientation="vertical">
 
-    <TextView
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:text="CONSULTANT"
+    <com.sumian.sd.widget.TitleBar
+        android:id="@+id/examine_title_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:background="@color/hw_colorPrimary"
+        android:paddingTop="@dimen/status_bar_height"
+        app:tb_dark_theme="true"
+        app:text="咨询"
+        app:text_size="@dimen/font_20" />
 
-</FrameLayout>
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_200"
+        android:layout_weight="1"
+        android:contentDescription="@null"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/ic_advisory_banner" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/space_8"
+        android:layout_marginTop="@dimen/space_24"
+        android:layout_marginRight="@dimen/space_8"
+        android:layout_weight="2"
+        app:cardBackgroundColor="#FF313642"
+        app:cardCornerRadius="@dimen/space_4"
+        app:cardElevation="@dimen/space_4"
+        app:cardMaxElevation="@dimen/space_4"
+        app:cardPreventCornerOverlap="true"
+        tools:visibility="visible">
+
+        <LinearLayout
+            android:id="@+id/lay_doctor_service"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:baselineAligned="false"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center|left"
+                android:orientation="vertical"
+                tools:ignore="NestedWeights,RtlHardcoded">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_20"
+                    android:text="速眠医生"
+                    android:textColor="@color/bt_hole_color"
+                    android:textSize="@dimen/font_18" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_20"
+                    android:layout_marginTop="@dimen/space_16"
+                    android:text="立即向专业睡眠医生咨询你的睡眠问题"
+                    android:textSize="@dimen/font_12" />
+
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="@dimen/space_48"
+                android:layout_height="@dimen/space_56"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/space_16"
+                android:layout_marginRight="@dimen/space_16">
+
+                <ImageView
+                    android:layout_width="@dimen/space_48"
+                    android:layout_height="@dimen/space_48"
+                    android:layout_gravity="center"
+                    android:contentDescription="@null"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/ic_advisory_icon_doctor" />
+
+                <View
+                    android:id="@+id/doctor_service_dot"
+                    android:layout_width="@dimen/space_8"
+                    android:layout_height="@dimen/space_8"
+                    android:layout_gravity="right|top"
+                    android:background="@drawable/bg_tab_dot"
+                    android:visibility="gone"
+                    tools:ignore="RtlHardcoded"
+                    tools:visibility="visible" />
+            </FrameLayout>
+
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/space_16"
+        android:layout_weight="1"
+        android:baselineAligned="false"
+        android:orientation="horizontal"
+        tools:visibility="visible">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginTop="@dimen/space_8"
+            android:layout_marginRight="@dimen/space_4"
+            android:layout_marginBottom="@dimen/space_8"
+            android:layout_weight="1"
+            app:cardBackgroundColor="#FF313642"
+            app:cardCornerRadius="@dimen/space_4"
+            app:cardElevation="@dimen/space_4"
+            app:cardMaxElevation="@dimen/space_4"
+            app:cardPreventCornerOverlap="true"
+            tools:ignore="NestedWeights,RtlHardcoded">
+
+            <LinearLayout
+                android:id="@+id/lay_customer_call_service"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center|left"
+                android:orientation="vertical">
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    tools:ignore="NestedWeights">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="@dimen/space_20"
+                        android:gravity="center"
+                        android:singleLine="true"
+                        android:text="客服电话"
+                        android:textColor="@color/bt_hole_color"
+                        android:textSize="@dimen/font_18" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                    <ImageView
+                        android:layout_width="@dimen/space_32"
+                        android:layout_height="@dimen/space_32"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="@dimen/space_16"
+                        android:layout_marginRight="@dimen/space_16"
+                        android:contentDescription="@null"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/ic_advisory_icon_phone" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_20"
+                    android:layout_marginBottom="@dimen/space_20"
+                    android:layout_weight="1"
+                    android:text="预约医生电话回拨"
+                    android:textSize="@dimen/font_12" />
+
+            </LinearLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/space_4"
+            android:layout_marginTop="@dimen/space_8"
+            android:layout_marginRight="@dimen/space_8"
+            android:layout_marginBottom="@dimen/space_8"
+            android:layout_weight="1"
+            app:cardBackgroundColor="#FF313642"
+            app:cardCornerRadius="@dimen/space_4"
+            app:cardElevation="@dimen/space_4"
+            app:cardMaxElevation="@dimen/space_4"
+            app:cardPreventCornerOverlap="true"
+            tools:ignore="NestedWeights,RtlHardcoded">
+
+            <LinearLayout
+                android:id="@+id/lay_customer_online_service"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center|left"
+                android:orientation="vertical"
+                tools:ignore="NestedWeights,RtlHardcoded">
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <LinearLayout
+                    android:id="@+id/lay_online_service"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    tools:ignore="NestedWeights">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center|top"
+                        android:layout_marginLeft="@dimen/space_20"
+                        android:gravity="center"
+                        android:singleLine="true"
+                        android:text="线上客服"
+                        android:textColor="@color/bt_hole_color"
+                        android:textSize="@dimen/font_18" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                    <FrameLayout
+                        android:layout_width="@dimen/space_48"
+                        android:layout_height="@dimen/space_40"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="@dimen/space_16"
+                        android:layout_marginRight="@dimen/space_16">
+
+                        <ImageView
+                            android:layout_width="@dimen/space_32"
+                            android:layout_height="@dimen/space_32"
+                            android:layout_gravity="center"
+                            android:contentDescription="@null"
+                            android:scaleType="fitCenter"
+                            app:srcCompat="@drawable/ic_advisory_icon_online_service" />
+
+                        <View
+                            android:id="@+id/customer_service_dot"
+                            android:layout_width="@dimen/space_8"
+                            android:layout_height="@dimen/space_8"
+                            android:layout_gravity="right|top"
+                            android:background="@drawable/bg_tab_dot"
+                            android:visibility="gone"
+                            tools:ignore="RtlHardcoded"
+                            tools:visibility="visible" />
+                    </FrameLayout>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_20"
+                    android:layout_marginBottom="@dimen/space_16"
+                    android:layout_weight="1"
+                    android:text="售前售后咨询服务"
+                    android:textSize="@dimen/font_12" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+
+    </LinearLayout>
+
+</LinearLayout>
