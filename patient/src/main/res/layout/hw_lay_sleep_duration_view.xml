@@ -44,7 +44,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/space_1"
         android:layout_gravity="bottom"
-        android:background="@color/l1_color_day"
+        android:background="@color/t2_color_day"
         skin:enable="true"
         tools:ignore="MissingPrefix" />
 

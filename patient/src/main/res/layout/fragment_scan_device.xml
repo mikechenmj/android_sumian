@@ -21,11 +21,11 @@
             android:textSize="14sp" />
 
         <ImageView
-            android:tint="@color/white"
-            android:src="@drawable/ic_arrow_right_light_blue"
             android:layout_width="7dp"
             android:layout_height="12dp"
-            android:layout_gravity="center|right" />
+            android:layout_gravity="center|right"
+            android:src="@drawable/ic_arrow_right_light_blue"
+            android:tint="@color/white" />
     </FrameLayout>
 
     <TextView
@@ -48,7 +48,7 @@
     <View
         style="@style/HorizontalDividerLineMarginStart20L3"
         android:layout_marginTop="20dp"
-        android:background="@color/l3_color_day" />
+        android:background="@color/light_line_bg_color" />
 
     <LinearLayout
         android:id="@+id/vg_no_device"

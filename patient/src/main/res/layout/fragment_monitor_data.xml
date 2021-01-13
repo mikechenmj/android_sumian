@@ -15,9 +15,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/space_200"
                 android:gravity="center"
-                app:tdshv_coordinate_color="@color/l3_color_day"
                 app:tdshv_deep_color="@color/g1_color_day"
-                app:tdshv_empty_text_color="@color/t5_color_day"
+                app:tdshv_empty_text_color="@color/bt_hole_color"
                 app:tdshv_eog_color="@color/g2_color_day"
                 app:tdshv_light_color="@color/g2_color_day"
                 app:tdshv_sober_color="@color/g3_color_day" />
@@ -27,13 +26,14 @@
                 android:layout_height="@dimen/space_26" />
 
             <androidx.cardview.widget.CardView
+                android:layout_margin="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/space_10"
                 android:layout_marginTop="@dimen/space_24"
                 android:layout_marginRight="@dimen/space_10"
                 android:layout_marginBottom="1dp"
-                app:cardBackgroundColor="@color/b2_color_day"
+                app:cardBackgroundColor="@color/examine_grey_background"
                 app:cardCornerRadius="@dimen/space_4"
                 app:cardElevation="0dp"
                 app:contentPaddingLeft="@dimen/space_20"

@@ -10,8 +10,8 @@ class ExamineLoginViewModel : BaseExamineViewModel() {
     suspend fun loginByPassword(mobile: String, password: String): Boolean {
         return withContext(Dispatchers.IO) {
             val call = AppManager.getSdHttpService().loginByPassword(mobile, password)
-            val response = call.execute()
             mWorkTasks.add(call)
+            val response = call.execute()
             val isSuccess = response.isSuccessful
             withContext(Dispatchers.Main) {
                 if (isSuccess) {

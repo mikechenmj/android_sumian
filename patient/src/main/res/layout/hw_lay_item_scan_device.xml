@@ -13,10 +13,12 @@
         android:drawableStart="@mipmap/equip_icon_bracelet"
         android:drawablePadding="20dp"
         android:gravity="center_vertical"
+        android:textColor="@color/full_general_color"
         tools:text="S1007501234" />
 
     <View
         style="@style/HorizontalDividerLine"
-        android:layout_marginStart="40dp" />
+        android:layout_marginStart="40dp"
+        android:background="@color/light_line_bg_color" />
 
 </LinearLayout>

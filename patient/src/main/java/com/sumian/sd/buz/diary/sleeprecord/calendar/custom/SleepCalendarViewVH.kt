@@ -40,7 +40,7 @@ class SleepCalendarViewVH private constructor(itemView: View) : CalendarViewVH(i
             when (dayType) {
                 SleepDayType.HAS_DATA, SleepDayType.NO_DATA -> R.color.t1_color
                 SleepDayType.SELECT_HAS_DATA, SleepDayType.SELECT_NO_DATA -> R.color.white
-                SleepDayType.FEATURE -> R.color.t1_color_40
+                SleepDayType.FEATURE -> R.color.t1_color
                 else -> R.color.t1_color
             }
         } else {
@@ -53,8 +53,8 @@ class SleepCalendarViewVH private constructor(itemView: View) : CalendarViewVH(i
         val drawableRes: Int
         when (dayType) {
             SleepDayType.HAS_DATA -> drawableRes = R.drawable.ic_calendar_date
-            SleepDayType.SELECT_HAS_DATA -> drawableRes = R.drawable.ic_calendar_selecteddate
-            SleepDayType.SELECT_NO_DATA -> drawableRes = R.drawable.ic_calendar_selected
+            SleepDayType.SELECT_HAS_DATA -> drawableRes = R.drawable.shape_calendar_selected_examine
+            SleepDayType.SELECT_NO_DATA -> drawableRes = R.drawable.shape_calendar_selected_examine
             else -> return null
         }
         return mContext.resources.getDrawable(drawableRes)

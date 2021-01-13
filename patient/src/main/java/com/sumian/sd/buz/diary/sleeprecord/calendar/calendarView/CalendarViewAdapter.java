@@ -1,6 +1,7 @@
 package com.sumian.sd.buz.diary.sleeprecord.calendar.calendarView;
 
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.ViewGroup;
 
 import com.sumian.sd.common.utils.TimeUtil;

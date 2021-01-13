@@ -42,7 +42,7 @@ public class RippleScanningView extends RelativeLayout implements Runnable {
         mRipplePaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
         mRipplePaint.setAntiAlias(true);
         mRipplePaint.setStyle(Paint.Style.STROKE);
-        mRipplePaint.setColor(getResources().getColor(R.color.t1_color_day));
+        mRipplePaint.setColor(getResources().getColor(R.color.login_line_color));
         mRipplePaint.setStrokeWidth(2.f);
     }
 

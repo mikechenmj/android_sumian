@@ -2,6 +2,7 @@ package com.sumian.sd.buz.diary.sleeprecord.calendar.calendarViewWrapper;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -61,7 +62,6 @@ public class CalendarViewWrapper extends LinearLayout implements CalendarView.Da
         mTvGoBack.setOnClickListener(this);
         vBg = inflate.findViewById(R.id.v_bg);
         mViewPager = inflate.findViewById(R.id.calender_view_pager);
-
         init();
     }
 
@@ -151,8 +151,8 @@ public class CalendarViewWrapper extends LinearLayout implements CalendarView.Da
         mCurrentPosition = position;
         LogUtils.d(position);
         updateTvMonth(getMonthTimes().get(position));
-        ivLeft.setVisibility(position != 0 ? VISIBLE : GONE);
-        ivRight.setVisibility(position != getMonthTimes().size() - 1 ? VISIBLE : GONE);
+//        ivLeft.setVisibility(position != 0 ? VISIBLE : GONE);
+//        ivRight.setVisibility(position != getMonthTimes().size() - 1 ? VISIBLE : GONE);
     }
 
     @Override

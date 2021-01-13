@@ -5,12 +5,12 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:windowBackground">@color/b1_color</item>
+        <item name="android:windowBackground">@color/examine_background</item>
         <!--<item name="android:navigationBarColor">@android:color/white</item>-->
         <item name="android:windowAnimationStyle">@style/AnimationStyle</item>
         <item name="android:textCursorDrawable">@drawable/bg_cursor</item>
         <item name="android:textAllCaps">false</item>
-        <item name="android:textColor">@color/t1_color</item>
+        <item name="android:textColor">@color/bt_hole_color</item>
     </style>
 
     <style name="BaseAppTheme.Fullscreen">
@@ -23,7 +23,7 @@
     </style>
 
     <style name="BaseAppTheme.TranslucentStatus.Examine">
-        <item name="android:windowBackground">@color/examine_background</item>
+        <item name="android:windowBackground">@color/hw_colorPrimary</item>
     </style>
 
     <style name="PlayActivityTheme" parent="@style/BaseAppTheme">

@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.device.callback.AsyncCallback
 import com.sumian.device.callback.ConnectDeviceCallback

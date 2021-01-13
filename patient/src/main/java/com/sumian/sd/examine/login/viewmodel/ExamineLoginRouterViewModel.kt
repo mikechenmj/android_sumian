@@ -19,7 +19,6 @@ class ExamineLoginRouterViewModel : BaseExamineViewModel() {
 
     suspend fun loginByWechat(activity: ExamineLoginRouterActivity) = withContext(Dispatchers.IO) {
         val channel = weChatLogin(activity)
-        Log.i("MCJ", "channel.isclose: ${channel.isClosedForReceive}")
         val map = channel.receive()
         if (map.isNullOrEmpty()) {
             withContext(Dispatchers.Main) {
@@ -34,33 +33,26 @@ class ExamineLoginRouterViewModel : BaseExamineViewModel() {
         val channel = Channel<MutableMap<String, String?>?>()
         AppManager.getOpenLogin().weChatLogin(activity, object : UMAuthListener {
             override fun onComplete(shareMedia: SHARE_MEDIA?, p1: Int, map: MutableMap<String, String?>?) {
-                Log.i("MCJ", "onComplete")
                 launch {
-                    Log.i("MCJ", "onComplete launch")
                     channel.send(map)
                 }
             }
 
             override fun onCancel(p0: SHARE_MEDIA?, p1: Int) {
-                Log.i("MCJ", "onCancel")
                 ToastUtils.showShort(R.string.login_cancel)
                 launch {
-                    Log.i("MCJ", "launch onCancel")
                     channel.send(null)
                 }
             }
 
             override fun onError(p0: SHARE_MEDIA?, p1: Int, p2: Throwable?) {
                 ToastUtils.showShort(R.string.no_have_wechat)
-                Log.i("MCJ", "onError")
                 launch {
-                    Log.i("MCJ", "launch onError")
                     channel.send(null)
                 }
             }
 
             override fun onStart(p0: SHARE_MEDIA?) {
-                Log.i("MCJ", "onStart")
                 ToastUtils.showShort(R.string.opening_wechat)
             }
         })

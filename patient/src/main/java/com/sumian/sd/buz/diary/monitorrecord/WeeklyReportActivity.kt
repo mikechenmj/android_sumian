@@ -46,7 +46,7 @@ class WeeklyReportActivity : BaseActivity() {
     }
 
     override fun showBackNav(): Boolean {
-        return true
+        return false
     }
 
     override fun getLayoutId(): Int {
@@ -58,9 +58,10 @@ class WeeklyReportActivity : BaseActivity() {
     }
     override fun initWidget() {
         super.initWidget()
-        setTitle(R.string.weekly_data)
+//        setTitle(R.string.weekly_data)
         initDateBar()
         initViewPager()
+        tv_day.setOnClickListener { finish() }
     }
 
     private fun initViewPager() {

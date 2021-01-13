@@ -68,7 +68,7 @@ class WeeklySleepDataDateBar(context: Context, attributeSet: AttributeSet) : Fra
     }
 
     private fun formatDate(time: Long): CharSequence? {
-        return DateFormat.format("MM.dd", Date(time))
+        return DateFormat.format("yyyy/MM/dd", Date(time))
     }
 
     fun setDataLoader(dataLoader: CalendarPopup.DataLoader) {

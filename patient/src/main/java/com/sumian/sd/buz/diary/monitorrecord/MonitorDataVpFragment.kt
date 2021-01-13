@@ -4,13 +4,13 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.os.Build
 import android.os.Handler
+import android.text.TextUtils
 import android.text.format.DateUtils
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
@@ -33,14 +33,15 @@ import com.sumian.sd.buz.devicemanager.uploadsleepdata.UploadSleepDataFinishedEv
 import com.sumian.sd.buz.diary.event.UpdateMonitorDataEvent
 import com.sumian.sd.buz.diary.sleeprecord.calendar.calendarView.CalendarView
 import com.sumian.sd.buz.diary.sleeprecord.calendar.custom.CalendarPopup
-import com.sumian.sd.buz.diary.sleeprecord.widget.SleepDataDateBar
-import com.sumian.sd.buz.huaweihealth.BindHuaweiHealthActivity
 import com.sumian.sd.buz.report.weeklyreport.CalendarItemSleepReport
 import com.sumian.sd.buz.stat.StatConstants
 import com.sumian.sd.common.log.SdLogManager
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
 import com.sumian.sd.common.utils.EventBusUtil
+import com.sumian.sd.examine.main.report.note.NoteDialog
+import com.sumian.sd.examine.main.report.note.SleepNote
 import kotlinx.android.synthetic.main.fragment_monitor_data_vp.*
+import kotlinx.android.synthetic.main.view_sleep_data_date_bar.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -53,6 +54,7 @@ import kotlin.collections.ArrayList
  * version: 1.0
  */
 class MonitorDataVpFragment : BaseFragment() {
+    private var mCurrentitem: Int = 0
     private val mAdapter by lazy { InnerPagerAdapter(fragmentManager!!) }
     private val mDateChangeReceiver by lazy {
         object : BroadcastReceiver() {
@@ -87,12 +89,19 @@ class MonitorDataVpFragment : BaseFragment() {
         super.initWidget()
         initDateBar()
         initViewPager()
-        iv_bind_huawei_health.isVisible = Build.MANUFACTURER.toLowerCase().contains("huawei")
-        iv_bind_huawei_health.setOnClickListener {
-            if (this.activity != null) {
-                BindHuaweiHealthActivity.start(this.activity!!)
-            }
+        tv_week.setOnClickListener {
+            WeeklyReportActivity.launch(date_bar.getCurrentTime())
         }
+        iv_calender.setOnClickListener {
+            date_bar.showDatePopup()
+        }
+        iv_float_diary.setOnClickListener { initNoteDialog() }
+    }
+
+    private fun initNoteDialog() {
+        val sleepNote = SleepNote()
+        val noteDialog: NoteDialog = NoteDialog.newInstance(sleepNote)
+        noteDialog.show(fragmentManager!!, NoteDialog::class.java.simpleName)
     }
 
     override fun initData() {
@@ -150,13 +159,21 @@ class MonitorDataVpFragment : BaseFragment() {
     private fun initViewPager() {
         view_pager_monitor.adapter = mAdapter.apply { mRefresh = mRoot as SumianSwipeRefreshLayout }
         mAdapter.setDays(TimeUtilV2.getDayStartTime(getInitTime()), PRELOAD_THRESHOLD * 2, true)
+        mCurrentitem = mAdapter.times.size - 1
         view_pager_monitor.setCurrentItem(mAdapter.count - 1, false)
         view_pager_monitor.addOnPageChangeListener(object : androidx.viewpager.widget.ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {
                 val currentItem = view_pager_monitor.currentItem
+                mCurrentitem = currentItem
+                if (currentItem != mAdapter.times.size - 1) {
+                    date_bar.iv_date_right.visibility = View.VISIBLE
+                } else {
+                    date_bar.iv_date_right.visibility = View.INVISIBLE
+                }
                 date_bar.setCurrentTime(mAdapter.times[currentItem])
                 if (state == androidx.viewpager.widget.ViewPager.SCROLL_STATE_IDLE && currentItem < PRELOAD_THRESHOLD) {
                     mAdapter.addDays(mAdapter.times[0], PRELOAD_THRESHOLD, false)
+                    mCurrentitem += PRELOAD_THRESHOLD
                 }
             }
 
@@ -184,15 +201,6 @@ class MonitorDataVpFragment : BaseFragment() {
         val previewDays = if (calendar.get(Calendar.HOUR_OF_DAY) >= 20) 1 else 0
         date_bar.setPreviewDays(previewDays)
         date_bar.setCurrentTime(getInitTime())
-        date_bar.setOnSleepDataDateBarClickListener(object : SleepDataDateBar.OnSleepDataDateBarClickListener {
-            override fun onClick(show: Boolean) {
-                if (show && activity != null) {
-                    var scrollView = nsv_fragment_monitor_data_vp as NestedScrollView
-                    scrollView.scrollTo(scrollView.scrollX,
-                            activity!!.resources.getDimension(R.dimen.device_card_view_height).toInt())
-                }
-            }
-        })
         date_bar.setDataLoader(object : CalendarPopup.DataLoader {
             override fun loadData(startMonthTime: Long, monthCount: Int, isInit: Boolean) {
                 val map = HashMap<String, Any>(0)
@@ -228,6 +236,15 @@ class MonitorDataVpFragment : BaseFragment() {
             StatUtil.event(StatConstants.click_monitor_data_page_weekly_report_icon)
             WeeklyReportActivity.launch(date_bar.getCurrentTime())
         })
+
+        date_bar.setOnDateLeftListener {
+            Log.i("MCJ", "setOnDateLeftListener: $mCurrentitem")
+            view_pager_monitor.currentItem = mCurrentitem - 1
+        }
+        date_bar.setOnDateRightListener {
+            Log.i("MCJ", "setOnDateRightListener: $mCurrentitem")
+            view_pager_monitor.currentItem = mCurrentitem + 1
+        }
     }
 
     private fun scrollToTime(time: Long) {

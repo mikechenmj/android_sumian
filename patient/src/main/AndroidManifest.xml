@@ -380,6 +380,18 @@
             android:theme="@style/BaseAppTheme.TranslucentStatus.Examine" />
 
         <activity
+            android:name=".buz.device.devicemanage.ExamineAssessmentActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.TranslucentStatus.Examine" />
+
+        <activity
+            android:name=".examine.login.ExamineRegisterActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.TranslucentStatus.Examine" />
+
+        <activity
             android:name=".examine.main.me.setting.ExamineFeedbackActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
@@ -423,7 +435,7 @@
 
         <activity
             android:name=".buz.account.login.ValidatePhoneNumberActivity"
-            android:theme="@style/BaseAppTheme" />
+            android:theme="@style/BaseAppTheme.TranslucentStatus.Examine" />
         <activity
             android:name=".common.h5.HwSimpleWebActivity"
             android:theme="@style/BaseAppTheme" />
@@ -474,7 +486,8 @@
             android:name=".buz.diary.monitorrecord.WeeklyReportActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.TranslucentStatus.Examine" />
         <activity
             android:name=".buz.device.scan.ScanDeviceActivity"
             android:configChanges="keyboardHidden|orientation"
@@ -489,7 +502,8 @@
             android:name=".buz.device.devicemanage.DeviceManageActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/BaseAppTheme.TranslucentStatus.Examine" />
         <activity
             android:name=".buz.account.login.SettingPasswordActivity"
             android:configChanges="keyboardHidden|orientation"

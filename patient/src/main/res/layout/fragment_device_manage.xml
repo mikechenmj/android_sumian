@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_marginTop="60dp">
 
-    <include layout="@layout/layout_device_manage_fragment_no_device" />
+    <include
+        layout="@layout/layout_device_manage_fragment_no_device"
+        tools:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/ll_device"
@@ -37,18 +41,55 @@
                 android:padding="2dp"
                 android:text="@string/already_connected" />
 
+            <TextView
+                android:id="@+id/tv_sync"
+                android:layout_width="@dimen/space_40"
+                android:layout_height="@dimen/space_20"
+                android:layout_marginEnd="@dimen/space_9"
+                android:layout_marginStart="@dimen/space_9"
+                android:background="@drawable/sleep_cha_sync_shape"
+                android:gravity="center"
+                android:paddingLeft="@dimen/space_8"
+                android:paddingRight="@dimen/space_8"
+                android:text="@string/sync"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_10"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
             <Space
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_weight="1" />
 
-            <com.sumian.sd.buz.device.widget.BatteryView
+            <com.sumian.sd.buz.device.widget.ExamineBatteryView
                 android:id="@+id/monitor_battery_view"
-                android:layout_width="52dp"
-                android:layout_height="31dp" />
+                android:layout_width="@dimen/space_68"
+                android:layout_height="@dimen/space_42"
+                android:layout_gravity="center"
+                app:ah="0"
+                app:ah_radius="@dimen/space_4"
+                app:border_color="#FF7D8FB3"
+                app:border_radius="@dimen/space_6"
+                app:border_width="@dimen/space_2"
+                app:bottom_full_half_color="#FF6293F5"
+                app:bottom_less_half_color="#FFCC3835"
+                app:full_ah="100"
+                app:text_color="@color/white"
+                app:battery_text_size="18sp"
+                app:top_full_half_color="#FF7EA5F4"
+                app:top_less_half_color="#FFDB514F" />
+
+<!--            <com.sumian.sd.buz.device.widget.BatteryView-->
+<!--                android:id="@+id/monitor_battery_view"-->
+<!--                android:layout_width="52dp"-->
+<!--                android:layout_height="31dp" />-->
         </LinearLayout>
 
-        <View style="@style/HorizontalDividerLine" />
+        <View
+            android:layout_marginLeft="20dp"
+            style="@style/HorizontalDividerLine"
+            android:background="@color/light_line_bg_color" />
 
         <LinearLayout
             android:id="@+id/vg_sleeper"
@@ -78,10 +119,23 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" />
 
-            <com.sumian.sd.buz.device.widget.BatteryView
+            <com.sumian.sd.buz.device.widget.ExamineBatteryView
                 android:id="@+id/sleeper_battery_view"
-                android:layout_width="52dp"
-                android:layout_height="31dp" />
+                android:layout_width="@dimen/space_68"
+                android:layout_height="@dimen/space_42"
+                android:layout_gravity="center"
+                app:ah="0"
+                app:ah_radius="@dimen/space_4"
+                app:border_color="#FF7D8FB3"
+                app:border_radius="@dimen/space_6"
+                app:border_width="@dimen/space_2"
+                app:bottom_full_half_color="#FF6293F5"
+                app:bottom_less_half_color="#FFCC3835"
+                app:full_ah="100"
+                app:text_color="@color/white"
+                app:battery_text_size="18sp"
+                app:top_full_half_color="#FF7EA5F4"
+                app:top_less_half_color="#FFDB514F" />
         </LinearLayout>
 
         <FrameLayout
@@ -96,7 +150,7 @@
                 android:layout_marginTop="36dp"
                 android:layout_marginEnd="20dp"
                 android:contentDescription="@null"
-                android:src="@drawable/ic_equip_btn_more" />
+                android:src="@drawable/equip_btn_more" />
 
             <FrameLayout
                 android:layout_width="210dp"
@@ -106,10 +160,10 @@
 
                 <ImageView
                     android:id="@+id/iv_device_bg"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:contentDescription="@null"
-                    android:src="@drawable/ic_equip_bg" />
+                    android:src="@drawable/ic_equip_bg_examine" />
 
                 <com.sumian.sd.widget.ripple.RippleScanningView
                     android:id="@+id/ripple_view"
@@ -141,8 +195,8 @@
                 android:layout_marginTop="270dp"
                 android:gravity="center"
                 android:visibility="gone"
-                tools:visibility="visible"
-                tools:text="正在同步睡眠数据\n第 1 段 (100%)" />
+                tools:text="正在同步睡眠数据\n第 1 段 (100%)"
+                tools:visibility="visible" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/bt_turn_on_pa"
@@ -157,4 +211,13 @@
         </FrameLayout>
 
     </LinearLayout>
+
+    <com.sumian.sd.buz.device.widget.FloatGroupView
+        android:id="@+id/float_group_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="@dimen/space_108"
+        tools:ignore="RtlHardcoded"
+        tools:visibility="visible" />
 </FrameLayout>

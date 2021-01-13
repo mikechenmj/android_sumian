@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import com.sumian.common.base.BaseActivity
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
+import com.sumian.sd.buz.device.devicemanage.DeviceManageFragment
+import com.sumian.sd.buz.diary.monitorrecord.MonitorDataVpFragment
 import com.sumian.sd.examine.main.fragment.ExamineConsultantFragment
 import com.sumian.sd.examine.main.fragment.ExamineDeviceFragment
 import com.sumian.sd.examine.main.me.ExamineMeFragment
@@ -18,8 +20,8 @@ import pub.devrel.easypermissions.EasyPermissions
 class ExamineMainActivity : BaseActivity(), NavTab.OnTabChangeListener {
 
     private val mPagerFragments by lazy {
-        mutableListOf<Fragment>(ExamineDeviceFragment(),
-                ExamineReportFragment(), ExamineConsultantFragment(), ExamineMeFragment())
+        mutableListOf<Fragment>(DeviceManageFragment(),
+                MonitorDataVpFragment(), ExamineConsultantFragment(), ExamineMeFragment())
     }
 
     override fun getLayoutId(): Int {

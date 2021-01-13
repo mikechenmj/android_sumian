@@ -29,10 +29,22 @@ class SleepDataDateBar(context: Context, attributeSet: AttributeSet) : FrameLayo
 
     init {
         LayoutInflater.from(context).inflate(R.layout.view_sleep_data_date_bar, this, true)
-        val onDateClickListener: (View) -> Unit = { showDatePopup(show = !iv_date_arrow.isActivated) }
-        iv_date_arrow.setOnClickListener(onDateClickListener)
-        tv_date.setOnClickListener(onDateClickListener)
+//        val onDateClickListener: (View) -> Unit = { showDatePopup(show = !iv_date_arrow.isActivated) }
+//        iv_date_arrow.setOnClickListener(onDateClickListener)
+//        tv_date.setOnClickListener(onDateClickListener)
         setCurrentTime(TimeUtilV2.getDayStartTime(System.currentTimeMillis()))
+        iv_date_left.setOnClickListener { dateLeftClickListener() }
+        iv_date_right.setOnClickListener { dateRightClickListener() }
+    }
+
+    private lateinit var dateLeftClickListener: () -> Unit
+    fun setOnDateLeftListener(f: () -> Unit) {
+        dateLeftClickListener = f
+    }
+
+    private lateinit var dateRightClickListener: () -> Unit
+    fun setOnDateRightListener(f: () -> Unit) {
+        dateRightClickListener = f
     }
 
     fun setOnSleepDataDateBarClickListener(onSleepDataDateBarClickListener: OnSleepDataDateBarClickListener) {
@@ -59,7 +71,7 @@ class SleepDataDateBar(context: Context, attributeSet: AttributeSet) : FrameLayo
         mPreviewDays = previewDays
     }
 
-    private fun showDatePopup(show: Boolean) {
+    fun showDatePopup(show: Boolean = !iv_date_arrow.isActivated) {
         mOnSleepDataDateBarClickListener?.onClick(show)
         iv_date_arrow.isActivated = show
         if (show) {
@@ -76,7 +88,7 @@ class SleepDataDateBar(context: Context, attributeSet: AttributeSet) : FrameLayo
 
     fun setCurrentTime(time: Long) {
         mSelectedTime = time
-        tv_date.text = TimeUtil.formatDate("yyyy.MM.dd", time)
+        tv_date.text = TimeUtil.formatDate("yyyy/MM/dd", time)
     }
 
     fun getCurrentTime(): Long {

@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rl_toolbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingLeft="@dimen/normal_padding"
-    android:background="@color/white">
+    android:background="@color/deep_content_bg_color"
+    android:gravity="start"
+    android:orientation="horizontal"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp">
 
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:textColor="@color/t1_color"
-        android:textSize="@dimen/font_16"
-        android:text="@string/monitor_data"
-        tools:ignore="RelativeOverlap"
-        tools:text="监测数据" />
+    <ImageView
+        android:id="@+id/iv_date_left"
+        android:layout_width="50dp"
+        android:layout_height="match_parent"
+        android:src="@drawable/ic_arrow_left_light_blue" />
 
     <TextView
         android:id="@+id/tv_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:layout_weight="1"
+        android:gravity="center"
         android:textColor="@color/b3_color"
         android:textSize="@dimen/font_16"
         tools:ignore="RelativeOverlap"
@@ -39,15 +39,22 @@
         android:padding="@dimen/space_10"
         android:scaleType="centerInside"
         android:src="@drawable/sel_nav_date_arrow"
-        android:tint="@color/b3_color" />
+        android:tint="@color/b3_color"
+        android:visibility="gone" />
 
     <ImageView
         android:id="@+id/iv_weekly_report"
         android:layout_width="@dimen/space_48"
         android:layout_height="@dimen/space_48"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
         android:contentDescription="@null"
         android:scaleType="centerInside"
-        android:src="@drawable/ic_sleepdiary_icon_weeklyreport" />
-</RelativeLayout>
+        android:src="@drawable/ic_sleepdiary_icon_weeklyreport"
+        android:visibility="gone" />
+
+    <ImageView
+        android:visibility="invisible"
+        android:id="@+id/iv_date_right"
+        android:layout_width="50dp"
+        android:layout_height="match_parent"
+        android:src="@drawable/ic_arrow_right_light_blue" />
+</LinearLayout>

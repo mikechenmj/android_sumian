@@ -8,6 +8,7 @@ import com.sumian.common.base.BaseActivity
 import com.sumian.common.helper.ToastHelper
 import com.sumian.sd.R
 import com.sumian.sd.buz.account.login.LoginActivity
+import com.sumian.sd.buz.account.login.ValidatePhoneNumberActivity
 import com.sumian.sd.examine.login.viewmodel.ExamineLoginViewModel
 import kotlinx.android.synthetic.main.activity_examine_login.*
 
@@ -29,6 +30,9 @@ class ExamineLoginActivity : BaseActivity() {
 
     override fun initWidget() {
         super.initWidget()
+        tv_forget_pwd.setOnClickListener {
+            ValidatePhoneNumberActivity.launchForForgetPassword()
+        }
         bt_login.setOnClickListener {
             lifecycleScope.launchWhenStarted {
                 val mobile: String = et_mobile.text.toString().trim { it <= ' ' }

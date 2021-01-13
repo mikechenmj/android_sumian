@@ -6,8 +6,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:visibility="gone"
+    android:layout_marginTop="20dp"
     tools:ignore="MissingDefaultResource"
-    tools:visibility="gone">
+    tools:visibility="visible">
 
     <TextView
         android:id="@+id/tv_title"
@@ -15,6 +16,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="20dp"
+        android:textColor="@color/bt_hole_color"
         android:text="@string/add_device"
         android:textStyle="bold" />
 
@@ -27,6 +29,7 @@
         android:text="@string/please_keep_nearly" />
 
     <View
+        android:background="@color/light_line_bg_color"
         style="@style/HorizontalDividerLineMarginStart20L3"
         android:layout_marginTop="20dp" />
 
@@ -37,11 +40,11 @@
 
     <ImageView
         android:id="@+id/iv_add_device"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:layout_gravity="center_horizontal"
         android:contentDescription="@null"
-        android:src="@drawable/ic_equip_icon_adddevice" />
+        android:src="@drawable/equip_btn_binding" />
 
     <ImageView
         android:id="@+id/iv_open_bluetooth"

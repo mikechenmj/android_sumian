@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
+        app:cpv_ring_bg_color="@color/t2_color_day"
         app:cpv_high_end_color="@color/b7_color_day"
         app:cpv_high_start_color="@color/b6_color_day"
         app:cpv_low_end_color="@color/b7_color_day"

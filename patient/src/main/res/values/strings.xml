@@ -178,7 +178,6 @@
     <string name="third_question">第三次提问</string>
     <string name="view_the_record">查看电子报告</string>
     <string name="sleep_doctor">睡眠医生</string>
-    <string name="submit">提交</string>
     <string name="input_question_hint">请描述您的年龄、性别、且详细描述您的症状及就诊经历，便于医生准确分析，我们会保证您的隐私安全。</string>
     <string name="select_report">选择报告</string>
     <string name="take_picture">您上传的附件仅对您的医生可见，最多可上传9张</string>
@@ -223,7 +222,6 @@
     <string name="have_a_new_version">有新版本，请立即体验吧</string>
     <string name="force_upgrade_version">当前版本太低，请到应用市场升级后再使用</string>
     <string name="practice_dialog_title">下节课程待开放</string>
-    <string name="good">好的</string>
 
     <!-- record -->
     <string name="open_notification">开启通知</string>
@@ -382,10 +380,6 @@
 
 
     <!--sleep note and doctor advice-->
-    <string name="version_name_hint">%s版本: %s</string>
-    <string name="app_upgrade">APP升级</string>
-    <string name="monitor_upgrade">监测仪升级</string>
-    <string name="sleepy_upgrade">速眠仪升级</string>
     <!--<string name="good">还可以</string>-->
     <!--<string name="submit">提交</string>-->
 
@@ -407,14 +401,15 @@
     <!--<string name="register_rule_four"><u>速眠隐私政策</u></string>-->
     <!--<string name="register_rule_user_agreement_title">用户协议</string>-->
     <!--<string name="register_rule_privacy_policy_title">隐私政策</string>-->
-    <string name="none_week_have_sleep_data">本周无睡眠记录</string>
+    <string name="none_week_have_sleep_data">您还未有睡眠记录数据</string>
     <!--<string name="unbind">解绑</string>-->
     <!--<string name="opening_wechat">正在打开微信中…</string>-->
     <!--<string name="no_have_wechat">手机上未安装微信客户端</string>-->
 
     <!--<string name="take_photo">拍照</string>-->
     <!--<string name="network_error">网络异常,请检查你的网络设置</string>-->
-
+    <string name="turn_on_snoop_mode">开启监测模式</string>
+    <string name="turn_off_snoop_mode">关闭监测模式</string>
     <string name="sync">同步</string>
     <!--<string name="syncing">同步中</string>-->
     <string name="all_today_duration">全天睡眠时长</string>
@@ -430,6 +425,7 @@
     <string name="tab_device">设备</string>
     <!--<string name="complete">已完成评估</string>-->
     <string name="go_today">回到今天</string>
+    <string name="turning_on_pa_mode">正在启动工作模式</string>
     <string name="is_read">全部已读</string>
     <string name="feedback">意见反馈</string>
     <string name="please_turn_on_bluetooth_adapter">请打开手机蓝牙，与监测仪进行连接。</string>
@@ -532,7 +528,7 @@
     <string name="already_connected">已连接</string>
     <string name="not_connected">未连接</string>
     <string name="speed_sleeper_already">速眠仪已就绪</string>
-    <string name="start_work">开启工作</string>
+    <string name="start_work">开启睡眠</string>
     <string name="starting_work" tools:ignore="TypographyEllipsis">开启中...</string>
     <string name="sync_progress_0">第 %d 段</string>
     <string name="sync_progress_1">(%d%%)</string>
@@ -549,7 +545,7 @@
     <string name="is_not_this_device">不是这台设备？</string>
     <string name="search_more_u"><u>搜索更多</u></string>
     <string name="confirm_bind">确认绑定</string>
-    <string name="add_device">添加设备</string>
+    <string name="add_device">绑定设备</string>
     <string name="do_not_see_your_device">没看到您的设备？</string>
     <string name="monitor_not_connect">监测仪未连接</string>
     <string name="click_card_try_to_connect_monitor">点击卡片，尝试连接监测仪</string>
@@ -558,7 +554,7 @@
     <string name="device_manage">设备管理</string>
     <string name="coupon_center">兑换中心</string>
     <string name="add_new_device">添加新设备</string>
-    <string name="click_btn_add_device">点击按钮，添加设备</string>
+    <string name="click_btn_add_device">点击按钮，开始绑定</string>
     <string name="connecting">连接中</string>
     <string name="connected">已连接</string>
     <string name="monitor_not_connect_click_upper_to_connect">监测仪未连接，点击上方尝试连接</string>
@@ -1016,13 +1012,13 @@
     <string name="sleepy_notice_state_off_hint">未开启</string>
     <string name="user_guide">新手指南</string>
     <string name="setting_hint">设置</string>
-    <string name="sleep_note_hint">睡眠日记</string>
     <string name="sleep_notification_remark">关闭睡眠日记功能后,生成新的睡眠报告时,系统将不显示填写睡眠日记的窗口.</string>
     <string name="bind_wechat">绑定微信</string>
     <string name="setting_modify_pwd_hint">修改密码</string>
     <string name="unbind_sleepy_hint">更换绑定</string>
     <string name="setting_about_me_hint">关于我们</string>
     <string name="setting_logout_hint">退出登录</string>
+    <string name="zero_percent">0/200</string>
 
 
     <string-array name="reminder_hour">
@@ -1116,4 +1112,29 @@
     </string-array>
 
     <string name="reminder_add_success_hint">您睡眠提醒设置成功啦</string>
+
+    <string name="version_name_hint">%s版本: %s</string>
+    <string name="app_upgrade">APP升级</string>
+    <string name="monitor_upgrade">监测仪升级</string>
+    <string name="sleepy_upgrade">速眠仪升级</string>
+    <string name="note">记录日记</string>
+    <string name="ignore">忽略</string>
+    <string name="sleep_note_hint">睡眠日记</string>
+    <string name="report_sleep_remark">睡眠备注</string>
+    <string name="report_sleep_state">睡前状态</string>
+    <string name="report_sleep_evaluate">医生评价</string>
+    <string name="report_sleep_mood">苏醒情绪</string>
+    <string name="not_bad">不太好</string>
+    <string name="general">一般般</string>
+    <string name="good">还可以</string>
+    <string name="very_good">好极了</string>
+    <string name="submit">提交</string>
+    <string name="upload_sleep_note">您的睡眠日记已上传成功啦</string>
+    <string name="none_sleep_note">睡醒后并未记录睡眠日记哦,坚持每次都记下睡眠日记,可以对你的睡眠情况有更深入的了解,
+        医生才能给出最准确的建议~</string>
+    <string name="sleep_report_remark">坚持每天记下睡眠日记,可以对你的睡眠情况有更深入的了解,医生才能给出最准确的建议哦~</string>
+    <string name="sleep_note_error_one">请选择您的苏醒情绪</string>
+    <string name="sleep_note_error_two">请填写您的睡眠备注信息</string>
+    <string name="sleep_note_error_three">睡眠备注信息请不要超过200字</string>
+    <string name="note_not_null">日记内容不能为空</string>
 </resources>

@@ -6,6 +6,8 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +17,7 @@ import androidx.core.view.isVisible
 import com.blankj.utilcode.util.LogUtils
 import com.sumian.common.base.BaseFragment
 import com.sumian.common.dialog.SumianImageTextDialog
+import com.sumian.common.helper.ToastHelper
 import com.sumian.common.utils.ColorCompatUtil
 import com.sumian.common.utils.LocationManagerUtil
 import com.sumian.common.utils.PermissionUtil
@@ -24,8 +27,11 @@ import com.sumian.device.callback.DeviceStatusListener
 import com.sumian.device.data.DeviceConnectStatus
 import com.sumian.device.data.SumianDevice
 import com.sumian.device.manager.DeviceManager
+import com.sumian.device.manager.helper.SyncSleepDataHelper
 import com.sumian.sd.R
 import com.sumian.sd.buz.device.scan.ScanPermissionDetailActivity
+import com.sumian.sd.buz.device.widget.DeviceBottomSheet
+import com.sumian.sd.buz.device.widget.PaModeDialog
 import com.sumian.sd.buz.device.widget.SyncAnimatorUtil
 import com.sumian.sd.buz.devicemanager.BlueDevice
 import com.sumian.sd.common.log.SdLogManager
@@ -59,8 +65,6 @@ class DeviceManageFragment : BaseFragment() {
 
     private var mCardStatus = 0
     private var mRotateAnimator: ObjectAnimator? = null
-    private var mMonitor: BlueDevice? = null
-    private var mPopupWindow: PopupWindow? = null
     private var mConnectStatus = DeviceManager.getDevice()?.monitorConnectStatus
             ?: DeviceConnectStatus.DISCONNECTED
 
@@ -111,7 +115,11 @@ class DeviceManageFragment : BaseFragment() {
 
     override fun initWidget() {
         super.initWidget()
-        iv_add_device.setOnClickListener { mHost?.scanForDevice() }
+        iv_add_device.setOnClickListener {
+            Log.i("MCJ", "iv_add_device scan")
+            startActivity(Intent(activity, DeviceManageActivity::class.java))
+//            mHost?.scanForDevice()
+        }
         bt_turn_on_pa.setOnClickListener {
             dismissOldCreateNewSumianImageTextDialog().show(SumianImageTextDialog.TYPE_LOADING)
             DeviceManager.toggleSleeperWorkMode(true, object : AsyncCallback<Any?> {
@@ -121,12 +129,15 @@ class DeviceManageFragment : BaseFragment() {
 
                 override fun onFail(code: Int, msg: String) {
                     dismissSumianImageTextDialog()
-                    SumianAlertDialog(context)
-                            .hideTopIcon(true)
-                            .setTitle(R.string.turn_on_pa_mode_failed_title)
-                            .setMessage(resources.getString(R.string.turn_on_pa_mode_failed_desc, msg))
-                            .setRightBtn(R.string.haode, null)
-                            .show()
+                    val paModeDialog = PaModeDialog(activity)
+                    paModeDialog.setType(0x01).show()
+                    Handler().postDelayed({ paModeDialog.setType(0x02).setTvContent(msg).showError() }, 500)
+//                    SumianAlertDialog(context)
+//                            .hideTopIcon(true)
+//                            .setTitle(R.string.turn_on_pa_mode_failed_title)
+//                            .setMessage(resources.getString(R.string.turn_on_pa_mode_failed_desc, msg))
+//                            .setRightBtn(R.string.haode, null)
+//                            .show()
                 }
             })
         }
@@ -137,29 +148,50 @@ class DeviceManageFragment : BaseFragment() {
         iv_open_bluetooth.setOnClickListener {
             connectBoundDeviceIfCan()
         }
-        monitor_battery_view.setTextSize(14f)
-        sleeper_battery_view.setTextSize(14f)
+        tv_sync.setOnClickListener {
+            var state = DeviceManager.startSyncSleepData()
+            if (state == SyncSleepDataHelper.SyncState.START || state == SyncSleepDataHelper.SyncState.RETRY) {
+                DeviceManager.registerDeviceStatusListener(mSyncResultListener)
+            } else if (state == SyncSleepDataHelper.SyncState.FAIL_IS_SYNCING) {
+                ToastHelper.show(resources.getString(R.string.already_latest_data))
+            } else if (state == SyncSleepDataHelper.SyncState.FAIL_VERSION_WRONG) {
+                ToastHelper.show(resources.getString(R.string.sync_fail))
+            }
+        }
+    }
+
+    private val mSyncResultListener = object : DeviceStatusListener {
+        override fun onStatusChange(type: String) {
+            if (type == DeviceManager.EVENT_SYNC_SLEEP_DATA_SUCCESS) {
+                ToastHelper.show(resources.getString(R.string.already_latest_data))
+                DeviceManager.unregisterDeviceStatusListener(this)
+            } else if (type == DeviceManager.EVENT_SYNC_SLEEP_DATA_FAIL) {
+                ToastHelper.show(resources.getString(R.string.sync_fail))
+                DeviceManager.unregisterDeviceStatusListener(this)
+            }
+        }
     }
 
     @SuppressLint("InflateParams")
     private fun showUnbindPopup() {
-        val inflate = LayoutInflater.from(activity!!).inflate(R.layout.layout_undbind_popup, null, false)
-        inflate.setOnClickListener {
-            SumianAlertDialog(activity)
-                    .hideTopIcon(true)
-                    .setTitle(R.string.sure_to_unbind)
-                    .setMessage(R.string.after_unbind_monitor_will_disconnect_from_phone)
-                    .setLeftBtn(R.string.cancel, null)
-                    .setRightBtn(R.string.confirm) {
-                        DeviceManager.unbind()
-                        mPopupWindow?.dismiss()
-                    }
-                    .show()
-        }
-        mPopupWindow = PopupWindow(inflate, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-        mPopupWindow?.isOutsideTouchable = true
-        mPopupWindow?.isFocusable = true
-        mPopupWindow?.showAsDropDown(iv_float_menu)
+        DeviceBottomSheet().show(fragmentManager!!, "DeviceBottomSheet")
+//        val inflate = LayoutInflater.from(activity!!).inflate(R.layout.layout_undbind_popup, null, false)
+//        inflate.setOnClickListener {
+//            SumianAlertDialog(activity)
+//                    .hideTopIcon(true)
+//                    .setTitle(R.string.sure_to_unbind)
+//                    .setMessage(R.string.after_unbind_monitor_will_disconnect_from_phone)
+//                    .setLeftBtn(R.string.cancel, null)
+//                    .setRightBtn(R.string.confirm) {
+//                        DeviceManager.unbind()
+//                        mPopupWindow?.dismiss()
+//                    }
+//                    .show()
+//        }
+//        mPopupWindow = PopupWindow(inflate, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+//        mPopupWindow?.isOutsideTouchable = true
+//        mPopupWindow?.isFocusable = true
+//        mPopupWindow?.showAsDropDown(iv_float_menu)
     }
 
     override fun onAttach(context: Context) {
@@ -240,7 +272,7 @@ class DeviceManageFragment : BaseFragment() {
                         R.drawable.ic_equip_icon_monitor
                 }
         iv_device.setImageResource(deviceIvRes)
-        iv_device_bg.setImageResource(if (monitor.isSyncing) R.drawable.ic_equip_bg_synchronization else R.drawable.ic_equip_bg)
+        iv_device_bg.setImageResource(if (monitor.isSyncing) R.drawable.ic_equip_bg_examine else R.drawable.ic_equip_bg_examine)
         iv_device_bg.visibility = if (monitor.monitorConnectStatus == DeviceConnectStatus.CONNECTING) View.GONE else View.VISIBLE
         iv_device.alpha = if (monitor.monitorConnectStatus == DeviceConnectStatus.DISCONNECTED) .5f else 1f
     }
@@ -261,7 +293,8 @@ class DeviceManageFragment : BaseFragment() {
             DeviceConnectStatus.CONNECTED -> R.string.connected
             else -> R.string.not_connected
         })
-        monitor_battery_view.setProgress(monitor.monitorBattery)
+        tv_sync.isVisible = monitor.monitorConnectStatus == DeviceConnectStatus.CONNECTED
+        monitor_battery_view.setAh(monitor.monitorBattery)
         vg_monitor.alpha = if (monitor.monitorConnectStatus == DeviceConnectStatus.DISCONNECTED) .5f else 1f
         vg_sleeper.visibility = if (monitor.monitorConnectStatus == DeviceConnectStatus.CONNECTED) View.VISIBLE else View.INVISIBLE
         if (monitor.isSyncing) {
@@ -274,8 +307,8 @@ class DeviceManageFragment : BaseFragment() {
             }
         }
         showRipple(monitor.monitorConnectStatus == DeviceConnectStatus.CONNECTING)
-        tv_monitor.setTextColor(ColorCompatUtil.getColor(activity!!, if (monitor.isMonitorConnected()) R.color.t3_color else R.color.t2_color))
-        tv_sleeper.setTextColor(ColorCompatUtil.getColor(activity!!, if (monitor.isSleepMasterConnected()) R.color.t3_color else R.color.t2_color))
+        tv_monitor.setTextColor(ColorCompatUtil.getColor(activity!!, if (monitor.isMonitorConnected()) R.color.bt_hole_color else R.color.general_color))
+        tv_sleeper.setTextColor(ColorCompatUtil.getColor(activity!!, if (monitor.isSleepMasterConnected()) R.color.bt_hole_color else R.color.general_color))
     }
 
     private fun updateBottomTv(monitor: SumianDevice) {
@@ -317,7 +350,7 @@ class DeviceManageFragment : BaseFragment() {
 
     private fun updateSleeperUI(monitor: SumianDevice?) {
         // sleeper ui
-        sleeper_battery_view.setProgress(monitor?.sleepMasterBattery ?: 0)
+        sleeper_battery_view.setAh(monitor?.sleepMasterBattery ?: 0)
         tv_speed_sleeper_status.text = getString(when (monitor?.sleepMasterConnectStatus) {
             DeviceConnectStatus.CONNECTED -> if (monitor.isSleepMasterWorkModeOn()) R.string.working else R.string.already_connected
             DeviceConnectStatus.DISCONNECTED -> R.string.not_connected

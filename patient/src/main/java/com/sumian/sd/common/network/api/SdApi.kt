@@ -44,7 +44,10 @@ import com.sumian.sd.buz.report.bean.DailyReport
 import com.sumian.sd.buz.report.weeklyreport.WeekMeta
 import com.sumian.sd.buz.report.weeklyreport.bean.SleepDurationReport
 import com.sumian.sd.buz.report.weeklyreport.bean.WeeklyReportResponse
-import com.sumian.sd.buz.scale.bean.*
+import com.sumian.sd.buz.scale.bean.FilledScale
+import com.sumian.sd.buz.scale.bean.FilledScaleCollection
+import com.sumian.sd.buz.scale.bean.ReleasedScaleCollection
+import com.sumian.sd.buz.scale.bean.Scale
 import com.sumian.sd.buz.setting.bean.Feedback
 import com.sumian.sd.buz.setting.remind.bean.Reminder
 import com.sumian.sd.buz.sleepertalk.bean.SleeperTalkData
@@ -57,6 +60,7 @@ import com.sumian.sd.common.oss.OssResponse
 import com.sumian.sd.common.pay.bean.OrderDetail
 import com.sumian.sd.common.pay.bean.PayCouponCode
 import com.sumian.sd.common.pay.bean.PayOrder
+import com.sumian.sd.examine.login.bean.RegisterBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -68,6 +72,10 @@ import retrofit2.http.*
  */
 
 interface SdApi {
+
+    //account module
+    @POST("users")
+    fun doRegister(@Body registerBody: RegisterBody?): Call<Token>
 
     @PATCH("authorizations/current")
     fun refreshToken(@Header("Authorization") token: String): Call<Any>

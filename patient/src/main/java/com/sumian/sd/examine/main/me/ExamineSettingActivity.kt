@@ -8,8 +8,10 @@ import com.avos.avoscloud.AVInstallation
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.base.BaseActivity
+import com.sumian.common.helper.ToastHelper
 import com.sumian.common.network.response.ErrorResponse
 import com.sumian.common.utils.JsonUtil.Companion.toJson
+import com.sumian.device.manager.DeviceManager
 import com.sumian.sd.BuildConfig
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
@@ -20,6 +22,7 @@ import com.sumian.sd.buz.account.bean.Social
 import com.sumian.sd.buz.account.login.LoginActivity
 import com.sumian.sd.buz.account.login.SettingPasswordActivity
 import com.sumian.sd.buz.account.model.AccountManager
+import com.sumian.sd.buz.qrcode.activity.QrCodeActivity
 import com.sumian.sd.common.h5.H5Uri
 import com.sumian.sd.common.h5.SimpleWebActivity
 import com.sumian.sd.common.network.callback.BaseSdResponseCallback
@@ -56,6 +59,13 @@ class ExamineSettingActivity : BaseActivity(), UMAuthListener {
         }
         bt_bind_wechat.setOnToggleChanged {
             showDialog(it)
+        }
+        lay_unbind_sleepy.setOnClickListener {
+            if (!DeviceManager.isMonitorConnected()) {
+                ToastHelper.show(getString(R.string.please_connect_monitor_before_change_bind))
+                return@setOnClickListener
+            }
+            QrCodeActivity.show(this)
         }
         examine_title_bar.setOnBackClickListener { finish() }
         tv_logout.setOnClickListener { logout() }

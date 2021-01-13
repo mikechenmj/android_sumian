@@ -29,7 +29,7 @@ class DeviceManageActivity : BaseActivity() {
     private var mCurrentFragmentIndex = 0
 
     override fun showBackNav(): Boolean {
-        return true
+        return false
     }
 
     override fun getLayoutId(): Int {
@@ -42,9 +42,9 @@ class DeviceManageActivity : BaseActivity() {
 
     override fun initWidget() {
         super.initWidget()
-        setTitle(R.string.device_manage)
-        switchFragment(0)
-        AutoSyncDeviceDataUtil.autoSyncSleepData()
+//        setTitle(R.string.device_manage)
+        switchFragment(1)
+//        AutoSyncDeviceDataUtil.autoSyncSleepData()
     }
 
     private fun switchFragment(position: Int) {
@@ -60,7 +60,7 @@ class DeviceManageActivity : BaseActivity() {
                 return when (position) {
                     0 -> {
                         val deviceManageFragment = DeviceManageFragment()
-                        deviceManageFragment.mHost = mHost
+//                        deviceManageFragment.mHost = mHost
                         deviceManageFragment
                     }
                     else -> {
@@ -89,16 +89,7 @@ class DeviceManageActivity : BaseActivity() {
 
     private val mOnDeviceSelectedListener = object : ScanDeviceFragment.OnDeviceSelectedListener {
         override fun onDeviceSelected(device: BlueDevice) {
-            switchFragment(0)
-        }
-    }
-
-
-    override fun onBackPressed() {
-        if (mCurrentFragmentIndex == 1) {
-            switchFragment(0)
-        } else {
-            super.onBackPressed()
+            finish()
         }
     }
 }

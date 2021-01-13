@@ -34,6 +34,9 @@ class ExamineLoginRouterActivity : BaseActivity() {
                 viewModel.loginByWechat(this@ExamineLoginRouterActivity)
             }
         }
+        tv_register.setOnClickListener {
+            ExamineRegisterActivity.show()
+        }
         AppManager.checkAgreementShouldShow(supportFragmentManager)
     }
 }

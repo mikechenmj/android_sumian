@@ -69,7 +69,7 @@
         android:layout_marginStart="@dimen/space_20"
         android:layout_marginTop="@dimen/space_20"
         android:layout_marginEnd="@dimen/space_20"
-        android:background="@color/l1_color_day"
+        android:background="@color/login_line_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="@id/tv_duration"
         app:layout_constraintRight_toRightOf="@id/tv_compare_duration"
