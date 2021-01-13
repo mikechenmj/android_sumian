@@ -138,77 +138,82 @@
                 app:top_less_half_color="#FFDB514F" />
         </LinearLayout>
 
-        <FrameLayout
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/iv_float_menu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginTop="36dp"
-                android:layout_marginEnd="20dp"
-                android:contentDescription="@null"
-                android:src="@drawable/equip_btn_more" />
-
             <FrameLayout
-                android:layout_width="210dp"
-                android:layout_height="210dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="40dp">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
                 <ImageView
-                    android:id="@+id/iv_device_bg"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:contentDescription="@null"
-                    android:src="@drawable/ic_equip_bg_examine" />
-
-                <com.sumian.sd.widget.ripple.RippleScanningView
-                    android:id="@+id/ripple_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="gone" />
-
-                <ImageView
-                    android:id="@+id/iv_device"
+                    android:id="@+id/iv_float_menu"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="36dp"
+                    android:layout_marginEnd="20dp"
                     android:contentDescription="@null"
-                    android:src="@drawable/ic_equip_icon_monitor_synchronization" />
+                    android:src="@drawable/equip_btn_more" />
+
+                <FrameLayout
+                    android:layout_width="210dp"
+                    android:layout_height="210dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="40dp">
+
+                    <ImageView
+                        android:id="@+id/iv_device_bg"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_equip_bg_examine" />
+
+                    <com.sumian.sd.widget.ripple.RippleScanningView
+                        android:id="@+id/ripple_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="gone" />
+
+                    <ImageView
+                        android:id="@+id/iv_device"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_equip_icon_monitor_synchronization" />
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/tv_bottom_hint"
+                    style="@style/text_t1_14"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="270dp"
+                    android:gravity="center"
+                    android:visibility="visible"
+                    tools:text="正在同步睡眠数据\n第 1 段 (100%)" />
+
+                <TextView
+                    android:id="@+id/tv_bottom_progress"
+                    style="@style/text_t1_14"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="270dp"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    tools:text="正在同步睡眠数据\n第 1 段 (100%)"
+                    tools:visibility="visible" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/bt_turn_on_pa"
+                    style="@style/SumianButton"
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="330dp"
+                    android:text="@string/start_work" />
+
             </FrameLayout>
 
-            <TextView
-                android:id="@+id/tv_bottom_hint"
-                style="@style/text_t1_14"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="270dp"
-                android:gravity="center"
-                android:visibility="visible"
-                tools:text="正在同步睡眠数据\n第 1 段 (100%)" />
-
-            <TextView
-                android:id="@+id/tv_bottom_progress"
-                style="@style/text_t1_14"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="270dp"
-                android:gravity="center"
-                android:visibility="gone"
-                tools:text="正在同步睡眠数据\n第 1 段 (100%)"
-                tools:visibility="visible" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/bt_turn_on_pa"
-                style="@style/SumianButton"
-                android:layout_width="150dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="330dp"
-                android:text="@string/start_work"
-                android:visibility="gone" />
-
-        </FrameLayout>
+        </ScrollView>
 
     </LinearLayout>
 

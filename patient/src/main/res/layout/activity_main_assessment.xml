@@ -168,7 +168,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/bt_user_info_table"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -181,7 +181,7 @@
                 tools:ignore="ButtonStyle,HardcodedText"
                 tools:visibility="visible" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/bt_assessment_table"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

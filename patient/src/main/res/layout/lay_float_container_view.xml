@@ -10,10 +10,9 @@
 
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:contentDescription="@null"
-        android:scaleType="centerCrop"
         android:src="@drawable/ic_white_m_blue_circle_bg" />
 
     <TextView

@@ -150,7 +150,7 @@ object SyncSleepDataHelper {
     }
 
     internal fun startSendFakeSleepData() {
-        DeviceManager.writeData(BleCmdUtil.createDataFromString("12", "03080F"))
+        DeviceManager.writeData(BleCmdUtil.createDataFromString("12", "040C0F"))
     }
 
     private const val UPLOAD_TAG_SYNC_SLEEP_DATA = "sync_sleep_data"

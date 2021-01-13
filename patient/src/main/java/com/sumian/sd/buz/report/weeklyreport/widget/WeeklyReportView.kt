@@ -23,7 +23,6 @@ class WeeklyReportView(context: Context, attributeSet: AttributeSet) : FrameLayo
         daily_sleep_light_avg_compare_view.setAvgDuration(item.avg_light_duration).setCompareDuration(item.diff_avg_light_duration)
         daily_sleep_deep_avg_compare_view.setAvgDuration(item.avg_deep_duration).setCompareDuration(item.diff_avg_deep_duration)
         daily_sleep_awake_avg_compare_view.setAvgDuration(item.avg_awake_duration).setCompareDuration(item.diff_avg_awake_duration)
-        lay_sleep_data_less_container.visibility = if (item.advice == null) View.GONE else View.VISIBLE
         lay_sleep_data_less_container.setOnClickListener { SleepAdviceDialog(context).setAdvice(item.advice).show() }
     }
 
