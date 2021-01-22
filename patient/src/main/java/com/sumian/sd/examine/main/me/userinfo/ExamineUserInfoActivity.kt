@@ -99,20 +99,20 @@ class ExamineUserInfoActivity : BaseActivity(), OnTakePhotoCallback {
             return
         }
         ImageLoader.loadImage(userProfile.avatar, iv_avatar, R.mipmap.ic_info_avatar_patient)
-        if (userProfile.mobile.isNotEmpty()) tv_mobile.text = userProfile.mobile
-        if (userProfile.nickname.isNotEmpty()) tv_nickname.text = userProfile.nickname
-        if (userProfile.area.isNotEmpty()) tv_area.text = userProfile.area
-        if (userProfile.gender.isNotEmpty()) {
+        if (!userProfile.mobile.isNullOrEmpty()) tv_mobile.text = userProfile.mobile
+        if (!userProfile.nickname.isNullOrEmpty()) tv_nickname.text = userProfile.nickname
+        if (!userProfile.area.isNullOrEmpty()) tv_area.text = userProfile.area
+        if (!userProfile.gender.isNullOrEmpty()) {
             tv_gender.text = when(userProfile.gender) {
                 "female" -> "女"
                 "male" -> "男"
                 else -> "未知"
             }
         }
-        if (userProfile.birthday.isNotEmpty()) tv_birthday.text = userProfile.birthday
-        if (userProfile.height.isNotEmpty()) tv_height.text = userProfile.weight + " cm"
-        if (userProfile.weight.isNotEmpty()) tv_weight.text = userProfile.weight + " kg"
-        if (userProfile.career.isNotEmpty()) tv_career.text = userProfile.career
+        if (!userProfile.birthday.isNullOrEmpty()) tv_birthday.text = userProfile.birthday
+        if (!userProfile.height.isNullOrEmpty()) tv_height.text = userProfile.height + " cm"
+        if (!userProfile.weight.isNullOrEmpty()) tv_weight.text = userProfile.weight + " kg"
+        if (!userProfile.career.isNullOrEmpty()) tv_career.text = userProfile.career
     }
 
     @AfterPermissionGranted(PIC_REQUEST_CODE_CAMERA)

@@ -84,8 +84,8 @@ class ExamineMeFragment : BaseFragment(), OnEnterListener {
         val nickname = info.nickname
         tv_nickname.text = if (TextUtils.isEmpty(nickname)) info.mobile else nickname
         tv_age_and_gender.text = formatGender(info.getGender())
-        val age: String = info.getAge().toString()
-        if (!TextUtils.isEmpty(age)) {
+        val age = info.getAge()
+        if (age != null) {
             tv_age_and_gender.append(java.lang.String.format(Locale.getDefault(), "%s%s%s", "  丨  ", age, "岁"))
         }
     }

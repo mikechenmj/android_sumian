@@ -11,6 +11,7 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.qmuiteam.qmui.util.QMUISpanHelper
 import com.sumian.common.base.BaseViewModelActivity
 import com.sumian.common.statistic.StatUtil
+import com.sumian.sd.BuildConfig
 import com.sumian.sd.R
 import com.sumian.sd.app.AppManager
 import com.sumian.sd.buz.stat.StatConstants
@@ -18,6 +19,7 @@ import com.sumian.sd.buz.version.VersionManager
 import com.sumian.sd.common.h5.H5Uri
 import com.sumian.sd.common.h5.SimpleWebActivity
 import com.sumian.sd.common.utils.StatusBarUtil
+import com.sumian.sd.examine.login.ExamineLoginRouterActivity
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : BaseViewModelActivity<LoginPresenter>(), LoginContract.View {
@@ -28,6 +30,10 @@ class LoginActivity : BaseViewModelActivity<LoginPresenter>(), LoginContract.Vie
 
         @JvmStatic
         fun show() {
+            if (BuildConfig.IS_EXAMINE_VERSION) {
+                ExamineLoginRouterActivity.show()
+                return
+            }
             ActivityUtils.startActivity(LoginActivity::class.java)
         }
     }

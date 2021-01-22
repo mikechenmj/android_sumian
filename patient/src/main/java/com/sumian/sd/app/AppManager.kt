@@ -397,13 +397,13 @@ object AppManager {
     }
 
     fun onMainActivityCreate() {
-        if (getAccountViewModel().userInfo == null || getAccountViewModel().userInfo?.im_id?.isEmpty() != false) {
-            SdLogManager.logToken("getAccountViewModel().userInfo: ${getAccountViewModel().userInfo}")
-            SdLogManager.logToken("getAccountViewModel().userInfo?.im_id: ${getAccountViewModel().userInfo?.im_id}")
-            SdLogManager.logToken("clearToken in onMainActivityCreate")
-            getAccountViewModel().clearToken()
-            return
-        }
+//        if (getAccountViewModel().userInfo == null || getAccountViewModel().userInfo?.im_id?.isEmpty() != false) {
+//            SdLogManager.logToken("getAccountViewModel().userInfo: ${getAccountViewModel().userInfo}")
+//            SdLogManager.logToken("getAccountViewModel().userInfo?.im_id: ${getAccountViewModel().userInfo?.im_id}")
+//            SdLogManager.logToken("clearToken in onMainActivityCreate")
+//            getAccountViewModel().clearToken()
+//            return
+//        }
         initKefu(mApplication)
         AppNotificationManager.uploadPushId()
         sendHeartbeat()
@@ -424,7 +424,7 @@ object AppManager {
         LCIMManager.getInstance()
                 .init(mApplication,
                         BuildConfig.LEANCLOUD_APP_ID, BuildConfig.LEANCLOUD_APP_KEY,
-                        getAccountViewModel().userInfo?.im_id,
+                        "0",
                         IMProfileProvider(),
                         IMManagerHost())
     }
