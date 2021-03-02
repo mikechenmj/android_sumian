@@ -294,5 +294,6 @@ dependencies {
     implementation project(':SumianDevice')
     // file download
     implementation 'com.liulishuo.filedownloader:library:1.7.6'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.2.0'
     implementation files('libs/hihealthkit-2.0.1.jar')
 }

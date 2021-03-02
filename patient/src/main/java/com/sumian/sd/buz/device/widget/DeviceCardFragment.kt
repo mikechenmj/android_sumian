@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.sumian.common.base.BaseFragment
@@ -210,7 +211,9 @@ class DeviceCardFragment : BaseFragment() {
 
 
     fun updateDevice() {
-        updateUI(DeviceManager.getDevice())
+        lifecycleScope.launchWhenCreated {
+            updateUI(DeviceManager.getDevice())
+        }
     }
 
     private fun updateUI(device: SumianDevice?) {

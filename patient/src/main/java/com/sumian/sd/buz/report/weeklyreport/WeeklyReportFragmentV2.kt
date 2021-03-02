@@ -71,7 +71,7 @@ class WeeklyReportFragmentV2 : BaseFragment() {
             }
 
             override fun onFinish() {
-                refresh_layout.hideRefreshAnim()
+                refresh_layout?.hideRefreshAnim()
             }
         })
     }
