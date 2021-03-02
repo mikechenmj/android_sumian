@@ -37,7 +37,7 @@ abstract class BaseResponseCallback<Data> : Callback<Data> {
 
     override fun onFailure(call: Call<Data>?, t: Throwable?) {
         onFinish()
-        Log.d(TAG, t?.message)
+        Log.d(TAG, t?.message ?: "have not message")
         t?.let {
             it.printStackTrace()
             if ((it.message == "Socket closed" || it.message == "Canceled")) {
