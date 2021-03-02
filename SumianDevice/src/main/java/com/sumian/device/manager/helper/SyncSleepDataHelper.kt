@@ -90,7 +90,7 @@ object SyncSleepDataHelper {
                 }
                 MESSAGE_CODE_NEXT_PAYLOAD -> {
                     var type = msg.arg1
-                    var beginCmd = msg.obj as String
+                    var beginCmd = msg.obj as? String
                     onSyncTimeOut(type, beginCmd)
                 }
             }
@@ -556,7 +556,7 @@ object SyncSleepDataHelper {
         }
     }
 
-    private fun onSyncTimeOut(type: Int, beginCmd: String) {
+    private fun onSyncTimeOut(type: Int, beginCmd: String?) {
         log("透传数据超时 type: $type beginCmd: $beginCmd")
         removePayloadTimeoutMessage()
         if (isSyncSleepData()) {
