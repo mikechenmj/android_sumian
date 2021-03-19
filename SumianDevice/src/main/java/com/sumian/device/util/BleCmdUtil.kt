@@ -1,7 +1,7 @@
 package com.sumian.device.util
 
 import com.clj.fastble.utils.HexUtil
-import com.sumian.device.cmd.BleCmd
+import com.sumian.device.cmd.BleConstants
 
 /**
  * @author : Zhan Xuzhao
@@ -16,7 +16,7 @@ class BleCmdUtil {
     companion object {
         fun createDataFromBytes(cmdType: String, data: ByteArray? = null): ByteArray {
             val sb = StringBuilder()
-            sb.append(BleCmd.APP_CMD_HEADER)
+            sb.append(BleConstants.APP_CMD_HEADER)
             sb.append(cmdType)
             if (data != null) {
                 sb.append(String.format("%02X", data.size))
@@ -54,7 +54,7 @@ class BleCmdUtil {
         fun isDeviceCmdValid(hexString: String?): Boolean {
             return hexString != null
                     && hexString.length >= 4
-                    && hexString.substring(0, 2) == BleCmd.MONITOR_CMD_HEADER
+                    && hexString.substring(0, 2) == BleConstants.MONITOR_CMD_HEADER
         }
 
         fun getCmdType(hexString: String): String {
@@ -75,7 +75,7 @@ class BleCmdUtil {
         }
 
         fun createSuccessResponse(cmdType: String): ByteArray {
-            return createDataFromString(cmdType, BleCmd.RESPONSE_CODE_SUCCESS)
+            return createDataFromString(cmdType, BleConstants.RESPONSE_CODE_SUCCESS)
         }
     }
 

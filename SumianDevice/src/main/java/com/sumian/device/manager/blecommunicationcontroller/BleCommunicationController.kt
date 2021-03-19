@@ -12,8 +12,8 @@ import com.clj.fastble.utils.HexUtil
 import com.sumian.device.callback.BleCommunicationWatcher
 import com.sumian.device.callback.BleRequestCallback
 import com.sumian.device.callback.WriteBleDataCallback
-import com.sumian.device.cmd.BleCmd
-import com.sumian.device.cmd.BleCmd.Companion.SYNC_TRANSPARENT
+import com.sumian.device.cmd.BleConstants
+import com.sumian.device.cmd.BleConstants.Companion.SYNC_TRANSPARENT
 import com.sumian.device.manager.DeviceManager
 import com.sumian.device.util.LogManager
 import com.sumian.device.util.ThreadManager
@@ -139,7 +139,7 @@ object BleCommunicationController {
      * 发起请求，会受到设备的响应或超时回调
      */
     fun requestByCmd(cmd: String, callback: BleRequestCallback? = null, retry: Boolean = false) {
-        requestWithRetry(HexUtil.hexStringToBytes(BleCmd.APP_CMD_HEADER + cmd), callback, retry)
+        requestWithRetry(HexUtil.hexStringToBytes(BleConstants.APP_CMD_HEADER + cmd), callback, retry)
     }
 
     fun requestWithRetry(data: ByteArray, callback: BleRequestCallback?, retry: Boolean = false) {

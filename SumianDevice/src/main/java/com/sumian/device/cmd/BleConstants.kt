@@ -8,7 +8,7 @@ package com.sumian.device.cmd
  *
  * version: 1.0
  */
-class BleCmd {
+class BleConstants {
     companion object {
         const val RESPONSE_CODE_POSITIVE = "01"
 

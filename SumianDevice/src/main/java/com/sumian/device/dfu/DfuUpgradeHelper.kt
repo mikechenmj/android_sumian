@@ -14,14 +14,13 @@ import com.clj.fastble.utils.HexUtil
 import com.sumian.device.R
 import com.sumian.device.callback.BleRequestCallback
 import com.sumian.device.callback.ScanCallback
-import com.sumian.device.cmd.BleCmd
+import com.sumian.device.cmd.BleConstants
 import com.sumian.device.data.DeviceType
 import com.sumian.device.manager.DeviceManager
 import com.sumian.device.manager.blecommunicationcontroller.BleCommunicationController
 import com.sumian.device.util.*
 import no.nordicsemi.android.dfu.*
 import java.lang.IllegalArgumentException
-import java.util.*
 
 /**
  * @author : Zhan Xuzhao
@@ -114,7 +113,7 @@ object DfuUpgradeHelper {
                 }
             }
             DeviceType.SLEEP_MASTER -> BleCommunicationController.requestByCmd(
-                    BleCmd.QUERY_SLEEP_MASTER_MAC,
+                    BleConstants.QUERY_SLEEP_MASTER_MAC,
                     object : BleRequestCallback {
                         override fun onResponse(bytes: ByteArray, hexString: String) {
                             onSuccess(MacUtil.getLongMacFromCmdBytes(bytes))
@@ -132,11 +131,11 @@ object DfuUpgradeHelper {
     fun enterDfuMode(target: DeviceType, onSuccess: () -> Unit, onFail: (code: Int, msg: String?) -> Unit) {
         var errMsg = "进入升级模式失败，请确保设备连接正常并重试"
         val dufCmd =
-                if (target == DeviceType.MONITOR) BleCmd.MONITOR_ENTER_DFU else BleCmd.SLEEP_MASTER_ENTER_DFU
+                if (target == DeviceType.MONITOR) BleConstants.MONITOR_ENTER_DFU else BleConstants.SLEEP_MASTER_ENTER_DFU
         BleCommunicationController.requestByCmd(dufCmd, object : BleRequestCallback {
             override fun onResponse(data: ByteArray, hexString: String) {
                 val result = BleCmdUtil.getContentFromData(HexUtil.formatHexString(data))
-                if (BleCmd.RESPONSE_CODE_SUCCESS == result) {
+                if (BleConstants.RESPONSE_CODE_SUCCESS == result) {
                     onSuccess()
                 } else {
                     errMsg = getErrorMsg(result)

@@ -5,13 +5,12 @@ import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import android.text.TextUtils
-import android.util.Log
 import com.clj.fastble.utils.HexUtil
 import com.sumian.device.R
 import com.sumian.device.callback.AsyncCallback
 import com.sumian.device.callback.BleCommunicationWatcher
 import com.sumian.device.callback.BleRequestCallback
-import com.sumian.device.cmd.BleCmd
+import com.sumian.device.cmd.BleConstants
 import com.sumian.device.data.DeviceConnectStatus
 import com.sumian.device.data.MonitorChannel
 import com.sumian.device.data.MonitorVersionInfo
@@ -47,30 +46,30 @@ object DeviceStateHelper {
                 return
             }
             when (BleCmdUtil.getCmdType(hexString)) {
-                BleCmd.QUERY_MONITOR_BATTERY // "44" 监测仪电量
+                BleConstants.QUERY_MONITOR_BATTERY // "44" 监测仪电量
                 -> receiveMonitorBatteryInfo(hexString)
-                BleCmd.QUERY_SLEEP_MASTER_BATTERY // "45" 速眠仪电量
+                BleConstants.QUERY_SLEEP_MASTER_BATTERY // "45" 速眠仪电量
                 -> receiveSleepMasterBatteryInfo(hexString)
-                BleCmd.QUERY_SLEEP_MASTER_CONNECT_STATUS // "4e" 速眠仪的连接状态
+                BleConstants.QUERY_SLEEP_MASTER_CONNECT_STATUS // "4e" 速眠仪的连接状态
                 -> receiveSleepMasterConnectionStatus(hexString)
-                BleCmd.QUERY_MONITOR_SLEEP_MASTER_WORK_MODE // "61" 同步到的监测仪的所有状态,以及与之绑定的速眠仪的所有状态
+                BleConstants.QUERY_MONITOR_SLEEP_MASTER_WORK_MODE // "61" 同步到的监测仪的所有状态,以及与之绑定的速眠仪的所有状态
                 -> receiveAllMonitorAndSleepMasterStatus(data, hexString)
                 else -> {
                 }
             }
 
             when (BleCmdUtil.getCmdType(hexString)) {
-                BleCmd.QUERY_MONITOR_BATTERY, // "44" 监测仪电量
-                BleCmd.QUERY_MONITOR_SLEEP_MASTER_WORK_MODE, // "61" 同步到的监测仪的所有状态,以及与之绑定的速眠仪的所有状态
-                BleCmd.QUERY_MONITOR_VERSION, // 50
-                BleCmd.QUERY_MONITOR_SN,
-                BleCmd.QUERY_SLEEP_MASTER_BATTERY, // "45" 速眠仪电量
-                BleCmd.QUERY_SLEEP_MASTER_CONNECT_STATUS, // "4e" 速眠仪的连接状态
-                BleCmd.QUERY_SLEEP_MASTER_VERSION, // 54
-                BleCmd.QUERY_SLEEP_MASTER_MAC,
-                BleCmd.QUERY_SLEEP_MASTER_SN,
-                BleCmd.SET_USER_INFO,
-                BleCmd.CHANGE_SLEEP_MASTER
+                BleConstants.QUERY_MONITOR_BATTERY, // "44" 监测仪电量
+                BleConstants.QUERY_MONITOR_SLEEP_MASTER_WORK_MODE, // "61" 同步到的监测仪的所有状态,以及与之绑定的速眠仪的所有状态
+                BleConstants.QUERY_MONITOR_VERSION, // 50
+                BleConstants.QUERY_MONITOR_SN,
+                BleConstants.QUERY_SLEEP_MASTER_BATTERY, // "45" 速眠仪电量
+                BleConstants.QUERY_SLEEP_MASTER_CONNECT_STATUS, // "4e" 速眠仪的连接状态
+                BleConstants.QUERY_SLEEP_MASTER_VERSION, // 54
+                BleConstants.QUERY_SLEEP_MASTER_MAC,
+                BleConstants.QUERY_SLEEP_MASTER_SN,
+                BleConstants.SET_USER_INFO,
+                BleConstants.CHANGE_SLEEP_MASTER
                 -> {
                     val cmdType = BleCmdUtil.getCmdType(hexString)
                     CmdQueue.putSyncInfoCmd(Cmd(BleCmdUtil.createSuccessResponse(cmdType), priority = Cmd.Priority.FIRST))
@@ -82,30 +81,30 @@ object DeviceStateHelper {
     }
 
     fun generateResultCmd(cmd: String): MutableList<String> {
-        return mutableListOf(BleCmd.MONITOR_CMD_HEADER + cmd)
+        return mutableListOf(BleConstants.MONITOR_CMD_HEADER + cmd)
     }
 
     fun putSetMonitorTimeCmd() {
         CmdQueue.putSyncInfoCmd(
                 Cmd(
                         BleCmdUtil.createDataFromBytes(
-                                BleCmd.SET_MONITOR_TIME,
+                                BleConstants.SET_MONITOR_TIME,
                                 createSetTimeData()),
-                        generateResultCmd(BleCmd.SET_MONITOR_TIME), callback = object : BleRequestCallback {
+                        generateResultCmd(BleConstants.SET_MONITOR_TIME), callback = object : BleRequestCallback {
                     override fun onResponse(data: ByteArray, hexString: String) {
                         LogManager.bleRequestStatusLog("请求蓝牙状态成功,cmd: $hexString")
                     }
 
                     override fun onFail(code: Int, msg: String) {
-                        LogManager.bleRequestStatusLog("请求蓝牙状态失败，cmd:${BleCmd.SET_MONITOR_TIME} code: $code msg: $msg")
+                        LogManager.bleRequestStatusLog("请求蓝牙状态失败，cmd:${BleConstants.SET_MONITOR_TIME} code: $code msg: $msg")
                     }
                 }))
     }
 
     fun putQueryMonitorSn() {
         CmdQueue.putSyncInfoCmd(
-                Cmd(HexUtil.hexStringToBytes(BleCmd.APP_CMD_HEADER + BleCmd.QUERY_MONITOR_SN),
-                        generateResultCmd(BleCmd.QUERY_MONITOR_SN), callback = object : BleRequestCallback {
+                Cmd(HexUtil.hexStringToBytes(BleConstants.APP_CMD_HEADER + BleConstants.QUERY_MONITOR_SN),
+                        generateResultCmd(BleConstants.QUERY_MONITOR_SN), callback = object : BleRequestCallback {
                     override fun onResponse(data: ByteArray, hexString: String) {
                         LogManager.bleRequestStatusLog("请求蓝牙状态成功,cmd: $hexString")
                         val sn = String(BleCmdUtil.getContentFromData(data)!!)
@@ -115,7 +114,7 @@ object DeviceStateHelper {
                     }
 
                     override fun onFail(code: Int, msg: String) {
-                        LogManager.bleRequestStatusLog("请求蓝牙状态失败，cmd:${BleCmd.QUERY_MONITOR_SN} code: $code msg: $msg")
+                        LogManager.bleRequestStatusLog("请求蓝牙状态失败，cmd:${BleConstants.QUERY_MONITOR_SN} code: $code msg: $msg")
                     }
                 }))
     }
@@ -134,8 +133,8 @@ object DeviceStateHelper {
     // p| 协议版本号
     fun putQueryMonitorVersion() {
         CmdQueue.putSyncInfoCmd(
-                Cmd(HexUtil.hexStringToBytes(BleCmd.APP_CMD_HEADER + BleCmd.QUERY_MONITOR_VERSION),
-                        generateResultCmd(BleCmd.QUERY_MONITOR_VERSION), callback = object : BleRequestCallback {
+                Cmd(HexUtil.hexStringToBytes(BleConstants.APP_CMD_HEADER + BleConstants.QUERY_MONITOR_VERSION),
+                        generateResultCmd(BleConstants.QUERY_MONITOR_VERSION), callback = object : BleRequestCallback {
                     override fun onResponse(data: ByteArray, hexString: String) {
                         LogManager.bleRequestStatusLog("请求蓝牙状态成功,监测仪版本cmd: $hexString")
                         // 55 50 0e 【00 09 09】 【0e】 【43 31 31】 【00 00 42】 【30 30 30 4a】【pp】【软件版本】【临床0C/正式0E】【bom版本号】【心率库版本号】【睡眠算法版本号】【协议版本号】
@@ -172,35 +171,35 @@ object DeviceStateHelper {
                     }
 
                     override fun onFail(code: Int, msg: String) {
-                        LogManager.bleRequestStatusLog("请求蓝牙状态失败，cmd:${BleCmd.QUERY_MONITOR_VERSION} code: $code msg: $msg")
+                        LogManager.bleRequestStatusLog("请求蓝牙状态失败，cmd:${BleConstants.QUERY_MONITOR_VERSION} code: $code msg: $msg")
                     }
                 }))
     }
 
     fun putQueryMonitorBattery() {
         CmdQueue.putSyncInfoCmd(
-                Cmd(HexUtil.hexStringToBytes(BleCmd.APP_CMD_HEADER + BleCmd.QUERY_MONITOR_BATTERY),
-                        generateResultCmd(BleCmd.QUERY_MONITOR_BATTERY), callback = object : BleRequestCallback {
+                Cmd(HexUtil.hexStringToBytes(BleConstants.APP_CMD_HEADER + BleConstants.QUERY_MONITOR_BATTERY),
+                        generateResultCmd(BleConstants.QUERY_MONITOR_BATTERY), callback = object : BleRequestCallback {
                     override fun onResponse(data: ByteArray, hexString: String) {
                         LogManager.bleRequestStatusLog("请求蓝牙状态成功,cmd: $hexString")
                     }
 
                     override fun onFail(code: Int, msg: String) {
-                        LogManager.bleRequestStatusLog("请求蓝牙状态失败，cmd:${BleCmd.QUERY_MONITOR_BATTERY} code: $code msg: $msg")
+                        LogManager.bleRequestStatusLog("请求蓝牙状态失败，cmd:${BleConstants.QUERY_MONITOR_BATTERY} code: $code msg: $msg")
                     }
                 }))
     }
 
     fun putQuerySleepMasterConnectStatus() {
         CmdQueue.putSyncInfoCmd(
-                Cmd(HexUtil.hexStringToBytes(BleCmd.APP_CMD_HEADER + BleCmd.QUERY_SLEEP_MASTER_CONNECT_STATUS),
-                        generateResultCmd(BleCmd.QUERY_SLEEP_MASTER_CONNECT_STATUS), callback = object : BleRequestCallback {
+                Cmd(HexUtil.hexStringToBytes(BleConstants.APP_CMD_HEADER + BleConstants.QUERY_SLEEP_MASTER_CONNECT_STATUS),
+                        generateResultCmd(BleConstants.QUERY_SLEEP_MASTER_CONNECT_STATUS), callback = object : BleRequestCallback {
                     override fun onResponse(data: ByteArray, hexString: String) {
                         LogManager.bleRequestStatusLog("请求蓝牙状态成功,cmd: $hexString")
                     }
 
                     override fun onFail(code: Int, msg: String) {
-                        LogManager.bleRequestStatusLog("请求蓝牙状态失败，cmd:${BleCmd.QUERY_SLEEP_MASTER_CONNECT_STATUS} code: $code msg: $msg")
+                        LogManager.bleRequestStatusLog("请求蓝牙状态失败，cmd:${BleConstants.QUERY_SLEEP_MASTER_CONNECT_STATUS} code: $code msg: $msg")
                     }
                 }))
     }
@@ -237,8 +236,8 @@ object DeviceStateHelper {
 
     fun putQuerySleepMasterMac() {
         CmdQueue.putSyncInfoCmd(
-                Cmd(HexUtil.hexStringToBytes(BleCmd.APP_CMD_HEADER + BleCmd.QUERY_SLEEP_MASTER_MAC),
-                        generateResultCmd(BleCmd.QUERY_SLEEP_MASTER_MAC), callback = object : BleRequestCallback {
+                Cmd(HexUtil.hexStringToBytes(BleConstants.APP_CMD_HEADER + BleConstants.QUERY_SLEEP_MASTER_MAC),
+                        generateResultCmd(BleConstants.QUERY_SLEEP_MASTER_MAC), callback = object : BleRequestCallback {
                     override fun onResponse(data: ByteArray, hexString: String) {
                         LogManager.bleRequestStatusLog("请求蓝牙状态成功,cmd: $hexString")
                         mMainHandler.post {
@@ -250,15 +249,15 @@ object DeviceStateHelper {
                     }
 
                     override fun onFail(code: Int, msg: String) {
-                        LogManager.bleRequestStatusLog("请求蓝牙状态失败，cmd:${BleCmd.QUERY_SLEEP_MASTER_MAC} code: $code msg: $msg")
+                        LogManager.bleRequestStatusLog("请求蓝牙状态失败，cmd:${BleConstants.QUERY_SLEEP_MASTER_MAC} code: $code msg: $msg")
                     }
                 }))
     }
 
     fun putQuerySleepMasterSn() {
         CmdQueue.putSyncInfoCmd(
-                Cmd(HexUtil.hexStringToBytes(BleCmd.APP_CMD_HEADER + BleCmd.QUERY_SLEEP_MASTER_SN),
-                        generateResultCmd(BleCmd.QUERY_SLEEP_MASTER_SN), callback = object : BleRequestCallback {
+                Cmd(HexUtil.hexStringToBytes(BleConstants.APP_CMD_HEADER + BleConstants.QUERY_SLEEP_MASTER_SN),
+                        generateResultCmd(BleConstants.QUERY_SLEEP_MASTER_SN), callback = object : BleRequestCallback {
                     override fun onResponse(data: ByteArray, hexString: String) {
                         LogManager.bleRequestStatusLog("请求蓝牙状态成功,cmd: $hexString")
                         mMainHandler.post {
@@ -268,15 +267,15 @@ object DeviceStateHelper {
                     }
 
                     override fun onFail(code: Int, msg: String) {
-                        LogManager.bleRequestStatusLog("请求蓝牙状态失败，cmd:${BleCmd.QUERY_SLEEP_MASTER_SN} code: $code msg: $msg")
+                        LogManager.bleRequestStatusLog("请求蓝牙状态失败，cmd:${BleConstants.QUERY_SLEEP_MASTER_SN} code: $code msg: $msg")
                     }
                 }))
     }
 
     fun putQuerySleepMasterVersion() {
         CmdQueue.putSyncInfoCmd(
-                Cmd(HexUtil.hexStringToBytes(BleCmd.APP_CMD_HEADER + BleCmd.QUERY_SLEEP_MASTER_VERSION),
-                        generateResultCmd(BleCmd.QUERY_SLEEP_MASTER_VERSION), callback = object : BleRequestCallback {
+                Cmd(HexUtil.hexStringToBytes(BleConstants.APP_CMD_HEADER + BleConstants.QUERY_SLEEP_MASTER_VERSION),
+                        generateResultCmd(BleConstants.QUERY_SLEEP_MASTER_VERSION), callback = object : BleRequestCallback {
                     override fun onResponse(data: ByteArray, hexString: String) {
                         LogManager.bleRequestStatusLog("请求蓝牙状态成功,cmd: $hexString")
                         mMainHandler.post {
@@ -302,41 +301,41 @@ object DeviceStateHelper {
                     }
 
                     override fun onFail(code: Int, msg: String) {
-                        LogManager.bleRequestStatusLog("请求蓝牙状态失败，cmd:${BleCmd.QUERY_SLEEP_MASTER_VERSION} code: $code msg: $msg")
+                        LogManager.bleRequestStatusLog("请求蓝牙状态失败，cmd:${BleConstants.QUERY_SLEEP_MASTER_VERSION} code: $code msg: $msg")
                     }
                 }))
     }
 
     fun putQuerySleepMasterBattery() {
         CmdQueue.putSyncInfoCmd(
-                Cmd(HexUtil.hexStringToBytes(BleCmd.APP_CMD_HEADER + BleCmd.QUERY_SLEEP_MASTER_BATTERY),
-                        generateResultCmd(BleCmd.QUERY_SLEEP_MASTER_BATTERY), callback = object : BleRequestCallback {
+                Cmd(HexUtil.hexStringToBytes(BleConstants.APP_CMD_HEADER + BleConstants.QUERY_SLEEP_MASTER_BATTERY),
+                        generateResultCmd(BleConstants.QUERY_SLEEP_MASTER_BATTERY), callback = object : BleRequestCallback {
                     override fun onResponse(data: ByteArray, hexString: String) {
                         LogManager.bleRequestStatusLog("请求蓝牙状态成功,cmd: $hexString")
                     }
 
                     override fun onFail(code: Int, msg: String) {
-                        LogManager.bleRequestStatusLog("请求蓝牙状态失败，cmd:${BleCmd.QUERY_SLEEP_MASTER_BATTERY} code: $code msg: $msg")
+                        LogManager.bleRequestStatusLog("请求蓝牙状态失败，cmd:${BleConstants.QUERY_SLEEP_MASTER_BATTERY} code: $code msg: $msg")
                     }
                 }))
     }
 
     fun putQueryMonitorAndSleepMasterWorkMode() {
         CmdQueue.putSyncInfoCmd(
-                Cmd(HexUtil.hexStringToBytes(BleCmd.APP_CMD_HEADER + BleCmd.QUERY_MONITOR_SLEEP_MASTER_WORK_MODE),
-                        generateResultCmd(BleCmd.QUERY_MONITOR_SLEEP_MASTER_WORK_MODE), callback = object : BleRequestCallback {
+                Cmd(HexUtil.hexStringToBytes(BleConstants.APP_CMD_HEADER + BleConstants.QUERY_MONITOR_SLEEP_MASTER_WORK_MODE),
+                        generateResultCmd(BleConstants.QUERY_MONITOR_SLEEP_MASTER_WORK_MODE), callback = object : BleRequestCallback {
                     override fun onResponse(data: ByteArray, hexString: String) {
                         LogManager.bleRequestStatusLog("请求蓝牙状态成功,cmd: $hexString")
                     }
 
                     override fun onFail(code: Int, msg: String) {
-                        LogManager.bleRequestStatusLog("请求蓝牙状态失败，cmd:${BleCmd.QUERY_MONITOR_SLEEP_MASTER_WORK_MODE} code: $code msg: $msg")
+                        LogManager.bleRequestStatusLog("请求蓝牙状态失败，cmd:${BleConstants.QUERY_MONITOR_SLEEP_MASTER_WORK_MODE} code: $code msg: $msg")
                     }
                 }))
     }
 
     private fun receiveSleepMasterConnectionStatus(hexString: String) {
-        val isConnected = BleCmdUtil.getContentFromData(hexString) == BleCmd.RESPONSE_CODE_POSITIVE
+        val isConnected = BleCmdUtil.getContentFromData(hexString) == BleConstants.RESPONSE_CODE_POSITIVE
         if (isConnected) {
             putQuerySleepMasterVersion()
             putQuerySleepMasterBattery()
@@ -410,8 +409,8 @@ object DeviceStateHelper {
     fun toggleSleepMasterWorkMode(on: Boolean = true, callback: AsyncCallback<Any?>) {
         BleCommunicationController.requestWithRetry(
                 BleCmdUtil.createDataFromString(
-                        BleCmd.TOGGLE_SLEEP_MASTER_WORK_MODE,
-                        BleCmd.RESPONSE_CODE_POSITIVE
+                        BleConstants.TOGGLE_SLEEP_MASTER_WORK_MODE,
+                        BleConstants.RESPONSE_CODE_POSITIVE
                 ), object : BleRequestCallback {
             override fun onResponse(data: ByteArray, hexString: String) {
                 //aa58 01  默认 app 只能开启 pa 模式,不可以关闭
@@ -427,7 +426,7 @@ object DeviceStateHelper {
                 // 0xE6 -- 设置数据长度错误
                 // 0xE7 -- 发送数据到速眠仪发生错误
                 // 0xFF -- 未知错误
-                val turnOnPaModeSuccess = BleCmdUtil.getContentFromData(hexString) == BleCmd.RESPONSE_CODE_SUCCESS
+                val turnOnPaModeSuccess = BleCmdUtil.getContentFromData(hexString) == BleConstants.RESPONSE_CODE_SUCCESS
                 if (turnOnPaModeSuccess) {
                     callback.onSuccess(null)
                     DeviceManager.postEvent(
@@ -472,12 +471,12 @@ object DeviceStateHelper {
         LogManager.monitorLog("绑定速眠仪： $sleepMasterSn")
         BleCommunicationController.requestWithRetry(
                 BleCmdUtil.createDataFromBytes(
-                        BleCmd.CHANGE_SLEEP_MASTER,
+                        BleConstants.CHANGE_SLEEP_MASTER,
                         BleCmdUtil.stringToCharBytes(sleepMasterSn!!)
                 ),
                 object : BleRequestCallback {
                     override fun onResponse(data: ByteArray, hexString: String) {
-                        if (BleCmdUtil.getContentFromData(hexString) == BleCmd.RESPONSE_CODE_SUCCESS) {
+                        if (BleCmdUtil.getContentFromData(hexString) == BleConstants.RESPONSE_CODE_SUCCESS) {
                             callback.onSuccess()
                         } else {
                             callback.onFail(1, "绑定速眠仪失败,请重新扫码绑定")

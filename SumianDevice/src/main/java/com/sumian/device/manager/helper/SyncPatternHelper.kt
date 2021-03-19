@@ -3,9 +3,8 @@ package com.sumian.device.manager.helper
 import com.blankj.utilcode.util.LogUtils
 import com.sumian.device.callback.AsyncCallback
 import com.sumian.device.callback.BleRequestCallback
-import com.sumian.device.cmd.BleCmd
+import com.sumian.device.cmd.BleConstants
 import com.sumian.device.data.PatternData
-import com.sumian.device.manager.DeviceManager
 import com.sumian.device.net.NetworkManager
 import com.sumian.device.util.*
 import retrofit2.Call
@@ -63,7 +62,7 @@ object SyncPatternHelper {
                         for (data in list) {
                             val value = data.value
                             val patternBytes =
-                                    BleCmdUtil.createDataFromString(BleCmd.SET_PATTERN, value)
+                                    BleCmdUtil.createDataFromString(BleConstants.SET_PATTERN, value)
                             patternList.add(patternBytes)
                         }
                         sendPatternsToDevice(patternList)
@@ -132,11 +131,11 @@ object SyncPatternHelper {
 
     private fun putSendPatternToDeviceCmd(pattern: ByteArray, callback: AsyncCallback<Any>) {
         CmdQueue.putSyncInfoCmd(
-                Cmd(pattern, DeviceStateHelper.generateResultCmd(BleCmd.SET_PATTERN), retry = false, callback = object : BleRequestCallback {
+                Cmd(pattern, DeviceStateHelper.generateResultCmd(BleConstants.SET_PATTERN), retry = false, callback = object : BleRequestCallback {
                     override fun onResponse(data: ByteArray, hexString: String) {
                         LogManager.bleRequestStatusLog("请求蓝牙状态成功,cmd: $hexString")
                         LogUtils.d(hexString)
-                        if (hexString.endsWith(BleCmd.RESPONSE_CODE_SUCCESS)) {
+                        if (hexString.endsWith(BleConstants.RESPONSE_CODE_SUCCESS)) {
                             callback.onSuccess()
                         } else {
                             callback.onFail(1, "error unknown")

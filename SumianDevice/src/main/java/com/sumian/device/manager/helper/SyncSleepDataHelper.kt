@@ -4,11 +4,10 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
-import android.util.Log
 import com.clj.fastble.utils.HexUtil
 import com.sumian.device.callback.BleCommunicationWatcher
 import com.sumian.device.callback.WriteBleDataCallback
-import com.sumian.device.cmd.BleCmd
+import com.sumian.device.cmd.BleConstants
 import com.sumian.device.manager.DeviceManager
 import com.sumian.device.manager.upload.SleepDataUploadManager
 import com.sumian.device.util.BleCmdUtil
@@ -58,15 +57,15 @@ object SyncSleepDataHelper {
                 return
             }
             when (BleCmdUtil.getCmdType(hexString)) {
-                BleCmd.SYNC_DATA -> {
+                BleConstants.SYNC_DATA -> {
                     // 主动获取睡眠特征数据response
                     receiveRequestSleepDataResponse(hexString)
                 }
-                BleCmd.SYNC_START_OR_END -> {
+                BleConstants.SYNC_START_OR_END -> {
                     // 透传数据 开始/结束
                     receiveStartOrFinishTransportCmd(data, hexString)
                 }
-                BleCmd.SYNC_TRANSPARENT -> {
+                BleConstants.SYNC_TRANSPARENT -> {
                     // 透传数据 帧
                     receiveSleepData(data, hexString)
                 }
@@ -136,8 +135,8 @@ object SyncSleepDataHelper {
         setIsSyncing(true, "startSyncSleepData")
         sendSetSyncFlagFalseMessageDelay("startSyncSleepData")
         CmdQueue.putSyncInfoCmd(
-                Cmd(BleCmdUtil.createDataFromString(BleCmd.SYNC_DATA, BleCmd.SYNC_SLEEP_DATA_CONTENT),
-                        DeviceStateHelper.generateResultCmd(BleCmd.SYNC_DATA), priority = Cmd.Priority.SLEEP_DATA, retry = false))
+                Cmd(BleCmdUtil.createDataFromString(BleConstants.SYNC_DATA, BleConstants.SYNC_SLEEP_DATA_CONTENT),
+                        DeviceStateHelper.generateResultCmd(BleConstants.SYNC_DATA), priority = Cmd.Priority.SLEEP_DATA, retry = false))
         return true
     }
 
@@ -146,7 +145,7 @@ object SyncSleepDataHelper {
             return
         }
         log("retrySyncSleepData: $mReceiveStartedTime")
-        DeviceManager.writeData(BleCmdUtil.createDataFromString(BleCmd.SYNC_DATA, BleCmd.SYNC_SLEEP_DATA_CONTENT))
+        DeviceManager.writeData(BleCmdUtil.createDataFromString(BleConstants.SYNC_DATA, BleConstants.SYNC_SLEEP_DATA_CONTENT))
     }
 
     internal fun startSendFakeSleepData() {
@@ -184,7 +183,7 @@ object SyncSleepDataHelper {
         log("收到4f: $cmd")
         mTranType = Integer.parseInt(cmd.substring(6, 8), 16)
         when (cmd.substring(cmd.length - 2)) {
-            BleCmd.RESPONSE_CODE_SUCCESS -> {
+            BleConstants.RESPONSE_CODE_SUCCESS -> {
                 setIsSyncing(true, "RESPONSE_CODE_SUCCESS")
                 log("收到0x4f回复 发现设备有睡眠特征数据,准备同步中  cmd=$cmd")
                 DeviceManager.postEvent(DeviceManager.EVENT_SYNC_SLEEP_DATA_PREPARE)
@@ -194,15 +193,15 @@ object SyncSleepDataHelper {
                     mUploadTags.add(UPLOAD_TAG_SYNC_SLEEP_DATA)
                 }
             }
-            BleCmd.RESPONSE_CODE_NONE -> {
+            BleConstants.RESPONSE_CODE_NONE -> {
                 onSyncSuccess()
                 log("收到0x4f回复 设备没有睡眠特征数据  cmd=$cmd")
             }
-            BleCmd.RESPONSE_CODE_FAIL -> {
+            BleConstants.RESPONSE_CODE_FAIL -> {
                 onSyncFailed()
                 log("收到0x4f回复 设备4f 指令识别异常  cmd=$cmd")
             }
-            BleCmd.RESPONSE_CODE_FINISH -> {
+            BleConstants.RESPONSE_CODE_FINISH -> {
                 mSyncFinish = true
                 log("收到0x4f回复 单段同步完成 cmd=$cmd")
             }
@@ -273,7 +272,7 @@ object SyncSleepDataHelper {
         log("开始透传 mCurrentPackageIndex: ${mCurrentPackageIndex}， mTotalPackageCount: $mTotalPackageCount, mTotalDataCount: $mTotalDataCount")
         onSyncStart()
         sendNextPayloadTimeoutDelay()
-        writeResponse(mBeginBytes!!, BleCmd.RESPONSE_CODE_SUCCESS)
+        writeResponse(mBeginBytes!!, BleConstants.RESPONSE_CODE_SUCCESS)
         mIsGettingLostFrame = false
     }
 
@@ -288,7 +287,7 @@ object SyncSleepDataHelper {
         calLostFrames()
         log("writeResponse RESPONSE_CODE_POSITIVE for $cmd")
         sendNextPayloadTimeoutDelay()
-        writeResponse(data, BleCmd.RESPONSE_CODE_POSITIVE, object : WriteBleDataCallback {
+        writeResponse(data, BleConstants.RESPONSE_CODE_POSITIVE, object : WriteBleDataCallback {
             override fun onSuccess(data: ByteArray) {
                 if (hasLostFrames()) {
                     mIsGettingLostFrame = true
@@ -362,12 +361,12 @@ object SyncSleepDataHelper {
     private fun onCurrentPackageReceivedSuccess() {
         var file = saveSleepDataToFile()
         if (file.length() > 0) {
-            writeResponse(mEndBytes!!, BleCmd.RESPONSE_CODE_SUCCESS, object : WriteBleDataCallback {
+            writeResponse(mEndBytes!!, BleConstants.RESPONSE_CODE_SUCCESS, object : WriteBleDataCallback {
                 override fun onSuccess(data: ByteArray) {
                 }
 
                 override fun onFail(code: Int, msg: String) {
-                    writeResponse(mEndBytes!!, BleCmd.RESPONSE_CODE_SUCCESS)
+                    writeResponse(mEndBytes!!, BleConstants.RESPONSE_CODE_SUCCESS)
                 }
             })
             log("单段接收完成 ${HexUtil.formatHexString(mEndBytes)}")
@@ -375,7 +374,7 @@ object SyncSleepDataHelper {
                 if (isSyncSleepData()) {
                     mMainHandler.postDelayed({
                         if (!mSyncFinish) {
-                            writeResponse(mEndBytes!!, BleCmd.RESPONSE_CODE_SUCCESS)
+                            writeResponse(mEndBytes!!, BleConstants.RESPONSE_CODE_SUCCESS)
                         }
                     }, 1500)
                 }
