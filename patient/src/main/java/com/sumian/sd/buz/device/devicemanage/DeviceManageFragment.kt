@@ -26,6 +26,7 @@ import com.sumian.device.data.SumianDevice
 import com.sumian.device.manager.DeviceManager
 import com.sumian.sd.R
 import com.sumian.sd.buz.device.scan.ScanPermissionDetailActivity
+import com.sumian.sd.buz.device.widget.DeviceCardFragment
 import com.sumian.sd.buz.device.widget.SyncAnimatorUtil
 import com.sumian.sd.buz.devicemanager.BlueDevice
 import com.sumian.sd.common.log.SdLogManager
@@ -201,9 +202,9 @@ class DeviceManageFragment : BaseFragment() {
                 }
             }
         } else {
-            if (PermissionUtil.isForbidPermissionPopup(this) || PermissionUtil.shouldShowRequestPermissionRationale(this)) {
+            if (PermissionUtil.shouldShowRequestPermissionRationale(this)) {
                 PermissionUtil.showScanPermissionDetail(this, Intent(activity!!, ScanPermissionDetailActivity::class.java), REQUEST_CODE_PERMISSION_DETAIL)
-            } else {
+            } else if (!PermissionUtil.isForbidPermissionPopup(this) || !PermissionUtil.startSettingPermission(this)) {
                 PermissionUtil.requestPermissions(this, REQUEST_PERMISSION_LOCATION_AND_STORAGE)
             }
         }

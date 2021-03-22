@@ -4,6 +4,7 @@ import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -126,9 +127,9 @@ class DeviceCardFragment : BaseFragment() {
                 }
             }
         } else {
-            if (PermissionUtil.isForbidPermissionPopup(this) || PermissionUtil.shouldShowRequestPermissionRationale(this)) {
+            if (PermissionUtil.shouldShowRequestPermissionRationale(this)) {
                 PermissionUtil.showScanPermissionDetail(this, Intent(activity!!, ScanPermissionDetailActivity::class.java), REQUEST_CODE_PERMISSION_DETAIL)
-            } else {
+            } else if (!PermissionUtil.isForbidPermissionPopup(this) || !PermissionUtil.startSettingPermission(this)) {
                 PermissionUtil.requestPermissions(this, REQUEST_PERMISSION_LOCATION_AND_STORAGE)
             }
         }
