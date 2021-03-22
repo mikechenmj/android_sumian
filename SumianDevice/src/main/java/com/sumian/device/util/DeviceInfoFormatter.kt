@@ -55,6 +55,7 @@ class DeviceInfoFormatter {
             val channel = when (device?.monitorVersionInfo?.channel) {
                 MonitorChannel.CLINIC -> "临床"
                 MonitorChannel.NORMAL -> "正式"
+                MonitorChannel.NORMAL_PRO -> "正式PRO"
                 else -> "null"
             }
             val bomVersion = device?.monitorVersionInfo?.hardwareVersion

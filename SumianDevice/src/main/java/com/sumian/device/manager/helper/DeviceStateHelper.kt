@@ -11,6 +11,9 @@ import com.sumian.device.callback.AsyncCallback
 import com.sumian.device.callback.BleCommunicationWatcher
 import com.sumian.device.callback.BleRequestCallback
 import com.sumian.device.cmd.BleConstants
+import com.sumian.device.cmd.BleConstants.Companion.VERSION_CLINICAL
+import com.sumian.device.cmd.BleConstants.Companion.VERSION_NORMAL
+import com.sumian.device.cmd.BleConstants.Companion.VERSION_NORMAL_PRO
 import com.sumian.device.data.DeviceConnectStatus
 import com.sumian.device.data.MonitorChannel
 import com.sumian.device.data.MonitorVersionInfo
@@ -139,14 +142,14 @@ object DeviceStateHelper {
                         LogManager.bleRequestStatusLog("请求蓝牙状态成功,监测仪版本cmd: $hexString")
                         // 55 50 0e 【00 09 09】 【0e】 【43 31 31】 【00 00 42】 【30 30 30 4a】【pp】【软件版本】【临床0C/正式0E】【bom版本号】【心率库版本号】【睡眠算法版本号】【协议版本号】
                         val softwareVersion = getVersionFromCmd(hexString, 6)
-                        val deviceChannel =
-                                if (hexString.length >= 14) {
-                                    if (hexString.substring(
-                                                    12,
-                                                    14
-                                            ) == "0C"
-                                    ) MonitorChannel.CLINIC else MonitorChannel.NORMAL
-                                } else MonitorChannel.UNKNOWN
+                        val deviceChannel = if (hexString.length >= 14) {
+                            when (hexString.substring(12, 14).toLowerCase(Locale.ROOT)) {
+                                VERSION_CLINICAL -> MonitorChannel.CLINIC
+                                VERSION_NORMAL -> MonitorChannel.NORMAL
+                                VERSION_NORMAL_PRO -> MonitorChannel.NORMAL_PRO
+                                else -> MonitorChannel.UNKNOWN
+                            }
+                        } else MonitorChannel.UNKNOWN
                         val hardwareVersion = getVersionFromCmd(hexString, 14)
                         val heartBeatVersion = getVersionFromCmd(hexString, 20)
                         val sleepAlgorithmVersion = getVersionFromCmd(hexString, 26, 4)

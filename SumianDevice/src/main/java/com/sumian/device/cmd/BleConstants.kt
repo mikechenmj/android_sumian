@@ -10,6 +10,11 @@ package com.sumian.device.cmd
  */
 class BleConstants {
     companion object {
+
+        const val VERSION_CLINICAL = "0c"
+        const val VERSION_NORMAL = "0e"
+        const val VERSION_NORMAL_PRO = "0a"
+
         const val RESPONSE_CODE_POSITIVE = "01"
 
         // monitor

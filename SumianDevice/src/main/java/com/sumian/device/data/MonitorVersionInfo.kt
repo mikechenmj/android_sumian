@@ -19,5 +19,6 @@ data class MonitorVersionInfo(
 enum class MonitorChannel {
     UNKNOWN,
     NORMAL,
+    NORMAL_PRO,
     CLINIC,
 }

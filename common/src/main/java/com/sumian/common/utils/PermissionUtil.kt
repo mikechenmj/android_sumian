@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.util.Log
 import androidx.core.app.ActivityCompat
@@ -58,5 +59,19 @@ object PermissionUtil {
         } else {
             fragment.startActivity(intent)
         }
+    }
+
+    fun startSettingPermission(fragment: Fragment): Boolean {
+        if (fragment.activity == null) {
+            return false
+        }
+        val intent = Intent()
+        intent.action = android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS;
+        intent.data = Uri.parse("package:${fragment.activity!!.packageName}")
+        if (fragment.activity!!.packageManager != null && fragment.activity!!.packageManager.queryIntentActivities(intent, 0).size > 0) {
+            fragment.activity!!.startActivity(intent)
+            return true
+        }
+        return false
     }
 }

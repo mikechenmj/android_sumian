@@ -8,6 +8,10 @@ import java.lang.annotation.RetentionPolicy;
 
 import androidx.annotation.IntDef;
 
+import static com.sumian.device.cmd.BleConstants.VERSION_CLINICAL;
+import static com.sumian.device.cmd.BleConstants.VERSION_NORMAL;
+import static com.sumian.device.cmd.BleConstants.VERSION_NORMAL_PRO;
+
 /**
  * <pre>
  *     author : Zhan Xuzhao
@@ -21,14 +25,14 @@ public class BluetoothDeviceUtil {
     @SuppressWarnings("WeakerAccess")
     public static final int BLUETOOTH_DEVICE_VERSION_OLD = 0;
     public static final int BLUETOOTH_DEVICE_VERSION_CLINICAL = 1;
-    public static final int BLUETOOTH_DEVICE_VERSION_RELEASE = 2;
-    public static final String BLUETOOTH_DEVICE_VERSION_CLINICAL_FLAG = "0c";
-    public static final String BLUETOOTH_DEVICE_VERSION_RELEASE_FLAG = "0e";
+    public static final int BLUETOOTH_DEVICE_VERSION_NORMAL = 2;
+    public static final int BLUETOOTH_DEVICE_VERSION_NORMAL_PRO = 3;
 
     @IntDef({
             BLUETOOTH_DEVICE_VERSION_OLD,
             BLUETOOTH_DEVICE_VERSION_CLINICAL,
-            BLUETOOTH_DEVICE_VERSION_RELEASE,
+            BLUETOOTH_DEVICE_VERSION_NORMAL,
+            BLUETOOTH_DEVICE_VERSION_NORMAL_PRO
     })
     @Retention(RetentionPolicy.SOURCE)
     private @interface BluetoothDeviceVersion {
@@ -63,10 +67,12 @@ public class BluetoothDeviceUtil {
             return deviceVersion;
         }
         String version = manufacturerSpecificDataStr.substring(4,6);
-        if (BLUETOOTH_DEVICE_VERSION_CLINICAL_FLAG.equalsIgnoreCase(version)) {
+        if (VERSION_CLINICAL.equalsIgnoreCase(version)) {
             deviceVersion = BLUETOOTH_DEVICE_VERSION_CLINICAL;
-        } else if (BLUETOOTH_DEVICE_VERSION_RELEASE_FLAG.equalsIgnoreCase(version)) {
-            deviceVersion = BLUETOOTH_DEVICE_VERSION_RELEASE;
+        } else if (VERSION_NORMAL.equalsIgnoreCase(version)) {
+            deviceVersion = BLUETOOTH_DEVICE_VERSION_NORMAL;
+        } else if (VERSION_NORMAL_PRO.equalsIgnoreCase(version)) {
+            deviceVersion = BLUETOOTH_DEVICE_VERSION_NORMAL_PRO;
         }
         return deviceVersion;
     }

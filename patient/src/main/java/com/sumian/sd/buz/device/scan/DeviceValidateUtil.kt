@@ -1,6 +1,5 @@
 package com.sumian.sd.buz.device.scan
 
-import android.util.Log
 import com.sumian.sd.BuildConfig
 import com.sumian.sd.buz.devicemanager.util.BluetoothDeviceUtil
 import com.sumian.sd.common.log.LogManager
@@ -20,12 +19,13 @@ object DeviceValidateUtil {
             true
         } else { // release version app
             when (deviceVersion) {
-                BluetoothDeviceUtil.BLUETOOTH_DEVICE_VERSION_RELEASE -> LogManager.appendBluetoothLog("常规版本app 搜索到一台正式版本设备 name=$deviceName  mac=$deviceMac")
+                BluetoothDeviceUtil.BLUETOOTH_DEVICE_VERSION_NORMAL_PRO -> LogManager.appendBluetoothLog("常规版本app 搜索到一台正式版本 PRO 设备 name=$deviceName  mac=$deviceMac")
+                BluetoothDeviceUtil.BLUETOOTH_DEVICE_VERSION_NORMAL -> LogManager.appendBluetoothLog("常规版本app 搜索到一台正式版本设备 name=$deviceName  mac=$deviceMac")
                 BluetoothDeviceUtil.BLUETOOTH_DEVICE_VERSION_CLINICAL -> LogManager.appendBluetoothLog("常规版本app 搜索到一台临床版本设备 name=$deviceName  mac=$deviceMac")
                 BluetoothDeviceUtil.BLUETOOTH_DEVICE_VERSION_OLD -> LogManager.appendBluetoothLog("常规版本app 搜索到一台老版本设备 name=$deviceName  mac=$deviceMac")
                 else -> LogManager.appendBluetoothLog("常规版本app 搜索到一台未知版本设备 name=$deviceName  mac=$deviceMac")
             }
-            deviceVersion == BluetoothDeviceUtil.BLUETOOTH_DEVICE_VERSION_RELEASE
+            deviceVersion == BluetoothDeviceUtil.BLUETOOTH_DEVICE_VERSION_NORMAL || deviceVersion == BluetoothDeviceUtil.BLUETOOTH_DEVICE_VERSION_NORMAL_PRO
         }
     }
 }
