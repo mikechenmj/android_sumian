@@ -70,5 +70,13 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:text="测试页面" />
+
+        <TextView
+            android:id="@+id/v_dfu_update_demo"
+            style="@style/SumianButton"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="Dfu 升级 demo" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

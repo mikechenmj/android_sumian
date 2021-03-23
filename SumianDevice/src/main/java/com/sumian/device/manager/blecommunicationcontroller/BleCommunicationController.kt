@@ -2,6 +2,7 @@ package com.sumian.device.manager.blecommunicationcontroller
 
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import androidx.collection.ArrayMap
 import com.clj.fastble.BleManager
 import com.clj.fastble.callback.BleNotifyCallback

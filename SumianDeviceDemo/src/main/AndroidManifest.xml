@@ -31,6 +31,7 @@
         <activity android:name="com.sumian.devicedemo.device.DeviceVersionActivity" />
         <activity android:name="com.sumian.devicedemo.sleepdata.SleepDataActivity" />
         <activity android:name="com.sumian.devicedemo.device.ScanDeviceActivity" />
+        <activity android:name=".dfuDemo.DfuDemoActivity" />
         <activity android:name="com.sumian.devicedemo.device.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

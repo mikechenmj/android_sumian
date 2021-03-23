@@ -1,0 +1,18 @@
+package com.sumian.devicedemo.dfuDemo
+
+const val CMD_RESPONSE_HEADER = 0x60
+
+const val CMD_SELECT = 0x06
+const val CMD_CREATE = 0x01
+const val CMD_PRN = 0x02
+const val CMD_CALCULATE_CHECKSUM = 0x03
+const val CMD_EXECUTE = 0x04
+
+const val PARA_INIT = 0x01
+const val PARA_IMAGE = 0x02
+
+const val RESULT_SUCCESS = 0x01
+
+const val DFU_SERVICE_UUID = "0000fe59-0000-1000-8000-00805f9b34fb"
+const val CONTROL_POINT_UUID = "8EC90001-F315-4F60-9FB8-838830DAEA50"
+const val PACKET_UUID = "8EC90002-F315-4F60-9FB8-838830DAEA50"

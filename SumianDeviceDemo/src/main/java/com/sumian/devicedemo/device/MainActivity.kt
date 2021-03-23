@@ -13,6 +13,7 @@ import com.sumian.device.manager.DeviceManager
 import com.sumian.device.test.ui.DeviceTestActivity
 import com.sumian.devicedemo.R
 import com.sumian.devicedemo.base.BaseActivity
+import com.sumian.devicedemo.dfuDemo.DfuDemoActivity
 import com.sumian.devicedemo.sleepdata.SleepDataActivity
 import com.yzq.zxinglibrary.android.CaptureActivity
 import com.yzq.zxinglibrary.common.Constant
@@ -73,6 +74,7 @@ class MainActivity : BaseActivity() {
             startActivity(Intent(this, SleepDataActivity::class.java))
         }
         bt_sync_pattern.setOnClickListener { DeviceManager.syncPattern() }
+        v_dfu_update_demo.setOnClickListener { startActivity(Intent(this, DfuDemoActivity::class.java)) }
         updateButtonEnable()
         DeviceManager.registerDeviceStatusListener(mDeviceStatusListener)
         DeviceManager.connectBoundDevice(object : ConnectDeviceCallback {
