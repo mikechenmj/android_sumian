@@ -119,7 +119,7 @@ class MeFragment : BaseViewModelFragment<GetAchievementListPresenter>(), View.On
         super.initData()
         val userProfile = AppManager.getAccountViewModel().userInfo!!
         updateUserProfile(userProfile)
-        updateOrganizationFeature(AppManager.getAccountViewModel().organization!!)
+        updateOrganizationFeature(AppManager.getAccountViewModel().organization)
         AppManager.getAccountViewModel().getUserInfoLiveData().observe(this, Observer<UserInfo> { userInfo ->
             run {
                 userInfo?.let {
