@@ -19,14 +19,16 @@ import java.lang.IllegalArgumentException
 object DfuUpgradeManager {
 
     const val TYPE_MONITOR = 0
-    const val TYPE_SLEEP_MASTER = 1
-    const val TYPE_ALL = 2
+    const val TYPE_MONITOR_PRO = 1
+    const val TYPE_SLEEP_MASTER = 2
+    const val TYPE_ALL = 3
 
     private val mContext: Context by lazy { App.getAppContext() }
 
     private fun getLatestVersionInfo(type: Int): VersionInfo? {
         return when (type) {
-            TYPE_MONITOR -> VersionManager.mFirmwareVersionInfoLD.value?.monitor
+            TYPE_MONITOR_PRO -> VersionManager.mFirmwareVersionInfoLD.value?.monitorPro
+            TYPE_MONITOR -> VersionManager.mFirmwareVersionInfoLD.value?.monitorNormal
             TYPE_SLEEP_MASTER -> VersionManager.mFirmwareVersionInfoLD.value?.sleeper
             else -> null
         }

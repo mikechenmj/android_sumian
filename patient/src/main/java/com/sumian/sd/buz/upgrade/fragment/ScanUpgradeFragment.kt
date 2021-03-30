@@ -330,6 +330,7 @@ class ScanUpgradeFragment(private var mDeviceType: Int) : BaseScanDeviceFragment
 
     private fun getTypeFromDeviceName(name: String): Int {
         return when {
+            name.startsWith(MONITOR_NAME_PRO) -> DfuUpgradeManager.TYPE_MONITOR_PRO
             name.startsWith(MONITOR_NAME) -> DfuUpgradeManager.TYPE_MONITOR
             name.startsWith(SLEEP_MASTER_NAME) -> DfuUpgradeManager.TYPE_SLEEP_MASTER
             else -> throw IllegalArgumentException()

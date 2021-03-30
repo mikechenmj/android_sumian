@@ -13,10 +13,10 @@ import com.sumian.sd.buz.upgrade.bean.VersionInfo
  * desc:
  */
 data class FirmwareVersionInfo(
-        @SerializedName("monitor") private var monitorNormal: VersionInfo? = null,
+        @SerializedName("monitor") var monitorNormal: VersionInfo? = null,
         var sleeper: VersionInfo? = null,
         @SerializedName("monitor_pro")
-        private var monitorPro: VersionInfo? = null
+        var monitorPro: VersionInfo? = null
 ) {
     val monitor get() = if (isMonitorPro()) monitorPro else monitorNormal
 

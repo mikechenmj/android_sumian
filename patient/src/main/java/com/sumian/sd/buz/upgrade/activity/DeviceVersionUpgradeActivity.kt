@@ -72,7 +72,7 @@ class DeviceVersionUpgradeActivity : BaseViewModelActivity<BaseViewModel>(), Tit
         titleBar.setOnBackClickListener(this)
         titleBar.setTitle(if (mType == TYPE_MONITOR) "监测仪升级" else "速眠仪升级")
         bt_download.setOnClickListener { downloadUpgradeFileWithPermissionCheck() }
-        bt_upgrade.setOnClickListener { enterDfu(mUpgradeFile) }
+        bt_upgrade.setOnClickListener { enterDfuAndUpgrade(mUpgradeFile) }
     }
 
     override fun initData() {
@@ -206,7 +206,7 @@ class DeviceVersionUpgradeActivity : BaseViewModelActivity<BaseViewModel>(), Tit
         finish()
     }
 
-    private fun enterDfu(file: File?) {
+    private fun enterDfuAndUpgrade(file: File?) {
         if (!checkBattery()) {
             return
         }

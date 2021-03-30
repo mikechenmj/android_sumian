@@ -29,6 +29,7 @@ abstract class BaseScanDeviceFragment : BaseFragment() {
         const val REQUEST_CODE_PERMISSION_DETAIL = 3
         const val REQUEST_PERMISSION_LOCATION_AND_STORAGE = 3
         const val MONITOR_NAME = "M-SUMIAN"
+        const val MONITOR_NAME_PRO = "M-SUMIAN-PRO"
         const val SLEEP_MASTER_NAME = "PDNWK"
     }
 
