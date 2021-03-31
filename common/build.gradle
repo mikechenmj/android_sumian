@@ -145,7 +145,7 @@ dependencies {
     api 'com.makeramen:roundedimageview:2.3.0'
     api 'com.bskim:maxheightscrollview:1.0.0@aar'
     //客服
-    implementation project(':kefu-easeui')
+//    implementation project(':kefu-easeui')
     api 'com.qiyukf.unicorn:unicorn:4.12.0'
     //奔溃收集
     api 'com.iqiyi.xcrash:xcrash-android-lib:2.4.6'
